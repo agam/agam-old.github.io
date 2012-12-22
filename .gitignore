@@ -1,11 +1,1 @@
-dist
-cabal-dev
-*.o
-*.hi
-*.chi
-*.chs.h
-.virthualenv
 
-site
-_cache
-_site
