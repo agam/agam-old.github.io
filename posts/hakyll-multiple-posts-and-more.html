@@ -1,0 +1,73 @@
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+        <title>Hakyll: multiple posts and more</title>
+        <link rel="stylesheet" type="text/css" href="../css/default.css"></link>
+        <link rel="stylesheet" type="text/css" href="../css/syntax.css"></link>
+    </head>
+    <body>
+        <h1>Hakyll: multiple posts and more</h1>
+	<br>
+	<h2>23 Dec 2012</h2>
+	<br>
+
+        <h1 id="handling-multiple-posts-and-more">Handling multiple posts, and more</h1>
+<p>At the moment, my blog is basically a single page. This is boring, so let’s expand it to handle multiple pages. Also, each page should be templatized in turn, so that we can add a footer to handle analytics, comments, etc.</p>
+<h2 id="multiple-posts">Multiple posts</h2>
+<p>I’ll do this step by step. First, I’ll ignore the index page and just add support for the posts. So <code>blog.hs</code> gets a new “match” rule.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">    match <span class="st">&quot;posts/*&quot;</span> <span class="fu">$</span> <span class="kw">do</span>
+        route     <span class="fu">$</span> setExtension <span class="st">&quot;html&quot;</span>
+        compile   <span class="fu">$</span> pageCompiler
+            <span class="fu">&gt;&gt;&gt;</span> applyTemplateCompiler <span class="st">&quot;templates/post.html&quot;</span>
+            <span class="fu">&gt;&gt;&gt;</span> relativizeUrlsCompiler</code></pre>
+<p>I modified <code>index.markdown</code> to explicitly point to the two posts for now (i.e. this one and the previous one).</p>
+<p>Also, I created <code>templates/post.html</code>, which has some basic boilerplate difference from the template used to serve the index page :-</p>
+<pre><code>        &lt;h1&gt;$title$&lt;/h1&gt;
+	&lt;br&gt;
+	&lt;h2&gt;$date$&lt;/h2&gt;
+	&lt;br&gt;
+
+        $body$</code></pre>
+<p>Ok, <code>ghc --make blog.hs &amp;&amp; ./blog preview</code> confirms that all is well. There’s still the problem that the</p>
+<h2 id="analytics-and-comments">Analytics and Comments</h2>
+<p>I’ll be brief here, since you probably already know this, and this isn’t relevant to hakyll in anyway. There are many commenting systems out there, I found <a href="http://www.disqus.com">Disqus</a> to be really quick to set up.</p>
+<p>Enter your username, password, site url, and you’ll be shown a list of hosting platforms; just select <em>Universal Code</em> from the list, then copy-paste the javascript into the html footer of your post template. Done. Your posts now have comments!</p>
+<p>Similarly, if you want to track site visits, <a href="www.google.com/analytics/">Google Analytics</a> is a quick solution. Sign up for a new account, enter the website name, and then get your “tracking code”, which is a bit of javascript you (again) tack on to the end of each post’s html.</p>
+    </body>
+    <footer>
+    <!-- Disqus code -->
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+        var disqus_shortname = 'agamamp'; // required: replace example with your forum shortname
+
+        /* * * DON'T EDIT BELOW THIS LINE * * */
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+    <!-- Google Analytics tracking -->
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-16612682-4']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+    
+    </footer>
+</html>
