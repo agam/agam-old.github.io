@@ -1,17 +1,32 @@
-
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
-        <title>Hakyll: multiple posts and more</title>
+        <title>Agam's Mashed-up Pome</title>
         <link rel="stylesheet" type="text/css" href="../css/default.css"></link>
         <link rel="stylesheet" type="text/css" href="../css/syntax.css"></link>
+        <script src="../js/google_analytics.js" type="text/javascript" charset="utf-8"></script>
+    </head>
+    <body>
+        <h1>Agam's Mashed-up Pome</h1>
+	<br>
+        <div id="navigation">
+            <a href="../">Home</a>
+            <a href="../about.html">About</a>
+        </div>
+
+        
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <title>Hakyll: multiple posts and more</title>
     </head>
     <body>
         <h1>Hakyll: multiple posts and more</h1>
 	<br>
-	<h2>23 Dec 2012</h2>
+	<h2>04 Jan 2013</h2>
 	<br>
 
         <h1 id="handling-multiple-posts-and-more">Handling multiple posts, and more</h1>
@@ -31,43 +46,57 @@
 	&lt;br&gt;
 
         $body$</code></pre>
-<p>Ok, <code>ghc --make blog.hs &amp;&amp; ./blog preview</code> confirms that all is well. There’s still the problem that the</p>
+<p>Ok, <code>ghc --make blog.hs &amp;&amp; ./blog preview</code> confirms that all is well.</p>
 <h2 id="analytics-and-comments">Analytics and Comments</h2>
 <p>I’ll be brief here, since you probably already know this, and this isn’t relevant to hakyll in anyway. There are many commenting systems out there, I found <a href="http://www.disqus.com">Disqus</a> to be really quick to set up.</p>
 <p>Enter your username, password, site url, and you’ll be shown a list of hosting platforms; just select <em>Universal Code</em> from the list, then copy-paste the javascript into the html footer of your post template. Done. Your posts now have comments!</p>
 <p>Similarly, if you want to track site visits, <a href="www.google.com/analytics/">Google Analytics</a> is a quick solution. Sign up for a new account, enter the website name, and then get your “tracking code”, which is a bit of javascript you (again) tack on to the end of each post’s html.</p>
+<h2 id="showing-a-list-of-posts">Showing a list of posts</h2>
+<p>At a minimum, we’d like to show the last few posts on the index page, and provide a link to the list of <em>all</em> posts.</p>
+<p>Let’s do the second item first. To do this, we’ll create a pseudo-page that will be defined based on the list of posts found in the <code>posts/</code> subdirectory.</p>
+<p>(BTW this is heavily inspired by <a href="https://github.com/jaspervdj/hakyll-examples/blob/master/feedblog/hakyll.hs">this hakyll example</a>)</p>
+<p>Since we want to have a ‘list of posts’ on the index page as well, this common functionality can be abstracted out.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">addPostList ::</span> <span class="dt">Compiler</span> (<span class="dt">Page</span> <span class="dt">String</span>, [<span class="dt">Page</span> <span class="dt">String</span>]) (<span class="dt">Page</span> <span class="dt">String</span>)
+addPostList <span class="fu">=</span> setFieldA <span class="st">&quot;posts&quot;</span> <span class="fu">$</span>
+    arr (<span class="fu">reverse</span> <span class="fu">.</span> chronological)
+        <span class="fu">&gt;&gt;&gt;</span> require <span class="st">&quot;templates/postitem.html&quot;</span> (\p t <span class="ot">-&gt;</span> <span class="fu">map</span> (applyTemplate t) p)
+        <span class="fu">&gt;&gt;&gt;</span> arr mconcat
+        <span class="fu">&gt;&gt;&gt;</span> arr pageBody</code></pre>
+<p>Now create a rudimentary html fragment that will hold the ‘post summary’</p>
+<pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;li&gt;</span>
+   <span class="kw">&lt;a</span><span class="ot"> href=</span><span class="st">&quot;/posts/hakyll-multiple-posts-and-more.html&quot;</span><span class="kw">&gt;</span>Hakyll: multiple posts and more<span class="kw">&lt;/a&gt;</span> - <span class="kw">&lt;em&gt;</span>04 Jan 2013<span class="kw">&lt;/em&gt;</span>
+<span class="kw">&lt;/li&gt;</span></code></pre>
+<p>Finally, to tie it together, add a match for <code>posts.html</code>, which will be the entry point to show the list of all posts.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">    match <span class="st">&quot;posts.html&quot;</span> <span class="fu">$</span> route idRoute 
+    create <span class="st">&quot;posts.html&quot;</span> <span class="fu">$</span> constA mempty
+        <span class="fu">&gt;&gt;&gt;</span> arr (setField <span class="st">&quot;title&quot;</span> <span class="st">&quot;All posts&quot;</span>)
+        <span class="fu">&gt;&gt;&gt;</span> requireAllA <span class="st">&quot;posts/*&quot;</span> addPostList
+        <span class="fu">&gt;&gt;&gt;</span> applyTemplateCompiler <span class="st">&quot;templates/posts.html&quot;</span>
+        <span class="fu">&gt;&gt;&gt;</span> applyTemplateCompiler <span class="st">&quot;templates/default.html&quot;</span>
+        <span class="fu">&gt;&gt;&gt;</span> relativizeUrlsCompiler</code></pre>
+<h2 id="showing-a-subset-of-all-posts-on-the-index-page">Showing a subset of all posts on the index page</h2>
+<p>Initially, I had some trouble getting this to work, for some reason the <code>match &quot;posts/*&quot;</code> wasn’t working, and I commented out the <code>match &quot;index.html&quot;</code> and retained the <code>index.markdown</code> that I had.</p>
+<p>Turned out to be another ommission on my part, I had to replace</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">	match <span class="st">&quot;index.html&quot;</span> <span class="fu">$</span> <span class="kw">do</span>
+	create <span class="st">&quot;index.html&quot;</span> <span class="fu">$</span> constA mempty</code></pre>
+<p>with</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">	match <span class="st">&quot;index.html&quot;</span> <span class="fu">$</span> route idRoute
+	create <span class="st">&quot;index.html&quot;</span> <span class="fu">$</span> constA mempty</code></pre>
+<p>… and then it works!</p>
+<p>Getting the list of the last (say) 3 posts is achieved by having a line similar to the one in the handler for <code>posts.html</code>, except instead of just</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">	<span class="fu">&gt;&gt;&gt;</span> requireAllA <span class="st">&quot;posts/*&quot;</span> addPostList</code></pre>
+<p>we now have</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">        <span class="fu">&gt;&gt;&gt;</span> requireAllA <span class="st">&quot;posts/*&quot;</span> (<span class="fu">id</span> <span class="fu">***</span> arr (<span class="fu">take</span> <span class="dv">3</span> <span class="fu">.</span> <span class="fu">reverse</span> <span class="fu">.</span> chronological) <span class="fu">&gt;&gt;&gt;</span> addPostList)</code></pre>
     </body>
     <footer>
-    <!-- Disqus code -->
     <div id="disqus_thread"></div>
-    <script type="text/javascript">
-        /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
-        var disqus_shortname = 'agamamp'; // required: replace example with your forum shortname
-
-        /* * * DON'T EDIT BELOW THIS LINE * * */
-        (function() {
-            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-            dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
-            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-        })();
-    </script>
-    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <script src="../js/disqus.js" type="text/javascript" charset="utf-8"></script>
     <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </footer>
+</html>
 
-    <!-- Google Analytics tracking -->
-    <script type="text/javascript">
-
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-16612682-4']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-
-</script>
-    
+    </body>
+    <footer>
+       This site generated using Hakyll
     </footer>
 </html>
