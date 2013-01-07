@@ -3,33 +3,37 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
-        <title>Agam's Mashed-up Pome</title>
-        <link rel="stylesheet" type="text/css" href="../css/default.css"></link>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content>
+	<meta name="author" content>
+	<title>Agam's Mashed-up Pome</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css"></link>
         <link rel="stylesheet" type="text/css" href="../css/syntax.css"></link>
+        <link rel="stylesheet" type="text/css" href="../css/default.css"></link>
         <script src="../js/google_analytics.js" type="text/javascript" charset="utf-8"></script>
     </head>
     <body>
-        <h1>Agam's Mashed-up Pome</h1>
-	<br>
+	<div class="topbar">
+	<div class="topbar-inner">
+	<div class="container">
         <div id="navigation">
-            <a href="../">Home</a>
-            <a href="../about.html">About</a>
+	<ul class="nav">
+            <li><a href="../">Home</a></li>
+            <li><a href="../about.html">About</a></li>
+	</ul>
+	</div>
+        </div>
+        </div>
         </div>
 
-        
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-    <head>
-        <title>Beginning Hakyll</title>
-    </head>
-    <body>
-        <h1>Beginning Hakyll</h1>
-	<br>
-	<h2>22 Dec 2012</h2>
-	<br>
+        <head>
+<title>Beginning Hakyll</title>
+</head>
+<body>
+<h2>22 Dec 2012</h2>
+<br>
 
-        <h1 id="getting-up-and-running-with-hakyll">Getting up and running with Hakyll</h1>
+<h1 id="getting-up-and-running-with-hakyll">Getting up and running with Hakyll</h1>
 <p>I looked around at the usual suspects (wordpress, blogspot, etc) but then stumbled across the recent static website idea when I read “powerd by Jekyll” in a blog footer. Soon enough I came across Hakyll, and decided to give it a go, if only to learn Haskell a bit better.</p>
 <p>The first few examples I came across were hosted on Linode etc, so my initial plan was to use this new blog to try out another new (for me) tool and host it on Google Compute Engine. But after reading up a bit on that, I realized I didn’t want to deal with provisioning and storage and all, and that’s when I realized that I could just host it on a platform that already supports static websites: Github Pages.</p>
 <p>So there are a few steps here: getting hakyll, setting it up for my blog, setting it up with github, etc, and I’ll go over them, in no particular order.</p>
@@ -140,16 +144,18 @@ Compiling index.markdown
 <hr></hr>
 <p>For reference, my hakyll source lives <a href="https://github.com/agam/hakyll-source">here</a> and the static website is generated <a href="https://github.com/agam/agam.github.com">here</a></p>
 <p><em>Continue on to <a href="../posts/hakyll-multiple-posts-and-more.html">part 2</a></em></p>
-    </body>
-    <footer>
-    <div id="disqus_thread"></div>
-    <script src="../js/disqus.js" type="text/javascript" charset="utf-8"></script>
-    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-    </footer>
-</html>
+</body>
+<footer>
+<div id="disqus_thread"></div>
+<script src="../js/disqus.js" type="text/javascript" charset="utf-8"></script>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</footer>
 
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
     </body>
     <footer>
+	<br><br><br>
        This site generated using Hakyll
     </footer>
 </html>

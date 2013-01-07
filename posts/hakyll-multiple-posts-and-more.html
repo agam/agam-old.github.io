@@ -3,33 +3,37 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
-        <title>Agam's Mashed-up Pome</title>
-        <link rel="stylesheet" type="text/css" href="../css/default.css"></link>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content>
+	<meta name="author" content>
+	<title>Agam's Mashed-up Pome</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css"></link>
         <link rel="stylesheet" type="text/css" href="../css/syntax.css"></link>
+        <link rel="stylesheet" type="text/css" href="../css/default.css"></link>
         <script src="../js/google_analytics.js" type="text/javascript" charset="utf-8"></script>
     </head>
     <body>
-        <h1>Agam's Mashed-up Pome</h1>
-	<br>
+	<div class="topbar">
+	<div class="topbar-inner">
+	<div class="container">
         <div id="navigation">
-            <a href="../">Home</a>
-            <a href="../about.html">About</a>
+	<ul class="nav">
+            <li><a href="../">Home</a></li>
+            <li><a href="../about.html">About</a></li>
+	</ul>
+	</div>
+        </div>
+        </div>
         </div>
 
-        
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-    <head>
-        <title>Hakyll: multiple posts and more</title>
-    </head>
-    <body>
-        <h1>Hakyll: multiple posts and more</h1>
-	<br>
-	<h2>04 Jan 2013</h2>
-	<br>
+        <head>
+<title>Hakyll: multiple posts and more</title>
+</head>
+<body>
+<h2>04 Jan 2013</h2>
+<br>
 
-        <h1 id="handling-multiple-posts-and-more">Handling multiple posts, and more</h1>
+<h1 id="handling-multiple-posts-and-more">Handling multiple posts, and more</h1>
 <p>At the moment, my blog is basically a single page. This is boring, so let’s expand it to handle multiple pages. Also, each page should be templatized in turn, so that we can add a footer to handle analytics, comments, etc.</p>
 <h2 id="multiple-posts">Multiple posts</h2>
 <p>I’ll do this step by step. First, I’ll ignore the index page and just add support for the posts. So <code>blog.hs</code> gets a new “match” rule.</p>
@@ -40,10 +44,10 @@
             <span class="fu">&gt;&gt;&gt;</span> relativizeUrlsCompiler</code></pre>
 <p>I modified <code>index.markdown</code> to explicitly point to the two posts for now (i.e. this one and the previous one).</p>
 <p>Also, I created <code>templates/post.html</code>, which has some basic boilerplate difference from the template used to serve the index page :-</p>
-<pre><code>        &lt;h1&gt;$title$&lt;/h1&gt;
-	&lt;br&gt;
-	&lt;h2&gt;$date$&lt;/h2&gt;
-	&lt;br&gt;
+<pre class="sourceCode html"><code class="sourceCode html">        <span class="kw">&lt;h1&gt;</span>$title$<span class="kw">&lt;/h1&gt;</span>
+	<span class="kw">&lt;br&gt;</span>
+	<span class="kw">&lt;h2&gt;</span>$date$<span class="kw">&lt;/h2&gt;</span>
+	<span class="kw">&lt;br&gt;</span>
 
         $body$</code></pre>
 <p>Ok, <code>ghc --make blog.hs &amp;&amp; ./blog preview</code> confirms that all is well.</p>
@@ -54,7 +58,7 @@
 <h2 id="showing-a-list-of-posts">Showing a list of posts</h2>
 <p>At a minimum, we’d like to show the last few posts on the index page, and provide a link to the list of <em>all</em> posts.</p>
 <p>Let’s do the second item first. To do this, we’ll create a pseudo-page that will be defined based on the list of posts found in the <code>posts/</code> subdirectory.</p>
-<p>(BTW this is heavily inspired by <a href="https://github.com/jaspervdj/hakyll-examples/blob/master/feedblog/hakyll.hs">this hakyll example</a>)</p>
+<p>(BTW this is heavily <del>inspired by</del> copy-pasted from <a href="https://github.com/jaspervdj/hakyll-examples/blob/master/feedblog/hakyll.hs">this hakyll example</a>)</p>
 <p>Since we want to have a ‘list of posts’ on the index page as well, this common functionality can be abstracted out.</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">addPostList ::</span> <span class="dt">Compiler</span> (<span class="dt">Page</span> <span class="dt">String</span>, [<span class="dt">Page</span> <span class="dt">String</span>]) (<span class="dt">Page</span> <span class="dt">String</span>)
 addPostList <span class="fu">=</span> setFieldA <span class="st">&quot;posts&quot;</span> <span class="fu">$</span>
@@ -64,7 +68,7 @@ addPostList <span class="fu">=</span> setFieldA <span class="st">&quot;posts&quo
         <span class="fu">&gt;&gt;&gt;</span> arr pageBody</code></pre>
 <p>Now create a rudimentary html fragment that will hold the ‘post summary’</p>
 <pre class="sourceCode html"><code class="sourceCode html"><span class="kw">&lt;li&gt;</span>
-   <span class="kw">&lt;a</span><span class="ot"> href=</span><span class="st">&quot;/posts/hakyll-multiple-posts-and-more.html&quot;</span><span class="kw">&gt;</span>Hakyll: multiple posts and more<span class="kw">&lt;/a&gt;</span> - <span class="kw">&lt;em&gt;</span>04 Jan 2013<span class="kw">&lt;/em&gt;</span>
+   <span class="kw">&lt;a</span><span class="ot"> href=</span><span class="st">&quot;$ url $&quot;</span><span class="kw">&gt;</span>$ title $<span class="kw">&lt;/a&gt;</span> - <span class="kw">&lt;em&gt;</span>$ date $<span class="kw">&lt;/em&gt;</span>
 <span class="kw">&lt;/li&gt;</span></code></pre>
 <p>Finally, to tie it together, add a match for <code>posts.html</code>, which will be the entry point to show the list of all posts.</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell">    match <span class="st">&quot;posts.html&quot;</span> <span class="fu">$</span> route idRoute 
@@ -87,16 +91,20 @@ addPostList <span class="fu">=</span> setFieldA <span class="st">&quot;posts&quo
 <pre class="sourceCode haskell"><code class="sourceCode haskell">	<span class="fu">&gt;&gt;&gt;</span> requireAllA <span class="st">&quot;posts/*&quot;</span> addPostList</code></pre>
 <p>we now have</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell">        <span class="fu">&gt;&gt;&gt;</span> requireAllA <span class="st">&quot;posts/*&quot;</span> (<span class="fu">id</span> <span class="fu">***</span> arr (<span class="fu">take</span> <span class="dv">3</span> <span class="fu">.</span> <span class="fu">reverse</span> <span class="fu">.</span> chronological) <span class="fu">&gt;&gt;&gt;</span> addPostList)</code></pre>
-    </body>
-    <footer>
-    <div id="disqus_thread"></div>
-    <script src="../js/disqus.js" type="text/javascript" charset="utf-8"></script>
-    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
-    </footer>
-</html>
+<h2 id="css-ifying">CSS-ifying</h2>
+<p>You probably know more about this than me, but if you don’t want a black-and white, crammed together bunch of text, you probably want atleast a couple of css rules for your headers and the body text etc. I cobbled together mine based on some random examples I found online, pick yours as you see fit.</p>
+</body>
+<footer>
+<div id="disqus_thread"></div>
+<script src="../js/disqus.js" type="text/javascript" charset="utf-8"></script>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</footer>
 
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
     </body>
     <footer>
+	<br><br><br>
        This site generated using Hakyll
     </footer>
 </html>
