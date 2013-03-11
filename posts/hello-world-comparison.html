@@ -198,7 +198,13 @@ main1 <span class="fu">=</span>
   \ (<span class="ot">eta_B1 ::</span> <span class="dt">State</span><span class="fu">#</span> <span class="dt">RealWorld</span>) <span class="ot">-&gt;</span>
     Handle.Text.hPutStr2
       Handle.FD.stdout main2 <span class="kw">True</span> eta_B1</code></pre>
-<p>Once again, ghci to the rescue: <code>haskell Prelude&gt; :m GHC.IO.Handle.Text Prelude GHC.IO.Handle.Text&gt; :t hPutStrLn hPutStr :: GHC.IO.Handle.Types.Handle -&gt; String -&gt; IO () Prelude GHC.IO.Handle.Text&gt; :m GHC.IO.Handle.FD Prelude GHC.IO.Handle.FD&gt; :t stdout stdout :: GHC.IO.Handle.Types.Handle</code></p>
+<p>Once again, ghci to the rescue:</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="dt">Prelude</span><span class="fu">&gt;</span> <span class="fu">:</span>m <span class="dt">GHC.IO.Handle.Text</span>
+<span class="dt">Prelude</span> <span class="dt">GHC.IO.Handle.Text</span><span class="fu">&gt;</span> <span class="fu">:</span>t hPutStrLn
+<span class="ot">hPutStr ::</span> <span class="dt">GHC.IO.Handle.Types.Handle</span> <span class="ot">-&gt;</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">IO</span> ()
+<span class="dt">Prelude</span> <span class="dt">GHC.IO.Handle.Text</span><span class="fu">&gt;</span> <span class="fu">:</span>m <span class="dt">GHC.IO.Handle.FD</span>
+<span class="dt">Prelude</span> <span class="dt">GHC.IO.Handle.FD</span><span class="fu">&gt;</span> <span class="fu">:</span>t stdout
+<span class="ot">stdout ::</span> <span class="dt">GHC.IO.Handle.Types.Handle</span></code></pre>
 <p>Also, internally in <a href="http://hackage.haskell.org/packages/archive/base/4.3.1.0/doc/html/src/GHC-IO-Handle-Text.html">the source for this module</a>, <code>hPutStrLn</code> is implemented in terms of <code>hPutStr'</code>, which has the type signature</p>
 <pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">hPutStr' ::</span> <span class="dt">Handle</span> <span class="ot">-&gt;</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">IO</span> ()</code></pre>
 <p>Moving on, a <code>main</code> is defined but never used (perhaps just for correspondence with the user program?). Anywya, that is followed by a <code>main3</code> which actually runs the code.</p>
