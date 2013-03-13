@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content>
+	<meta name="author" content>
+	<title>Agam's Mashed-up Pome</title>
+	<link rel="stylesheet" href="css/bootstrap.min.css"></link>
+        <link rel="stylesheet" type="text/css" href="../css/syntax.css"></link>
+        <link rel="stylesheet" type="text/css" href="../css/default.css"></link>
+        <script src="../js/google_analytics.js" type="text/javascript" charset="utf-8"></script>
+    </head>
+    <body>
+	<div class="topbar">
+	<div class="topbar-inner">
+	<div class="container">
+        <div id="navigation">
+	<ul class="nav">
+            <li><a href="../">Home</a></li>
+            <li><a href="../about.html">About</a></li>
+	</ul>
+	</div>
+        </div>
+        </div>
+        </div>
+
+        <head>
+<title>Comparing &quot;Hello World&quot; in Go</title>
+</head>
+<body>
+<h2>12 Mar 2013</h2>
+<br>
+
+<h1 id="comparing-hello-world-in-go">Comparing “Hello World” in Go</h1>
+<p>Since I looked at printing “Hello World” <a href="../posts/hello-world-comparison.html">in C and Haskell earlier</a>, I thought I would look at what <em><a href="http://golang.org/">Go</a></em> does diferently.</p>
+<h2 id="source-program">Source program</h2>
+<p>So we start with this</p>
+<pre class="sourceCode go"><code class="sourceCode go">package main
+
+<span class="kw">import</span> <span class="st">&quot;fmt&quot;</span>
+
+<span class="kw">func</span> main() {
+    fmt.Println(<span class="st">&quot;Hello, World&quot;</span>)
+}</code></pre>
+<h2 id="binary-info">Binary info</h2>
+<p>The generated binary is large, like haskell, since (like haskell) it has a runtime linked in</p>
+<pre class="shell"><code>$ ls -lh | grep '\-x\-'
+-rwxr-x--- 1 agam eng 1.1M Mar 10 17:27 haskellhelloworld
+-rwxr-x--- 1 agam eng 8.8K Dec 14 16:10 helloworldcpp
+-rwxr-x--- 1 agam eng 1.3M Mar 12 18:07 helloworldgo</code></pre>
+<p>It does define an intermediate number of symbols though:</p>
+<pre class="shell"><code>$ nm helloworldgo | wc -l
+1748</code></pre>
+<p>Unlike both C++ and Haskell though (and this is really impressive) the Go binary is statically linked. So presumably I can copy it to a different location and expect it to run without worry too much about the environment (although I don’t know if this is true for all supported libraries (i.e. there might be certain Go libraries that don’t allow static linking)).</p>
+<h2 id="object-code">Object code</h2>
+<p>To see the generated assembly, run the following (the <code>sed</code> here is to get rid of the filename + linenumber that shows up on every line).</p>
+<pre class="shell"><code>$ go build -gcflags=-S helloworld.go  | sed 's/([^ ]*)//' &gt; helloworldgo.s</code></pre>
+<p>I’ve <a href="https://gist.github.com/agam/5148575">saved the output in one piece</a> if you want to look at it.</p>
+<p>The assembly format here looks very different from what we saw before; that’s because it’s in the <a href="http://doc.cat-v.org/plan_9/4th_edition/papers/asm">Plan 9 assembler</a> format, and it’s a bit confusing since it introduces new pseudo-instructions and pseudo-registers.</p>
+<p>Luckily, the generated assembly is somewhat annotated so it is much easier to follow along.</p>
+<pre class="sourceCode nasm"><code class="sourceCode nasm">--- prog list <span class="st">&quot;main&quot;</span> ---
+<span class="dv">0000</span>  TEXT    main<span class="dv">+0</span>(SB),<span class="dv">$72-0</span>
+<span class="dv">0001</span>  LEAQ    autotmp_0002+-<span class="dv">16</span>(<span class="kw">SP</span>),<span class="kw">DI</span>
+<span class="dv">0002</span>  <span class="kw">MOVQ</span><span class="bn">    $0,</span><span class="kw">AX</span>
+<span class="dv">0003</span>  <span class="kw">STOSQ</span>   ,
+<span class="dv">0004</span>  <span class="kw">STOSQ</span>   ,</code></pre>
+<p>I was confused by the <code>autotmp_000x</code> all over the code, until I looked at the <a href="http://golang.org/src/cmd/gc/gen.c">corresponding runtime code</a> and realized these were unique names for temporary variables in the original code.</p>
+<pre class="sourceCode nasm"><code class="sourceCode nasm"><span class="dv">0005</span>  LEAQ    autotmp_0002+-<span class="dv">16</span>(<span class="kw">SP</span>),<span class="kw">BX</span>
+<span class="dv">0006</span>  MOVL<span class="bn">    $1,</span>autotmp_0000+-<span class="dv">24</span>(<span class="kw">SP</span>)
+<span class="dv">0007</span>  MOVL<span class="bn">    $1,</span>autotmp_0000+-<span class="dv">20</span>(<span class="kw">SP</span>)
+<span class="dv">0008</span>  <span class="kw">MOVQ</span>    <span class="kw">BX</span>,autotmp_0000+-<span class="dv">32</span>(<span class="kw">SP</span>)
+<span class="dv">0009</span>  <span class="kw">MOVQ</span>    <span class="dv">$</span>type.string<span class="dv">+0</span>(SB),(<span class="kw">SP</span>)</code></pre>
+<p>Raw data, such as the string “Hello, World” here, <a href="http://golang.org/src/pkg/runtime/iface.c">have to be converted</a> to types within the program.</p>
+<pre class="sourceCode nasm"><code class="sourceCode nasm"><span class="dv">0010</span>  LEAQ    go.string.<span class="st">&quot;Hello, World&quot;</span>+<span class="dv">0</span>(SB),<span class="kw">SI</span>
+<span class="dv">0011</span>  LEAQ    <span class="dv">8</span>(<span class="kw">SP</span>),<span class="kw">DI</span>
+<span class="dv">0012</span>  <span class="kw">MOVSQ</span>   ,
+<span class="dv">0013</span>  <span class="kw">MOVSQ</span>   ,
+<span class="dv">0014</span>  <span class="kw">CALL</span>    ,runtime.convT2E<span class="dv">+0</span>(SB)
+<span class="dv">0015</span>  LEAQ    <span class="dv">24</span>(<span class="kw">SP</span>),<span class="kw">SI</span>
+<span class="dv">0016</span>  LEAQ    autotmp_0000+-<span class="dv">32</span>(<span class="kw">SP</span>),<span class="kw">DI</span>
+<span class="dv">0017</span>  <span class="kw">MOVQ</span>    (<span class="kw">DI</span>),<span class="kw">DI</span>
+<span class="dv">0018</span>  <span class="kw">MOVSQ</span>   ,
+<span class="dv">0019</span>  <span class="kw">MOVSQ</span>   ,</code></pre>
+<p>Not sure here … looks like the string is being copied, as an argument to <code>fmt.Println</code> ?</p>
+<pre class="sourceCode nasm"><code class="sourceCode nasm"><span class="dv">0020</span>  LEAQ    (<span class="kw">SP</span>),<span class="kw">BX</span>
+<span class="dv">0021</span>  <span class="kw">MOVQ</span>    autotmp_0000+-<span class="dv">32</span>(<span class="kw">SP</span>),<span class="kw">BP</span>
+<span class="dv">0022</span>  <span class="kw">MOVQ</span>    <span class="kw">BP</span>,(<span class="kw">BX</span>)
+<span class="dv">0023</span>  MOVL    autotmp_0000+-<span class="dv">24</span>(<span class="kw">SP</span>),<span class="kw">BP</span>
+<span class="dv">0024</span>  MOVL    <span class="kw">BP</span>,<span class="dv">8</span>(<span class="kw">BX</span>)
+<span class="dv">0025</span>  MOVL    autotmp_0000+-<span class="dv">20</span>(<span class="kw">SP</span>),<span class="kw">BP</span>
+<span class="dv">0026</span>  MOVL    <span class="kw">BP</span>,<span class="dv">12</span>(<span class="kw">BX</span>)
+<span class="dv">0027</span>  <span class="kw">CALL</span>    ,fmt.Println<span class="dv">+0</span>(SB)
+<span class="dv">0028</span>  <span class="kw">RET</span>     ,</code></pre>
+<p>General runtime initialization … including a call to <code>fmt.init</code> to initialize static data in the <code>fmt</code> package.</p>
+<pre class="sourceCode nasm"><code class="sourceCode nasm">--- prog list <span class="st">&quot;init&quot;</span> ---
+<span class="dv">0029</span>  TEXT    init<span class="dv">+0</span>(SB),<span class="dv">$0-0</span>
+<span class="dv">0030</span>  MOVB    initdone·+<span class="dv">0</span>(SB),<span class="kw">AX</span>
+<span class="dv">0031</span>  MOVB    <span class="kw">AX</span>,<span class="kw">BX</span>
+<span class="dv">0032</span>  CMPB    <span class="kw">BX</span><span class="bn">,$0</span>
+<span class="dv">0033</span>  JEQ     ,<span class="dv">39</span>
+<span class="dv">0034</span>  MOVB    <span class="kw">AX</span>,<span class="kw">BX</span>
+<span class="dv">0035</span>  CMPB    <span class="kw">BX</span><span class="bn">,$2</span>
+<span class="dv">0036</span>  <span class="kw">JNE</span>     ,<span class="dv">38</span>
+<span class="dv">0037</span>  <span class="kw">RET</span>     ,
+<span class="dv">0038</span>  <span class="kw">CALL</span>    ,runtime.throwinit<span class="dv">+0</span>(SB)
+<span class="dv">0039</span>  MOVB<span class="bn">    $1,</span>initdone·+<span class="dv">0</span>(SB)
+<span class="dv">0040</span>  <span class="kw">CALL</span>    ,fmt.init<span class="dv">+0</span>(SB)
+<span class="dv">0041</span>  MOVB<span class="bn">    $2,</span>initdone·+<span class="dv">0</span>(SB)
+<span class="dv">0042</span>  <span class="kw">RET</span>     ,</code></pre>
+<p>The data section …</p>
+<pre><code>--- prog list &quot;&lt;S&gt;&quot; ---
+0043  DATA    go.string.&quot;Hello, World&quot;+0(SB)/8,$go.string.&quot;Hello, World&quot;+12(SB)
+0043  DATA    go.string.&quot;Hello, World&quot;+8(SB)/4,$12
+0043  DATA    go.string.&quot;Hello, World&quot;+12(SB)/8,$&quot;Hello, W&quot;
+0043  DATA    go.string.&quot;Hello, World&quot;+20(SB)/4,$&quot;orld&quot;
+0043  DATA    go.string.&quot;Hello, World&quot;+24(SB)/1,$0
+0043  GLOBL   go.string.&quot;Hello, World&quot;+0(SB),10,$32</code></pre>
+<p>Omitted most of the rest of the data section, althought it has some weird stuff that I’d like to dig into later, such as</p>
+<pre class="sourceCode nasm"><code class="sourceCode nasm">...
+...
+...
+<span class="dv">0043</span>  DATA    go.string.<span class="st">&quot;func(*uint8, string) interface {}&quot;</span>+<span class="dv">0</span>(SB)/<span class="dv">8</span>,<span class="dv">$</span>go.string.<span class="st">&quot;func(*uint8, string) interface {}&quot;</span>+<span class="dv">12</span>(SB)
+<span class="dv">0043</span>  DATA    go.string.<span class="st">&quot;func(*uint8, string) interface {}&quot;</span>+<span class="dv">8</span>(SB)/<span class="dv">4</span><span class="bn">,$33</span>
+<span class="dv">0043</span>  DATA    go.string.<span class="st">&quot;func(*uint8, string) interface {}&quot;</span>+<span class="dv">12</span>(SB)/<span class="dv">8</span>,<span class="dv">$</span><span class="st">&quot;func(*ui&quot;</span>
+<span class="dv">0043</span>  DATA    go.string.<span class="st">&quot;func(*uint8, string) interface {}&quot;</span>+<span class="dv">20</span>(SB)/<span class="dv">8</span>,<span class="dv">$</span><span class="st">&quot;nt8, str&quot;</span>
+<span class="dv">0043</span>  DATA    go.string.<span class="st">&quot;func(*uint8, string) interface {}&quot;</span>+<span class="dv">28</span>(SB)/<span class="dv">8</span>,<span class="dv">$</span><span class="st">&quot;ing) int&quot;</span>
+<span class="dv">0043</span>  DATA    go.string.<span class="st">&quot;func(*uint8, string) interface {}&quot;</span>+<span class="dv">36</span>(SB)/<span class="dv">8</span>,<span class="dv">$</span><span class="st">&quot;erface {&quot;</span>
+<span class="dv">0043</span>  DATA    go.string.<span class="st">&quot;func(*uint8, string) interface {}&quot;</span>+<span class="dv">44</span>(SB)/<span class="dv">1</span>,<span class="dv">$</span><span class="st">&quot;}&quot;</span>
+<span class="dv">0043</span>  DATA    go.string.<span class="st">&quot;func(*uint8, string) interface {}&quot;</span>+<span class="dv">45</span>(SB)/<span class="dv">1</span><span class="bn">,$0</span>
+<span class="dv">0043</span>  GLOBL   go.string.<span class="st">&quot;func(*uint8, string) interface {}&quot;</span>+<span class="dv">0</span>(SB),<span class="dv">10</span><span class="bn">,$48</span>
+...
+...
+...
+<span class="dv">0043</span>  END     ,</code></pre>
+<p>(What exactly is going on here ? Perhaps encoding strings to use for runtime error reporting ?)</p>
+<h2 id="running-time">Running time</h2>
+<p>Again, running a string output program for time comparison is stupid, but I can’t help doing this stupid thing. So …</p>
+<pre class="shell"><code>$ time (while ((n++ &lt; 100)); do ./helloworldgo; done)
+
+real	0m0.567s
+user	0m0.196s
+sys	0m0.132s</code></pre>
+</body>
+<footer>
+<div id="disqus_thread"></div>
+<script src="../js/disqus.js" type="text/javascript" charset="utf-8"></script>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</footer>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+    </body>
+    <footer>
+	<br><br><br>
+       This site generated using Hakyll
+    </footer>
+</html>
