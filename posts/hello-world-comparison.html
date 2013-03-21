@@ -2,14 +2,14 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content>
 	<meta name="author" content>
 	<title>Agam's Mashed-up Pome</title>
-	<link rel="stylesheet" href="css/bootstrap.min.css"></link>
-        <link rel="stylesheet" type="text/css" href="../css/syntax.css"></link>
-        <link rel="stylesheet" type="text/css" href="../css/default.css"></link>
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="../css/syntax.css" />
+        <link rel="stylesheet" type="text/css" href="../css/default.css" />
         <script src="../js/google_analytics.js" type="text/javascript" charset="utf-8"></script>
     </head>
     <body>
@@ -30,7 +30,7 @@
 <title>Comparing &quot;Hello World&quot; in C++ and Haskell</title>
 </head>
 <body>
-<h2>10 Mar 2013</h2>
+<h2>March 10, 2013</h2>
 <br>
 
 <h1 id="hello-world-in-c-and-haskell">“Hello World” in C++ and Haskell</h1>
@@ -496,15 +496,15 @@ and those arguments will be followed by the info pointer of a continuation.</cod
 <h2 id="running-time-comparison">Running time comparison</h2>
 <p>(only because I couldn’t help myself, usual disclaimers about ‘this-is-not-a-benchmark’ apply)</p>
 <p>C++:</p>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">time</span> <span class="kw">(while</span> <span class="kw">((</span>n++ &lt; 100<span class="kw">))</span>; <span class="kw">do</span> ./cpphelloworld; <span class="kw">done)</span>
-real	0m0.250s
-user	0m0.004s
-sys	0m0.036s</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">time</span> (while ((n++ <span class="kw">&lt;</span> 100)); <span class="kw">do</span> <span class="kw">./cpphelloworld</span>; <span class="kw">done</span>)
+<span class="kw">real</span>	0m0.250s
+<span class="kw">user</span>	0m0.004s
+<span class="kw">sys</span>	0m0.036s</code></pre>
 <p>Haskell:</p>
-<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">time</span> <span class="kw">(while</span> <span class="kw">((</span>n++ &lt; 100<span class="kw">))</span>; <span class="kw">do</span> ./haskellhelloworld; <span class="kw">done)</span>
-real	0m0.366s
-user	0m0.004s
-sys	0m0.048s</code></pre>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">time</span> (while ((n++ <span class="kw">&lt;</span> 100)); <span class="kw">do</span> <span class="kw">./haskellhelloworld</span>; <span class="kw">done</span>)
+<span class="kw">real</span>	0m0.366s
+<span class="kw">user</span>	0m0.004s
+<span class="kw">sys</span>	0m0.048s</code></pre>
 <h2 id="gists">Gists</h2>
 <p><em>Update</em>: I’ve made the complete assembly version of both ‘Hello World’ programs available as gists. So you can look at <a href="https://gist.github.com/agam/5148416">The C++ version</a> or <a href="https://gist.github.com/agam/5148398">The Haskell version</a>.</p>
 </body>

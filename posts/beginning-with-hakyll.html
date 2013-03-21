@@ -2,14 +2,14 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content>
 	<meta name="author" content>
 	<title>Agam's Mashed-up Pome</title>
-	<link rel="stylesheet" href="css/bootstrap.min.css"></link>
-        <link rel="stylesheet" type="text/css" href="../css/syntax.css"></link>
-        <link rel="stylesheet" type="text/css" href="../css/default.css"></link>
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="../css/syntax.css" />
+        <link rel="stylesheet" type="text/css" href="../css/default.css" />
         <script src="../js/google_analytics.js" type="text/javascript" charset="utf-8"></script>
     </head>
     <body>
@@ -30,7 +30,7 @@
 <title>Beginning Hakyll</title>
 </head>
 <body>
-<h2>22 Dec 2012</h2>
+<h2>December 22, 2012</h2>
 <br>
 
 <h1 id="getting-up-and-running-with-hakyll">Getting up and running with Hakyll</h1>
@@ -73,9 +73,9 @@ Registering hakyll-3.4.0.0...</code></pre>
 <p>So in the first iteration, I had a <code>css</code> folder (with the same contents as the example) and a <code>templates</code> folder (which contained a barebones <code>default.html</code>). I had a file <code>blog.hs</code> with this code:</p>
 <pre class="sourceCode Haskell"><code class="sourceCode haskell"><span class="ot">{-# LANGUAGE OverloadedStrings #-}</span>
 
-<span class="kw">import</span> <span class="dt">Control.Arrow</span> ((<span class="fu">&gt;&gt;&gt;</span>))
+<span class="kw">import</span> Control.Arrow ((&gt;&gt;&gt;))
 
-<span class="kw">import</span> <span class="dt">Hakyll</span>
+<span class="kw">import</span> Hakyll
 
 <span class="ot">main ::</span> <span class="dt">IO</span>()
 main <span class="fu">=</span> hakyll <span class="fu">$</span> <span class="kw">do</span>
@@ -141,7 +141,7 @@ Compiling index.markdown
 <li><code>cd _site</code> then <code>git add -i</code> and <code>git commit -m &quot;new post etc&quot;</code> and <code>git push origin master</code>. The blog is now live on Github Pages!</li>
 <li><code>cd ..</code> followed by another commit and push to check in your modified post(s)</li>
 </ol>
-<hr></hr>
+<hr />
 <p>For reference, my hakyll source lives <a href="https://github.com/agam/hakyll-source">here</a> and the static website is generated <a href="https://github.com/agam/agam.github.com">here</a></p>
 <p><em>Continue on to <a href="../posts/hakyll-multiple-posts-and-more.html">part 2</a></em></p>
 </body>

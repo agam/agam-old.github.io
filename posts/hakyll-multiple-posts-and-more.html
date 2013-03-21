@@ -2,14 +2,14 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content>
 	<meta name="author" content>
 	<title>Agam's Mashed-up Pome</title>
-	<link rel="stylesheet" href="css/bootstrap.min.css"></link>
-        <link rel="stylesheet" type="text/css" href="../css/syntax.css"></link>
-        <link rel="stylesheet" type="text/css" href="../css/default.css"></link>
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="../css/syntax.css" />
+        <link rel="stylesheet" type="text/css" href="../css/default.css" />
         <script src="../js/google_analytics.js" type="text/javascript" charset="utf-8"></script>
     </head>
     <body>
@@ -30,7 +30,7 @@
 <title>Hakyll: multiple posts and more</title>
 </head>
 <body>
-<h2>04 Jan 2013</h2>
+<h2>January  4, 2013</h2>
 <br>
 
 <h1 id="handling-multiple-posts-and-more">Handling multiple posts, and more</h1>
@@ -44,12 +44,12 @@
             <span class="fu">&gt;&gt;&gt;</span> relativizeUrlsCompiler</code></pre>
 <p>I modified <code>index.markdown</code> to explicitly point to the two posts for now (i.e. this one and the previous one).</p>
 <p>Also, I created <code>templates/post.html</code>, which has some basic boilerplate difference from the template used to serve the index page :-</p>
-<pre class="sourceCode html"><code class="sourceCode html">        <span class="kw">&lt;h1&gt;</span>$title$<span class="kw">&lt;/h1&gt;</span>
+<pre class="sourceCode html"><code class="sourceCode html">        <span class="kw">&lt;h1&gt;</span>$$title$$<span class="kw">&lt;/h1&gt;</span>
 	<span class="kw">&lt;br&gt;</span>
-	<span class="kw">&lt;h2&gt;</span>$date$<span class="kw">&lt;/h2&gt;</span>
+	<span class="kw">&lt;h2&gt;</span>$$date$$<span class="kw">&lt;/h2&gt;</span>
 	<span class="kw">&lt;br&gt;</span>
 
-        $body$</code></pre>
+        $$body$$</code></pre>
 <p>Ok, <code>ghc --make blog.hs &amp;&amp; ./blog preview</code> confirms that all is well.</p>
 <h2 id="analytics-and-comments">Analytics and Comments</h2>
 <p>I’ll be brief here, since you probably already know this, and this isn’t relevant to hakyll in anyway. There are many commenting systems out there, I found <a href="http://www.disqus.com">Disqus</a> to be really quick to set up.</p>

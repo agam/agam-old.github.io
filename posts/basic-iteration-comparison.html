@@ -2,14 +2,14 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></meta>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<meta name="description" content>
 	<meta name="author" content>
 	<title>Agam's Mashed-up Pome</title>
-	<link rel="stylesheet" href="css/bootstrap.min.css"></link>
-        <link rel="stylesheet" type="text/css" href="../css/syntax.css"></link>
-        <link rel="stylesheet" type="text/css" href="../css/default.css"></link>
+	<link rel="stylesheet" href="css/bootstrap.min.css" />
+        <link rel="stylesheet" type="text/css" href="../css/syntax.css" />
+        <link rel="stylesheet" type="text/css" href="../css/default.css" />
         <script src="../js/google_analytics.js" type="text/javascript" charset="utf-8"></script>
     </head>
     <body>
@@ -30,7 +30,7 @@
 <title>Comparing basic iteration in C++ and Haskell</title>
 </head>
 <body>
-<h2>13 Mar 2013</h2>
+<h2>March 13, 2013</h2>
 <br>
 
 <h1 id="iteration-in-c-and-haskell-part-1">Iteration in C++ and Haskell: Part 1</h1>
@@ -308,9 +308,9 @@ main <span class="fu">=</span> <span class="fu">mapM_</span> <span class="fu">pr
 	.quad	<span class="dv">0</span></code></pre>
 <h2 id="for-loop-iteration-haskell-other-list-structures"><code>For loop</code> iteration: Haskell (Other list structures)</h2>
 <p>Let’s look at a different kind of list in haskell</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">import</span> <span class="dt">Prelude</span> <span class="kw">hiding</span> (<span class="fu">mapM_</span>);
-<span class="kw">import</span> <span class="dt">Data.Sequence</span>;
-<span class="kw">import</span> <span class="dt">Data.Foldable</span> (<span class="fu">mapM_</span>);
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">import</span> Prelude <span class="kw">hiding</span> (mapM_);
+<span class="kw">import</span> Data.Sequence;
+<span class="kw">import</span> Data.Foldable (mapM_);
 
 x <span class="fu">=</span> Data.Sequence.singleton <span class="dv">12</span> <span class="fu">|&gt;</span> <span class="dv">23</span> <span class="fu">|&gt;</span> <span class="dv">34</span> <span class="fu">|&gt;</span> <span class="dv">45</span> <span class="fu">|&gt;</span> <span class="dv">56</span> <span class="fu">|&gt;</span> <span class="dv">67</span> <span class="fu">|&gt;</span> <span class="dv">78</span>  <span class="fu">|&gt;</span> <span class="dv">89</span>
 main <span class="fu">=</span> <span class="fu">mapM_</span>  <span class="fu">print</span>  x</code></pre>
@@ -338,8 +338,8 @@ main <span class="fu">=</span> <span class="fu">mapM_</span>  <span class="fu">p
 	<span class="kw">movq</span><span class="bn"> $32,</span><span class="dv">192</span>(<span class="ot">%r13)</span></code></pre>
 <p>(This extract shows the closure that adds <code>67</code> in the list)</p>
 <p>It’s possible to construct this directly from a finite list, and the same can be done for the <code>Data.Vector</code> type too :</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">import</span> <span class="dt">Prelude</span> <span class="kw">hiding</span> (<span class="fu">mapM_</span>);
-<span class="kw">import</span> <span class="dt">Data.Vector</span>;
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">import</span> Prelude <span class="kw">hiding</span> (mapM_);
+<span class="kw">import</span> Data.Vector;
 
 x <span class="fu">=</span> Data.Vector.fromList [ <span class="dv">12</span>, <span class="dv">23</span>, <span class="dv">34</span>, <span class="dv">45</span>, <span class="dv">56</span>, <span class="dv">67</span>, <span class="dv">78</span>, <span class="dv">89</span> ]
 main <span class="fu">=</span> <span class="fu">mapM_</span>  <span class="fu">print</span>  x</code></pre>
@@ -364,7 +364,7 @@ main <span class="fu">=</span> <span class="fu">mapM_</span>  <span class="fu">p
 	<span class="kw">jmp</span> stg_ap_p_fast</code></pre>
 <p>(This extract shows the steps for picking up 23 and 12 (skipping similar steps for the other numbers)</p>
 <p>I was curious if there was a way to avoid constructing the list</p>
-<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">import</span> <span class="dt">Data.Vector.Unboxed</span> <span class="kw">as</span> <span class="dt">U</span>;
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">import</span> Data.Vector.Unboxed <span class="kw">as</span> U;
 
 <span class="ot">x ::</span> <span class="dt">U.Vector</span> <span class="dt">Double</span>
 x <span class="fu">=</span> U.fromList [ <span class="dv">12</span>, <span class="dv">23</span>, <span class="dv">34</span>, <span class="dv">45</span>, <span class="dv">56</span>, <span class="dv">67</span>, <span class="dv">78</span>, <span class="dv">89</span> ]
