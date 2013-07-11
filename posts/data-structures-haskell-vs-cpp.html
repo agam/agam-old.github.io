@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content>
+        <meta name="author" content>
+        <title>Agam's Mashed-up Pome</title>
+        <link href="http://fonts.googleapis.com/css?family=Source+Code+Pro|Radley:400,400italic" rel="stylesheet" type="text/css">
+          <link rel="stylesheet" href="css/bootstrap.min.css" />
+          <link rel="stylesheet" type="text/css" href="../css/syntax.css" />
+          <link rel="stylesheet" type="text/css" href="../css/default.css" />
+        <script src="../js/google_analytics.js" type="text/javascript" charset="utf-8"></script>
+  </head>
+  <body>
+  <div class="topbar">
+  <div class="topbar-inner">
+  <div class="container">
+        <div id="navigation">
+	<ul class="nav">
+            <li><a href="../">Home</a></li>
+            <li><a href="../about.html">About</a></li>
+	</ul>
+	</div>
+        </div>
+        </div>
+        </div>
+
+        <head>
+<title>Comparison of data structures in C++ and Haskell</title>
+</head>
+<body>
+<h2>June 26, 2013</h2>
+<br>
+
+<h1 id="comparison-of-data-structures-in-c-and-haskell">Comparison of Data Structures in C++ and Haskell</h1>
+<p>Once again, just to satisfy my curiosity, I want to do a tiny comparison of a basic feature in both languages, trying to see how data structures are implemented. Ok, I’m fairly certain how it works for in C++, I’m really just curious about Haskell.</p>
+<h2 id="c-version">C++ version</h2>
+<pre class="sourceCode C"><code class="sourceCode c"><span class="ot">#include &lt;iostream&gt;</span>
+<span class="ot">#include &lt;memory&gt;</span>
+<span class="ot">#include &lt;vector&gt;</span>
+
+<span class="kw">struct</span> BinaryNode {
+  <span class="dt">int</span> val;
+  BinaryNode *leftchild, *rightchild;
+  BinaryNode(<span class="dt">int</span> v, BinaryNode* lc = nullptr, BinaryNode* rc = nullptr)
+    : val(v), leftchild(lc), rightchild(rc) {}
+};
+
+<span class="kw">struct</span> NaryNode {
+  <span class="dt">int</span> val;
+  std::vector&lt;NaryNode*&gt; children;
+  NaryNode(<span class="dt">int</span> v, std::vector&lt;NaryNode*&gt;&amp; c) : val(v), children(c) {}
+};
+
+<span class="dt">int</span> binarySum(BinaryNode* node) {
+  <span class="kw">if</span> (node == nullptr) {
+    <span class="kw">return</span> <span class="dv">0</span>;
+  }
+  <span class="kw">return</span> node-&gt;val + binarySum(node-&gt;leftchild) + binarySum(node-&gt;rightchild);
+}
+
+<span class="dt">int</span> narySum(NaryNode* node) {
+  <span class="kw">if</span> (node == nullptr) {
+    <span class="kw">return</span> <span class="dv">0</span>;
+  }
+  <span class="dt">int</span> sum = node-&gt;val;
+  <span class="kw">for</span> (<span class="dt">const</span> <span class="dt">auto</span> it : node-&gt;children) {
+    sum += narySum(it);
+  }
+  <span class="kw">return</span> sum;
+}
+
+<span class="co">// Create dummy binary and n-ary trees and print out their sum</span>
+<span class="dt">int</span> main() {
+  std::unique_ptr&lt;BinaryNode&gt; bnode1(new BinaryNode(<span class="dv">4</span>));
+  std::unique_ptr&lt;BinaryNode&gt; bnode2(new BinaryNode(<span class="dv">5</span>));
+  std::unique_ptr&lt;BinaryNode&gt; broot(new BinaryNode(<span class="dv">0</span>, bnode1.get(), bnode2.get()));
+  std::cout &lt;&lt; <span class="st">&quot;BinarySum = &quot;</span> &lt;&lt; binarySum(broot.get()) &lt;&lt; std::endl;
+
+  std::vector&lt;NaryNode*&gt; children;
+  std::unique_ptr&lt;NaryNode&gt; nnode1(new NaryNode(<span class="dv">4</span>, children));
+  std::unique_ptr&lt;NaryNode&gt; nnode2(new NaryNode(<span class="dv">5</span>, children));
+  std::unique_ptr&lt;NaryNode&gt; nnode3(new NaryNode(<span class="dv">6</span>, children));
+  children.push_back(nnode1.get());
+  children.push_back(nnode2.get());
+  children.push_back(nnode3.get());
+  std::unique_ptr&lt;NaryNode&gt; nroot(new NaryNode(<span class="dv">0</span>, children));
+  std::cout &lt;&lt; <span class="st">&quot;NarySum = &quot;</span> &lt;&lt; narySum(nroot.get()) &lt;&lt; std::endl;
+}</code></pre>
+<p>Assembly highlights:</p>
+<p>Uploaded the full file as a <a href="https://gist.github.com/agam/5872178">Gist</a> (it’s 6437 lines long, we aren’t in <em>Hello World</em> territory any more; on the other hand, this program would have been much longer in C.</p>
+<p>The function <code>_Z9binarySumP10BinaryNode</code> is defined near the top, and the function <code>_Z7narySumP8NaryNode</code> right under it.</p>
+<p>The assembly code follows along almost exactly as the C++ code above (of course all the struct offsets are “just added” and you don’t see the members being accessed directly).</p>
+<p>The recursion is more obviously visible for the first function, where you see a pattern of “call the function”, “call the function again” and then add the node value to it. For the second function, you can see calls to <code>vector&lt;NaryNode&gt;::begin()</code> and <code>vector&lt;NaryNode&gt;::end()</code> at the beginning of the loop, and the test ‘n’ jump and the recursive call in the middle of the body.</p>
+<p>It is useful also to see how <code>main()</code> works here, you can see three calls to the <code>BinaryNode</code> constructor (<code>_ZN10BinaryNodeC1EiPS_S0_</code>), and then similar stuff for the <code>NaryNode</code> objects. At the end are multiple calls to the destructors (similar to <code>callq	_ZNSt10unique_ptrI8NaryNodeSt14default_deleteIS0_EED1Ev</code>).</p>
+<p>Most of the rest of the code is the definition of these functions (vector begin/end and unique_ptr delete etc.)</p>
+<p>Note: I found a better way to show the assembly &lt;-&gt; source correspondence, in an interactive way: <a href="http://gcc.godbolt.org/">GCC Explorer</a> and I’ll use that next time, it’s just way more convenient. Also, I’ve been showing unoptimized assembly, which is <em>just noise</em>, will refer to <code>-O2</code> next time.</p>
+<h2 id="haskell-version">Haskell version</h2>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="kw">data</span> <span class="dt">BinaryTree</span> a <span class="fu">=</span> <span class="dt">BinaryLeaf</span> a <span class="fu">|</span> <span class="dt">BinaryBranch</span> (<span class="dt">BinaryTree</span> a) (<span class="dt">BinaryTree</span> a)
+<span class="kw">data</span> <span class="dt">NaryTree</span> a <span class="fu">=</span> <span class="dt">NaryLeaf</span> a <span class="fu">|</span> <span class="dt">NaryBranch</span> [<span class="dt">NaryTree</span> a]
+
+<span class="ot">binarySum ::</span> (<span class="kw">Num</span> a) <span class="ot">=&gt;</span> (<span class="dt">BinaryTree</span> a) <span class="ot">-&gt;</span> a
+binarySum (<span class="dt">BinaryLeaf</span> x) <span class="fu">=</span> x
+binarySum (<span class="dt">BinaryBranch</span> a b) <span class="fu">=</span>  (binarySum a) <span class="fu">+</span> (binarySum b)
+
+<span class="ot">narySum ::</span> (<span class="kw">Num</span> a) <span class="ot">=&gt;</span> <span class="dt">NaryTree</span> a <span class="ot">-&gt;</span> a
+narySum (<span class="dt">NaryLeaf</span> x) <span class="fu">=</span> x
+narySum (<span class="dt">NaryBranch</span> b) <span class="fu">=</span> <span class="fu">foldl</span> (\acc x <span class="ot">-&gt;</span> acc <span class="fu">+</span> (narySum x)) <span class="dv">0</span> b
+
+<span class="co">--Create dummy binary and n-ary trees and print out their sum</span>
+main <span class="fu">=</span> <span class="kw">let</span> bt <span class="fu">=</span> <span class="dt">BinaryBranch</span> (<span class="dt">BinaryLeaf</span> <span class="dv">4</span>) (<span class="dt">BinaryLeaf</span> <span class="dv">5</span>)
+           nt <span class="fu">=</span> <span class="dt">NaryBranch</span> ((<span class="dt">NaryLeaf</span> <span class="dv">4</span>) <span class="fu">:</span> (<span class="dt">NaryLeaf</span> <span class="dv">5</span>) <span class="fu">:</span> (<span class="dt">NaryLeaf</span> <span class="dv">6</span>) <span class="fu">:</span> [])
+       <span class="kw">in</span> <span class="kw">do</span>
+          <span class="fu">putStrLn</span> (<span class="st">&quot;BinarySum = &quot;</span> <span class="fu">++</span> <span class="fu">show</span>(binarySum bt))
+          <span class="fu">putStrLn</span> (<span class="st">&quot;NarySum = &quot;</span> <span class="fu">++</span> <span class="fu">show</span>(narySum nt))</code></pre>
+<p>Assembly highlights:</p>
+<p>Uploaded the <a href="https://gist.github.com/agam/5974455">full file (core) as a Gist</a></p>
+<p><code>main</code> is present as <code>main1</code> near the bottom, which has two calls to <code>Handle.Text.hPutStr2</code></p>
+<p>The binary sum is unpacked quite straightforwardly :-</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">main_<span class="fu">$</span>sbinarySum <span class="fu">=</span>
+  \ (<span class="ot">ds_dBk ::</span> <span class="dt">BinaryTree</span> <span class="dt">Type.Integer</span>) <span class="ot">-&gt;</span>
+    <span class="kw">case</span> ds_dBk <span class="kw">of</span> _ {
+      <span class="dt">BinaryLeaf</span> x_aaA <span class="ot">-&gt;</span> x_aaA;
+      <span class="dt">BinaryBranch</span> a_aaB b_aaC <span class="ot">-&gt;</span>
+        Type.plusInteger
+          (main_<span class="fu">$</span>sbinarySum a_aaB) (main_<span class="fu">$</span>sbinarySum b_aaC)
+    }</code></pre>
+<p>whereas the nary sum is less so :-</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">main_<span class="fu">$</span>snarySum <span class="fu">=</span>
+  \ (<span class="ot">ds_dtA ::</span> <span class="dt">NaryTree</span> <span class="dt">Type.Integer</span>) <span class="ot">-&gt;</span>
+    <span class="kw">case</span> ds_dtA <span class="kw">of</span> _ {
+      <span class="dt">NaryLeaf</span> x_aad <span class="ot">-&gt;</span> x_aad;
+      <span class="dt">NaryBranch</span> b_aae <span class="ot">-&gt;</span> lgo_r1MR lvl_r1MQ b_aae
+    }
+
+lgo_r1MR <span class="fu">=</span>
+  \ (<span class="ot">z_atM ::</span> <span class="dt">Type.Integer</span>)
+    (<span class="ot">ds_atN ::</span> [<span class="dt">NaryTree</span> <span class="dt">Type.Integer</span>]) <span class="ot">-&gt;</span>
+    <span class="kw">case</span> ds_atN <span class="kw">of</span> _ {
+      [] <span class="ot">-&gt;</span> z_atM;
+      <span class="fu">:</span> x_atS xs_atT <span class="ot">-&gt;</span>
+        lgo_r1MR
+          (Type.plusInteger z_atM (main_<span class="fu">$</span>snarySum x_atS))
+          xs_atT
+    }</code></pre>
+<p>with the second function being defined for iteration. I uploaded a gist with the <a href="https://gist.github.com/agam/5974501">assembly output</a>, which is of course tedious and quite spaghetti-like.</p>
+<p>Here is an example of the nary leaf:</p>
+<pre class="sourceCode nasm"><code class="sourceCode nasm">.globl Main_NaryLeaf_closure
+.type Main_NaryLeaf_closure, @ob<span class="kw">je</span>ct
+<span class="fu">Main_NaryLeaf_closure:</span>
+	.quad	Main_NaryLeaf_info
+.text
+	.<span class="kw">align</span> <span class="dv">8</span>
+	.quad	<span class="dv">4294967301</span>
+	.quad	<span class="dv">0</span>
+	.quad	<span class="dv">15</span>
+<span class="fu">Main_NaryLeaf_info:</span>
+<span class="fu">.LcBb:</span>
+	addq<span class="bn"> $16,</span><span class="ot">%r12</span>
+	cmpq <span class="dv">144</span>(<span class="ot">%r13),%r12</span>
+	<span class="kw">ja</span> .LcBg
+	<span class="kw">movq</span> <span class="dv">$</span>Main_NaryLeaf_con_info,-<span class="dv">8</span>(<span class="ot">%r12)</span>
+	<span class="kw">movq</span> <span class="ot">%r14,0(%r12)</span>
+	leaq -<span class="dv">7</span>(<span class="ot">%r12),%rbx</span>
+	<span class="kw">jmp</span> *<span class="dv">0</span>(<span class="ot">%rbp)</span>
+<span class="fu">.LcBg:</span>
+	<span class="kw">movq</span><span class="bn"> $16,</span><span class="dv">192</span>(<span class="ot">%r13)</span>
+<span class="fu">.LcBe:</span>
+	movl <span class="dv">$</span>Main_NaryLeaf_closure,<span class="ot">%ebx</span>
+	<span class="kw">jmp</span> *-<span class="dv">8</span>(<span class="ot">%r13)</span>
+	.size Main_NaryLeaf_info, .-Main_NaryLeaf_info</code></pre>
+<h2 id="running-time">Running time</h2>
+<p>Pretty much on par here:</p>
+<pre class="shell"><code>$ time ./cpptree
+BinarySum = 9
+NarySum = 15
+
+real	0m0.005s
+user	0m0.000s
+
+$ time ./haskelltree 
+BinarySum = 9
+NarySum = 15
+
+real	0m0.004s
+user	0m0.000s
+sys	0m0.000s</code></pre>
+</body>
+<footer>
+<div id="disqus_thread"></div>
+<script src="../js/disqus.js" type="text/javascript" charset="utf-8"></script>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</footer>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+    </body>
+    <footer>
+	<br><br><br>
+       <i>This site generated using Hakyll</i>
+    </footer>
+</html>
