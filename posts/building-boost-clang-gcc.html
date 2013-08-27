@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content>
+        <meta name="author" content>
+        <title>Agam's Mashed-up Pome</title>
+        <link href="http://fonts.googleapis.com/css?family=Source+Code+Pro|Radley:400,400italic" rel="stylesheet" type="text/css">
+          <link rel="stylesheet" href="css/bootstrap.min.css" />
+          <link rel="stylesheet" type="text/css" href="../css/syntax.css" />
+          <link rel="stylesheet" type="text/css" href="../css/default.css" />
+        <script src="../js/google_analytics.js" type="text/javascript" charset="utf-8"></script>
+  </head>
+  <body>
+  <div class="topbar">
+  <div class="topbar-inner">
+  <div class="container">
+        <div id="navigation">
+	<ul class="nav">
+            <li><a href="../">Home</a></li>
+            <li><a href="../about.html">About</a></li>
+	</ul>
+	</div>
+        </div>
+        </div>
+        </div>
+
+        <head>
+<title>In which I recall how to build stuff</title>
+</head>
+<body>
+<h2>August 26, 2013</h2>
+<br>
+
+<h1 id="in-which-i-recall-how-to-build-stuff">In which I recall how to build stuff</h1>
+<p>It all started when I wanted to “relearn” C++. I use it everyday, but it’s been so long since I first came across it 15 years ago that I’ve accumulated tons of bad habits and thought patterns etc, so I wanted to get a “beginner’s mind” feel of it again.</p>
+<h2 id="the-initial-detour">The initial detour</h2>
+<p>Ok, I thought, let’s read the <a href="http://www.amazon.com/The-Programming-Language-3rd-Edition/dp/0201889544">4th edition</a> of Bjarne’s introduction to C++, and meanwhile also get to know <a href="http://www.boost.org/">Boost</a> with some familiarity.</p>
+<p>So I downloaded the <a href="http://sourceforge.net/projects/boost/files/boost/1.54.0/boost_1_54_0.tar.bz2/download">Boost libraries</a> (which took a while), and then tried to build this basic example (from the Boost FAQ)</p>
+<pre class="sourceCode C"><code class="sourceCode c"><span class="ot">#include &lt;iostream&gt;</span>
+<span class="ot">#include &lt;algorithm&gt;</span>
+<span class="ot">#include &lt;iterator&gt;</span>
+
+using boost::lambda::_1;
+
+<span class="dt">int</span> main() {
+  <span class="kw">typedef</span> std::istream_iterator&lt;<span class="dt">int</span>&gt; in;
+  std::for_each(
+      in(std::cin), in(), std::cout &lt;&lt; (_1 * <span class="dv">3</span>) &lt;&lt; <span class="st">&quot; &quot;</span>);
+}</code></pre>
+<p>using Clang</p>
+<pre class="shell"><code>clang -std=c++11 -stdlib=libc++ -I/opt/boost/boost_1_54_0 example.cc -o example</code></pre>
+<h2 id="fork-in-the-road">Fork in the road</h2>
+<p>No luck</p>
+<pre class="shell"><code>/tmp/example-oWquCX.o: In function `__cxx_global_var_init3':
+example.cc:(.text+0x71): undefined reference to `std::ios_base::Init::Init()'
+example.cc:(.text+0x79): undefined reference to `std::ios_base::Init::~Init()'
+/tmp/example-oWquCX.o: In function `main':
+example.cc:(.text+0xb3): undefined reference to `std::cin'
+example.cc:(.text+0xf0): undefined reference to `std::cout'
+/tmp/example-oWquCX.o: In function `std::istream_iterator&lt;int, char, std::char_traits&lt;char&gt;, long&gt;::_M_read()':</code></pre>
+<p>(and more that I’ll skip over right now).</p>
+<p>Later I realized that this was probably my fault in not linking it correctly, but I immediately, inexplicably, decided “Aha! let’s build clang from source!”</p>
+<p>This might also have been because I had gotten bored of <code>sudo apt-get install foo</code> and longed for the (decade ago) days of <code>emerge foo</code>.</p>
+<h2 id="deep-in-the-woods">Deep in the woods</h2>
+<p>Luckily, this turned out to be <a href="http://solarianprogrammer.com/2013/01/17/building-clang-libcpp-ubuntu-linux/">well-documented</a>, more or less.</p>
+<p>So I got up to the point where I got and built <code>clang</code>:</p>
+<pre class="shell"><code>$ svn co http://llvm.org/svn/llvm-project/llvm/trunk llvm
+$ cd llvm/tools
+$ svn co http://llvm.org/svn/llvm-project/cfe/trunk clang
+$ mkdir build &amp;&amp; cd build
+$ ../llvm/configure --prefix=/usr/clang_3_3 \
+  --enable-optimized --enable-targets=host
+$ make -j 8</code></pre>
+<p>And I procedded to then build <code>libcxx</code></p>
+<pre class="shell"><code>$ svn co http://llvm.org/svn/llvm-project/libcxx/trunk libcxx
+$ mkdir build_libcxx &amp;&amp; cd build_libcxx
+$ CC=clang CXX=clang++ cmake -G &quot;Unix Makefiles&quot; \
+  -DLIBCXX_CXX_ABI=libsupc++ \
+  -DLIBCXX_LIBSUPCXX_INCLUDE_PATHS=&quot;/usr/include/c++/4.6/;\
+  /usr/include/c++/4.6/x86_64-linux-gnu/&quot; \
+  -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr $HOME/Clang/libcxx
+$ make</code></pre>
+<h2 id="mt.-doom">Mt. Doom</h2>
+<p>At this point I got a compiler error. Very sad. Too bad, I thought, we need to go deeper. Time for building <code>gcc</code>/<code>g++</code> and a new version of the C++ standard library. My Ubuntu version only had <code>gcc</code> upto <code>4.6</code>, and I found <a href="http://lists.cs.uiuc.edu/pipermail/llvmbugs/2013-February/027116.html">a mailing list post</a> which suggested this might be fixed in <code>4.7</code>.</p>
+<p>I could have at this point decided to add a PPA repository and got the new libraries and binaries that way, but luckily this was <a href="http://solarianprogrammer.com/2012/04/13/building-gcc-4-7-on-ubuntu-12-04/">also well-documented</a> (thank you, “Solarian Programmer”, whoever you are!).</p>
+<p>So I went ahead and downloaded <a href="http://www.netgull.com/gcc/releases/gcc-4.7.3/gcc-4.7.3.tar.bz2"><code>gcc</code></a>, and what turned out to be its prerequisites, <a href="ftp://ftp.gmplib.org/pub/gmp-5.1.2/gmp-5.1.2.tar.lz"><code>gmp</code></a>, <a href="http://www.mpfr.org/mpfr-current/mpfr-3.1.2.tar.gz"><code>mpfr</code></a> and <a href="http://www.multiprecision.org/mpc/download/mpc-1.0.tar.gz"><code>mpc</code></a>.</p>
+<p>These I built in the usual way (<code>configure</code>, <code>make</code>, <code>make install</code>), and then had to refer to them while setting up <code>gcc</code>:</p>
+<pre class="shell"><code>$ export LD_LIBRARY_PATH=/usr/gcc_4_7/lib:$LD_LIBRARY_PATH
+$ export LIBRARY_PATH=/usr/lib/x86_64-linux-gnu/
+$ export C_INCLUDE_PATH=/usr/include/x86_64-linux-gnu
+$ export CPLUS_INCLUDE_PATH=/usr/include/x86_64-linux-gnu
+$ ../gcc-4.7.2/configure --build=x86_64-linux-gnu --prefix=/usr/gcc_4_7 \
+  --with-gmp=/usr/gcc_4_7 --with-mpfr=/usr/gcc_4_7 \
+  --with-mpc=/usr/gcc_4_7 --enable-checking=release \
+  --enable-languages=c,c++,fortran --disable-multilib \
+  --program-suffix=-4.7</code></pre>
+<p>Now I could proceed where I left off earlier, with the <code>libcxx</code> build, after setting a couple of path variables:</p>
+<pre class="shell"><code>$ export PATH=/usr/gcc_4_7/bin:$PATH
+$ export LD_LIBRARY_PATH=/usr/gcc_4_7/lib:/usr/gcc_4_7/lib64:$LD_LIBRARY_PATH</code></pre>
+<h2 id="a-ray-of-hope">A ray of hope</h2>
+<p>But first, I wanted to see if the new <code>g++</code> could do what I had initially tried to do with <code>clang</code>:</p>
+<pre class="shell"><code>$ g++4.7 -std=c++11 -I/opt/boost/boost_1_54_0 example.cc -o example
+$ echo 1 2 3 | ./example
+3 6 9</code></pre>
+<p>Whew, now I was getting somewhere.</p>
+<p>I went back and re-ran <code>cmake</code>, and then <code>libcxx</code> built successfully.</p>
+<p>And then of course, I retried my original example:</p>
+<pre class="shell"><code>$ /usr/clang_3_3/bin/clang++ -std=c++11 -I/opt/boost/boost_1_54_0 example.cc -o example</code></pre>
+<p>and that worked too … Woohoo!!</p>
+<p>Finally, since I always measure running time:</p>
+<pre class="shell"><code>$ time /usr/clang_3_3/bin/clang++ -std=c++11 -I/opt/boost/boost_1_54_0 example.cc -o example
+
+real    0m0.848s
+user    0m0.780s
+sys     0m0.056s
+
+$ time g++4.7 -std=c++11 -I/opt/boost/boost_1_54_0 example.cc -o example
+
+real    0m0.714s
+user    0m0.648s
+sys     0m0.044s</code></pre>
+<p>Now to do something more than this example program …</p>
+</body>
+<footer>
+<div id="disqus_thread"></div>
+<script src="../js/disqus.js" type="text/javascript" charset="utf-8"></script>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</footer>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+    </body>
+    <footer>
+	<br><br><br>
+       <i>This site generated using Hakyll</i>
+    </footer>
+</html>
