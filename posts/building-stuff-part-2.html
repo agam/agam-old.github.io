@@ -87,22 +87,10 @@ export LD_LIBRARY_PATH=
 <p>Or for a more basic step, replicate <a href="http://cpp-netlib.org/0.10.1/examples/http/hello_world_client.html">cpp-netlib’s hello world</a> first.</p>
 <p>This was the initial version, from the web page referred above.</p>
 <pre class="sourceCode C"><code class="sourceCode c"><span class="ot">#include &lt;protocol/http/client.hpp&gt;</span>
-<span class="ot">#include &lt;network/uri.hpp&gt; </span>
 <span class="ot">#include &lt;string&gt;                  </span>
-<span class="ot">#include &lt;fstream&gt;                 </span>
 <span class="ot">#include &lt;iostream&gt;                </span>
                                    
 namespace http = network::http;
-using uri = network::uri;
-                                   
-namespace {                        
-                                   
-std::string get_filename(<span class="dt">const</span> uri::uri&amp; url) {
-  std::string path(url.path().get());
-  std::size_t index = path.find_last_of('/');
-  std::string filename = path.substr(index + <span class="dv">1</span>);
-  <span class="kw">return</span> filename.empty() ? <span class="st">&quot;index.html&quot;</span> : filename;
-}                                  
                                    
 <span class="dt">int</span> main(<span class="dt">int</span> argc, <span class="dt">char</span>*argv[]) {
   <span class="kw">if</span> (argc != <span class="dv">2</span>) {                 
@@ -253,18 +241,12 @@ hello-world.cpp:(.text+0x231): undefined reference to `network::http::request::r
   CPPNETLIB_HTTP_MESSAGE_WRAPPERS
   )</code></pre>
 <p>So, not only did I have to set the <code>IMPORTED_LOCATION</code> of each library (there <em>has</em> to be a better way to do this, doesn’t there ?!) but I also had to juggle around their order relative to each other before passing <code>${CPPNETLIB_LIBS}</code> to <code>target_link_libraries</code></p>
-<p>Once this was done, I could successfully do the following:</p>
-<pre class="shell"><code>$ mkdir build &amp;&amp; cd build
-$ cmake ..
-$ make
-
-Scanning dependencies of target hello-world
-[100%] Building CXX object CMakeFiles/hello-world.dir/hello-world.cpp.o
-Linking CXX executable hello-world
-[100%] Built target hello-world</code></pre>
-<p>About %$#ing time, eh ?</p>
 <h2 id="forging-a-networking-hello-world-or-all-i-want-is-a-wget">Forging a networking hello-world, or ‘all I want is a wget’</h2>
-<p>Well, it still doesn’t quite work.</p>
+<p>Once this was done, I could successfully do the following:</p>
+<p>```shell $ mkdir build &amp;&amp; cd build $ cmake .. $ make</p>
+<p>Scanning dependencies of target hello-world [100%] Building CXX object CMakeFiles/hello-world.dir/hello-world.cpp.o Linking CXX executable hello-world [100%] Built target hello-world</p>
+<p>About %$#ing time, eh ?</p>
+<p>Well, it still doesn’t <em>quite</em> work.</p>
 <p>Before we see the non-working case, it’s useful to see what happens on bad input:</p>
 <pre class="shell"><code>$ ./hello-world foo
 [network http/client/base.ipp:78] client_base_pimpl::client_base_pimpl(client_options const &amp;)
@@ -290,6 +272,33 @@ Linking CXX executable hello-world
 [network http/client/connection/connection_delegate_factory.ipp:47] connection_delegate_factory::~connection_delegate_factory()
 [network http/client/connection_manager.ipp:16] connection_manager::~connection_manager()
 Exception: Unable to parse URI string.</code></pre>
+<p>When I ran <code>time ./hello-world http://www.google.com</code>, I got</p>
+<pre class="shell"><code>real    4m0.135s
+user    0m0.020s
+sys     0m0.012s</code></pre>
+<p>There were a series of calls of the following form:</p>
+<pre class="shell"><code>[network http/client/connection/normal_delegate.ipp:38] normal_delegate::read_some(...)
+[network http/client/connection/normal_delegate.ipp:39] scheduling asynchronous read some...
+[network http/client/connection/normal_delegate.ipp:41] scheduled asynchronous read some...
+[network http/client/connection/async_normal.ipp:237] http_async_connection_pimpl::handle_received_data(...)
+[network http/client/connection/async_normal.ipp:252] processing data chunk, no error encountered so far...
+[network http/client/connection/async_normal.ipp:380] parsing body...
+[network http/client/connection/async_normal.ipp:414] connection still active...
+[network http/client/connection/async_normal.ipp:440] no callback provided, appending to body...
+[network http/client/connection/normal_delegate.ipp:38] normal_delegate::read_some(...)
+[network http/client/connection/normal_delegate.ipp:39] scheduling asynchronous read some...
+[network http/client/connection/normal_delegate.ipp:41] scheduled asynchronous read some...
+[network http/client/connection/async_normal.ipp:237] http_async_connection_pimpl::handle_received_data(...)
+[network http/client/connection/async_normal.ipp:252] processing data chunk, no error encountered so far...
+[network http/client/connection/async_normal.ipp:380] parsing body...
+[network http/client/connection/async_normal.ipp:382] end of the line.
+[network http/client/connection/async_normal.ipp:399] no callback provided, appending to body...</code></pre>
+<p>after which it seemed to pause for a few minutes before printing out the received body.</p>
+<p>However, this seemed to depend on the url in question. For example, trying it on a static web page that forms part of this blog, <code>$ time ./hello-world http://agam.github.io/posts/building-boost-clang-gcc.html</code> yielded</p>
+<pre class="shell"><code>real    0m10.154s
+user    0m0.024s
+sys     0m0.004s</code></pre>
+<p>That’s enough, for me, for now.</p>
 </body>
 <footer>
 <div id="disqus_thread"></div>
