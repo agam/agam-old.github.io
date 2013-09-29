@@ -80,8 +80,9 @@ export LD_LIBRARY_PATH=
  -DCMAKE_INCLUDE_PATH=/usr/gcc_4_7/include/c++/4.7.3/ \
  -DCMAKE_LIBRARY_PATH=/usr/gcc_4_7/lib64 \
  ~/Documents/Code/AmpWorld/cpp-netlib</code></pre>
-<p>Finally, even this didn’t install the libraries where I wanted them. Finally I gave up and just hacked it up: <code>for f in</code>find /home/agam/Documents/Code/AmpWorld/cpp-netlib/ | grep ’lib.*a<span class="math">$'`; \
- do sudo cp $</span>f /opt/cpp-static-libs/; done`</p>
+<p>Finally, even this didn’t install the libraries where I wanted them. Finally I gave up and just hacked it up:</p>
+<pre class="shell"><code>`for f in `find /home/agam/Documents/Code/AmpWorld/cpp-netlib/ | grep 'lib.*a$'`; \
+ do sudo cp $f /opt/cpp-static-libs/; done`</code></pre>
 <h2 id="into-the-furnace-a-simple-sample">Into the furnace: a simple sample</h2>
 <p>So far so good. Now it was “hello world” time (something that used atleast two of these libraries).</p>
 <p>Or for a more basic step, replicate <a href="http://cpp-netlib.org/0.10.1/examples/http/hello_world_client.html">cpp-netlib’s hello world</a> first.</p>
@@ -243,7 +244,9 @@ hello-world.cpp:(.text+0x231): undefined reference to `network::http::request::r
 <p>So, not only did I have to set the <code>IMPORTED_LOCATION</code> of each library (there <em>has</em> to be a better way to do this, doesn’t there ?!) but I also had to juggle around their order relative to each other before passing <code>${CPPNETLIB_LIBS}</code> to <code>target_link_libraries</code></p>
 <h2 id="forging-a-networking-hello-world-or-all-i-want-is-a-wget">Forging a networking hello-world, or ‘all I want is a wget’</h2>
 <p>Once this was done, I could successfully do the following:</p>
-<p>```shell $ mkdir build &amp;&amp; cd build $ cmake .. $ make</p>
+<pre class="shell"><code>$ mkdir build &amp;&amp; cd build
+$ cmake ..
+$ make</code></pre>
 <p>Scanning dependencies of target hello-world [100%] Building CXX object CMakeFiles/hello-world.dir/hello-world.cpp.o Linking CXX executable hello-world [100%] Built target hello-world</p>
 <p>About %$#ing time, eh ?</p>
 <p>Well, it still doesn’t <em>quite</em> work.</p>
@@ -298,7 +301,7 @@ sys     0m0.012s</code></pre>
 <pre class="shell"><code>real    0m10.154s
 user    0m0.024s
 sys     0m0.004s</code></pre>
-<p>That’s enough, for me, for now.</p>
+<p>That’s enough, for me, for now. Maybe I’ll try the <a href="http://pocoproject.org/">Poco libraries</a> next and see if they are any better.</p>
 </body>
 <footer>
 <div id="disqus_thread"></div>
