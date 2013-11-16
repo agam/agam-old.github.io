@@ -1,10 +1,10 @@
 ---
-title: "Beginning Hakyll"
+layout: post
+title: "Getting up and running with Hakyll"
 date: 2012-12-22
+comments: true
+categories: Hakyll Github
 ---
-
-Getting up and running with Hakyll
-========================================
 
 I looked around at the usual suspects (wordpress, blogspot, etc) but then stumbled across the recent static website idea when I read "powerd by Jekyll" in a blog footer. Soon enough I came across Hakyll, and decided to give it a go, if only to learn Haskell a bit better.
 
@@ -15,7 +15,7 @@ So there are a few steps here: getting hakyll, setting it up for my blog, settin
 Getting Hakyll
 --------------------
 
-```shell
+```bash
 cabal install hakyll
 ```
 
@@ -23,10 +23,10 @@ This will fetch al the required packages (and it took *quite* some time when I r
 
 If this works as intended, you should see a lot of output as `cabal` goes and compiles and installs a bunch of packages, ending with something like this:
 
-~~~
+```
 Installing library in /home/agam/.cabal/lib/hakyll-3.4.0.0/ghc-7.4.1
 Registering hakyll-3.4.0.0...
-~~~
+```
 
 Know how to use git and github
 -------------------------------
@@ -54,7 +54,7 @@ The code for the site will live in a different repo (yeah, this part is a drag c
 
 To get the same effect in our hakyll blog here, we'll have to set the pages repo as a *submodule* of the source repo. To do that, run
 
-```shell
+```bash
 git submodule add https://github.com/agam/agam.github.com.git _site
 
 ```
@@ -65,20 +65,20 @@ If you leave this out, it will be embedded under the name of the repo (e.g. in t
 
 (Thanks to [this stackoverflow post](http://stackoverflow.com/questions/1260748/how-do-i-remove-a-git-submodule)!)
 
-1. Edit `.gitmodules` to remove the offending section. In my case, this showed up as
+(1) Edit `.gitmodules` to remove the offending section. In my case, this showed up as
 ```
 [submodule "agam.github.com"]
 	path = agam.github.com
 	url = https://github.com/agam/agam.github.com.git
 ```
 
-2. Remove the corresponding section from `.git/config`. In my case, this showed up as
+(2) Remove the corresponding section from `.git/config`. In my case, this showed up as
 ```
 [submodule "agam.github.com"]
 	url = https://github.com/agam/agam.github.com.git
 ``` 
 
-3. Run `git rm` to remove the directory. Again, in my case, this meant running `git rm --cached agam.github.com`
+(3) Run `git rm` to remove the directory. Again, in my case, this meant running `git rm --cached agam.github.com`
 
 
 Setting up hakyll: Overview
@@ -97,7 +97,7 @@ You can ignore this part really, if you've successfully adapted the other blogs 
 
 So in the first iteration, I had a `css` folder (with the same contents as the example) and a `templates` folder (which contained a barebones `default.html`). I had a file `blog.hs` with this code:
 
-```Haskell
+```haskell
 {-# LANGUAGE OverloadedStrings #-}
 
 import Control.Arrow ((>>>))
@@ -126,7 +126,7 @@ main = hakyll $ do
 
 To generate the static html, run
 
-```Shell
+```bash
 ghc --make blog.hs
 ```
 
@@ -191,7 +191,7 @@ So if you see any errors, **Don't Panic**. It'll turn out to have a simple expla
 You can also, at this point, run `./blog preview`, and then [check it out](http://0.0.0.0:8000) in your browser.
 
 Pushing to Github
-====================
+-----------------
 
 Ok, so the blog's basically one stupid black-and-white single page (no problem, we'll add to that later). To get this basic example up and running, make sure you `git add` all the files you created.
 
@@ -207,6 +207,6 @@ In general, this will be a 4 step process:-
 
 For reference, my hakyll source lives [here](https://github.com/agam/hakyll-source) and the static website is generated [here](https://github.com/agam/agam.github.com)
 
-*Continue on to [part 2](/posts/hakyll-multiple-posts-and-more.html)*
+*Continue on to [part 2](/blog/2013/01/04/hakyll-multiple-posts-and-more/)*
 
 _**Update**_: Since the writing of this post, Hakyll has gone from 3.x to 4.x and changed its DSL significantly (see [a post on that](/posts/hakyll-broken.html)).
