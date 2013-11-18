@@ -1,10 +1,10 @@
 ---
-title: Less Gcc, More Clang
+layout: post
+title: "Less Gcc, More Clang"
 date: 2013-09-30
+comments: true
+categories: Gcc Clang Boost 
 ---
-
-Less GCC, More Clang
-====================
 
 I was unhappy with how I had not fully figured out my `libstdc++ <-> gcc/clang <-> boost` issues, and was feeling a bit ashamed that I had let the complexity of the system beat me.
 
@@ -14,7 +14,7 @@ The first thing I decided to do was get rid of the newly installed `gcc 4.7` and
 
 The second was to recompile Boost with Clang.
 
-```shell
+```sh
 export PATH=/usr/clang_3_3/bin:$PATH
 ./bootstrap.sh --with-toolset=clang
 ./b2 install --prefix=/opt/boost/boost_1_54_0
@@ -32,7 +32,7 @@ This took a while to run, but in the end, I got
 
 Wha ... 4 failed ? Scrolling up, I see for example:
 
-```shell
+```sh
 clang: /home/agam/Documents/Code/Building/Clang/llvm/lib/IR/Instructions.cpp:2929: llvm::BitCastInst::BitCastInst(llvm::Value*, llvm::Type*, const llvm::Twine&, llvm::Instruction*): Assertion `castIsValid(getOpcode(), S, Ty) && "Illegal BitCast"' failed.
 0  clang           0x0000000002569c72 llvm::sys::PrintStackTrace(_IO_FILE*) + 34
 1  clang           0x0000000002569059
@@ -119,7 +119,7 @@ clang: note: diagnostic msg:
 
 Ignoring these few Boost failures for now ... I do want to use Clang with `-stdlib=libc++`, so I also wanted to build `libcxx` with Clang
 
-```shell
+```sh
 CC=clang CXX=clang++ cmake -G "Unix Makefiles" -DLIBCXX_CXX_ABI=libsupc++ -DLIBCXX_LIBSUPCXX_INCLUDE_PATHS="/usr/include/c++/4.6/;/usr/include/c++/4.6/x86_64-linux-gnu/" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr ../libcxx/
 make -j 4
 sudo make install
@@ -127,7 +127,7 @@ sudo make install
 
 Time for our test program from earlier:
 
-```C
+```c
 #include <boost/lambda/lambda.hpp>
 #include <iostream>
 #include <algorithm>
@@ -144,7 +144,7 @@ int main() {
 
 However, this results in a clang error:
 
-```shell
+```sh
 $ /usr/clang_3_3/bin/clang++ -std=c++11 -stdlib=libc++ -L/usr/lib -I/opt/boost/boost_1_54_0 hello-world.cpp -o hello-world -lc++abi
 /usr/bin/ld: cannot find -lc++abi
 clang: error: linker command failed with exit code 1 (use -v to see invocation)
@@ -152,7 +152,7 @@ clang: error: linker command failed with exit code 1 (use -v to see invocation)
 
 Wohkay, so I'm assuming we need to build libc++abi
 
-```shell
+```sh
 $ svn co http://llvm.org/svn/llvm-project/libcxxabi/trunk libcxxabi
 $ cd libcxxabi/lib
 $ ./buildit
@@ -160,7 +160,7 @@ $ ./buildit
 
 Now move over to the `libcxx` branch again, and 
 
-```shell
+```sh
 $ CC=clang CXX=clang++ cmake -G "Unix Makefiles" -DLIBCXX_CXX_ABI=libcxxabi -DLIBCXX_LIBCXXABI_INCLUDE_PATHS="/home/agam/Documents/Code/Building/libcxxabi/include" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=/usr ../libcxx
 -- The CXX compiler identification is Clang 3.4.0
 -- The C compiler identification is Clang 3.4.0
@@ -189,13 +189,13 @@ That worked! So then `make && sudo make install` as usual.
 
 Note: I also had to copy the `libcxxabi` library built above to a global location, since I got an error trying to build `libcxx` without it
 
-```shell
+```sh
 /usr/bin/ld: cannot find -lc++abi
 ```
 
 After a while it occurred to me: [one does not simply copy a library to /usr/local/lib](http://memegenerator.net/instance/41718307)
 
-```shell
+```sh
 $ sudo ldconfig -f /etc/ld.so.conf.d/libc.conf
 $ ldconfig -p | grep c++abi
 ...
@@ -208,7 +208,7 @@ Yup, this was fixed by `sudo ln libc++abi.so.1.0 libc++abi.so`
 
 Now, adding this library works:
 
-```shell
+```sh
 /usr/clang_3_3/bin/clang++ -std=c++11 -stdlib=libc++ -L/usr/lib -I/opt/boost/boost_1_54_0 hello-world.cpp -o hello-world -lc++abi
 ```
 

@@ -1,17 +1,17 @@
 ---
-title: Comparison of data structures in C++ and Haskell
+layout: post
+title: "Comparison of data structures in C++ and Haskell"
 date: 2013-06-26
+comments: true
+categories: Haskell C++ 
 ---
-
-Comparison of Data Structures in C++ and Haskell
-===
 
 Once again, just to satisfy my curiosity, I want to do a tiny comparison of a basic feature in both languages, trying to see how data structures are implemented. Ok, I'm fairly certain how it works for in C++, I'm really just curious about Haskell.
 
 C++ version
 ---
 
-```C
+```c
 #include <iostream>
 #include <memory>
 #include <vector>
@@ -182,7 +182,7 @@ Running time
 
 Pretty much on par here:
 
-```shell
+```sh
 $ time ./cpptree
 BinarySum = 9
 NarySum = 15

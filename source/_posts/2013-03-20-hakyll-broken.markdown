@@ -1,15 +1,15 @@
 ---
-title: Hakyll broken ?
+layout: post
+title: "Hakyll broken ?"
 date: 2013-03-20
+comments: true
+categories: Hakyll Haskell
 ---
-
-Hakyll transition
-=================
 
 I noticed that the dates in my blog were all wrong, and now the blog
 doesn't build.
 
-```shell
+```sh
 ghc --make blog.hs
 [1 of 1] Compiling Main             ( blog.hs, blog.o )
 
@@ -85,7 +85,7 @@ error message, looking at the [source](https://github.com/jaspervdj/hakyll/blob/
 
 Finally, right at the end, I clobbered the git submodule in my output directory when I did a ```./blog rebuild```. So to bring it back, I had to
 
-```shell
+```sh
 $ rm -f .gitmodules
 $ ./blog clean
 Removing _site...
@@ -110,3 +110,6 @@ But it works! (atleast the chronological sorting works again).
 _**Update:**_ [This diff](https://github.com/agam/hakyll-source/commit/9af1c492dc34e2ffb677a619ac86113a8a716703) might help to show the changes required.
 _**Update:**_ Just for fun, I tweaked the CSS of the page a bit, to make it a little less bland.
 
+*Update*: I have sinced moved to [Jekyll](http://jekyllrb.com/), so if Hakyll
+has moved on to a different version, this blog post should be considered
+obsolete.

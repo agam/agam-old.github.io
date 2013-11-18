@@ -1,10 +1,10 @@
 ---
-title: Using Typewriter mode, ALWAYS
+layout: post
+title: "Using Typewriter mode, ALWAYS"
 date: 2013-11-06
+comments: true
+categories: Editor Vim
 ---
-
-Using Typewriter mode, ALWAYS
-==============================
 
 I used to have two giant monitors to work with, and reduced them to one since I
 found myself frequently moving my neck from side to side.
@@ -17,8 +17,8 @@ tracking the cursor on each find, on each scroll.
 The solution is obvious -- as far as possible, keep the horizontal location of
 the cursor fixed.
 
-I'm sure what the Emacs equivalent of this is, but if you use the One True
-Editor, try typing `:help scrolloff` right now; you should see this:
+I'm sure what the Emacs equivalent of this is, but if you use the [One True
+Editor](http://www.sbf5.com/~cduan/technical/vi/), try typing `:help scrolloff` right now; you should see this:
 
 ```
 						*'scrolloff'* *'so'*

@@ -1,10 +1,10 @@
 ---
-title: Moving to Jekyll
+layout: post
+title: "Moving to Jekyll"
 date: 2013-11-15
+comments: true
+categories: Hakyll Jekyll Tumblr
 ---
-
-Moving to Jekyll
-================
 
 Wait, what ? Seriously ? Yes, seriously.
 

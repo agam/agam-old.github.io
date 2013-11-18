@@ -1,10 +1,10 @@
 ---
-title: Setting up a Haskell webserver to run in Google Compute Engine
+layout: post
+title: "Setting up a Haskell webserver to run in Google Compute Engine"
 date: 2013-03-11
+comments: true
+categories: Haskell GCE HTTP Yesod
 ---
-
-Setting up a Haskell webserver to run in Google Compute Engine
-==============================================================
 
 I signed up for a project at the [Google Cloud Console](https://cloud.google.com/console#c=l), and decided to try running a webserver on it, as a prerequisite to other future toy projects I might link to it.
 
@@ -13,20 +13,20 @@ First steps
 
 Get [```gcutil```](https://developers.google.com/compute/docs/gcutil/) and install it
 
-```shell
+```sh
 $ sudo tar xvpzf gcutil-1.7.1.tar.gz  -C /usr/local/share
 $ sudo ln -s /usr/local/share/gcutil-1.7.1/gcutil /usr/local/bin/gcutil
 ```
 
 Then, link it up to your project
 
-```shell
+```sh
 $ gcutil auth --project=agam-personal-project
 ```
 
 It's a good idea to avoid entering the ```--project=``` bit every time, by saving your project name
 
-```shell
+```sh
 $ gcutil getproject --project=agam-personal-project --cache_flag_values
 +--------------------------+-------------------------------+
 |         property         |             value             |
@@ -53,7 +53,7 @@ $ gcutil getproject --project=agam-personal-project --cache_flag_values
 
 By default, incoming HTTP is blocked. So enable it.
 
-```shell
+```sh
 $ gcutil addfirewall http2 --description="Allow incoming http" --allowed="tcp:http"
 INFO: Waiting for insert of firewall http2. Sleeping for 3s.
 INFO: Waiting for insert of firewall http2. Sleeping for 3s.
@@ -77,7 +77,7 @@ Table of operations:
 
 And now it's time to make choices!
 
-```shell
+```sh
 gcutil addinstance basic-webserver-instance
 1: europe-west1-a  (currently in maintenance)
 2: europe-west1-b
@@ -89,7 +89,7 @@ gcutil addinstance basic-webserver-instance
 
 No particular reason, I picked ```us-central1-a``` (why no ```us-west``` ?). I wasn't sure which [instance type](https://cloud.google.com/pricing/compute-engine) to pick ... I went with the cheapest option with a disk (#2) for now.
 
-```shell
+```sh
 1: n1-standard-1
 2: n1-standard-1-d
 3: n1-standard-2
@@ -115,7 +115,7 @@ No particular reason, I picked ```us-central1-a``` (why no ```us-west``` ?). I w
 
 10 choices of a host OS, I picked what seemed to be the latest ```gcel``` one.
 
-```shell
+```sh
 1: projects/google/global/images/centos-6-v20121106
 2: projects/google/global/images/centos-6-v20130104
 3: projects/google/global/images/centos-6-v20130225
@@ -131,7 +131,7 @@ No particular reason, I picked ```us-central1-a``` (why no ```us-west``` ?). I w
 
 If this is the first time running ```gcutil``` it will ask you to enter a passphrase for authentication, and then your instance should be inserted. As you can see below, this took about 35s for me.
 
-```shell
+```sh
 INFO: Waiting for insert of instance basic-webserver-instance. Sleeping for 3s.
 INFO: Waiting for insert of instance basic-webserver-instance. Sleeping for 3s.
 INFO: Waiting for insert of instance basic-webserver-instance. Sleeping for 3s.
@@ -163,7 +163,7 @@ Table of operations:
 
 You can then check if the instance matches what you wanted.
 
-```shell
+```sh
 $ gcutil getinstance basic-webserver-instance
 (output skipped)
 ```
@@ -173,7 +173,7 @@ Installing Stuff
 
 Now that the instance is ready to go, you can ssh to it and get the stuff we need.
 
-```shell
+```sh
 $ gcutil ssh basic-webserver-instance
 ...
 ... (skipping boilerplate)
@@ -197,7 +197,7 @@ Eventually, I'll attach [persistent disks](https://developers.google.com/compute
 
 Anyway, let's start installing stuff
 
-```shell
+```sh
 $ sudo apt-get install haskell-platform
 ...
 $ cabal update
@@ -208,7 +208,7 @@ $ cabal install yesod-platform
 
 Haskell packages are still a bit flaky. For instance, I got this error and had to ignore it and pray nothing broke:
 
-```shell
+```sh
 Warning: The following packages are likely to be broken by the reinstalls:
 regex-posix-0.95.1
 ```
@@ -220,7 +220,7 @@ Running Yesod
 
 For this example, I'm going to do a basic webserver, though the right thing to do in this case is to choose the option to configure the urls to be used with [Google Cloud Storage](https://developers.google.com/storage/docs/getting-started)
 
-```shell
+```sh
 agam@basic-webserver-instance:~$ yesod init
 Welcome to the Yesod scaffolder.
 I'm going to be creating a skeleton Yesod project for you.
@@ -245,7 +245,7 @@ So, what'll it be? s
 
 This sets up a basic scaffold with a few directories
 
-```shell
+```sh
 agam@basic-webserver-instance:~/AgamsWeb$ ls -l
 total 68
 -rw-rw-r-- 1 agam agam 3907 Mar 11 08:18 AgamsWeb.cabal
@@ -268,14 +268,14 @@ drwxrwxr-x 2 agam agam 4096 Mar 11 08:18 tests
 
 Now to start this (empty) webserver
 
-```shell
+```sh
 $ cabal install
 $ yesod devel
 ```
 
 This starts the server on ```localhost:3000```. Now the Yesod folks recommend running ```nginx``` as a reverse proxy in front, so let's do that (though it's obviously overkill for this example).
 
-```shell
+```sh
 $ sudo apt-get install nginx
 ```
 
@@ -298,13 +298,13 @@ http {
 
 Then run nginx
 
-```shell
+```sh
 sudo nginx -c nginx.conf
 ```
 
 Hmm ... ok ... for whatever reason that didn't work. This seems like a fairly straightforward config. Screw it, run yesod directly on port 80.
 
-```shell
+```sh
 sudo yesod devel --port=80
 ```
 

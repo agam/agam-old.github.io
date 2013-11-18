@@ -1,10 +1,10 @@
 ---
+layout: post
 title: Appengine transition from Python to Go
 date: 2013-06-22
+comments: true
+categories: Appengine Python Go
 ---
-
-Appengine transition from python to Go
-======================================
 
 Hadn't updated this blog for a few months, and neither the "personal web site" that I had started earlier. So, to try something new, I decided to port that appengine site from python to go (looking at the Github logs, I haven't updated that for 2 years !!)
 
@@ -14,13 +14,13 @@ Both the [Appengine docs](https://developers.google.com/appengine/docs/go/) as w
 
 The first thing I did was to make a barebones "Hello World" index handler, and run it with
 
-```shell
+```sh
 $ google_appengine/dev_appserver.py <path to my app>
 ```
 
 But I immediately got this error:
 
-```shell
+```sh
 google.appengine.tools.devappserver2.wsgi_server.BindError: Unable to find a consistent port localhost
 Exception in thread Thread-4 (most likely raised during interpreter shutdown):
 Traceback (most recent call last):
@@ -49,7 +49,7 @@ I added a `log.Fatal()` and sure enough the file wasn't being read any more.
 
 This was also a good time to see error handling in place, the application logs showed
 
-```shell
+```sh
 panic: os.Exit called
 runtime.panic go/src/pkg/runtime/panic.c:230
 os.Exit go/src/pkg/os/proc.go:42
@@ -67,7 +67,7 @@ runtime.goexit go/src/pkg/runtime/proc.c:280
 
 While testing this I also ran into an appengine bug: it is possible to get the following error message, though it literally doesn't make much sense
 
-```shell
+```sh
 E 2013-06-23 11:53:32.539
 Request failed because the app binary was missing. This can generally be fixed by redeploying your app.
 I 2013-06-23 11:53:32.539

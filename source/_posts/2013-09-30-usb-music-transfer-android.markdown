@@ -1,10 +1,10 @@
 ---
+layout: post
 title: Getting music onto an Android phone's external storage
 date: 2013-09-30
+comments: true
+categories: Android Storage Music
 ---
-
-Getting music onto an Android phone
-==================================
 
 I had bought a MicroSD card to go along with my Motorola Razr M, since it has a limited internal storage of 8G.
 
@@ -23,7 +23,7 @@ Finally I found [this](http://www.mysolutions.it/mounting-your-mtp-androids-sd-c
 
 Of course, it was incomplete (yes, you need `sudo apt-get install mtpfs` but *also* `sudo apt-get install mtp-tools`)
 
-```shell
+```sh
 sudo mkdir /media/MTPDevice
 sudo chmod 775 /media/MTPDevice
 sudo mtpfs -o allow_other /media/MTPDevice/
@@ -31,7 +31,7 @@ sudo mtpfs -o allow_other /media/MTPDevice/
 
 Finally, I saw
 
-```shell
+```sh
 $ mtp-detect
 libmtp version: 1.1.3
 
@@ -64,7 +64,7 @@ So I just pulled out the USB cable and plugged it in again ("when all else fails
 
 This time, it worked.
 
-```shell
+```sh
 $ mtp-detect
 libmtp version: 1.1.3
 
@@ -91,7 +91,7 @@ USB low-level info:
 
 While we're here, a clarification by way of digression: I am not ranting against MTP, just its usability. It is clearly (IMHO) better than the previous mass storage option, since it supports well-defined interfaces to specific file types, such as this one for JPEG files:
 
-```shell
+```sh
    3801: JPEG
       dc01: Storage ID UINT32 data type ANY 32BIT VALUE form READ ONLY
       dc02: Object Format UINT16 data type ANY 16BIT VALUE form READ ONLY
@@ -109,7 +109,7 @@ While we're here, a clarification by way of digression: I am not ranting against
 
 But wait a minute, what happened to the directory I created ?
 
-```shell
+```sh
 $ ls -ld /media/MTPDevice/
 ls: cannot access /media/MTPDevice/: Transport endpoint is not connected
 ```
@@ -130,7 +130,7 @@ Hmm, it looks like I skipped a step. I had to modify `/etc/udev/rules.d/51-andro
 
 Nope, no luck. I can't access, mount, unmount or delete.
 
-```shell
+```sh
 $ fusermount -u /media/MTPDevice 
 fusermount: entry for /media/MTPDevice not found in /etc/mtab
 $ sudo mtpfs -o allow_other /media/MTPDevice/
@@ -141,7 +141,7 @@ rmdir: failed to remove `/media/MTPDevice': Device or resource busy
 
 But wait! All is not lost! We can use the `adb` tool to interact directly with the android filesystem!
 
-```shell
+```sh
 $ ./adb push /media/My\ Book/Music/Amazon\ MP3/Eminem/ /sdcard/Music/
 push: /media/My Book/Music/Amazon MP3/Eminem/Recovery [Explicit]/17 - Untitled [Explicit].mp3 -> /sdcard/Music/Recovery [Explicit]/17 - Untitled [Explicit].mp3
 push: /media/My Book/Music/Amazon MP3/Eminem/Recovery [Explicit]/16 - You're Never Over [Explicit].mp3 -> /sdcard/Music/Recovery [Explicit]/16 - You're Never Over [Explicit].mp3
@@ -166,7 +166,7 @@ push: /media/My Book/Music/Amazon MP3/Eminem/Recovery [Explicit]/01 - Cold Wind 
 
 and verify it after running `adb shell`
 
-```shell
+```sh
 shell@scorpion_mini:/ $ ls sdcard/Music/                                       
 Recovery [Explicit]
 ```
@@ -180,3 +180,6 @@ To add to my misery, I still can't _play_ the songs. Google Play doesn't pick  t
 
 As far as I can tell, this is because on my phone, the sdcard is mounted on `/storage/sdcard1` instead of `/storage/sdcard0`, and that has made all the difference.
 
+*Update*:
+I realized I could use the default file explorer app which came with the phone
+to navigate to the external sd card and play music from there, so that works ...
