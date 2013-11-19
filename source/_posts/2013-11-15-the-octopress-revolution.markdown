@@ -158,6 +158,9 @@ Push it out and call it a day ...
   $ git push origin source
 ```
 
+Migrating static content
+-------------------------
+
 But wait, in my case, I also need to get all my old stuff over.
 
 ```bash
@@ -242,10 +245,26 @@ from
 
 [Nothing to panic](https://plus.google.com/photos?pid=5946667874240500674&oid=116824588290880385608) about, turns out I just had to use different names for the
 [Lexers in Pygments](http://pygments.org/docs/lexers/). So it's "sh" or "bash"
-instead of "shell", and "haskell" instead of "Haskell". Also, I had to make
-other cosmetic changes like
+instead of "shell", and "haskell" instead of "Haskell".
+
+Also, I had to make other cosmetic changes like
 - changing the title to be in the _yyyy-mm-dd-title_ format
 - added quotes around the 'title' in the header metadata
 - added categories (retroactively) for each post
 
+Sorting out the old repo
+-------------------------
+
+Almost there, but not there yet. Running `rake deploy` doesn't work out of the
+box:
+
+```sh
+ ! [rejected]        master -> master (non-fast-forward)
+ error: failed to push some refs to
+ 'https://github.com/agam/agam.github.com.git'
+ hint: Updates were rejected because the tip of your current branch is behind
+ hint: its remote counterpart. Integrate the remote changes (e.g.
+ hint: 'git pull ...') before pushing again.
+ hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+```
 
