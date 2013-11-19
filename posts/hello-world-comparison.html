@@ -1,0 +1,525 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content>
+        <meta name="author" content>
+        <title>Agam's Mashed-up Pome</title>
+        <link href="http://fonts.googleapis.com/css?family=Source+Code+Pro|Radley:400,400italic" rel="stylesheet" type="text/css">
+          <link rel="stylesheet" href="css/bootstrap.min.css" />
+          <link rel="stylesheet" type="text/css" href="../css/syntax.css" />
+          <link rel="stylesheet" type="text/css" href="../css/default.css" />
+        <script src="../js/google_analytics.js" type="text/javascript" charset="utf-8"></script>
+  </head>
+  <body>
+  <div class="topbar">
+  <div class="topbar-inner">
+  <div class="container">
+        <div id="navigation">
+	<ul class="nav">
+            <li><a href="../">Home</a></li>
+            <li><a href="../about.html">About</a></li>
+	</ul>
+	</div>
+        </div>
+        </div>
+        </div>
+
+        <head>
+<title>Comparing &quot;Hello World&quot; in C++ and Haskell</title>
+</head>
+<body>
+<h2>March 10, 2013</h2>
+<br>
+
+<h1 id="hello-world-in-c-and-haskell">“Hello World” in C++ and Haskell</h1>
+<p>I feel I’ve totally forgotten all about assembly, and I was curious anyway about how Haskell differed fundamentally in its basic code generation, so I decided to contrast a basic example against C++.</p>
+<p>The choice of C++ here is arbitrary; it just happens to be something I’ve used most often, and pretty much all the time for the last decade or so. If it ends up being interesting, I can add similar comparisons for other languages.</p>
+<h2 id="source-programs">Source Programs</h2>
+<p>The C++ version:</p>
+<pre class="sourceCode C"><code class="sourceCode c"><span class="ot">#include &lt;iostream&gt;</span>
+
+<span class="dt">int</span> main(<span class="dt">int</span> argc, <span class="dt">char</span>** argv) {
+  std::cout &lt;&lt; <span class="st">&quot;Hello world</span><span class="ch">\n\n</span><span class="st">&quot;</span>;
+}</code></pre>
+<p>The Haskell version:</p>
+<pre class="sourceCode Haskell"><code class="sourceCode haskell">main <span class="fu">=</span> <span class="fu">putStrLn</span> <span class="st">&quot;Hello World&quot;</span></code></pre>
+<h2 id="some-high-level-differences">Some high-level differences:</h2>
+<p>Difference in size of generated binary:</p>
+<pre><code>-rwxr-x--- 1 agam eng 8.8K Dec 14 16:10 cpphelloworld
+-rwxr-x--- 1 agam eng 1.1M Dec 14 16:16 haskellhelloworld</code></pre>
+<p>Difference in number of symbols defined:</p>
+<pre><code>nm cpphelloworld | wc -l
+41
+nm haskellhelloworld | wc -l
+6578</code></pre>
+<p>Differences in libraries linked in :-</p>
+<pre><code>$ ldd cpphelloworld
+	linux-vdso.so.1 =&gt;  (0x00007fffcb5a7000)
+	libstdc++.so.6 =&gt; /usr/lib/x86_64-linux-gnu/libstdc++.so.6 (0x00007ffe35064000)
+	libc.so.6 =&gt; /lib/x86_64-linux-gnu/libc.so.6 (0x00007ffe34ca5000)
+	libm.so.6 =&gt; /lib/x86_64-linux-gnu/libm.so.6 (0x00007ffe349a8000)
+	/lib64/ld-linux-x86-64.so.2 (0x00007ffe35381000)
+	libgcc_s.so.1 =&gt; /lib/x86_64-linux-gnu/libgcc_s.so.1 (0x00007ffe34792000)
+
+$ ldd haskellhelloworld
+	linux-vdso.so.1 =&gt;  (0x00007fff681b9000)
+	libgmp.so.10 =&gt; /usr/lib/x86_64-linux-gnu/libgmp.so.10 (0x00007f427e124000)
+	libffi.so.6 =&gt; /usr/lib/x86_64-linux-gnu/libffi.so.6 (0x00007f427df1c000)
+	libm.so.6 =&gt; /lib/x86_64-linux-gnu/libm.so.6 (0x00007f427dc1f000)
+	librt.so.1 =&gt; /lib/x86_64-linux-gnu/librt.so.1 (0x00007f427da17000)
+	libdl.so.2 =&gt; /lib/x86_64-linux-gnu/libdl.so.2 (0x00007f427d813000)
+	libc.so.6 =&gt; /lib/x86_64-linux-gnu/libc.so.6 (0x00007f427d453000)
+	libpthread.so.0 =&gt; /lib/x86_64-linux-gnu/libpthread.so.0 (0x00007f427d236000)
+	/lib64/ld-linux-x86-64.so.2 (0x00007f427e3af000)</code></pre>
+<h2 id="c-object-code">C++ Object Code</h2>
+<p>The C++ version:</p>
+<p>Filename, and a static declaration of <code>std::__ioinit</code> defined in <code>iostream</code>.</p>
+<pre class="sourceCode nasm"><code class="sourceCode nasm">	.file	<span class="st">&quot;helloworld.cpp&quot;</span>
+	.local	_ZStL8__ioinit
+	.comm	_ZStL8__ioinit,<span class="dv">1</span>,<span class="dv">1</span></code></pre>
+<p>Read-only data, containing the string used in our program.</p>
+<pre class="sourceCode nasm"><code class="sourceCode nasm">	.<span class="kw">section</span>	.rodata
+<span class="fu">.LC0:</span>
+	.string	<span class="st">&quot;Hello world\n\n&quot;</span></code></pre>
+<p>Beginning of the ‘<code>main</code>’ function, which is globally visible.</p>
+<pre class="sourceCode nasm"><code class="sourceCode nasm">	.text
+	.globl	main
+	.type	main, @function</code></pre>
+<p>The C++ code has a lot of these <code>cfi_</code> declarations, which is Call Frame Information for the <a href="http://www.logix.cz/michal/devel/gas-cfi/dwarf-2.0.0.pdf">DWARF debugging format</a></p>
+<pre class="sourceCode nasm"><code class="sourceCode nasm"><span class="fu">main:</span>
+<span class="fu">.LFB966:</span>
+	.cfi_startproc</code></pre>
+<p>Start new frame, Store old stack pointer.</p>
+<pre class="sourceCode nasm"><code class="sourceCode nasm">	pushq	<span class="ot">%rbp</span>
+	.cfi_def_cfa_offset <span class="dv">16</span>
+	.cfi_offset <span class="dv">6</span>, -<span class="dv">16</span>
+	<span class="kw">movq</span>	<span class="ot">%rsp, %rbp</span>
+	.cfi_def_cfa_register <span class="dv">6</span></code></pre>
+<p>Create space for local variables on the stack. Copy the value of (empty) EDI and RSI onto this created space. Copy the string declared above into ESI. Store the address of the <code>std::cout</code> object into EDI. Reset EAX to 0. Call the std::basic_ostream<std::char_traits> operator&lt;&lt;()</p>
+<pre class="sourceCode nasm"><code class="sourceCode nasm">	subq<span class="bn">	$16, </span><span class="ot">%rsp</span>
+	movl	<span class="ot">%edi, -4(%rbp)</span>
+	<span class="kw">movq</span>	<span class="ot">%rsi, -16(%rbp)</span>
+	movl	<span class="dv">$</span>.LC0, <span class="ot">%esi</span>
+	movl	<span class="dv">$</span>_ZSt4cout, <span class="ot">%edi</span>
+	<span class="kw">call</span>	_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc
+	movl<span class="bn">	$0, </span><span class="ot">%eax</span>
+	<span class="kw">leave</span>
+	.cfi_def_cfa <span class="dv">7</span>, <span class="dv">8</span>
+	<span class="kw">ret</span>
+	.cfi_endproc</code></pre>
+<p>This part is not particular to the specific program here; gcc creates a <code>static_initialization_and_destruction</code> section for each translation unit that needs any static constructors to be called.</p>
+<pre class="sourceCode nasm"><code class="sourceCode nasm"><span class="fu">.LFE966:</span>
+	.size	main, .-main
+	.type	_Z41__static_initialization_and_destruction_0ii, @function
+<span class="fu">_Z41__static_initialization_and_destruction_0ii:</span>
+<span class="fu">.LFB970:</span>
+	.cfi_startproc
+	pushq	<span class="ot">%rbp</span>
+	.cfi_def_cfa_offset <span class="dv">16</span>
+	.cfi_offset <span class="dv">6</span>, -<span class="dv">16</span>
+	<span class="kw">movq</span>	<span class="ot">%rsp, %rbp</span>
+	.cfi_def_cfa_register <span class="dv">6</span>
+	subq<span class="bn">	$16, </span><span class="ot">%rsp</span>
+	movl	<span class="ot">%edi, -4(%rbp)</span>
+	movl	<span class="ot">%esi, -8(%rbp)</span>
+	cmpl<span class="bn">	$1, </span>-<span class="dv">4</span>(<span class="ot">%rbp)</span>
+	<span class="kw">jne</span>	.L2
+	cmpl<span class="bn">	$65535, </span>-<span class="dv">8</span>(<span class="ot">%rbp)</span>
+	<span class="kw">jne</span>	.L2
+	movl	<span class="dv">$</span>_ZStL8__ioinit, <span class="ot">%edi</span>
+	<span class="kw">call</span>	_ZNSt8ios_base4InitC1Ev
+	movl	<span class="dv">$</span>_ZNSt8ios_base4InitD1Ev, <span class="ot">%eax</span>
+	movl	<span class="dv">$</span>__dso_handle, <span class="ot">%edx</span>
+	movl	<span class="dv">$</span>_ZStL8__ioinit, <span class="ot">%esi</span>
+	<span class="kw">movq</span>	<span class="ot">%rax, %rdi</span>
+	<span class="kw">call</span>	__cxa_atexit
+<span class="fu">.L2:</span>
+	<span class="kw">leave</span>
+	.cfi_def_cfa <span class="dv">7</span>, <span class="dv">8</span>
+	<span class="kw">ret</span>
+	.cfi_endproc</code></pre>
+<p>I’m not sure <em>wtf</em> is going on here. When it calls the static initialization function, 1 and 65535 are passed as arguments. Then within the function, it verifies that it did actually get these two arguments, and only if they were passed in, it calls the static constructor <code>ios_base::init</code></p>
+<pre class="sourceCode nasm"><code class="sourceCode nasm"><span class="fu">.LFE970:</span>
+	.size	_Z41__static_initialization_and_destruction_0ii, .-_Z41__static_initialization_and_destruction_0ii
+	.type	_GLOBAL__sub_I_main, @function
+<span class="fu">_GLOBAL__sub_I_main:</span>
+<span class="fu">.LFB971:</span>
+	.cfi_startproc
+	pushq	<span class="ot">%rbp</span>
+	.cfi_def_cfa_offset <span class="dv">16</span>
+	.cfi_offset <span class="dv">6</span>, -<span class="dv">16</span>
+	<span class="kw">movq</span>	<span class="ot">%rsp, %rbp</span>
+	.cfi_def_cfa_register <span class="dv">6</span>
+	movl<span class="bn">	$65535, </span><span class="ot">%esi</span>
+	movl<span class="bn">	$1, </span><span class="ot">%edi</span>
+	<span class="kw">call</span>	_Z41__static_initialization_and_destruction_0ii
+	popq	<span class="ot">%rbp</span>
+	.cfi_def_cfa <span class="dv">7</span>, <span class="dv">8</span>
+	<span class="kw">ret</span>
+	.cfi_endproc
+<span class="fu">.LFE971:</span>
+	.size	_GLOBAL__sub_I_main, .-_GLOBAL__sub_I_main
+	.<span class="kw">section</span>	.ctors,<span class="st">&quot;aw&quot;</span>,@progbits
+	.<span class="kw">align</span> <span class="dv">8</span>
+	.quad	_GLOBAL__sub_I_main</code></pre>
+<p>Omitted a bunch of library references that looked like</p>
+<pre class="sourceCode nasm"><code class="sourceCode nasm">	.weakref	_ZL22__gthrw_pthread_createPmPK14pthread_attr_tPFPvS3_ES3_,pthread_create</code></pre>
+<h2 id="haskell-core">Haskell core</h2>
+<p>Haskell code generation is <strong>significantly</strong> different, so we’ll look at generated <a href="http://www.haskell.org/haskellwiki/Performance/GHC#Looking_at_the_Core"><em>core</em></a> code first.</p>
+<p>The best way for this is to use the <code>ghc-core</code> package.</p>
+<pre class="shell"><code>$ cabal install ghc-core
+$ ~/.cabal/bin/ghc-core --no-cast --no-asm haskellhelloworld.hs</code></pre>
+<p>I’ve removed the <em>attributes</em> of functions, which look something like</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">[<span class="dt">GblId</span>,
+ <span class="dt">Unf</span><span class="fu">=</span><span class="dt">Unf</span>{<span class="dt">Src</span><span class="fu">=&lt;</span>vanilla<span class="fu">&gt;</span>, <span class="dt">TopLvl</span><span class="fu">=</span><span class="kw">True</span>, <span class="dt">Arity</span><span class="fu">=</span><span class="dv">0</span>, <span class="dt">Value</span><span class="fu">=</span><span class="kw">False</span>,
+         <span class="dt">ConLike</span><span class="fu">=</span><span class="kw">False</span>, <span class="dt">Cheap</span><span class="fu">=</span><span class="kw">False</span>, <span class="dt">Expandable</span><span class="fu">=</span><span class="kw">False</span>,
+         <span class="dt">Guidance</span><span class="fu">=</span><span class="dt">IF_ARGS</span> [] <span class="dv">60</span> <span class="dv">0</span>}]</code></pre>
+<p>The cleaned up core looks like this:</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">main2 ::</span> [<span class="dt">Char</span>]
+main2 <span class="fu">=</span> unpackCString<span class="fu">#</span> <span class="st">&quot;Hello World&quot;</span></code></pre>
+<p>The code seemse full of a lot of <code>#</code>s, these are <a href="http://www.haskell.org/ghc/docs/latest/html/users_guide/primitives.html">primitive types</a>. The ‘raw’ string is made available as a different type to the program we wrote. Ghci is a good way to explore the type relationships here.</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="dt">Prelude</span><span class="fu">&gt;</span> <span class="fu">:</span>t <span class="st">&quot;Hello world&quot;</span>
+<span class="st">&quot;Hello world&quot;</span><span class="ot"> ::</span> [<span class="dt">Char</span>]
+<span class="dt">Prelude</span><span class="fu">&gt;</span> <span class="fu">:</span>t <span class="fu">putStrLn</span>
+<span class="fu">putStrLn</span><span class="ot"> ::</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">IO</span> ()
+
+<span class="dt">Prelude</span><span class="fu">&gt;</span> <span class="fu">:</span>browse <span class="dt">GHC.CString</span>
+<span class="fu">...</span>
+<span class="fu">...</span> (other functions)
+<span class="fu">...</span>
+GHC.CString.unpackCString<span class="fu">#</span><span class="ot"> ::</span> <span class="dt">GHC.Prim.Addr</span><span class="fu">#</span> <span class="ot">-&gt;</span> [<span class="dt">Char</span>]</code></pre>
+<p>Continuing with our exploration of the core, <code>main1</code> is defined as a lambda function that effectively performs a<code>return</code> on the value returned by <code>Handle.Text.hPutStr2</code></p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">main1
+<span class="ot">  ::</span> <span class="dt">State</span><span class="fu">#</span> <span class="dt">RealWorld</span>
+     <span class="ot">-&gt;</span> (<span class="fu">#</span> <span class="dt">State</span><span class="fu">#</span> <span class="dt">RealWorld</span>, () <span class="fu">#</span>)
+main1 <span class="fu">=</span>
+  \ (<span class="ot">eta_B1 ::</span> <span class="dt">State</span><span class="fu">#</span> <span class="dt">RealWorld</span>) <span class="ot">-&gt;</span>
+    Handle.Text.hPutStr2
+      Handle.FD.stdout main2 <span class="kw">True</span> eta_B1</code></pre>
+<p>Once again, ghci to the rescue:</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="dt">Prelude</span><span class="fu">&gt;</span> <span class="fu">:</span>m <span class="dt">GHC.IO.Handle.Text</span>
+<span class="dt">Prelude</span> <span class="dt">GHC.IO.Handle.Text</span><span class="fu">&gt;</span> <span class="fu">:</span>t hPutStrLn
+<span class="ot">hPutStr ::</span> <span class="dt">GHC.IO.Handle.Types.Handle</span> <span class="ot">-&gt;</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">IO</span> ()
+<span class="dt">Prelude</span> <span class="dt">GHC.IO.Handle.Text</span><span class="fu">&gt;</span> <span class="fu">:</span>m <span class="dt">GHC.IO.Handle.FD</span>
+<span class="dt">Prelude</span> <span class="dt">GHC.IO.Handle.FD</span><span class="fu">&gt;</span> <span class="fu">:</span>t stdout
+<span class="ot">stdout ::</span> <span class="dt">GHC.IO.Handle.Types.Handle</span></code></pre>
+<p>Also, internally in <a href="http://hackage.haskell.org/packages/archive/base/4.3.1.0/doc/html/src/GHC-IO-Handle-Text.html">the source for this module</a>, <code>hPutStrLn</code> is implemented in terms of <code>hPutStr'</code>, which has the type signature</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="ot">hPutStr' ::</span> <span class="dt">Handle</span> <span class="ot">-&gt;</span> <span class="dt">String</span> <span class="ot">-&gt;</span> <span class="dt">Bool</span> <span class="ot">-&gt;</span> <span class="dt">IO</span> ()</code></pre>
+<p>Moving on, a <code>main</code> is defined but never used (perhaps just for correspondence with the user program?). Anywya, that is followed by a <code>main3</code> which actually runs the code.</p>
+<pre><code>main :: IO ()
+main =
+  main1
+  
+
+main3
+  :: State# RealWorld
+     -&gt; (# State# RealWorld, () #)
+main3 =
+  \ (eta_X9 :: State# RealWorld) -&gt;
+    runMainIO1
+      @ ()
+      (main1
+       )
+      eta_X9
+
+:main :: IO ()
+:main =
+  main3</code></pre>
+<p>Again, internally, the comments for <code>runMainIO</code> in the <a href="http://hackage.haskell.org/packages/archive/base/3.0.1.0/doc/html/src/GHC-TopHandler.html">corresponding source file</a> say:</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="co">-- | 'runMainIO' is wrapped around 'Main.main' (or whatever main is</span>
+<span class="co">-- called in the program).  It catches otherwise uncaught exceptions,</span>
+<span class="co">-- and also flushes stdout\/stderr before exiting.</span>
+<span class="ot">runMainIO ::</span> <span class="dt">IO</span> a <span class="ot">-&gt;</span> <span class="dt">IO</span> a
+runMainIO main <span class="fu">=</span> (<span class="kw">do</span> a <span class="ot">&lt;-</span> main; cleanUp; <span class="fu">return</span> a) <span class="ot">`catchException`</span> topHandler</code></pre>
+<p>Alright …. we’re done with the core, and can look at the assembly, in full now.</p>
+<h2 id="haskell-object-code">Haskell object code</h2>
+<p>As mentioned earlier, the object code here hardly corresponds to our one-line program, but we can read it (sort of !) since we know the core. First off is a declaratoin for the ‘real’ and ‘dummy’ <code>main</code> methods.</p>
+<pre class="sourceCode nasm"><code class="sourceCode nasm">.data
+	.<span class="kw">align</span> <span class="dv">8</span>
+.<span class="kw">align</span> <span class="dv">1</span>
+.globl __stginit_Main
+.type __stginit_Main, @ob<span class="kw">je</span>ct
+<span class="fu">__stginit_Main:</span>
+.globl __stginit_ZCMain
+.type __stginit_ZCMain, @ob<span class="kw">je</span>ct
+<span class="fu">__stginit_ZCMain:</span>
+.<span class="kw">section</span> .data
+	.<span class="kw">align</span> <span class="dv">8</span>
+.<span class="kw">align</span> <span class="dv">1</span></code></pre>
+<p>It is common in generated assembly to see functions wrapped in closures. So there will typically be ‘info’ for the function, a ‘closure’ for it, and when needed to be called, a ‘jump’ to it.</p>
+<pre class="sourceCode nasm"><code class="sourceCode nasm"><span class="fu">sfB_srt:</span>
+	.quad	ghczmprim_GHCziCString_unpackCStringzh_closure
+
+.data
+	.<span class="kw">align</span> <span class="dv">8</span>
+.<span class="kw">align</span> <span class="dv">1</span>
+<span class="fu">sfB_closure:</span>
+	.quad	sfB_info
+	.quad	<span class="dv">0</span>
+	.quad	<span class="dv">0</span>
+	.quad	<span class="dv">0</span></code></pre>
+<p>BTW I wanted to get the “official” line on this, so I went to the <a href="http://hackage.haskell.org/trac/ghc/wiki/Commentary/Compiler/GeneratedCode">haskell wiki</a> and found this:</p>
+<pre><code>The goal of the STG machine is to reduce the current expression to a value.
+
+When it has done so, it:
+
+Stores a tagged pointer to evaluated closure in the STG register R1
+Jumps to the entry code of the info table pointed to by the value at the top
+of the STG stack
+This may also be called the info table of the continuation of the expression
+The continuation code is responsible for popping its info pointer (and stack-
+allocated free variables, if any) from the stack before returning.
+
+Arguments are passed on the stack, and are popped by the callee. Upon a
+jump to the entry code for a function, there are always precisely as many
+arguments on the stack as the (statically known) arity of that function,
+and those arguments will be followed by the info pointer of a continuation.</code></pre>
+<p>Moving on, this (<code>cf0_str</code>) is our output string, declared byte-by-byte.</p>
+<pre class="sourceCode nasm"><code class="sourceCode nasm">.<span class="kw">section</span> .rodata
+	.<span class="kw">align</span> <span class="dv">8</span>
+.<span class="kw">align</span> <span class="dv">1</span>
+<span class="fu">cfO_str:</span>
+	.<span class="dt">byte</span>	<span class="dv">72</span>
+	.<span class="dt">byte</span>	<span class="dv">101</span>
+	.<span class="dt">byte</span>	<span class="dv">108</span>
+	.<span class="dt">byte</span>	<span class="dv">108</span>
+	.<span class="dt">byte</span>	<span class="dv">111</span>
+	.<span class="dt">byte</span>	<span class="dv">32</span>
+	.<span class="dt">byte</span>	<span class="dv">87</span>
+	.<span class="dt">byte</span>	<span class="dv">111</span>
+	.<span class="dt">byte</span>	<span class="dv">114</span>
+	.<span class="dt">byte</span>	<span class="dv">108</span>
+	.<span class="dt">byte</span>	<span class="dv">100</span>
+	.<span class="dt">byte</span>	<span class="dv">0</span>
+.text
+	.<span class="kw">align</span> <span class="dv">8</span>
+	.long	sfB_srt-(sfB_info)+<span class="dv">0</span>
+	.long	<span class="dv">0</span>
+	.quad	<span class="dv">0</span>
+	.quad	<span class="dv">4294967318</span></code></pre>
+<p>I was totally stumped by <code>newCAF</code> and <code>CAF_BLACKHOLE_info</code> here, so I had to Google around to find <a href="http://mainisusuallyafunction.blogspot.com/2011/10/thunks-and-lazy-blackholes-introduction.html">some helpful info on it</a>.This in turn led me to the <a href="https://github.com/ghc/ghc/blob/master/rts/sm/Storage.c#L262">GHC runtime code</a> which says</p>
+<pre><code>
+   The entry code for every CAF does the following:
+     
+      - builds a CAF_BLACKHOLE in the heap
+
+      - calls newCaf, which atomically updates the CAF with
+        IND_STATIC pointing to the CAF_BLACKHOLE
+
+      - if newCaf returns zero, it re-enters the CAF (see Note [atomic
+        CAF entry])
+
+      - pushes an update frame pointing to the CAF_BLACKHOLE
+
+   Why do we build an BLACKHOLE in the heap rather than just updating
+   the thunk directly?  It's so that we only need one kind of update
+   frame - otherwise we'd need a static version of the update frame
+   too, and various other parts of the RTS that deal with update
+   frames would also need special cases for static update frames.
+
+   newCaf() does the following:
+       
+      - it updates the CAF with an IND_STATIC pointing to the
+        CAF_BLACKHOLE, atomically.
+
+      - it puts the CAF on the oldest generation's mutable list.
+        This is so that we treat the CAF as a root when collecting
+        younger generations.
+</code></pre>
+<p>If you want to know more about CAFs (Constant Applicative Forms), see <a href="http://www.haskell.org/haskellwiki/Constant_applicative_form">this wiki page</a></p>
+<p>So, moving on, what follows is book-keeping (ok, I just really want to skip over these 20 lines)</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell">sfB_info<span class="fu">:</span>
+<span class="fu">.</span><span class="dt">LcfS</span><span class="fu">:</span>
+	leaq <span class="fu">-</span><span class="dv">16</span>(<span class="fu">%</span>rbp),<span class="fu">%</span>rax
+	cmpq <span class="fu">%</span>r15,<span class="fu">%</span>rax
+	jb <span class="fu">.</span><span class="dt">LcfU</span>
+	addq <span class="fu">$</span><span class="dv">16</span>,<span class="fu">%</span>r12
+	cmpq <span class="dv">144</span>(<span class="fu">%</span>r13),<span class="fu">%</span>r12
+	ja <span class="fu">.</span><span class="dt">LcfW</span>
+	movq <span class="fu">$</span>stg_CAF_BLACKHOLE_info,<span class="fu">-</span><span class="dv">8</span>(<span class="fu">%</span>r12)
+	movq <span class="dv">160</span>(<span class="fu">%</span>r13),<span class="fu">%</span>rax
+	movq <span class="fu">%</span>rax,<span class="dv">0</span>(<span class="fu">%</span>r12)
+	movq <span class="fu">%</span>r13,<span class="fu">%</span>rdi
+	movq <span class="fu">%</span>rbx,<span class="fu">%</span>rsi
+	leaq <span class="fu">-</span><span class="dv">8</span>(<span class="fu">%</span>r12),<span class="fu">%</span>rdx
+	subq <span class="fu">$</span><span class="dv">8</span>,<span class="fu">%</span>rsp
+	movl <span class="fu">$</span><span class="dv">0</span>,<span class="fu">%</span>eax
+	call newCAF
+	addq <span class="fu">$</span><span class="dv">8</span>,<span class="fu">%</span>rsp
+	testq <span class="fu">%</span>rax,<span class="fu">%</span>rax
+	je <span class="fu">.</span><span class="dt">LcfX</span></code></pre>
+<p>Closures in action! Here we see the steps: Move the frame info into place, setup the function we want to call (here <code>GHC.String.unpackCString</code>) and its arguments (<code>cfo_str</code> from above) and then <code>jmp</code> to an evaluating function (here <code>stg_ap_n_fast</code>).</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">.</span><span class="dt">LcfY</span><span class="fu">:</span>
+	movq <span class="fu">$</span>stg_bh_upd_frame_info,<span class="fu">-</span><span class="dv">16</span>(<span class="fu">%</span>rbp)
+	leaq <span class="fu">-</span><span class="dv">8</span>(<span class="fu">%</span>r12),<span class="fu">%</span>rax
+	movq <span class="fu">%</span>rax,<span class="fu">-</span><span class="dv">8</span>(<span class="fu">%</span>rbp)
+	movl <span class="fu">$</span>ghczmprim_GHCziCString_unpackCStringzh_closure,<span class="fu">%</span>ebx
+	movl <span class="fu">$</span>cfO_str,<span class="fu">%</span>r14d
+	addq <span class="fu">$-</span><span class="dv">16</span>,<span class="fu">%</span>rbp
+	jmp stg_ap_n_fast
+<span class="fu">.</span><span class="dt">LcfW</span><span class="fu">:</span>
+	movq <span class="fu">$</span><span class="dv">16</span>,<span class="dv">192</span>(<span class="fu">%</span>r13)
+<span class="fu">.</span><span class="dt">LcfU</span><span class="fu">:</span>
+	jmp <span class="fu">*-</span><span class="dv">16</span>(<span class="fu">%</span>r13)
+<span class="fu">.</span><span class="dt">LcfX</span><span class="fu">:</span>
+	jmp <span class="fu">*</span>(<span class="fu">%</span>rbx)
+	<span class="fu">.</span>size sfB_info, <span class="fu">.-</span>sfB_info</code></pre>
+<p>Setting up the <code>Main_main_closure</code>, which combines <code>base.SystemIO.putStrLn</code> and <code>sfB_closure</code>(above).</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">.</span>section <span class="fu">.</span><span class="kw">data</span>
+	<span class="fu">.</span>align <span class="dv">8</span>
+<span class="fu">.</span>align <span class="dv">1</span>
+<span class="dt">Main_main_srt</span><span class="fu">:</span>
+	<span class="fu">.</span>quad	base_SystemziIO_putStrLn_closure
+	<span class="fu">.</span>quad	sfB_closure
+<span class="fu">.</span><span class="kw">data</span>
+	<span class="fu">.</span>align <span class="dv">8</span>
+<span class="fu">.</span>align <span class="dv">1</span>
+<span class="fu">.</span>globl <span class="dt">Main_main_closure</span>
+<span class="fu">.</span><span class="kw">type</span> <span class="dt">Main_main_closure</span>, <span class="fu">@</span>object
+<span class="dt">Main_main_closure</span><span class="fu">:</span>
+	<span class="fu">.</span>quad	<span class="dt">Main_main_info</span>
+	<span class="fu">.</span>quad	<span class="dv">0</span>
+	<span class="fu">.</span>quad	<span class="dv">0</span>
+	<span class="fu">.</span>quad	<span class="dv">0</span>
+<span class="fu">.</span>text
+	<span class="fu">.</span>align <span class="dv">8</span>
+	<span class="fu">.</span>long	<span class="dt">Main_main_srt</span><span class="fu">-</span>(<span class="dt">Main_main_info</span>)<span class="fu">+</span><span class="dv">0</span>
+	<span class="fu">.</span>long	<span class="dv">0</span>
+	<span class="fu">.</span>quad	<span class="dv">0</span>
+	<span class="fu">.</span>quad	<span class="dv">12884901910</span>
+<span class="fu">.</span>globl <span class="dt">Main_main_info</span>
+<span class="fu">.</span><span class="kw">type</span> <span class="dt">Main_main_info</span>, <span class="fu">@</span>object</code></pre>
+<p>Moving on … bookkeeping for the main function similar for the functions above</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="dt">Main_main_info</span><span class="fu">:</span>
+<span class="fu">.</span><span class="dt">Lcgf</span><span class="fu">:</span>
+	leaq <span class="fu">-</span><span class="dv">16</span>(<span class="fu">%</span>rbp),<span class="fu">%</span>rax
+	cmpq <span class="fu">%</span>r15,<span class="fu">%</span>rax
+	jb <span class="fu">.</span><span class="dt">Lcgh</span>
+	addq <span class="fu">$</span><span class="dv">16</span>,<span class="fu">%</span>r12
+	cmpq <span class="dv">144</span>(<span class="fu">%</span>r13),<span class="fu">%</span>r12
+	ja <span class="fu">.</span><span class="dt">Lcgj</span>
+	movq <span class="fu">$</span>stg_CAF_BLACKHOLE_info,<span class="fu">-</span><span class="dv">8</span>(<span class="fu">%</span>r12)
+	movq <span class="dv">160</span>(<span class="fu">%</span>r13),<span class="fu">%</span>rax
+	movq <span class="fu">%</span>rax,<span class="dv">0</span>(<span class="fu">%</span>r12)
+	movq <span class="fu">%</span>r13,<span class="fu">%</span>rdi
+	movq <span class="fu">%</span>rbx,<span class="fu">%</span>rsi
+	leaq <span class="fu">-</span><span class="dv">8</span>(<span class="fu">%</span>r12),<span class="fu">%</span>rdx
+	subq <span class="fu">$</span><span class="dv">8</span>,<span class="fu">%</span>rsp
+	movl <span class="fu">$</span><span class="dv">0</span>,<span class="fu">%</span>eax
+	call newCAF
+	addq <span class="fu">$</span><span class="dv">8</span>,<span class="fu">%</span>rsp
+	testq <span class="fu">%</span>rax,<span class="fu">%</span>rax
+	je <span class="fu">.</span><span class="dt">Lcgk</span></code></pre>
+<p>Running the <code>main</code> closure … this is also a demonstration of how functions are connected (one closure is an argument for the other closure)</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="fu">.</span><span class="dt">Lcgl</span><span class="fu">:</span>
+	movq <span class="fu">$</span>stg_bh_upd_frame_info,<span class="fu">-</span><span class="dv">16</span>(<span class="fu">%</span>rbp)
+	leaq <span class="fu">-</span><span class="dv">8</span>(<span class="fu">%</span>r12),<span class="fu">%</span>rax
+	movq <span class="fu">%</span>rax,<span class="fu">-</span><span class="dv">8</span>(<span class="fu">%</span>rbp)
+	movl <span class="fu">$</span>base_SystemziIO_putStrLn_closure,<span class="fu">%</span>ebx
+	movl <span class="fu">$</span>sfB_closure,<span class="fu">%</span>r14d
+	addq <span class="fu">$-</span><span class="dv">16</span>,<span class="fu">%</span>rbp
+	jmp stg_ap_p_fast
+<span class="fu">.</span><span class="dt">Lcgj</span><span class="fu">:</span>
+	movq <span class="fu">$</span><span class="dv">16</span>,<span class="dv">192</span>(<span class="fu">%</span>r13)
+<span class="fu">.</span><span class="dt">Lcgh</span><span class="fu">:</span>
+	jmp <span class="fu">*-</span><span class="dv">16</span>(<span class="fu">%</span>r13)
+<span class="fu">.</span><span class="dt">Lcgk</span><span class="fu">:</span>
+	jmp <span class="fu">*</span>(<span class="fu">%</span>rbx)
+	<span class="fu">.</span>size <span class="dt">Main_main_info</span>, <span class="fu">.-</span><span class="dt">Main_main_info</span>
+<span class="fu">.</span>section <span class="fu">.</span><span class="kw">data</span>
+	<span class="fu">.</span>align <span class="dv">8</span>
+<span class="fu">.</span>align <span class="dv">1</span></code></pre>
+<p>Ok, our last round of setting up the ‘running main function’ and then its associated book-keeping</p>
+<pre class="sourceCode haskell"><code class="sourceCode haskell"><span class="dt">ZCMain_main_srt</span><span class="fu">:</span>
+	<span class="fu">.</span>quad	base_GHCziTopHandler_runMainIO_closure
+	<span class="fu">.</span>quad	<span class="dt">Main_main_closure</span>
+<span class="fu">.</span><span class="kw">data</span>
+	<span class="fu">.</span>align <span class="dv">8</span>
+<span class="fu">.</span>align <span class="dv">1</span>
+<span class="fu">.</span>globl <span class="dt">ZCMain_main_closure</span>
+<span class="fu">.</span><span class="kw">type</span> <span class="dt">ZCMain_main_closure</span>, <span class="fu">@</span>object
+<span class="dt">ZCMain_main_closure</span><span class="fu">:</span>
+	<span class="fu">.</span>quad	<span class="dt">ZCMain_main_info</span>
+	<span class="fu">.</span>quad	<span class="dv">0</span>
+	<span class="fu">.</span>quad	<span class="dv">0</span>
+	<span class="fu">.</span>quad	<span class="dv">0</span>
+<span class="fu">.</span>text
+	<span class="fu">.</span>align <span class="dv">8</span>
+	<span class="fu">.</span>long	<span class="dt">ZCMain_main_srt</span><span class="fu">-</span>(<span class="dt">ZCMain_main_info</span>)<span class="fu">+</span><span class="dv">0</span>
+	<span class="fu">.</span>long	<span class="dv">0</span>
+	<span class="fu">.</span>quad	<span class="dv">0</span>
+	<span class="fu">.</span>quad	<span class="dv">12884901910</span>
+<span class="fu">.</span>globl <span class="dt">ZCMain_main_info</span>
+<span class="fu">.</span><span class="kw">type</span> <span class="dt">ZCMain_main_info</span>, <span class="fu">@</span>object
+<span class="dt">ZCMain_main_info</span><span class="fu">:</span>
+<span class="fu">.</span><span class="dt">LcgC</span><span class="fu">:</span>
+	leaq <span class="fu">-</span><span class="dv">16</span>(<span class="fu">%</span>rbp),<span class="fu">%</span>rax
+	cmpq <span class="fu">%</span>r15,<span class="fu">%</span>rax
+	jb <span class="fu">.</span><span class="dt">LcgE</span>
+	addq <span class="fu">$</span><span class="dv">16</span>,<span class="fu">%</span>r12
+	cmpq <span class="dv">144</span>(<span class="fu">%</span>r13),<span class="fu">%</span>r12
+	ja <span class="fu">.</span><span class="dt">LcgG</span>
+	movq <span class="fu">$</span>stg_CAF_BLACKHOLE_info,<span class="fu">-</span><span class="dv">8</span>(<span class="fu">%</span>r12)
+	movq <span class="dv">160</span>(<span class="fu">%</span>r13),<span class="fu">%</span>rax
+	movq <span class="fu">%</span>rax,<span class="dv">0</span>(<span class="fu">%</span>r12)
+	movq <span class="fu">%</span>r13,<span class="fu">%</span>rdi
+	movq <span class="fu">%</span>rbx,<span class="fu">%</span>rsi
+	leaq <span class="fu">-</span><span class="dv">8</span>(<span class="fu">%</span>r12),<span class="fu">%</span>rdx
+	subq <span class="fu">$</span><span class="dv">8</span>,<span class="fu">%</span>rsp
+	movl <span class="fu">$</span><span class="dv">0</span>,<span class="fu">%</span>eax
+	call newCAF
+	addq <span class="fu">$</span><span class="dv">8</span>,<span class="fu">%</span>rsp
+	testq <span class="fu">%</span>rax,<span class="fu">%</span>rax
+	je <span class="fu">.</span><span class="dt">LcgH</span></code></pre>
+<p>And finally, this is the <code>GHC.TopHandler.runMainIO</code> closure being called (if you haven’t noticed yet, there are no <code>call</code>s in this code at all (except for <code>newCAF</code>), and everything is done by <code>jmp</code> instructions!)</p>
+<p>The <code>Main_main_closure</code> above is an argument here to <code>runMainIO</code>.</p>
+<pre class="sourceCode nasm"><code class="sourceCode nasm"><span class="fu">.LcgI:</span>
+	<span class="kw">movq</span> <span class="dv">$</span>stg_bh_upd_frame_info,-<span class="dv">16</span>(<span class="ot">%rbp)</span>
+	leaq -<span class="dv">8</span>(<span class="ot">%r12),%rax</span>
+	<span class="kw">movq</span> <span class="ot">%rax,-8(%rbp)</span>
+	movl <span class="dv">$</span>base_GHCziTopHandler_runMainIO_closure,<span class="ot">%ebx</span>
+	movl <span class="dv">$</span>Main_main_closure,<span class="ot">%r14d</span>
+	addq <span class="dv">$</span>-<span class="dv">16</span>,<span class="ot">%rbp</span>
+	<span class="kw">jmp</span> stg_ap_p_fast
+<span class="fu">.LcgG:</span>
+	<span class="kw">movq</span><span class="bn"> $16,</span><span class="dv">192</span>(<span class="ot">%r13)</span>
+<span class="fu">.LcgE:</span>
+	<span class="kw">jmp</span> *-<span class="dv">16</span>(<span class="ot">%r13)</span>
+<span class="fu">.LcgH:</span>
+	<span class="kw">jmp</span> *(<span class="ot">%rbx)</span>
+	.size ZCMain_main_info, .-ZCMain_main_info
+.<span class="kw">section</span> .note.GNU-stack,<span class="st">&quot;&quot;</span>,@progbits
+.ident <span class="st">&quot;GHC 7.4.1&quot;</span></code></pre>
+<p>And we’re done!</p>
+<h2 id="running-time-comparison">Running time comparison</h2>
+<p>(only because I couldn’t help myself, usual disclaimers about ‘this-is-not-a-benchmark’ apply)</p>
+<p>C++:</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">time</span> (while ((n++ <span class="kw">&lt;</span> 100)); <span class="kw">do</span> <span class="kw">./cpphelloworld</span>; <span class="kw">done</span>)
+<span class="kw">real</span>	0m0.250s
+<span class="kw">user</span>	0m0.004s
+<span class="kw">sys</span>	0m0.036s</code></pre>
+<p>Haskell:</p>
+<pre class="sourceCode bash"><code class="sourceCode bash"><span class="kw">time</span> (while ((n++ <span class="kw">&lt;</span> 100)); <span class="kw">do</span> <span class="kw">./haskellhelloworld</span>; <span class="kw">done</span>)
+<span class="kw">real</span>	0m0.366s
+<span class="kw">user</span>	0m0.004s
+<span class="kw">sys</span>	0m0.048s</code></pre>
+<h2 id="gists">Gists</h2>
+<p><em>Update</em>: I’ve made the complete assembly version of both ‘Hello World’ programs available as gists. So you can look at <a href="https://gist.github.com/agam/5148416">The C++ version</a> or <a href="https://gist.github.com/agam/5148398">The Haskell version</a>.</p>
+</body>
+<footer>
+<div id="disqus_thread"></div>
+<script src="../js/disqus.js" type="text/javascript" charset="utf-8"></script>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</footer>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+    </body>
+    <footer>
+	<br><br><br>
+       <i>This site generated using Hakyll</i>
+    </footer>
+</html>
