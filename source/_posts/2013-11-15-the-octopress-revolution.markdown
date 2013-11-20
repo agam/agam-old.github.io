@@ -288,7 +288,35 @@ To https://github.com/agam/agam.github.io.git
  cd -
 ```
 
+BTW if you do this you might also need to recreate the `source` remote branch,
+e.g. in my case
+
+```sh
+agam@terminus:~/Documents/octopress$ git remote set-url origin
+https://github.com/agam/agam.github.io.git
+agam@terminus:~/Documents/octopress$ git push origin source
+Username for 'https://github.com': agam
+Password for 'https://agam@github.com': 
+Counting objects: 4975, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (2173/2173), done.
+Writing objects: 100% (4975/4975), 1.56 MiB | 816.00 KiB/s, done.
+Total 4975 (delta 2611), reused 4694 (delta 2428)
+To https://github.com/agam/agam.github.io.git
+ * [new branch]      source -> source
+```
+
+Finally, keep in mind that `rake deploy` only updates the generated content. You
+obviously also want to version your posts in markdown format (along with any
+images etc that you might be hosting too), so every once in a while,
+
+```sh
+git commit -a -m 'sync to latest post'
+git push origin source
+```
+
+(you might want to replace that with a more descriptive message !)
+
 So that's that. If you use git or write code setting this up is pretty easy, and
 as you can see, it's not too bad to look at either!
-
 
