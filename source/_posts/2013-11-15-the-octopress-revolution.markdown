@@ -268,3 +268,27 @@ box:
  hint: See the 'Note about fast-forwards' in 'git push --help' for details.
 ```
 
+Ah what the hell, its just a static blog repo! I deleted the old repo, created a
+new repo, ran `rake setup_github_pages` again, and this time `rake deploy`
+worked flawlessly.
+
+```sh
+## Pushing generated _deploy website
+Username for 'https://github.com': agam
+Password for 'https://agam@github.com': 
+Counting objects: 262, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (217/217), done.
+Writing objects: 100% (262/262), 677.07 KiB | 0 bytes/s, done.
+Total 262 (delta 59), reused 0 (delta 0)
+To https://github.com/agam/agam.github.io.git
+ * [new branch]      master -> master
+
+ ## Github Pages deploy complete
+ cd -
+```
+
+So that's that. If you use git or write code setting this up is pretty easy, and
+as you can see, it's not too bad to look at either!
+
+
