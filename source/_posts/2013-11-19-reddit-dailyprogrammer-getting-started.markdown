@@ -3,7 +3,7 @@ layout: post
 title: "Reddit DailyProgrammer Getting Started"
 date: 2013-11-19 18:57
 comments: true
-categories: 
+categories: reddit, AlwaysBeCoding
 ---
 
 In the vein of "Always Be Coding", I stumbled across this subreddit: ["Daily
