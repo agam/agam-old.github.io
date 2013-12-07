@@ -1,0 +1,416 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Basic HTTP Client with Poco - Agam's Mashed-Up Pome</title>
+  <meta name="author" content="Agam">
+
+  
+  <meta name="description" content="After my previous terrible experience with cpp-netlib, I was very very pleasantly surprised by how well this went. You can get the Poco C++ libraries &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://agam.github.io/blog/2013/09/29/http-client-with-poco">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Agam's Mashed-Up Pome" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Agam's Mashed-Up Pome</a></h1>
+  
+    <h2>Thinking is hard; Let's compute instead.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:agam.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Basic HTTP Client With Poco</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-29T00:00:00-07:00" pubdate data-updated="true">Sep 29<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>After my previous terrible experience with <code>cpp-netlib</code>, I was very very pleasantly surprised by how well this went.</p>
+
+<p>You can get the Poco C++ libraries <a href="http://pocoproject.org/">here</a></p>
+
+<p>This is the short <code>wget</code> equivalent &hellip;</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#include &lt;algorithm&gt;  </span><span class="c1">// for copy</span>
+</span><span class='line'><span class="cp">#include &lt;iterator&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;string&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;iostream&gt;   </span><span class="c1">// for cout, istream</span>
+</span><span class='line'>
+</span><span class='line'><span class="cp">#include &lt;Poco/Exception.h&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;Poco/Net/HTTPClientSession.h&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;Poco/Net/HTTPRequest.h&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;Poco/Net/HTTPResponse.h&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;Poco/Path.h&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;Poco/URI.h&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">using</span> <span class="n">string</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span><span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="n">argc</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">std</span><span class="o">::</span><span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Usage: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; &lt;url&gt;&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">try</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// Initialize session</span>
+</span><span class='line'>    <span class="n">Poco</span><span class="o">::</span><span class="n">URI</span> <span class="n">uri</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+</span><span class='line'>    <span class="n">Poco</span><span class="o">::</span><span class="n">Net</span><span class="o">::</span><span class="n">HTTPClientSession</span> <span class="n">client_session</span><span class="p">(</span><span class="n">uri</span><span class="p">.</span><span class="n">getHost</span><span class="p">(),</span> <span class="n">uri</span><span class="p">.</span><span class="n">getPort</span><span class="p">());</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// Prepare and send request</span>
+</span><span class='line'>    <span class="n">string</span> <span class="n">path</span><span class="p">(</span><span class="n">uri</span><span class="p">.</span><span class="n">getPathAndQuery</span><span class="p">());</span>
+</span><span class='line'>    <span class="n">Poco</span><span class="o">::</span><span class="n">Net</span><span class="o">::</span><span class="n">HTTPRequest</span> <span class="n">req</span><span class="p">(</span><span class="n">Poco</span><span class="o">::</span><span class="n">Net</span><span class="o">::</span><span class="n">HTTPRequest</span><span class="o">::</span><span class="n">HTTP_GET</span><span class="p">,</span>
+</span><span class='line'>        <span class="n">path</span><span class="p">,</span> <span class="n">Poco</span><span class="o">::</span><span class="n">Net</span><span class="o">::</span><span class="n">HTTPMessage</span><span class="o">::</span><span class="n">HTTP_1_1</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">client_session</span><span class="p">.</span><span class="n">sendRequest</span><span class="p">(</span><span class="n">req</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// Get response</span>
+</span><span class='line'>    <span class="n">Poco</span><span class="o">::</span><span class="n">Net</span><span class="o">::</span><span class="n">HTTPResponse</span> <span class="n">res</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">std</span><span class="o">::</span><span class="n">istream</span><span class="o">&amp;</span> <span class="n">is</span> <span class="o">=</span> <span class="n">client_session</span><span class="p">.</span><span class="n">receiveResponse</span><span class="p">(</span><span class="n">res</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// Print to standard output</span>
+</span><span class='line'>    <span class="n">std</span><span class="o">::</span><span class="n">copy</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">istream_iterator</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span><span class="p">(</span><span class="n">is</span><span class="p">),</span>
+</span><span class='line'>        <span class="n">std</span><span class="o">::</span><span class="n">istream_iterator</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span><span class="p">(),</span>
+</span><span class='line'>        <span class="n">std</span><span class="o">::</span><span class="n">ostream_iterator</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="p">));</span>
+</span><span class='line'>  <span class="p">}</span> <span class="n">catch</span> <span class="p">(</span><span class="n">Poco</span><span class="o">::</span><span class="n">Exception</span><span class="o">&amp;</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">std</span><span class="o">::</span><span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Exception: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">e</span><span class="p">.</span><span class="n">what</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Completed communication&quot;</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Thanks to my struggles getting the previous <code>cpp-netlib</code> example to build, I at least got very familiar with <code>cmake</code>. As a result, getting this example to build was a breeze:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+</pre></td><td class='code'><pre><code class='cmake'><span class='line'><span class="nb">cmake_minimum_required</span><span class="p">(</span><span class="s">VERSION</span> <span class="s">2.8</span><span class="p">)</span>
+</span><span class='line'><span class="nb">project</span><span class="p">(</span><span class="s">hello-world</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">add_definitions</span><span class="p">(</span><span class="s">-std=c++11</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Search paths</span>
+</span><span class='line'><span class="nb">include_directories</span><span class="p">(</span>
+</span><span class='line'>  <span class="s">/opt/boost/boost_1_54_0</span>
+</span><span class='line'>  <span class="s">/usr/local/include</span><span class="p">)</span>
+</span><span class='line'><span class="nb">link_directories</span><span class="p">(</span>
+</span><span class='line'>  <span class="s">/opt/boost/boost_1_54_0/stage/lib</span>
+</span><span class='line'>  <span class="s">/usr/local/lib</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Boost dependencies</span>
+</span><span class='line'><span class="nb">find_package</span><span class="p">(</span><span class="s">Boost</span> <span class="s">1.51</span> <span class="s">REQUIRED</span> <span class="s">system</span> <span class="s">regex</span><span class="p">)</span>
+</span><span class='line'><span class="nb">set</span><span class="p">(</span><span class="s">BOOST_LIBS</span>
+</span><span class='line'>  <span class="o">${</span><span class="nv">Boost_SYSTEM_LIBRARY</span><span class="o">}</span>
+</span><span class='line'>  <span class="o">${</span><span class="nv">Boost_REGEX_LIBRARY</span><span class="o">}</span>
+</span><span class='line'>  <span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Other external libraries</span>
+</span><span class='line'><span class="nb">find_package</span><span class="p">(</span><span class="s">OpenSSL</span><span class="p">)</span>
+</span><span class='line'><span class="nb">find_library</span><span class="p">(</span><span class="s">LIBCRYPTO</span> <span class="s">crypto</span><span class="p">)</span>
+</span><span class='line'><span class="nb">find_library</span><span class="p">(</span><span class="s">POCO_FOUNDATION</span> <span class="s">PocoFoundation</span><span class="p">)</span>
+</span><span class='line'><span class="nb">find_library</span><span class="p">(</span><span class="s">POCO_NET</span> <span class="s">PocoNet</span><span class="p">)</span>
+</span><span class='line'><span class="nb">set</span><span class="p">(</span><span class="s">EXTERNAL_LIBS</span>
+</span><span class='line'>  <span class="o">${</span><span class="nv">OPENSSL_LIBRARIES</span><span class="o">}</span>
+</span><span class='line'>  <span class="o">${</span><span class="nv">LIBCRYPTO</span><span class="o">}</span>
+</span><span class='line'>  <span class="o">${</span><span class="nv">POCO_FOUNDATION</span><span class="o">}</span>
+</span><span class='line'>  <span class="o">${</span><span class="nv">POCO_NET</span><span class="o">}</span>
+</span><span class='line'>  <span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Our final output</span>
+</span><span class='line'><span class="nb">add_executable</span><span class="p">(</span><span class="s">hello-world</span> <span class="s">hello-world.cpp</span><span class="p">)</span>
+</span><span class='line'><span class="nb">target_link_libraries</span><span class="p">(</span><span class="s">hello-world</span>
+</span><span class='line'>  <span class="o">${</span><span class="nv">BOOST_LIBS</span><span class="o">}</span>
+</span><span class='line'>  <span class="o">${</span><span class="nv">EXTERNAL_LIBS</span><span class="o">}</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And it worked fine too:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nb">time</span> ./hello-world http://www.google.com
+</span><span class='line'>&lt;html&gt;&lt;head&gt;&lt;metahttp-equiv<span class="o">=</span><span class="s2">&quot;content-type&quot;</span><span class="nv">content</span><span class="o">=</span><span class="err">&quot;</span>text/html;charset<span class="o">=</span> ...<span class="o">(</span>skipped rest<span class="o">)</span>
+</span><span class='line'>real    0m0.424s
+</span><span class='line'>user    0m0.004s
+</span><span class='line'>sys     0m0.012s
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I&rsquo;m sure I&rsquo;ll be using more of POCO in the future!</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Agam</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-29T00:00:00-07:00" pubdate data-updated="true">Sep 29<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/c-plus-plus/'>C++</a>, <a class='category' href='/blog/categories/http/'>HTTP</a>, <a class='category' href='/blog/categories/poco/'>Poco</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://agam.github.io/blog/2013/09/29/http-client-with-poco/" data-via="" data-counturl="http://agam.github.io/blog/2013/09/29/http-client-with-poco/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/09/09/building-stuff-part-2/" title="Previous Post: Learning how to build (part 2)">&laquo; Learning how to build (part 2)</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2013/09/30/less-gcc-more-clang/" title="Next Post: Less Gcc, More Clang">Less Gcc, More Clang &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/11/26/moar-reddit-dailyprogramming-falling-sand/">Moar Reddit DailyProgramming: Falling Sand</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/11/26/reddit-dailyprogrammer-computing-pi/">Reddit DailyProgrammer Computing Pi</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/11/19/reddit-dailyprogrammer-getting-started/">Reddit DailyProgrammer Getting Started</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/11/15/the-octopress-revolution/">The Octopress Revolution</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/11/15/moving-to-jekyll/">Moving to Jekyll</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Agam -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

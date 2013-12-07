@@ -1,0 +1,484 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: reddit, | Agam's Mashed-Up Pome]]></title>
+  <link href="http://agam.github.io/blog/categories/reddit/atom.xml" rel="self"/>
+  <link href="http://agam.github.io/"/>
+  <updated>2013-12-06T18:38:24-08:00</updated>
+  <id>http://agam.github.io/</id>
+  <author>
+    <name><![CDATA[Agam]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Moar Reddit DailyProgramming: Falling Sand]]></title>
+    <link href="http://agam.github.io/blog/2013/11/26/moar-reddit-dailyprogramming-falling-sand/"/>
+    <updated>2013-11-26T17:33:00-08:00</updated>
+    <id>http://agam.github.io/blog/2013/11/26/moar-reddit-dailyprogramming-falling-sand</id>
+    <content type="html"><![CDATA[<p>Another <a href="http://www.reddit.com/r/dailyprogrammer/comments/1rdtky/111113_challenge_142_easy_falling_sand/">easy challenge</a>.</p>
+
+<p>One thing I learnt while doing this: I had to test the program with standard
+input and had created a couple of files with sample input that I could pipe in.
+I wasted a lot of time debugging a spurious newline (!), so in the future I
+should remember to do the following:</p>
+
+<p><code>sh
+set listchars=eol:$
+</code></p>
+
+<p>What this does is show you <code>$</code> wherever the file has <code>\n</code> in it, so you can use
+this to distinguish between &lsquo;real&rsquo; spaces and whitespace.</p>
+
+<p><div><script src='https://gist.github.com/7669304.js'></script>
+<noscript><pre><code>#include &lt;cmath&gt;
+#include &lt;cstdint&gt;
+#include &lt;cstdio&gt;
+#include &lt;cstdlib&gt;
+#include &lt;iostream&gt;
+#include &lt;limits&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
+
+using namespace std;
+
+void PrintGrid(const vector&lt;vector&lt;char&gt;&gt;&amp; grid) {
+  for (int i = 0; i &lt; grid.size(); ++i) {
+    for (int j = 0; j &lt; grid.size(); ++j) {
+      cout &lt;&lt; grid[i][j];
+    }
+    cout &lt;&lt; endl;
+  }
+}
+
+bool GridFall(vector&lt;vector&lt;char&gt;&gt;* grid) {
+  bool changed = false;
+  // Skip row above ground
+  for (int i = grid-&gt;size() - 2; i &gt;= 0; --i) {
+    auto&amp; current_row = grid-&gt;at(i);
+    auto&amp; next_row = grid-&gt;at(i + 1);
+    for (int j = 0; j &lt; grid-&gt;size(); ++j) {
+      if (current_row[j] == &#39;.&#39; &amp;&amp; next_row[j] == &#39; &#39;) {
+        changed = true;
+        current_row[j] = &#39; &#39;;
+        next_row[j] = &#39;.&#39;;
+      }
+    }
+  }
+  return changed;
+}
+
+int main() {
+  int grid_size;
+  cin &gt;&gt; grid_size;
+
+  vector&lt;vector&lt;char&gt;&gt; grid(grid_size);
+  char dummy_newline;
+  cin.get(dummy_newline);
+  cin &gt;&gt; noskipws;
+  for (int i = 0; i &lt; grid_size; ++i) {
+    for (int j = 0; j &lt; grid_size; ++j) {
+      char grid_char;
+      cin.get(grid_char);
+      grid[i].push_back(grid_char);
+    }
+    cin.get(dummy_newline);
+  }
+
+  do {
+    // Uncomment to view/debug transitory steps.
+    //cout &lt;&lt; &quot;Intermediate grid state :- &quot; &lt;&lt; endl;
+    //PrintGrid(grid);
+  } while (GridFall(&amp;grid));
+
+  PrintGrid(grid);
+
+  return 0;
+}
+
+/*
+ * Input Description
+ * On standard console input, you will be given an integer N which represents
+ * the N x N grid of ASCII characters. This means there will be N-lines of
+ * N-characters long. This is the starting grid of your simulated world: the
+ * character &#39; &#39; (space) means an empty space, while &#39;.&#39; (dot) means sand, and
+ * &#39;#&#39; (hash or pound) means stone. Once you parse this input, simulate the
+ * world until all particles are settled (e.g. the sand has fallen and either
+ * settled on the ground or on stone). &quot;Ground&quot; is defined as the solid surface
+ * right below the last row.
+ * Output Description
+ * Print the end result of all particle positions using the input format for
+ * particles.
+ * Sample Inputs &amp; Outputs
+ * Sample Input
+ * 5
+ * .....
+ *   #  
+ *   #    
+ *
+ *       .
+ * Sample Output
+ *   .  
+ * . #  
+ * #    
+ *     .
+ *  . ..
+ */
+</code></pre></noscript></div>
+</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Reddit DailyProgrammer Computing Pi]]></title>
+    <link href="http://agam.github.io/blog/2013/11/26/reddit-dailyprogrammer-computing-pi/"/>
+    <updated>2013-11-26T14:50:00-08:00</updated>
+    <id>http://agam.github.io/blog/2013/11/26/reddit-dailyprogrammer-computing-pi</id>
+    <content type="html"><![CDATA[<p>Another reddit programming exercise, <a href="http://www.reddit.com/r/dailyprogrammer/comments/1qply1/111513_challenge_129_hard_baking_pi/">this one</a> being classified as &lsquo;hard&rsquo; and indeed it <em>did</em> take a while longer, being a distributed programming setup.</p>
+
+<h3>Implementation Notes</h3>
+
+<ul>
+<li>In a real world application, I would use something like Protocol Buffers for serialization</li>
+<li>ditto for something like Thrift for RPCs</li>
+<li>I had to add a sleep to each client so the first client doesn&rsquo;t run through
+the whole batch on its own (machines are too fast these days!)</li>
+<li>The run was limited to 250 digits, seemed to exhaust accuracy after about 254 digits with my implementation</li>
+<li>Every client connects and sends &lsquo;-1&rsquo; before getting its first digit. On
+subsequent connections it sends its current digit and computed value, and
+receives the next digit to compute.</li>
+</ul>
+
+
+<h3>Server Code</h3>
+
+<p><div><script src='https://gist.github.com/7667732.js'></script>
+<noscript><pre><code>#include &lt;cmath&gt;
+#include &lt;cstdint&gt;
+#include &lt;cstdio&gt;
+#include &lt;cstdlib&gt;
+#include &lt;iostream&gt;
+#include &lt;limits&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
+
+#include &quot;Poco/Net/ServerSocket.h&quot;
+#include &quot;Poco/Net/SocketAddress.h&quot;
+#include &quot;Poco/Net/StreamSocket.h&quot;
+#include &quot;Poco/Timespan.h&quot;
+
+using namespace std;
+
+int getNextDigit() {
+  static int next_digit = -1;
+  ++next_digit;
+  return next_digit;
+}
+
+int main() {
+  Poco::Net::ServerSocket srv(9090);
+  cout &lt;&lt; &quot;Waiting for clients ...&quot; &lt;&lt; endl;
+
+  // Arbitrary number of clients are supported. Each client is given the &#39;next&#39;
+  // digit once it&#39;s done.
+
+  double mysum = 3.0;  // used to sanity check
+  static const float kComparisonMultiplier = 10000.0;
+  for (;;) {
+    Poco::Net::StreamSocket ss = srv.acceptConnection();
+    ss.setReceiveTimeout(20000);
+    ss.setSendTimeout(20000);
+    int last_digit;
+    unsigned int computed_value;
+    char client_buf[10];
+    ss.receiveBytes(client_buf, 10);
+    sscanf(client_buf, &quot;%d-%u&quot;, &amp;last_digit, &amp;computed_value);
+    cout &lt;&lt; &quot;Received &quot; &lt;&lt; last_digit
+         &lt;&lt; &quot;th digit as &quot; &lt;&lt; hex &lt;&lt; computed_value &lt;&lt; dec &lt;&lt; endl;
+    if (computed_value != 1000) {
+      mysum += (1.0 * computed_value / pow(16.0, (last_digit + 1)));
+      cout &lt;&lt; &quot;  Divergence from PI &quot;
+           &lt;&lt; &quot;(to &quot; &lt;&lt; kComparisonMultiplier &lt;&lt; &quot; accuracy) so far = &quot;
+           &lt;&lt; fabs((mysum - M_PI) * kComparisonMultiplier)  &lt;&lt; endl;
+    }
+
+    // Send next command
+    int next_digit = getNextDigit();
+    snprintf(client_buf, 10, &quot;*%d*&quot;, next_digit);
+    ss.sendBytes(client_buf, 10);
+    cout &lt;&lt; &quot;Sent &quot; &lt;&lt; client_buf &lt;&lt; endl;
+  }
+  return 0;
+}
+
+/*
+ * Input Description
+ * There is no formal input description, though this is the desired behavior:
+ * You launch your main dispatcher-application on Computer A. You then launch
+ * the computing-applications on Computer W, X, Y and Z. Computer A wants to
+ * compute the first four digits of Pi, and sends the appropriate network
+ * commands, one to each computer. Computer Y returns a result first, so the
+ * dispatcher receives the data, saves in your output file the line &quot;0:2&quot;, and
+ * then gives the command to compute the 5th digit of Pi. Computers X, Z, W
+ * finish in that order, returning the results to the dispatcher, which in turn
+ * saves in the same format. They are then asked to compute digits 6, 7, and 8.
+ * This repeats until your dispatcher application sends a &quot;stop&quot; or &quot;kill&quot;
+ * command to the computing processes. It is up to you how many hexadecimal
+ * digits each process computes.
+ * Output Description
+ * For each computed base-16 (hexadecimal) digit of Pi, write to a file a line
+ * of text in the format of &lt;Digit-Index&gt;:&lt;Computed-Digit&gt;. The order does not
+ * matter, and you may skip digits. An example of the file, after eight computed
+ * digits, would be as follows:
+ * 0:2
+ * 1:4
+ * 2:3
+ * 3:F
+ * 4:6
+ * 5:A
+ * 6:8
+ * 7:8
+ */
+</code></pre></noscript></div>
+</p>
+
+<h3>Client Code</h3>
+
+<p><div><script src='https://gist.github.com/7667742.js'></script>
+<noscript><pre><code>#include &lt;cmath&gt;
+#include &lt;cstdint&gt;
+#include &lt;cstdio&gt;
+#include &lt;cstdlib&gt;
+#include &lt;iostream&gt;
+#include &lt;limits&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
+
+#include &quot;Poco/Net/SocketAddress.h&quot;
+#include &quot;Poco/Net/StreamSocket.h&quot;
+
+using namespace std;
+
+double Series(unsigned int digit, int j) {
+  double termsum = 0.0;
+  for (int k = 0; k &lt; digit; k++) {
+    double numerator = pow(16.0, digit - k);
+    double denominator = (8 * k + j);
+    termsum += (numerator / denominator);
+    termsum -= floor(termsum);
+  }
+  for (int k = digit; ; k++) {
+    double numerator = 1.0;
+    double denominator = (8 * k + j) * pow(16, k - digit);
+    double fraction = numerator / denominator;
+    if (fraction - 0.0  &lt; 1e-32) break;
+    termsum += (numerator / denominator);
+    termsum -= floor(termsum);
+  }
+  return termsum;
+}
+
+double ComputePiDigit(unsigned int digit) {
+  double value = (4 * Series(digit, 1) -
+                  2 * Series(digit, 4) -
+                  1 * Series(digit, 5) -
+                  1 * Series(digit, 6));
+  value = value - (unsigned long long) value + 1.0;
+  return value;
+}
+
+// Special case for very first client connection: digitNum == -1
+// Value has valid hex range, or else &#39;1000&#39;
+
+struct PiState {
+  int digitNum;
+  unsigned int value;
+};
+
+int main(int argc, char **argv) {
+  cout &lt;&lt; &quot;Connecting to &quot; &lt;&lt; argv[1] &lt;&lt; &quot;:&quot; &lt;&lt; argv[2] &lt;&lt; endl;
+  static const int kMaxDigits = 250;
+  // Connect to the server, work with upto 10000 digits, then stop.
+  Poco::Net::SocketAddress sa(argv[1], atoi(argv[2]));
+  PiState my_pi_state;
+  // First request is special
+  my_pi_state.digitNum = -1;;
+  my_pi_state.value = 1000;
+
+  while (my_pi_state.digitNum &lt; kMaxDigits) {
+
+    Poco::Net::StreamSocket socket(sa);
+    socket.setReceiveTimeout(100000);
+
+    // contact server, give current result, get new digit to compute
+    char bufstr[10];
+    snprintf(bufstr, 10, &quot;%d-%u&quot;, my_pi_state.digitNum, my_pi_state.value);
+    socket.sendBytes(bufstr, 10);
+    socket.receiveBytes(bufstr, 10);
+    sscanf(bufstr, &quot;*%d*&quot;, &amp;my_pi_state.digitNum);
+    double calculated_value = ComputePiDigit(my_pi_state.digitNum);
+    // common case: compute the current digit and send it to the server
+
+    cout &lt;&lt; &quot;Digit: &quot; &lt;&lt; dec &lt;&lt; my_pi_state.digitNum &lt;&lt; &quot;...&quot;;
+    float hexval = fabs(calculated_value);
+    my_pi_state.value =
+        static_cast&lt;unsigned int&gt;(16.0 * (hexval - floor(hexval)));
+    cout &lt;&lt; &quot;Value: &quot; &lt;&lt; hex &lt;&lt; my_pi_state.value &lt;&lt; endl;
+
+    // Anti-performance, but we want to work slowly here so I can start up
+    // multiple clients and show their interleaved output :)
+    sleep(1);
+  }
+  cout &lt;&lt; &quot;Pi Client exiting ...&quot; &lt;&lt; endl &lt;&lt; endl;
+}
+</code></pre></noscript></div>
+</p>
+
+<h3>Compiling</h3>
+
+<p><code>sh
+$ clang++ -std=c++0x pi-compute-server.cpp  -lPocoNet -lPocoFoundation -o server
+$ clang++ -std=c++0x pi-compute-client.cpp  -lPocoNet -lPocoFoundation -o client
+</code></p>
+
+<h3>Running</h3>
+
+<p>```sh
+$ ./server
+Waiting for clients &hellip;
+Received -1th digit as 1000
+Sent <em>0</em>
+Received 0th digit as 2
+Divergence from PI (to 10000 accuracy) so far = 165.927
+Sent <em>1</em>
+Received -1th digit as 1000
+Sent <em>2</em>
+Received 1th digit as 4
+Divergence from PI (to 10000 accuracy) so far = 9.67654
+Sent <em>3</em>
+Received 2th digit as 3
+Divergence from PI (to 10000 accuracy) so far = 2.35232
+Sent <em>4</em>
+Received -1th digit as 1000
+Sent <em>5</em>
+Received 3th digit as 15
+Divergence from PI (to 10000 accuracy) so far = 0.0634988
+Sent <em>6</em>
+Received 4th digit as 6
+Divergence from PI (to 10000 accuracy) so far = 0.00627833
+Sent <em>7</em>
+&hellip;
+Sent <em>249</em>
+Received 246th digit as 1
+Divergence from PI (to 10000 accuracy) so far = 0.00597909
+Sent <em>250</em>
+Received 247th digit as 0
+Divergence from PI (to 10000 accuracy) so far = 0.00597909
+Sent <em>251</em>
+Received 248th digit as 11
+Divergence from PI (to 10000 accuracy) so far = 0.00597909
+Sent <em>252</em>
+Received 249th digit as 3
+Divergence from PI (to 10000 accuracy) so far = 0.00597909
+Sent <em>253</em>
+^C</p>
+
+<p>$ ./client localhost 9090
+Connecting to localhost:9090
+Digit: 0&hellip;Value: 2
+Digit: 1&hellip;Value: 4
+Digit: 3&hellip;Value: f
+Digit: 6&hellip;Value: 8
+Digit: 9&hellip;Value: 5
+Digit: 13&hellip;Value: 8
+Digit: 17&hellip;Value: 0
+Digit: 21&hellip;Value: 7
+&hellip;
+```</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Reddit DailyProgrammer Getting Started]]></title>
+    <link href="http://agam.github.io/blog/2013/11/19/reddit-dailyprogrammer-getting-started/"/>
+    <updated>2013-11-19T18:57:00-08:00</updated>
+    <id>http://agam.github.io/blog/2013/11/19/reddit-dailyprogrammer-getting-started</id>
+    <content type="html"><![CDATA[<p>In the vein of &ldquo;Always Be Coding&rdquo;, I stumbled across this subreddit: <a href="http://www.reddit.com/r/dailyprogrammer/">&ldquo;Daily
+Programmer&rdquo;</a>, and then decided to do
+the &lsquo;easy&rsquo; <a href="http://www.reddit.com/r/dailyprogrammer/comments/1qwkdz/111113_challenge_141_easy_checksums/">question on the
+top</a></p>
+
+<p>Here&rsquo;s the gist (problem in comments at the bottom).</p>
+
+<p><div><script src='https://gist.github.com/7556916.js'></script>
+<noscript><pre><code>#include &lt;stdint.h&gt;                                                                                                                                                      
+        
+#include &lt;iostream&gt;
+#include &lt;limits&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
+        
+using namespace std;
+        
+void cin_discard_newline() {
+  cin.ignore(numeric_limits&lt;streamsize&gt;::max(), &#39;\n&#39;);
+}       
+        
+uint16_t fletcher_checksum(const string&amp; word) {
+  uint8_t count0 = 0, count1 = 0; 
+  for (int i = 0; i &lt; word.size(); ++i) {
+    unsigned char c = word[i];
+    count0 = (count0 + c) % 255;
+    count1 = (count1 + count0) % 255;
+  }     
+  return (count1 &lt;&lt; 8) | count0;
+}       
+        
+int main() {
+  // Read in number of lines
+  int num_lines;
+  cin &gt;&gt; num_lines;
+  cin_discard_newline();
+  cout &lt;&lt; hex;
+  vector&lt;string&gt; lines;
+  for (int i = 0; i &lt; num_lines; ++i) {
+    string line;
+    getline(cin, line);
+    lines.push_back(line);
+  }     
+        
+  for (int i = 0; i &lt; num_lines; ++i) {
+    cout &lt;&lt; i + 1 &lt;&lt; &quot; &quot; &lt;&lt; fletcher_checksum(lines[i]) &lt;&lt; endl;
+  }     
+}       
+        
+/*      
+ * http://www.reddit.com/r/dailyprogrammer/comments/1qwkdz/111113_challenge_141_easy_checksums/
+ *      
+ * Formal Inputs &amp; Outputs
+ * Input Description
+ * On standard console input, you will first be given an integer N which ranges
+ * inclusively from 1 to 256. After this line, you will receive N-lines of ASCII
+ * text. This text will only contain regular printable characters, and will all
+ * be on a single line of input.
+ * Output Description
+ * For each line of input, print the index (starting from 1) and the 16-bit
+ * Fletcher&#39;s checksum as a 4-digit hexadecimal number.
+ * Sample Inputs &amp; Outputs
+ * Sample Input
+ * 3    
+ * Fletcher
+ * Sally sells seashells by the seashore.
+ * Les chaussettes de l&#39;archi-duchesse, sont-elles seches ou archi-seches ?
+ * Sample Output
+ * 1 D330
+ * 2 D23E
+ * 3 404D
+ */     </code></pre></noscript></div>
+</p>
+]]></content>
+  </entry>
+  
+</feed>

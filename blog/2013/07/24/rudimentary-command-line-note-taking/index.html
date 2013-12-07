@@ -1,0 +1,263 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Rudimentary note taking on the command line - Agam's Mashed-Up Pome</title>
+  <meta name="author" content="Agam">
+
+  
+  <meta name="description" content="Everyone has their own pet setup; here&rsquo;s mine. Its just a bunch of text files, shared on Dropbox. I have a bash alias to make a directory if &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://agam.github.io/blog/2013/07/24/rudimentary-command-line-note-taking">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Agam's Mashed-Up Pome" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Agam's Mashed-Up Pome</a></h1>
+  
+    <h2>Thinking is hard; Let's compute instead.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:agam.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Rudimentary Note Taking on the Command Line</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-24T00:00:00-07:00" pubdate data-updated="true">Jul 24<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Everyone has their own pet setup; here&rsquo;s mine. Its just a bunch of text files, shared on Dropbox.</p>
+
+<p>I have a bash alias to make a directory if required, create the file, and open it in Vim.</p>
+
+<p>Within the file, I use markdown for text, and a few additional conventions to make it easier to search through them.</p>
+
+<p>I use one file per date, with the name being something like <code>~/notes/2013/07/24</code>.</p>
+
+<p>The following one-liner in my <code>.bashrc</code> accomplishes this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="c"># Bring up the day&#39;s notes</span>
+</span><span class='line'><span class="k">function </span>diary<span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>  <span class="nv">year</span><span class="o">=</span><span class="sb">`</span>date <span class="s2">&quot;+%Y&quot;</span><span class="sb">`</span>
+</span><span class='line'>  <span class="nv">month</span><span class="o">=</span><span class="sb">`</span>date <span class="s2">&quot;+%m&quot;</span><span class="sb">`</span>
+</span><span class='line'>  <span class="nv">day</span><span class="o">=</span><span class="sb">`</span>date <span class="s2">&quot;+%d&quot;</span><span class="sb">`</span>
+</span><span class='line'>  <span class="nv">diarydir</span><span class="o">=</span>~/Dropbox/personalnotes/<span class="nv">$year</span>/<span class="nv">$month</span>
+</span><span class='line'>  <span class="k">if</span> <span class="o">[[</span> ! -d <span class="s2">&quot;$diarydir&quot;</span> <span class="o">]]</span>; <span class="k">then</span>
+</span><span class='line'><span class="k">    </span>mkdir -p <span class="s2">&quot;$diarydir&quot;</span>
+</span><span class='line'>  <span class="k">fi</span>
+</span><span class='line'><span class="k">  </span>vi <span class="nv">$diarydir</span>/<span class="nv">$day</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I also use some additional <em>metadata</em> within it, such as adding &lsquo;@14:45&rsquo; to indicate a timestamp before a paragraph, and &lsquo;#category&rsquo; to mark off sections (I use &lsquo;##category&rsquo; to denote one-line or one paragraph sections, otherwise all text is assumed to belong to the last declared section).</p>
+
+<p>For convenience, I defined the following mapping in my <code>.vimrc</code> that inserts the timestamp when required:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>nmap &lt;C-c&gt;&lt;C-t&gt; o@&lt;C-R&gt;<span class="o">=</span>strftime<span class="o">(</span><span class="s2">&quot;%H:%M&quot;</span><span class="o">)</span>&lt;CR&gt;&lt;CR&gt;&lt;CR&gt;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I&rsquo;ll cover the retrieval part of this in a separate post. If you don&rsquo;t have any note taking system yet, and don&rsquo;t want to go to the extent of <em>blogging</em> every little thing you want to note down, and find it a bit of a hassle to open up Evernote or something similar to jot something down, you might like to try this quick and simple text-based solution!</p>
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Agam</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-07-24T00:00:00-07:00" pubdate data-updated="true">Jul 24<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/commandline/'>CommandLine</a>, <a class='category' href='/blog/categories/notes/'>Notes</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://agam.github.io/blog/2013/07/24/rudimentary-command-line-note-taking/" data-via="" data-counturl="http://agam.github.io/blog/2013/07/24/rudimentary-command-line-note-taking/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/06/26/data-structures-haskell-vs-cpp/" title="Previous Post: Comparison of data structures in C++ and Haskell">&laquo; Comparison of data structures in C++ and Haskell</a>
+      
+      
+        <a class="basic-alignment right" href="/blog/2013/08/06/slimv/" title="Next Post: SlimV and Vim (as an equivalent to Emacs and Slime)">SlimV and Vim (as an equivalent to Emacs and Slime) &raquo;</a>
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/11/26/moar-reddit-dailyprogramming-falling-sand/">Moar Reddit DailyProgramming: Falling Sand</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/11/26/reddit-dailyprogrammer-computing-pi/">Reddit DailyProgrammer Computing Pi</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/11/19/reddit-dailyprogrammer-getting-started/">Reddit DailyProgrammer Getting Started</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/11/15/the-octopress-revolution/">The Octopress Revolution</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/11/15/moving-to-jekyll/">Moving to Jekyll</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Agam -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

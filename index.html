@@ -1,1 +1,2400 @@
-My Octopress Page is coming soon &hellip;
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Agam's Mashed-Up Pome</title>
+  <meta name="author" content="Agam">
+
+  
+  <meta name="description" content="Another easy challenge. One thing I learnt while doing this: I had to test the program with standard
+input and had created a couple of files with &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://agam.github.io">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Agam's Mashed-Up Pome" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Agam's Mashed-Up Pome</a></h1>
+  
+    <h2>Thinking is hard; Let's compute instead.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:agam.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div class="blog-index">
+  
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/11/26/moar-reddit-dailyprogramming-falling-sand/">Moar Reddit DailyProgramming: Falling Sand</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-11-26T17:33:00-08:00" pubdate data-updated="true">Nov 26<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Another <a href="http://www.reddit.com/r/dailyprogrammer/comments/1rdtky/111113_challenge_142_easy_falling_sand/">easy challenge</a>.</p>
+
+<p>One thing I learnt while doing this: I had to test the program with standard
+input and had created a couple of files with sample input that I could pipe in.
+I wasted a lot of time debugging a spurious newline (!), so in the future I
+should remember to do the following:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nb">set </span><span class="nv">listchars</span><span class="o">=</span>eol:<span class="err">$</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>What this does is show you <code>$</code> wherever the file has <code>\n</code> in it, so you can use
+this to distinguish between &lsquo;real&rsquo; spaces and whitespace.</p>
+
+<div><script src='https://gist.github.com/7669304.js'></script>
+<noscript><pre><code>#include &lt;cmath&gt;
+#include &lt;cstdint&gt;
+#include &lt;cstdio&gt;
+#include &lt;cstdlib&gt;
+#include &lt;iostream&gt;
+#include &lt;limits&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
+
+using namespace std;
+
+void PrintGrid(const vector&lt;vector&lt;char&gt;&gt;&amp; grid) {
+  for (int i = 0; i &lt; grid.size(); ++i) {
+    for (int j = 0; j &lt; grid.size(); ++j) {
+      cout &lt;&lt; grid[i][j];
+    }
+    cout &lt;&lt; endl;
+  }
+}
+
+bool GridFall(vector&lt;vector&lt;char&gt;&gt;* grid) {
+  bool changed = false;
+  // Skip row above ground
+  for (int i = grid-&gt;size() - 2; i &gt;= 0; --i) {
+    auto&amp; current_row = grid-&gt;at(i);
+    auto&amp; next_row = grid-&gt;at(i + 1);
+    for (int j = 0; j &lt; grid-&gt;size(); ++j) {
+      if (current_row[j] == &#39;.&#39; &amp;&amp; next_row[j] == &#39; &#39;) {
+        changed = true;
+        current_row[j] = &#39; &#39;;
+        next_row[j] = &#39;.&#39;;
+      }
+    }
+  }
+  return changed;
+}
+
+int main() {
+  int grid_size;
+  cin &gt;&gt; grid_size;
+
+  vector&lt;vector&lt;char&gt;&gt; grid(grid_size);
+  char dummy_newline;
+  cin.get(dummy_newline);
+  cin &gt;&gt; noskipws;
+  for (int i = 0; i &lt; grid_size; ++i) {
+    for (int j = 0; j &lt; grid_size; ++j) {
+      char grid_char;
+      cin.get(grid_char);
+      grid[i].push_back(grid_char);
+    }
+    cin.get(dummy_newline);
+  }
+
+  do {
+    // Uncomment to view/debug transitory steps.
+    //cout &lt;&lt; &quot;Intermediate grid state :- &quot; &lt;&lt; endl;
+    //PrintGrid(grid);
+  } while (GridFall(&amp;grid));
+
+  PrintGrid(grid);
+
+  return 0;
+}
+
+/*
+ * Input Description
+ * On standard console input, you will be given an integer N which represents
+ * the N x N grid of ASCII characters. This means there will be N-lines of
+ * N-characters long. This is the starting grid of your simulated world: the
+ * character &#39; &#39; (space) means an empty space, while &#39;.&#39; (dot) means sand, and
+ * &#39;#&#39; (hash or pound) means stone. Once you parse this input, simulate the
+ * world until all particles are settled (e.g. the sand has fallen and either
+ * settled on the ground or on stone). &quot;Ground&quot; is defined as the solid surface
+ * right below the last row.
+ * Output Description
+ * Print the end result of all particle positions using the input format for
+ * particles.
+ * Sample Inputs &amp; Outputs
+ * Sample Input
+ * 5
+ * .....
+ *   #  
+ *   #    
+ *
+ *       .
+ * Sample Output
+ *   .  
+ * . #  
+ * #    
+ *     .
+ *  . ..
+ */
+</code></pre></noscript></div>
+
+
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/11/26/reddit-dailyprogrammer-computing-pi/">Reddit DailyProgrammer Computing Pi</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-11-26T14:50:00-08:00" pubdate data-updated="true">Nov 26<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Another reddit programming exercise, <a href="http://www.reddit.com/r/dailyprogrammer/comments/1qply1/111513_challenge_129_hard_baking_pi/">this one</a> being classified as &lsquo;hard&rsquo; and indeed it <em>did</em> take a while longer, being a distributed programming setup.</p>
+
+<h3>Implementation Notes</h3>
+
+<ul>
+<li>In a real world application, I would use something like Protocol Buffers for serialization</li>
+<li>ditto for something like Thrift for RPCs</li>
+<li>I had to add a sleep to each client so the first client doesn&rsquo;t run through
+the whole batch on its own (machines are too fast these days!)</li>
+<li>The run was limited to 250 digits, seemed to exhaust accuracy after about 254 digits with my implementation</li>
+<li>Every client connects and sends &lsquo;-1&rsquo; before getting its first digit. On
+subsequent connections it sends its current digit and computed value, and
+receives the next digit to compute.</li>
+</ul>
+
+
+<h3>Server Code</h3>
+
+<div><script src='https://gist.github.com/7667732.js'></script>
+<noscript><pre><code>#include &lt;cmath&gt;
+#include &lt;cstdint&gt;
+#include &lt;cstdio&gt;
+#include &lt;cstdlib&gt;
+#include &lt;iostream&gt;
+#include &lt;limits&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
+
+#include &quot;Poco/Net/ServerSocket.h&quot;
+#include &quot;Poco/Net/SocketAddress.h&quot;
+#include &quot;Poco/Net/StreamSocket.h&quot;
+#include &quot;Poco/Timespan.h&quot;
+
+using namespace std;
+
+int getNextDigit() {
+  static int next_digit = -1;
+  ++next_digit;
+  return next_digit;
+}
+
+int main() {
+  Poco::Net::ServerSocket srv(9090);
+  cout &lt;&lt; &quot;Waiting for clients ...&quot; &lt;&lt; endl;
+
+  // Arbitrary number of clients are supported. Each client is given the &#39;next&#39;
+  // digit once it&#39;s done.
+
+  double mysum = 3.0;  // used to sanity check
+  static const float kComparisonMultiplier = 10000.0;
+  for (;;) {
+    Poco::Net::StreamSocket ss = srv.acceptConnection();
+    ss.setReceiveTimeout(20000);
+    ss.setSendTimeout(20000);
+    int last_digit;
+    unsigned int computed_value;
+    char client_buf[10];
+    ss.receiveBytes(client_buf, 10);
+    sscanf(client_buf, &quot;%d-%u&quot;, &amp;last_digit, &amp;computed_value);
+    cout &lt;&lt; &quot;Received &quot; &lt;&lt; last_digit
+         &lt;&lt; &quot;th digit as &quot; &lt;&lt; hex &lt;&lt; computed_value &lt;&lt; dec &lt;&lt; endl;
+    if (computed_value != 1000) {
+      mysum += (1.0 * computed_value / pow(16.0, (last_digit + 1)));
+      cout &lt;&lt; &quot;  Divergence from PI &quot;
+           &lt;&lt; &quot;(to &quot; &lt;&lt; kComparisonMultiplier &lt;&lt; &quot; accuracy) so far = &quot;
+           &lt;&lt; fabs((mysum - M_PI) * kComparisonMultiplier)  &lt;&lt; endl;
+    }
+
+    // Send next command
+    int next_digit = getNextDigit();
+    snprintf(client_buf, 10, &quot;*%d*&quot;, next_digit);
+    ss.sendBytes(client_buf, 10);
+    cout &lt;&lt; &quot;Sent &quot; &lt;&lt; client_buf &lt;&lt; endl;
+  }
+  return 0;
+}
+
+/*
+ * Input Description
+ * There is no formal input description, though this is the desired behavior:
+ * You launch your main dispatcher-application on Computer A. You then launch
+ * the computing-applications on Computer W, X, Y and Z. Computer A wants to
+ * compute the first four digits of Pi, and sends the appropriate network
+ * commands, one to each computer. Computer Y returns a result first, so the
+ * dispatcher receives the data, saves in your output file the line &quot;0:2&quot;, and
+ * then gives the command to compute the 5th digit of Pi. Computers X, Z, W
+ * finish in that order, returning the results to the dispatcher, which in turn
+ * saves in the same format. They are then asked to compute digits 6, 7, and 8.
+ * This repeats until your dispatcher application sends a &quot;stop&quot; or &quot;kill&quot;
+ * command to the computing processes. It is up to you how many hexadecimal
+ * digits each process computes.
+ * Output Description
+ * For each computed base-16 (hexadecimal) digit of Pi, write to a file a line
+ * of text in the format of &lt;Digit-Index&gt;:&lt;Computed-Digit&gt;. The order does not
+ * matter, and you may skip digits. An example of the file, after eight computed
+ * digits, would be as follows:
+ * 0:2
+ * 1:4
+ * 2:3
+ * 3:F
+ * 4:6
+ * 5:A
+ * 6:8
+ * 7:8
+ */
+</code></pre></noscript></div>
+
+
+<h3>Client Code</h3>
+
+<div><script src='https://gist.github.com/7667742.js'></script>
+<noscript><pre><code>#include &lt;cmath&gt;
+#include &lt;cstdint&gt;
+#include &lt;cstdio&gt;
+#include &lt;cstdlib&gt;
+#include &lt;iostream&gt;
+#include &lt;limits&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
+
+#include &quot;Poco/Net/SocketAddress.h&quot;
+#include &quot;Poco/Net/StreamSocket.h&quot;
+
+using namespace std;
+
+double Series(unsigned int digit, int j) {
+  double termsum = 0.0;
+  for (int k = 0; k &lt; digit; k++) {
+    double numerator = pow(16.0, digit - k);
+    double denominator = (8 * k + j);
+    termsum += (numerator / denominator);
+    termsum -= floor(termsum);
+  }
+  for (int k = digit; ; k++) {
+    double numerator = 1.0;
+    double denominator = (8 * k + j) * pow(16, k - digit);
+    double fraction = numerator / denominator;
+    if (fraction - 0.0  &lt; 1e-32) break;
+    termsum += (numerator / denominator);
+    termsum -= floor(termsum);
+  }
+  return termsum;
+}
+
+double ComputePiDigit(unsigned int digit) {
+  double value = (4 * Series(digit, 1) -
+                  2 * Series(digit, 4) -
+                  1 * Series(digit, 5) -
+                  1 * Series(digit, 6));
+  value = value - (unsigned long long) value + 1.0;
+  return value;
+}
+
+// Special case for very first client connection: digitNum == -1
+// Value has valid hex range, or else &#39;1000&#39;
+
+struct PiState {
+  int digitNum;
+  unsigned int value;
+};
+
+int main(int argc, char **argv) {
+  cout &lt;&lt; &quot;Connecting to &quot; &lt;&lt; argv[1] &lt;&lt; &quot;:&quot; &lt;&lt; argv[2] &lt;&lt; endl;
+  static const int kMaxDigits = 250;
+  // Connect to the server, work with upto 10000 digits, then stop.
+  Poco::Net::SocketAddress sa(argv[1], atoi(argv[2]));
+  PiState my_pi_state;
+  // First request is special
+  my_pi_state.digitNum = -1;;
+  my_pi_state.value = 1000;
+
+  while (my_pi_state.digitNum &lt; kMaxDigits) {
+
+    Poco::Net::StreamSocket socket(sa);
+    socket.setReceiveTimeout(100000);
+
+    // contact server, give current result, get new digit to compute
+    char bufstr[10];
+    snprintf(bufstr, 10, &quot;%d-%u&quot;, my_pi_state.digitNum, my_pi_state.value);
+    socket.sendBytes(bufstr, 10);
+    socket.receiveBytes(bufstr, 10);
+    sscanf(bufstr, &quot;*%d*&quot;, &amp;my_pi_state.digitNum);
+    double calculated_value = ComputePiDigit(my_pi_state.digitNum);
+    // common case: compute the current digit and send it to the server
+
+    cout &lt;&lt; &quot;Digit: &quot; &lt;&lt; dec &lt;&lt; my_pi_state.digitNum &lt;&lt; &quot;...&quot;;
+    float hexval = fabs(calculated_value);
+    my_pi_state.value =
+        static_cast&lt;unsigned int&gt;(16.0 * (hexval - floor(hexval)));
+    cout &lt;&lt; &quot;Value: &quot; &lt;&lt; hex &lt;&lt; my_pi_state.value &lt;&lt; endl;
+
+    // Anti-performance, but we want to work slowly here so I can start up
+    // multiple clients and show their interleaved output :)
+    sleep(1);
+  }
+  cout &lt;&lt; &quot;Pi Client exiting ...&quot; &lt;&lt; endl &lt;&lt; endl;
+}
+</code></pre></noscript></div>
+
+
+<h3>Compiling</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>clang++ -std<span class="o">=</span>c++0x pi-compute-server.cpp  -lPocoNet -lPocoFoundation -o server
+</span><span class='line'><span class="nv">$ </span>clang++ -std<span class="o">=</span>c++0x pi-compute-client.cpp  -lPocoNet -lPocoFoundation -o client
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3>Running</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>./server
+</span><span class='line'>Waiting <span class="k">for </span>clients ...
+</span><span class='line'>Received -1th digit as 1000
+</span><span class='line'>Sent *0*
+</span><span class='line'>Received 0th digit as 2
+</span><span class='line'>Divergence from PI <span class="o">(</span>to 10000 accuracy<span class="o">)</span> so <span class="nv">far</span> <span class="o">=</span> 165.927
+</span><span class='line'>Sent *1*
+</span><span class='line'>Received -1th digit as 1000
+</span><span class='line'>Sent *2*
+</span><span class='line'>Received 1th digit as 4
+</span><span class='line'>Divergence from PI <span class="o">(</span>to 10000 accuracy<span class="o">)</span> so <span class="nv">far</span> <span class="o">=</span> 9.67654
+</span><span class='line'>Sent *3*
+</span><span class='line'>Received 2th digit as 3
+</span><span class='line'>Divergence from PI <span class="o">(</span>to 10000 accuracy<span class="o">)</span> so <span class="nv">far</span> <span class="o">=</span> 2.35232
+</span><span class='line'>Sent *4*
+</span><span class='line'>Received -1th digit as 1000
+</span><span class='line'>Sent *5*
+</span><span class='line'>Received 3th digit as 15
+</span><span class='line'>Divergence from PI <span class="o">(</span>to 10000 accuracy<span class="o">)</span> so <span class="nv">far</span> <span class="o">=</span> 0.0634988
+</span><span class='line'>Sent *6*
+</span><span class='line'>Received 4th digit as 6
+</span><span class='line'>Divergence from PI <span class="o">(</span>to 10000 accuracy<span class="o">)</span> so <span class="nv">far</span> <span class="o">=</span> 0.00627833
+</span><span class='line'>Sent *7*
+</span><span class='line'>...
+</span><span class='line'>Sent *249*
+</span><span class='line'>Received 246th digit as 1
+</span><span class='line'>Divergence from PI <span class="o">(</span>to 10000 accuracy<span class="o">)</span> so <span class="nv">far</span> <span class="o">=</span> 0.00597909
+</span><span class='line'>Sent *250*
+</span><span class='line'>Received 247th digit as 0
+</span><span class='line'>Divergence from PI <span class="o">(</span>to 10000 accuracy<span class="o">)</span> so <span class="nv">far</span> <span class="o">=</span> 0.00597909
+</span><span class='line'>Sent *251*
+</span><span class='line'>Received 248th digit as 11
+</span><span class='line'>Divergence from PI <span class="o">(</span>to 10000 accuracy<span class="o">)</span> so <span class="nv">far</span> <span class="o">=</span> 0.00597909
+</span><span class='line'>Sent *252*
+</span><span class='line'>Received 249th digit as 3
+</span><span class='line'>Divergence from PI <span class="o">(</span>to 10000 accuracy<span class="o">)</span> so <span class="nv">far</span> <span class="o">=</span> 0.00597909
+</span><span class='line'>Sent *253*
+</span><span class='line'>^C
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>./client localhost 9090
+</span><span class='line'>Connecting to localhost:9090
+</span><span class='line'>Digit: 0...Value: 2
+</span><span class='line'>Digit: 1...Value: 4
+</span><span class='line'>Digit: 3...Value: f
+</span><span class='line'>Digit: 6...Value: 8
+</span><span class='line'>Digit: 9...Value: 5
+</span><span class='line'>Digit: 13...Value: 8
+</span><span class='line'>Digit: 17...Value: 0
+</span><span class='line'>Digit: 21...Value: 7
+</span><span class='line'>...
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/11/19/reddit-dailyprogrammer-getting-started/">Reddit DailyProgrammer Getting Started</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-11-19T18:57:00-08:00" pubdate data-updated="true">Nov 19<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>In the vein of &ldquo;Always Be Coding&rdquo;, I stumbled across this subreddit: <a href="http://www.reddit.com/r/dailyprogrammer/">&ldquo;Daily
+Programmer&rdquo;</a>, and then decided to do
+the &lsquo;easy&rsquo; <a href="http://www.reddit.com/r/dailyprogrammer/comments/1qwkdz/111113_challenge_141_easy_checksums/">question on the
+top</a></p>
+
+<p>Here&rsquo;s the gist (problem in comments at the bottom).</p>
+
+<div><script src='https://gist.github.com/7556916.js'></script>
+<noscript><pre><code>#include &lt;stdint.h&gt;                                                                                                                                                      
+        
+#include &lt;iostream&gt;
+#include &lt;limits&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
+        
+using namespace std;
+        
+void cin_discard_newline() {
+  cin.ignore(numeric_limits&lt;streamsize&gt;::max(), &#39;\n&#39;);
+}       
+        
+uint16_t fletcher_checksum(const string&amp; word) {
+  uint8_t count0 = 0, count1 = 0; 
+  for (int i = 0; i &lt; word.size(); ++i) {
+    unsigned char c = word[i];
+    count0 = (count0 + c) % 255;
+    count1 = (count1 + count0) % 255;
+  }     
+  return (count1 &lt;&lt; 8) | count0;
+}       
+        
+int main() {
+  // Read in number of lines
+  int num_lines;
+  cin &gt;&gt; num_lines;
+  cin_discard_newline();
+  cout &lt;&lt; hex;
+  vector&lt;string&gt; lines;
+  for (int i = 0; i &lt; num_lines; ++i) {
+    string line;
+    getline(cin, line);
+    lines.push_back(line);
+  }     
+        
+  for (int i = 0; i &lt; num_lines; ++i) {
+    cout &lt;&lt; i + 1 &lt;&lt; &quot; &quot; &lt;&lt; fletcher_checksum(lines[i]) &lt;&lt; endl;
+  }     
+}       
+        
+/*      
+ * http://www.reddit.com/r/dailyprogrammer/comments/1qwkdz/111113_challenge_141_easy_checksums/
+ *      
+ * Formal Inputs &amp; Outputs
+ * Input Description
+ * On standard console input, you will first be given an integer N which ranges
+ * inclusively from 1 to 256. After this line, you will receive N-lines of ASCII
+ * text. This text will only contain regular printable characters, and will all
+ * be on a single line of input.
+ * Output Description
+ * For each line of input, print the index (starting from 1) and the 16-bit
+ * Fletcher&#39;s checksum as a 4-digit hexadecimal number.
+ * Sample Inputs &amp; Outputs
+ * Sample Input
+ * 3    
+ * Fletcher
+ * Sally sells seashells by the seashore.
+ * Les chaussettes de l&#39;archi-duchesse, sont-elles seches ou archi-seches ?
+ * Sample Output
+ * 1 D330
+ * 2 D23E
+ * 3 404D
+ */     </code></pre></noscript></div>
+
+
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/11/15/the-octopress-revolution/">The Octopress Revolution</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-11-15T17:06:00-08:00" pubdate data-updated="true">Nov 15<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Stumbled across Octopress and realized I could get a &ldquo;better minimalism&rdquo; with
+it.</p>
+
+<p>First, you have to get it.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>  <span class="nv">$ </span> git clone
+</span><span class='line'>  git://github.com/imathis/octopress.git
+</span><span class='line'>  octopress
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then, you have to get a few dependencies.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>ruby --version
+</span><span class='line'>ruby 1.8.7 <span class="o">(</span>2011-06-30 patchlevel 352<span class="o">)</span> <span class="o">[</span>x86_64-linux<span class="o">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>curl -L https://get.rvm.io | bash -s stable --ruby
+</span><span class='line'>  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+</span><span class='line'>  Dload  Upload   Total   Spent    Left  Speed
+</span><span class='line'>  100   184  100   184    0     0    468      0
+</span><span class='line'>  --:--:-- --:--:-- --:--:--  1688
+</span><span class='line'>  100 19527  100 19527    0     0  37740      0
+</span><span class='line'>  --:--:-- --:--:-- --:--:-- 37740
+</span><span class='line'>  Please <span class="nb">read </span>and follow further instructions.
+</span><span class='line'>  Downloading RVM branch stable
+</span><span class='line'>  ...
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">$ </span><span class="nb">source</span> /home/agam/.rvm/scripts/rvm
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">$ </span>rvm install 1.9.3
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">$ </span>rvm use 1.9.3
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">$ </span>rvm rubygems latest
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>(Note: <a href="http://rbenv.org/">rbenv</a> is an alternative to <a href="http://rvm.io/">rvm</a> above)</p>
+
+<p>The next step is to set up some of the gems we downloaded.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>  <span class="nv">$ </span> <span class="nb">cd </span>octopress
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">$ </span>gem install bundler
+</span><span class='line'>Fetching: bundler-1.3.5.gem <span class="o">(</span>100%<span class="o">)</span>
+</span><span class='line'>  Successfully installed bundler-1.3.5
+</span><span class='line'>  Installing ri documentation <span class="k">for </span>bundler-1.3.5
+</span><span class='line'>  1 gem installed
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">$ </span>bundle install
+</span><span class='line'>  Fetching gem metadata from
+</span><span class='line'>  https://rubygems.org/.......
+</span><span class='line'>  Fetching gem metadata from
+</span><span class='line'>  https://rubygems.org/..
+</span><span class='line'>  Installing rake <span class="o">(</span>0.9.2.2<span class="o">)</span>
+</span><span class='line'>  Installing RedCloth <span class="o">(</span>4.2.9<span class="o">)</span>
+</span><span class='line'>  Installing chunky_png <span class="o">(</span>1.2.5<span class="o">)</span>
+</span><span class='line'>  Installing fast-stemmer <span class="o">(</span>1.0.1<span class="o">)</span>
+</span><span class='line'>  Installing classifier <span class="o">(</span>1.3.3<span class="o">)</span>
+</span><span class='line'>  Installing fssm <span class="o">(</span>0.2.9<span class="o">)</span>
+</span><span class='line'>  Installing sass <span class="o">(</span>3.2.9<span class="o">)</span>
+</span><span class='line'>  Installing compass <span class="o">(</span>0.12.2<span class="o">)</span>
+</span><span class='line'>  Installing directory_watcher <span class="o">(</span>1.4.1<span class="o">)</span>
+</span><span class='line'>  Installing haml <span class="o">(</span>3.1.7<span class="o">)</span>
+</span><span class='line'>  Installing kramdown <span class="o">(</span>0.13.8<span class="o">)</span>
+</span><span class='line'>  Installing liquid <span class="o">(</span>2.3.0<span class="o">)</span>
+</span><span class='line'>  Installing syntax <span class="o">(</span>1.0.0<span class="o">)</span>
+</span><span class='line'>  Installing maruku <span class="o">(</span>0.6.1<span class="o">)</span>
+</span><span class='line'>  Installing posix-spawn <span class="o">(</span>0.3.6<span class="o">)</span>
+</span><span class='line'>  Installing yajl-ruby <span class="o">(</span>1.1.0<span class="o">)</span>
+</span><span class='line'>  Installing pygments.rb <span class="o">(</span>0.3.4<span class="o">)</span>
+</span><span class='line'>  Installing jekyll <span class="o">(</span>0.12.0<span class="o">)</span>
+</span><span class='line'>  Installing rack <span class="o">(</span>1.5.2<span class="o">)</span>
+</span><span class='line'>  Installing rack-protection <span class="o">(</span>1.5.0<span class="o">)</span>
+</span><span class='line'>  Installing rb-fsevent <span class="o">(</span>0.9.1<span class="o">)</span>
+</span><span class='line'>  Installing rdiscount <span class="o">(</span>2.0.7.3<span class="o">)</span>
+</span><span class='line'>  Installing rubypants <span class="o">(</span>0.2.0<span class="o">)</span>
+</span><span class='line'>  Installing sass-globbing <span class="o">(</span>1.0.0<span class="o">)</span>
+</span><span class='line'>  Installing tilt <span class="o">(</span>1.3.7<span class="o">)</span>
+</span><span class='line'>  Installing sinatra <span class="o">(</span>1.4.2<span class="o">)</span>
+</span><span class='line'>  Installing stringex <span class="o">(</span>1.4.0<span class="o">)</span>
+</span><span class='line'>Using bundler <span class="o">(</span>1.3.5<span class="o">)</span>
+</span><span class='line'>  Your bundle is <span class="nb">complete</span>!
+</span><span class='line'>  Use <span class="sb">`</span>bundle show <span class="o">[</span>gemname<span class="o">]</span><span class="sb">`</span> to see where a
+</span><span class='line'>  bundled gem is installed.
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Finally, we&rsquo;re ready to get a &ldquo;blank blog&rdquo; up and running</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>  <span class="nv">$ </span>rake install
+</span><span class='line'><span class="c">## Copying classic theme into ./source and</span>
+</span><span class='line'>  ./sass
+</span><span class='line'>  mkdir -p <span class="nb">source</span>
+</span><span class='line'><span class="nb">  </span>cp -r .themes/classic/source/. <span class="nb">source</span>
+</span><span class='line'><span class="nb">  </span>mkdir -p sass
+</span><span class='line'>  cp -r .themes/classic/sass/. sass
+</span><span class='line'>  mkdir -p <span class="nb">source</span>/_posts
+</span><span class='line'>  mkdir -p public
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I use Github Pages, but this setup works out of the box with Heroku (or just
+plain rsync) too.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>  <span class="nv">$ </span>rake setup_github_pages
+</span><span class='line'>  Enter the <span class="nb">read</span>/write url <span class="k">for </span>your repository
+</span><span class='line'>  <span class="o">(</span>For example,
+</span><span class='line'>   <span class="s1">&#39;git@github.com:your_username/your_username.github.io.git)</span>
+</span><span class='line'><span class="s1">  or</span>
+</span><span class='line'><span class="s1">  &#39;</span>https://github.com/your_username/your_username.github.io<span class="s1">&#39;)</span>
+</span><span class='line'><span class="s1">  Repository url:</span>
+</span><span class='line'><span class="s1">  https://github.com/agam/agam.github.com.git</span>
+</span><span class='line'><span class="s1">  Added remote</span>
+</span><span class='line'><span class="s1">  https://github.com/agam/agam.github.com.git</span>
+</span><span class='line'><span class="s1">  as origin</span>
+</span><span class='line'><span class="s1">  Set origin as default remote</span>
+</span><span class='line'><span class="s1">  Master branch renamed to &#39;</span><span class="nb">source</span><span class="err">&#39;</span>
+</span><span class='line'>  <span class="k">for </span>committing your blog <span class="nb">source</span>
+</span><span class='line'><span class="nb">  </span>files
+</span><span class='line'>  rm -rf _deploy
+</span><span class='line'>  mkdir _deploy
+</span><span class='line'>  <span class="nb">cd </span>_deploy
+</span><span class='line'>  Initialized empty Git repository
+</span><span class='line'>  in
+</span><span class='line'>  /home/agam/Documents/octopress/_deploy/.git/
+</span><span class='line'>  <span class="o">[</span>master <span class="o">(</span>root-commit<span class="o">)</span> 5a90a3a<span class="o">]</span>
+</span><span class='line'>  Octopress init
+</span><span class='line'>1 file changed, 1 insertion<span class="o">(</span>+<span class="o">)</span>
+</span><span class='line'>  create mode 100644 index.html
+</span><span class='line'>  <span class="nb">cd</span> -
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Take a look at what we made !</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>  <span class="nv">$ </span>rake generate
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">$ </span>rake preview
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Push it out and call it a day &hellip;</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>  <span class="nv">$ </span>git add .
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">$ </span>git commit -m <span class="s1">&#39;New (Empty) Blog&#39;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nv">$ </span>git push origin <span class="nb">source</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Migrating static content</h2>
+
+<p>But wait, in my case, I also need to get all my old stuff over.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>  <span class="nv">$ </span>cp ../hakyll-source/posts/* <span class="nb">source</span>/_posts/
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>But when I try to generate again &hellip; sadness</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'>/usr/local/google/home/agam/Documents/octopress/plugins/pygments_code.rb:27:in
+</span><span class='line'><span class="sb">`</span>rescue in pygments<span class="s1">&#39;: Pygments can&#39;</span>t parse unknown language: shell.
+</span><span class='line'><span class="o">(</span>RuntimeError<span class="o">)</span>
+</span><span class='line'>from
+</span><span class='line'>/usr/local/google/home/agam/Documents/octopress/plugins/pygments_code.rb:24:in
+</span><span class='line'><span class="sb">`</span>pygments<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">from</span>
+</span><span class='line'><span class="s1">/usr/local/google/home/agam/Documents/octopress/plugins/pygments_code.rb:14:in</span>
+</span><span class='line'><span class="s1">`highlight&#39;</span>
+</span><span class='line'>from
+</span><span class='line'>/usr/local/google/home/agam/Documents/octopress/plugins/backtick_code_block.rb:37:in
+</span><span class='line'><span class="sb">`</span>block in render_code_block<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">from</span>
+</span><span class='line'><span class="s1">/usr/local/google/home/agam/Documents/octopress/plugins/backtick_code_block.rb:13:in</span>
+</span><span class='line'><span class="s1">`gsub&#39;</span>
+</span><span class='line'>from
+</span><span class='line'>/usr/local/google/home/agam/Documents/octopress/plugins/backtick_code_block.rb:13:in
+</span><span class='line'><span class="sb">`</span>render_code_block<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">from</span>
+</span><span class='line'><span class="s1">/usr/local/google/home/agam/Documents/octopress/plugins/octopress_filters.rb:12:in</span>
+</span><span class='line'><span class="s1">`pre_filter&#39;</span>
+</span><span class='line'>from
+</span><span class='line'>/usr/local/google/home/agam/Documents/octopress/plugins/octopress_filters.rb:28:in
+</span><span class='line'><span class="sb">`</span>pre_render<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">from</span>
+</span><span class='line'><span class="s1">/usr/local/google/home/agam/Documents/octopress/plugins/post_filters.rb:112:in</span>
+</span><span class='line'><span class="s1">`block in</span>
+</span><span class='line'><span class="s1">pre_render&#39;</span>
+</span><span class='line'>from
+</span><span class='line'>/usr/local/google/home/agam/Documents/octopress/plugins/post_filters.rb:111:in
+</span><span class='line'><span class="sb">`</span>each<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">from</span>
+</span><span class='line'><span class="s1">/usr/local/google/home/agam/Documents/octopress/plugins/post_filters.rb:111:in</span>
+</span><span class='line'><span class="s1">`pre_render&#39;</span>
+</span><span class='line'>from
+</span><span class='line'>/usr/local/google/home/agam/Documents/octopress/plugins/post_filters.rb:166:in
+</span><span class='line'><span class="sb">`</span>do_layout<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">from</span>
+</span><span class='line'><span class="s1">/usr/local/google/home/agam/.rvm/gems/ruby-1.9.3-p448/gems/jekyll-0.12.0/lib/jekyll/post.rb:195:in</span>
+</span><span class='line'><span class="s1">`render&#39;</span>
+</span><span class='line'>from
+</span><span class='line'>/usr/local/google/home/agam/.rvm/gems/ruby-1.9.3-p448/gems/jekyll-0.12.0/lib/jekyll/site.rb:200:in
+</span><span class='line'><span class="sb">`</span>block
+</span><span class='line'>in
+</span><span class='line'>render<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">from</span>
+</span><span class='line'><span class="s1">/usr/local/google/home/agam/.rvm/gems/ruby-1.9.3-p448/gems/jekyll-0.12.0/lib/jekyll/site.rb:199:in</span>
+</span><span class='line'><span class="s1">`each&#39;</span>
+</span><span class='line'>from
+</span><span class='line'>/usr/local/google/home/agam/.rvm/gems/ruby-1.9.3-p448/gems/jekyll-0.12.0/lib/jekyll/site.rb:199:in
+</span><span class='line'><span class="sb">`</span>render<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">from</span>
+</span><span class='line'><span class="s1">/usr/local/google/home/agam/.rvm/gems/ruby-1.9.3-p448/gems/jekyll-0.12.0/lib/jekyll/site.rb:41:in</span>
+</span><span class='line'><span class="s1">`process&#39;</span>
+</span><span class='line'>from
+</span><span class='line'>/usr/local/google/home/agam/.rvm/gems/ruby-1.9.3-p448/gems/jekyll-0.12.0/bin/jekyll:264:in
+</span><span class='line'><span class="sb">`</span>&lt;top
+</span><span class='line'><span class="o">(</span>required<span class="o">)</span>&gt;<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">from</span>
+</span><span class='line'><span class="s1">/usr/local/google/home/agam/.rvm/gems/ruby-1.9.3-p448/bin/jekyll:23:in</span>
+</span><span class='line'><span class="s1">`load&#39;</span>
+</span><span class='line'>from
+</span><span class='line'>/usr/local/google/home/agam/.rvm/gems/ruby-1.9.3-p448/bin/jekyll:23:in
+</span><span class='line'><span class="sb">`</span>&lt;main&gt;<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">from</span>
+</span><span class='line'><span class="s1">  /usr/local/google/home/agam/.rvm/gems/ruby-1.9.3-p448/bin/ruby_executable_hooks:15:in</span>
+</span><span class='line'><span class="s1">  `eval&#39;</span>
+</span><span class='line'>  from
+</span><span class='line'>  /usr/local/google/home/agam/.rvm/gems/ruby-1.9.3-p448/bin/ruby_executable_hooks:15:in
+</span><span class='line'>  <span class="sb">`</span>&lt;main&gt;<span class="err">&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><a href="https://plus.google.com/photos?pid=5946667874240500674&amp;oid=116824588290880385608">Nothing to panic</a> about, turns out I just had to use different names for the
+<a href="http://pygments.org/docs/lexers/">Lexers in Pygments</a>. So it&rsquo;s &ldquo;sh&rdquo; or &ldquo;bash&rdquo;
+instead of &ldquo;shell&rdquo;, and &ldquo;haskell&rdquo; instead of &ldquo;Haskell&rdquo;.</p>
+
+<p>Also, I had to make other cosmetic changes like
+&ndash; changing the title to be in the <em>yyyy-mm-dd-title</em> format
+&ndash; added quotes around the &lsquo;title&rsquo; in the header metadata
+&ndash; added categories (retroactively) for each post</p>
+
+<h2>Sorting out the old repo</h2>
+
+<p>Almost there, but not there yet. Running <code>rake deploy</code> doesn&rsquo;t work out of the
+box:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'> ! <span class="o">[</span>rejected<span class="o">]</span>        master -&gt; master <span class="o">(</span>non-fast-forward<span class="o">)</span>
+</span><span class='line'> error: failed to push some refs to
+</span><span class='line'> <span class="s1">&#39;https://github.com/agam/agam.github.com.git&#39;</span>
+</span><span class='line'> hint: Updates were rejected because the tip of your current branch is behind
+</span><span class='line'> hint: its remote counterpart. Integrate the remote changes <span class="o">(</span>e.g.
+</span><span class='line'> hint: <span class="s1">&#39;git pull ...&#39;</span><span class="o">)</span> before pushing again.
+</span><span class='line'> hint: See the <span class="s1">&#39;Note about fast-forwards&#39;</span> in <span class="s1">&#39;git push --help&#39;</span> <span class="k">for </span>details.
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Ah what the hell, its just a static blog repo! I deleted the old repo, created a
+new repo, ran <code>rake setup_github_pages</code> again, and this time <code>rake deploy</code>
+worked flawlessly.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="c">## Pushing generated _deploy website</span>
+</span><span class='line'>Username <span class="k">for</span> <span class="s1">&#39;https://github.com&#39;</span>: agam
+</span><span class='line'>Password <span class="k">for</span> <span class="s1">&#39;https://agam@github.com&#39;</span>:
+</span><span class='line'>Counting objects: 262, <span class="k">done</span>.
+</span><span class='line'>Delta compression using up to 8 threads.
+</span><span class='line'>Compressing objects: 100% <span class="o">(</span>217/217<span class="o">)</span>, <span class="k">done</span>.
+</span><span class='line'>Writing objects: 100% <span class="o">(</span>262/262<span class="o">)</span>, 677.07 KiB | 0 bytes/s, <span class="k">done</span>.
+</span><span class='line'>Total 262 <span class="o">(</span>delta 59<span class="o">)</span>, reused 0 <span class="o">(</span>delta 0<span class="o">)</span>
+</span><span class='line'>To https://github.com/agam/agam.github.io.git
+</span><span class='line'> * <span class="o">[</span>new branch<span class="o">]</span>      master -&gt; master
+</span><span class='line'>
+</span><span class='line'> <span class="c">## Github Pages deploy complete</span>
+</span><span class='line'> <span class="nb">cd</span> -
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>BTW if you do this you might also need to recreate the <code>source</code> remote branch,
+e.g. in my case</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>agam@terminus:~/Documents/octopress<span class="nv">$ </span>git remote <span class="nb">set</span>-url origin
+</span><span class='line'>https://github.com/agam/agam.github.io.git
+</span><span class='line'>agam@terminus:~/Documents/octopress<span class="nv">$ </span>git push origin <span class="nb">source</span>
+</span><span class='line'>Username <span class="k">for</span> <span class="s1">&#39;https://github.com&#39;</span>: agam
+</span><span class='line'>Password <span class="k">for</span> <span class="s1">&#39;https://agam@github.com&#39;</span>:
+</span><span class='line'>Counting objects: 4975, <span class="k">done</span>.
+</span><span class='line'>Delta compression using up to 8 threads.
+</span><span class='line'>Compressing objects: 100% <span class="o">(</span>2173/2173<span class="o">)</span>, <span class="k">done</span>.
+</span><span class='line'>Writing objects: 100% <span class="o">(</span>4975/4975<span class="o">)</span>, 1.56 MiB | 816.00 KiB/s, <span class="k">done</span>.
+</span><span class='line'>Total 4975 <span class="o">(</span>delta 2611<span class="o">)</span>, reused 4694 <span class="o">(</span>delta 2428<span class="o">)</span>
+</span><span class='line'>To https://github.com/agam/agam.github.io.git
+</span><span class='line'> * <span class="o">[</span>new branch<span class="o">]</span>      <span class="nb">source</span> -&gt; <span class="nb">source</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Finally, keep in mind that <code>rake deploy</code> only updates the generated content. You
+obviously also want to version your posts in markdown format (along with any
+images etc that you might be hosting too), so every once in a while,</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>git commit -a -m <span class="s1">&#39;sync to latest post&#39;</span>
+</span><span class='line'>git push origin <span class="nb">source</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>(you might want to replace that with a more descriptive message !)</p>
+
+<p>So that&rsquo;s that. If you use git or write code setting this up is pretty easy, and
+as you can see, it&rsquo;s not too bad to look at either!</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/11/15/moving-to-jekyll/">Moving to Jekyll</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-11-15T00:00:00-08:00" pubdate data-updated="true">Nov 15<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>Wait, what ? Seriously ? Yes, seriously.</p>
+
+<p>If it goes well you&rsquo;re reading this on my Jekyll-generated static blog (or
+perhaps <a href="http://www.tumblr.com">something else</a>). In that case, you should know
+that this post and the ones before it were generated by <a href="http://jaspervdj.be/hakyll/">Hakyll</a>. It was fun, I made my point, but I have a general <em>be-more-practical-than-ideological</em> theme going in my life, and this is part of that.</p>
+
+<p>For future reference, this is what my Hakyll blog looked like (!)</p>
+
+<p><img src="/images/pre-jekyll-blog.png" alt="Pre-Jekyll Blog" /></p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/11/06/typewriter-mode/">Using Typewriter Mode, ALWAYS</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-11-06T00:00:00-08:00" pubdate data-updated="true">Nov 6<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I used to have two giant monitors to work with, and reduced them to one since I
+found myself frequently moving my neck from side to side.</p>
+
+<p>I got rid of one of them, and felt much better after that &mdash; but now I was still
+moving my neck up and down. When editing large source files (wait, why are these
+files large to begin with ? That&rsquo;s a different conversation!), you do end up
+tracking the cursor on each find, on each scroll.</p>
+
+<p>The solution is obvious &mdash; as far as possible, keep the horizontal location of
+the cursor fixed.</p>
+
+<p>I&rsquo;m sure what the Emacs equivalent of this is, but if you use the <a href="http://www.sbf5.com/~cduan/technical/vi/">One True
+Editor</a>, try typing <code>:help scrolloff</code> right now; you should see this:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>                 *'scrolloff'* *'so'*
+</span><span class='line'>'scrolloff' 'so'  number  (default 0)
+</span><span class='line'>      global
+</span><span class='line'>      {not in Vi}
+</span><span class='line'>Minimal number of screen lines to keep above and below the cursor.
+</span><span class='line'>This will make some context visible around where you are working.  If
+</span><span class='line'>you set it to a very large value (999) the cursor line will always be
+</span><span class='line'>in the middle of the window (except at the start or end of the file or
+</span><span class='line'>when long lines wrap).
+</span><span class='line'>For scrolling horizontally see 'sidescrolloff'.
+</span><span class='line'>NOTE: This option is set to 0 when 'compatible' is set.</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So you can add this to your <code>.vimrc</code> later, but try it out right now. Type</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>:set scrolloff=999</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&hellip; and scroll around a bit.</p>
+
+<p>Enjoy.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/10/01/wishlist-2013/">Wishlist [Being a Brain Dump of Random Things I&#8217;d Like to Play Around With]</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-10-01T00:00:00-07:00" pubdate data-updated="true">Oct 1<span>st</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><ul>
+<li>Get acquainted with <a href="http://processing.org/">Processing</a> &mdash; it&rsquo;s quite low performance, but really quick to use.</li>
+<li>Write a book (perhaps during <a href="http://nanowrimo.org/">NaNoWriMo</a> ?</li>
+<li>Try my hand at an Android app again. The last time I tried, it got to a point where I had to refactor a bunch of Java classes. I don&rsquo;t like Java. I hear it&rsquo;s possible to build some stuff (mostly games) <a href="https://developer.nvidia.com/tegra-android-development-pack">entirely in C++</a> with some &lsquo;shim&rsquo; work to play nice with the rest of Android. So. Worth trying out.</li>
+<li><del>Stop procrastinating on doing anything with AppEngine. Just move off AppEngine. Similar to the above, I&rsquo;m not a big fan of either Java or Python. Now that <a href="https://cloud.google.com/products/compute-engine">Google Compute Engine</a> and Google Developer Storage and a bunch of other similar stuff is available, I can be free of the Python/Java restrictions of AppEngine.</del> Do something (maybe host a wordpress blog ?) on the new <a href="https://developers.google.com/appengine/docs/php/">PHP runtime</a> in Google App Engine</li>
+<li>Make a toy language. Sure, it&rsquo;ll be dumb and slow as %$#^ but it should be fun to do. <em>Update</em>: How about an implementation of <a href="http://web.cs.wpi.edu/~jshutt/kernel.html">Kernel Lisp</a> ?</li>
+<li><del>Make a static blog generator and self-host. Admit it. I&rsquo;m just using Hakyll because it&rsquo;s cool. OTOH the same reason would apply to its replacement, so this is not really a well-formed wish at all</del> Move to a different (read <em>better</em>) static blog generator</li>
+<li><del>Find some applications for all the <a href="http://svonava.com/post/62186512058/datasets-released-by-google">Google data</a> that keeps getting publicly released. Most of it is interesting as $#%^.</del></li>
+<li>Try my hand at <a href="http://www.topcoder.com/">TopCoder</a> (!)</li>
+</ul>
+
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/09/30/usb-music-transfer-android/">Getting Music Onto an Android Phone&#8217;s External Storage</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-30T00:00:00-07:00" pubdate data-updated="true">Sep 30<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I had bought a MicroSD card to go along with my Motorola Razr M, since it has a limited internal storage of 8G.</p>
+
+<p>(That is to say, <em>limited</em> by today&rsquo;s standards, where a singe Chrome tab can take up a few hundred MB. I remember when I was excited to find a computer with 8MB Ram since that meant I could play Quake on it. Anyway &hellip;)</p>
+
+<p>I assembled everything on my (linux) laptop in one folder, this should just be a copy-and-paste, drag-and-drop kind of thing, right ?</p>
+
+<p><em>Wrong</em>.</p>
+
+<p>Instead I had to wade through a bunch of online forum posts, about mounting the phone on windows, on mac, configuring various settings.</p>
+
+<p>When I plugged in the phone through USB, I got a notification saying the phone was connected but it didn&rsquo;t show up in Ubuntu&rsquo;s list of connected devices (and I know this works for other devices because my external hard drive shows up when I connect i
+t).</p>
+
+<p>Finally I found <a href="http://www.mysolutions.it/mounting-your-mtp-androids-sd-card-on-ubuntu/">this</a>, it assured me that <em>&ldquo;Fortunately, it’s quite easy to get this working&rdquo;</em>.</p>
+
+<p>Of course, it was incomplete (yes, you need <code>sudo apt-get install mtpfs</code> but <em>also</em> <code>sudo apt-get install mtp-tools</code>)</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>sudo mkdir /media/MTPDevice
+</span><span class='line'>sudo chmod 775 /media/MTPDevice
+</span><span class='line'>sudo mtpfs -o allow_other /media/MTPDevice/
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Finally, I saw</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>mtp-detect
+</span><span class='line'>libmtp version: 1.1.3
+</span><span class='line'>
+</span><span class='line'>Listing raw device<span class="o">(</span>s<span class="o">)</span>
+</span><span class='line'>Device 0 <span class="o">(</span><span class="nv">VID</span><span class="o">=</span>22b8 and <span class="nv">PID</span><span class="o">=</span>2e51<span class="o">)</span> is UNKNOWN.
+</span><span class='line'>Please report this VID/PID and the device model to the libmtp development team
+</span><span class='line'>   Found 1 device<span class="o">(</span>s<span class="o">)</span>:
+</span><span class='line'>   22b8:2e51 @ bus 2, dev 9
+</span><span class='line'>Attempting to connect device<span class="o">(</span>s<span class="o">)</span>
+</span><span class='line'>PTP_ERROR_IO: failed to open session, trying again after resetting USB interface
+</span><span class='line'>LIBMTP libusb: Attempt to reset device
+</span><span class='line'>inep: usb_get_endpoint_status<span class="o">()</span>: No such device
+</span><span class='line'>outep: usb_get_endpoint_status<span class="o">()</span>: No such device
+</span><span class='line'>usb_clear_halt<span class="o">()</span> on IN endpoint: No such device
+</span><span class='line'>usb_clear_halt<span class="o">()</span> on OUT endpoint: No such device
+</span><span class='line'>usb_clear_halt<span class="o">()</span> on INTERRUPT endpoint: No such device
+</span><span class='line'>usb_open<span class="o">()</span>: No such device
+</span><span class='line'>LIBMTP PANIC: Could not init USB on second attempt
+</span><span class='line'>Unable to open raw device 0
+</span><span class='line'>OK.
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Woo hoo. So much for that.</p>
+
+<p>Then I came across <a href="http://penzoditutto.blogspot.it/2012/12/android-mtp-devices-40-mount-scripts.html">this</a>, which seemed more pragmatic, since it said &ldquo;If you&rsquo;re using ubuntu (12.04 or 12.10) and you want to browse your Android 4.0+ device <em>you know how frustrating can be.</em>&rdquo; Yes I do.</p>
+
+<p>But it didn&rsquo;t have anything fundamentally different.</p>
+
+<p>So I just pulled out the USB cable and plugged it in again (&ldquo;when all else fails, cycle power&rdquo;)</p>
+
+<p>This time, it worked.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>mtp-detect
+</span><span class='line'>libmtp version: 1.1.3
+</span><span class='line'>
+</span><span class='line'>Listing raw device<span class="o">(</span>s<span class="o">)</span>
+</span><span class='line'>Device 0 <span class="o">(</span><span class="nv">VID</span><span class="o">=</span>22b8 and <span class="nv">PID</span><span class="o">=</span>2e51<span class="o">)</span> is UNKNOWN.
+</span><span class='line'>Please report this VID/PID and the device model to the libmtp development team
+</span><span class='line'>   Found 1 device<span class="o">(</span>s<span class="o">)</span>:
+</span><span class='line'>   22b8:2e51 @ bus 2, dev 11
+</span><span class='line'>Attempting to connect device<span class="o">(</span>s<span class="o">)</span>
+</span><span class='line'>Android device detected, assigning default bug flags
+</span><span class='line'>USB low-level info:
+</span><span class='line'>   Interface has a kernel driver attached.
+</span><span class='line'>   bcdUSB: 512
+</span><span class='line'>   bDeviceClass: 0
+</span><span class='line'>   bDeviceSubClass: 0
+</span><span class='line'>   bDeviceProtocol: 0
+</span><span class='line'>   idVendor: 22b8
+</span><span class='line'>   idProduct: 2e51
+</span><span class='line'>   IN endpoint maxpacket: 512 bytes
+</span><span class='line'>   OUT endpoint maxpacket: 512 bytes
+</span><span class='line'>
+</span><span class='line'>&lt; ... and many more pages ... &gt;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>While we&rsquo;re here, a clarification by way of digression: I am not ranting against MTP, just its usability. It is clearly (IMHO) better than the previous mass storage option, since it supports well-defined interfaces to specific file types, such as this one for JPEG files:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>   3801: JPEG
+</span><span class='line'>      dc01: Storage ID UINT32 data <span class="nb">type </span>ANY 32BIT VALUE form READ ONLY
+</span><span class='line'>      dc02: Object Format UINT16 data <span class="nb">type </span>ANY 16BIT VALUE form READ ONLY
+</span><span class='line'>      dc03: Protection Status UINT16 data <span class="nb">type </span>ANY 16BIT VALUE form READ ONLY
+</span><span class='line'>      dc04: Object Size UINT64 data <span class="nb">type </span>READ ONLY
+</span><span class='line'>      dc07: Object File Name STRING data <span class="nb">type </span>GET/SET
+</span><span class='line'>      dc09: Date Modified STRING data <span class="nb">type </span>DATETIME FORM READ ONLY
+</span><span class='line'>      dc0b: Parent Object UINT32 data <span class="nb">type </span>ANY 32BIT VALUE form READ ONLY
+</span><span class='line'>      dc41: Persistant Unique Object Identifier UINT128 data <span class="nb">type </span>READ ONLY
+</span><span class='line'>      dc44: Name STRING data <span class="nb">type </span>READ ONLY
+</span><span class='line'>      dce0: Display Name STRING data <span class="nb">type </span>READ ONLY
+</span><span class='line'>      dc4e: Date Added STRING data <span class="nb">type </span>DATETIME FORM READ ONLY
+</span><span class='line'>      dc48: Description STRING data <span class="nb">type </span>READ ONLY
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>But wait a minute, what happened to the directory I created ?</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>ls -ld /media/MTPDevice/
+</span><span class='line'>ls: cannot access /media/MTPDevice/: Transport endpoint is not connected
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Obviously I celebrated too soon. More trudging through posts. As an idea of how crazy this can seem, I found <a href="http://askubuntu.com/questions/159095/problems-connecting-android-ics-to-ubuntu-using-mtp">this post</a> on <a href="http://www.askubuntu.com">askubuntu</a> which said:</p>
+
+<p>&ldquo;Please note the Terence Egan Blog where you took the instructions from is a copy of an OMG Ubuntu article. He has missed an important step <em>to restart your PC before running the Echo commands</em> I suggest you try and reinstall from the original OMG Ubuntu source. Click on this link&rdquo; (emphasis mine, link omitted).</p>
+
+<p>Yes, that&rsquo;s right, <em><em>N00b</em></em>. You forgot to restart.</p>
+
+<p>(In case you&rsquo;re wondering how that story ends,
+&ldquo;Oh my god!!! I did not know that. Will do this asap. – ubuntico Jul 3 &lsquo;12 at 16:40
+It worked this way. <em>I connect the mobile and them immediately (under 1s after connection) I have to start command android-connect. Otherwise, the system will try to mount the mobile and after that I cannot use fuse to mount it.</em> It the same with you? – ubuntico Jul 3 &#8216;12 at 17:08&rdquo;)</p>
+
+<p>Maybe I&rsquo;m expecting too much, but I would not refer to this tenuous solution as <em>&ldquo;it worked&rdquo;</em>.</p>
+
+<p>Hmm, it looks like I skipped a step. I had to modify <code>/etc/udev/rules.d/51-android.rules</code> to add the right <code>SUBSYSTEM...</code> rule, and then <code>sudo service udev restart</code>.</p>
+
+<p>Nope, no luck. I can&rsquo;t access, mount, unmount or delete.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>fusermount -u /media/MTPDevice
+</span><span class='line'>fusermount: entry <span class="k">for</span> /media/MTPDevice not found in /etc/mtab
+</span><span class='line'><span class="nv">$ </span>sudo mtpfs -o allow_other /media/MTPDevice/
+</span><span class='line'>fuse: bad mount point <span class="sb">`</span>/media/MTPDevice/<span class="s1">&#39;: Transport endpoint is not connected</span>
+</span><span class='line'><span class="s1">$ sudo rmdir /media/MTPDevice</span>
+</span><span class='line'><span class="s1">rmdir: failed to remove `/media/MTPDevice&#39;</span>: Device or resource busy
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>But wait! All is not lost! We can use the <code>adb</code> tool to interact directly with the android filesystem!</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>./adb push /media/My<span class="se">\ </span>Book/Music/Amazon<span class="se">\ </span>MP3/Eminem/ /sdcard/Music/
+</span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/17 - Untitled <span class="o">[</span>Explicit<span class="o">]</span>.mp3 -&gt; /sdcard/Music/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/17 - Untitled <span class="o">[</span>Explicit<span class="o">]</span>.mp3
+</span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/16 - You<span class="s1">&#39;re Never Over [Explicit].mp3 -&gt; /sdcard/Music/Recovery [Explicit]/16 - You&#39;</span>re Never Over <span class="o">[</span>Explicit<span class="o">]</span>.mp3
+</span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/15 - Love The Way You Lie <span class="o">[</span>Explicit<span class="o">]</span>.mp3 -&gt; /sdcard/Music/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/15 - Love The Way You Lie <span class="o">[</span>Explicit<span class="o">]</span>.mp3
+</span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/14 - Almost Famous <span class="o">[</span>Explicit<span class="o">]</span>.mp3 -&gt; /sdcard/Music/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/14 - Almost Famous <span class="o">[</span>Explicit<span class="o">]</span>.mp3
+</span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/13 - So Bad <span class="o">[</span>Explicit<span class="o">]</span>.mp3 -&gt; /sdcard/Music/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/13 - So Bad <span class="o">[</span>Explicit<span class="o">]</span>.mp3
+</span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/12 - 25 To Life <span class="o">[</span>Explicit<span class="o">]</span>.mp3 -&gt; /sdcard/Music/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/12 - 25 To Life <span class="o">[</span>Explicit<span class="o">]</span>.mp3
+</span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/11 - Cinderella Man <span class="o">[</span>Explicit<span class="o">]</span>.mp3 -&gt; /sdcard/Music/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/11 - Cinderella Man <span class="o">[</span>Explicit<span class="o">]</span>.mp3
+</span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/10 - Space Bound <span class="o">[</span>Explicit<span class="o">]</span>.mp3 -&gt; /sdcard/Music/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/10 - Space Bound <span class="o">[</span>Explicit<span class="o">]</span>.mp3
+</span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/09 - No Love <span class="o">[</span>Explicit<span class="o">]</span>.mp3 -&gt; /sdcard/Music/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/09 - No Love <span class="o">[</span>Explicit<span class="o">]</span>.mp3
+</span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/08 - Seduction <span class="o">[</span>Explicit<span class="o">]</span>.mp3 -&gt; /sdcard/Music/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/08 - Seduction <span class="o">[</span>Explicit<span class="o">]</span>.mp3
+</span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/07 - Not Afraid <span class="o">[</span>Explicit<span class="o">]</span>.mp3 -&gt; /sdcard/Music/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/07 - Not Afraid <span class="o">[</span>Explicit<span class="o">]</span>.mp3
+</span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/06 - Going Through Changes <span class="o">[</span>Explicit<span class="o">]</span>.mp3 -&gt; /sdcard/Music/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/06 - Going Through Changes <span class="o">[</span>Explicit<span class="o">]</span>.mp3
+</span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/05 - W.T.P. <span class="o">[</span>Explicit<span class="o">]</span>.mp3 -&gt; /sdcard/Music/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/05 - W.T.P. <span class="o">[</span>Explicit<span class="o">]</span>.mp3
+</span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/04 - Won<span class="s1">&#39;t Back Down [Explicit].mp3 -&gt; /sdcard/Music/Recovery [Explicit]/04 - Won&#39;</span>t Back Down <span class="o">[</span>Explicit<span class="o">]</span>.mp3
+</span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/03 - On Fire <span class="o">[</span>Explicit<span class="o">]</span>.mp3 -&gt; /sdcard/Music/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/03 - On Fire <span class="o">[</span>Explicit<span class="o">]</span>.mp3
+</span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/02 - Talkin<span class="s1">&#39; 2 Myself [Explicit].mp3 -&gt; /sdcard/Music/Recovery [Explicit]/02 - Talkin&#39;</span> 2 Myself <span class="o">[</span>Explicit<span class="o">]</span>.mp3
+</span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/01 - Cold Wind Blows <span class="o">[</span>Explicit<span class="o">]</span>.mp3 -&gt; /sdcard/Music/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/01 - Cold Wind Blows <span class="o">[</span>Explicit<span class="o">]</span>.mp3
+</span><span class='line'>17 files pushed. 0 files skipped.
+</span><span class='line'>3624 KB/s <span class="o">(</span>150604367 bytes in 40.580s<span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>and verify it after running <code>adb shell</code></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>shell@scorpion_mini:/ <span class="nv">$ </span>ls sdcard/Music/
+</span><span class='line'>Recovery <span class="o">[</span>Explicit<span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So yeah. It works. And it&rsquo;s a <em>magical</em> experience.</p>
+
+<p><em>Update</em>:
+To add to my misery, I still can&rsquo;t <em>play</em> the songs. Google Play doesn&rsquo;t pick  them up (no surprise there) but neither does a dedicated music playing app like Winamp.</p>
+
+<p>(Yes, <em>Winamp!</em> It&rsquo;s still around! It still plays the <a href="http://www.youtube.com/watch?v=cKqKrH0O9yg">&ldquo;whips the llama&rsquo;s ass&rdquo; clip</a> when it starts! But it doesn&rsquo;t find my music ?!)</p>
+
+<p>As far as I can tell, this is because on my phone, the sdcard is mounted on <code>/storage/sdcard1</code> instead of <code>/storage/sdcard0</code>, and that has made all the difference.</p>
+
+<p><em>Update</em>:
+I realized I could use the default file explorer app which came with the phone
+to navigate to the external sd card and play music from there, so that works &hellip;</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/09/30/less-gcc-more-clang/">Less Gcc, More Clang</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-30T00:00:00-07:00" pubdate data-updated="true">Sep 30<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>I was unhappy with how I had not fully figured out my <code>libstdc++ &lt;-&gt; gcc/clang &lt;-&gt; boost</code> issues, and was feeling a bit ashamed that I had let the complexity of the system beat me.</p>
+
+<p><em>First, burn your boats</em></p>
+
+<p>The first thing I decided to do was get rid of the newly installed <code>gcc 4.7</code> and commit to getting a working version, recompiling/downloading/installing whatever it took.</p>
+
+<p>The second was to recompile Boost with Clang.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span>/usr/clang_3_3/bin:<span class="nv">$PATH</span>
+</span><span class='line'>./bootstrap.sh --with-toolset<span class="o">=</span>clang
+</span><span class='line'>./b2 install --prefix<span class="o">=</span>/opt/boost/boost_1_54_0
+</span><span class='line'><span class="nb">echo </span><span class="nv">PATH</span><span class="o">=</span>/opt/boost/boost_1_54_0/bin:<span class="nv">$PATH</span>
+</span><span class='line'>./b2 --build-dir<span class="o">=</span>/tmp/build-boost <span class="nv">toolset</span><span class="o">=</span>clang stage
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This took a while to run, but in the end, I got</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>...failed updating 4 targets...
+</span><span class='line'>...skipped 6 targets...
+</span><span class='line'>...updated 1073 targets...
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Wha &hellip; 4 failed ? Scrolling up, I see for example:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>clang: /home/agam/Documents/Code/Building/Clang/llvm/lib/IR/Instructions.cpp:2929: llvm::BitCastInst::BitCastInst<span class="o">(</span>llvm::Value*, llvm::Type*, const llvm::Twine&amp;, llvm::Instruction*<span class="o">)</span>: Assertion <span class="sb">`</span>castIsValid<span class="o">(</span>getOpcode<span class="o">()</span>, S, Ty<span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="s2">&quot;Illegal BitCast&quot;</span><span class="s1">&#39; failed.</span>
+</span><span class='line'><span class="s1">0  clang           0x0000000002569c72 llvm::sys::PrintStackTrace(_IO_FILE*) + 34</span>
+</span><span class='line'><span class="s1">1  clang           0x0000000002569059</span>
+</span><span class='line'><span class="s1">2  libpthread.so.0 0x00007f13948eecb0</span>
+</span><span class='line'><span class="s1">3  libc.so.6       0x00007f1393919425 gsignal + 53</span>
+</span><span class='line'><span class="s1">4  libc.so.6       0x00007f139391cb8b abort + 379</span>
+</span><span class='line'><span class="s1">5  libc.so.6       0x00007f13939120ee</span>
+</span><span class='line'><span class="s1">6  libc.so.6       0x00007f1393912192</span>
+</span><span class='line'><span class="s1">7  clang           0x00000000024de388</span>
+</span><span class='line'><span class="s1">8  clang           0x0000000002192568</span>
+</span><span class='line'><span class="s1">9  clang           0x00000000021928ae</span>
+</span><span class='line'><span class="s1">10 clang           0x000000000215748e</span>
+</span><span class='line'><span class="s1">11 clang           0x00000000021584a0</span>
+</span><span class='line'><span class="s1">12 clang           0x00000000024fa4cf llvm::FPPassManager::runOnFunction(llvm::Function&amp;) + 607</span>
+</span><span class='line'><span class="s1">13 clang           0x000000000224ac48</span>
+</span><span class='line'><span class="s1">14 clang           0x000000000224e7b9</span>
+</span><span class='line'><span class="s1">15 clang           0x00000000024f9fd0 llvm::MPPassManager::runOnModule(llvm::Module&amp;) + 688</span>
+</span><span class='line'><span class="s1">16 clang           0x00000000024fa1a5 llvm::PassManagerImpl::run(llvm::Module&amp;) + 245</span>
+</span><span class='line'><span class="s1">17 clang           0x0000000000903e8e clang::EmitBackendOutput(clang::DiagnosticsEngine&amp;, clang::CodeGenOptions const&amp;, clang::TargetOptions const&amp;, clang::LangOptions const&amp;, llvm::Module*, clang::BackendAction, llvm::raw_ostream*) + 3550</span>
+</span><span class='line'><span class="s1">18 clang           0x00000000009013bd</span>
+</span><span class='line'><span class="s1">19 clang           0x0000000000aa8c24 clang::ParseAST(clang::Sema&amp;, bool, bool) + 372</span>
+</span><span class='line'><span class="s1">20 clang           0x000000000077bafa clang::FrontendAction::Execute() + 282</span>
+</span><span class='line'><span class="s1">21 clang           0x000000000075eca0 clang::CompilerInstance::ExecuteAction(clang::FrontendAction&amp;) + 352</span>
+</span><span class='line'><span class="s1">22 clang           0x0000000000744a8a clang::ExecuteCompilerInvocation(clang::CompilerInstance*) + 1722 23 clang           0x000000000073ddf0 cc1_main(char const**, char const**, char const*, void*) + 1232</span>
+</span><span class='line'><span class="s1">24 clang           0x000000000072190e main + 622</span>
+</span><span class='line'><span class="s1">25 libc.so.6       0x00007f139390476d __libc_start_main + 237</span>
+</span><span class='line'><span class="s1">26 clang           0x000000000073d7ad</span>
+</span><span class='line'><span class="s1">Stack dump:</span>
+</span><span class='line'><span class="s1">0.      Program arguments: /usr/clang_3_3/bin/clang -cc1 -triple</span>
+</span><span class='line'><span class="s1">x86_64-unknown-linux-gnu -emit-obj -disable-free -main-file-name</span>
+</span><span class='line'><span class="s1">settings_parser.cpp -mrelocation-model pic -pic-level 2 -fmath-errno</span>
+</span><span class='line'><span class="s1">-masm-verbose -mconstructor-aliases -munwind-tables -target-cpu x86-64</span>
+</span><span class='line'><span class="s1">-target-linker-version 2.22 -momit-leaf-frame-pointer -coverage-file</span>
+</span><span class='line'><span class="s1">/tmp/build-boost/boost/bin.v2/libs/log/build/clang-linux-3.4/release/log-api-</span>
+</span><span class='line'><span class="s1">unix/threading-multi/settings_parser.o -resource-dir</span>
+</span><span class='line'><span class="s1">/usr/clang_3_3/bin/../lib/clang/3.4 -D BOOST_ALL_NO_LIB=1 -D</span>
+</span><span class='line'><span class="s1">BOOST_CHRONO_DYN_LINK=1 -D BOOST_DATE_TIME_DYN_LINK=1 -D</span>
+</span><span class='line'><span class="s1">BOOST_FILESYSTEM_DYN_LINK=1 -D BOOST_LOG_DYN_LINK=1 -D</span>
+</span><span class='line'><span class="s1">BOOST_LOG_SETUP_BUILDING_THE_LIB=1 -D BOOST_LOG_SETUP_DLL -D BOOST_LOG_USE_AVX2</span>
+</span><span class='line'><span class="s1">-D BOOST_LOG_USE_NATIVE_SYSLOG -D BOOST_LOG_USE_SSSE3 -D</span>
+</span><span class='line'><span class="s1">BOOST_LOG_WITHOUT_EVENT_LOG -D BOOST_SPIRIT_USE_PHOENIX_V3=1 -D</span>
+</span><span class='line'><span class="s1">BOOST_SYSTEM_DYN_LINK=1 -D BOOST_SYSTEM_NO_DEPRECATED -D</span>
+</span><span class='line'><span class="s1">BOOST_THREAD_BUILD_DLL=1 -D BOOST_THREAD_DONT_USE_CHRONO=1 -D BOOST_THREAD_POSIX</span>
+</span><span class='line'><span class="s1">-D BOOST_THREAD_USE_DLL=1 -D DATE_TIME_INLINE -D NDEBUG -I . -internal-isystem</span>
+</span><span class='line'><span class="s1">/usr/lib/gcc/x86_64-linux-gnu/4.6/../../../../include/c++/4.6 -internal-isystem</span>
+</span><span class='line'><span class="s1">/usr/lib/gcc/x86_64-linux-gnu/4.6/../../../../include/c++/4.6/x86_64-linux-gnu</span>
+</span><span class='line'><span class="s1">-internal-isystem</span>
+</span><span class='line'><span class="s1">/usr/lib/gcc/x86_64-linux-gnu/4.6/../../../../include/c++/4.6/backward</span>
+</span><span class='line'><span class="s1">-internal-isystem</span>
+</span><span class='line'><span class="s1">/usr/lib/gcc/x86_64-linux-gnu/4.6/../../../../include/x86_64-linux-gnu/c++/4.6</span>
+</span><span class='line'><span class="s1">-internal-isystem /usr/local/include -internal-isystem</span>
+</span><span class='line'><span class="s1">/usr/clang_3_3/bin/../lib/clang/3.4/include -internal-externc-isystem</span>
+</span><span class='line'><span class="s1">/usr/include/x86_64-linux-gnu -internal-externc-isystem /include</span>
+</span><span class='line'><span class="s1">-internal-externc-isystem /usr/include -O3 -Wno-bind-to-temporary-copy</span>
+</span><span class='line'><span class="s1">-Wno-unused-function -Wno-inline -Wall -Wno-bind-to-temporary-copy</span>
+</span><span class='line'><span class="s1">-Wno-unused-function -fdeprecated-macro -fdebug-compilation-dir</span>
+</span><span class='line'><span class="s1">/opt/boost/boost_1_54_0 -ferror-limit 19 -fmessage-length 0 -pthread</span>
+</span><span class='line'><span class="s1">-mstackrealign -fobjc-runtime=gcc -fobjc-default-synthesize-properties</span>
+</span><span class='line'><span class="s1">-fcxx-exceptions -fexceptions -fdiagnostics-show-option -vectorize-loops</span>
+</span><span class='line'><span class="s1">-vectorize-slp -o</span>
+</span><span class='line'><span class="s1">/tmp/build-boost/boost/bin.v2/libs/log/build/clang-linux-3.4/release/log-api-</span>
+</span><span class='line'><span class="s1">unix/threading-multi/settings_parser.o -x c++ libs/log/src/settings_parser.cpp</span>
+</span><span class='line'><span class="s1">1.      &lt;eof&gt; parser at end of file</span>
+</span><span class='line'><span class="s1">2.      Per-module optimization passes</span>
+</span><span class='line'><span class="s1">3.      Running pass &#39;</span>CallGraph Pass Manager<span class="s1">&#39; on module &#39;</span>libs/log/src/settings_parser.cpp<span class="s1">&#39;.</span>
+</span><span class='line'><span class="s1">4.      Running pass &#39;</span>Combine redundant instructions<span class="s1">&#39; on function &#39;</span>@_ZNK5boost6spirit6detail18make_binary_helperINS0_13meta_compilerINS0_2qi6domainEE12meta_grammarEE4implIRKNS_5proto7exprns_4exprINSA_6tagns_3tag10bitwise_orENSA_7argsns_5list2IRKNSC_ISF_NSH_IRNS4_4ruleIPKcNSC_INSE_8terminalENSG_4termINS0_3tag9char_codeINSN_5spaceENS0_13char_encoding8standardEEEEELl0EEENS0_11unused_typeESV_SV_EESX_EELl2EEESX_EELl2EEENS_6fusion4consINS4_10eoi_parserENS16_3nilEEERSV_EclES15_RKS1A_S1B_<span class="err">&#39;</span>
+</span><span class='line'>clang: error: unable to execute <span class="nb">command</span>: Aborted <span class="o">(</span>core dumped<span class="o">)</span>
+</span><span class='line'>clang: error: clang frontend <span class="nb">command </span>failed due to signal <span class="o">(</span>use -v to see invocation<span class="o">)</span>
+</span><span class='line'>clang version 3.4 <span class="o">(</span>trunk 189210<span class="o">)</span>
+</span><span class='line'>Target: x86_64-unknown-linux-gnu
+</span><span class='line'>Thread model: posix
+</span><span class='line'>clang: note: diagnostic msg: PLEASE submit a bug report to http://llvm.org/bugs/ and include the crash backtrace, preprocessed <span class="nb">source</span>, and associated run script.
+</span><span class='line'>clang: note: diagnostic msg:
+</span><span class='line'>********************
+</span><span class='line'>
+</span><span class='line'>PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:
+</span><span class='line'>Preprocessed <span class="nb">source</span><span class="o">(</span>s<span class="o">)</span> and associated run script<span class="o">(</span>s<span class="o">)</span> are located at:
+</span><span class='line'>clang: note: diagnostic msg: /tmp/settings_parser-7f5a26.cpp
+</span><span class='line'>clang: note: diagnostic msg: /tmp/settings_parser-7f5a26.sh
+</span><span class='line'>clang: note: diagnostic msg:
+</span><span class='line'>
+</span><span class='line'>********************
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Ignoring these few Boost failures for now &hellip; I do want to use Clang with <code>-stdlib=libc++</code>, so I also wanted to build <code>libcxx</code> with Clang</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">CC</span><span class="o">=</span>clang <span class="nv">CXX</span><span class="o">=</span>clang++ cmake -G <span class="s2">&quot;Unix Makefiles&quot;</span> -DLIBCXX_CXX_ABI<span class="o">=</span>libsupc++ -DLIBCXX_LIBSUPCXX_INCLUDE_PATHS<span class="o">=</span><span class="s2">&quot;/usr/include/c++/4.6/;/usr/include/c++/4.6/x86_64-linux-gnu/&quot;</span> -DCMAKE_BUILD_TYPE<span class="o">=</span>Release -DCMAKE_INSTALL_PREFIX<span class="o">=</span>/usr ../libcxx/
+</span><span class='line'>make -j 4
+</span><span class='line'>sudo make install
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Time for our test program from earlier:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#include &lt;boost/lambda/lambda.hpp&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;iostream&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;algorithm&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;iterator&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">using</span> <span class="n">boost</span><span class="o">::</span><span class="n">lambda</span><span class="o">::</span><span class="n">_1</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">typedef</span> <span class="n">std</span><span class="o">::</span><span class="n">istream_iterator</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">in</span><span class="p">;</span>
+</span><span class='line'>      <span class="n">std</span><span class="o">::</span><span class="n">for_each</span><span class="p">(</span>
+</span><span class='line'>                <span class="n">in</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">cin</span><span class="p">),</span> <span class="n">in</span><span class="p">(),</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">_1</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; &quot;</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>However, this results in a clang error:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>/usr/clang_3_3/bin/clang++ -std<span class="o">=</span>c++11 -stdlib<span class="o">=</span>libc++ -L/usr/lib -I/opt/boost/boost_1_54_0 hello-world.cpp -o hello-world -lc++abi
+</span><span class='line'>/usr/bin/ld: cannot find -lc++abi
+</span><span class='line'>clang: error: linker <span class="nb">command </span>failed with <span class="nb">exit </span>code 1 <span class="o">(</span>use -v to see invocation<span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Wohkay, so I&rsquo;m assuming we need to build libc++abi</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>svn co http://llvm.org/svn/llvm-project/libcxxabi/trunk libcxxabi
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>libcxxabi/lib
+</span><span class='line'><span class="nv">$ </span>./buildit
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now move over to the <code>libcxx</code> branch again, and</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ CC</span><span class="o">=</span>clang <span class="nv">CXX</span><span class="o">=</span>clang++ cmake -G <span class="s2">&quot;Unix Makefiles&quot;</span> -DLIBCXX_CXX_ABI<span class="o">=</span>libcxxabi -DLIBCXX_LIBCXXABI_INCLUDE_PATHS<span class="o">=</span><span class="s2">&quot;/home/agam/Documents/Code/Building/libcxxabi/include&quot;</span> -DCMAKE_BUILD_TYPE<span class="o">=</span>Release -DCMAKE_INSTALL_PREFIX<span class="o">=</span>/usr ../libcxx
+</span><span class='line'>-- The CXX compiler identification is Clang 3.4.0
+</span><span class='line'>-- The C compiler identification is Clang 3.4.0
+</span><span class='line'>-- Check <span class="k">for </span>working CXX compiler: /usr/clang_3_3/bin/clang++
+</span><span class='line'>-- Check <span class="k">for </span>working CXX compiler: /usr/clang_3_3/bin/clang++ -- works
+</span><span class='line'>-- Detecting CXX compiler ABI info
+</span><span class='line'>-- Detecting CXX compiler ABI info - <span class="k">done</span>
+</span><span class='line'>-- Check <span class="k">for </span>working C compiler: /usr/clang_3_3/bin/clang
+</span><span class='line'>-- Check <span class="k">for </span>working C compiler: /usr/clang_3_3/bin/clang -- works
+</span><span class='line'>-- Detecting C compiler ABI info
+</span><span class='line'>-- Detecting C compiler ABI info - <span class="k">done</span>
+</span><span class='line'>-- Host triple: x86_64-pc-linux
+</span><span class='line'>-- Target triple: x86_64-pc-linux
+</span><span class='line'>CMake Error at CMakeLists.txt:119 <span class="o">(</span>message<span class="o">)</span>:
+</span><span class='line'>  Failed to find cxa_demangle.h
+</span><span class='line'>Call Stack <span class="o">(</span>most recent call first<span class="o">)</span>:
+</span><span class='line'>  CMakeLists.txt:141 <span class="o">(</span>setup_abi_lib<span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>-- Configuring incomplete, errors occurred!
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I looked into this and &hellip; this seemed like a bug ? WTF. Anyway I just edited this out of <code>CMakeLists.txt</code> and tried again.</p>
+
+<p>That worked! So then <code>make &amp;&amp; sudo make install</code> as usual.</p>
+
+<p>Note: I also had to copy the <code>libcxxabi</code> library built above to a global location, since I got an error trying to build <code>libcxx</code> without it</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>/usr/bin/ld: cannot find -lc++abi
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>After a while it occurred to me: <a href="http://memegenerator.net/instance/41718307">one does not simply copy a library to /usr/local/lib</a></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>sudo ldconfig -f /etc/ld.so.conf.d/libc.conf
+</span><span class='line'><span class="nv">$ </span>ldconfig -p | grep c++abi
+</span><span class='line'>...
+</span><span class='line'>        libc++abi.so.1 <span class="o">(</span>libc6,x86-64<span class="o">)</span> <span class="o">=</span>&gt; /usr/local/lib/libc++abi.so.1
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Hmm not quite. Some <a href="http://comments.gmane.org/gmane.comp.compilers.clang.devel/30074">discussion I came across</a> suggests a different format for the symlink</p>
+
+<p>Yup, this was fixed by <code>sudo ln libc++abi.so.1.0 libc++abi.so</code></p>
+
+<p>Now, adding this library works:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>/usr/clang_3_3/bin/clang++ -std<span class="o">=</span>c++11 -stdlib<span class="o">=</span>libc++ -L/usr/lib -I/opt/boost/boost_1_54_0 hello-world.cpp -o hello-world -lc++abi
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Just to confirm, I also verified that the toy <code>wget</code> equivalent I had built with the Poco libraries works with Clang, and it does.</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  
+    <article>
+      
+  <header>
+    
+      <h1 class="entry-title"><a href="/blog/2013/09/29/http-client-with-poco/">Basic HTTP Client With Poco</a></h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-09-29T00:00:00-07:00" pubdate data-updated="true">Sep 29<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+  <div class="entry-content"><p>After my previous terrible experience with <code>cpp-netlib</code>, I was very very pleasantly surprised by how well this went.</p>
+
+<p>You can get the Poco C++ libraries <a href="http://pocoproject.org/">here</a></p>
+
+<p>This is the short <code>wget</code> equivalent &hellip;</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#include &lt;algorithm&gt;  </span><span class="c1">// for copy</span>
+</span><span class='line'><span class="cp">#include &lt;iterator&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;string&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;iostream&gt;   </span><span class="c1">// for cout, istream</span>
+</span><span class='line'>
+</span><span class='line'><span class="cp">#include &lt;Poco/Exception.h&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;Poco/Net/HTTPClientSession.h&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;Poco/Net/HTTPRequest.h&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;Poco/Net/HTTPResponse.h&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;Poco/Path.h&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;Poco/URI.h&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">using</span> <span class="n">string</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span><span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="n">argc</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">std</span><span class="o">::</span><span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Usage: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; &lt;url&gt;&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">try</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// Initialize session</span>
+</span><span class='line'>    <span class="n">Poco</span><span class="o">::</span><span class="n">URI</span> <span class="n">uri</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+</span><span class='line'>    <span class="n">Poco</span><span class="o">::</span><span class="n">Net</span><span class="o">::</span><span class="n">HTTPClientSession</span> <span class="n">client_session</span><span class="p">(</span><span class="n">uri</span><span class="p">.</span><span class="n">getHost</span><span class="p">(),</span> <span class="n">uri</span><span class="p">.</span><span class="n">getPort</span><span class="p">());</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// Prepare and send request</span>
+</span><span class='line'>    <span class="n">string</span> <span class="n">path</span><span class="p">(</span><span class="n">uri</span><span class="p">.</span><span class="n">getPathAndQuery</span><span class="p">());</span>
+</span><span class='line'>    <span class="n">Poco</span><span class="o">::</span><span class="n">Net</span><span class="o">::</span><span class="n">HTTPRequest</span> <span class="n">req</span><span class="p">(</span><span class="n">Poco</span><span class="o">::</span><span class="n">Net</span><span class="o">::</span><span class="n">HTTPRequest</span><span class="o">::</span><span class="n">HTTP_GET</span><span class="p">,</span>
+</span><span class='line'>        <span class="n">path</span><span class="p">,</span> <span class="n">Poco</span><span class="o">::</span><span class="n">Net</span><span class="o">::</span><span class="n">HTTPMessage</span><span class="o">::</span><span class="n">HTTP_1_1</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">client_session</span><span class="p">.</span><span class="n">sendRequest</span><span class="p">(</span><span class="n">req</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// Get response</span>
+</span><span class='line'>    <span class="n">Poco</span><span class="o">::</span><span class="n">Net</span><span class="o">::</span><span class="n">HTTPResponse</span> <span class="n">res</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">std</span><span class="o">::</span><span class="n">istream</span><span class="o">&amp;</span> <span class="n">is</span> <span class="o">=</span> <span class="n">client_session</span><span class="p">.</span><span class="n">receiveResponse</span><span class="p">(</span><span class="n">res</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// Print to standard output</span>
+</span><span class='line'>    <span class="n">std</span><span class="o">::</span><span class="n">copy</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">istream_iterator</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span><span class="p">(</span><span class="n">is</span><span class="p">),</span>
+</span><span class='line'>        <span class="n">std</span><span class="o">::</span><span class="n">istream_iterator</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span><span class="p">(),</span>
+</span><span class='line'>        <span class="n">std</span><span class="o">::</span><span class="n">ostream_iterator</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="p">));</span>
+</span><span class='line'>  <span class="p">}</span> <span class="n">catch</span> <span class="p">(</span><span class="n">Poco</span><span class="o">::</span><span class="n">Exception</span><span class="o">&amp;</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">std</span><span class="o">::</span><span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Exception: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">e</span><span class="p">.</span><span class="n">what</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Completed communication&quot;</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Thanks to my struggles getting the previous <code>cpp-netlib</code> example to build, I at least got very familiar with <code>cmake</code>. As a result, getting this example to build was a breeze:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+</pre></td><td class='code'><pre><code class='cmake'><span class='line'><span class="nb">cmake_minimum_required</span><span class="p">(</span><span class="s">VERSION</span> <span class="s">2.8</span><span class="p">)</span>
+</span><span class='line'><span class="nb">project</span><span class="p">(</span><span class="s">hello-world</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nb">add_definitions</span><span class="p">(</span><span class="s">-std=c++11</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Search paths</span>
+</span><span class='line'><span class="nb">include_directories</span><span class="p">(</span>
+</span><span class='line'>  <span class="s">/opt/boost/boost_1_54_0</span>
+</span><span class='line'>  <span class="s">/usr/local/include</span><span class="p">)</span>
+</span><span class='line'><span class="nb">link_directories</span><span class="p">(</span>
+</span><span class='line'>  <span class="s">/opt/boost/boost_1_54_0/stage/lib</span>
+</span><span class='line'>  <span class="s">/usr/local/lib</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Boost dependencies</span>
+</span><span class='line'><span class="nb">find_package</span><span class="p">(</span><span class="s">Boost</span> <span class="s">1.51</span> <span class="s">REQUIRED</span> <span class="s">system</span> <span class="s">regex</span><span class="p">)</span>
+</span><span class='line'><span class="nb">set</span><span class="p">(</span><span class="s">BOOST_LIBS</span>
+</span><span class='line'>  <span class="o">${</span><span class="nv">Boost_SYSTEM_LIBRARY</span><span class="o">}</span>
+</span><span class='line'>  <span class="o">${</span><span class="nv">Boost_REGEX_LIBRARY</span><span class="o">}</span>
+</span><span class='line'>  <span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Other external libraries</span>
+</span><span class='line'><span class="nb">find_package</span><span class="p">(</span><span class="s">OpenSSL</span><span class="p">)</span>
+</span><span class='line'><span class="nb">find_library</span><span class="p">(</span><span class="s">LIBCRYPTO</span> <span class="s">crypto</span><span class="p">)</span>
+</span><span class='line'><span class="nb">find_library</span><span class="p">(</span><span class="s">POCO_FOUNDATION</span> <span class="s">PocoFoundation</span><span class="p">)</span>
+</span><span class='line'><span class="nb">find_library</span><span class="p">(</span><span class="s">POCO_NET</span> <span class="s">PocoNet</span><span class="p">)</span>
+</span><span class='line'><span class="nb">set</span><span class="p">(</span><span class="s">EXTERNAL_LIBS</span>
+</span><span class='line'>  <span class="o">${</span><span class="nv">OPENSSL_LIBRARIES</span><span class="o">}</span>
+</span><span class='line'>  <span class="o">${</span><span class="nv">LIBCRYPTO</span><span class="o">}</span>
+</span><span class='line'>  <span class="o">${</span><span class="nv">POCO_FOUNDATION</span><span class="o">}</span>
+</span><span class='line'>  <span class="o">${</span><span class="nv">POCO_NET</span><span class="o">}</span>
+</span><span class='line'>  <span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c"># Our final output</span>
+</span><span class='line'><span class="nb">add_executable</span><span class="p">(</span><span class="s">hello-world</span> <span class="s">hello-world.cpp</span><span class="p">)</span>
+</span><span class='line'><span class="nb">target_link_libraries</span><span class="p">(</span><span class="s">hello-world</span>
+</span><span class='line'>  <span class="o">${</span><span class="nv">BOOST_LIBS</span><span class="o">}</span>
+</span><span class='line'>  <span class="o">${</span><span class="nv">EXTERNAL_LIBS</span><span class="o">}</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And it worked fine too:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nb">time</span> ./hello-world http://www.google.com
+</span><span class='line'>&lt;html&gt;&lt;head&gt;&lt;metahttp-equiv<span class="o">=</span><span class="s2">&quot;content-type&quot;</span><span class="nv">content</span><span class="o">=</span><span class="err">&quot;</span>text/html;charset<span class="o">=</span> ...<span class="o">(</span>skipped rest<span class="o">)</span>
+</span><span class='line'>real    0m0.424s
+</span><span class='line'>user    0m0.004s
+</span><span class='line'>sys     0m0.012s
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I&rsquo;m sure I&rsquo;ll be using more of POCO in the future!</p>
+</div>
+  
+  
+
+
+    </article>
+  
+  <div class="pagination">
+    
+      <a class="prev" href="/blog/page/2/">&larr; Older</a>
+    
+    <a href="/blog/archives">Blog Archives</a>
+    
+  </div>
+</div>
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/11/26/moar-reddit-dailyprogramming-falling-sand/">Moar Reddit DailyProgramming: Falling Sand</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/11/26/reddit-dailyprogrammer-computing-pi/">Reddit DailyProgrammer Computing Pi</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/11/19/reddit-dailyprogrammer-getting-started/">Reddit DailyProgrammer Getting Started</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/11/15/the-octopress-revolution/">The Octopress Revolution</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/11/15/moving-to-jekyll/">Moving to Jekyll</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Agam -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Go | Agam's Mashed-Up Pome]]></title>
+  <link href="http://agam.github.io/blog/categories/go/atom.xml" rel="self"/>
+  <link href="http://agam.github.io/"/>
+  <updated>2013-12-06T18:38:24-08:00</updated>
+  <id>http://agam.github.io/</id>
+  <author>
+    <name><![CDATA[Agam]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Appengine transition from Python to Go]]></title>
+    <link href="http://agam.github.io/blog/2013/06/22/python-to-go/"/>
+    <updated>2013-06-22T00:00:00-07:00</updated>
+    <id>http://agam.github.io/blog/2013/06/22/python-to-go</id>
+    <content type="html"><![CDATA[<p>Hadn&rsquo;t updated this blog for a few months, and neither the &ldquo;personal web site&rdquo; that I had started earlier. So, to try something new, I decided to port that appengine site from python to go (looking at the Github logs, I haven&rsquo;t updated that for 2 years !!)</p>
+
+<p>The <code>app.yaml</code> is changed to get rid of all non-static handlers (which are now declared inside the <code>func init()</code> in the <code>.go</code> file. So the only handlers will be <code>/static</code>, <code>/robots.txt</code>, and <code>/.*</code>.</p>
+
+<p>Both the <a href="https://developers.google.com/appengine/docs/go/">Appengine docs</a> as well as <a href="http://cuddle.googlecode.com/hg/talk/index.html">a couple</a> <a href="http://jan.newmarch.name/go/chinese/chapter-chinese.html">of examples</a> have basic bootstrapping information.</p>
+
+<p>The first thing I did was to make a barebones &ldquo;Hello World&rdquo; index handler, and run it with</p>
+
+<p><code>sh
+$ google_appengine/dev_appserver.py &lt;path to my app&gt;
+</code></p>
+
+<p>But I immediately got this error:</p>
+
+<p><code>sh
+google.appengine.tools.devappserver2.wsgi_server.BindError: Unable to find a consistent port localhost
+Exception in thread Thread-4 (most likely raised during interpreter shutdown):
+Traceback (most recent call last):
+  File "/usr/lib/python2.7/threading.py", line 551, in __bootstrap_inner
+  File "/usr/lib/python2.7/threading.py", line 504, in run
+  File "/home/agam/Documents/Code/google_appengine/google/appengine/api/taskqueue/taskqueue_stub.py", line 2014, in MainLoop
+  File "/home/agam/Documents/Code/google_appengine/google/appengine/api/taskqueue/taskqueue_stub.py", line 2006, in _Wait
+  File "/usr/lib/python2.7/threading.py", line 403, in wait
+  File "/usr/lib/python2.7/threading.py", line 258, in wait
+&lt;type 'exceptions.TypeError'&gt;: 'NoneType' object is not callable
+</code></p>
+
+<p>After some Googling and Stackoverflowing, I found a somewhat bizarre fix (to use <code>--api_port</code> argument) with the root cause identified as being duplicate <code>localhost</code> mappings in the <code>/etc/hosts</code> file, including ipv6 mappings to localhost. Now I don&rsquo;t want to mess up my <code>/etc/hosts</code> with what is certainly a <em>bad idea</em>, so I used the <code>--api_port</code> option and I saw the &lsquo;hello world&rsquo;. So far, so good.</p>
+
+<p>I had terrible fonts from long ago, and since Google Web Fonts has become pretty awesome since then, headed on over to pick a few custom fonts. Also realized that I really just need to keep the index page, since the custom blog that I started is really superseded by this one and the posterous feed tracker was obsolete some time ago.</p>
+
+<p>The handler idea is quite straightforward, and there is definitely less boilerplate than what <code>index.py</code> was using earlier.</p>
+
+<p>Initial stupid error: All requests were going to the same handler (including static css ones). Had to change url order in <code>app.yaml</code> to move the <code>/static</code> above the <code>/.*</code>.</p>
+
+<p>Ok, all set, the barebones appengine site is up and running, I hope I can add some fun stuff to this in the future!</p>
+
+<p><em>Update</em>:
+We aren&rsquo;t done yet; after I uploaded the app (<code>appcfg.py update</code>, which by the way prefers <code>--oauth2</code> but won&rsquo;t tell you about it) the html wasn&rsquo;t being served.
+I added a <code>log.Fatal()</code> and sure enough the file wasn&rsquo;t being read any more.</p>
+
+<p>This was also a good time to see error handling in place, the application logs showed</p>
+
+<p><code>sh
+panic: os.Exit called
+runtime.panic go/src/pkg/runtime/panic.c:230
+os.Exit go/src/pkg/os/proc.go:42
+log.Fatal go/src/pkg/log/log.go:289
+agamsweb.indexHandler agamsweb/agamsweb.go:18
+net/http.HandlerFunc.ServeHTTP go/src/pkg/net/http/server.go:1150
+net/http.(*ServeMux).ServeHTTP go/src/pkg/net/http/server.go:1417
+appengine_internal.executeRequestSafely go/src/pkg/appengine_internal/api_prod.go:248
+appengine_internal.(*server).HandleRequest go/src/pkg/appengine_internal/api_prod.go:198
+reflect.Value.call go/src/pkg/reflect/value.go:474
+reflect.Value.Call go/src/pkg/reflect/value.go:345
+_ _.go:316
+runtime.goexit go/src/pkg/runtime/proc.c:280
+</code></p>
+
+<p>While testing this I also ran into an appengine bug: it is possible to get the following error message, though it literally doesn&rsquo;t make much sense</p>
+
+<p><code>sh
+E 2013-06-23 11:53:32.539
+Request failed because the app binary was missing. This can generally be fixed by redeploying your app.
+I 2013-06-23 11:53:32.539
+This request caused a new process to be started for your application, and thus caused your application code to be loaded for the first time.
+This request may thus take longer and use more CPU than a typical request for your application.
+</code>
+(i..e how can the app binary be missing <em>after</em> the application was loaded? :) )</p>
+
+<p>After much digging, realized that it isn&rsquo;t possible to read files specified by the <code>static</code> handler.</p>
+
+<p>Hmm so I don&rsquo;t really need any go code to do anything meaningful right now, I&rsquo;ll leave &lsquo;hello world&rsquo; running :/</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Comparing 'Hello World' in Go]]></title>
+    <link href="http://agam.github.io/blog/2013/03/12/hello-world-in-go-compared/"/>
+    <updated>2013-03-12T00:00:00-07:00</updated>
+    <id>http://agam.github.io/blog/2013/03/12/hello-world-in-go-compared</id>
+    <content type="html"><![CDATA[<p>Since I looked at printing &ldquo;Hello World&rdquo; <a href="/posts/hello-world-comparison.html">in C and Haskell earlier</a>, I thought I would look at what <em><a href="http://golang.org/">Go</a></em> does diferently.</p>
+
+<h2>Source program</h2>
+
+<p>So we start with this</p>
+
+<p>```go
+package main</p>
+
+<p>import &ldquo;fmt&rdquo;</p>
+
+<p>func main() {</p>
+
+<pre><code>fmt.Println("Hello, World")
+</code></pre>
+
+<p>}
+```</p>
+
+<h2>Binary info</h2>
+
+<p>The generated binary is large, like haskell, since (like haskell) it has a runtime linked in</p>
+
+<p><code>sh
+$ ls -lh | grep '\-x\-'
+-rwxr-x--- 1 agam eng 1.1M Mar 10 17:27 haskellhelloworld
+-rwxr-x--- 1 agam eng 8.8K Dec 14 16:10 helloworldcpp
+-rwxr-x--- 1 agam eng 1.3M Mar 12 18:07 helloworldgo
+</code></p>
+
+<p>It does define an intermediate number of symbols though:</p>
+
+<p><code>sh
+$ nm helloworldgo | wc -l
+1748
+</code></p>
+
+<p>Unlike both C++ and Haskell though (and this is really impressive) the Go binary is statically linked. So presumably I can copy it to a different location and expect it to run without worry too much about the environment (although I don&rsquo;t know if this is true for all supported libraries (i.e. there might be certain Go libraries that don&rsquo;t allow static linking)).</p>
+
+<h2>Object code</h2>
+
+<p>To see the generated assembly, run the following (the <code>sed</code> here is to get rid of the filename + linenumber that shows up on every line).</p>
+
+<p><code>sh
+$ go build -gcflags=-S helloworld.go  | sed 's/([^ ]*)//' &gt; helloworldgo.s
+</code></p>
+
+<p>I&rsquo;ve <a href="https://gist.github.com/agam/5148575">saved the output in one piece</a> if you want to look at it.</p>
+
+<p>The assembly format here looks very different from what we saw before; that&rsquo;s because it&rsquo;s in the <a href="http://doc.cat-v.org/plan_9/4th_edition/papers/asm">Plan 9 assembler</a> format, and it&rsquo;s a bit confusing since it introduces new pseudo-instructions and pseudo-registers.</p>
+
+<p>Luckily, the generated assembly is somewhat annotated so it is much easier to follow along.</p>
+
+<p><code>nasm
+--- prog list "main" ---
+0000  TEXT    main+0(SB),$72-0
+0001  LEAQ    autotmp_0002+-16(SP),DI
+0002  MOVQ    $0,AX
+0003  STOSQ   ,
+0004  STOSQ   ,
+</code></p>
+
+<p>I was confused by the <code>autotmp_000x</code> all over the code, until I looked at the <a href="http://golang.org/src/cmd/gc/gen.c">corresponding runtime code</a> and realized these were unique names for temporary variables in the original code.</p>
+
+<p><code>nasm
+0005  LEAQ    autotmp_0002+-16(SP),BX
+0006  MOVL    $1,autotmp_0000+-24(SP)
+0007  MOVL    $1,autotmp_0000+-20(SP)
+0008  MOVQ    BX,autotmp_0000+-32(SP)
+0009  MOVQ    $type.string+0(SB),(SP)
+</code></p>
+
+<p>Raw data, such as the string &ldquo;Hello, World&rdquo; here, <a href="http://golang.org/src/pkg/runtime/iface.c">have to be converted</a> to types within the program.</p>
+
+<p><code>nasm
+0010  LEAQ    go.string."Hello, World"+0(SB),SI
+0011  LEAQ    8(SP),DI
+0012  MOVSQ   ,
+0013  MOVSQ   ,
+0014  CALL    ,runtime.convT2E+0(SB)
+0015  LEAQ    24(SP),SI
+0016  LEAQ    autotmp_0000+-32(SP),DI
+0017  MOVQ    (DI),DI
+0018  MOVSQ   ,
+0019  MOVSQ   ,
+</code></p>
+
+<p>Not sure here &hellip; looks like the string is being copied, as an argument to <code>fmt.Println</code> ?</p>
+
+<p><code>nasm
+0020  LEAQ    (SP),BX
+0021  MOVQ    autotmp_0000+-32(SP),BP
+0022  MOVQ    BP,(BX)
+0023  MOVL    autotmp_0000+-24(SP),BP
+0024  MOVL    BP,8(BX)
+0025  MOVL    autotmp_0000+-20(SP),BP
+0026  MOVL    BP,12(BX)
+0027  CALL    ,fmt.Println+0(SB)
+0028  RET     ,
+</code></p>
+
+<p>General runtime initialization &hellip; including a call to <code>fmt.init</code> to initialize static data in the <code>fmt</code> package.</p>
+
+<p><code>nasm
+--- prog list "init" ---
+0029  TEXT    init+0(SB),$0-0
+0030  MOVB    initdone·+0(SB),AX
+0031  MOVB    AX,BX
+0032  CMPB    BX,$0
+0033  JEQ     ,39
+0034  MOVB    AX,BX
+0035  CMPB    BX,$2
+0036  JNE     ,38
+0037  RET     ,
+0038  CALL    ,runtime.throwinit+0(SB)
+0039  MOVB    $1,initdone·+0(SB)
+0040  CALL    ,fmt.init+0(SB)
+0041  MOVB    $2,initdone·+0(SB)
+0042  RET     ,
+</code></p>
+
+<p>The data section &hellip;</p>
+
+<p><code>
+--- prog list "&lt;S&gt;" ---
+0043  DATA    go.string."Hello, World"+0(SB)/8,$go.string."Hello, World"+12(SB)
+0043  DATA    go.string."Hello, World"+8(SB)/4,$12
+0043  DATA    go.string."Hello, World"+12(SB)/8,$"Hello, W"
+0043  DATA    go.string."Hello, World"+20(SB)/4,$"orld"
+0043  DATA    go.string."Hello, World"+24(SB)/1,$0
+0043  GLOBL   go.string."Hello, World"+0(SB),10,$32
+</code></p>
+
+<p>Omitted most of the rest of the data section, althought it has some weird stuff that I&rsquo;d like to dig into later, such as</p>
+
+<p><code>nasm
+...
+...
+...
+0043  DATA    go.string."func(*uint8, string) interface {}"+0(SB)/8,$go.string."func(*uint8, string) interface {}"+12(SB)
+0043  DATA    go.string."func(*uint8, string) interface {}"+8(SB)/4,$33
+0043  DATA    go.string."func(*uint8, string) interface {}"+12(SB)/8,$"func(*ui"
+0043  DATA    go.string."func(*uint8, string) interface {}"+20(SB)/8,$"nt8, str"
+0043  DATA    go.string."func(*uint8, string) interface {}"+28(SB)/8,$"ing) int"
+0043  DATA    go.string."func(*uint8, string) interface {}"+36(SB)/8,$"erface {"
+0043  DATA    go.string."func(*uint8, string) interface {}"+44(SB)/1,$"}"
+0043  DATA    go.string."func(*uint8, string) interface {}"+45(SB)/1,$0
+0043  GLOBL   go.string."func(*uint8, string) interface {}"+0(SB),10,$48
+...
+...
+...
+0043  END     ,
+</code></p>
+
+<p>(What exactly is going on here ? Perhaps encoding strings to use for runtime error reporting ?)</p>
+
+<h2>Running time</h2>
+
+<p>Again, running a string output program for time comparison is stupid, but I can&rsquo;t help doing this stupid thing. So &hellip;</p>
+
+<p>```sh
+$ time (while ((n++ &lt; 100)); do ./helloworldgo; done)</p>
+
+<p>real    0m0.567s
+user    0m0.196s
+sys 0m0.132s
+```</p>
+]]></content>
+  </entry>
+  
+</feed>

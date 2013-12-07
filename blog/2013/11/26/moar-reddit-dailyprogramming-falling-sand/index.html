@@ -1,0 +1,330 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Moar Reddit DailyProgramming: Falling Sand - Agam's Mashed-Up Pome</title>
+  <meta name="author" content="Agam">
+
+  
+  <meta name="description" content="Another easy challenge. One thing I learnt while doing this: I had to test the program with standard
+input and had created a couple of files with &hellip;">
+  
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://agam.github.io/blog/2013/11/26/moar-reddit-dailyprogramming-falling-sand">
+  <link href="/favicon.png" rel="icon">
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Agam's Mashed-Up Pome" type="application/atom+xml">
+  <script src="/javascripts/modernizr-2.0.js"></script>
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
+  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+
+</head>
+
+<body   >
+  <header role="banner"><hgroup>
+  <h1><a href="/">Agam's Mashed-Up Pome</a></h1>
+  
+    <h2>Thinking is hard; Let's compute instead.</h2>
+  
+</hgroup>
+
+</header>
+  <nav role="navigation"><ul class="subscription" data-subscription="rss">
+  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
+  
+</ul>
+  
+<form action="http://google.com/search" method="get">
+  <fieldset role="search">
+    <input type="hidden" name="q" value="site:agam.github.io" />
+    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
+  </fieldset>
+</form>
+  
+<ul class="main-navigation">
+  <li><a href="/">Blog</a></li>
+  <li><a href="/blog/archives">Archives</a></li>
+</ul>
+
+</nav>
+  <div id="main">
+    <div id="content">
+      <div>
+<article class="hentry" role="article">
+  
+  <header>
+    
+      <h1 class="entry-title">Moar Reddit DailyProgramming: Falling Sand</h1>
+    
+    
+      <p class="meta">
+        
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-11-26T17:33:00-08:00" pubdate data-updated="true">Nov 26<span>th</span>, 2013</time>
+        
+      </p>
+    
+  </header>
+
+
+<div class="entry-content"><p>Another <a href="http://www.reddit.com/r/dailyprogrammer/comments/1rdtky/111113_challenge_142_easy_falling_sand/">easy challenge</a>.</p>
+
+<p>One thing I learnt while doing this: I had to test the program with standard
+input and had created a couple of files with sample input that I could pipe in.
+I wasted a lot of time debugging a spurious newline (!), so in the future I
+should remember to do the following:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nb">set </span><span class="nv">listchars</span><span class="o">=</span>eol:<span class="err">$</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>What this does is show you <code>$</code> wherever the file has <code>\n</code> in it, so you can use
+this to distinguish between &lsquo;real&rsquo; spaces and whitespace.</p>
+
+<div><script src='https://gist.github.com/7669304.js'></script>
+<noscript><pre><code>#include &lt;cmath&gt;
+#include &lt;cstdint&gt;
+#include &lt;cstdio&gt;
+#include &lt;cstdlib&gt;
+#include &lt;iostream&gt;
+#include &lt;limits&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
+
+using namespace std;
+
+void PrintGrid(const vector&lt;vector&lt;char&gt;&gt;&amp; grid) {
+  for (int i = 0; i &lt; grid.size(); ++i) {
+    for (int j = 0; j &lt; grid.size(); ++j) {
+      cout &lt;&lt; grid[i][j];
+    }
+    cout &lt;&lt; endl;
+  }
+}
+
+bool GridFall(vector&lt;vector&lt;char&gt;&gt;* grid) {
+  bool changed = false;
+  // Skip row above ground
+  for (int i = grid-&gt;size() - 2; i &gt;= 0; --i) {
+    auto&amp; current_row = grid-&gt;at(i);
+    auto&amp; next_row = grid-&gt;at(i + 1);
+    for (int j = 0; j &lt; grid-&gt;size(); ++j) {
+      if (current_row[j] == &#39;.&#39; &amp;&amp; next_row[j] == &#39; &#39;) {
+        changed = true;
+        current_row[j] = &#39; &#39;;
+        next_row[j] = &#39;.&#39;;
+      }
+    }
+  }
+  return changed;
+}
+
+int main() {
+  int grid_size;
+  cin &gt;&gt; grid_size;
+
+  vector&lt;vector&lt;char&gt;&gt; grid(grid_size);
+  char dummy_newline;
+  cin.get(dummy_newline);
+  cin &gt;&gt; noskipws;
+  for (int i = 0; i &lt; grid_size; ++i) {
+    for (int j = 0; j &lt; grid_size; ++j) {
+      char grid_char;
+      cin.get(grid_char);
+      grid[i].push_back(grid_char);
+    }
+    cin.get(dummy_newline);
+  }
+
+  do {
+    // Uncomment to view/debug transitory steps.
+    //cout &lt;&lt; &quot;Intermediate grid state :- &quot; &lt;&lt; endl;
+    //PrintGrid(grid);
+  } while (GridFall(&amp;grid));
+
+  PrintGrid(grid);
+
+  return 0;
+}
+
+/*
+ * Input Description
+ * On standard console input, you will be given an integer N which represents
+ * the N x N grid of ASCII characters. This means there will be N-lines of
+ * N-characters long. This is the starting grid of your simulated world: the
+ * character &#39; &#39; (space) means an empty space, while &#39;.&#39; (dot) means sand, and
+ * &#39;#&#39; (hash or pound) means stone. Once you parse this input, simulate the
+ * world until all particles are settled (e.g. the sand has fallen and either
+ * settled on the ground or on stone). &quot;Ground&quot; is defined as the solid surface
+ * right below the last row.
+ * Output Description
+ * Print the end result of all particle positions using the input format for
+ * particles.
+ * Sample Inputs &amp; Outputs
+ * Sample Input
+ * 5
+ * .....
+ *   #  
+ *   #    
+ *
+ *       .
+ * Sample Output
+ *   .  
+ * . #  
+ * #    
+ *     .
+ *  . ..
+ */
+</code></pre></noscript></div>
+
+
+
+</div>
+
+
+  <footer>
+    <p class="meta">
+      
+  
+
+<span class="byline author vcard">Posted by <span class="fn">Agam</span></span>
+
+      
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-11-26T17:33:00-08:00" pubdate data-updated="true">Nov 26<span>th</span>, 2013</time>
+      
+
+<span class="categories">
+  
+    <a class='category' href='/blog/categories/alwaysbecoding/'>AlwaysBeCoding</a>, <a class='category' href='/blog/categories/reddit/'>reddit,</a>
+  
+</span>
+
+
+    </p>
+    
+      <div class="sharing">
+  
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://agam.github.io/blog/2013/11/26/moar-reddit-dailyprogramming-falling-sand/" data-via="" data-counturl="http://agam.github.io/blog/2013/11/26/moar-reddit-dailyprogramming-falling-sand/" >Tweet</a>
+  
+  
+  
+</div>
+
+    
+    <p class="meta">
+      
+        <a class="basic-alignment left" href="/blog/2013/11/26/reddit-dailyprogrammer-computing-pi/" title="Previous Post: Reddit DailyProgrammer Computing Pi">&laquo; Reddit DailyProgrammer Computing Pi</a>
+      
+      
+    </p>
+  </footer>
+</article>
+
+</div>
+
+<aside class="sidebar">
+  
+    <section>
+  <h1>Recent Posts</h1>
+  <ul id="recent_posts">
+    
+      <li class="post">
+        <a href="/blog/2013/11/26/moar-reddit-dailyprogramming-falling-sand/">Moar Reddit DailyProgramming: Falling Sand</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/11/26/reddit-dailyprogrammer-computing-pi/">Reddit DailyProgrammer Computing Pi</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/11/19/reddit-dailyprogrammer-getting-started/">Reddit DailyProgrammer Getting Started</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/11/15/the-octopress-revolution/">The Octopress Revolution</a>
+      </li>
+    
+      <li class="post">
+        <a href="/blog/2013/11/15/moving-to-jekyll/">Moving to Jekyll</a>
+      </li>
+    
+  </ul>
+</section>
+
+
+
+
+
+  
+</aside>
+
+
+    </div>
+  </div>
+  <footer role="contentinfo"><p>
+  Copyright &copy; 2013 - Agam -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+</p>
+
+</footer>
+  
+
+
+
+
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
