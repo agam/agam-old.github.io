@@ -5,12 +5,11 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Using Typewriter mode, ALWAYS - Agam's Mashed-Up Pome</title>
+  <title>Problems with Octopress in a new location - Agam's Mashed-Up Pome</title>
   <meta name="author" content="Agam">
 
   
-  <meta name="description" content="I used to have two giant monitors to work with, and reduced them to one since I
-found myself frequently moving my neck from side to side. I got rid &hellip;">
+  <meta name="description" content="My git-n00bness obviously inhibited me a bit here, but I was today in the situation of creating a new location from which to blog (a hosted VM, more &hellip;">
   
 
   <!-- http://t.co/dKP3o1e -->
@@ -19,7 +18,7 @@ found myself frequently moving my neck from side to side. I got rid &hellip;">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://agam.github.io/blog/2013/11/06/typewriter-mode">
+  <link rel="canonical" href="http://agam.github.io/blog/2013/12/14/problems-with-octopress-in-a-new-location">
   <link href="/favicon.png" rel="icon">
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Agam's Mashed-Up Pome" type="application/atom+xml">
@@ -69,7 +68,7 @@ found myself frequently moving my neck from side to side. I got rid &hellip;">
   
   <header>
     
-      <h1 class="entry-title">Using Typewriter Mode, ALWAYS</h1>
+      <h1 class="entry-title">Problems With Octopress in a New Location</h1>
     
     
       <p class="meta">
@@ -85,60 +84,45 @@ found myself frequently moving my neck from side to side. I got rid &hellip;">
   
 
 
-<time datetime="2013-11-06T00:00:00+00:00" pubdate data-updated="true">Nov 6<span>th</span>, 2013</time>
+<time datetime="2013-12-14T05:43:00+00:00" pubdate data-updated="true">Dec 14<span>th</span>, 2013</time>
         
       </p>
     
   </header>
 
 
-<div class="entry-content"><p>I used to have two giant monitors to work with, and reduced them to one since I
-found myself frequently moving my neck from side to side.</p>
+<div class="entry-content"><p>My git-n00bness obviously inhibited me a bit here, but I was today in the situation of creating a new location from which to blog (a hosted VM, more about which in a separate post).</p>
 
-<p>I got rid of one of them, and felt much better after that &mdash; but now I was still
-moving my neck up and down. When editing large source files (wait, why are these
-files large to begin with ? That&rsquo;s a different conversation!), you do end up
-tracking the cursor on each find, on each scroll.</p>
+<p>So I ran <code>git clone https://github.com/agam/agam.github.io.git</code>, which gave me the <code>master</code> branch.</p>
 
-<p>The solution is obvious &mdash; as far as possible, keep the horizontal location of
-the cursor fixed.</p>
+<p>But I also needed the <code>source</code> branch. So I naively ran <code>git pull origin source</code>, which resulted in &hellip; a merge conflict on <code>index.html</code>?! WTF?</p>
 
-<p>I&rsquo;m sure what the Emacs equivalent of this is, but if you use the <a href="http://www.sbf5.com/~cduan/technical/vi/">One True
-Editor</a>, try typing <code>:help scrolloff</code> right now; you should see this:</p>
+<p>I &lsquo;fixed&rsquo; that by making <code>index.html</code> empty. But <code>rake generate</code> failed with weird errors and <code>git branch</code> still shows only <code>source</code>. So what was wrong?</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p><a href="http://stackoverflow.com/questions/67699/how-do-i-clone-all-remote-branches-with-git">This stackoverflow post</a> had a possible answer on how to proceed.</p>
+
+<p>I tried running <code>git checkout origin/source</code> but that brought on the dreaded <code>experimental HEAD</code> error message.</p>
+
+<p>No luck. Then I came across <a href="http://blog.zerosharp.com/clone-your-octopress-to-blog-from-two-places/">this post</a> which seemed to describe a similar situation (I crossed my fingers that I hadn&rsquo;t already screwed up my repo).</p>
+
+<p>Aha! (I won&rsquo;t forget it now). You&rsquo;re supposed to specify the branch name when you check out!</p>
+
+<p>So I <code>rm -rf</code>ed my setup, then ran the following:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>                 *'scrolloff'* *'so'*
-</span><span class='line'>'scrolloff' 'so'  number  (default 0)
-</span><span class='line'>      global
-</span><span class='line'>      {not in Vi}
-</span><span class='line'>Minimal number of screen lines to keep above and below the cursor.
-</span><span class='line'>This will make some context visible around where you are working.  If
-</span><span class='line'>you set it to a very large value (999) the cursor line will always be
-</span><span class='line'>in the middle of the window (except at the start or end of the file or
-</span><span class='line'>when long lines wrap).
-</span><span class='line'>For scrolling horizontally see 'sidescrolloff'.
-</span><span class='line'>NOTE: This option is set to 0 when 'compatible' is set.</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>git clone -b <span class="nb">source </span>https://github.com/agam/agam.github.io.git
+</span><span class='line'><span class="nb">cd </span>agam.github.io
+</span><span class='line'>git clone https://github.com/agam/agam.github.io.git _deploy
+</span></code></pre></td></tr></table></div></figure>
 
 
-<p>So you can add this to your <code>.vimrc</code> later, but try it out right now. Type</p>
+<p>After this, <code>rake new_post</code> worked as expected, but <code>rake generate</code> still failed on some plugin error about an &ldquo;invalid byte sequence&rdquo;.</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>:set scrolloff=999</span></code></pre></td></tr></table></div></figure>
+<p>That led me to <a href="https://gist.github.com/arnab/4584901">this gist</a>. <code>export LANG=en_US.utf-8</code> fixed the generate problem.</p>
 
-
-<p>&hellip; and scroll around a bit.</p>
-
-<p>Enjoy.</p>
+<p>And then <code>rake deploy</code> worked as expected, so yay!</p>
 </div>
 
 
@@ -161,12 +145,12 @@ Editor</a>, try typing <code>:help scrolloff</code> right now; you should see th
   
 
 
-<time datetime="2013-11-06T00:00:00+00:00" pubdate data-updated="true">Nov 6<span>th</span>, 2013</time>
+<time datetime="2013-12-14T05:43:00+00:00" pubdate data-updated="true">Dec 14<span>th</span>, 2013</time>
       
 
 <span class="categories">
   
-    <a class='category' href='/blog/categories/editor/'>Editor</a>, <a class='category' href='/blog/categories/vim/'>Vim</a>
+    <a class='category' href='/blog/categories/octopress/'>octopress</a>
   
 </span>
 
@@ -175,7 +159,7 @@ Editor</a>, try typing <code>:help scrolloff</code> right now; you should see th
     
       <div class="sharing">
   
-  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://agam.github.io/blog/2013/11/06/typewriter-mode/" data-via="" data-counturl="http://agam.github.io/blog/2013/11/06/typewriter-mode/" >Tweet</a>
+  <a href="//twitter.com/share" class="twitter-share-button" data-url="http://agam.github.io/blog/2013/12/14/problems-with-octopress-in-a-new-location/" data-via="" data-counturl="http://agam.github.io/blog/2013/12/14/problems-with-octopress-in-a-new-location/" >Tweet</a>
   
   
   
@@ -184,10 +168,8 @@ Editor</a>, try typing <code>:help scrolloff</code> right now; you should see th
     
     <p class="meta">
       
-        <a class="basic-alignment left" href="/blog/2013/10/01/wishlist-2013/" title="Previous Post: Wishlist [being a brain dump of random things I'd like to play around with]">&laquo; Wishlist [being a brain dump of random things I'd like to play around with]</a>
+        <a class="basic-alignment left" href="/blog/2013/11/26/moar-reddit-dailyprogramming-falling-sand/" title="Previous Post: Moar Reddit DailyProgramming: Falling Sand">&laquo; Moar Reddit DailyProgramming: Falling Sand</a>
       
-      
-        <a class="basic-alignment right" href="/blog/2013/11/15/moving-to-jekyll/" title="Next Post: Moving to Jekyll">Moving to Jekyll &raquo;</a>
       
     </p>
   </footer>

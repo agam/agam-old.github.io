@@ -4,7 +4,7 @@
   <title><![CDATA[Category: reddit, | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/reddit/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2013-12-06T18:55:44-08:00</updated>
+  <updated>2013-12-14T08:43:52+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Moar Reddit DailyProgramming: Falling Sand]]></title>
     <link href="http://agam.github.io/blog/2013/11/26/moar-reddit-dailyprogramming-falling-sand/"/>
-    <updated>2013-11-26T17:33:00-08:00</updated>
+    <updated>2013-11-26T17:33:00+00:00</updated>
     <id>http://agam.github.io/blog/2013/11/26/moar-reddit-dailyprogramming-falling-sand</id>
     <content type="html"><![CDATA[<p>Another <a href="http://www.reddit.com/r/dailyprogrammer/comments/1rdtky/111113_challenge_142_easy_falling_sand/">easy challenge</a>.</p>
 
@@ -134,7 +134,7 @@ int main() {
   <entry>
     <title type="html"><![CDATA[Reddit DailyProgrammer Computing Pi]]></title>
     <link href="http://agam.github.io/blog/2013/11/26/reddit-dailyprogrammer-computing-pi/"/>
-    <updated>2013-11-26T14:50:00-08:00</updated>
+    <updated>2013-11-26T14:50:00+00:00</updated>
     <id>http://agam.github.io/blog/2013/11/26/reddit-dailyprogrammer-computing-pi</id>
     <content type="html"><![CDATA[<p>Another reddit programming exercise, <a href="http://www.reddit.com/r/dailyprogrammer/comments/1qply1/111513_challenge_129_hard_baking_pi/">this one</a> being classified as &lsquo;hard&rsquo; and indeed it <em>did</em> take a while longer, being a distributed programming setup.</p>
 
@@ -403,7 +403,7 @@ Digit: 21&hellip;Value: 7
   <entry>
     <title type="html"><![CDATA[Reddit DailyProgrammer Getting Started]]></title>
     <link href="http://agam.github.io/blog/2013/11/19/reddit-dailyprogrammer-getting-started/"/>
-    <updated>2013-11-19T18:57:00-08:00</updated>
+    <updated>2013-11-19T18:57:00+00:00</updated>
     <id>http://agam.github.io/blog/2013/11/19/reddit-dailyprogrammer-getting-started</id>
     <content type="html"><![CDATA[<p>In the vein of &ldquo;Always Be Coding&rdquo;, I stumbled across this subreddit: <a href="http://www.reddit.com/r/dailyprogrammer/">&ldquo;Daily
 Programmer&rdquo;</a>, and then decided to do

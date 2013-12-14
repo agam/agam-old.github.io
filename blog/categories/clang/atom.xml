@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Clang | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/clang/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2013-12-06T18:55:44-08:00</updated>
+  <updated>2013-12-14T08:43:52+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Less Gcc, More Clang]]></title>
     <link href="http://agam.github.io/blog/2013/09/30/less-gcc-more-clang/"/>
-    <updated>2013-09-30T00:00:00-07:00</updated>
+    <updated>2013-09-30T00:00:00+00:00</updated>
     <id>http://agam.github.io/blog/2013/09/30/less-gcc-more-clang</id>
     <content type="html"><![CDATA[<p>I was unhappy with how I had not fully figured out my <code>libstdc++ &lt;-&gt; gcc/clang &lt;-&gt; boost</code> issues, and was feeling a bit ashamed that I had let the complexity of the system beat me.</p>
 
@@ -242,7 +242,7 @@ $ ldconfig -p | grep c++abi
   <entry>
     <title type="html"><![CDATA[Clang vs Gcc, which would you use?]]></title>
     <link href="http://agam.github.io/blog/2013/06/23/clang-vs-gcc-which-would-you-use/"/>
-    <updated>2013-06-23T00:00:00-07:00</updated>
+    <updated>2013-06-23T00:00:00+00:00</updated>
     <id>http://agam.github.io/blog/2013/06/23/clang-vs-gcc-which-would-you-use</id>
     <content type="html"><![CDATA[<p>Compare these two runs &hellip;</p>
 
