@@ -8,9 +8,10 @@
   <title>Agam's Mashed-Up Pome</title>
   <meta name="author" content="Agam">
 
+   
+  <meta name="description" content="">
   
-  <meta name="description" content="I was unhappy with how I had not fully figured out my libstdc++ &lt;-&gt; gcc/clang &lt;-&gt; boost issues, and was feeling a bit ashamed that I had &hellip;">
-  
+  <meta name="keywords" content="">
 
   <!-- http://t.co/dKP3o1e -->
   <meta name="HandheldFriendly" content="True">
@@ -20,62 +21,85 @@
   
   <link rel="canonical" href="http://agam.github.io/blog/page/2">
   <link href="/favicon.png" rel="icon">
+  <link href='http://fonts.googleapis.com/css?family=Quicksand:300,400' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
   <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
   <link href="/atom.xml" rel="alternate" title="Agam's Mashed-Up Pome" type="application/atom+xml">
-  <script src="/javascripts/modernizr-2.0.js"></script>
-  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-  <script>!window.jQuery && document.write(unescape('%3Cscript src="./javascripts/lib/jquery.min.js"%3E%3C/script%3E'))</script>
-  <script src="/javascripts/octopress.js" type="text/javascript"></script>
+  <script src="/js/jquery.js"></script>
+  <script src="/js/bootstrap-collapse.js"></script>
+  <script src="/js/modernizr-2.0.js"></script>
+  <script src="/js/octopress.js" type="text/javascript"></script>
+  <script src="/js/application.js"></script>
   <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 <link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
 
   
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-16612682-4']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
 
 </head>
 
 <body   >
-  <header role="banner"><hgroup>
-  <h1><a href="/">Agam's Mashed-Up Pome</a></h1>
-  
-    <h2>Thinking is hard; Let's compute instead.</h2>
-  
-</hgroup>
-
-</header>
-  <nav role="navigation"><ul class="subscription" data-subscription="rss">
-  <li><a href="/atom.xml" rel="subscribe-rss" title="subscribe via RSS">RSS</a></li>
-  
-</ul>
-  
-<form action="http://google.com/search" method="get">
-  <fieldset role="search">
-    <input type="hidden" name="q" value="site:agam.github.io" />
-    <input class="search" type="text" name="q" results="0" placeholder="Search"/>
-  </fieldset>
-</form>
-  
-<ul class="main-navigation">
-  <li><a href="/">Blog</a></li>
-  <li><a href="/blog/archives">Archives</a></li>
+  <div class="navbar navbar-inverse navbar-static-top">
+  	<div class="navbar-inner">
+  	  <div class="container">
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+          <span class="fui-menu-24"></span>
+        </a>
+  	  	<div class="nav-collapse collapse navbar-responsive-collapse" style="height:0;">
+  	      <ul class="nav">
+    
 </ul>
 
-</nav>
-  <div id="main">
-    <div id="content">
-      <div class="blog-index">
+<ul class="nav pull-right">
+    
+    
+    
+    <li><a href="http://twitter.com/agambrahma" title="Twitter Profile"><i class="icon-twitter-sign social-navbar"></i></a></li>
+    
+    
+    <li><a href="http://plus.google.com/+AgamBrahma" title="Google+ Profile"><i class="icon-google-plus-sign social-navbar"></i></a></li>
+    
+    
+    
+</ul>
+
+  	    </div>
+  	  </div>
+  	</div>
+  </div>
+  <div class="container" id="main">
+      <div class="row-fluid">
+        <div id="content">
+          <div class="jumbotron">
+  <div class="container">
+    Agam&#8217;s Mashed-Up Pome
+    <h3 class="tagline">Thinking is hard; Let&#8217;s compute instead.</h3>
+  </div>
+</div>
+
+
+<div class="blog-index">
   
   
   
     <article>
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/09/30/less-gcc-more-clang/">Less Gcc, More Clang</a></h1>
-    
-    
-      <p class="meta">
-        
+
+  <div class="row-fluid">
+    <div class="span2 post-meta">
+	  <h5 class="date-time">
 
 
 
@@ -87,14 +111,339 @@
   
 
 
-<time datetime="2013-09-30T00:00:00+00:00" pubdate data-updated="true">Sep 30<span>th</span>, 2013</time>
-        
-      </p>
+<i class="icon-calendar-empty"></i> <time datetime="2013-09-30T00:00:00+00:00" pubdate data-updated="true">Sep 30<span>th</span>, 2013</time></h5>
+          <div class="row-fluid">
+          
+          </div>
+          
+          <div class="row-fluid">
+          
+          <a href="/blog/categories/android/"><span class="badge">Android</span></a>
+          
+          <a href="/blog/categories/music/"><span class="badge">Music</span></a>
+          
+          <a href="/blog/categories/storage/"><span class="badge">Storage</span></a>
+          
+          </div>
+          
+    </div>
+    <div class="span10 post-container">
+      <h1 class="link"><a href="/blog/2013/09/30/usb-music-transfer-android/">Getting music onto an Android phone&#8217;s external storage</a></h1>
+      <p>I had bought a MicroSD card to go along with my Motorola Razr M, since it has a limited internal storage of 8G.</p>
+
+<p>(That is to say, <em>limited</em> by today&rsquo;s standards, where a singe Chrome tab can take up a few hundred MB. I remember when I was excited to find a computer with 8MB Ram since that meant I could play Quake on it. Anyway &hellip;)</p>
+
+<p>I assembled everything on my (linux) laptop in one folder, this should just be a copy-and-paste, drag-and-drop kind of thing, right ?</p>
+
+<p><em>Wrong</em>.</p>
+
+<p>Instead I had to wade through a bunch of online forum posts, about mounting the phone on windows, on mac, configuring various settings.</p>
+
+<p>When I plugged in the phone through USB, I got a notification saying the phone was connected but it didn&rsquo;t show up in Ubuntu&rsquo;s list of connected devices (and I know this works for other devices because my external hard drive shows up when I connect i
+t).</p>
+
+<p>Finally I found <a href="http://www.mysolutions.it/mounting-your-mtp-androids-sd-card-on-ubuntu/">this</a>, it assured me that <em>&ldquo;Fortunately, it’s quite easy to get this working&rdquo;</em>.</p>
+
+<p>Of course, it was incomplete (yes, you need <code>sudo apt-get install mtpfs</code> but <em>also</em> <code>sudo apt-get install mtp-tools</code>)</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>sudo mkdir /media/MTPDevice
+</span><span class='line'>sudo chmod 775 /media/MTPDevice
+</span><span class='line'>sudo mtpfs -o allow_other /media/MTPDevice/
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Finally, I saw</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>mtp-detect
+</span><span class='line'>libmtp version: 1.1.3
+</span><span class='line'>
+</span><span class='line'>Listing raw device<span class="o">(</span>s<span class="o">)</span>
+</span><span class='line'>Device 0 <span class="o">(</span><span class="nv">VID</span><span class="o">=</span>22b8 and <span class="nv">PID</span><span class="o">=</span>2e51<span class="o">)</span> is UNKNOWN.
+</span><span class='line'>Please report this VID/PID and the device model to the libmtp development team
+</span><span class='line'>   Found 1 device<span class="o">(</span>s<span class="o">)</span>:
+</span><span class='line'>   22b8:2e51 @ bus 2, dev 9
+</span><span class='line'>Attempting to connect device<span class="o">(</span>s<span class="o">)</span>
+</span><span class='line'>PTP_ERROR_IO: failed to open session, trying again after resetting USB interface
+</span><span class='line'>LIBMTP libusb: Attempt to reset device
+</span><span class='line'>inep: usb_get_endpoint_status<span class="o">()</span>: No such device
+</span><span class='line'>outep: usb_get_endpoint_status<span class="o">()</span>: No such device
+</span><span class='line'>usb_clear_halt<span class="o">()</span> on IN endpoint: No such device
+</span><span class='line'>usb_clear_halt<span class="o">()</span> on OUT endpoint: No such device
+</span><span class='line'>usb_clear_halt<span class="o">()</span> on INTERRUPT endpoint: No such device
+</span><span class='line'>usb_open<span class="o">()</span>: No such device
+</span><span class='line'>LIBMTP PANIC: Could not init USB on second attempt
+</span><span class='line'>Unable to open raw device 0
+</span><span class='line'>OK.
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Woo hoo. So much for that.</p>
+
+<p>Then I came across <a href="http://penzoditutto.blogspot.it/2012/12/android-mtp-devices-40-mount-scripts.html">this</a>, which seemed more pragmatic, since it said &ldquo;If you&rsquo;re using ubuntu (12.04 or 12.10) and you want to browse your Android 4.0+ device <em>you know how frustrating can be.</em>&rdquo; Yes I do.</p>
+
+<p>But it didn&rsquo;t have anything fundamentally different.</p>
+
+<p>So I just pulled out the USB cable and plugged it in again (&ldquo;when all else fails, cycle power&rdquo;)</p>
+
+<p>This time, it worked.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>mtp-detect
+</span><span class='line'>libmtp version: 1.1.3
+</span><span class='line'>
+</span><span class='line'>Listing raw device<span class="o">(</span>s<span class="o">)</span>
+</span><span class='line'>Device 0 <span class="o">(</span><span class="nv">VID</span><span class="o">=</span>22b8 and <span class="nv">PID</span><span class="o">=</span>2e51<span class="o">)</span> is UNKNOWN.
+</span><span class='line'>Please report this VID/PID and the device model to the libmtp development team
+</span><span class='line'>   Found 1 device<span class="o">(</span>s<span class="o">)</span>:
+</span><span class='line'>   22b8:2e51 @ bus 2, dev 11
+</span><span class='line'>Attempting to connect device<span class="o">(</span>s<span class="o">)</span>
+</span><span class='line'>Android device detected, assigning default bug flags
+</span><span class='line'>USB low-level info:
+</span><span class='line'>   Interface has a kernel driver attached.
+</span><span class='line'>   bcdUSB: 512
+</span><span class='line'>   bDeviceClass: 0
+</span><span class='line'>   bDeviceSubClass: 0
+</span><span class='line'>   bDeviceProtocol: 0
+</span><span class='line'>   idVendor: 22b8
+</span><span class='line'>   idProduct: 2e51
+</span><span class='line'>   IN endpoint maxpacket: 512 bytes
+</span><span class='line'>   OUT endpoint maxpacket: 512 bytes
+</span><span class='line'>
+</span><span class='line'>&lt; ... and many more pages ... &gt;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>While we&rsquo;re here, a clarification by way of digression: I am not ranting against MTP, just its usability. It is clearly (IMHO) better than the previous mass storage option, since it supports well-defined interfaces to specific file types, such as this one for JPEG files:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>   3801: JPEG
+</span><span class='line'>      dc01: Storage ID UINT32 data <span class="nb">type </span>ANY 32BIT VALUE form READ ONLY
+</span><span class='line'>      dc02: Object Format UINT16 data <span class="nb">type </span>ANY 16BIT VALUE form READ ONLY
+</span><span class='line'>      dc03: Protection Status UINT16 data <span class="nb">type </span>ANY 16BIT VALUE form READ ONLY
+</span><span class='line'>      dc04: Object Size UINT64 data <span class="nb">type </span>READ ONLY
+</span><span class='line'>      dc07: Object File Name STRING data <span class="nb">type </span>GET/SET
+</span><span class='line'>      dc09: Date Modified STRING data <span class="nb">type </span>DATETIME FORM READ ONLY
+</span><span class='line'>      dc0b: Parent Object UINT32 data <span class="nb">type </span>ANY 32BIT VALUE form READ ONLY
+</span><span class='line'>      dc41: Persistant Unique Object Identifier UINT128 data <span class="nb">type </span>READ ONLY
+</span><span class='line'>      dc44: Name STRING data <span class="nb">type </span>READ ONLY
+</span><span class='line'>      dce0: Display Name STRING data <span class="nb">type </span>READ ONLY
+</span><span class='line'>      dc4e: Date Added STRING data <span class="nb">type </span>DATETIME FORM READ ONLY
+</span><span class='line'>      dc48: Description STRING data <span class="nb">type </span>READ ONLY
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>But wait a minute, what happened to the directory I created ?</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>ls -ld /media/MTPDevice/
+</span><span class='line'>ls: cannot access /media/MTPDevice/: Transport endpoint is not connected
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Obviously I celebrated too soon. More trudging through posts. As an idea of how crazy this can seem, I found <a href="http://askubuntu.com/questions/159095/problems-connecting-android-ics-to-ubuntu-using-mtp">this post</a> on <a href="http://www.askubuntu.com">askubuntu</a> which said:</p>
+
+<p>&ldquo;Please note the Terence Egan Blog where you took the instructions from is a copy of an OMG Ubuntu article. He has missed an important step <em>to restart your PC before running the Echo commands</em> I suggest you try and reinstall from the original OMG Ubuntu source. Click on this link&rdquo; (emphasis mine, link omitted).</p>
+
+<p>Yes, that&rsquo;s right, <em><em>N00b</em></em>. You forgot to restart.</p>
+
+<p>(In case you&rsquo;re wondering how that story ends,
+&ldquo;Oh my god!!! I did not know that. Will do this asap. – ubuntico Jul 3 &lsquo;12 at 16:40
+It worked this way. <em>I connect the mobile and them immediately (under 1s after connection) I have to start command android-connect. Otherwise, the system will try to mount the mobile and after that I cannot use fuse to mount it.</em> It the same with you? – ubuntico Jul 3 &#8216;12 at 17:08&rdquo;)</p>
+
+<p>Maybe I&rsquo;m expecting too much, but I would not refer to this tenuous solution as <em>&ldquo;it worked&rdquo;</em>.</p>
+
+<p>Hmm, it looks like I skipped a step. I had to modify <code>/etc/udev/rules.d/51-android.rules</code> to add the right <code>SUBSYSTEM...</code> rule, and then <code>sudo service udev restart</code>.</p>
+
+<p>Nope, no luck. I can&rsquo;t access, mount, unmount or delete.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>fusermount -u /media/MTPDevice
+</span><span class='line'>fusermount: entry <span class="k">for</span> /media/MTPDevice not found in /etc/mtab
+</span><span class='line'><span class="nv">$ </span>sudo mtpfs -o allow_other /media/MTPDevice/
+</span><span class='line'>fuse: bad mount point <span class="sb">`</span>/media/MTPDevice/<span class="s1">&#39;: Transport endpoint is not connected</span>
+</span><span class='line'><span class="s1">$ sudo rmdir /media/MTPDevice</span>
+</span><span class='line'><span class="s1">rmdir: failed to remove `/media/MTPDevice&#39;</span>: Device or resource busy
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>But wait! All is not lost! We can use the <code>adb</code> tool to interact directly with the android filesystem!</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>./adb push /media/My<span class="se">\ </span>Book/Music/Amazon<span class="se">\ </span>MP3/Eminem/ /sdcard/Music/
+</span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/17 - Untitled <span class="o">[</span>Explicit<span class="o">]</span>.mp3 -&gt; /sdcard/Music/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/17 - Untitled <span class="o">[</span>Explicit<span class="o">]</span>.mp3
+</span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/16 - You<span class="s1">&#39;re Never Over [Explicit].mp3 -&gt; /sdcard/Music/Recovery [Explicit]/16 - You&#39;</span>re Never Over <span class="o">[</span>Explicit<span class="o">]</span>.mp3
+</span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/15 - Love The Way You Lie <span class="o">[</span>Explicit<span class="o">]</span>.mp3 -&gt; /sdcard/Music/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/15 - Love The Way You Lie <span class="o">[</span>Explicit<span class="o">]</span>.mp3
+</span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/14 - Almost Famous <span class="o">[</span>Explicit<span class="o">]</span>.mp3 -&gt; /sdcard/Music/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/14 - Almost Famous <span class="o">[</span>Explicit<span class="o">]</span>.mp3
+</span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/13 - So Bad <span class="o">[</span>Explicit<span class="o">]</span>.mp3 -&gt; /sdcard/Music/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/13 - So Bad <span class="o">[</span>Explicit<span class="o">]</span>.mp3
+</span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/12 - 25 To Life <span class="o">[</span>Explicit<span class="o">]</span>.mp3 -&gt; /sdcard/Music/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/12 - 25 To Life <span class="o">[</span>Explicit<span class="o">]</span>.mp3
+</span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/11 - Cinderella Man <span class="o">[</span>Explicit<span class="o">]</span>.mp3 -&gt; /sdcard/Music/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/11 - Cinderella Man <span class="o">[</span>Explicit<span class="o">]</span>.mp3
+</span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/10 - Space Bound <span class="o">[</span>Explicit<span class="o">]</span>.mp3 -&gt; /sdcard/Music/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/10 - Space Bound <span class="o">[</span>Explicit<span class="o">]</span>.mp3
+</span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/09 - No Love <span class="o">[</span>Explicit<span class="o">]</span>.mp3 -&gt; /sdcard/Music/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/09 - No Love <span class="o">[</span>Explicit<span class="o">]</span>.mp3
+</span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/08 - Seduction <span class="o">[</span>Explicit<span class="o">]</span>.mp3 -&gt; /sdcard/Music/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/08 - Seduction <span class="o">[</span>Explicit<span class="o">]</span>.mp3
+</span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/07 - Not Afraid <span class="o">[</span>Explicit<span class="o">]</span>.mp3 -&gt; /sdcard/Music/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/07 - Not Afraid <span class="o">[</span>Explicit<span class="o">]</span>.mp3
+</span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/06 - Going Through Changes <span class="o">[</span>Explicit<span class="o">]</span>.mp3 -&gt; /sdcard/Music/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/06 - Going Through Changes <span class="o">[</span>Explicit<span class="o">]</span>.mp3
+</span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/05 - W.T.P. <span class="o">[</span>Explicit<span class="o">]</span>.mp3 -&gt; /sdcard/Music/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/05 - W.T.P. <span class="o">[</span>Explicit<span class="o">]</span>.mp3
+</span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/04 - Won<span class="s1">&#39;t Back Down [Explicit].mp3 -&gt; /sdcard/Music/Recovery [Explicit]/04 - Won&#39;</span>t Back Down <span class="o">[</span>Explicit<span class="o">]</span>.mp3
+</span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/03 - On Fire <span class="o">[</span>Explicit<span class="o">]</span>.mp3 -&gt; /sdcard/Music/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/03 - On Fire <span class="o">[</span>Explicit<span class="o">]</span>.mp3
+</span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/02 - Talkin<span class="s1">&#39; 2 Myself [Explicit].mp3 -&gt; /sdcard/Music/Recovery [Explicit]/02 - Talkin&#39;</span> 2 Myself <span class="o">[</span>Explicit<span class="o">]</span>.mp3
+</span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/01 - Cold Wind Blows <span class="o">[</span>Explicit<span class="o">]</span>.mp3 -&gt; /sdcard/Music/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/01 - Cold Wind Blows <span class="o">[</span>Explicit<span class="o">]</span>.mp3
+</span><span class='line'>17 files pushed. 0 files skipped.
+</span><span class='line'>3624 KB/s <span class="o">(</span>150604367 bytes in 40.580s<span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>and verify it after running <code>adb shell</code></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>shell@scorpion_mini:/ <span class="nv">$ </span>ls sdcard/Music/
+</span><span class='line'>Recovery <span class="o">[</span>Explicit<span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So yeah. It works. And it&rsquo;s a <em>magical</em> experience.</p>
+
+<p><em>Update</em>:
+To add to my misery, I still can&rsquo;t <em>play</em> the songs. Google Play doesn&rsquo;t pick  them up (no surprise there) but neither does a dedicated music playing app like Winamp.</p>
+
+<p>(Yes, <em>Winamp!</em> It&rsquo;s still around! It still plays the <a href="http://www.youtube.com/watch?v=cKqKrH0O9yg">&ldquo;whips the llama&rsquo;s ass&rdquo; clip</a> when it starts! But it doesn&rsquo;t find my music ?!)</p>
+
+<p>As far as I can tell, this is because on my phone, the sdcard is mounted on <code>/storage/sdcard1</code> instead of <code>/storage/sdcard0</code>, and that has made all the difference.</p>
+
+<p><em>Update</em>:
+I realized I could use the default file explorer app which came with the phone
+to navigate to the external sd card and play music from there, so that works &hellip;</p>
+
+      
+      
+    </div>
+  </div>
+
+
+
+    </article>
     
-  </header>
+    <hr>
+    
+  
+  
+    <article>
+      
+
+  <div class="row-fluid">
+    <div class="span2 post-meta">
+	  <h5 class="date-time">
 
 
-  <div class="entry-content"><p>I was unhappy with how I had not fully figured out my <code>libstdc++ &lt;-&gt; gcc/clang &lt;-&gt; boost</code> issues, and was feeling a bit ashamed that I had let the complexity of the system beat me.</p>
+
+
+
+
+
+
+  
+
+
+<i class="icon-calendar-empty"></i> <time datetime="2013-09-30T00:00:00+00:00" pubdate data-updated="true">Sep 30<span>th</span>, 2013</time></h5>
+          <div class="row-fluid">
+          
+          </div>
+          
+          <div class="row-fluid">
+          
+          <a href="/blog/categories/boost/"><span class="badge">Boost</span></a>
+          
+          <a href="/blog/categories/clang/"><span class="badge">Clang</span></a>
+          
+          <a href="/blog/categories/gcc/"><span class="badge">Gcc</span></a>
+          
+          </div>
+          
+    </div>
+    <div class="span10 post-container">
+      <h1 class="link"><a href="/blog/2013/09/30/less-gcc-more-clang/">Less Gcc, More Clang</a></h1>
+      <p>I was unhappy with how I had not fully figured out my <code>libstdc++ &lt;-&gt; gcc/clang &lt;-&gt; boost</code> issues, and was feeling a bit ashamed that I had let the complexity of the system beat me.</p>
 
 <p><em>First, burn your boats</em></p>
 
@@ -438,23 +787,26 @@
 
 
 <p>Just to confirm, I also verified that the toy <code>wget</code> equivalent I had built with the Poco libraries works with Clang, and it does.</p>
-</div>
-  
-  
+
+      
+      
+    </div>
+  </div>
+
 
 
     </article>
+    
+    <hr>
+    
   
   
     <article>
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/09/29/http-client-with-poco/">Basic HTTP Client With Poco</a></h1>
-    
-    
-      <p class="meta">
-        
+
+  <div class="row-fluid">
+    <div class="span2 post-meta">
+	  <h5 class="date-time">
 
 
 
@@ -466,14 +818,25 @@
   
 
 
-<time datetime="2013-09-29T00:00:00+00:00" pubdate data-updated="true">Sep 29<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>After my previous terrible experience with <code>cpp-netlib</code>, I was very very pleasantly surprised by how well this went.</p>
+<i class="icon-calendar-empty"></i> <time datetime="2013-09-29T00:00:00+00:00" pubdate data-updated="true">Sep 29<span>th</span>, 2013</time></h5>
+          <div class="row-fluid">
+          
+          </div>
+          
+          <div class="row-fluid">
+          
+          <a href="/blog/categories/c++/"><span class="badge">C++</span></a>
+          
+          <a href="/blog/categories/http/"><span class="badge">HTTP</span></a>
+          
+          <a href="/blog/categories/poco/"><span class="badge">Poco</span></a>
+          
+          </div>
+          
+    </div>
+    <div class="span10 post-container">
+      <h1 class="link"><a href="/blog/2013/09/29/http-client-with-poco/">Basic HTTP Client with Poco</a></h1>
+      <p>After my previous terrible experience with <code>cpp-netlib</code>, I was very very pleasantly surprised by how well this went.</p>
 
 <p>You can get the Poco C++ libraries <a href="http://pocoproject.org/">here</a></p>
 
@@ -671,23 +1034,26 @@
 
 
 <p>I&rsquo;m sure I&rsquo;ll be using more of POCO in the future!</p>
-</div>
-  
-  
+
+      
+      
+    </div>
+  </div>
+
 
 
     </article>
+    
+    <hr>
+    
   
   
     <article>
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/09/09/building-stuff-part-2/">Learning How to Build (Part 2)</a></h1>
-    
-    
-      <p class="meta">
-        
+
+  <div class="row-fluid">
+    <div class="span2 post-meta">
+	  <h5 class="date-time">
 
 
 
@@ -699,14 +1065,23 @@
   
 
 
-<time datetime="2013-09-09T00:00:00+00:00" pubdate data-updated="true">Sep 9<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I wanted to get an idea of the state of open source C++ tools and idioms, so I decided to pick something small to start with.</p>
+<i class="icon-calendar-empty"></i> <time datetime="2013-09-09T00:00:00+00:00" pubdate data-updated="true">Sep 9<span>th</span>, 2013</time></h5>
+          <div class="row-fluid">
+          
+          </div>
+          
+          <div class="row-fluid">
+          
+          <a href="/blog/categories/cmake/"><span class="badge">CMake</span></a>
+          
+          <a href="/blog/categories/cppnetlib/"><span class="badge">CppNetlib</span></a>
+          
+          </div>
+          
+    </div>
+    <div class="span10 post-container">
+      <h1 class="link"><a href="/blog/2013/09/09/building-stuff-part-2/">Learning how to build (part 2)</a></h1>
+      <p>I wanted to get an idea of the state of open source C++ tools and idioms, so I decided to pick something small to start with.</p>
 
 <h2>Raw materials: getting the libraries</h2>
 
@@ -1271,23 +1646,26 @@ Linking CXX executable hello-world
 
 
 <p>That&rsquo;s enough, for me, for now. Maybe I&rsquo;ll try the <a href="http://pocoproject.org/">Poco libraries</a> next and see if they are any better.</p>
-</div>
-  
-  
+
+      
+      
+    </div>
+  </div>
+
 
 
     </article>
+    
+    <hr>
+    
   
   
     <article>
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/08/26/building-boost-clang-gcc/">In Which I Recall How to Build Stuff</a></h1>
-    
-    
-      <p class="meta">
-        
+
+  <div class="row-fluid">
+    <div class="span2 post-meta">
+	  <h5 class="date-time">
 
 
 
@@ -1299,14 +1677,23 @@ Linking CXX executable hello-world
   
 
 
-<time datetime="2013-08-26T00:00:00+00:00" pubdate data-updated="true">Aug 26<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>It all started when I wanted to &ldquo;relearn&rdquo; C++. I use it everyday, but it&rsquo;s been so long since I first came across it 15 years ago that I&rsquo;ve accumulated tons of bad habits and thought patterns etc, so I wanted to get a &ldquo;beginner&rsquo;s mind&rdquo; feel of it again.</p>
+<i class="icon-calendar-empty"></i> <time datetime="2013-08-26T00:00:00+00:00" pubdate data-updated="true">Aug 26<span>th</span>, 2013</time></h5>
+          <div class="row-fluid">
+          
+          </div>
+          
+          <div class="row-fluid">
+          
+          <a href="/blog/categories/boost/"><span class="badge">Boost</span></a>
+          
+          <a href="/blog/categories/c++/"><span class="badge">C++</span></a>
+          
+          </div>
+          
+    </div>
+    <div class="span10 post-container">
+      <h1 class="link"><a href="/blog/2013/08/26/building-boost-clang-gcc/">In which I recall how to build stuff</a></h1>
+      <p>It all started when I wanted to &ldquo;relearn&rdquo; C++. I use it everyday, but it&rsquo;s been so long since I first came across it 15 years ago that I&rsquo;ve accumulated tons of bad habits and thought patterns etc, so I wanted to get a &ldquo;beginner&rsquo;s mind&rdquo; feel of it again.</p>
 
 <h2>The initial detour</h2>
 
@@ -1511,23 +1898,26 @@ Linking CXX executable hello-world
 
 
 <p>Now to do something more than this example program &hellip;</p>
-</div>
-  
-  
+
+      
+      
+    </div>
+  </div>
+
 
 
     </article>
+    
+    <hr>
+    
   
   
     <article>
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/08/14/switching-to-kde/">Switching to KDE</a></h1>
-    
-    
-      <p class="meta">
-        
+
+  <div class="row-fluid">
+    <div class="span2 post-meta">
+	  <h5 class="date-time">
 
 
 
@@ -1539,14 +1929,27 @@ Linking CXX executable hello-world
   
 
 
-<time datetime="2013-08-14T00:00:00+00:00" pubdate data-updated="true">Aug 14<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I have been using <a href="http://xmonad.org/">Xmonad</a> for almost a couple of years, mostly because I wanted a tiling window manager that would maximize screen space and allow fast window and desktop switching on my linux laptop.</p>
+<i class="icon-calendar-empty"></i> <time datetime="2013-08-14T00:00:00+00:00" pubdate data-updated="true">Aug 14<span>th</span>, 2013</time></h5>
+          <div class="row-fluid">
+          
+          </div>
+          
+          <div class="row-fluid">
+          
+          <a href="/blog/categories/desktop/"><span class="badge">Desktop</span></a>
+          
+          <a href="/blog/categories/kde/"><span class="badge">KDE</span></a>
+          
+          <a href="/blog/categories/linux/"><span class="badge">Linux</span></a>
+          
+          <a href="/blog/categories/xmonad/"><span class="badge">XMonad</span></a>
+          
+          </div>
+          
+    </div>
+    <div class="span10 post-container">
+      <h1 class="link"><a href="/blog/2013/08/14/switching-to-kde/">Switching to KDE</a></h1>
+      <p>I have been using <a href="http://xmonad.org/">Xmonad</a> for almost a couple of years, mostly because I wanted a tiling window manager that would maximize screen space and allow fast window and desktop switching on my linux laptop.</p>
 
 <p>Recently, I decided to go back to a full-fledged desktop environment again, and I (randomly (please, no &ldquo;Gnome vs Kde&rdquo; flamewar)) picked KDE. The last time I used it was maybe 8 years ago (!), and I was eager to see what I had been missing.</p>
 
@@ -1587,23 +1990,26 @@ Linking CXX executable hello-world
 <p><em><strong>Update</strong></em>: I have since switched from the linux laptop I was doing this on,
 to a Chromebook, making the discussion somewhat moot now. However, I am still
 using KDE on a desktop environment and loving it.</p>
-</div>
-  
-  
+
+      
+      
+    </div>
+  </div>
+
 
 
     </article>
+    
+    <hr>
+    
   
   
     <article>
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/08/06/slimv/">SlimV and Vim (as an Equivalent to Emacs and Slime)</a></h1>
-    
-    
-      <p class="meta">
-        
+
+  <div class="row-fluid">
+    <div class="span2 post-meta">
+	  <h5 class="date-time">
 
 
 
@@ -1615,14 +2021,21 @@ using KDE on a desktop environment and loving it.</p>
   
 
 
-<time datetime="2013-08-06T00:00:00+00:00" pubdate data-updated="true">Aug 6<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>I&rsquo;ve switched between Emacs and Vim a few times over the last 15-odd years, before finally (?) settling on Vim. I&rsquo;ve come to the realization, as many have before me, that for all the elegant awesomeness of Emacs Lisp,</p>
+<i class="icon-calendar-empty"></i> <time datetime="2013-08-06T00:00:00+00:00" pubdate data-updated="true">Aug 6<span>th</span>, 2013</time></h5>
+          <div class="row-fluid">
+          
+          </div>
+          
+          <div class="row-fluid">
+          
+          <a href="/blog/categories/vim/"><span class="badge">Vim</span></a>
+          
+          </div>
+          
+    </div>
+    <div class="span10 post-container">
+      <h1 class="link"><a href="/blog/2013/08/06/slimv/">SlimV and Vim (as an equivalent to Emacs and Slime)</a></h1>
+      <p>I&rsquo;ve switched between Emacs and Vim a few times over the last 15-odd years, before finally (?) settling on Vim. I&rsquo;ve come to the realization, as many have before me, that for all the elegant awesomeness of Emacs Lisp,</p>
 
 <blockquote><p>Vim is a better <em>text</em> editor, Emacs is good for everything else</p></blockquote>
 
@@ -1662,23 +2075,26 @@ answer that question)</p>
 
 
 <p>&hellip; and much more. So next time someone tells you how <code>Slime</code> is indispensable and hence Emacs is indispensable, throw <code>Slimv</code> in their face! Kudos to <a href="http://www.vim.org/account/profile.php?user_id=16470">the guy who built it</a>!</p>
-</div>
-  
-  
+
+      
+      
+    </div>
+  </div>
+
 
 
     </article>
+    
+    <hr>
+    
   
   
     <article>
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/07/24/rudimentary-command-line-note-taking/">Rudimentary Note Taking on the Command Line</a></h1>
-    
-    
-      <p class="meta">
-        
+
+  <div class="row-fluid">
+    <div class="span2 post-meta">
+	  <h5 class="date-time">
 
 
 
@@ -1690,14 +2106,23 @@ answer that question)</p>
   
 
 
-<time datetime="2013-07-24T00:00:00+00:00" pubdate data-updated="true">Jul 24<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Everyone has their own pet setup; here&rsquo;s mine. Its just a bunch of text files, shared on Dropbox.</p>
+<i class="icon-calendar-empty"></i> <time datetime="2013-07-24T00:00:00+00:00" pubdate data-updated="true">Jul 24<span>th</span>, 2013</time></h5>
+          <div class="row-fluid">
+          
+          </div>
+          
+          <div class="row-fluid">
+          
+          <a href="/blog/categories/commandline/"><span class="badge">CommandLine</span></a>
+          
+          <a href="/blog/categories/notes/"><span class="badge">Notes</span></a>
+          
+          </div>
+          
+    </div>
+    <div class="span10 post-container">
+      <h1 class="link"><a href="/blog/2013/07/24/rudimentary-command-line-note-taking/">Rudimentary note taking on the command line</a></h1>
+      <p>Everyone has their own pet setup; here&rsquo;s mine. Its just a bunch of text files, shared on Dropbox.</p>
 
 <p>I have a bash alias to make a directory if required, create the file, and open it in Vim.</p>
 
@@ -1742,23 +2167,26 @@ answer that question)</p>
 
 
 <p>I&rsquo;ll cover the retrieval part of this in a separate post. If you don&rsquo;t have any note taking system yet, and don&rsquo;t want to go to the extent of <em>blogging</em> every little thing you want to note down, and find it a bit of a hassle to open up Evernote or something similar to jot something down, you might like to try this quick and simple text-based solution!</p>
-</div>
-  
-  
+
+      
+      
+    </div>
+  </div>
+
 
 
     </article>
+    
+    <hr>
+    
   
   
     <article>
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/06/26/data-structures-haskell-vs-cpp/">Comparison of Data Structures in C++ and Haskell</a></h1>
-    
-    
-      <p class="meta">
-        
+
+  <div class="row-fluid">
+    <div class="span2 post-meta">
+	  <h5 class="date-time">
 
 
 
@@ -1770,14 +2198,23 @@ answer that question)</p>
   
 
 
-<time datetime="2013-06-26T00:00:00+00:00" pubdate data-updated="true">Jun 26<span>th</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Once again, just to satisfy my curiosity, I want to do a tiny comparison of a basic feature in both languages, trying to see how data structures are implemented. Ok, I&rsquo;m fairly certain how it works for in C++, I&rsquo;m really just curious about Haskell.</p>
+<i class="icon-calendar-empty"></i> <time datetime="2013-06-26T00:00:00+00:00" pubdate data-updated="true">Jun 26<span>th</span>, 2013</time></h5>
+          <div class="row-fluid">
+          
+          </div>
+          
+          <div class="row-fluid">
+          
+          <a href="/blog/categories/c++/"><span class="badge">C++</span></a>
+          
+          <a href="/blog/categories/haskell/"><span class="badge">Haskell</span></a>
+          
+          </div>
+          
+    </div>
+    <div class="span10 post-container">
+      <h1 class="link"><a href="/blog/2013/06/26/data-structures-haskell-vs-cpp/">Comparison of data structures in C++ and Haskell</a></h1>
+      <p>Once again, just to satisfy my curiosity, I want to do a tiny comparison of a basic feature in both languages, trying to see how data structures are implemented. Ok, I&rsquo;m fairly certain how it works for in C++, I&rsquo;m really just curious about Haskell.</p>
 
 <h2>C++ version</h2>
 
@@ -2100,23 +2537,26 @@ answer that question)</p>
 
 
 <p>Fast compilation, comparable run-time, shorter code &hellip; we&rsquo;re talking serious competition here :)</p>
-</div>
-  
-  
+
+      
+      
+    </div>
+  </div>
+
 
 
     </article>
+    
+    <hr>
+    
   
   
     <article>
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/06/23/clang-vs-gcc-which-would-you-use/">Clang vs Gcc, Which Would You Use?</a></h1>
-    
-    
-      <p class="meta">
-        
+
+  <div class="row-fluid">
+    <div class="span2 post-meta">
+	  <h5 class="date-time">
 
 
 
@@ -2128,14 +2568,25 @@ answer that question)</p>
   
 
 
-<time datetime="2013-06-23T00:00:00+00:00" pubdate data-updated="true">Jun 23<span>rd</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Compare these two runs &hellip;</p>
+<i class="icon-calendar-empty"></i> <time datetime="2013-06-23T00:00:00+00:00" pubdate data-updated="true">Jun 23<span>rd</span>, 2013</time></h5>
+          <div class="row-fluid">
+          
+          </div>
+          
+          <div class="row-fluid">
+          
+          <a href="/blog/categories/clang/"><span class="badge">Clang</span></a>
+          
+          <a href="/blog/categories/compiler/"><span class="badge">Compiler</span></a>
+          
+          <a href="/blog/categories/gcc/"><span class="badge">Gcc</span></a>
+          
+          </div>
+          
+    </div>
+    <div class="span10 post-container">
+      <h1 class="link"><a href="/blog/2013/06/23/clang-vs-gcc-which-would-you-use/">Clang vs Gcc, which would you use?</a></h1>
+      <p>Compare these two runs &hellip;</p>
 
 <h2>Clang Error</h2>
 
@@ -2146,210 +2597,68 @@ answer that question)</p>
 <p><img src="/images/gcc-error.png" alt="G++ Error is not color-coded, not formatted, and the actual error is obscured with language lawyer suggestions" /></p>
 
 <p>&hellip; <em>Enough said, hopefully.</em></p>
-</div>
-  
-  
 
-
-    </article>
-  
-  
-    <article>
       
-  <header>
-    
-      <h1 class="entry-title"><a href="/blog/2013/06/22/python-to-go/">Appengine Transition From Python to Go</a></h1>
-    
-    
-      <p class="meta">
-        
+      
+    </div>
+  </div>
 
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-06-22T00:00:00+00:00" pubdate data-updated="true">Jun 22<span>nd</span>, 2013</time>
-        
-      </p>
-    
-  </header>
-
-
-  <div class="entry-content"><p>Hadn&rsquo;t updated this blog for a few months, and neither the &ldquo;personal web site&rdquo; that I had started earlier. So, to try something new, I decided to port that appengine site from python to go (looking at the Github logs, I haven&rsquo;t updated that for 2 years !!)</p>
-
-<p>The <code>app.yaml</code> is changed to get rid of all non-static handlers (which are now declared inside the <code>func init()</code> in the <code>.go</code> file. So the only handlers will be <code>/static</code>, <code>/robots.txt</code>, and <code>/.*</code>.</p>
-
-<p>Both the <a href="https://developers.google.com/appengine/docs/go/">Appengine docs</a> as well as <a href="http://cuddle.googlecode.com/hg/talk/index.html">a couple</a> <a href="http://jan.newmarch.name/go/chinese/chapter-chinese.html">of examples</a> have basic bootstrapping information.</p>
-
-<p>The first thing I did was to make a barebones &ldquo;Hello World&rdquo; index handler, and run it with</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>google_appengine/dev_appserver.py &lt;path to my app&gt;
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>But I immediately got this error:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>google.appengine.tools.devappserver2.wsgi_server.BindError: Unable to find a consistent port localhost
-</span><span class='line'>Exception in thread Thread-4 <span class="o">(</span>most likely raised during interpreter shutdown<span class="o">)</span>:
-</span><span class='line'>Traceback <span class="o">(</span>most recent call last<span class="o">)</span>:
-</span><span class='line'>  File <span class="s2">&quot;/usr/lib/python2.7/threading.py&quot;</span>, line 551, in __bootstrap_inner
-</span><span class='line'>  File <span class="s2">&quot;/usr/lib/python2.7/threading.py&quot;</span>, line 504, in run
-</span><span class='line'>  File <span class="s2">&quot;/home/agam/Documents/Code/google_appengine/google/appengine/api/taskqueue/taskqueue_stub.py&quot;</span>, line 2014, in MainLoop
-</span><span class='line'>  File <span class="s2">&quot;/home/agam/Documents/Code/google_appengine/google/appengine/api/taskqueue/taskqueue_stub.py&quot;</span>, line 2006, in _Wait
-</span><span class='line'>  File <span class="s2">&quot;/usr/lib/python2.7/threading.py&quot;</span>, line 403, in <span class="nb">wait</span>
-</span><span class='line'><span class="nb">  </span>File <span class="s2">&quot;/usr/lib/python2.7/threading.py&quot;</span>, line 258, in <span class="nb">wait</span>
-</span><span class='line'>&lt;<span class="nb">type</span> <span class="s1">&#39;exceptions.TypeError&#39;</span>&gt;: <span class="s1">&#39;NoneType&#39;</span> object is not callable
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>After some Googling and Stackoverflowing, I found a somewhat bizarre fix (to use <code>--api_port</code> argument) with the root cause identified as being duplicate <code>localhost</code> mappings in the <code>/etc/hosts</code> file, including ipv6 mappings to localhost. Now I don&rsquo;t want to mess up my <code>/etc/hosts</code> with what is certainly a <em>bad idea</em>, so I used the <code>--api_port</code> option and I saw the &lsquo;hello world&rsquo;. So far, so good.</p>
-
-<p>I had terrible fonts from long ago, and since Google Web Fonts has become pretty awesome since then, headed on over to pick a few custom fonts. Also realized that I really just need to keep the index page, since the custom blog that I started is really superseded by this one and the posterous feed tracker was obsolete some time ago.</p>
-
-<p>The handler idea is quite straightforward, and there is definitely less boilerplate than what <code>index.py</code> was using earlier.</p>
-
-<p>Initial stupid error: All requests were going to the same handler (including static css ones). Had to change url order in <code>app.yaml</code> to move the <code>/static</code> above the <code>/.*</code>.</p>
-
-<p>Ok, all set, the barebones appengine site is up and running, I hope I can add some fun stuff to this in the future!</p>
-
-<p><em>Update</em>:
-We aren&rsquo;t done yet; after I uploaded the app (<code>appcfg.py update</code>, which by the way prefers <code>--oauth2</code> but won&rsquo;t tell you about it) the html wasn&rsquo;t being served.
-I added a <code>log.Fatal()</code> and sure enough the file wasn&rsquo;t being read any more.</p>
-
-<p>This was also a good time to see error handling in place, the application logs showed</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>panic: os.Exit called
-</span><span class='line'>runtime.panic go/src/pkg/runtime/panic.c:230
-</span><span class='line'>os.Exit go/src/pkg/os/proc.go:42
-</span><span class='line'>log.Fatal go/src/pkg/log/log.go:289
-</span><span class='line'>agamsweb.indexHandler agamsweb/agamsweb.go:18
-</span><span class='line'>net/http.HandlerFunc.ServeHTTP go/src/pkg/net/http/server.go:1150
-</span><span class='line'>net/http.<span class="o">(</span>*ServeMux<span class="o">)</span>.ServeHTTP go/src/pkg/net/http/server.go:1417
-</span><span class='line'>appengine_internal.executeRequestSafely go/src/pkg/appengine_internal/api_prod.go:248
-</span><span class='line'>appengine_internal.<span class="o">(</span>*server<span class="o">)</span>.HandleRequest go/src/pkg/appengine_internal/api_prod.go:198
-</span><span class='line'>reflect.Value.call go/src/pkg/reflect/value.go:474
-</span><span class='line'>reflect.Value.Call go/src/pkg/reflect/value.go:345
-</span><span class='line'>_ _.go:316
-</span><span class='line'>runtime.goexit go/src/pkg/runtime/proc.c:280
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>While testing this I also ran into an appengine bug: it is possible to get the following error message, though it literally doesn&rsquo;t make much sense</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>E 2013-06-23 11:53:32.539
-</span><span class='line'>Request failed because the app binary was missing. This can generally be fixed by redeploying your app.
-</span><span class='line'>I 2013-06-23 11:53:32.539
-</span><span class='line'>This request caused a new process to be started <span class="k">for </span>your application, and thus caused your application code to be loaded <span class="k">for </span>the first time.
-</span><span class='line'>This request may thus take longer and use more CPU than a typical request <span class="k">for </span>your application.
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>(i..e how can the app binary be missing <em>after</em> the application was loaded? :) )</p>
-
-<p>After much digging, realized that it isn&rsquo;t possible to read files specified by the <code>static</code> handler.</p>
-
-<p>Hmm so I don&rsquo;t really need any go code to do anything meaningful right now, I&rsquo;ll leave &lsquo;hello world&rsquo; running :/</p>
-</div>
-  
-  
 
 
     </article>
+    
   
   <div class="pagination">
     
-      <a class="prev" href="/blog/page/3/">&larr; Older</a>
+    <a class="prev" href="/blog/page/3/">&larr; Older</a>
     
-    <a href="/blog/archives">Blog Archives</a>
+
     
     <a class="next" href="/">Newer &rarr;</a>
     
   </div>
 </div>
-<aside class="sidebar">
-  
-    <section>
-  <h1>Recent Posts</h1>
-  <ul id="recent_posts">
-    
-      <li class="post">
-        <a href="/blog/2013/12/14/augmenting-my-chromebook-with-a-vm/">Augmenting My Chromebook With a VM</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/12/14/problems-with-octopress-in-a-new-location/">Problems With Octopress in a New Location</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/11/26/moar-reddit-dailyprogramming-falling-sand/">Moar Reddit DailyProgramming: Falling Sand</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/11/26/reddit-dailyprogrammer-computing-pi/">Reddit DailyProgrammer Computing Pi</a>
-      </li>
-    
-      <li class="post">
-        <a href="/blog/2013/11/19/reddit-dailyprogrammer-getting-started/">Reddit DailyProgrammer Getting Started</a>
-      </li>
-    
-  </ul>
-</section>
 
 
-
-
-
-  
-</aside>
-
-    </div>
-  </div>
-  <footer role="contentinfo"><p>
+        </div>
+      </div>
+      <div class="row-fluid">
+        <footer class="footer-page" role="contentinfo">
+          <p>
   Copyright &copy; 2013 - Agam -
-  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span>
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span> - Theme by <a href="http://alexgaribay.com">Alex Garibay</a>
 </p>
 
-</footer>
+
+        </footer>
+      </div>
+  </div>
   
 
+<script type="text/javascript">
+      var disqus_shortname = 'agamamp';
+      
+        
+        var disqus_script = 'count.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
 
 
 
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
 
 
 
@@ -2358,7 +2667,7 @@ I added a <code>log.Fatal()</code> and sure enough the file wasn&rsquo;t being r
       var twitterWidgets = document.createElement('script');
       twitterWidgets.type = 'text/javascript';
       twitterWidgets.async = true;
-      twitterWidgets.src = '//platform.twitter.com/widgets.js';
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
       document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
     })();
   </script>
