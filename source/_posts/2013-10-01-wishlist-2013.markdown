@@ -1,0 +1,17 @@
+---
+layout: post
+title: Wishlist [being a brain dump of random things I'd like to play around with]
+date: 2013-10-01
+comments: true
+categories: Wishlist
+---
+
+* Get acquainted with [Processing](http://processing.org/) -- it's quite low performance, but really quick to use.
+* Write a book (perhaps during [NaNoWriMo](http://nanowrimo.org/) ?
+* Try my hand at an Android app again. The last time I tried, it got to a point where I had to refactor a bunch of Java classes. I don't like Java. I hear it's possible to build some stuff (mostly games) [entirely in C++](https://developer.nvidia.com/tegra-android-development-pack) with some 'shim' work to play nice with the rest of Android. So. Worth trying out.
+* ~~Stop procrastinating on doing anything with AppEngine. Just move off AppEngine. Similar to the above, I'm not a big fan of either Java or Python. Now that [Google Compute Engine](https://cloud.google.com/products/compute-engine) and Google Developer Storage and a bunch of other similar stuff is available, I can be free of the Python/Java restrictions of AppEngine.~~ Do something (maybe host a wordpress blog ?) on the new [PHP runtime](https://developers.google.com/appengine/docs/php/) in Google App Engine
+* Make a toy language. Sure, it'll be dumb and slow as %$#^ but it should be fun to do. *Update*: How about an implementation of [Kernel Lisp](http://web.cs.wpi.edu/~jshutt/kernel.html) ?
+* ~~Make a static blog generator and self-host. Admit it. I'm just using Hakyll because it's cool. OTOH the same reason would apply to its replacement, so this is not really a well-formed wish at all~~ Move to a different (read _better_) static blog generator
+* ~~Find some applications for all the [Google data](http://svonava.com/post/62186512058/datasets-released-by-google) that keeps getting publicly released. Most of it is interesting as $#%^.~~
+* Try my hand at [TopCoder](http://www.topcoder.com/) (!)
+

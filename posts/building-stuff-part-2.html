@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+  <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content>
+        <meta name="author" content>
+        <title>Agam's Mashed-up Pome</title>
+        <link href="http://fonts.googleapis.com/css?family=Source+Code+Pro|Radley:400,400italic" rel="stylesheet" type="text/css">
+          <link rel="stylesheet" href="css/bootstrap.min.css" />
+          <link rel="stylesheet" type="text/css" href="../css/syntax.css" />
+          <link rel="stylesheet" type="text/css" href="../css/default.css" />
+        <script src="../js/google_analytics.js" type="text/javascript" charset="utf-8"></script>
+  </head>
+  <body>
+  <div class="topbar">
+  <div class="topbar-inner">
+  <div class="container">
+        <div id="navigation">
+	<ul class="nav">
+            <li><a href="../">Home</a></li>
+            <li><a href="../about.html">About</a></li>
+	</ul>
+	</div>
+        </div>
+        </div>
+        </div>
+
+        <head>
+<title>Learning how to build (part 2)</title>
+</head>
+<body>
+<h2>September  9, 2013</h2>
+<br>
+
+<h1 id="learning-how-to-build-part-2">Learning how to build (part 2)</h1>
+<p>I wanted to get an idea of the state of open source C++ tools and idioms, so I decided to pick something small to start with.</p>
+<h2 id="raw-materials-getting-the-libraries">Raw materials: getting the libraries</h2>
+<p>I already had <code>boost</code> and newly built versions of <code>gcc</code> and <code>libstdc++</code>.</p>
+<p>First, I got another networking library I had heard about, <a href="https://github.com/google/cpp-netlib"><code>cpp-netlib</code></a>. (<code>git clone</code>, then <code>git submodule update</code>)</p>
+<p>Next, I got a logging library <a href="https://code.google.com/p/google-glog/"><code>glog</code></a>, and a perf library <a href="https://code.google.com/p/gperftools/"><code>gperftools</code></a></p>
+<p>(Both of these required me to download a <code>.tar.gz</code> file that needed to be uncompressed)</p>
+<p>At this point, there was already a problem of how to build stuff (!)</p>
+<p>Glog/Gperftools came with the usual <code>autoconf</code> system, but <code>cpp-netlib</code> had to be built with <code>CMake</code>.</p>
+<pre class="shell"><code>cmake ~/Documents/Code/AmpWorld/cpp-netlib \
+  -DCMAKE_BUILD_TYPE=Debug \
+  -DCMAKE_C_COMPILER=/usr/clang_3_3/bin/clang \
+  -DCMAKE_CXX_COMPILER=/usr/clang_3_3/bin/clang++</code></pre>
+<p>Initial problems getting this to work (in roughly chronological order) were:</p>
+<ul>
+<li>I had run <code>git submodule update</code> without <code>git submodule init</code>, so I had to clear out <code>CMake</code> temporaries, then run <code>init</code> and <code>update</code> to get them</li>
+<li><code>Gperftools</code> didn’t build on my machine, and required me to first install <code>libunwind</code></li>
+<li>I had not specified boost include dirs, I had to run (in my case) <code>export BOOST_INCLUDEDIR=/opt/boost/boost_1_54_0</code></li>
+<li>I had not installed the boost libraries that were <em>not</em> header-only (filesystem, regex, date_time, unit_test_framework, etc)</li>
+<li>I couldn’t figure out how to pass the right include paths through cmake, I ended up setting the environment variables instead (In my case this meant <code>export C_INCLUDE_PATH=255</code>.</li>
+<li>After these four, I still got compilation errors (e.g. <code>boost/bind/mem_fn_template.hpp:610:30: error: no matching function for call to 'get_pointer'</code>)</li>
+<li>I added <code>-DCMAKE_LIBRARY_PATH=/usr/gcc_4_7/lib64</code> to cmake, and ran <code>make</code> again</li>
+<li>Now I had different linker errors … <em>sigh</em> … undefined references to basic C++ library symbols like <code>string</code> in boost code</li>
+<li>Guessed that this might have been because I had built <em>boost</em> with <em>gcc</em></li>
+<li>Tried building the relevant Boost libraries again. This time when I ran “<code>bootstrap.sh</code>” again, I got: <code>error: No best alternative for libs/coroutine/build/allocator_sources</code></li>
+<li>WTF (!) … found <a href="http://superuser.com/questions/614472/error-while-installing-boost-1-54">a Superuser post that explained</a> a workaround, which was to edit <code>libs/coroutine/build/Jamfile.v2</code> … and now I get <em>other</em> weird errors: <code>./boost/python/detail/wrap_python.hpp:75:24: fatal error: patchlevel.h: No such file or directory</code></li>
+<li>Needed to install stuff: <code>sudo apt-get install python-dev</code></li>
+<li>Now everything <em>almost</em> worked, but one of the files failed to compile: <code>cpp-netlib/http/src/network/protocol/http/client.ipp:18: undefined reference to network::logging::log(network::logging::log_record const&amp;)'</code></li>
+<li>This error was truly bizarre because I located the source file that had this call (<code>logging/src/network/logging/logging.hpp</code>) and it very explicitly disabled the copy constructor that the linker was complaining of being undefined !</li>
+<li>Digging around in the corresponding <code>CMakeLists.txt</code> suggests this might possibly be due to logging being disabled</li>
+<li>(<em>Will this never end ?</em>) <code>/usr/bin/ld: cannot find -lcppnetlib-logging</code></li>
+<li>Fine, just turn of the f&amp;*ing tests</li>
+</ul>
+<p>So finally, this is what worked:</p>
+<pre class="shell"><code>export CC=/usr/gcc_4_7/bin/gcc4.7
+export CXX=/usr/gcc_4_7/bin/g++4.7
+export LD_LIBRARY_PATH=
+  /usr/gcc_4_7/lib:/usr/gcc_4_7/lib64:/opt/boost/boost_1_54_0/stage/lib:$LD_LIBRARY_PATH
+/usr/local/bin/cmake \
+ -DCPP-NETLIB_BUILD_TESTS=OFF \
+ -DCPP-NETLIB_BUILD_EXAMPLES=ON \
+ -DCPP-NETLIB_DISABLE_LOGGING=OFF \
+ -DCMAKE_BUILD_TYPE=Debug \
+ -DCMAKE_INCLUDE_PATH=/usr/gcc_4_7/include/c++/4.7.3/ \
+ -DCMAKE_LIBRARY_PATH=/usr/gcc_4_7/lib64 \
+ ~/Documents/Code/AmpWorld/cpp-netlib</code></pre>
+<p>Finally, even this didn’t install the libraries where I wanted them. Finally I gave up and just hacked it up:</p>
+<pre class="shell"><code>`for f in `find /home/agam/Documents/Code/AmpWorld/cpp-netlib/ | grep 'lib.*a$'`; \
+ do sudo cp $f /opt/cpp-static-libs/; done`</code></pre>
+<h2 id="into-the-furnace-a-simple-sample">Into the furnace: a simple sample</h2>
+<p>So far so good. Now it was “hello world” time (something that used atleast two of these libraries).</p>
+<p>Or for a more basic step, replicate <a href="http://cpp-netlib.org/0.10.1/examples/http/hello_world_client.html">cpp-netlib’s hello world</a> first.</p>
+<p>This was the initial version, from the web page referred above.</p>
+<pre class="sourceCode C"><code class="sourceCode c"><span class="ot">#include &lt;protocol/http/client.hpp&gt;</span>
+<span class="ot">#include &lt;string&gt;                  </span>
+<span class="ot">#include &lt;iostream&gt;                </span>
+                                   
+namespace http = network::http;
+                                   
+<span class="dt">int</span> main(<span class="dt">int</span> argc, <span class="dt">char</span>*argv[]) {
+  <span class="kw">if</span> (argc != <span class="dv">2</span>) {                 
+    std::cerr &lt;&lt; <span class="st">&quot;Usage: &quot;</span> &lt;&lt; argv[<span class="dv">0</span>] &lt;&lt; <span class="st">&quot;&lt;url&gt;&quot;</span> &lt;&lt; std::endl;
+    <span class="kw">return</span> <span class="dv">1</span>;                      
+  }                                
+                                   
+  try {                            
+    http::client client;           
+    http::client::request request(argv[<span class="dv">1</span>]);
+    http::client::response response = client.get(request);
+                                   
+    <span class="co">// Print to standard output  </span>
+    std::cout &lt;&lt; <span class="st">&quot;Received: &quot;</span> &lt;&lt; body(response);                                                                                                                                                               
+  } catch (std::exception&amp; e) {  
+    std::cerr &lt;&lt; e.what() &lt;&lt; std::endl;
+    <span class="kw">return</span> <span class="dv">1</span>;                      
+  }                                
+}                                  
+                                   
+}  <span class="co">// end namespace                </span></code></pre>
+<p>(The version in the example on the web page referred above was different in many ways, I’ll leave that as an exercise for the reader :) )</p>
+<p>Trying to compile it thus:</p>
+<p><code>g++4.7 -std=c++11 hello-world.cpp -Icpp-netlib/http/src/ -Icpp-netlib/message/src/ -Icpp-netlib/uri/src/  -I/opt/boost/boost_1_54_0 -lcppnetlib-http-client</code></p>
+<p>(almost there, now I get <code>/usr/bin/ld: cannot find -lcppnetlib-http-client</code>)</p>
+<p>After a round of tacking on libraries while I continued to get <code>undefined reference</code> errors, I gave up and decided it was time to get a makefile ready.</p>
+<p>For reference (or shame, or disgust, or trivia), the one-liner I had at this point had grown to</p>
+<pre class="shell"><code>g++4.7 hello-world.cpp \
+  -L/opt/cpp-static-libs/ \
+  -lcppnetlib-uri -lcppnetlib-http-client -lcppnetlib-http-message-wrappers \
+  -lcppnetlib-http-client-connections -lcppnetlib-constants \
+  -lcppnetlib-http-message -lcppnetlib-message -lcppnetlib-logging \
+  -L/opt/boost/boost_1_54_0/stage/lib/ -lboost_system -lboost_regex \
+  -lssl -lcrypt -std=c++11 \
+  -Icpp-netlib/http/src/ -Icpp-netlib/message/src/ -Icpp-netlib/uri/src/ \
+  -I/opt/boost/boost_1_54_0</code></pre>
+<h2 id="scaffolding-and-fire-creating-a-makefile">Scaffolding and Fire: Creating a makefile</h2>
+<p>Time to learn CMake ! Here’s <a href="http://mathnathan.com/2010/07/getting-started-with-cmake/">a good tutorial</a> or actually here’s <a href="http://web.cs.swarthmore.edu/~adanner/tips/cmake.php">a better one</a></p>
+<p>This is what I came up with for <code>CMakeLists.txt</code> :</p>
+<pre class="sourceCode cmake"><code class="sourceCode cmake"><span class="kw">cmake_minimum_required</span>(<span class="ot">VERSION</span> 2.8)                                                                                                                                                                                                                                            
+<span class="kw">project</span>(hello-world)
+ 
+<span class="kw">add_definitions</span>(-std=c++11)
+ 
+<span class="kw">set</span>(CMAKE_FIND_LIBRARY_SUFFIXES .a <span class="dv">${CMAKE_FIND_LIBRARY_SUFFIXES}</span>)                                                                     
+ 
+<span class="co"># Search paths</span>
+<span class="kw">set</span>(CPP-NETLIB-SRC
+  /home/agam/Documents/Code/AmpWorld/cpp-netlib)
+<span class="kw">include_directories</span>(
+  /opt/boost/boost_1_54_0
+  /opt/cpp-static-libs
+  ${CPP-NETLIB-SRC}/http/src
+  ${CPP-NETLIB-SRC}/message/src                                                                                                        
+  ${CPP-NETLIB-SRC}/uri/src                                                                                                            
+  ${CPP-NETLIB-SRC}/logging/src)
+<span class="kw">link_directories</span>(
+  /opt/boost/boost_1_54_0/stage/lib                                                                                                    
+  /opt/cpp-static-libs)
+ 
+<span class="co"># CppNetlib libraries                                                                                                                  </span>
+<span class="kw">set</span>(CMAKE_FIND_LIBRARY_SUFFIXES .a <span class="dv">${CMAKE_FIND_LIBRARY_SUFFIXES}</span>)                                                                     
+<span class="kw">set</span>(CPP-NETLIB-LIBS,                                                                                                                   
+  cppnetlib-uri
+  cppnetlib-message
+  cppnetlib-message-directives
+  cppnetlib-message-wrappers                                                                                                           
+  cppnetlib-http-message-wrappers
+  cppnetlib-http-message                                                                                                               
+  cppnetlib-constants
+  cppnetlib-http-client
+  cppnetlib-http-client-connections                                                                                                    
+  cppnetlib-logging)
+ 
+<span class="co"># Boost dependencies</span>
+<span class="kw">find_package</span>(Boost 1.51 <span class="ot">REQUIRED</span> system regex)                                                                                         
+<span class="kw">set</span>(BOOST_LIBS,                                                                                                                        
+  <span class="dv">${Boost_SYSTEM_LIBRARY}</span>                                                                                                              
+  <span class="dv">${Boost_REGEX_LIBRARY}</span>)                                                                                                              
+ 
+<span class="co"># Other external libraries                                                                                                             </span>
+<span class="kw">set</span>(EXTERNAL_LIBS,
+  ssl
+  crypto)                                                                                                                              
+ 
+<span class="co"># Our final output</span>
+<span class="kw">add_executable</span>(hello-world hello-world.cpp)
+<span class="kw">target_link_libraries</span>(hello-world                                                                                                      
+  <span class="dv">${BOOST_LIBS}</span>
+  <span class="dv">${EXTERNAL_LIBS}</span>                                                                                                                     
+  ${CPP-NETLIB-LIBS})</code></pre>
+<p>However when I tried to build,</p>
+<pre class="shell"><code>$ make
+Scanning dependencies of target hello-world
+[100%] Building CXX object CMakeFiles/hello-world.dir/hello-world.cpp.o
+Linking CXX executable hello-world
+CMakeFiles/hello-world.dir/hello-world.cpp.o: In function `(anonymous namespace)::get_filename(network::uri const&amp;)':
+hello-world.cpp:(.text+0x22): undefined reference to `network::uri::path() const'
+CMakeFiles/hello-world.dir/hello-world.cpp.o: In function `main':
+hello-world.cpp:(.text+0x1ee): undefined reference to `network::http::client::client()'
+hello-world.cpp:(.text+0x231): undefined reference to `network::http::request::request(std::string const&amp;)'
+...
+&lt;more undefined reference errors&gt;</code></pre>
+<p>Eventually (minutes, hours, later! I’ll spare you the pain) and after becoming lightly skilled in the arts of CMake, I realized that what I needed to do (or one of the things that I <em>could</em> do) was to explicitly declare the path of the static library, and specify their order.</p>
+<p>So I then ended up with something like this (omitting the common parts with the listing above):</p>
+<pre class="sourceCode cmake"><code class="sourceCode cmake"><span class="co"># Specify static libraries explicitly to make Cmake happy</span>
+<span class="kw">add_library</span>(CPPNETLIB_URI <span class="ot">STATIC</span> <span class="ot">IMPORTED</span>)
+<span class="kw">set_property</span>(<span class="ot">TARGET</span> CPPNETLIB_URI <span class="ot">PROPERTY</span>
+  <span class="ot">IMPORTED_LOCATION</span> /opt/cpp-static-libs/libcppnetlib-uri.a)
+<span class="kw">add_library</span>(CPPNETLIB_MESSAGE <span class="ot">STATIC</span> <span class="ot">IMPORTED</span>)
+<span class="kw">set_property</span>(<span class="ot">TARGET</span> CPPNETLIB_MESSAGE <span class="ot">PROPERTY</span>
+  <span class="ot">IMPORTED_LOCATION</span> /opt/cpp-static-libs/libcppnetlib-message.a)
+<span class="kw">add_library</span>(CPPNETLIB_MESSAGE_DIRECTIVES <span class="ot">STATIC</span> <span class="ot">IMPORTED</span>)
+<span class="kw">set_property</span>(<span class="ot">TARGET</span> CPPNETLIB_MESSAGE_DIRECTIVES <span class="ot">PROPERTY</span>
+  <span class="ot">IMPORTED_LOCATION</span> /opt/cpp-static-libs/libcppnetlib-message-directives.a)
+<span class="kw">add_library</span>(CPPNETLIB_MESSAGE_WRAPPERS <span class="ot">STATIC</span> <span class="ot">IMPORTED</span>)
+<span class="kw">set_property</span>(<span class="ot">TARGET</span> CPPNETLIB_MESSAGE_WRAPPERS <span class="ot">PROPERTY</span>
+  <span class="ot">IMPORTED_LOCATION</span> /opt/cpp-static-libs/libcppnetlib-message-wrappers.a)
+<span class="kw">add_library</span>(CPPNETLIB_HTTP_MESSAGE <span class="ot">STATIC</span> <span class="ot">IMPORTED</span>)
+<span class="kw">set_property</span>(<span class="ot">TARGET</span> CPPNETLIB_HTTP_MESSAGE <span class="ot">PROPERTY</span>
+  <span class="ot">IMPORTED_LOCATION</span> /opt/cpp-static-libs/libcppnetlib-http-message.a)
+<span class="kw">add_library</span>(CPPNETLIB_HTTP_MESSAGE_WRAPPERS <span class="ot">STATIC</span> <span class="ot">IMPORTED</span>)
+<span class="kw">set_property</span>(<span class="ot">TARGET</span> CPPNETLIB_HTTP_MESSAGE_WRAPPERS <span class="ot">PROPERTY</span>
+  <span class="ot">IMPORTED_LOCATION</span> /opt/cpp-static-libs/libcppnetlib-http-message-wrappers.a)
+<span class="kw">add_library</span>(CPPNETLIB_CONSTANTS <span class="ot">STATIC</span> <span class="ot">IMPORTED</span>)
+<span class="kw">set_property</span>(<span class="ot">TARGET</span> CPPNETLIB_CONSTANTS <span class="ot">PROPERTY</span>
+  <span class="ot">IMPORTED_LOCATION</span> /opt/cpp-static-libs/libcppnetlib-constants.a)
+<span class="kw">add_library</span>(CPPNETLIB_HTTP_CLIENT <span class="ot">STATIC</span> <span class="ot">IMPORTED</span>)
+<span class="kw">set_property</span>(<span class="ot">TARGET</span> CPPNETLIB_HTTP_CLIENT <span class="ot">PROPERTY</span>
+  <span class="ot">IMPORTED_LOCATION</span> /opt/cpp-static-libs/libcppnetlib-http-client.a)
+<span class="kw">add_library</span>(CPPNETLIB_HTTP_CLIENT_CONNECTINS <span class="ot">STATIC</span> <span class="ot">IMPORTED</span>)
+<span class="kw">set_property</span>(<span class="ot">TARGET</span> CPPNETLIB_HTTP_CLIENT_CONNECTINS <span class="ot">PROPERTY</span>
+  <span class="ot">IMPORTED_LOCATION</span> /opt/cpp-static-libs/libcppnetlib-http-client-connections.a)
+<span class="kw">add_library</span>(CPPNETLIB_LOGGING <span class="ot">STATIC</span> <span class="ot">IMPORTED</span>)
+<span class="kw">set_property</span>(<span class="ot">TARGET</span> CPPNETLIB_LOGGING <span class="ot">PROPERTY</span>
+  <span class="ot">IMPORTED_LOCATION</span> /opt/cpp-static-libs/libcppnetlib-logging.a)
+ 
+<span class="kw">set</span>(CPPNETLIB_LIBS
+  CPPNETLIB_MESSAGE_WRAPPERS
+  CPPNETLIB_HTTP_MESSAGE
+  CPPNETLIB_MESSAGE
+  CPPNETLIB_HTTP_CLIENT
+  CPPNETLIB_MESSAGE_DIRECTIVES
+  CPPNETLIB_HTTP_CLIENT_CONNECTINS
+  CPPNETLIB_URI
+  CPPNETLIB_LOGGING
+  CPPNETLIB_CONSTANTS
+  CPPNETLIB_HTTP_MESSAGE_WRAPPERS
+  )</code></pre>
+<p>So, not only did I have to set the <code>IMPORTED_LOCATION</code> of each library (there <em>has</em> to be a better way to do this, doesn’t there ?!) but I also had to juggle around their order relative to each other before passing <code>${CPPNETLIB_LIBS}</code> to <code>target_link_libraries</code></p>
+<h2 id="forging-a-networking-hello-world-or-all-i-want-is-a-wget">Forging a networking hello-world, or ‘all I want is a wget’</h2>
+<p>Once this was done, I could successfully do the following:</p>
+<pre class="shell"><code>$ mkdir build &amp;&amp; cd build
+$ cmake ..
+$ make</code></pre>
+<p>Scanning dependencies of target hello-world [100%] Building CXX object CMakeFiles/hello-world.dir/hello-world.cpp.o Linking CXX executable hello-world [100%] Built target hello-world</p>
+<p>About %$#ing time, eh ?</p>
+<p>Well, it still doesn’t <em>quite</em> work.</p>
+<p>Before we see the non-working case, it’s useful to see what happens on bad input:</p>
+<pre class="shell"><code>$ ./hello-world foo
+[network http/client/base.ipp:78] client_base_pimpl::client_base_pimpl(client_options const &amp;)
+[network http/client/base.ipp:80] creating owned io_service.
+[network http/client/base.ipp:85] creating owned simple_connection_manager
+[network http/client/simple_connection_manager.ipp:24] simple_connection_manager_pimpl::simple_connection_manager_pimpl(client_options const &amp;)
+[network http/client/simple_connection_manager.ipp:26] creating simple connection factory
+[network http/client/connection/simple_connection_factory.ipp:57] simple_connection_factory::simple_connection_factory()
+[network http/client/connection/connection_delegate_factory.ipp:22] connection_delegate_factory::connection_delegate_factory()
+[network http/client/connection/resolver_delegate_factory.ipp:18] resolver_delegate_factory::resolver_delegate_factory()
+[network http/client/connection/simple_connection_factory.ipp:33] simple_connection_factory_pimpl::simple_connection_factory_pimpl(...)
+[network http/client/simple_connection_manager.ipp:61] simple_connection_manager::simple_connection_manager(client_options const &amp;)
+[network http/client/base.ipp:46] client_base::client_base()
+[network http/client/facade.ipp:19] basic_client_facade::basic_client_facade()
+[network http/client.ipp:18] client::client()
+[network http/client/base.ipp:68] client_base::~client_base()
+[network http/client/base.ipp:98] client_base_pimpl::~client_base_pimpl()
+[network http/client/simple_connection_manager.ipp:73] simple_connection_manager::reset()
+[network http/client/simple_connection_manager.ipp:83] simple_connection_manager::~simple_connection_manager()
+[network http/client/simple_connection_manager.ipp:48] simple_connection_manager_pimpl::~simple_connection_manager_pimpl()
+[network http/client/connection/simple_connection_factory.ipp:82] simple_connection_factory::~simple_connection_factory()
+[network http/client/connection/resolver_delegate_factory.ipp:29] resolver_delegate_factory::~resolver_delegate_factory()
+[network http/client/connection/connection_delegate_factory.ipp:47] connection_delegate_factory::~connection_delegate_factory()
+[network http/client/connection_manager.ipp:16] connection_manager::~connection_manager()
+Exception: Unable to parse URI string.</code></pre>
+<p>When I ran <code>time ./hello-world http://www.google.com</code>, I got</p>
+<pre class="shell"><code>real    4m0.135s
+user    0m0.020s
+sys     0m0.012s</code></pre>
+<p>There were a series of calls of the following form:</p>
+<pre class="shell"><code>[network http/client/connection/normal_delegate.ipp:38] normal_delegate::read_some(...)
+[network http/client/connection/normal_delegate.ipp:39] scheduling asynchronous read some...
+[network http/client/connection/normal_delegate.ipp:41] scheduled asynchronous read some...
+[network http/client/connection/async_normal.ipp:237] http_async_connection_pimpl::handle_received_data(...)
+[network http/client/connection/async_normal.ipp:252] processing data chunk, no error encountered so far...
+[network http/client/connection/async_normal.ipp:380] parsing body...
+[network http/client/connection/async_normal.ipp:414] connection still active...
+[network http/client/connection/async_normal.ipp:440] no callback provided, appending to body...
+[network http/client/connection/normal_delegate.ipp:38] normal_delegate::read_some(...)
+[network http/client/connection/normal_delegate.ipp:39] scheduling asynchronous read some...
+[network http/client/connection/normal_delegate.ipp:41] scheduled asynchronous read some...
+[network http/client/connection/async_normal.ipp:237] http_async_connection_pimpl::handle_received_data(...)
+[network http/client/connection/async_normal.ipp:252] processing data chunk, no error encountered so far...
+[network http/client/connection/async_normal.ipp:380] parsing body...
+[network http/client/connection/async_normal.ipp:382] end of the line.
+[network http/client/connection/async_normal.ipp:399] no callback provided, appending to body...</code></pre>
+<p>after which it seemed to pause for a few minutes before printing out the received body.</p>
+<p>However, this seemed to depend on the url in question. For example, trying it on a static web page that forms part of this blog, <code>$ time ./hello-world http://agam.github.io/posts/building-boost-clang-gcc.html</code> yielded</p>
+<pre class="shell"><code>real    0m10.154s
+user    0m0.024s
+sys     0m0.004s</code></pre>
+<p>That’s enough, for me, for now. Maybe I’ll try the <a href="http://pocoproject.org/">Poco libraries</a> next and see if they are any better.</p>
+</body>
+<footer>
+<div id="disqus_thread"></div>
+<script src="../js/disqus.js" type="text/javascript" charset="utf-8"></script>
+<a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+</footer>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+    </body>
+    <footer>
+	<br><br><br>
+       <i>This site generated using Hakyll</i>
+    </footer>
+</html>
