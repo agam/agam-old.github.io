@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2013-12-14T08:43:52+00:00</updated>
+  <updated>2013-12-14T17:57:04+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,85 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Augmenting my Chromebook with a VM]]></title>
+    <link href="http://agam.github.io/blog/2013/12/14/augmenting-my-chromebook-with-a-vm/"/>
+    <updated>2013-12-14T17:14:00+00:00</updated>
+    <id>http://agam.github.io/blog/2013/12/14/augmenting-my-chromebook-with-a-vm</id>
+    <content type="html"><![CDATA[<p>I had tried this out about a year ago, creating a small VM instance on Google Compute Engine. But a maintenance window occurred, my VM died, and that was that. I cleaned up and walked away.</p>
+
+<h2>Comparison</h2>
+
+<p>Sometime back, I heard about <a href="https://www.digitalocean.com/">Digital Ocean</a> from a friend. I had just switched to a chromebook and was missing the shell of my previous Linux laptop. So I once again looked into the current cloud offerings.</p>
+
+<p>There is an excellent comparison at <a href="http://cloudpricegrid.com/">cloud price grid</a> so I won&rsquo;t waste time repeating that.</p>
+
+<p>DigitalOcean seems the cheapest for a couple of options</p>
+
+<ul>
+<li><em>1core/512Mb/20G &mdash;> $5/mo</em></li>
+<li><em>1core/1G/30G  &mdash;> $10/mo</em></li>
+</ul>
+
+
+<p>(See <a href="https://www.digitalocean.com/pricing/">detailed pricing</a>)</p>
+
+<p>However, this is without any firewall or networking capability, and the datacenter seems to be near New York, so that&rsquo;s something to keep in mind.</p>
+
+<p>Meanwhile at Google Compute Engine, the right comparison would be with a combination of</p>
+
+<ul>
+<li><em>Persistent disk &mdash;> 20G for $0.8/mo</em></li>
+<li><em>f1-micro [1core/600Mb] &mdash;> $0.019/hr</em>
+[which by the way at max utilization turns out to be $13.78/mo]</li>
+</ul>
+
+
+<p>(See <a href="https://cloud.google.com/products/compute-engine/#pricing">detailed pricing</a>)</p>
+
+<p>A similar comparison for Amazon (I could be off in apples-to-apples here (what I think are apples may in fact be oranges))</p>
+
+<p><em>t1.micro [1core/630Mb] &mdash;> $0.025/hr</em></p>
+
+<p>So the cheapest Amazon has to offer seems more expensive than the cheapest Google has to offer (both of these instances will be pretty useless for hosting something substantial, but we&rsquo;re assuming the idea here is to have a small &ldquo;developer space&rdquo;).</p>
+
+<p>But keep in mind Amazon also has a <a href="http://aws.amazon.com/free/">free tier</a> so if you just want to try it out for a year, the micro instance is actually FREE (!)</p>
+
+<h2>Getting (re-)started with Google Compute Engine</h2>
+
+<p>I elected to stay with Google. The new <a href="https://cloud.google.com/console#/project">cloud console</a> is much better than it was before, with a nice grouping by project and sub-links to Appengine, CloudSql, CloudStorage, ComputeEngine, etc.</p>
+
+<p>Within the Cloud Engine dashboard, it is possible (and in fact, easy) to create a new VM, set up its associated disk and static IPs, OS, etc from the UI.</p>
+
+<h2>SSHing</h2>
+
+<p>One thing to point out is that the first time I set it up I used the <code>gcutil</code> tool to ssh into the instance; this creates local ssh keys and uploads the public key to the instance (it can be viewed in the <code>Metadata</code> part of the console). So I had to do this from a non-chromebook &ldquo;real&rdquo; computer (though there may be a workaround I&rsquo;m unaware of).</p>
+
+<p>For subsequent SSHs, the recommended way is to use a long SSH command</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>ssh -o <span class="nv">UserKnownHostsFile</span><span class="o">=</span>/dev/null -o <span class="nv">CheckHostIP</span><span class="o">=</span>no -o  <span class="nv">StrictHostKeyChecking</span><span class="o">=</span>no <span class="se">\</span>
+</span><span class='line'> -i &lt;key-file&gt; -o <span class="nv">LogLevel</span><span class="o">=</span>QUIET -A  -p 22 &lt;username&gt;@&lt;ipaddress&gt;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>and this worked when I tried it from the computer I signed up on.</p>
+
+<p>Before trying to SSH from a chromebook, you have to copy ssh keys locally (how? I Dropbox&rsquo;d them and then deleted them from Dropbox, which is admittedly less secure &hellip; maybe I should have written it down and recreated manually?!).</p>
+
+<p>Anyway, so once you have copied the keys, you can use the <a href="https://chrome.google.com/webstore/detail/secure-shell/pnhechapfaindjhompbnflcldabbghjo?hl=en">Secure Shell</a> app.</p>
+
+<p>You have to click on <code>import...</code> to select the public/private key pair. At this point, when I used the long SSH command mentioned above, it didn&rsquo;t work. Eventually it only worked when I tried with a blank command (so the only arguments were username, host IP and the key file).</p>
+
+<h2>Chromebook + VM</h2>
+
+<p>Having tried this out for a while, I can&rsquo;t imagine living without it. Obviously it depends on internet access, but that&rsquo;s a common caveat these days.</p>
+
+<p>But I strongly encourage it, since it&rsquo;s a perfect complement to the otherwise &ldquo;browser-only&rdquo; world.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Problems with Octopress in a new location]]></title>
@@ -3432,176 +3511,6 @@ I added a <code>log.Fatal()</code> and sure enough the file wasn&rsquo;t being r
 <p>After much digging, realized that it isn&rsquo;t possible to read files specified by the <code>static</code> handler.</p>
 
 <p>Hmm so I don&rsquo;t really need any go code to do anything meaningful right now, I&rsquo;ll leave &lsquo;hello world&rsquo; running :/</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Hakyll broken ?]]></title>
-    <link href="http://agam.github.io/blog/2013/03/20/hakyll-broken/"/>
-    <updated>2013-03-20T00:00:00+00:00</updated>
-    <id>http://agam.github.io/blog/2013/03/20/hakyll-broken</id>
-    <content type="html"><![CDATA[<p>I noticed that the dates in my blog were all wrong, and now the blog
-doesn&rsquo;t build.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>ghc --make blog.hs
-</span><span class='line'><span class="o">[</span>1 of 1<span class="o">]</span> Compiling Main             <span class="o">(</span> blog.hs, blog.o <span class="o">)</span>
-</span><span class='line'>
-</span><span class='line'>blog.hs:27:12:
-</span><span class='line'>    Not in scope: <span class="sb">`</span>list<span class="s1">&#39;</span>
-</span><span class='line'><span class="s1">    Perhaps you meant `last&#39;</span> <span class="o">(</span>imported from Prelude<span class="o">)</span>
-</span><span class='line'>
-</span><span class='line'>blog.hs:29:21: Not in scope: <span class="sb">`</span>pageCompiler<span class="s1">&#39;</span>
-</span><span class='line'>
-</span><span class='line'><span class="s1">blog.hs:30:17: Not in scope: `applyTemplateCompiler&#39;</span>
-</span><span class='line'>
-</span><span class='line'>blog.hs:31:17: Not in scope: <span class="sb">`</span>relativizeUrlsCompiler<span class="s1">&#39;</span>
-</span><span class='line'>
-</span><span class='line'><span class="s1">blog.hs:34:27:</span>
-</span><span class='line'><span class="s1">    Not in scope: `constA&#39;</span>
-</span><span class='line'>    Perhaps you meant <span class="sb">`</span>const<span class="s1">&#39; (imported from Prelude)</span>
-</span><span class='line'>
-</span><span class='line'><span class="s1">blog.hs:35:18: Not in scope: `setField&#39;</span>
-</span><span class='line'>
-</span><span class='line'>blog.hs:36:13: Not in scope: <span class="sb">`</span>requireAllA<span class="s1">&#39;</span>
-</span><span class='line'>
-</span><span class='line'><span class="s1">blog.hs:37:13: Not in scope: `applyTemplateCompiler&#39;</span>
-</span><span class='line'>
-</span><span class='line'>blog.hs:38:13: Not in scope: <span class="sb">`</span>applyTemplateCompiler<span class="s1">&#39;</span>
-</span><span class='line'>
-</span><span class='line'><span class="s1">blog.hs:39:13: Not in scope: `relativizeUrlsCompiler&#39;</span>
-</span><span class='line'>
-</span><span class='line'>blog.hs:43:21: Not in scope: <span class="sb">`</span>pageCompiler<span class="s1">&#39;</span>
-</span><span class='line'>
-</span><span class='line'><span class="s1">blog.hs:44:17: Not in scope: `applyTemplateCompiler&#39;</span>
-</span><span class='line'>
-</span><span class='line'>blog.hs:45:17: Not in scope: <span class="sb">`</span>applyTemplateCompiler<span class="s1">&#39;</span>
-</span><span class='line'>
-</span><span class='line'><span class="s1">blog.hs:46:17: Not in scope: `relativizeUrlsCompiler&#39;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The price to pay for using a system in flux &hellip; oh well, time to read up on
-the <a href="http://jaspervdj.be/hakyll/tutorials/04-compilers.html">hakyll
-transition</a> from v3 to v4.</p>
-
-<p>Alright, that isn&rsquo;t good enough &hellip; need some &lsquo;patterns&rsquo; to work with.
-Luckily, I found <a href="http://wmasson.com/">another Hakyll blog</a> that made the jump, and shameless
-plagiarized. (So thank you, <code>wmasson</code>!)</p>
-
-<p>Well, I didn&rsquo;t even plagiarize well. I used tabs instead of spaces at one
-point and stared at a <code>parse error on input `='</code> error message for
-<em>some time</em>.</p>
-
-<p>I spent some more time staring at</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>blog.hs:39:47:
-</span><span class='line'>    Couldn<span class="s1">&#39;t match expected type `Item String&#39;</span>
-</span><span class='line'>                with actual <span class="nb">type</span> <span class="sb">`</span><span class="o">[</span>Item String<span class="o">]</span><span class="s1">&#39;</span>
-</span><span class='line'><span class="s1">    Expected type: [Item String] -&gt; [Item String]</span>
-</span><span class='line'><span class="s1">      Actual type: [Item String] -&gt; [[Item String]]</span>
-</span><span class='line'><span class="s1">    In the second argument of `(.)&#39;</span>, namely <span class="sb">`</span>recentFirst<span class="s1">&#39;</span>
-</span><span class='line'><span class="s1">    In the second argument of `($)&#39;</span>, namely <span class="sb">`</span>take 3 . recentFirst<span class="err">&#39;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>&hellip; and then I realized that the signature of <code>postList</code> was wrong and should have its second argument as <code>([Item String] -&gt; Compiler [Item String])</code> instead of <code>([Item String] -&gt; [Item String])</code>.
-Had to change <code>prep &lt;$&gt; loadAll pattern</code> to <code>prep =&lt;&lt; loadAll pattern</code> to accomodate this change.</p>
-
-<p>Somehow the type signature of the main page function didn&rsquo;t match, so I modified the <code>postList</code> function to take a <code>listmodifier</code>; this way I could pass in <code>id</code> for the list of all posts and <code>(take 3)</code> for the main page.</p>
-
-<p>I also had to change the date format from <code>%d %m %Y</code> to <code>%Y-%m-%d</code>, since I was getting an</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="o">[</span>ERROR<span class="o">]</span> Hakyll.Web.Template.Context.getItemUTC: could not parse <span class="nb">time </span><span class="k">for</span> ...
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>error message, looking at the <a href="https://github.com/jaspervdj/hakyll/blob/master/src/Hakyll/Web/Template/Context.hs#L200">source</a> I found that only a few formats were supported.</p>
-
-<p>Finally, right at the end, I clobbered the git submodule in my output directory when I did a <code>./blog rebuild</code>. So to bring it back, I had to</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>rm -f .gitmodules
-</span><span class='line'><span class="nv">$ </span>./blog clean
-</span><span class='line'>Removing _site...
-</span><span class='line'>Removing _cache...
-</span><span class='line'>Removing _cache/tmp...
-</span><span class='line'><span class="nv">$ </span>git rm -r _site
-</span><span class='line'>rm <span class="s1">&#39;_site&#39;</span>
-</span><span class='line'><span class="nv">$ </span>git submodule add --force git@github.com:agam/agam.github.com.git _site
-</span><span class='line'>Reactivating <span class="nb">local </span>git directory <span class="k">for </span>submodule <span class="s1">&#39;_site&#39;</span>.
-</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>_site
-</span><span class='line'><span class="nv">$ </span>git checkout master
-</span><span class='line'><span class="nv">$ </span><span class="nb">cd</span> ..
-</span><span class='line'><span class="nv">$ </span>./blog build
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>So &hellip; no outward change in appearance, but a lot of time wasted, and all because I was bold enough to run <code>cabal update</code>.</p>
-
-<p>Yes, I know. Sad.</p>
-
-<p>But it works! (atleast the chronological sorting works again).</p>
-
-<p><em><strong>Update:</strong></em> <a href="https://github.com/agam/hakyll-source/commit/9af1c492dc34e2ffb677a619ac86113a8a716703">This diff</a> might help to show the changes required.
-<em><strong>Update:</strong></em> Just for fun, I tweaked the CSS of the page a bit, to make it a little less bland.</p>
-
-<p><em>Update</em>: I have sinced moved to <a href="http://jekyllrb.com/">Jekyll</a>, so if Hakyll
-has moved on to a different version, this blog post should be considered
-obsolete.</p>
 ]]></content>
   </entry>
   
