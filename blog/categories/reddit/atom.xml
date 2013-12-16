@@ -4,7 +4,7 @@
   <title><![CDATA[Category: reddit, | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/reddit/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2013-12-14T18:51:23+00:00</updated>
+  <updated>2013-12-16T03:11:19+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -33,6 +33,7 @@ set listchars=eol:$
 this to distinguish between &lsquo;real&rsquo; spaces and whitespace.</p>
 
 <p><div><script src='https://gist.github.com/7669304.js'></script>
+<script type="text/javascript">$(".gist-file table tr td.line-numbers").remove();</script>
 <noscript><pre><code>#include &lt;cmath&gt;
 #include &lt;cstdint&gt;
 #include &lt;cstdio&gt;
@@ -155,6 +156,7 @@ receives the next digit to compute.</li>
 <h3>Server Code</h3>
 
 <p><div><script src='https://gist.github.com/7667732.js'></script>
+<script type="text/javascript">$(".gist-file table tr td.line-numbers").remove();</script>
 <noscript><pre><code>#include &lt;cmath&gt;
 #include &lt;cstdint&gt;
 #include &lt;cstdio&gt;
@@ -247,6 +249,7 @@ int main() {
 <h3>Client Code</h3>
 
 <p><div><script src='https://gist.github.com/7667742.js'></script>
+<script type="text/javascript">$(".gist-file table tr td.line-numbers").remove();</script>
 <noscript><pre><code>#include &lt;cmath&gt;
 #include &lt;cstdint&gt;
 #include &lt;cstdio&gt;
@@ -413,6 +416,7 @@ top</a></p>
 <p>Here&rsquo;s the gist (problem in comments at the bottom).</p>
 
 <p><div><script src='https://gist.github.com/7556916.js'></script>
+<script type="text/javascript">$(".gist-file table tr td.line-numbers").remove();</script>
 <noscript><pre><code>#include &lt;stdint.h&gt;                                                                                                                                                      
         
 #include &lt;iostream&gt;
