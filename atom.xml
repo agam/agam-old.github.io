@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2013-12-16T03:11:19+00:00</updated>
+  <updated>2013-12-16T03:47:54+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,17 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Starting from scratch on a VM]]></title>
+    <link href="http://agam.github.io/blog/2013/12/16/starting-from-scratch-on-a-vm/"/>
+    <updated>2013-12-16T03:41:00+00:00</updated>
+    <id>http://agam.github.io/blog/2013/12/16/starting-from-scratch-on-a-vm</id>
+    <content type="html"><![CDATA[<p>I&rsquo;ve started from scratch many times on new linux installations. It gets old after a while though, so I prefer to do it as infrequently as possible.</p>
+
+<p>Getting started with a bare-bones VM is one of the occasions for this, so I&rsquo;ll take the time to record what I do so that I don&rsquo;t have to revisit this stuff the <em>next time</em>.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Adding social elements to octopress]]></title>
@@ -3406,25 +3417,6 @@ answer that question)</p>
 
 
 <p>Fast compilation, comparable run-time, shorter code &hellip; we&rsquo;re talking serious competition here :)</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Clang vs Gcc, which would you use?]]></title>
-    <link href="http://agam.github.io/blog/2013/06/23/clang-vs-gcc-which-would-you-use/"/>
-    <updated>2013-06-23T00:00:00+00:00</updated>
-    <id>http://agam.github.io/blog/2013/06/23/clang-vs-gcc-which-would-you-use</id>
-    <content type="html"><![CDATA[<p>Compare these two runs &hellip;</p>
-
-<h2>Clang Error</h2>
-
-<p><img src="http://agam.github.io/images/clang-error.png" alt="Clang Error highlights source text and is color-coded and formatted to show the location of the actual error, along with actionable suggestions" /></p>
-
-<h2>G++ Error</h2>
-
-<p><img src="http://agam.github.io/images/gcc-error.png" alt="G++ Error is not color-coded, not formatted, and the actual error is obscured with language lawyer suggestions" /></p>
-
-<p>&hellip; <em>Enough said, hopefully.</em></p>
 ]]></content>
   </entry>
   
