@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Starting from scratch on a VM - Agam's Mashed-Up Pome</title>
+  <title>Small change for Vim and Git - Agam's Mashed-Up Pome</title>
   <meta name="author" content="Agam">
 
    
@@ -19,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://agam.github.io/blog/2013/12/16/starting-from-scratch-on-a-vm">
+  <link rel="canonical" href="http://agam.github.io/blog/2013/12/16/small-change-for-vim-and-git">
   <link href="/favicon.png" rel="icon">
   <link href='http://fonts.googleapis.com/css?family=Quicksand:300,400' rel='stylesheet' type='text/css'>
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
@@ -88,7 +88,7 @@
 
   <header>
   <div class="jumbotron">
-    Starting From Scratch on a VM
+    Small Change for Vim and Git
 	<h5>
 
 
@@ -101,14 +101,34 @@
   
 
 
-<i class="icon-calendar-empty"></i> <time datetime="2013-12-16T03:41:00+00:00" pubdate data-updated="true">Dec 16<span>th</span>, 2013</time></h5>
+<i class="icon-calendar-empty"></i> <time datetime="2013-12-16T06:04:00+00:00" pubdate data-updated="true">Dec 16<span>th</span>, 2013</time></h5>
   </div>
 </header>
   <div class="row-fluid">
     <div class="span12">
-      <p>I&rsquo;ve started from scratch many times on new linux installations. It gets old after a while though, so I prefer to do it as infrequently as possible.</p>
+      <h2>Vim</h2>
 
-<p>Getting started with a bare-bones VM is one of the occasions for this, so I&rsquo;ll take the time to record what I do so that I don&rsquo;t have to revisit this stuff the <em>next time</em>.</p>
+<p>I hate seeing <code>.swp</code> and <code>~</code> files when I&rsquo;m editing. If I really need to go back to an earlier version of something there are other ways.</p>
+
+<p>So I added this to my .vimrc:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>set nobackup
+</span><span class='line'>set nowritebackup
+</span><span class='line'>set noswapfile</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Git</h2>
+
+<p>If there&rsquo;s one config change to make for <code>git</code>, it should be this one:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ git config --global --add color.ui true</span></code></pre></td></tr></table></div></figure>
+
+
+
 
     </div>
   </div>
@@ -127,7 +147,9 @@
 
 
 
-  <a href="/blog/categories/vm/"><span class="badge">VM</span></a>
+  <a href="/blog/categories/git/"><span class="badge">git</span></a>
+
+  <a href="/blog/categories/vim,/"><span class="badge">vim,</span></a>
 
 
 
@@ -159,10 +181,8 @@
       <div class="span12">
         <p class="meta">
           
-            <a class="basic-alignment left" href="/blog/2013/12/14/adding-social-elements-to-octopress/" title="Previous Post: Adding social elements to octopress">&laquo; Adding social elements to octopress</a>
+            <a class="basic-alignment left" href="/blog/2013/12/16/setting-up-screen/" title="Previous Post: Setting up Screen">&laquo; Setting up Screen</a>
           
-          
-            <a class="basic-alignment right" href="/blog/2013/12/16/setting-up-screen/" title="Next Post: Setting up Screen">Setting up Screen &raquo;</a>
           
         </p>
       </div>
@@ -200,8 +220,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://agam.github.io/blog/2013/12/16/starting-from-scratch-on-a-vm/';
-        var disqus_url = 'http://agam.github.io/blog/2013/12/16/starting-from-scratch-on-a-vm/';
+        var disqus_identifier = 'http://agam.github.io/blog/2013/12/16/small-change-for-vim-and-git/';
+        var disqus_url = 'http://agam.github.io/blog/2013/12/16/small-change-for-vim-and-git/';
         var disqus_script = 'embed.js';
       
     (function () {
