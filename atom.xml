@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2013-12-16T23:24:13+00:00</updated>
+  <updated>2013-12-19T02:26:41+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,139 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Ranked Voting]]></title>
+    <link href="http://agam.github.io/blog/2013/12/19/ranked-voting/"/>
+    <updated>2013-12-19T02:23:00+00:00</updated>
+    <id>http://agam.github.io/blog/2013/12/19/ranked-voting</id>
+    <content type="html"><![CDATA[<p>This one might actually make for a medium level interview question (assuming the problem can be successfully communicated)</p>
+
+<p>Here is <a href="http://www.reddit.com/r/dailyprogrammer/comments/1r2mcz/112013_challenge_136_intermediate_ranked_voting/">the problem</a> (also found at the bottom of the gist)</p>
+
+<div><script src='https://gist.github.com/8033346.js'></script>
+<script type="text/javascript">$(".gist-file table tr td.line-numbers").remove();</script>
+<noscript><pre><code>#include &lt;cmath&gt;
+#include &lt;cstdint&gt;
+#include &lt;cstdio&gt;
+#include &lt;cstdlib&gt;
+#include &lt;iomanip&gt;
+#include &lt;iostream&gt;
+#include &lt;limits&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
+
+using namespace std;
+
+void GetVotes(
+    const vector&lt;vector&lt;int&gt;&gt;&amp; votes,
+    int loser_index,
+    vector&lt;int&gt;* candidate_votes) {
+  // Use the round# to determine if votes should be transferred.
+  for (const vector&lt;int&gt;&amp; vote : votes) {
+    int first_choice = vote[0];
+    int second_choice = vote[1];
+    if (loser_index &gt;= 0) {
+      if (loser_index == first_choice) {
+        ++((*candidate_votes)[second_choice]);
+      }
+    } else {
+      // first pass; just add the votes
+      ++((*candidate_votes)[first_choice]);
+    }
+  }
+  if (loser_index &gt;=0) { ((*candidate_votes)[loser_index]) = 0; }
+}
+
+bool CheckMajority(const vector&lt;int&gt;&amp; candidate_votes, int total_votes, int* winner, int* loser) {
+  int max_votes = 0, min_votes = total_votes;
+  for (int i = 0; i &lt; candidate_votes.size(); ++i) {
+    int v = candidate_votes[i];
+    if (max_votes &lt; v) {
+      max_votes = v;
+      *winner = i;
+    }
+    if (min_votes &gt; v) {
+      min_votes = v;
+      *loser = i;
+    }
+  }
+  if (max_votes * 2 &gt; total_votes) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+void PrintStats(const vector&lt;int&gt;&amp; candidate_votes, int total_votes, const vector&lt;string&gt;&amp; candidate_names) {
+  for (int i = 0; i &lt; candidate_votes.size(); ++i) {
+    if (candidate_votes[i] == 0) continue;
+    cout &lt;&lt; fixed &lt;&lt; setprecision(2) &lt;&lt; (100.0 * candidate_votes[i])/total_votes &lt;&lt; &quot;% &quot; &lt;&lt; candidate_names[i];
+    if (i &lt; candidate_votes.size() - 1) {
+      cout &lt;&lt; &quot;, &quot;;
+    }
+  }
+  cout &lt;&lt; endl;
+}
+
+int main() {
+  int num_votes, num_candidates;
+  cin &gt;&gt; num_votes &gt;&gt; num_candidates;
+  cout &lt;&lt; &quot;Will read in &quot; &lt;&lt; num_votes &lt;&lt; &quot; votes for &quot; &lt;&lt; num_candidates &lt;&lt; &quot; candidates.&quot; &lt;&lt; endl;
+  vector&lt;string&gt; candidate_names;
+  vector&lt;vector&lt;int&gt;&gt; votes(num_votes, vector&lt;int&gt;(num_candidates));
+  for (int i = 0; i &lt; num_candidates; ++i) {
+    string name;
+    cin &gt;&gt; name;
+    candidate_names.push_back(name);
+  }
+  for (int i = 0; i &lt; num_votes; ++i) {
+    for (int j = 0; j &lt; num_candidates; ++j) {
+      cin &gt;&gt; votes[i][j];
+    }
+  }
+
+  // Sanity check what we got.
+  cout  &lt;&lt; &quot;Read in the following candidates :- \n&quot;;
+  for (const string&amp; name : candidate_names) {
+    cout &lt;&lt; name &lt;&lt; endl;
+  }
+  cout &lt;&lt; &quot;Read in the following votes :- \n&quot;;
+  for (int i = 0; i &lt; num_votes; ++i) {
+    for (int j = 0; j &lt; num_candidates; ++j) {
+      cout &lt;&lt; votes[i][j] &lt;&lt; &quot; &quot;;
+    }
+    cout &lt;&lt; endl;
+  }
+
+  vector&lt;int&gt; candidate_votes(num_candidates);
+  int round = 0, winner_index = -1, loser_index = -1;
+  do {
+    ++round;
+    GetVotes(votes, loser_index, &amp;candidate_votes);
+    cout &lt;&lt; &quot;Round &quot; &lt;&lt; round &lt;&lt; &quot;: &quot;;
+    PrintStats(candidate_votes, num_votes, candidate_names);
+  } while (!CheckMajority(candidate_votes, num_votes, &amp;winner_index, &amp;loser_index) &amp;&amp; round &lt; 10);
+  cout &lt;&lt; candidate_names[winner_index] &lt;&lt; &quot; is the winner.\n&quot;;
+}
+
+/*
+Input Description
+-----------------
+On standard console input, you will be given two space-delimited integers, N and M. N is the number of votes, while M is the number of candidates. After this line, you will be given the candidates line, which is a space-delimited set of M-number of candidate names. These names are one-word lower-case letters only. This is followed by N-lines of ballots, where each ballot is a list of M-integers, from 0 to M-1, representing the order of preference.
+Note that the order of preference for ballots goes from left-to-right. The integers are the index into the candidate list. For the example below, you can map 0: Knuth, 1: Turing, 2: Church. This means that if the ballot row is &quot;1 0 2&quot;, that means the voter prefers Turing over Knuth over Church.
+
+Output Description
+------------------
+Given the candidates and ballots, compute the first-round of successful candidates (e.g. rank them based on all ballot&#39;s first choice). If the percentage of votes for any one candidate is more than 50%, print the candidate name as the winner. Else, take all the votes of the least-successful candidate, and use their ballot&#39;s 2nd choice, summing again the total votes. If needed (e.g. there is no candidate that has more than 50% of the votes), repeat this process for the 3rd, 4th, etc. choice, and print the winner of the election.
+For each round of computation, print the percentage of votes for each candidate, and rank them based on that percentage, using the output format.
+*/
+</code></pre></noscript></div>
+
+
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Small change for Vim and Git]]></title>
@@ -3041,54 +3174,6 @@ Linking CXX executable hello-world
 <p><em><strong>Update</strong></em>: I have since switched from the linux laptop I was doing this on,
 to a Chromebook, making the discussion somewhat moot now. However, I am still
 using KDE on a desktop environment and loving it.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[SlimV and Vim (as an equivalent to Emacs and Slime)]]></title>
-    <link href="http://agam.github.io/blog/2013/08/06/slimv/"/>
-    <updated>2013-08-06T00:00:00+00:00</updated>
-    <id>http://agam.github.io/blog/2013/08/06/slimv</id>
-    <content type="html"><![CDATA[<p>I&rsquo;ve switched between Emacs and Vim a few times over the last 15-odd years, before finally (?) settling on Vim. I&rsquo;ve come to the realization, as many have before me, that for all the elegant awesomeness of Emacs Lisp,</p>
-
-<blockquote><p>Vim is a better <em>text</em> editor, Emacs is good for everything else</p></blockquote>
-
-<p>Perhaps one day if <a href="http://www.gnu.org/software/guile/">Guile</a> or <a href="https://google-melange.appspot.com/gsoc/proposal/review/google/gsoc2013/shanecelis/1">Emacsey</a> deliver their full promise, I&rsquo;ll happily live inside a REPL forever.</p>
-
-<p>Until then, it&rsquo;s just <em>much, much, much</em> faster to do the equivalent <em>text</em> operations in Vim than in Emacs (yes, I mapped CapsLock to Control; yes, I replaced <code>M-</code> by <code>C-xC-m-</code>).</p>
-
-<p>There were still a few Emacs-only things that haunted me (I outgrew the need to have a <a href="http://emacs-w3m.namazu.org/">web browser</a> or an <a href="http://www.gnu.org/software/emacs/manual/html_mono/erc.html">IRC client</a> in my editor environment, I now use Google Chrome for the former and BitchX/Irssi/Xchat for the latter. I also don&rsquo;t mind reading my <a href="http://gmail.com">email</a> in the browser), such as <a href="http://orgmode.org/"><code>org-mode</code></a>. Fortunately for me, I don&rsquo;t most of its features, and keeping a timestamped diary is something I was able to fix for myself with some shell scripting and vim shortcuts.</p>
-
-<p>Recently, I decided to learn Common Lisp with as much of a newbie attitude as possible. And here I ran into a veritable wall of convention. <em>Of course, didn&rsquo;t I know, that Emacs + Slime is the one true way ?</em>
-<em><strong>Update</strong></em>: Uh no, I take back that decision (why? maybe a future post to
-answer that question)</p>
-
-<p>I dithered, was flustered and nearly reconsidered.</p>
-
-<p>And then I discovered the awesomeness I was looking for, a replacement for Slime in Vim, <a href="http://www.vim.org/scripts/script.php?script_id=2531">Slimv</a>!</p>
-
-<p><a href="http://kovisoft.bitbucket.org/tutorial.html">Here is a tutorial</a> to get you started, but basically all I had to do was to install the plugin and the rest pretty much <em>just worked</em>.</p>
-
-<p>There are quite a lot of nifty tricks here, but my most frequently used commands are:</p>
-
-<ul>
-<li><code>,L</code>: that&rsquo;s a comma followed by L): compile current file</li>
-<li><code>,D</code>: compile current form</li>
-<li><code>,s</code>: lookup a short summary description of the keyword under the cursor</li>
-<li><code>,c</code>: Open Slimv session (splits the window horizontally)</li>
-</ul>
-
-
-<p>I was also new to <code>paredit mode</code>, which is pretty much necessary for making changes to heavily nested parantheses, and it has useful commands there too:</p>
-
-<ul>
-<li><code>,W</code>: wrap an extra set of parentheses around the current form</li>
-<li><code>,S</code>: it&rsquo;s opposite; remove <em>one</em> set of parentheses from the current form</li>
-<li><code>,&lt;</code>, <code>,&gt;</code>: move the parentheses under the cursor one form to the left or right</li>
-</ul>
-
-
-<p>&hellip; and much more. So next time someone tells you how <code>Slime</code> is indispensable and hence Emacs is indispensable, throw <code>Slimv</code> in their face! Kudos to <a href="http://www.vim.org/account/profile.php?user_id=16470">the guy who built it</a>!</p>
 ]]></content>
   </entry>
   
