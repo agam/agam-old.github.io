@@ -111,6 +111,258 @@
   
 
 
+<i class="icon-calendar-empty"></i> <time datetime="2013-08-26T00:00:00+00:00" pubdate data-updated="true">Aug 26<span>th</span>, 2013</time></h5>
+          <div class="row-fluid">
+          
+          </div>
+          
+          <div class="row-fluid">
+          
+          <a href="/blog/categories/boost/"><span class="badge">Boost</span></a>
+          
+          <a href="/blog/categories/c++/"><span class="badge">C++</span></a>
+          
+          </div>
+          
+    </div>
+    <div class="span10 post-container">
+      <h1 class="link"><a href="/blog/2013/08/26/building-boost-clang-gcc/">In which I recall how to build stuff</a></h1>
+      <p>It all started when I wanted to &ldquo;relearn&rdquo; C++. I use it everyday, but it&rsquo;s been so long since I first came across it 15 years ago that I&rsquo;ve accumulated tons of bad habits and thought patterns etc, so I wanted to get a &ldquo;beginner&rsquo;s mind&rdquo; feel of it again.</p>
+
+<h2>The initial detour</h2>
+
+<p>Ok, I thought, let&rsquo;s read the <a href="http://www.amazon.com/The-Programming-Language-3rd-Edition/dp/0201889544">4th edition</a> of Bjarne&rsquo;s introduction to C++, and meanwhile also get to know <a href="http://www.boost.org/">Boost</a> with some familiarity.</p>
+
+<p>So I downloaded the <a href="http://sourceforge.net/projects/boost/files/boost/1.54.0/boost_1_54_0.tar.bz2/download">Boost libraries</a> (which took a while), and then tried to build this basic example (from the Boost FAQ)</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#include &lt;iostream&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;algorithm&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;iterator&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">using</span> <span class="n">boost</span><span class="o">::</span><span class="n">lambda</span><span class="o">::</span><span class="n">_1</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">typedef</span> <span class="n">std</span><span class="o">::</span><span class="n">istream_iterator</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">in</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">std</span><span class="o">::</span><span class="n">for_each</span><span class="p">(</span>
+</span><span class='line'>      <span class="n">in</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">cin</span><span class="p">),</span> <span class="n">in</span><span class="p">(),</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">_1</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; &quot;</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>using Clang</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>clang -std<span class="o">=</span>c++11 -stdlib<span class="o">=</span>libc++ -I/opt/boost/boost_1_54_0 example.cc -o example
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Fork in the road</h2>
+
+<p>No luck</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>/tmp/example-oWquCX.o: In <span class="k">function</span> <span class="sb">`</span>__cxx_global_var_init3<span class="s1">&#39;:</span>
+</span><span class='line'><span class="s1">example.cc:(.text+0x71): undefined reference to `std::ios_base::Init::Init()&#39;</span>
+</span><span class='line'>example.cc:<span class="o">(</span>.text+0x79<span class="o">)</span>: undefined reference to <span class="sb">`</span>std::ios_base::Init::~Init<span class="o">()</span><span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">/tmp/example-oWquCX.o: In function `main&#39;</span>:
+</span><span class='line'>example.cc:<span class="o">(</span>.text+0xb3<span class="o">)</span>: undefined reference to <span class="sb">`</span>std::cin<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">example.cc:(.text+0xf0): undefined reference to `std::cout&#39;</span>
+</span><span class='line'>/tmp/example-oWquCX.o: In <span class="k">function</span> <span class="sb">`</span>std::istream_iterator&lt;int, char, std::char_traits&lt;char&gt;, long&gt;::_M_read<span class="o">()</span><span class="err">&#39;</span>:
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>(and more that I&rsquo;ll skip over right now).</p>
+
+<p>Later I realized that this was probably my fault in not linking it correctly, but I immediately, inexplicably, decided &ldquo;Aha! let&rsquo;s build clang from source!&rdquo;</p>
+
+<p>This might also have been because I had gotten bored of <code>sudo apt-get install foo</code> and longed for the (decade ago) days of <code>emerge foo</code>.</p>
+
+<h2>Deep in the woods</h2>
+
+<p>Luckily, this turned out to be <a href="http://solarianprogrammer.com/2013/01/17/building-clang-libcpp-ubuntu-linux/">well-documented</a>, more or less.</p>
+
+<p>So I got up to the point where I got and built <code>clang</code>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>svn co http://llvm.org/svn/llvm-project/llvm/trunk llvm
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>llvm/tools
+</span><span class='line'><span class="nv">$ </span>svn co http://llvm.org/svn/llvm-project/cfe/trunk clang
+</span><span class='line'><span class="nv">$ </span>mkdir build <span class="o">&amp;&amp;</span> <span class="nb">cd </span>build
+</span><span class='line'><span class="nv">$ </span>../llvm/configure --prefix<span class="o">=</span>/usr/clang_3_3 <span class="se">\</span>
+</span><span class='line'>  --enable-optimized --enable-targets<span class="o">=</span>host
+</span><span class='line'><span class="nv">$ </span>make -j 8
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And I procedded to then build <code>libcxx</code></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>svn co http://llvm.org/svn/llvm-project/libcxx/trunk libcxx
+</span><span class='line'><span class="nv">$ </span>mkdir build_libcxx <span class="o">&amp;&amp;</span> <span class="nb">cd </span>build_libcxx
+</span><span class='line'><span class="nv">$ CC</span><span class="o">=</span>clang <span class="nv">CXX</span><span class="o">=</span>clang++ cmake -G <span class="s2">&quot;Unix Makefiles&quot;</span> <span class="se">\</span>
+</span><span class='line'>  -DLIBCXX_CXX_ABI<span class="o">=</span>libsupc++ <span class="se">\</span>
+</span><span class='line'>  -DLIBCXX_LIBSUPCXX_INCLUDE_PATHS<span class="o">=</span><span class="s2">&quot;/usr/include/c++/4.6/;\</span>
+</span><span class='line'><span class="s2">  /usr/include/c++/4.6/x86_64-linux-gnu/&quot;</span> <span class="se">\</span>
+</span><span class='line'>  -DCMAKE_BUILD_TYPE<span class="o">=</span>Release -DCMAKE_INSTALL_PREFIX<span class="o">=</span>/usr <span class="nv">$HOME</span>/Clang/libcxx
+</span><span class='line'><span class="nv">$ </span>make
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Mt. Doom</h2>
+
+<p>At this point I got a compiler error. Very sad. Too bad, I thought, we need to go deeper. Time for building <code>gcc</code>/<code>g++</code> and a new version of the C++ standard library. My Ubuntu version only had <code>gcc</code> upto <code>4.6</code>, and I found <a href="http://lists.cs.uiuc.edu/pipermail/llvmbugs/2013-February/027116.html">a mailing list post</a> which suggested this might be fixed in <code>4.7</code>.</p>
+
+<p>I could have at this point decided to add a PPA repository and got the new libraries and binaries that way, but luckily this was <a href="http://solarianprogrammer.com/2012/04/13/building-gcc-4-7-on-ubuntu-12-04/">also well-documented</a> (thank you, &ldquo;Solarian Programmer&rdquo;, whoever you are!).</p>
+
+<p>So I went ahead and downloaded <a href="http://www.netgull.com/gcc/releases/gcc-4.7.3/gcc-4.7.3.tar.bz2"><code>gcc</code></a>, and what turned out to be its prerequisites, <a href="ftp://ftp.gmplib.org/pub/gmp-5.1.2/gmp-5.1.2.tar.lz"><code>gmp</code></a>, <a href="http://www.mpfr.org/mpfr-current/mpfr-3.1.2.tar.gz"><code>mpfr</code></a> and <a href="http://www.multiprecision.org/mpc/download/mpc-1.0.tar.gz"><code>mpc</code></a>.</p>
+
+<p>These I built in the usual way (<code>configure</code>, <code>make</code>, <code>make install</code>), and then had to refer to them while setting up <code>gcc</code>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span><span class="nb">export </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span>/usr/gcc_4_7/lib:<span class="nv">$LD_LIBRARY_PATH</span>
+</span><span class='line'><span class="nv">$ </span><span class="nb">export </span><span class="nv">LIBRARY_PATH</span><span class="o">=</span>/usr/lib/x86_64-linux-gnu/
+</span><span class='line'><span class="nv">$ </span><span class="nb">export </span><span class="nv">C_INCLUDE_PATH</span><span class="o">=</span>/usr/include/x86_64-linux-gnu
+</span><span class='line'><span class="nv">$ </span><span class="nb">export </span><span class="nv">CPLUS_INCLUDE_PATH</span><span class="o">=</span>/usr/include/x86_64-linux-gnu
+</span><span class='line'><span class="nv">$ </span>../gcc-4.7.2/configure --build<span class="o">=</span>x86_64-linux-gnu --prefix<span class="o">=</span>/usr/gcc_4_7 <span class="se">\</span>
+</span><span class='line'>  --with-gmp<span class="o">=</span>/usr/gcc_4_7 --with-mpfr<span class="o">=</span>/usr/gcc_4_7 <span class="se">\</span>
+</span><span class='line'>  --with-mpc<span class="o">=</span>/usr/gcc_4_7 --enable-checking<span class="o">=</span>release <span class="se">\</span>
+</span><span class='line'>  --enable-languages<span class="o">=</span>c,c++,fortran --disable-multilib <span class="se">\</span>
+</span><span class='line'>  --program-suffix<span class="o">=</span>-4.7
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now I could proceed where I left off earlier, with the <code>libcxx</code> build, after setting a couple of path variables:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span>/usr/gcc_4_7/bin:<span class="nv">$PATH</span>
+</span><span class='line'><span class="nv">$ </span><span class="nb">export </span><span class="nv">LD_LIBRARY_PATH</span><span class="o">=</span>/usr/gcc_4_7/lib:/usr/gcc_4_7/lib64:<span class="nv">$LD_LIBRARY_PATH</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>A ray of hope</h2>
+
+<p>But first, I wanted to see if the new <code>g++</code> could do what I had initially tried to do with <code>clang</code>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>g++4.7 -std<span class="o">=</span>c++11 -I/opt/boost/boost_1_54_0 example.cc -o example
+</span><span class='line'><span class="nv">$ </span><span class="nb">echo </span>1 2 3 | ./example
+</span><span class='line'>3 6 9
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Whew, now I was getting somewhere.</p>
+
+<p>I went back and re-ran <code>cmake</code>, and then <code>libcxx</code> built successfully.</p>
+
+<p>And then of course, I retried my original example:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>/usr/clang_3_3/bin/clang++ -std<span class="o">=</span>c++11 -I/opt/boost/boost_1_54_0 example.cc -o example
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>and that worked too &hellip; Woohoo!!</p>
+
+<p>Finally, since I always measure running time:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span><span class="nb">time</span> /usr/clang_3_3/bin/clang++ -std<span class="o">=</span>c++11 -I/opt/boost/boost_1_54_0 example.cc -o example
+</span><span class='line'>
+</span><span class='line'>real    0m0.848s
+</span><span class='line'>user    0m0.780s
+</span><span class='line'>sys     0m0.056s
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span><span class="nb">time </span>g++4.7 -std<span class="o">=</span>c++11 -I/opt/boost/boost_1_54_0 example.cc -o example
+</span><span class='line'>
+</span><span class='line'>real    0m0.714s
+</span><span class='line'>user    0m0.648s
+</span><span class='line'>sys     0m0.044s
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now to do something more than this example program &hellip;</p>
+
+      
+      
+    </div>
+  </div>
+
+
+
+    </article>
+    
+    <hr>
+    
+  
+  
+    <article>
+      
+
+  <div class="row-fluid">
+    <div class="span2 post-meta">
+	  <h5 class="date-time">
+
+
+
+
+
+
+
+
+  
+
+
 <i class="icon-calendar-empty"></i> <time datetime="2013-08-14T00:00:00+00:00" pubdate data-updated="true">Aug 14<span>th</span>, 2013</time></h5>
           <div class="row-fluid">
           
@@ -2456,547 +2708,6 @@ poor benchmark, but still) it seems close enough:</p>
 
     </article>
     
-    <hr>
-    
-  
-  
-    <article>
-      
-
-  <div class="row-fluid">
-    <div class="span2 post-meta">
-	  <h5 class="date-time">
-
-
-
-
-
-
-
-
-  
-
-
-<i class="icon-calendar-empty"></i> <time datetime="2013-03-11T00:00:00+00:00" pubdate data-updated="true">Mar 11<span>th</span>, 2013</time></h5>
-          <div class="row-fluid">
-          
-          </div>
-          
-          <div class="row-fluid">
-          
-          <a href="/blog/categories/gce/"><span class="badge">GCE</span></a>
-          
-          <a href="/blog/categories/http/"><span class="badge">HTTP</span></a>
-          
-          <a href="/blog/categories/haskell/"><span class="badge">Haskell</span></a>
-          
-          <a href="/blog/categories/yesod/"><span class="badge">Yesod</span></a>
-          
-          </div>
-          
-    </div>
-    <div class="span10 post-container">
-      <h1 class="link"><a href="/blog/2013/03/11/webserver-in-google-compute-engine/">Setting up a Haskell webserver to run in Google Compute Engine</a></h1>
-      <p>I signed up for a project at the <a href="https://cloud.google.com/console#c=l">Google Cloud Console</a>, and decided to try running a webserver on it, as a prerequisite to other future toy projects I might link to it.</p>
-
-<h2>First steps</h2>
-
-<p>Get <a href="https://developers.google.com/compute/docs/gcutil/"><code>gcutil</code></a> and install it</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>sudo tar xvpzf gcutil-1.7.1.tar.gz  -C /usr/local/share
-</span><span class='line'><span class="nv">$ </span>sudo ln -s /usr/local/share/gcutil-1.7.1/gcutil /usr/local/bin/gcutil
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Then, link it up to your project</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>gcutil auth --project<span class="o">=</span>agam-personal-project
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>It&rsquo;s a good idea to avoid entering the <code>--project=</code> bit every time, by saving your project name</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>gcutil getproject --project<span class="o">=</span>agam-personal-project --cache_flag_values
-</span><span class='line'>+--------------------------+-------------------------------+
-</span><span class='line'>|         property         |             value             |
-</span><span class='line'>+--------------------------+-------------------------------+
-</span><span class='line'>| name                     | agam-personal-project                     |
-</span><span class='line'>| description              |                               |
-</span><span class='line'>| creation-time            | 2012-10-30T13:52:46.571-07:00 |
-</span><span class='line'>| ips                      | 108.59.85.232,173.255.125.245 |
-</span><span class='line'>|                          |                               |
-</span><span class='line'>| usage                    |                               |
-</span><span class='line'>|   instances              | 0.0/4.0                       |
-</span><span class='line'>|   cpus                   | 0.0/4.0                       |
-</span><span class='line'>|   ephemeral-addresses    | 0.0/4.0                       |
-</span><span class='line'>|   disks                  | 0.0/4.0                       |
-</span><span class='line'>|   disks-total-gb         | 0.0/250.0                     |
-</span><span class='line'>|   snapshots              | 0.0/20.0                      |
-</span><span class='line'>|   networks               | 1.0/1.0                       |
-</span><span class='line'>|   firewalls              | 2.0/10.0                      |
-</span><span class='line'>|   images                 | 0.0/4.0                       |
-</span><span class='line'>|                          |                               |
-</span><span class='line'>| common-instance-metadata |                               |
-</span><span class='line'>+--------------------------+-------------------------------+
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>By default, incoming HTTP is blocked. So enable it.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>gcutil addfirewall http2 --description<span class="o">=</span><span class="s2">&quot;Allow incoming http&quot;</span> --allowed<span class="o">=</span><span class="s2">&quot;tcp:http&quot;</span>
-</span><span class='line'>INFO: Waiting <span class="k">for </span>insert of firewall http2. Sleeping <span class="k">for </span>3s.
-</span><span class='line'>INFO: Waiting <span class="k">for </span>insert of firewall http2. Sleeping <span class="k">for </span>3s.
-</span><span class='line'>
-</span><span class='line'>Table of resources:
-</span><span class='line'>
-</span><span class='line'>+-------+---------------------+------------------+------------+-------------+-------------+
-</span><span class='line'>| name  |     description     |     network      | <span class="nb">source</span>-ips | <span class="nb">source</span>-tags | target-tags |
-</span><span class='line'>+-------+---------------------+------------------+------------+-------------+-------------+
-</span><span class='line'>| http2 | Allow incoming http | networks/default | 0.0.0.0/0  |             |             |
-</span><span class='line'>+-------+---------------------+------------------+------------+-------------+-------------+
-</span><span class='line'>
-</span><span class='line'>Table of operations:
-</span><span class='line'>
-</span><span class='line'>+------------------------------------------------+------+--------+----------------+-----------------+-------------------------------+----------------+-------+---------+
-</span><span class='line'>|                      name                      | zone | status | status-message |     target      |          insert-time          | operation-type | error | warning |
-</span><span class='line'>+------------------------------------------------+------+--------+----------------+-----------------+-------------------------------+----------------+-------+---------+
-</span><span class='line'>| operation-1362984707558-4d7a09b531841-ea2eb01d |      | DONE   |                | firewalls/http2 | 2013-03-10T23:51:47.558-07:00 | insert         |       |         |
-</span><span class='line'>+------------------------------------------------+------+--------+----------------+-----------------+-------------------------------+----------------+-------+---------+
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>And now it&rsquo;s time to make choices!</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>gcutil addinstance basic-webserver-instance
-</span><span class='line'>1: europe-west1-a  <span class="o">(</span>currently in maintenance<span class="o">)</span>
-</span><span class='line'>2: europe-west1-b
-</span><span class='line'>3: us-central1-a
-</span><span class='line'>4: us-central1-b
-</span><span class='line'>5: us-central2-a
-</span><span class='line'>&gt;&gt;&gt; 3
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>No particular reason, I picked <code>us-central1-a</code> (why no <code>us-west</code> ?). I wasn&rsquo;t sure which <a href="https://cloud.google.com/pricing/compute-engine">instance type</a> to pick &hellip; I went with the cheapest option with a disk (#2) for now.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>1: n1-standard-1
-</span><span class='line'>2: n1-standard-1-d
-</span><span class='line'>3: n1-standard-2
-</span><span class='line'>4: n1-standard-2-d
-</span><span class='line'>5: n1-standard-4
-</span><span class='line'>6: n1-standard-4-d
-</span><span class='line'>7: n1-standard-8
-</span><span class='line'>8: n1-standard-8-d
-</span><span class='line'>9: n1-highcpu-2
-</span><span class='line'>10: n1-highcpu-2-d
-</span><span class='line'>11: n1-highcpu-4
-</span><span class='line'>12: n1-highcpu-4-d
-</span><span class='line'>13: n1-highcpu-8
-</span><span class='line'>14: n1-highcpu-8-d
-</span><span class='line'>15: n1-highmem-2
-</span><span class='line'>16: n1-highmem-2-d
-</span><span class='line'>17: n1-highmem-4
-</span><span class='line'>18: n1-highmem-4-d
-</span><span class='line'>19: n1-highmem-8
-</span><span class='line'>20: n1-highmem-8-d
-</span><span class='line'>&gt;&gt;&gt; 2
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>10 choices of a host OS, I picked what seemed to be the latest <code>gcel</code> one.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>1: projects/google/global/images/centos-6-v20121106
-</span><span class='line'>2: projects/google/global/images/centos-6-v20130104
-</span><span class='line'>3: projects/google/global/images/centos-6-v20130225
-</span><span class='line'>4: projects/google/global/images/gcel-10-04-v20121106
-</span><span class='line'>5: projects/google/global/images/gcel-10-04-v20130104
-</span><span class='line'>6: projects/google/global/images/gcel-10-04-v20130225
-</span><span class='line'>7: projects/google/global/images/gcel-12-04-v20121106
-</span><span class='line'>8: projects/google/global/images/gcel-12-04-v20130104
-</span><span class='line'>9: projects/google/global/images/gcel-12-04-v20130225
-</span><span class='line'>10: projects/google/global/images/centos-6-v20120912 <span class="o">(</span>DEPRECATED<span class="o">)</span>
-</span><span class='line'>&gt;&gt;&gt; 9
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>If this is the first time running <code>gcutil</code> it will ask you to enter a passphrase for authentication, and then your instance should be inserted. As you can see below, this took about 35s for me.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>INFO: Waiting <span class="k">for </span>insert of instance basic-webserver-instance. Sleeping <span class="k">for </span>3s.
-</span><span class='line'>INFO: Waiting <span class="k">for </span>insert of instance basic-webserver-instance. Sleeping <span class="k">for </span>3s.
-</span><span class='line'>INFO: Waiting <span class="k">for </span>insert of instance basic-webserver-instance. Sleeping <span class="k">for </span>3s.
-</span><span class='line'>INFO: Waiting <span class="k">for </span>insert of instance basic-webserver-instance. Sleeping <span class="k">for </span>3s.
-</span><span class='line'>INFO: Waiting <span class="k">for </span>insert of instance basic-webserver-instance. Sleeping <span class="k">for </span>3s.
-</span><span class='line'>INFO: Waiting <span class="k">for </span>insert of instance basic-webserver-instance. Sleeping <span class="k">for </span>3s.
-</span><span class='line'>INFO: Waiting <span class="k">for </span>insert of instance basic-webserver-instance. Sleeping <span class="k">for </span>3s.
-</span><span class='line'>INFO: Waiting <span class="k">for </span>insert of instance basic-webserver-instance. Sleeping <span class="k">for </span>3s.
-</span><span class='line'>INFO: Waiting <span class="k">for </span>insert of instance basic-webserver-instance. Sleeping <span class="k">for </span>3s.
-</span><span class='line'>INFO: Waiting <span class="k">for </span>insert of instance basic-webserver-instance. Sleeping <span class="k">for </span>3s.
-</span><span class='line'>INFO: Waiting <span class="k">for </span>insert of instance basic-webserver-instance. Sleeping <span class="k">for </span>3s.
-</span><span class='line'>
-</span><span class='line'>Table of resources:
-</span><span class='line'>
-</span><span class='line'>+--------------------------+------------------------------+----------------------------------------------------+------------------+---------------+---------------+-------+---------------+---------+----------------+
-</span><span class='line'>|           name           |         machine-type         |                       image                        |     network      |  network-ip   |  external-ip  | disks |     zone      | status  | status-message |
-</span><span class='line'>+--------------------------+------------------------------+----------------------------------------------------+------------------+---------------+---------------+-------+---------------+---------+----------------+
-</span><span class='line'>| basic-webserver-instance | machineTypes/n1-standard-1-d | projects/google/global/images/gcel-12-04-v20130225 | networks/default | 10.240.31.254 | 108.59.80.144 |       | us-central1-a | RUNNING |                |
-</span><span class='line'>+--------------------------+------------------------------+----------------------------------------------------+------------------+---------------+---------------+-------+---------------+---------+----------------+
-</span><span class='line'>
-</span><span class='line'>Table of operations:
-</span><span class='line'>
-</span><span class='line'>+------------------------------------------------+---------------+--------+----------------+--------------------------------------------------+-------------------------------+----------------+-------+---------+
-</span><span class='line'>|                      name                      |     zone      | status | status-message |                      target                      |          insert-time          | operation-type | error | warning |
-</span><span class='line'>+------------------------------------------------+---------------+--------+----------------+--------------------------------------------------+-------------------------------+----------------+-------+---------+
-</span><span class='line'>| operation-1362986355529-4d7a0fd8d07a1-a21d7f92 | us-central1-a | DONE   |                | us-central1-a/instances/basic-webserver-instance | 2013-03-11T00:19:15.529-07:00 | insert         |       |         |
-</span><span class='line'>+------------------------------------------------+---------------+--------+----------------+--------------------------------------------------+-------------------------------+----------------+-------+---------+
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>You can then check if the instance matches what you wanted.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>gcutil getinstance basic-webserver-instance
-</span><span class='line'><span class="o">(</span>output skipped<span class="o">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Installing Stuff</h2>
-
-<p>Now that the instance is ready to go, you can ssh to it and get the stuff we need.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>gcutil ssh basic-webserver-instance
-</span><span class='line'>...
-</span><span class='line'>... <span class="o">(</span>skipping boilerplate<span class="o">)</span>
-</span><span class='line'>...
-</span><span class='line'> * You appear to be running on an EPHEMERAL root disk.  Changes may be lost.
-</span><span class='line'>  For persistent data, use Persistent Disks:
-</span><span class='line'>  https://developers.google.com/compute/docs/disks#persistentdisks
-</span><span class='line'>
-</span><span class='line'>agam@basic-webserver-instance:~<span class="nv">$ </span>sudo df -h
-</span><span class='line'>Filesystem      Size  Used Avail Use% Mounted on
-</span><span class='line'>/dev/sda1       9.6G 1019M  8.1G  12% /
-</span><span class='line'>none            1.9G  4.0K  1.9G   1% /dev
-</span><span class='line'>none            377M  140K  377M   1% /run
-</span><span class='line'>none            5.0M     0  5.0M   0% /run/lock
-</span><span class='line'>none            1.9G     0  1.9G   0% /run/shm
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Yeah, the instance doesn&rsquo;t come with a persistent disk. So if you decide to delete the instance, your data is gone.</p>
-
-<p>Eventually, I&rsquo;ll attach <a href="https://developers.google.com/compute/docs/disks#persistentdisks">persistent disks</a> and also use a <a href="https://developers.google.com/compute/docs/robustsystems#startup">startup script</a> to allow me to quickly recreate VM state on new instances, but I&rsquo;ll punt on those for now.</p>
-
-<p>Anyway, let&rsquo;s start installing stuff</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>sudo apt-get install haskell-platform
-</span><span class='line'>...
-</span><span class='line'><span class="nv">$ </span>cabal update
-</span><span class='line'>...
-</span><span class='line'><span class="nv">$ </span>cabal install yesod-platform
-</span><span class='line'>...
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Haskell packages are still a bit flaky. For instance, I got this error and had to ignore it and pray nothing broke:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>Warning: The following packages are likely to be broken by the reinstalls:
-</span><span class='line'>regex-posix-0.95.1
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>BTW this takes a <em>long</em> <em>long</em> time to complete, so go do something else for 5-10 minutes and then come back.</p>
-
-<h2>Running Yesod</h2>
-
-<p>For this example, I&rsquo;m going to do a basic webserver, though the right thing to do in this case is to choose the option to configure the urls to be used with <a href="https://developers.google.com/storage/docs/getting-started">Google Cloud Storage</a></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>agam@basic-webserver-instance:~<span class="nv">$ </span>yesod init
-</span><span class='line'>Welcome to the Yesod scaffolder.
-</span><span class='line'>I<span class="s1">&#39;m going to be creating a skeleton Yesod project for you.</span>
-</span><span class='line'>
-</span><span class='line'><span class="s1">What do you want to call your project? We&#39;</span>ll use this <span class="k">for </span>the cabal name.
-</span><span class='line'>
-</span><span class='line'>Project name: AgamsWeb
-</span><span class='line'>Yesod uses Persistent <span class="k">for </span>its <span class="o">(</span>you guessed it<span class="o">)</span> persistence layer.
-</span><span class='line'>This tool will build in either SQLite or PostgreSQL or MongoDB support <span class="k">for </span>you.
-</span><span class='line'>We recommend starting with SQLite: it has no dependencies.
-</span><span class='line'>
-</span><span class='line'>    <span class="nv">s</span>      <span class="o">=</span> sqlite
-</span><span class='line'>    <span class="nv">p</span>      <span class="o">=</span> postgresql
-</span><span class='line'>    <span class="nv">pf</span>     <span class="o">=</span> postgresql + Fay <span class="o">(</span>experimental<span class="o">)</span>
-</span><span class='line'>    <span class="nv">mongo</span>  <span class="o">=</span> mongodb
-</span><span class='line'>    <span class="nv">mysql</span>  <span class="o">=</span> MySQL
-</span><span class='line'>    <span class="nv">simple</span> <span class="o">=</span> no database, no auth
-</span><span class='line'>    <span class="nv">url</span>    <span class="o">=</span> Let me specify URL containing a site <span class="o">(</span>advanced<span class="o">)</span>
-</span><span class='line'>
-</span><span class='line'>So, what<span class="err">&#39;</span>ll it be? s
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This sets up a basic scaffold with a few directories</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>agam@basic-webserver-instance:~/AgamsWeb<span class="nv">$ </span>ls -l
-</span><span class='line'>total 68
-</span><span class='line'>-rw-rw-r-- 1 agam agam 3907 Mar 11 08:18 AgamsWeb.cabal
-</span><span class='line'>-rw-rw-r-- 1 agam agam 2723 Mar 11 08:18 Application.hs
-</span><span class='line'>-rw-rw-r-- 1 agam agam 6583 Mar 11 08:18 Foundation.hs
-</span><span class='line'>drwxrwxr-x 2 agam agam 4096 Mar 11 08:18 Handler
-</span><span class='line'>-rw-rw-r-- 1 agam agam 1057 Mar 11 08:18 Import.hs
-</span><span class='line'>-rw-rw-r-- 1 agam agam  415 Mar 11 08:18 Model.hs
-</span><span class='line'>drwxrwxr-x 2 agam agam 4096 Mar 11 08:18 Settings
-</span><span class='line'>-rw-rw-r-- 1 agam agam 2736 Mar 11 08:18 Settings.hs
-</span><span class='line'>drwxrwxr-x 2 agam agam 4096 Mar 11 08:18 app
-</span><span class='line'>drwxrwxr-x 2 agam agam 4096 Mar 11 08:18 config
-</span><span class='line'>drwxrwxr-x 2 agam agam 4096 Mar 11 08:18 deploy
-</span><span class='line'>-rw-rw-r-- 1 agam agam  709 Mar 11 08:18 devel.hs
-</span><span class='line'>drwxrwxr-x 2 agam agam 4096 Mar 11 08:18 messages
-</span><span class='line'>drwxrwxr-x 4 agam agam 4096 Mar 11 08:18 static
-</span><span class='line'>drwxrwxr-x 2 agam agam 4096 Mar 11 08:18 templates
-</span><span class='line'>drwxrwxr-x 2 agam agam 4096 Mar 11 08:18 tests
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Now to start this (empty) webserver</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>cabal install
-</span><span class='line'><span class="nv">$ </span>yesod devel
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This starts the server on <code>localhost:3000</code>. Now the Yesod folks recommend running <code>nginx</code> as a reverse proxy in front, so let&rsquo;s do that (though it&rsquo;s obviously overkill for this example).</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>sudo apt-get install nginx
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Create a basic reverse proxy config</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='yaml'><span class='line'><span class="l-Scalar-Plain">events {</span>
-</span><span class='line'>    <span class="l-Scalar-Plain">worker_connections 4096;</span>
-</span><span class='line'><span class="l-Scalar-Plain">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="l-Scalar-Plain">http {</span>
-</span><span class='line'>    <span class="l-Scalar-Plain">server {</span>
-</span><span class='line'>        <span class="l-Scalar-Plain">listen 80;</span>
-</span><span class='line'>        <span class="l-Scalar-Plain">location / {</span>
-</span><span class='line'>            <span class="l-Scalar-Plain">proxy_pass http://127.0.0.1:3000/;</span>
-</span><span class='line'>        <span class="l-Scalar-Plain">}</span>
-</span><span class='line'>    <span class="l-Scalar-Plain">}</span>
-</span><span class='line'><span class="l-Scalar-Plain">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Then run nginx</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>sudo nginx -c nginx.conf
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Hmm &hellip; ok &hellip; for whatever reason that didn&rsquo;t work. This seems like a fairly straightforward config. Screw it, run yesod directly on port 80.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>sudo yesod devel --port<span class="o">=</span>80
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Now, if you open the associated IP in your browser, you should see the standard &ldquo;Welcome to Yesod&rdquo; placeholder !!</p>
-
-      
-      
-    </div>
-  </div>
-
-
-
-    </article>
-    
   
   <div class="pagination">
     
@@ -3015,7 +2726,7 @@ poor benchmark, but still) it seems close enough:</p>
       <div class="row-fluid">
         <footer class="footer-page" role="contentinfo">
           <p>
-  Copyright &copy; 2013 - Agam -
+  Copyright &copy; 2014 - Agam -
   <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span> - Theme by <a href="http://alexgaribay.com">Alex Garibay</a>
 </p>
 
