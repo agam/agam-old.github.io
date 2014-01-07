@@ -4,7 +4,7 @@
   <title><![CDATA[Category: urbit, | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/urbit/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2014-01-07T09:57:08+00:00</updated>
+  <updated>2014-01-07T09:59:41+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -195,7 +195,7 @@ $ cat wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/main/bin/cat.hoon
 change this data once you&rsquo;ve sent it to the server.  If you enter
 something wrong, hit ^D to cancel, then run the program again.</p>
 
-<p>Your ticket: ~dosruc-rinmus-lodryn-napwyx</p>
+<p>Your ticket: <Enter your ticket here></p>
 
 <p>Enter a passphrase or other unusual text.  You (or your enemies)
 can regenerate your ship from this entropy.</p>
