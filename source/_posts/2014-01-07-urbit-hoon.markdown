@@ -184,7 +184,7 @@ Let's configure your identity.  Warning - it's nontrivial to
 change this data once you've sent it to the server.  If you enter
 something wrong, hit ^D to cancel, then run the program again.
 
-Your ticket: ~dosruc-rinmus-lodryn-napwyx
+Your ticket: <Enter your ticket here>
 
 Enter a passphrase or other unusual text.  You (or your enemies)
 can regenerate your ship from this entropy.
