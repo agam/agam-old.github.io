@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2014-01-07T09:59:41+00:00</updated>
+  <updated>2014-01-07T23:34:25+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,132 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Programming Fun: Braille]]></title>
+    <link href="http://agam.github.io/blog/2014/01/07/programming-fun-braille/"/>
+    <updated>2014-01-07T23:31:00+00:00</updated>
+    <id>http://agam.github.io/blog/2014/01/07/programming-fun-braille</id>
+    <content type="html"><![CDATA[<p>Here&rsquo;s a simple <a href="http://www.reddit.com/r/dailyprogrammer/comments/1s061q/120313_challenge_143_easy_braille/">one</a>.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Input Description
+</span><span class='line'>-----------------
+</span><span class='line'>
+</span><span class='line'>Input will consistent of an array of 2x6 space-delimited Braille characters.
+</span><span class='line'>This array is always on the same line, so regardless of how long the text is, it
+</span><span class='line'>will always be on 3-rows of text. A lowered bump is a dot character '.', while a
+</span><span class='line'>raised bump is an upper-case 'O' character.
+</span><span class='line'>
+</span><span class='line'>Output Description
+</span><span class='line'>------------------
+</span><span class='line'>
+</span><span class='line'>Print the transcribed Braille.</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<div><script src='https://gist.github.com/8308823.js'></script>
+<script type="text/javascript">$(".gist-file table tr td.line-numbers").remove();</script>
+<noscript><pre><code>#include &lt;cassert&gt;
+#include &lt;cmath&gt;
+#include &lt;cstdint&gt;
+#include &lt;cstdio&gt;
+#include &lt;cstdlib&gt;
+#include &lt;algorithm&gt;
+#include &lt;iomanip&gt;
+#include &lt;iostream&gt;
+#include &lt;limits&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+#include &lt;unordered_map&gt;
+
+using namespace std;
+
+void InitializeBrailleData(unordered_map&lt;string, char&gt;* rep) {
+  rep-&gt;insert(make_pair(&quot;O.....&quot;, &#39;A&#39;));
+  rep-&gt;insert(make_pair(&quot;O.O...&quot;, &#39;B&#39;));
+  rep-&gt;insert(make_pair(&quot;OO....&quot;, &#39;C&#39;));
+  rep-&gt;insert(make_pair(&quot;OO.O..&quot;, &#39;D&#39;));
+  rep-&gt;insert(make_pair(&quot;O..O..&quot;, &#39;E&#39;));
+  rep-&gt;insert(make_pair(&quot;OOO...&quot;, &#39;F&#39;));
+  rep-&gt;insert(make_pair(&quot;OOOO..&quot;, &#39;G&#39;));
+  rep-&gt;insert(make_pair(&quot;O.OO..&quot;, &#39;H&#39;));
+  rep-&gt;insert(make_pair(&quot;.OO...&quot;, &#39;I&#39;));
+  rep-&gt;insert(make_pair(&quot;.OOO..&quot;, &#39;J&#39;));
+  rep-&gt;insert(make_pair(&quot;O...O.&quot;, &#39;K&#39;));
+  rep-&gt;insert(make_pair(&quot;O.O.O.&quot;, &#39;L&#39;));
+  rep-&gt;insert(make_pair(&quot;OO..O.&quot;, &#39;M&#39;));
+  rep-&gt;insert(make_pair(&quot;OO.OO.&quot;, &#39;N&#39;));
+  rep-&gt;insert(make_pair(&quot;O..OO.&quot;, &#39;O&#39;));
+  rep-&gt;insert(make_pair(&quot;OOO.O.&quot;, &#39;P&#39;));
+  rep-&gt;insert(make_pair(&quot;OOOOO.&quot;, &#39;Q&#39;));
+  rep-&gt;insert(make_pair(&quot;O.OOO.&quot;, &#39;R&#39;));
+  rep-&gt;insert(make_pair(&quot;.OO.O.&quot;, &#39;S&#39;));
+  rep-&gt;insert(make_pair(&quot;.OOOO.&quot;, &#39;T&#39;));
+  rep-&gt;insert(make_pair(&quot;O...OO&quot;, &#39;U&#39;));
+  rep-&gt;insert(make_pair(&quot;O.O.OO&quot;, &#39;V&#39;));
+  rep-&gt;insert(make_pair(&quot;.OOO.O&quot;, &#39;W&#39;));
+  rep-&gt;insert(make_pair(&quot;OO..OO&quot;, &#39;X&#39;));
+  rep-&gt;insert(make_pair(&quot;OO.OOO&quot;, &#39;Y&#39;));
+  rep-&gt;insert(make_pair(&quot;O..OOO&quot;, &#39;Z&#39;));
+};
+
+void AddRepresentation(const string&amp; line, vector&lt;string&gt;* representations) {
+  for (int index = 0; index &lt; line.length(); index += 3) {
+    (*representations)[index / 3].push_back(line[index]);
+    (*representations)[index / 3].push_back(line[index + 1]);
+
+    assert((line[index + 2] == &#39; &#39;) || (index + 2 == line.length()));
+  }
+}
+
+int main() {
+  unordered_map&lt;string, char&gt; braille_representation;
+  InitializeBrailleData(&amp;braille_representation);
+
+  // Assume input is well formed.
+  // This means we read three lines from standard input,
+  // and each line&#39;s length is (2 * x + 3)
+  string line1, line2, line3;
+  getline(cin, line1);
+  getline(cin, line2);
+  getline(cin, line3);
+
+  // Basic invariants
+  assert(line1.length() == line2.length());
+  assert(line2.length() == line3.length());
+  assert((line1.length() + 1) % 3 == 0);
+
+  // Get the input into our desired form
+  vector&lt;string&gt; representations((line1.length() + 1) / 3);
+  AddRepresentation(line1, &amp;representations);
+  AddRepresentation(line2, &amp;representations);
+  AddRepresentation(line3, &amp;representations);
+
+  for (const string&amp; rep : representations) {
+    cout &lt;&lt; braille_representation[rep];
+  }
+  cout &lt;&lt; endl;
+}
+</code></pre></noscript></div>
+
+
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Urbit: Hoon]]></title>
@@ -2418,279 +2544,6 @@ Editor</a>, try typing <code>:help scrolloff</code> right now; you should see th
 <li>Try my hand at <a href="http://www.topcoder.com/">TopCoder</a> (!)</li>
 </ul>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Getting music onto an Android phone's external storage]]></title>
-    <link href="http://agam.github.io/blog/2013/09/30/usb-music-transfer-android/"/>
-    <updated>2013-09-30T00:00:00+00:00</updated>
-    <id>http://agam.github.io/blog/2013/09/30/usb-music-transfer-android</id>
-    <content type="html"><![CDATA[<p>I had bought a MicroSD card to go along with my Motorola Razr M, since it has a limited internal storage of 8G.</p>
-
-<p>(That is to say, <em>limited</em> by today&rsquo;s standards, where a singe Chrome tab can take up a few hundred MB. I remember when I was excited to find a computer with 8MB Ram since that meant I could play Quake on it. Anyway &hellip;)</p>
-
-<p>I assembled everything on my (linux) laptop in one folder, this should just be a copy-and-paste, drag-and-drop kind of thing, right ?</p>
-
-<p><em>Wrong</em>.</p>
-
-<p>Instead I had to wade through a bunch of online forum posts, about mounting the phone on windows, on mac, configuring various settings.</p>
-
-<p>When I plugged in the phone through USB, I got a notification saying the phone was connected but it didn&rsquo;t show up in Ubuntu&rsquo;s list of connected devices (and I know this works for other devices because my external hard drive shows up when I connect i
-t).</p>
-
-<p>Finally I found <a href="http://www.mysolutions.it/mounting-your-mtp-androids-sd-card-on-ubuntu/">this</a>, it assured me that <em>&ldquo;Fortunately, it’s quite easy to get this working&rdquo;</em>.</p>
-
-<p>Of course, it was incomplete (yes, you need <code>sudo apt-get install mtpfs</code> but <em>also</em> <code>sudo apt-get install mtp-tools</code>)</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>sudo mkdir /media/MTPDevice
-</span><span class='line'>sudo chmod 775 /media/MTPDevice
-</span><span class='line'>sudo mtpfs -o allow_other /media/MTPDevice/
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Finally, I saw</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>mtp-detect
-</span><span class='line'>libmtp version: 1.1.3
-</span><span class='line'>
-</span><span class='line'>Listing raw device<span class="o">(</span>s<span class="o">)</span>
-</span><span class='line'>Device 0 <span class="o">(</span><span class="nv">VID</span><span class="o">=</span>22b8 and <span class="nv">PID</span><span class="o">=</span>2e51<span class="o">)</span> is UNKNOWN.
-</span><span class='line'>Please report this VID/PID and the device model to the libmtp development team
-</span><span class='line'>   Found 1 device<span class="o">(</span>s<span class="o">)</span>:
-</span><span class='line'>   22b8:2e51 @ bus 2, dev 9
-</span><span class='line'>Attempting to connect device<span class="o">(</span>s<span class="o">)</span>
-</span><span class='line'>PTP_ERROR_IO: failed to open session, trying again after resetting USB interface
-</span><span class='line'>LIBMTP libusb: Attempt to reset device
-</span><span class='line'>inep: usb_get_endpoint_status<span class="o">()</span>: No such device
-</span><span class='line'>outep: usb_get_endpoint_status<span class="o">()</span>: No such device
-</span><span class='line'>usb_clear_halt<span class="o">()</span> on IN endpoint: No such device
-</span><span class='line'>usb_clear_halt<span class="o">()</span> on OUT endpoint: No such device
-</span><span class='line'>usb_clear_halt<span class="o">()</span> on INTERRUPT endpoint: No such device
-</span><span class='line'>usb_open<span class="o">()</span>: No such device
-</span><span class='line'>LIBMTP PANIC: Could not init USB on second attempt
-</span><span class='line'>Unable to open raw device 0
-</span><span class='line'>OK.
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Woo hoo. So much for that.</p>
-
-<p>Then I came across <a href="http://penzoditutto.blogspot.it/2012/12/android-mtp-devices-40-mount-scripts.html">this</a>, which seemed more pragmatic, since it said &ldquo;If you&rsquo;re using ubuntu (12.04 or 12.10) and you want to browse your Android 4.0+ device <em>you know how frustrating can be.</em>&rdquo; Yes I do.</p>
-
-<p>But it didn&rsquo;t have anything fundamentally different.</p>
-
-<p>So I just pulled out the USB cable and plugged it in again (&ldquo;when all else fails, cycle power&rdquo;)</p>
-
-<p>This time, it worked.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>mtp-detect
-</span><span class='line'>libmtp version: 1.1.3
-</span><span class='line'>
-</span><span class='line'>Listing raw device<span class="o">(</span>s<span class="o">)</span>
-</span><span class='line'>Device 0 <span class="o">(</span><span class="nv">VID</span><span class="o">=</span>22b8 and <span class="nv">PID</span><span class="o">=</span>2e51<span class="o">)</span> is UNKNOWN.
-</span><span class='line'>Please report this VID/PID and the device model to the libmtp development team
-</span><span class='line'>   Found 1 device<span class="o">(</span>s<span class="o">)</span>:
-</span><span class='line'>   22b8:2e51 @ bus 2, dev 11
-</span><span class='line'>Attempting to connect device<span class="o">(</span>s<span class="o">)</span>
-</span><span class='line'>Android device detected, assigning default bug flags
-</span><span class='line'>USB low-level info:
-</span><span class='line'>   Interface has a kernel driver attached.
-</span><span class='line'>   bcdUSB: 512
-</span><span class='line'>   bDeviceClass: 0
-</span><span class='line'>   bDeviceSubClass: 0
-</span><span class='line'>   bDeviceProtocol: 0
-</span><span class='line'>   idVendor: 22b8
-</span><span class='line'>   idProduct: 2e51
-</span><span class='line'>   IN endpoint maxpacket: 512 bytes
-</span><span class='line'>   OUT endpoint maxpacket: 512 bytes
-</span><span class='line'>
-</span><span class='line'>&lt; ... and many more pages ... &gt;
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>While we&rsquo;re here, a clarification by way of digression: I am not ranting against MTP, just its usability. It is clearly (IMHO) better than the previous mass storage option, since it supports well-defined interfaces to specific file types, such as this one for JPEG files:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>   3801: JPEG
-</span><span class='line'>      dc01: Storage ID UINT32 data <span class="nb">type </span>ANY 32BIT VALUE form READ ONLY
-</span><span class='line'>      dc02: Object Format UINT16 data <span class="nb">type </span>ANY 16BIT VALUE form READ ONLY
-</span><span class='line'>      dc03: Protection Status UINT16 data <span class="nb">type </span>ANY 16BIT VALUE form READ ONLY
-</span><span class='line'>      dc04: Object Size UINT64 data <span class="nb">type </span>READ ONLY
-</span><span class='line'>      dc07: Object File Name STRING data <span class="nb">type </span>GET/SET
-</span><span class='line'>      dc09: Date Modified STRING data <span class="nb">type </span>DATETIME FORM READ ONLY
-</span><span class='line'>      dc0b: Parent Object UINT32 data <span class="nb">type </span>ANY 32BIT VALUE form READ ONLY
-</span><span class='line'>      dc41: Persistant Unique Object Identifier UINT128 data <span class="nb">type </span>READ ONLY
-</span><span class='line'>      dc44: Name STRING data <span class="nb">type </span>READ ONLY
-</span><span class='line'>      dce0: Display Name STRING data <span class="nb">type </span>READ ONLY
-</span><span class='line'>      dc4e: Date Added STRING data <span class="nb">type </span>DATETIME FORM READ ONLY
-</span><span class='line'>      dc48: Description STRING data <span class="nb">type </span>READ ONLY
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>But wait a minute, what happened to the directory I created ?</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>ls -ld /media/MTPDevice/
-</span><span class='line'>ls: cannot access /media/MTPDevice/: Transport endpoint is not connected
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Obviously I celebrated too soon. More trudging through posts. As an idea of how crazy this can seem, I found <a href="http://askubuntu.com/questions/159095/problems-connecting-android-ics-to-ubuntu-using-mtp">this post</a> on <a href="http://www.askubuntu.com">askubuntu</a> which said:</p>
-
-<p>&ldquo;Please note the Terence Egan Blog where you took the instructions from is a copy of an OMG Ubuntu article. He has missed an important step <em>to restart your PC before running the Echo commands</em> I suggest you try and reinstall from the original OMG Ubuntu source. Click on this link&rdquo; (emphasis mine, link omitted).</p>
-
-<p>Yes, that&rsquo;s right, <em><em>N00b</em></em>. You forgot to restart.</p>
-
-<p>(In case you&rsquo;re wondering how that story ends,
-&ldquo;Oh my god!!! I did not know that. Will do this asap. – ubuntico Jul 3 &lsquo;12 at 16:40
-It worked this way. <em>I connect the mobile and them immediately (under 1s after connection) I have to start command android-connect. Otherwise, the system will try to mount the mobile and after that I cannot use fuse to mount it.</em> It the same with you? – ubuntico Jul 3 &#8216;12 at 17:08&rdquo;)</p>
-
-<p>Maybe I&rsquo;m expecting too much, but I would not refer to this tenuous solution as <em>&ldquo;it worked&rdquo;</em>.</p>
-
-<p>Hmm, it looks like I skipped a step. I had to modify <code>/etc/udev/rules.d/51-android.rules</code> to add the right <code>SUBSYSTEM...</code> rule, and then <code>sudo service udev restart</code>.</p>
-
-<p>Nope, no luck. I can&rsquo;t access, mount, unmount or delete.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>fusermount -u /media/MTPDevice
-</span><span class='line'>fusermount: entry <span class="k">for</span> /media/MTPDevice not found in /etc/mtab
-</span><span class='line'><span class="nv">$ </span>sudo mtpfs -o allow_other /media/MTPDevice/
-</span><span class='line'>fuse: bad mount point <span class="sb">`</span>/media/MTPDevice/<span class="s1">&#39;: Transport endpoint is not connected</span>
-</span><span class='line'><span class="s1">$ sudo rmdir /media/MTPDevice</span>
-</span><span class='line'><span class="s1">rmdir: failed to remove `/media/MTPDevice&#39;</span>: Device or resource busy
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>But wait! All is not lost! We can use the <code>adb</code> tool to interact directly with the android filesystem!</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>./adb push /media/My<span class="se">\ </span>Book/Music/Amazon<span class="se">\ </span>MP3/Eminem/ /sdcard/Music/
-</span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/17 - Untitled <span class="o">[</span>Explicit<span class="o">]</span>.mp3 -&gt; /sdcard/Music/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/17 - Untitled <span class="o">[</span>Explicit<span class="o">]</span>.mp3
-</span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/16 - You<span class="s1">&#39;re Never Over [Explicit].mp3 -&gt; /sdcard/Music/Recovery [Explicit]/16 - You&#39;</span>re Never Over <span class="o">[</span>Explicit<span class="o">]</span>.mp3
-</span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/15 - Love The Way You Lie <span class="o">[</span>Explicit<span class="o">]</span>.mp3 -&gt; /sdcard/Music/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/15 - Love The Way You Lie <span class="o">[</span>Explicit<span class="o">]</span>.mp3
-</span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/14 - Almost Famous <span class="o">[</span>Explicit<span class="o">]</span>.mp3 -&gt; /sdcard/Music/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/14 - Almost Famous <span class="o">[</span>Explicit<span class="o">]</span>.mp3
-</span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/13 - So Bad <span class="o">[</span>Explicit<span class="o">]</span>.mp3 -&gt; /sdcard/Music/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/13 - So Bad <span class="o">[</span>Explicit<span class="o">]</span>.mp3
-</span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/12 - 25 To Life <span class="o">[</span>Explicit<span class="o">]</span>.mp3 -&gt; /sdcard/Music/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/12 - 25 To Life <span class="o">[</span>Explicit<span class="o">]</span>.mp3
-</span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/11 - Cinderella Man <span class="o">[</span>Explicit<span class="o">]</span>.mp3 -&gt; /sdcard/Music/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/11 - Cinderella Man <span class="o">[</span>Explicit<span class="o">]</span>.mp3
-</span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/10 - Space Bound <span class="o">[</span>Explicit<span class="o">]</span>.mp3 -&gt; /sdcard/Music/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/10 - Space Bound <span class="o">[</span>Explicit<span class="o">]</span>.mp3
-</span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/09 - No Love <span class="o">[</span>Explicit<span class="o">]</span>.mp3 -&gt; /sdcard/Music/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/09 - No Love <span class="o">[</span>Explicit<span class="o">]</span>.mp3
-</span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/08 - Seduction <span class="o">[</span>Explicit<span class="o">]</span>.mp3 -&gt; /sdcard/Music/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/08 - Seduction <span class="o">[</span>Explicit<span class="o">]</span>.mp3
-</span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/07 - Not Afraid <span class="o">[</span>Explicit<span class="o">]</span>.mp3 -&gt; /sdcard/Music/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/07 - Not Afraid <span class="o">[</span>Explicit<span class="o">]</span>.mp3
-</span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/06 - Going Through Changes <span class="o">[</span>Explicit<span class="o">]</span>.mp3 -&gt; /sdcard/Music/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/06 - Going Through Changes <span class="o">[</span>Explicit<span class="o">]</span>.mp3
-</span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/05 - W.T.P. <span class="o">[</span>Explicit<span class="o">]</span>.mp3 -&gt; /sdcard/Music/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/05 - W.T.P. <span class="o">[</span>Explicit<span class="o">]</span>.mp3
-</span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/04 - Won<span class="s1">&#39;t Back Down [Explicit].mp3 -&gt; /sdcard/Music/Recovery [Explicit]/04 - Won&#39;</span>t Back Down <span class="o">[</span>Explicit<span class="o">]</span>.mp3
-</span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/03 - On Fire <span class="o">[</span>Explicit<span class="o">]</span>.mp3 -&gt; /sdcard/Music/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/03 - On Fire <span class="o">[</span>Explicit<span class="o">]</span>.mp3
-</span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/02 - Talkin<span class="s1">&#39; 2 Myself [Explicit].mp3 -&gt; /sdcard/Music/Recovery [Explicit]/02 - Talkin&#39;</span> 2 Myself <span class="o">[</span>Explicit<span class="o">]</span>.mp3
-</span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/01 - Cold Wind Blows <span class="o">[</span>Explicit<span class="o">]</span>.mp3 -&gt; /sdcard/Music/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/01 - Cold Wind Blows <span class="o">[</span>Explicit<span class="o">]</span>.mp3
-</span><span class='line'>17 files pushed. 0 files skipped.
-</span><span class='line'>3624 KB/s <span class="o">(</span>150604367 bytes in 40.580s<span class="o">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>and verify it after running <code>adb shell</code></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>shell@scorpion_mini:/ <span class="nv">$ </span>ls sdcard/Music/
-</span><span class='line'>Recovery <span class="o">[</span>Explicit<span class="o">]</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>So yeah. It works. And it&rsquo;s a <em>magical</em> experience.</p>
-
-<p><em>Update</em>:
-To add to my misery, I still can&rsquo;t <em>play</em> the songs. Google Play doesn&rsquo;t pick  them up (no surprise there) but neither does a dedicated music playing app like Winamp.</p>
-
-<p>(Yes, <em>Winamp!</em> It&rsquo;s still around! It still plays the <a href="http://www.youtube.com/watch?v=cKqKrH0O9yg">&ldquo;whips the llama&rsquo;s ass&rdquo; clip</a> when it starts! But it doesn&rsquo;t find my music ?!)</p>
-
-<p>As far as I can tell, this is because on my phone, the sdcard is mounted on <code>/storage/sdcard1</code> instead of <code>/storage/sdcard0</code>, and that has made all the difference.</p>
-
-<p><em>Update</em>:
-I realized I could use the default file explorer app which came with the phone
-to navigate to the external sd card and play music from there, so that works &hellip;</p>
 ]]></content>
   </entry>
   

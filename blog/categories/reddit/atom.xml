@@ -4,7 +4,7 @@
   <title><![CDATA[Category: reddit | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/reddit/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2014-01-07T09:59:41+00:00</updated>
+  <updated>2014-01-07T23:34:25+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,116 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Programming Fun: Braille]]></title>
+    <link href="http://agam.github.io/blog/2014/01/07/programming-fun-braille/"/>
+    <updated>2014-01-07T23:31:00+00:00</updated>
+    <id>http://agam.github.io/blog/2014/01/07/programming-fun-braille</id>
+    <content type="html"><![CDATA[<p>Here&rsquo;s a simple <a href="http://www.reddit.com/r/dailyprogrammer/comments/1s061q/120313_challenge_143_easy_braille/">one</a>.</p>
+
+<p>```</p>
+
+<h2>Input Description</h2>
+
+<p>Input will consistent of an array of 2x6 space-delimited Braille characters.
+This array is always on the same line, so regardless of how long the text is, it
+will always be on 3-rows of text. A lowered bump is a dot character &lsquo;.&rsquo;, while a
+raised bump is an upper-case &lsquo;O&rsquo; character.</p>
+
+<h2>Output Description</h2>
+
+<p>Print the transcribed Braille.
+```</p>
+
+<p><div><script src='https://gist.github.com/8308823.js'></script>
+<script type="text/javascript">$(".gist-file table tr td.line-numbers").remove();</script>
+<noscript><pre><code>#include &lt;cassert&gt;
+#include &lt;cmath&gt;
+#include &lt;cstdint&gt;
+#include &lt;cstdio&gt;
+#include &lt;cstdlib&gt;
+#include &lt;algorithm&gt;
+#include &lt;iomanip&gt;
+#include &lt;iostream&gt;
+#include &lt;limits&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+#include &lt;unordered_map&gt;
+
+using namespace std;
+
+void InitializeBrailleData(unordered_map&lt;string, char&gt;* rep) {
+  rep-&gt;insert(make_pair(&quot;O.....&quot;, &#39;A&#39;));
+  rep-&gt;insert(make_pair(&quot;O.O...&quot;, &#39;B&#39;));
+  rep-&gt;insert(make_pair(&quot;OO....&quot;, &#39;C&#39;));
+  rep-&gt;insert(make_pair(&quot;OO.O..&quot;, &#39;D&#39;));
+  rep-&gt;insert(make_pair(&quot;O..O..&quot;, &#39;E&#39;));
+  rep-&gt;insert(make_pair(&quot;OOO...&quot;, &#39;F&#39;));
+  rep-&gt;insert(make_pair(&quot;OOOO..&quot;, &#39;G&#39;));
+  rep-&gt;insert(make_pair(&quot;O.OO..&quot;, &#39;H&#39;));
+  rep-&gt;insert(make_pair(&quot;.OO...&quot;, &#39;I&#39;));
+  rep-&gt;insert(make_pair(&quot;.OOO..&quot;, &#39;J&#39;));
+  rep-&gt;insert(make_pair(&quot;O...O.&quot;, &#39;K&#39;));
+  rep-&gt;insert(make_pair(&quot;O.O.O.&quot;, &#39;L&#39;));
+  rep-&gt;insert(make_pair(&quot;OO..O.&quot;, &#39;M&#39;));
+  rep-&gt;insert(make_pair(&quot;OO.OO.&quot;, &#39;N&#39;));
+  rep-&gt;insert(make_pair(&quot;O..OO.&quot;, &#39;O&#39;));
+  rep-&gt;insert(make_pair(&quot;OOO.O.&quot;, &#39;P&#39;));
+  rep-&gt;insert(make_pair(&quot;OOOOO.&quot;, &#39;Q&#39;));
+  rep-&gt;insert(make_pair(&quot;O.OOO.&quot;, &#39;R&#39;));
+  rep-&gt;insert(make_pair(&quot;.OO.O.&quot;, &#39;S&#39;));
+  rep-&gt;insert(make_pair(&quot;.OOOO.&quot;, &#39;T&#39;));
+  rep-&gt;insert(make_pair(&quot;O...OO&quot;, &#39;U&#39;));
+  rep-&gt;insert(make_pair(&quot;O.O.OO&quot;, &#39;V&#39;));
+  rep-&gt;insert(make_pair(&quot;.OOO.O&quot;, &#39;W&#39;));
+  rep-&gt;insert(make_pair(&quot;OO..OO&quot;, &#39;X&#39;));
+  rep-&gt;insert(make_pair(&quot;OO.OOO&quot;, &#39;Y&#39;));
+  rep-&gt;insert(make_pair(&quot;O..OOO&quot;, &#39;Z&#39;));
+};
+
+void AddRepresentation(const string&amp; line, vector&lt;string&gt;* representations) {
+  for (int index = 0; index &lt; line.length(); index += 3) {
+    (*representations)[index / 3].push_back(line[index]);
+    (*representations)[index / 3].push_back(line[index + 1]);
+
+    assert((line[index + 2] == &#39; &#39;) || (index + 2 == line.length()));
+  }
+}
+
+int main() {
+  unordered_map&lt;string, char&gt; braille_representation;
+  InitializeBrailleData(&amp;braille_representation);
+
+  // Assume input is well formed.
+  // This means we read three lines from standard input,
+  // and each line&#39;s length is (2 * x + 3)
+  string line1, line2, line3;
+  getline(cin, line1);
+  getline(cin, line2);
+  getline(cin, line3);
+
+  // Basic invariants
+  assert(line1.length() == line2.length());
+  assert(line2.length() == line3.length());
+  assert((line1.length() + 1) % 3 == 0);
+
+  // Get the input into our desired form
+  vector&lt;string&gt; representations((line1.length() + 1) / 3);
+  AddRepresentation(line1, &amp;representations);
+  AddRepresentation(line2, &amp;representations);
+  AddRepresentation(line3, &amp;representations);
+
+  for (const string&amp; rep : representations) {
+    cout &lt;&lt; braille_representation[rep];
+  }
+  cout &lt;&lt; endl;
+}
+</code></pre></noscript></div>
+</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Programming Fun: Banquet Planning]]></title>
