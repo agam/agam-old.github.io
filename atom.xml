@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2014-01-07T02:54:40+00:00</updated>
+  <updated>2014-01-07T09:57:08+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,478 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Urbit: Hoon]]></title>
+    <link href="http://agam.github.io/blog/2014/01/07/urbit-hoon/"/>
+    <updated>2014-01-07T09:50:00+00:00</updated>
+    <id>http://agam.github.io/blog/2014/01/07/urbit-hoon</id>
+    <content type="html"><![CDATA[<p>First off, just in case you closed your shell, terminal, screen session, whatever: you can easily resume your Arvo session</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>agam@myvm:~/urbit<span class="nv">$ </span>bin/vere frogstar
+</span><span class='line'>vere: urbit home is /home/agam/urbit/urb
+</span><span class='line'>loom: loaded 11MB
+</span><span class='line'>init: gc: 2.361.752 bytes live
+</span><span class='line'><span class="nb">time</span>: ~2014.1.7..09.04.14..a902
+</span><span class='line'>ames: on localhost, UDP 57882.
+</span><span class='line'>http: live on 8080
+</span><span class='line'>rest: checkpoint to event 7.319
+</span><span class='line'>rest: old 0v1i.p6o91, new 0v1k.b3ul0
+</span><span class='line'>loaded passcode from /home/agam/.urbit/~fiddyn-lavpun.txt
+</span><span class='line'>rest: replaying through event 7323
+</span><span class='line'>---------------- playback starting----------------
+</span><span class='line'>.....
+</span><span class='line'>---------------- playback <span class="nb">complete</span>----------------
+</span><span class='line'>save: gc: 28 bytes shed; 2.361.836 bytes live
+</span><span class='line'>
+</span><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>(hmm &hellip; &ldquo;<em>playback complete</em>&rdquo; ?? Yeah apparently everything you ever do is known forever, but that makes my head hurt right now so I won&rsquo;t try too hard to understand it just yet)</p>
+
+<p>Alright, continuing on &hellip;</p>
+
+<h2>Fun at the REPL</h2>
+
+<p>If you remember from <a href="http://agam.github.io/blog/2014/01/06/urbit/">earlier on</a>, we were dropped into a REPL.</p>
+
+<p>Being a REPL means we can do stuff like</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt; <span class="o">(</span>add 4 5<span class="o">)</span>
+</span><span class='line'>9
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>and</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt; <span class="o">=</span>a 17
+</span><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt; <span class="o">(</span>add 14 a<span class="o">)</span>
+</span><span class='line'>31
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>and also</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt; <span class="o">(</span>mul 6 7<span class="o">)</span>
+</span><span class='line'>42
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>or</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt; <span class="o">(</span>mul 5 <span class="o">(</span>add 4 7<span class="o">))</span>
+</span><span class='line'>55
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you look at some of the <code>hoon</code> files that were downloaded at the initial setup, you might intuit that they are executable-ish.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>+ /~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try/1/bin/reverse/hoon
+</span><span class='line'>...
+</span><span class='line'>+ /~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try/1/bin/fib/hoon
+</span><span class='line'>...
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>and more.</p>
+
+<p>These can be run (&ldquo;evaluated&rdquo; !!) at the command line. E.g. for <code>fib/hoon</code>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt; :fib 0
+</span><span class='line'>1
+</span><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt; :fib 1
+</span><span class='line'>1
+</span><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt; :fib 2
+</span><span class='line'>2
+</span><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt; :fib 3
+</span><span class='line'>3
+</span><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt; :fib 4
+</span><span class='line'>5
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Or for <code>zero/hoon</code>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt; :zero
+</span><span class='line'>0                             ::  0, ~zod
+</span><span class='line'>0                             ::  1, ~nec
+</span><span class='line'>0                             ::  2, ~bud
+</span><span class='line'>0                             ::  3, ~wes
+</span><span class='line'>0                             ::  4, ~sev
+</span><span class='line'>0                             ::  5, ~per
+</span><span class='line'>0                             ::  6, ~sut
+</span><span class='line'>0                             ::  7, ~let
+</span><span class='line'>0                             ::  8, ~ful
+</span><span class='line'>...
+</span><span class='line'>0                             ::  252, ~pec
+</span><span class='line'>0                             ::  253, ~nel
+</span><span class='line'>0                             ::  254, ~nev
+</span><span class='line'>0                             ::  255, ~fes
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>which is just 256 zeros &hellip; but you get the idea.</p>
+
+<h2>Hoon files</h2>
+
+<p>(More on what <code>hoon</code> really is and how to parse it later (it has to be later because I don&rsquo;t know WTF it is right now))</p>
+
+<p>As another example, let&rsquo;s examine <code>cat/hoon</code> (which fulfills a purpose similar to the Unix <code>cat</code> you&rsquo;re familiar with)</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt; :cat /<span class="o">=</span><span class="nv">main</span><span class="o">=</span>/toy/cat/hoon
+</span><span class='line'>~ /cx/~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/main/~2014.1.7..09.24.24..4de6/toy/cat/hoon
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The &ldquo;real&rdquo; file is at a location <em>and</em> a date! Yes, seriously. Running it again &hellip;</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt; :cat /<span class="o">=</span><span class="nv">main</span><span class="o">=</span>/toy/cat/hoon
+</span><span class='line'>~ /cx/~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/main/~2014.1.7..09.25.22..9bed/toy/cat/hoon
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&hellip; will give a different path.</p>
+
+<p>So far so good. What does the file actually contain ?</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt; :cat /<span class="o">=</span><span class="nv">main</span><span class="o">=</span>/bin/cat/hoon
+</span><span class='line'><span class="s1">&#39;!:&#39;</span>
+</span><span class='line'><span class="s1">&#39;::  /=main=/toy/cat/hoon&#39;</span>
+</span><span class='line'><span class="s1">&#39;::&#39;</span>
+</span><span class='line'><span class="s1">&#39;|=  *&#39;</span>
+</span><span class='line'><span class="s1">&#39;|=  ape=(list path)&#39;</span>
+</span><span class='line'><span class="s1">&#39;:_  ~&#39;</span>
+</span><span class='line'><span class="s1">&#39;:_  ~&#39;</span>
+</span><span class='line'><span class="s1">&#39;^-  gift&#39;</span>
+</span><span class='line'><span class="s1">&#39;:+  %mu  [%atom %t]&#39;</span>
+</span><span class='line'><span class="s1">&#39;=-  |-  ^-  (list ,@t)&#39;</span>
+</span><span class='line'><span class="s1">&#39;    ?~(foz ~ (weld i.foz $(foz t.foz)))&#39;</span>
+</span><span class='line'><span class="s1">&#39;^=  foz&#39;</span>
+</span><span class='line'><span class="s1">&#39;=|  foz=(list (list ,@t))&#39;</span>
+</span><span class='line'><span class="s1">&#39;|-  ^+  foz&#39;</span>
+</span><span class='line'><span class="s1">&#39;?~  ape  ~&#39;</span>
+</span><span class='line'><span class="s1">&#39;[(lore ((hard ,@) .^(%cx i.ape))) $(ape t.ape)]&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&ldquo;Yikes&rdquo; is an appropriate response at this point.</p>
+
+<p>BTW in case you were wondering: yes, right now Urbit <em>is</em> hosted on top of Unix (<strong>Arvo</strong> is written in <strong>Hoon</strong>, which is written in <strong>Nock</strong>, which is written in <strong>C</strong>), so you should see the exact same contents if you run</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>cat wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/main/bin/cat.hoon
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Setting up a destroyer</h2>
+
+<p>So I asked the nice folks at <a href="mailto:urbit@urbit.org">urbit</a> nicely and they sent me a (nice?) pair of destroyers (which if nothing else, should shorten the prompt by 75% or so).</p>
+
+<p>You&rsquo;ll receive a <em>ship</em> and its <em>ticket</em>, and then run</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt; :begin ~todbyt-nathes
+</span><span class='line'>
+</span><span class='line'>Launching ~todbyt-nathes, one of 4.278.124.800 Urbit destroyers...
+</span><span class='line'>
+</span><span class='line'>            If I did not build <span class="k">for </span>myself
+</span><span class='line'>            <span class="k">for </span>whom should I build?
+</span><span class='line'>
+</span><span class='line'>                  -- Bunting, _Chomei at Toyama_
+</span><span class='line'>
+</span><span class='line'>Let<span class="s1">&#39;s configure your identity.  Warning - it&#39;</span>s nontrivial to
+</span><span class='line'>change this data once you<span class="err">&#39;</span>ve sent it to the server.  If you enter
+</span><span class='line'>something wrong, hit ^D to cancel, <span class="k">then </span>run the program again.
+</span><span class='line'>
+</span><span class='line'>Your ticket: ~dosruc-rinmus-lodryn-napwyx
+</span><span class='line'>
+</span><span class='line'>Enter a passphrase or other unusual text.  You <span class="o">(</span>or your enemies<span class="o">)</span>
+</span><span class='line'>can regenerate your ship from this entropy.
+</span><span class='line'>
+</span><span class='line'>Entropy: **********
+</span><span class='line'>Entropy check: ~nildyl-hocmun
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Customization follows. This would normally be boring boilerplate, but I&rsquo;ve chosen to reproduce it here since some if it is entertaining.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>What language would your ship rather speak?  Enter it as a
+</span><span class='line'>two-letter <span class="o">(</span>ISO 639-1<span class="o">)</span> code, like <span class="s2">&quot;en&quot;</span> <span class="k">for </span>English.  Whatever
+</span><span class='line'>language you pick, it<span class="s1">&#39;ll all be English now, but in future</span>
+</span><span class='line'><span class="s1">we&#39;</span>ll be more sensitive to your needs.
+</span><span class='line'>
+</span><span class='line'>Language: en
+</span><span class='line'>
+</span><span class='line'>Okay, we<span class="err">&#39;</span>ll be speaking English.
+</span></code></pre></td></tr></table></div></figure>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>Please <span class="k">select </span>one of the pre-chosen forms:
+</span><span class='line'>
+</span><span class='line'>  %lady   female-identified individual
+</span><span class='line'>  %lord   male-identified individual
+</span><span class='line'>  %punk   opaque handle
+</span><span class='line'>  %anon   totally anonymous
+</span><span class='line'>
+</span><span class='line'>Form: %lord
+</span><span class='line'>
+</span><span class='line'>You<span class="s1">&#39;ve selected a personal identity.  For a %lord or a %lady,</span>
+</span><span class='line'><span class="s1">please use your real name only.  If you&#39;</span>d prefer a fictitious
+</span><span class='line'>handle, you can hit ^D and start over as a %punk.  Or you can
+</span><span class='line'>use %anon and go by your ship name alone.
+</span></code></pre></td></tr></table></div></figure>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>As a real person, we<span class="s1">&#39;re going to ask you for a little bit of</span>
+</span><span class='line'><span class="s1">personal information - not enough to compromise your privacy,</span>
+</span><span class='line'><span class="s1">just enough to make everyone on Urbit feel like a neighbor.</span>
+</span><span class='line'>
+</span><span class='line'><span class="s1">What we&#39;</span>re going to ask you <span class="k">for </span>is information that<span class="s1">&#39;s (a)</span>
+</span><span class='line'><span class="s1">public (would be obvious, or at least easy to guess, for</span>
+</span><span class='line'><span class="s1">someone who met you in person); (b) durable (doesn&#39;</span>t change
+</span><span class='line'>often<span class="o">)</span>; and <span class="o">(</span>c<span class="o">)</span> relevant <span class="o">(</span>helps you connect with friends<span class="o">)</span>.
+</span><span class='line'>
+</span><span class='line'>For example, we<span class="s1">&#39;ll ask for the year (not day) you were born,</span>
+</span><span class='line'><span class="s1">because your age is easy to guess in person, doesn&#39;</span>t change,
+</span><span class='line'>and has a big effect on how people perceive you.
+</span></code></pre></td></tr></table></div></figure>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>Year you were born: &lt;Enter your year of birth here&gt;
+</span><span class='line'>
+</span><span class='line'>Where are you?  This is totally optional, but we<span class="err">&#39;</span>d like to
+</span><span class='line'>know your vague general location.  You can enter nothing at
+</span><span class='line'>all, just a country code, or country and postal code.
+</span><span class='line'>
+</span><span class='line'>Location: us/&lt;Enter your zipcode here&gt;
+</span><span class='line'>
+</span><span class='line'>Please tell us your name - and please make it a real name.
+</span><span class='line'>Pseudonyms are totally cool, but please use %punk.  Middle
+</span><span class='line'>name and nickname are optional.  Ünicode is encouraged.
+</span><span class='line'>
+</span><span class='line'>First name: &lt;Enter your name here&gt;
+</span><span class='line'>Middle name <span class="o">(</span>or blank<span class="o">)</span>:
+</span><span class='line'>Nickname/handle <span class="o">(</span>or blank<span class="o">)</span>: agam
+</span><span class='line'>Last name: &lt;Enter your name here&gt;
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>One basic human instinct is the urge to form political tribes.
+</span><span class='line'>In a network that fights this need, these tribes form anyway and
+</span><span class='line'>they form badly.  Urbit designs them into the infrastructure.
+</span><span class='line'>Inspired by the Qing Dynasty, you<span class="s1">&#39;ll align yourself with one of</span>
+</span><span class='line'><span class="s1">five colored &quot;banners&quot; - %red, %blue, %orange, %black or %white.</span>
+</span><span class='line'>
+</span><span class='line'><span class="s1">Political discourse across tribal boundaries is almost always an</span>
+</span><span class='line'><span class="s1">antisocial act - less communication, than symbolic violence.  In</span>
+</span><span class='line'><span class="s1">Urbit, messages marked political stay within your own banner;</span>
+</span><span class='line'><span class="s1">your friends in other banners simply won&#39;</span>t see them.  Between
+</span><span class='line'>banners, politics doesn<span class="s1">&#39;t erode apolitical relationships; inside</span>
+</span><span class='line'><span class="s1">each banner, political discourse is harmonious and productive.</span>
+</span><span class='line'>
+</span><span class='line'><span class="s1">Pick a banner by the adjective you feel best describes you:</span>
+</span><span class='line'>
+</span><span class='line'><span class="s1">%red     far left: radical, anarchist</span>
+</span><span class='line'><span class="s1">%blue    center-left: moderate, liberal</span>
+</span><span class='line'><span class="s1">%orange  center-right: conservative, libertarian</span>
+</span><span class='line'><span class="s1">%black   far right: traditionalist, reactionary</span>
+</span><span class='line'>
+</span><span class='line'><span class="s1">Or if digital agitation isn&#39;</span>t your cup of tea, choose %white, and
+</span><span class='line'>your Urbit experience will remain politics-free.
+</span><span class='line'>
+</span><span class='line'>Banner: %white
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>At this point, it got stuck &hellip;</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>generating 2048-bit RSA key...
+</span><span class='line'>ames: czar zod.urbit.org: ip .198.199.112.32
+</span><span class='line'>; ~doznec ~doznec not responding still trying
+</span><span class='line'>waiting on ~doznec/ta
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&hellip; so I hit <code>Ctrl-D</code> and ran it again.</p>
+
+<p>Still nothing. I guess I&rsquo;ll continue the next post once I get this working (!)</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Programming Fun: Banquet Planning]]></title>
@@ -2219,358 +2691,6 @@ To add to my misery, I still can&rsquo;t <em>play</em> the songs. Google Play do
 <p><em>Update</em>:
 I realized I could use the default file explorer app which came with the phone
 to navigate to the external sd card and play music from there, so that works &hellip;</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Less Gcc, More Clang]]></title>
-    <link href="http://agam.github.io/blog/2013/09/30/less-gcc-more-clang/"/>
-    <updated>2013-09-30T00:00:00+00:00</updated>
-    <id>http://agam.github.io/blog/2013/09/30/less-gcc-more-clang</id>
-    <content type="html"><![CDATA[<p>I was unhappy with how I had not fully figured out my <code>libstdc++ &lt;-&gt; gcc/clang &lt;-&gt; boost</code> issues, and was feeling a bit ashamed that I had let the complexity of the system beat me.</p>
-
-<p><em>First, burn your boats</em></p>
-
-<p>The first thing I decided to do was get rid of the newly installed <code>gcc 4.7</code> and commit to getting a working version, recompiling/downloading/installing whatever it took.</p>
-
-<p>The second was to recompile Boost with Clang.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span>/usr/clang_3_3/bin:<span class="nv">$PATH</span>
-</span><span class='line'>./bootstrap.sh --with-toolset<span class="o">=</span>clang
-</span><span class='line'>./b2 install --prefix<span class="o">=</span>/opt/boost/boost_1_54_0
-</span><span class='line'><span class="nb">echo </span><span class="nv">PATH</span><span class="o">=</span>/opt/boost/boost_1_54_0/bin:<span class="nv">$PATH</span>
-</span><span class='line'>./b2 --build-dir<span class="o">=</span>/tmp/build-boost <span class="nv">toolset</span><span class="o">=</span>clang stage
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This took a while to run, but in the end, I got</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>...failed updating 4 targets...
-</span><span class='line'>...skipped 6 targets...
-</span><span class='line'>...updated 1073 targets...
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Wha &hellip; 4 failed ? Scrolling up, I see for example:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-<span class='line-number'>72</span>
-<span class='line-number'>73</span>
-<span class='line-number'>74</span>
-<span class='line-number'>75</span>
-<span class='line-number'>76</span>
-<span class='line-number'>77</span>
-<span class='line-number'>78</span>
-<span class='line-number'>79</span>
-<span class='line-number'>80</span>
-<span class='line-number'>81</span>
-<span class='line-number'>82</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>clang: /home/agam/Documents/Code/Building/Clang/llvm/lib/IR/Instructions.cpp:2929: llvm::BitCastInst::BitCastInst<span class="o">(</span>llvm::Value*, llvm::Type*, const llvm::Twine&amp;, llvm::Instruction*<span class="o">)</span>: Assertion <span class="sb">`</span>castIsValid<span class="o">(</span>getOpcode<span class="o">()</span>, S, Ty<span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="s2">&quot;Illegal BitCast&quot;</span><span class="s1">&#39; failed.</span>
-</span><span class='line'><span class="s1">0  clang           0x0000000002569c72 llvm::sys::PrintStackTrace(_IO_FILE*) + 34</span>
-</span><span class='line'><span class="s1">1  clang           0x0000000002569059</span>
-</span><span class='line'><span class="s1">2  libpthread.so.0 0x00007f13948eecb0</span>
-</span><span class='line'><span class="s1">3  libc.so.6       0x00007f1393919425 gsignal + 53</span>
-</span><span class='line'><span class="s1">4  libc.so.6       0x00007f139391cb8b abort + 379</span>
-</span><span class='line'><span class="s1">5  libc.so.6       0x00007f13939120ee</span>
-</span><span class='line'><span class="s1">6  libc.so.6       0x00007f1393912192</span>
-</span><span class='line'><span class="s1">7  clang           0x00000000024de388</span>
-</span><span class='line'><span class="s1">8  clang           0x0000000002192568</span>
-</span><span class='line'><span class="s1">9  clang           0x00000000021928ae</span>
-</span><span class='line'><span class="s1">10 clang           0x000000000215748e</span>
-</span><span class='line'><span class="s1">11 clang           0x00000000021584a0</span>
-</span><span class='line'><span class="s1">12 clang           0x00000000024fa4cf llvm::FPPassManager::runOnFunction(llvm::Function&amp;) + 607</span>
-</span><span class='line'><span class="s1">13 clang           0x000000000224ac48</span>
-</span><span class='line'><span class="s1">14 clang           0x000000000224e7b9</span>
-</span><span class='line'><span class="s1">15 clang           0x00000000024f9fd0 llvm::MPPassManager::runOnModule(llvm::Module&amp;) + 688</span>
-</span><span class='line'><span class="s1">16 clang           0x00000000024fa1a5 llvm::PassManagerImpl::run(llvm::Module&amp;) + 245</span>
-</span><span class='line'><span class="s1">17 clang           0x0000000000903e8e clang::EmitBackendOutput(clang::DiagnosticsEngine&amp;, clang::CodeGenOptions const&amp;, clang::TargetOptions const&amp;, clang::LangOptions const&amp;, llvm::Module*, clang::BackendAction, llvm::raw_ostream*) + 3550</span>
-</span><span class='line'><span class="s1">18 clang           0x00000000009013bd</span>
-</span><span class='line'><span class="s1">19 clang           0x0000000000aa8c24 clang::ParseAST(clang::Sema&amp;, bool, bool) + 372</span>
-</span><span class='line'><span class="s1">20 clang           0x000000000077bafa clang::FrontendAction::Execute() + 282</span>
-</span><span class='line'><span class="s1">21 clang           0x000000000075eca0 clang::CompilerInstance::ExecuteAction(clang::FrontendAction&amp;) + 352</span>
-</span><span class='line'><span class="s1">22 clang           0x0000000000744a8a clang::ExecuteCompilerInvocation(clang::CompilerInstance*) + 1722 23 clang           0x000000000073ddf0 cc1_main(char const**, char const**, char const*, void*) + 1232</span>
-</span><span class='line'><span class="s1">24 clang           0x000000000072190e main + 622</span>
-</span><span class='line'><span class="s1">25 libc.so.6       0x00007f139390476d __libc_start_main + 237</span>
-</span><span class='line'><span class="s1">26 clang           0x000000000073d7ad</span>
-</span><span class='line'><span class="s1">Stack dump:</span>
-</span><span class='line'><span class="s1">0.      Program arguments: /usr/clang_3_3/bin/clang -cc1 -triple</span>
-</span><span class='line'><span class="s1">x86_64-unknown-linux-gnu -emit-obj -disable-free -main-file-name</span>
-</span><span class='line'><span class="s1">settings_parser.cpp -mrelocation-model pic -pic-level 2 -fmath-errno</span>
-</span><span class='line'><span class="s1">-masm-verbose -mconstructor-aliases -munwind-tables -target-cpu x86-64</span>
-</span><span class='line'><span class="s1">-target-linker-version 2.22 -momit-leaf-frame-pointer -coverage-file</span>
-</span><span class='line'><span class="s1">/tmp/build-boost/boost/bin.v2/libs/log/build/clang-linux-3.4/release/log-api-</span>
-</span><span class='line'><span class="s1">unix/threading-multi/settings_parser.o -resource-dir</span>
-</span><span class='line'><span class="s1">/usr/clang_3_3/bin/../lib/clang/3.4 -D BOOST_ALL_NO_LIB=1 -D</span>
-</span><span class='line'><span class="s1">BOOST_CHRONO_DYN_LINK=1 -D BOOST_DATE_TIME_DYN_LINK=1 -D</span>
-</span><span class='line'><span class="s1">BOOST_FILESYSTEM_DYN_LINK=1 -D BOOST_LOG_DYN_LINK=1 -D</span>
-</span><span class='line'><span class="s1">BOOST_LOG_SETUP_BUILDING_THE_LIB=1 -D BOOST_LOG_SETUP_DLL -D BOOST_LOG_USE_AVX2</span>
-</span><span class='line'><span class="s1">-D BOOST_LOG_USE_NATIVE_SYSLOG -D BOOST_LOG_USE_SSSE3 -D</span>
-</span><span class='line'><span class="s1">BOOST_LOG_WITHOUT_EVENT_LOG -D BOOST_SPIRIT_USE_PHOENIX_V3=1 -D</span>
-</span><span class='line'><span class="s1">BOOST_SYSTEM_DYN_LINK=1 -D BOOST_SYSTEM_NO_DEPRECATED -D</span>
-</span><span class='line'><span class="s1">BOOST_THREAD_BUILD_DLL=1 -D BOOST_THREAD_DONT_USE_CHRONO=1 -D BOOST_THREAD_POSIX</span>
-</span><span class='line'><span class="s1">-D BOOST_THREAD_USE_DLL=1 -D DATE_TIME_INLINE -D NDEBUG -I . -internal-isystem</span>
-</span><span class='line'><span class="s1">/usr/lib/gcc/x86_64-linux-gnu/4.6/../../../../include/c++/4.6 -internal-isystem</span>
-</span><span class='line'><span class="s1">/usr/lib/gcc/x86_64-linux-gnu/4.6/../../../../include/c++/4.6/x86_64-linux-gnu</span>
-</span><span class='line'><span class="s1">-internal-isystem</span>
-</span><span class='line'><span class="s1">/usr/lib/gcc/x86_64-linux-gnu/4.6/../../../../include/c++/4.6/backward</span>
-</span><span class='line'><span class="s1">-internal-isystem</span>
-</span><span class='line'><span class="s1">/usr/lib/gcc/x86_64-linux-gnu/4.6/../../../../include/x86_64-linux-gnu/c++/4.6</span>
-</span><span class='line'><span class="s1">-internal-isystem /usr/local/include -internal-isystem</span>
-</span><span class='line'><span class="s1">/usr/clang_3_3/bin/../lib/clang/3.4/include -internal-externc-isystem</span>
-</span><span class='line'><span class="s1">/usr/include/x86_64-linux-gnu -internal-externc-isystem /include</span>
-</span><span class='line'><span class="s1">-internal-externc-isystem /usr/include -O3 -Wno-bind-to-temporary-copy</span>
-</span><span class='line'><span class="s1">-Wno-unused-function -Wno-inline -Wall -Wno-bind-to-temporary-copy</span>
-</span><span class='line'><span class="s1">-Wno-unused-function -fdeprecated-macro -fdebug-compilation-dir</span>
-</span><span class='line'><span class="s1">/opt/boost/boost_1_54_0 -ferror-limit 19 -fmessage-length 0 -pthread</span>
-</span><span class='line'><span class="s1">-mstackrealign -fobjc-runtime=gcc -fobjc-default-synthesize-properties</span>
-</span><span class='line'><span class="s1">-fcxx-exceptions -fexceptions -fdiagnostics-show-option -vectorize-loops</span>
-</span><span class='line'><span class="s1">-vectorize-slp -o</span>
-</span><span class='line'><span class="s1">/tmp/build-boost/boost/bin.v2/libs/log/build/clang-linux-3.4/release/log-api-</span>
-</span><span class='line'><span class="s1">unix/threading-multi/settings_parser.o -x c++ libs/log/src/settings_parser.cpp</span>
-</span><span class='line'><span class="s1">1.      &lt;eof&gt; parser at end of file</span>
-</span><span class='line'><span class="s1">2.      Per-module optimization passes</span>
-</span><span class='line'><span class="s1">3.      Running pass &#39;</span>CallGraph Pass Manager<span class="s1">&#39; on module &#39;</span>libs/log/src/settings_parser.cpp<span class="s1">&#39;.</span>
-</span><span class='line'><span class="s1">4.      Running pass &#39;</span>Combine redundant instructions<span class="s1">&#39; on function &#39;</span>@_ZNK5boost6spirit6detail18make_binary_helperINS0_13meta_compilerINS0_2qi6domainEE12meta_grammarEE4implIRKNS_5proto7exprns_4exprINSA_6tagns_3tag10bitwise_orENSA_7argsns_5list2IRKNSC_ISF_NSH_IRNS4_4ruleIPKcNSC_INSE_8terminalENSG_4termINS0_3tag9char_codeINSN_5spaceENS0_13char_encoding8standardEEEEELl0EEENS0_11unused_typeESV_SV_EESX_EELl2EEESX_EELl2EEENS_6fusion4consINS4_10eoi_parserENS16_3nilEEERSV_EclES15_RKS1A_S1B_<span class="err">&#39;</span>
-</span><span class='line'>clang: error: unable to execute <span class="nb">command</span>: Aborted <span class="o">(</span>core dumped<span class="o">)</span>
-</span><span class='line'>clang: error: clang frontend <span class="nb">command </span>failed due to signal <span class="o">(</span>use -v to see invocation<span class="o">)</span>
-</span><span class='line'>clang version 3.4 <span class="o">(</span>trunk 189210<span class="o">)</span>
-</span><span class='line'>Target: x86_64-unknown-linux-gnu
-</span><span class='line'>Thread model: posix
-</span><span class='line'>clang: note: diagnostic msg: PLEASE submit a bug report to http://llvm.org/bugs/ and include the crash backtrace, preprocessed <span class="nb">source</span>, and associated run script.
-</span><span class='line'>clang: note: diagnostic msg:
-</span><span class='line'>********************
-</span><span class='line'>
-</span><span class='line'>PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:
-</span><span class='line'>Preprocessed <span class="nb">source</span><span class="o">(</span>s<span class="o">)</span> and associated run script<span class="o">(</span>s<span class="o">)</span> are located at:
-</span><span class='line'>clang: note: diagnostic msg: /tmp/settings_parser-7f5a26.cpp
-</span><span class='line'>clang: note: diagnostic msg: /tmp/settings_parser-7f5a26.sh
-</span><span class='line'>clang: note: diagnostic msg:
-</span><span class='line'>
-</span><span class='line'>********************
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Ignoring these few Boost failures for now &hellip; I do want to use Clang with <code>-stdlib=libc++</code>, so I also wanted to build <code>libcxx</code> with Clang</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">CC</span><span class="o">=</span>clang <span class="nv">CXX</span><span class="o">=</span>clang++ cmake -G <span class="s2">&quot;Unix Makefiles&quot;</span> -DLIBCXX_CXX_ABI<span class="o">=</span>libsupc++ -DLIBCXX_LIBSUPCXX_INCLUDE_PATHS<span class="o">=</span><span class="s2">&quot;/usr/include/c++/4.6/;/usr/include/c++/4.6/x86_64-linux-gnu/&quot;</span> -DCMAKE_BUILD_TYPE<span class="o">=</span>Release -DCMAKE_INSTALL_PREFIX<span class="o">=</span>/usr ../libcxx/
-</span><span class='line'>make -j 4
-</span><span class='line'>sudo make install
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Time for our test program from earlier:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#include &lt;boost/lambda/lambda.hpp&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;iostream&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;algorithm&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;iterator&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">using</span> <span class="n">boost</span><span class="o">::</span><span class="n">lambda</span><span class="o">::</span><span class="n">_1</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">typedef</span> <span class="n">std</span><span class="o">::</span><span class="n">istream_iterator</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">in</span><span class="p">;</span>
-</span><span class='line'>      <span class="n">std</span><span class="o">::</span><span class="n">for_each</span><span class="p">(</span>
-</span><span class='line'>                <span class="n">in</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">cin</span><span class="p">),</span> <span class="n">in</span><span class="p">(),</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">_1</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; &quot;</span><span class="p">);</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>However, this results in a clang error:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>/usr/clang_3_3/bin/clang++ -std<span class="o">=</span>c++11 -stdlib<span class="o">=</span>libc++ -L/usr/lib -I/opt/boost/boost_1_54_0 hello-world.cpp -o hello-world -lc++abi
-</span><span class='line'>/usr/bin/ld: cannot find -lc++abi
-</span><span class='line'>clang: error: linker <span class="nb">command </span>failed with <span class="nb">exit </span>code 1 <span class="o">(</span>use -v to see invocation<span class="o">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Wohkay, so I&rsquo;m assuming we need to build libc++abi</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>svn co http://llvm.org/svn/llvm-project/libcxxabi/trunk libcxxabi
-</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>libcxxabi/lib
-</span><span class='line'><span class="nv">$ </span>./buildit
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Now move over to the <code>libcxx</code> branch again, and</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ CC</span><span class="o">=</span>clang <span class="nv">CXX</span><span class="o">=</span>clang++ cmake -G <span class="s2">&quot;Unix Makefiles&quot;</span> -DLIBCXX_CXX_ABI<span class="o">=</span>libcxxabi -DLIBCXX_LIBCXXABI_INCLUDE_PATHS<span class="o">=</span><span class="s2">&quot;/home/agam/Documents/Code/Building/libcxxabi/include&quot;</span> -DCMAKE_BUILD_TYPE<span class="o">=</span>Release -DCMAKE_INSTALL_PREFIX<span class="o">=</span>/usr ../libcxx
-</span><span class='line'>-- The CXX compiler identification is Clang 3.4.0
-</span><span class='line'>-- The C compiler identification is Clang 3.4.0
-</span><span class='line'>-- Check <span class="k">for </span>working CXX compiler: /usr/clang_3_3/bin/clang++
-</span><span class='line'>-- Check <span class="k">for </span>working CXX compiler: /usr/clang_3_3/bin/clang++ -- works
-</span><span class='line'>-- Detecting CXX compiler ABI info
-</span><span class='line'>-- Detecting CXX compiler ABI info - <span class="k">done</span>
-</span><span class='line'>-- Check <span class="k">for </span>working C compiler: /usr/clang_3_3/bin/clang
-</span><span class='line'>-- Check <span class="k">for </span>working C compiler: /usr/clang_3_3/bin/clang -- works
-</span><span class='line'>-- Detecting C compiler ABI info
-</span><span class='line'>-- Detecting C compiler ABI info - <span class="k">done</span>
-</span><span class='line'>-- Host triple: x86_64-pc-linux
-</span><span class='line'>-- Target triple: x86_64-pc-linux
-</span><span class='line'>CMake Error at CMakeLists.txt:119 <span class="o">(</span>message<span class="o">)</span>:
-</span><span class='line'>  Failed to find cxa_demangle.h
-</span><span class='line'>Call Stack <span class="o">(</span>most recent call first<span class="o">)</span>:
-</span><span class='line'>  CMakeLists.txt:141 <span class="o">(</span>setup_abi_lib<span class="o">)</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>-- Configuring incomplete, errors occurred!
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>I looked into this and &hellip; this seemed like a bug ? WTF. Anyway I just edited this out of <code>CMakeLists.txt</code> and tried again.</p>
-
-<p>That worked! So then <code>make &amp;&amp; sudo make install</code> as usual.</p>
-
-<p>Note: I also had to copy the <code>libcxxabi</code> library built above to a global location, since I got an error trying to build <code>libcxx</code> without it</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>/usr/bin/ld: cannot find -lc++abi
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>After a while it occurred to me: <a href="http://memegenerator.net/instance/41718307">one does not simply copy a library to /usr/local/lib</a></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>sudo ldconfig -f /etc/ld.so.conf.d/libc.conf
-</span><span class='line'><span class="nv">$ </span>ldconfig -p | grep c++abi
-</span><span class='line'>...
-</span><span class='line'>        libc++abi.so.1 <span class="o">(</span>libc6,x86-64<span class="o">)</span> <span class="o">=</span>&gt; /usr/local/lib/libc++abi.so.1
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Hmm not quite. Some <a href="http://comments.gmane.org/gmane.comp.compilers.clang.devel/30074">discussion I came across</a> suggests a different format for the symlink</p>
-
-<p>Yup, this was fixed by <code>sudo ln libc++abi.so.1.0 libc++abi.so</code></p>
-
-<p>Now, adding this library works:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>/usr/clang_3_3/bin/clang++ -std<span class="o">=</span>c++11 -stdlib<span class="o">=</span>libc++ -L/usr/lib -I/opt/boost/boost_1_54_0 hello-world.cpp -o hello-world -lc++abi
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Just to confirm, I also verified that the toy <code>wget</code> equivalent I had built with the Poco libraries works with Clang, and it does.</p>
 ]]></content>
   </entry>
   
