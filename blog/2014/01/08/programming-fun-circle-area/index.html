@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Urbit: Back Again - Agam's Mashed-Up Pome</title>
+  <title>Programming Fun: Circle Area - Agam's Mashed-Up Pome</title>
   <meta name="author" content="Agam">
 
    
@@ -19,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://agam.github.io/blog/2014/01/08/urbit-back-again">
+  <link rel="canonical" href="http://agam.github.io/blog/2014/01/08/programming-fun-circle-area">
   <link href="/favicon.png" rel="icon">
   <link href='http://fonts.googleapis.com/css?family=Quicksand:300,400' rel='stylesheet' type='text/css'>
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
@@ -88,7 +88,7 @@
 
   <header>
   <div class="jumbotron">
-    Urbit: Back Again
+    Programming Fun: Circle Area
 	<h5>
 
 
@@ -101,35 +101,14 @@
   
 
 
-<i class="icon-calendar-empty"></i> <time datetime="2014-01-08T08:47:00+00:00" pubdate data-updated="true">Jan 8<span>th</span>, 2014</time></h5>
+<i class="icon-calendar-empty"></i> <time datetime="2014-01-08T20:22:00+00:00" pubdate data-updated="true">Jan 8<span>th</span>, 2014</time></h5>
   </div>
 </header>
   <div class="row-fluid">
     <div class="span12">
-      <p>Turns out I was affected by the last &ldquo;continuity breach&rdquo;.</p>
+      <p>Straightforward <em>math-only, no-algorithm</em> <a href="http://www.reddit.com/r/dailyprogrammer/comments/1s6484/120513_challenge_138_intermediate_overlapping/">problem</a></p>
 
-<p>So I had to delete everything and start over. In my case this meant</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span><span class="nb">cd </span>urbit
-</span><span class='line'><span class="nv">$ </span>git pull origin master
-</span><span class='line'><span class="nv">$ </span>make clean
-</span><span class='line'><span class="nv">$ </span>make
-</span><span class='line'><span class="nv">$ </span>rm -rf urb/*-*
-</span><span class='line'><span class="nv">$ </span>rm -rf frogstar
-</span><span class='line'><span class="nv">$ </span>vere -c frogstar
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This time when I ran <code>:begin</code> it succeeded</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -137,25 +116,98 @@
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
 <span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>generating 2048-bit RSA key...
-</span><span class='line'>; ~doznec _Urban Republic_ is your neighbor
-</span><span class='line'>; ~doznec _Urban Republic_ is your neighbor
-</span><span class='line'>request approved
-</span><span class='line'>; ~zod |Tianming| is your neighbor
-</span><span class='line'>; ~zod |Tianming| is your neighbor
-</span><span class='line'>; ~doznec _Urban Republic_ is your neighbor
-</span><span class='line'>; ~doznec _Urban Republic_ is your neighbor
-</span></code></pre></td></tr></table></div></figure>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Input Description
+</span><span class='line'>-----------------
+</span><span class='line'>
+</span><span class='line'>On standard input you will be given four floating-point space-delimited values:
+</span><span class='line'>x y u w. x and y are the first circle's position in Cartesian coordinates. The
+</span><span class='line'>second pair u and w are the second circle's position.
+</span><span class='line'>
+</span><span class='line'>Note that the given circles may not actually intersect. If this is the case,
+</span><span class='line'>return the sum of both circles (which will always be Pi x 2 since our circles
+</span><span class='line'>are unit-circles).
+</span><span class='line'>
+</span><span class='line'>Output Description
+</span><span class='line'>------------------
+</span><span class='line'>
+</span><span class='line'>Print the summed volume of the two circles, up to an accuracy of 4 digits after the decimal place.</span></code></pre></td></tr></table></div></figure>
 
 
-<p>&hellip; and then more hoon files were downloaded, after which I got my new prompt:</p>
+<p>This is just trigonometry, so I made some Post-It illustrations. This one shows the general problem we have to solve.</p>
 
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>~todbyt-nathes/try<span class="o">=</span>&gt;
-</span></code></pre></td></tr></table></div></figure>
+<p><img class="center" src="/images/programming-fun/circle-area-1.jpg" width="300"></p>
+
+<p>Given the centres of the two circles, and their radii, we know <em>d</em>, the distance between their centres and whether it leads to overlap at all.</p>
+
+<p><img class="center" src="/images/programming-fun/circle-area-2.jpg" width="300"></p>
+
+<p>Overlap only occurs when <em>d &lt; 2r</em>. When <em>d > 2r</em> the answer is just the sum of the areas.</p>
+
+<p><img class="center" src="/images/programming-fun/circle-area-3.jpg" width="300"></p>
+
+<p>From this figure, it should be clear that the overlapping area is the segment of the circle subtended by the chord that is common to both circles. We can find the length of this chord by considering the right triangle formed by half of it, the radius, and half the centre distance.</p>
+
+<p><img class="center" src="/images/programming-fun/circle-area-4.jpg" width="300"></p>
+
+<p>This then leads to the relationship between the area of the sector (<em>A</em>), the area of the triangle inside it (<em>A_1</em>) and the segment area (<em>A_2</em>)</p>
+
+<p><img class="center" src="/images/programming-fun/circle-area-5.jpg" width="300"></p>
+
+<div><script src='https://gist.github.com/8323896.js'></script>
+<script type="text/javascript">$(".gist-file table tr td.line-numbers").remove();</script>
+<noscript><pre><code>#include &lt;cassert&gt;
+#include &lt;cmath&gt;
+#include &lt;cstdint&gt;
+#include &lt;cstdio&gt;
+#include &lt;cstdlib&gt;
+#include &lt;algorithm&gt;
+#include &lt;iomanip&gt;
+#include &lt;iostream&gt;
+#include &lt;limits&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+#include &lt;unordered_map&gt;
+
+using namespace std;
+
+int main() {
+  double x1, y1, x2, y2;
+  cin &gt;&gt; x1 &gt;&gt; y1 &gt;&gt; x2 &gt;&gt; y2;
+  cout &lt;&lt; &quot;Got circle 1 as (&quot; &lt;&lt; x1 &lt;&lt; &quot;, &quot; &lt;&lt; y1 &lt;&lt; &quot;)\n&quot;;
+  cout &lt;&lt; &quot;Got circle 2 as (&quot; &lt;&lt; x2 &lt;&lt; &quot;, &quot; &lt;&lt; y2 &lt;&lt; &quot;)\n&quot;;
+
+  // Total area = 2 * (area of each circle) - 2 * (segment area of overlap)
+  const double kPI = atan(1.0) * 4.0;
+  const double kRadius = 1.0;
+  const double circle_area = kPI * pow(kRadius, 2);
+
+  const double centre_distance = sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
+  if (centre_distance &gt; (2 * kRadius)) {
+    // No overlap
+    cout &lt;&lt; (2 * circle_area) &lt;&lt; endl;
+    return 0;
+  }
+
+  const double segment_half_length = sqrt(pow(kRadius, 2) - pow(centre_distance/2.0, 2));
+  const double theta = asin(segment_half_length / kRadius);
+  const double sector_area = theta * pow(kRadius, 2);
+  const double segment_area = sector_area - (centre_distance * segment_half_length / 2);
+
+  cout.precision(5);
+  cout &lt;&lt; (2 * circle_area) - (2 * segment_area) &lt;&lt; endl;
+}
+</code></pre></noscript></div>
 
 
-<p>Next time I&rsquo;ll start exploring <em>Nock</em> and <em>Hoon</em> some more &hellip;</p>
+
 
     </div>
   </div>
@@ -174,7 +226,9 @@
 
 
 
-  <a href="/blog/categories/urbit/"><span class="badge">urbit</span></a>
+  <a href="/blog/categories/alwaysbecoding,/"><span class="badge">AlwaysBeCoding,</span></a>
+
+  <a href="/blog/categories/reddit/"><span class="badge">reddit</span></a>
 
 
 
@@ -206,10 +260,8 @@
       <div class="span12">
         <p class="meta">
           
-            <a class="basic-alignment left" href="/blog/2014/01/07/programming-fun-braille/" title="Previous Post: Programming Fun: Braille">&laquo; Programming Fun: Braille</a>
+            <a class="basic-alignment left" href="/blog/2014/01/08/urbit-back-again/" title="Previous Post: Urbit: Back Again">&laquo; Urbit: Back Again</a>
           
-          
-            <a class="basic-alignment right" href="/blog/2014/01/08/programming-fun-circle-area/" title="Next Post: Programming Fun: Circle Area">Programming Fun: Circle Area &raquo;</a>
           
         </p>
       </div>
@@ -247,8 +299,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://agam.github.io/blog/2014/01/08/urbit-back-again/';
-        var disqus_url = 'http://agam.github.io/blog/2014/01/08/urbit-back-again/';
+        var disqus_identifier = 'http://agam.github.io/blog/2014/01/08/programming-fun-circle-area/';
+        var disqus_url = 'http://agam.github.io/blog/2014/01/08/programming-fun-circle-area/';
         var disqus_script = 'embed.js';
       
     (function () {
