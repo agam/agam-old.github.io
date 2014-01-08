@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Programming Fun: Braille - Agam's Mashed-Up Pome</title>
+  <title>Urbit: Back Again - Agam's Mashed-Up Pome</title>
   <meta name="author" content="Agam">
 
    
@@ -19,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://agam.github.io/blog/2014/01/07/programming-fun-braille">
+  <link rel="canonical" href="http://agam.github.io/blog/2014/01/08/urbit-back-again">
   <link href="/favicon.png" rel="icon">
   <link href='http://fonts.googleapis.com/css?family=Quicksand:300,400' rel='stylesheet' type='text/css'>
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
@@ -88,7 +88,7 @@
 
   <header>
   <div class="jumbotron">
-    Programming Fun: Braille
+    Urbit: Back Again
 	<h5>
 
 
@@ -101,14 +101,35 @@
   
 
 
-<i class="icon-calendar-empty"></i> <time datetime="2014-01-07T23:31:00+00:00" pubdate data-updated="true">Jan 7<span>th</span>, 2014</time></h5>
+<i class="icon-calendar-empty"></i> <time datetime="2014-01-08T08:47:00+00:00" pubdate data-updated="true">Jan 8<span>th</span>, 2014</time></h5>
   </div>
 </header>
   <div class="row-fluid">
     <div class="span12">
-      <p>Here&rsquo;s a simple <a href="http://www.reddit.com/r/dailyprogrammer/comments/1s061q/120313_challenge_143_easy_braille/">one</a>.</p>
+      <p>Turns out I was affected by the last &ldquo;continuity breach&rdquo;.</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<p>So I had to delete everything and start over. In my case this meant</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span><span class="nb">cd </span>urbit
+</span><span class='line'><span class="nv">$ </span>git pull origin master
+</span><span class='line'><span class="nv">$ </span>make clean
+</span><span class='line'><span class="nv">$ </span>make
+</span><span class='line'><span class="nv">$ </span>rm -rf urb/*-*
+</span><span class='line'><span class="nv">$ </span>rm -rf frogstar
+</span><span class='line'><span class="nv">$ </span>vere -c frogstar
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This time when I ran <code>:begin</code> it succeeded</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -116,114 +137,25 @@
 <span class='line-number'>6</span>
 <span class='line-number'>7</span>
 <span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>Input Description
-</span><span class='line'>-----------------
-</span><span class='line'>
-</span><span class='line'>Input will consistent of an array of 2x6 space-delimited Braille characters.
-</span><span class='line'>This array is always on the same line, so regardless of how long the text is, it
-</span><span class='line'>will always be on 3-rows of text. A lowered bump is a dot character '.', while a
-</span><span class='line'>raised bump is an upper-case 'O' character.
-</span><span class='line'>
-</span><span class='line'>Output Description
-</span><span class='line'>------------------
-</span><span class='line'>
-</span><span class='line'>Print the transcribed Braille.</span></code></pre></td></tr></table></div></figure>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>generating 2048-bit RSA key...
+</span><span class='line'>; ~doznec _Urban Republic_ is your neighbor
+</span><span class='line'>; ~doznec _Urban Republic_ is your neighbor
+</span><span class='line'>request approved
+</span><span class='line'>; ~zod |Tianming| is your neighbor
+</span><span class='line'>; ~zod |Tianming| is your neighbor
+</span><span class='line'>; ~doznec _Urban Republic_ is your neighbor
+</span><span class='line'>; ~doznec _Urban Republic_ is your neighbor
+</span></code></pre></td></tr></table></div></figure>
 
 
+<p>&hellip; and then more hoon files were downloaded, after which I got my new prompt:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>~todbyt-nathes/try<span class="o">=</span>&gt;
+</span></code></pre></td></tr></table></div></figure>
 
 
-<div><script src='https://gist.github.com/8308823.js'></script>
-<script type="text/javascript">$(".gist-file table tr td.line-numbers").remove();</script>
-<noscript><pre><code>#include &lt;cassert&gt;
-#include &lt;cmath&gt;
-#include &lt;cstdint&gt;
-#include &lt;cstdio&gt;
-#include &lt;cstdlib&gt;
-#include &lt;algorithm&gt;
-#include &lt;iomanip&gt;
-#include &lt;iostream&gt;
-#include &lt;limits&gt;
-#include &lt;string&gt;
-#include &lt;vector&gt;
-#include &lt;queue&gt;
-#include &lt;unordered_map&gt;
-
-using namespace std;
-
-void InitializeBrailleData(unordered_map&lt;string, char&gt;* rep) {
-  rep-&gt;insert(make_pair(&quot;O.....&quot;, &#39;A&#39;));
-  rep-&gt;insert(make_pair(&quot;O.O...&quot;, &#39;B&#39;));
-  rep-&gt;insert(make_pair(&quot;OO....&quot;, &#39;C&#39;));
-  rep-&gt;insert(make_pair(&quot;OO.O..&quot;, &#39;D&#39;));
-  rep-&gt;insert(make_pair(&quot;O..O..&quot;, &#39;E&#39;));
-  rep-&gt;insert(make_pair(&quot;OOO...&quot;, &#39;F&#39;));
-  rep-&gt;insert(make_pair(&quot;OOOO..&quot;, &#39;G&#39;));
-  rep-&gt;insert(make_pair(&quot;O.OO..&quot;, &#39;H&#39;));
-  rep-&gt;insert(make_pair(&quot;.OO...&quot;, &#39;I&#39;));
-  rep-&gt;insert(make_pair(&quot;.OOO..&quot;, &#39;J&#39;));
-  rep-&gt;insert(make_pair(&quot;O...O.&quot;, &#39;K&#39;));
-  rep-&gt;insert(make_pair(&quot;O.O.O.&quot;, &#39;L&#39;));
-  rep-&gt;insert(make_pair(&quot;OO..O.&quot;, &#39;M&#39;));
-  rep-&gt;insert(make_pair(&quot;OO.OO.&quot;, &#39;N&#39;));
-  rep-&gt;insert(make_pair(&quot;O..OO.&quot;, &#39;O&#39;));
-  rep-&gt;insert(make_pair(&quot;OOO.O.&quot;, &#39;P&#39;));
-  rep-&gt;insert(make_pair(&quot;OOOOO.&quot;, &#39;Q&#39;));
-  rep-&gt;insert(make_pair(&quot;O.OOO.&quot;, &#39;R&#39;));
-  rep-&gt;insert(make_pair(&quot;.OO.O.&quot;, &#39;S&#39;));
-  rep-&gt;insert(make_pair(&quot;.OOOO.&quot;, &#39;T&#39;));
-  rep-&gt;insert(make_pair(&quot;O...OO&quot;, &#39;U&#39;));
-  rep-&gt;insert(make_pair(&quot;O.O.OO&quot;, &#39;V&#39;));
-  rep-&gt;insert(make_pair(&quot;.OOO.O&quot;, &#39;W&#39;));
-  rep-&gt;insert(make_pair(&quot;OO..OO&quot;, &#39;X&#39;));
-  rep-&gt;insert(make_pair(&quot;OO.OOO&quot;, &#39;Y&#39;));
-  rep-&gt;insert(make_pair(&quot;O..OOO&quot;, &#39;Z&#39;));
-};
-
-void AddRepresentation(const string&amp; line, vector&lt;string&gt;* representations) {
-  for (int index = 0; index &lt; line.length(); index += 3) {
-    (*representations)[index / 3].push_back(line[index]);
-    (*representations)[index / 3].push_back(line[index + 1]);
-
-    assert((line[index + 2] == &#39; &#39;) || (index + 2 == line.length()));
-  }
-}
-
-int main() {
-  unordered_map&lt;string, char&gt; braille_representation;
-  InitializeBrailleData(&amp;braille_representation);
-
-  // Assume input is well formed.
-  // This means we read three lines from standard input,
-  // and each line&#39;s length is (2 * x + 3)
-  string line1, line2, line3;
-  getline(cin, line1);
-  getline(cin, line2);
-  getline(cin, line3);
-
-  // Basic invariants
-  assert(line1.length() == line2.length());
-  assert(line2.length() == line3.length());
-  assert((line1.length() + 1) % 3 == 0);
-
-  // Get the input into our desired form
-  vector&lt;string&gt; representations((line1.length() + 1) / 3);
-  AddRepresentation(line1, &amp;representations);
-  AddRepresentation(line2, &amp;representations);
-  AddRepresentation(line3, &amp;representations);
-
-  for (const string&amp; rep : representations) {
-    cout &lt;&lt; braille_representation[rep];
-  }
-  cout &lt;&lt; endl;
-}
-</code></pre></noscript></div>
-
-
-
+<p>Next time I&rsquo;ll start exploring <em>Nock</em> and <em>Hoon</em> &hellip;</p>
 
     </div>
   </div>
@@ -242,9 +174,7 @@ int main() {
 
 
 
-  <a href="/blog/categories/alwaysbecoding,/"><span class="badge">AlwaysBeCoding,</span></a>
-
-  <a href="/blog/categories/reddit/"><span class="badge">reddit</span></a>
+  <a href="/blog/categories/urbit/"><span class="badge">urbit</span></a>
 
 
 
@@ -276,10 +206,8 @@ int main() {
       <div class="span12">
         <p class="meta">
           
-            <a class="basic-alignment left" href="/blog/2014/01/07/urbit-hoon/" title="Previous Post: Urbit: Hoon">&laquo; Urbit: Hoon</a>
+            <a class="basic-alignment left" href="/blog/2014/01/07/programming-fun-braille/" title="Previous Post: Programming Fun: Braille">&laquo; Programming Fun: Braille</a>
           
-          
-            <a class="basic-alignment right" href="/blog/2014/01/08/urbit-back-again/" title="Next Post: Urbit: Back Again">Urbit: Back Again &raquo;</a>
           
         </p>
       </div>
@@ -317,8 +245,8 @@ int main() {
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://agam.github.io/blog/2014/01/07/programming-fun-braille/';
-        var disqus_url = 'http://agam.github.io/blog/2014/01/07/programming-fun-braille/';
+        var disqus_identifier = 'http://agam.github.io/blog/2014/01/08/urbit-back-again/';
+        var disqus_url = 'http://agam.github.io/blog/2014/01/08/urbit-back-again/';
         var disqus_script = 'embed.js';
       
     (function () {
