@@ -111,6 +111,65 @@
   
 
 
+<i class="icon-calendar-empty"></i> <time datetime="2014-01-16T06:21:00+00:00" pubdate data-updated="true">Jan 16<span>th</span>, 2014</time></h5>
+          <div class="row-fluid">
+          
+          </div>
+          
+          <div class="row-fluid">
+          
+          <a href="/blog/categories/foundation/"><span class="badge">foundation</span></a>
+          
+          <a href="/blog/categories/programming,/"><span class="badge">programming,</span></a>
+          
+          </div>
+          
+    </div>
+    <div class="span10 post-container">
+      <h1 class="link"><a href="/blog/2014/01/16/programming-technology-and-science/">Programming: Technology and Science</a></h1>
+      <p>I liked this quote from the <a href="http://www.amazon.com/Concepts-Techniques-Models-Computer-Programming/dp/0262220695">&ldquo;Concepts, Techniques and Models of Computer Programming&rdquo;</a>:</p>
+
+<blockquote><p>Programming as defined above has two essential parts: a technology and its scientific foundation.</p>
+
+<p>The technology consists of tools, practical techniques, and
+standards, allowing us to do programming.</p>
+
+<p>The science consists of a broad and deep theory with predictive power, allowing us to understand programming. <em>Ideally, the science should explain the technology in a way that is as direct and useful as possible.</em></p>
+
+<p>If either part is left out, we are no longer doing programming. <strong>Without the
+technology, we are doing pure mathematics. Without the science, we are doing a
+craft, i.e., we lack deep understanding</strong></p></blockquote>
+
+      
+      
+    </div>
+  </div>
+
+
+
+    </article>
+    
+    <hr>
+    
+  
+  
+    <article>
+      
+
+  <div class="row-fluid">
+    <div class="span2 post-meta">
+	  <h5 class="date-time">
+
+
+
+
+
+
+
+
+  
+
+
 <i class="icon-calendar-empty"></i> <time datetime="2014-01-08T20:22:00+00:00" pubdate data-updated="true">Jan 8<span>th</span>, 2014</time></h5>
           <div class="row-fluid">
           
@@ -175,9 +234,11 @@
 
 <p>From this figure, it should be clear that the overlapping area is the segment of the circle subtended by the chord that is common to both circles. We can find the length of this chord by considering the right triangle formed by half of it, the radius, and half the centre distance.</p>
 
+<p>This then leads to the relationship between the area of the sector (<em>A</em>), the area of the triangle inside it (<em>A_1</em>) and the segment area (<em>A_2</em>)</p>
+
 <p><img class="center" src="/images/programming-fun/circle-area-4.jpg" width="300"></p>
 
-<p>This then leads to the relationship between the area of the sector (<em>A</em>), the area of the triangle inside it (<em>A_1</em>) and the segment area (<em>A_2</em>)</p>
+<p>Finally, we subtract the segment area from the area of the circle (and then double it, for two circles) to get our answer.</p>
 
 <p><img class="center" src="/images/programming-fun/circle-area-5.jpg" width="300"></p>
 
@@ -1759,76 +1820,6 @@ Given the candidates and ballots, compute the first-round of successful candidat
 For each round of computation, print the percentage of votes for each candidate, and rank them based on that percentage, using the output format.
 */
 </code></pre></noscript></div>
-
-
-
-
-      
-      
-    </div>
-  </div>
-
-
-
-    </article>
-    
-    <hr>
-    
-  
-  
-    <article>
-      
-
-  <div class="row-fluid">
-    <div class="span2 post-meta">
-	  <h5 class="date-time">
-
-
-
-
-
-
-
-
-  
-
-
-<i class="icon-calendar-empty"></i> <time datetime="2013-12-16T06:04:00+00:00" pubdate data-updated="true">Dec 16<span>th</span>, 2013</time></h5>
-          <div class="row-fluid">
-          
-          </div>
-          
-          <div class="row-fluid">
-          
-          <a href="/blog/categories/git/"><span class="badge">git</span></a>
-          
-          <a href="/blog/categories/vim,/"><span class="badge">vim,</span></a>
-          
-          </div>
-          
-    </div>
-    <div class="span10 post-container">
-      <h1 class="link"><a href="/blog/2013/12/16/small-change-for-vim-and-git/">Small change for Vim and Git</a></h1>
-      <h2>Vim</h2>
-
-<p>I hate seeing <code>.swp</code> and <code>~</code> files when I&rsquo;m editing. If I really need to go back to an earlier version of something there are other ways.</p>
-
-<p>So I added this to my .vimrc:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>set nobackup
-</span><span class='line'>set nowritebackup
-</span><span class='line'>set noswapfile</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Git</h2>
-
-<p>If there&rsquo;s one config change to make for <code>git</code>, it should be this one:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ git config --global --add color.ui true</span></code></pre></td></tr></table></div></figure>
 
 
 
