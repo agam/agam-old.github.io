@@ -111,6 +111,91 @@
   
 
 
+<i class="icon-calendar-empty"></i> <time datetime="2013-08-06T00:00:00+00:00" pubdate data-updated="true">Aug 6<span>th</span>, 2013</time></h5>
+          <div class="row-fluid">
+          
+          </div>
+          
+          <div class="row-fluid">
+          
+          <a href="/blog/categories/vim/"><span class="badge">Vim</span></a>
+          
+          </div>
+          
+    </div>
+    <div class="span10 post-container">
+      <h1 class="link"><a href="/blog/2013/08/06/slimv/">SlimV and Vim (as an equivalent to Emacs and Slime)</a></h1>
+      <p>I&rsquo;ve switched between Emacs and Vim a few times over the last 15-odd years, before finally (?) settling on Vim. I&rsquo;ve come to the realization, as many have before me, that for all the elegant awesomeness of Emacs Lisp,</p>
+
+<blockquote><p>Vim is a better <em>text</em> editor, Emacs is good for everything else</p></blockquote>
+
+<p>Perhaps one day if <a href="http://www.gnu.org/software/guile/">Guile</a> or <a href="https://google-melange.appspot.com/gsoc/proposal/review/google/gsoc2013/shanecelis/1">Emacsey</a> deliver their full promise, I&rsquo;ll happily live inside a REPL forever.</p>
+
+<p>Until then, it&rsquo;s just <em>much, much, much</em> faster to do the equivalent <em>text</em> operations in Vim than in Emacs (yes, I mapped CapsLock to Control; yes, I replaced <code>M-</code> by <code>C-xC-m-</code>).</p>
+
+<p>There were still a few Emacs-only things that haunted me (I outgrew the need to have a <a href="http://emacs-w3m.namazu.org/">web browser</a> or an <a href="http://www.gnu.org/software/emacs/manual/html_mono/erc.html">IRC client</a> in my editor environment, I now use Google Chrome for the former and BitchX/Irssi/Xchat for the latter. I also don&rsquo;t mind reading my <a href="http://gmail.com">email</a> in the browser), such as <a href="http://orgmode.org/"><code>org-mode</code></a>. Fortunately for me, I don&rsquo;t most of its features, and keeping a timestamped diary is something I was able to fix for myself with some shell scripting and vim shortcuts.</p>
+
+<p>Recently, I decided to learn Common Lisp with as much of a newbie attitude as possible. And here I ran into a veritable wall of convention. <em>Of course, didn&rsquo;t I know, that Emacs + Slime is the one true way ?</em>
+<em><strong>Update</strong></em>: Uh no, I take back that decision (why? maybe a future post to
+answer that question)</p>
+
+<p>I dithered, was flustered and nearly reconsidered.</p>
+
+<p>And then I discovered the awesomeness I was looking for, a replacement for Slime in Vim, <a href="http://www.vim.org/scripts/script.php?script_id=2531">Slimv</a>!</p>
+
+<p><a href="http://kovisoft.bitbucket.org/tutorial.html">Here is a tutorial</a> to get you started, but basically all I had to do was to install the plugin and the rest pretty much <em>just worked</em>.</p>
+
+<p>There are quite a lot of nifty tricks here, but my most frequently used commands are:</p>
+
+<ul>
+<li><code>,L</code>: that&rsquo;s a comma followed by L): compile current file</li>
+<li><code>,D</code>: compile current form</li>
+<li><code>,s</code>: lookup a short summary description of the keyword under the cursor</li>
+<li><code>,c</code>: Open Slimv session (splits the window horizontally)</li>
+</ul>
+
+
+<p>I was also new to <code>paredit mode</code>, which is pretty much necessary for making changes to heavily nested parantheses, and it has useful commands there too:</p>
+
+<ul>
+<li><code>,W</code>: wrap an extra set of parentheses around the current form</li>
+<li><code>,S</code>: it&rsquo;s opposite; remove <em>one</em> set of parentheses from the current form</li>
+<li><code>,&lt;</code>, <code>,&gt;</code>: move the parentheses under the cursor one form to the left or right</li>
+</ul>
+
+
+<p>&hellip; and much more. So next time someone tells you how <code>Slime</code> is indispensable and hence Emacs is indispensable, throw <code>Slimv</code> in their face! Kudos to <a href="http://www.vim.org/account/profile.php?user_id=16470">the guy who built it</a>!</p>
+
+      
+      
+    </div>
+  </div>
+
+
+
+    </article>
+    
+    <hr>
+    
+  
+  
+    <article>
+      
+
+  <div class="row-fluid">
+    <div class="span2 post-meta">
+	  <h5 class="date-time">
+
+
+
+
+
+
+
+
+  
+
+
 <i class="icon-calendar-empty"></i> <time datetime="2013-07-24T00:00:00+00:00" pubdate data-updated="true">Jul 24<span>th</span>, 2013</time></h5>
           <div class="row-fluid">
           
@@ -3919,195 +4004,6 @@ Call the std::basic_ostream&lt;std::char_traits> operator&lt;&lt;()</p>
 
 <p><em>Update</em>: I&rsquo;ve made the complete assembly version of both &lsquo;Hello World&rsquo; programs available as gists.
 So you can look at <a href="https://gist.github.com/agam/5148416">The C++ version</a> or <a href="https://gist.github.com/agam/5148398">The Haskell version</a>.</p>
-
-      
-      
-    </div>
-  </div>
-
-
-
-    </article>
-    
-    <hr>
-    
-  
-  
-    <article>
-      
-
-  <div class="row-fluid">
-    <div class="span2 post-meta">
-	  <h5 class="date-time">
-
-
-
-
-
-
-
-
-  
-
-
-<i class="icon-calendar-empty"></i> <time datetime="2013-01-04T00:00:00+00:00" pubdate data-updated="true">Jan 4<span>th</span>, 2013</time></h5>
-          <div class="row-fluid">
-          
-          </div>
-          
-          <div class="row-fluid">
-          
-          <a href="/blog/categories/hakyll/"><span class="badge">Hakyll</span></a>
-          
-          </div>
-          
-    </div>
-    <div class="span10 post-container">
-      <h1 class="link"><a href="/blog/2013/01/04/hakyll-multiple-posts-and-more/">Hakyll: multiple posts and more</a></h1>
-      <p>At the moment, my blog is basically a single page. This is boring, so let&rsquo;s expand it to handle multiple pages. Also, each page should be templatized in turn, so that we can add a footer to handle analytics, comments, etc.</p>
-
-<h2>Multiple posts</h2>
-
-<p>I&rsquo;ll do this step by step. First, I&rsquo;ll ignore the index page and just add support for the posts. So <code>blog.hs</code> gets a new &ldquo;match&rdquo; rule.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="nf">match</span> <span class="s">&quot;posts/*&quot;</span> <span class="o">$</span> <span class="kr">do</span>
-</span><span class='line'>    <span class="n">route</span>     <span class="o">$</span> <span class="n">setExtension</span> <span class="s">&quot;html&quot;</span>
-</span><span class='line'>    <span class="n">compile</span>   <span class="o">$</span> <span class="n">pageCompiler</span>
-</span><span class='line'>        <span class="o">&gt;&gt;&gt;</span> <span class="n">applyTemplateCompiler</span> <span class="s">&quot;templates/post.html&quot;</span>
-</span><span class='line'>        <span class="o">&gt;&gt;&gt;</span> <span class="n">relativizeUrlsCompiler</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>I modified <code>index.markdown</code> to explicitly point to the two posts for now (i.e. this one and the previous one).</p>
-
-<p>Also, I created <code>templates/post.html</code>, which has some basic boilerplate difference from the template used to serve the index page :&ndash;</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'>    <span class="nt">&lt;h1&gt;</span>$$title$$<span class="nt">&lt;/h1&gt;</span>
-</span><span class='line'><span class="nt">&lt;br&gt;</span>
-</span><span class='line'><span class="nt">&lt;h2&gt;</span>$$date$$<span class="nt">&lt;/h2&gt;</span>
-</span><span class='line'><span class="nt">&lt;br&gt;</span>
-</span><span class='line'>
-</span><span class='line'>    $$body$$
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Ok, <code>ghc --make blog.hs &amp;&amp; ./blog preview</code> confirms that all is well.</p>
-
-<h2>Analytics and Comments</h2>
-
-<p>I&rsquo;ll be brief here, since you probably already know this, and this isn&rsquo;t relevant to hakyll in anyway. There are many commenting systems out there, I found <a href="http://www.disqus.com">Disqus</a> to be really quick to set up.</p>
-
-<p>Enter your username, password, site url, and you&rsquo;ll be shown a list of hosting platforms; just select <em>Universal Code</em> from the list, then copy-paste the javascript into the html footer of your post template. Done. Your posts now have comments!</p>
-
-<p>Similarly, if you want to track site visits, <a href="www.google.com/analytics/">Google Analytics</a> is a quick solution. Sign up for a new account, enter the website name, and then get your &ldquo;tracking code&rdquo;, which is a bit of javascript you (again) tack on to the end of each post&rsquo;s html.</p>
-
-<h2>Showing a list of posts</h2>
-
-<p>At a minimum, we&rsquo;d like to show the last few posts on the index page, and provide a link to the list of <em>all</em> posts.</p>
-
-<p>Let&rsquo;s do the second item first. To do this, we&rsquo;ll create a pseudo-page that will be defined based on the list of posts found in the <code>posts/</code> subdirectory.</p>
-
-<p>(BTW this is heavily <del>inspired by</del> copy-pasted from <a href="https://github.com/jaspervdj/hakyll-examples/blob/master/feedblog/hakyll.hs">this hakyll example</a>)</p>
-
-<p>Since we want to have a &lsquo;list of posts&rsquo; on the index page as well, this common functionality can be abstracted out.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="nf">addPostList</span> <span class="ow">::</span> <span class="kt">Compiler</span> <span class="p">(</span><span class="kt">Page</span> <span class="kt">String</span><span class="p">,</span> <span class="p">[</span><span class="kt">Page</span> <span class="kt">String</span><span class="p">])</span> <span class="p">(</span><span class="kt">Page</span> <span class="kt">String</span><span class="p">)</span>
-</span><span class='line'><span class="nf">addPostList</span> <span class="ow">=</span> <span class="n">setFieldA</span> <span class="s">&quot;posts&quot;</span> <span class="o">$</span>
-</span><span class='line'>    <span class="n">arr</span> <span class="p">(</span><span class="n">reverse</span> <span class="o">.</span> <span class="n">chronological</span><span class="p">)</span>
-</span><span class='line'>        <span class="o">&gt;&gt;&gt;</span> <span class="n">require</span> <span class="s">&quot;templates/postitem.html&quot;</span> <span class="p">(</span><span class="nf">\</span><span class="n">p</span> <span class="n">t</span> <span class="ow">-&gt;</span> <span class="n">map</span> <span class="p">(</span><span class="n">applyTemplate</span> <span class="n">t</span><span class="p">)</span> <span class="n">p</span><span class="p">)</span>
-</span><span class='line'>        <span class="o">&gt;&gt;&gt;</span> <span class="n">arr</span> <span class="n">mconcat</span>
-</span><span class='line'>        <span class="o">&gt;&gt;&gt;</span> <span class="n">arr</span> <span class="n">pageBody</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Now create a rudimentary html fragment that will hold the &lsquo;post summary&rsquo;</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;li&gt;</span>
-</span><span class='line'>   <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;$ url $&quot;</span><span class="nt">&gt;</span>$ title $<span class="nt">&lt;/a&gt;</span> - <span class="nt">&lt;em&gt;</span>$ date $<span class="nt">&lt;/em&gt;</span>
-</span><span class='line'><span class="nt">&lt;/li&gt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Finally, to tie it together, add a match for <code>posts.html</code>, which will be the entry point to show the list of all posts.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="nf">match</span> <span class="s">&quot;posts.html&quot;</span> <span class="o">$</span> <span class="n">route</span> <span class="n">idRoute</span>
-</span><span class='line'><span class="nf">create</span> <span class="s">&quot;posts.html&quot;</span> <span class="o">$</span> <span class="n">constA</span> <span class="n">mempty</span>
-</span><span class='line'>    <span class="o">&gt;&gt;&gt;</span> <span class="n">arr</span> <span class="p">(</span><span class="n">setField</span> <span class="s">&quot;title&quot;</span> <span class="s">&quot;All posts&quot;</span><span class="p">)</span>
-</span><span class='line'>    <span class="o">&gt;&gt;&gt;</span> <span class="n">requireAllA</span> <span class="s">&quot;posts/*&quot;</span> <span class="n">addPostList</span>
-</span><span class='line'>    <span class="o">&gt;&gt;&gt;</span> <span class="n">applyTemplateCompiler</span> <span class="s">&quot;templates/posts.html&quot;</span>
-</span><span class='line'>    <span class="o">&gt;&gt;&gt;</span> <span class="n">applyTemplateCompiler</span> <span class="s">&quot;templates/default.html&quot;</span>
-</span><span class='line'>    <span class="o">&gt;&gt;&gt;</span> <span class="n">relativizeUrlsCompiler</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Showing a subset of all posts on the index page</h2>
-
-<p>Initially, I had some trouble getting this to work, for some reason the <code>match "posts/*"</code> wasn&rsquo;t working, and I commented out the <code>match "index.html"</code> and retained the <code>index.markdown</code> that I had.</p>
-
-<p>Turned out to be another ommission on my part, I had to replace</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="nf">match</span> <span class="s">&quot;index.html&quot;</span> <span class="o">$</span> <span class="kr">do</span>
-</span><span class='line'><span class="nf">create</span> <span class="s">&quot;index.html&quot;</span> <span class="o">$</span> <span class="n">constA</span> <span class="n">mempty</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>with</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="nf">match</span> <span class="s">&quot;index.html&quot;</span> <span class="o">$</span> <span class="n">route</span> <span class="n">idRoute</span>
-</span><span class='line'><span class="nf">create</span> <span class="s">&quot;index.html&quot;</span> <span class="o">$</span> <span class="n">constA</span> <span class="n">mempty</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>&hellip; and then it works!</p>
-
-<p>Getting the list of the last (say) 3 posts is achieved by having a line similar to the one in the handler for <code>posts.html</code>, except instead of just</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">requireAllA</span> <span class="s">&quot;posts/*&quot;</span> <span class="n">addPostList</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>we now have</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='haskell'><span class='line'>    <span class="o">&gt;&gt;&gt;</span> <span class="n">requireAllA</span> <span class="s">&quot;posts/*&quot;</span> <span class="p">(</span><span class="n">id</span> <span class="o">***</span> <span class="n">arr</span> <span class="p">(</span><span class="n">take</span> <span class="mi">3</span> <span class="o">.</span> <span class="n">reverse</span> <span class="o">.</span> <span class="n">chronological</span><span class="p">)</span> <span class="o">&gt;&gt;&gt;</span> <span class="n">addPostList</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>CSS-ifying</h2>
-
-<p>You probably know more about this than me, but if you don&rsquo;t want a black-and white, crammed together bunch of text, you probably want atleast a couple of css rules for your headers and the body text etc. I cobbled together mine based on some random examples I found online, pick yours as you see fit.</p>
 
       
       
