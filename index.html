@@ -111,6 +111,148 @@
   
 
 
+<i class="icon-calendar-empty"></i> <time datetime="2014-01-19T00:39:00+00:00" pubdate data-updated="true">Jan 19<span>th</span>, 2014</time></h5>
+          <div class="row-fluid">
+          
+          </div>
+          
+          <div class="row-fluid">
+          
+          <a href="/blog/categories/alwaysbecoding,/"><span class="badge">AlwaysBeCoding,</span></a>
+          
+          <a href="/blog/categories/reddit/"><span class="badge">reddit</span></a>
+          
+          </div>
+          
+    </div>
+    <div class="span10 post-container">
+      <h1 class="link"><a href="/blog/2014/01/19/programming-fun-nuts-and-bolts/">Programming Fun: Nuts and Bolts</a></h1>
+      <p><a href="http://www.reddit.com/r/dailyprogrammer/comments/1sob1e/121113_challenge_144_easy_nuts_bolts/">This one</a> is <em>too easy</em> but included anyway for completeness (why not?)</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Input Description
+</span><span class='line'>-----------------
+</span><span class='line'>
+</span><span class='line'>The first line of input will be an integer N, which is for the number of rows
+</span><span class='line'>in each list. Each list has N-lines of two space-delimited strings: the first
+</span><span class='line'>string will be the unique item name (without spaces), the second string will be
+</span><span class='line'>the price (in whole-integer cents). The second list, following the same format,
+</span><span class='line'>will have the same unique item-names, but with the correct price. Note that the
+</span><span class='line'>lists may not be in the same order!
+</span><span class='line'>
+</span><span class='line'>Output Description
+</span><span class='line'>------------------
+</span><span class='line'>
+</span><span class='line'>For each item that has had its price changed, print a row with the item name
+</span><span class='line'>and the price difference (in cents). Print the sign of the change (e.g. '+' for
+</span><span class='line'>a growth in price, or '-' for a loss in price). Order does not matter for
+</span><span class='line'>output.
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<div><script src='https://gist.github.com/8498879.js'></script>
+<script type="text/javascript">$(".gist-file table tr td.line-numbers").remove();</script>
+<noscript><pre><code>#include &lt;cassert&gt;
+#include &lt;cmath&gt;
+#include &lt;cstdint&gt;
+#include &lt;cstdio&gt;
+#include &lt;cstdlib&gt;
+#include &lt;algorithm&gt;
+#include &lt;array&gt;
+#include &lt;fstream&gt;
+#include &lt;iomanip&gt;
+#include &lt;iostream&gt;
+#include &lt;limits&gt;
+#include &lt;map&gt;
+#include &lt;memory&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+#include &lt;unordered_map&gt;
+
+using namespace std;
+
+typedef unordered_map&lt;string, int&gt; Inventory;
+
+void ReadInventory(int number_items, Inventory* inventory) {
+  for (int i = 0; i &lt; number_items; ++i) {
+    string item;
+    int quantity;
+    cin &gt;&gt; item &gt;&gt; quantity;
+    inventory-&gt;insert(make_pair(item, quantity));
+  }
+}
+
+int main(int argc, char* argv[]) {
+  int number_items;
+  cin &gt;&gt; number_items;
+
+  Inventory before, after;
+  ReadInventory(number_items, &amp;before);
+  ReadInventory(number_items, &amp;after);
+
+  for (const auto&amp; it : before) {
+    assert(after.find(it.first) != after.end());
+    int diff_quantity = after[it.first] - it.second;
+    if (diff_quantity != 0) {
+      cout &lt;&lt; it.first &lt;&lt; &quot; &quot; &lt;&lt; showpos &lt;&lt; diff_quantity &lt;&lt; endl;
+    }
+  }
+}
+
+</code></pre></noscript></div>
+
+
+
+
+      
+      
+    </div>
+  </div>
+
+
+
+    </article>
+    
+    <hr>
+    
+  
+  
+    <article>
+      
+
+  <div class="row-fluid">
+    <div class="span2 post-meta">
+	  <h5 class="date-time">
+
+
+
+
+
+
+
+
+  
+
+
 <i class="icon-calendar-empty"></i> <time datetime="2014-01-18T02:21:00+00:00" pubdate data-updated="true">Jan 18<span>th</span>, 2014</time></h5>
           <div class="row-fluid">
           
@@ -127,7 +269,7 @@
     </div>
     <div class="span10 post-container">
       <h1 class="link"><a href="/blog/2014/01/18/programming-fun-telephone-keypads/">Programming Fun: Telephone Keypads</a></h1>
-      <p>This is a <em>medium</em> level problem with two levels of difficulty.</p>
+      <p><a href="http://www.reddit.com/r/dailyprogrammer/comments/1sody4/12113_challenge_139_intermediate_telephone_keypads/">This is a <em>medium</em> level problem</a>  with two levels of difficulty.</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -149,11 +291,20 @@
 <span class='line-number'>18</span>
 <span class='line-number'>19</span>
 <span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
 </pre></td><td class='code'><pre><code class=''><span class='line'>Input Description
 </span><span class='line'>-----------------
 </span><span class='line'>
-</span><span class='line'>On standard console input, you will be given an array of digits (0 to 9) and spaces. All digits will be space-delimited, unless the digits represent multiple presses of the same button (for example pressing 2 twice gives you the letter 'B').
-</span><span class='line'>Use the modern Telephone Keypads digit-letter layout:
+</span><span class='line'>On standard console input, you will be given an array of digits (0 to 9) and
+</span><span class='line'>spaces. All digits will be space-delimited, unless the digits represent
+</span><span class='line'>multiple presses of the same button (for example pressing 2 twice gives you the
+</span><span class='line'>letter 'B').  Use the modern Telephone Keypads digit-letter layout:
 </span><span class='line'>0 = Not used
 </span><span class='line'>1 = Not used
 </span><span class='line'>2 = ABC
@@ -164,16 +315,23 @@
 </span><span class='line'>7 = PQRS
 </span><span class='line'>8 = TUV
 </span><span class='line'>9 = WXYZ
-</span><span class='line'>You may use any source for looking up English-language words, though this simple English-language dictionary is complete enough for the challenge.
+</span><span class='line'>You may use any source for looking up English-language words, though this
+</span><span class='line'>simple English-language dictionary is complete enough for the challenge.
 </span><span class='line'>
 </span><span class='line'>Output Description
 </span><span class='line'>------------------
-</span><span class='line'>Print a list of all best-fitting words, meaning words that start with the word generated using the given input on a telephone keypad. You do not have to only print words of the same length as the input (e.g. even if the input is 4-digits, it's possible there are many long words that start with those 4-digits).</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'>Print a list of all best-fitting words, meaning words that start with the word
+</span><span class='line'>generated using the given input on a telephone keypad. You do not have to only
+</span><span class='line'>print words of the same length as the input (e.g. even if the input is
+</span><span class='line'>4-digits, it's possible there are many long words that start with those
+</span><span class='line'>4-digits).</span></code></pre></td></tr></table></div></figure>
 
 
 <p>You could do this by reading the dictionary into a vector of strings, then figuring out the prefix determined by the input and matching it against each dictionary word. There is a better way to do this though, which makes more sense considering the second part of this question.</p>
 
 <p>Instead of using a vector, you could use a <a href="http://en.wikipedia.org/wiki/Trie">Trie</a> which in this case would look something like:</p>
+
+<p>(showing the words &lsquo;sailor&rsquo;, &lsquo;soldier&rsquo; and &lsquo;solder&rsquo;)</p>
 
 <p><img class="center" src="http://farm6.staticflickr.com/5534/12005243014_69145160ae_o_d.jpg" width="400"></p>
 
@@ -339,14 +497,22 @@ int main(int argc, char* argv[]) {
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
 </pre></td><td class='code'><pre><code class=''><span class='line'>Challenge++
 </span><span class='line'>-----------
-</span><span class='line'>If you want an extra challenge, accomplish the same challenge but without knowing the number of times a digit is pressed. For example "7653" could mean sold, or poke, or even solenoid! You must do this efficiently with regards to Big-O complexity.</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'>If you want an extra challenge, accomplish the same challenge but without
+</span><span class='line'>knowing the number of times a digit is pressed. For example "7653" could mean
+</span><span class='line'>sold, or poke, or even solenoid! You must do this efficiently with regards to
+</span><span class='line'>Big-O complexity.</span></code></pre></td></tr></table></div></figure>
 
 
-<p>This would have been more inefficient with a vector of strings (you would sort the vector and then for each prefix, print out all subsequent ones until you encounter a string with a different prefix. So it&rsquo;s O(n log n) where n is the size of the dictionary). With our trie, we can (once we have a list of all combinatorially possible prefixes) look them up <em>quickly</em> (O(k + n), where k is the length of the prefix; O(k) time for each lookup and O(n) time for creating the trie (or O(mn) where m is the length of the largest word, though I would consider that a constant here)).</p>
+<p>This would have been more inefficient with a vector of strings (you would sort the vector and then for each prefix, print out all subsequent ones until you encounter a string with a different prefix. So it&rsquo;s O(n log n) where n is the size of the dictionary).</p>
 
-<p>(there&rsquo;s some duplication of common code, especially in the <code>Trie</code> class; sorry about that!)</p>
+<p>With our trie, we can (once we have a list of all combinatorially possible prefixes) look them up <em>quickly</em> (O(k + n), where k is the length of the prefix; O(k) time for each lookup and O(n) time for creating the trie (or O(mn) where m is the length of the largest word, though I would consider that a constant here)).</p>
+
+<p>(Note: there&rsquo;s some duplication of common code, especially in the <code>Trie</code> class; sorry about that!)</p>
 
 <div><script src='https://gist.github.com/8460783.js'></script>
 <script type="text/javascript">$(".gist-file table tr td.line-numbers").remove();</script>
@@ -2045,58 +2211,6 @@ int main() {
 <p>The other obvious way is to get into <a href="www.topcoder.com">TopCoder</a>. Go through all the <a href="http://community.topcoder.com/tc?module=Static&amp;d1=tutorials&amp;d2=alg_index">tutorials</a>, examples, every SRM that comes along. Even if it can&rsquo;t be attempted live, do it eventually.</p>
 
 <p>So that&rsquo;s all for now. I&rsquo;ll evaluate this next year!</p>
-
-      
-      
-    </div>
-  </div>
-
-
-
-    </article>
-    
-    <hr>
-    
-  
-  
-    <article>
-      
-
-  <div class="row-fluid">
-    <div class="span2 post-meta">
-	  <h5 class="date-time">
-
-
-
-
-
-
-
-
-  
-
-
-<i class="icon-calendar-empty"></i> <time datetime="2013-12-24T06:22:00+00:00" pubdate data-updated="true">Dec 24<span>th</span>, 2013</time></h5>
-          <div class="row-fluid">
-          
-          </div>
-          
-          <div class="row-fluid">
-          
-          <a href="/blog/categories/functional/"><span class="badge">functional</span></a>
-          
-          <a href="/blog/categories/programming/"><span class="badge">programming</span></a>
-          
-          </div>
-          
-    </div>
-    <div class="span10 post-container">
-      <h1 class="link"><a href="/blog/2013/12/24/fp-takedown/">FP takedown</a></h1>
-      <p>Don&rsquo;t blame the messenger. I just saw this and it&rsquo;s hilarious. Gilad Bracha is one of my new heroes now :)</p>
-
-<p>Watch <a href="http://www.infoq.com/presentations/functional-pros-cons">this video</a> and unless you&rsquo;re an overly sensitive haskell zealot, you&rsquo;ll find some humor here. There&rsquo;s a lot of hype-busting and sacred-cow-killing.</p>
-
-<p>Of course, he&rsquo;s no stranger to controversial programming views (<a href="http://gbracha.blogspot.com/2011/01/maybe-monads-might-not-matter.html">&ldquo;Maybe Monads Might Not Matter&rdquo;</a>, <a href="http://gbracha.blogspot.com/2011/06/types-are-anti-modular.html">&ldquo;Types are anti modular&rdquo;</a>, <a href="http://gbracha.blogspot.com/2009/11/objects-are-not-hash-tables.html">&ldquo;Objects are not hash tables&rdquo;</a>, and <a href="http://gbracha.blogspot.com/2009/12/chased-by-ones-own-tail.html">&ldquo;Chased by One&rsquo;s Own Tail&rdquo;</a>), so you might enjoy reading his blog after watching the video!</p>
 
       
       
