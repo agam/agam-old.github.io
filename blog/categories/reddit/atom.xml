@@ -4,7 +4,7 @@
   <title><![CDATA[Category: reddit | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/reddit/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2014-01-24T23:53:25+00:00</updated>
+  <updated>2014-01-24T23:54:34+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -40,7 +40,58 @@ output.</p>
 
 <p>```</p>
 
-<p>{% gist 8498879 %}</p>
+<p><div><script src='https://gist.github.com/8498879.js'></script>
+<script type="text/javascript">$(".gist-file table tr td.line-numbers").remove();</script>
+<noscript><pre><code>#include &lt;cassert&gt;
+#include &lt;cmath&gt;
+#include &lt;cstdint&gt;
+#include &lt;cstdio&gt;
+#include &lt;cstdlib&gt;
+#include &lt;algorithm&gt;
+#include &lt;array&gt;
+#include &lt;fstream&gt;
+#include &lt;iomanip&gt;
+#include &lt;iostream&gt;
+#include &lt;limits&gt;
+#include &lt;map&gt;
+#include &lt;memory&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+#include &lt;unordered_map&gt;
+
+using namespace std;
+
+typedef unordered_map&lt;string, int&gt; Inventory;
+
+void ReadInventory(int number_items, Inventory* inventory) {
+  for (int i = 0; i &lt; number_items; ++i) {
+    string item;
+    int quantity;
+    cin &gt;&gt; item &gt;&gt; quantity;
+    inventory-&gt;insert(make_pair(item, quantity));
+  }
+}
+
+int main(int argc, char* argv[]) {
+  int number_items;
+  cin &gt;&gt; number_items;
+
+  Inventory before, after;
+  ReadInventory(number_items, &amp;before);
+  ReadInventory(number_items, &amp;after);
+
+  for (const auto&amp; it : before) {
+    assert(after.find(it.first) != after.end());
+    int diff_quantity = after[it.first] - it.second;
+    if (diff_quantity != 0) {
+      cout &lt;&lt; it.first &lt;&lt; &quot; &quot; &lt;&lt; showpos &lt;&lt; diff_quantity &lt;&lt; endl;
+    }
+  }
+}
+
+</code></pre></noscript></div>
+</p>
 ]]></content>
   </entry>
   
@@ -87,11 +138,164 @@ print words of the same length as the input (e.g. even if the input is
 
 <p>(showing the words &lsquo;sailor&rsquo;, &lsquo;soldier&rsquo; and &lsquo;solder&rsquo;)</p>
 
-<p>{% img center <a href="http://farm6.staticflickr.com/5534/12005243014_69145160ae_o_d.jpg">http://farm6.staticflickr.com/5534/12005243014_69145160ae_o_d.jpg</a> 400 %}</p>
+<p><img class="center <a" src="href="http://farm6.staticflickr.com/5534/12005243014_69145160ae_o_d.jpg">http://farm6.staticflickr.com/5534/12005243014_69145160ae_o_d.jpg</a>" width="400"></p>
 
 <p>This is a sort of naive implementation, you could compress this by storing strings and only expanding out to character chains if needed, but I skipped that optimization here.</p>
 
-<p>{% gist 8422418 %}</p>
+<p><div><script src='https://gist.github.com/8422418.js'></script>
+<script type="text/javascript">$(".gist-file table tr td.line-numbers").remove();</script>
+<noscript><pre><code>#include &lt;cassert&gt;
+#include &lt;cmath&gt;
+#include &lt;cstdint&gt;
+#include &lt;cstdio&gt;
+#include &lt;cstdlib&gt;
+#include &lt;algorithm&gt;
+#include &lt;array&gt;
+#include &lt;fstream&gt;
+#include &lt;iomanip&gt;
+#include &lt;iostream&gt;
+#include &lt;limits&gt;
+#include &lt;map&gt;
+#include &lt;memory&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+#include &lt;unordered_map&gt;
+
+using namespace std;
+
+static const array&lt;string,10&gt; kKeypadLetters {
+  &quot;&quot;,
+  &quot;&quot;,
+  &quot;abc&quot;,
+  &quot;def&quot;,
+  &quot;ghi&quot;,
+  &quot;jkl&quot;,
+  &quot;mno&quot;,
+  &quot;pqrs&quot;,
+  &quot;tuv&quot;,
+  &quot;wxyz&quot;
+};
+
+// Naive trie implementation
+struct TrieNode {
+  map&lt;char, unique_ptr&lt;TrieNode&gt;&gt; children;
+  bool terminal_node = false;
+};
+
+class Trie {
+public:
+  Trie() {
+    head_.reset(new TrieNode());
+  }
+
+  void Insert(const string&amp; str) {
+    InsertHelper(str, head_.get());
+  }
+
+  bool Lookup(const string&amp; str) {
+    return (LookupHelper(str, head_.get()) != nullptr);
+  }
+
+  void FindAllWithPrefix(const string&amp; str, vector&lt;string&gt;* matches) {
+    const TrieNode* start_node = LookupHelper(str, head_.get());
+    if (start_node == nullptr) { return; }
+    FindAllHelper(str, start_node, matches);
+  }
+
+private:
+  void InsertHelper(const string&amp; str, TrieNode* node) {
+    if (str.empty()) {
+      node-&gt;terminal_node = true;
+      return;
+    }
+    assert(node != nullptr);
+    char c = str.front();
+    const auto&amp; it = node-&gt;children.find(c);
+    if (it == node-&gt;children.end()) {
+      node-&gt;children.insert(make_pair(c, unique_ptr&lt;TrieNode&gt;(new TrieNode)));
+    }
+    TrieNode* next_node = node-&gt;children.find(c)-&gt;second.get();
+    InsertHelper(str.substr(1), next_node);
+  }
+
+  const TrieNode* LookupHelper(const string&amp; str, const TrieNode* node) {
+    if (str.empty()) { return node; }
+    assert(node != nullptr);
+    const auto&amp; it = node-&gt;children.find(str.front());
+    if (it == node-&gt;children.end()) {
+      return nullptr;
+    } else {
+      return LookupHelper(str.substr(1), it-&gt;second.get());
+    }
+  }
+
+  void FindAllHelper(
+      const string&amp; current_str,
+      const TrieNode* current_node,
+      vector&lt;string&gt;* matches) {
+    if (current_node-&gt;terminal_node) {
+      matches-&gt;push_back(current_str);
+    }
+    for (const auto&amp; it : current_node-&gt;children) {
+      FindAllHelper(current_str + it.first, it.second.get(), matches);
+    }
+  }
+
+  unique_ptr&lt;TrieNode&gt; head_;
+};
+
+void PopulateTrie(const string&amp; fname, Trie* trie) {
+  ifstream ifs;
+  ifs.open(fname, ifstream::in);
+  while (!ifs.eof()) {
+    string word;
+    getline(ifs, word);
+    if (word.size()) {
+      trie-&gt;Insert(word);
+    }
+  }
+}
+
+int main(int argc, char* argv[]) {
+  // Read digiletters from stdin
+  vector&lt;int&gt; digiletters;
+  int digiletter;
+  while (cin &gt;&gt; digiletter) {
+    digiletters.push_back(digiletter);
+  }
+
+  // Read strings from file into Trie
+  assert(argc == 2);
+  Trie dict_trie;
+  PopulateTrie(argv[1], &amp;dict_trie);
+
+  // Get letter counts
+  string keypad_str;
+  for (int dl : digiletters) {
+    int count = 0;
+    const int letter = dl % 10;
+    while (dl &gt; 0) {
+      assert(dl % 10 == letter);
+      dl /= 10;
+      ++count;
+    }
+    const string&amp; keypad_letters = kKeypadLetters[letter];
+    assert(count &lt;= keypad_letters.size());
+    keypad_str.push_back(keypad_letters[count - 1]);
+  }
+
+  // Get matches
+  vector&lt;string&gt; possible_matches;
+  dict_trie.FindAllWithPrefix(keypad_str, &amp;possible_matches);
+
+  // Print matches
+  for (const string&amp; s : possible_matches) {
+    cout &lt;&lt; s &lt;&lt; endl;
+  }
+}
+</code></pre></noscript></div>
+</p>
 
 <p>There is a harder version of this problem:</p>
 
@@ -111,7 +315,182 @@ Big-O complexity.
 
 <p>(Note: there&rsquo;s some duplication of common code, especially in the <code>Trie</code> class; sorry about that!)</p>
 
-<p>{% gist 8460783 %}</p>
+<p><div><script src='https://gist.github.com/8460783.js'></script>
+<script type="text/javascript">$(".gist-file table tr td.line-numbers").remove();</script>
+<noscript><pre><code>#include &lt;cassert&gt;
+#include &lt;cmath&gt;
+#include &lt;cstdint&gt;
+#include &lt;cstdio&gt;
+#include &lt;cstdlib&gt;
+#include &lt;algorithm&gt;
+#include &lt;array&gt;
+#include &lt;fstream&gt;
+#include &lt;iomanip&gt;
+#include &lt;iostream&gt;
+#include &lt;limits&gt;
+#include &lt;map&gt;
+#include &lt;memory&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+#include &lt;unordered_map&gt;
+
+using namespace std;
+
+static const array&lt;string,10&gt; kKeypadLetters {
+  &quot;&quot;,
+  &quot;&quot;,
+  &quot;abc&quot;,
+  &quot;def&quot;,
+  &quot;ghi&quot;,
+  &quot;jkl&quot;,
+  &quot;mno&quot;,
+  &quot;pqrs&quot;,
+  &quot;tuv&quot;,
+  &quot;wxyz&quot;
+};
+
+// Naive trie implementation
+struct TrieNode {
+  map&lt;char, unique_ptr&lt;TrieNode&gt;&gt; children;
+  bool terminal_node = false;
+};
+
+class Trie {
+public:
+  Trie() {
+    head_.reset(new TrieNode());
+  }
+
+  void Insert(const string&amp; str) {
+    InsertHelper(str, head_.get());
+  }
+
+  bool Lookup(const string&amp; str) {
+    return (LookupHelper(str, head_.get()) != nullptr);
+  }
+
+  void FindAllWithPrefix(const string&amp; str, vector&lt;string&gt;* matches) {
+    const TrieNode* start_node = LookupHelper(str, head_.get());
+    if (start_node == nullptr) { return; }
+    FindAllHelper(str, start_node, matches);
+  }
+
+private:
+  void InsertHelper(const string&amp; str, TrieNode* node) {
+    if (str.empty()) {
+      node-&gt;terminal_node = true;
+      return;
+    }
+    assert(node != nullptr);
+    char c = str.front();
+    const auto&amp; it = node-&gt;children.find(c);
+    if (it == node-&gt;children.end()) {
+      node-&gt;children.insert(make_pair(c, unique_ptr&lt;TrieNode&gt;(new TrieNode)));
+    }
+    TrieNode* next_node = node-&gt;children.find(c)-&gt;second.get();
+    InsertHelper(str.substr(1), next_node);
+  }
+
+  const TrieNode* LookupHelper(const string&amp; str, const TrieNode* node) {
+    if (str.empty()) { return node; }
+    assert(node != nullptr);
+    const auto&amp; it = node-&gt;children.find(str.front());
+    if (it == node-&gt;children.end()) {
+      return nullptr;
+    } else {
+      return LookupHelper(str.substr(1), it-&gt;second.get());
+    }
+  }
+
+  void FindAllHelper(
+      const string&amp; current_str,
+      const TrieNode* current_node,
+      vector&lt;string&gt;* matches) {
+    if (current_node-&gt;terminal_node) {
+      matches-&gt;push_back(current_str);
+    }
+    for (const auto&amp; it : current_node-&gt;children) {
+      FindAllHelper(current_str + it.first, it.second.get(), matches);
+    }
+  }
+
+  unique_ptr&lt;TrieNode&gt; head_;
+};
+
+void PopulateTrie(const string&amp; fname, Trie* trie) {
+  ifstream ifs;
+  ifs.open(fname, ifstream::in);
+  while (!ifs.eof()) {
+    string word;
+    getline(ifs, word);
+    if (word.size()) {
+      trie-&gt;Insert(word);
+    }
+  }
+}
+
+void GetPrefixesHelper(
+    const vector&lt;int&gt;&amp; digiletters,
+    int index,
+    const string current_prefix,
+    vector&lt;string&gt;* possible_prefixes) {
+  if (index == digiletters.size()) {
+    possible_prefixes-&gt;push_back(current_prefix);
+    return;
+  }
+  const string candidates = kKeypadLetters[digiletters.at(index)];
+  for (char c : candidates) {
+    GetPrefixesHelper(
+        digiletters,
+        index + 1,
+        current_prefix + c,
+        possible_prefixes);
+  }
+}
+
+void GetPrefixes(
+    const vector&lt;int&gt;&amp; digiletters, vector&lt;string&gt;* possible_prefixes) {
+  GetPrefixesHelper(digiletters, 0, &quot;&quot;, possible_prefixes);
+}
+
+int main(int argc, char* argv[]) {
+  // Read the keypad input
+  int keypad_input;
+  cin &gt;&gt; keypad_input;
+
+  // Read strings from file into Trie
+  assert(argc == 2);
+  Trie dict_trie;
+  PopulateTrie(argv[1], &amp;dict_trie);
+
+  // Get letter counts
+  vector&lt;int&gt; digiletters;
+  while (keypad_input) {
+    digiletters.push_back(keypad_input % 10);
+    keypad_input /= 10;
+  }
+  reverse(digiletters.begin(), digiletters.end());
+
+  // First get the combinatorially possible prefixes
+  vector&lt;string&gt; possible_prefixes;
+  GetPrefixes(digiletters, &amp;possible_prefixes);
+
+  // Use the prefixes to get complete matches.
+  vector&lt;string&gt; possible_matches;
+  for (const string&amp; prefix : possible_prefixes) {
+    if (dict_trie.Lookup(prefix)) {
+      dict_trie.FindAllWithPrefix(prefix, &amp;possible_matches);
+    }
+  }
+
+  // Print matches
+  for (const string&amp; s : possible_matches) {
+    cout &lt;&lt; s &lt;&lt; endl;
+  }
+}
+</code></pre></noscript></div>
+</p>
 ]]></content>
   </entry>
   
@@ -141,27 +520,72 @@ are unit-circles).</p>
 
 <p>This is just trigonometry, so I made some Post-It illustrations. This one shows the general problem we have to solve.</p>
 
-<p>{% img center /images/programming-fun/circle-area-1.jpg 300 %}</p>
+<p><img class="center" src="/images/programming-fun/circle-area-1.jpg" width="300"></p>
 
 <p>Given the centres of the two circles, and their radii, we know <em>d</em>, the distance between their centres and whether it leads to overlap at all.</p>
 
-<p>{% img center /images/programming-fun/circle-area-2.jpg 300 %}</p>
+<p><img class="center" src="/images/programming-fun/circle-area-2.jpg" width="300"></p>
 
 <p>Overlap only occurs when <em>d &lt; 2r</em>. When <em>d > 2r</em> the answer is just the sum of the areas.</p>
 
-<p>{% img center /images/programming-fun/circle-area-3.jpg 300 %}</p>
+<p><img class="center" src="/images/programming-fun/circle-area-3.jpg" width="300"></p>
 
 <p>From this figure, it should be clear that the overlapping area is the segment of the circle subtended by the chord that is common to both circles. We can find the length of this chord by considering the right triangle formed by half of it, the radius, and half the centre distance.</p>
 
 <p>This then leads to the relationship between the area of the sector (<em>A</em>), the area of the triangle inside it (<em>A_1</em>) and the segment area (<em>A_2</em>)</p>
 
-<p>{% img center /images/programming-fun/circle-area-4.jpg 300 %}</p>
+<p><img class="center" src="/images/programming-fun/circle-area-4.jpg" width="300"></p>
 
 <p>Finally, we subtract the segment area from the area of the circle (and then double it, for two circles) to get our answer.</p>
 
-<p>{% img center /images/programming-fun/circle-area-5.jpg 300 %}</p>
+<p><img class="center" src="/images/programming-fun/circle-area-5.jpg" width="300"></p>
 
-<p>{% gist 8323896 %}</p>
+<p><div><script src='https://gist.github.com/8323896.js'></script>
+<script type="text/javascript">$(".gist-file table tr td.line-numbers").remove();</script>
+<noscript><pre><code>#include &lt;cassert&gt;
+#include &lt;cmath&gt;
+#include &lt;cstdint&gt;
+#include &lt;cstdio&gt;
+#include &lt;cstdlib&gt;
+#include &lt;algorithm&gt;
+#include &lt;iomanip&gt;
+#include &lt;iostream&gt;
+#include &lt;limits&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+#include &lt;unordered_map&gt;
+
+using namespace std;
+
+int main() {
+  double x1, y1, x2, y2;
+  cin &gt;&gt; x1 &gt;&gt; y1 &gt;&gt; x2 &gt;&gt; y2;
+  cout &lt;&lt; &quot;Got circle 1 as (&quot; &lt;&lt; x1 &lt;&lt; &quot;, &quot; &lt;&lt; y1 &lt;&lt; &quot;)\n&quot;;
+  cout &lt;&lt; &quot;Got circle 2 as (&quot; &lt;&lt; x2 &lt;&lt; &quot;, &quot; &lt;&lt; y2 &lt;&lt; &quot;)\n&quot;;
+
+  // Total area = 2 * (area of each circle) - 2 * (segment area of overlap)
+  const double kPI = atan(1.0) * 4.0;
+  const double kRadius = 1.0;
+  const double circle_area = kPI * pow(kRadius, 2);
+
+  const double centre_distance = sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
+  if (centre_distance &gt; (2 * kRadius)) {
+    // No overlap
+    cout &lt;&lt; (2 * circle_area) &lt;&lt; endl;
+    return 0;
+  }
+
+  const double segment_half_length = sqrt(pow(kRadius, 2) - pow(centre_distance/2.0, 2));
+  const double theta = asin(segment_half_length / kRadius);
+  const double sector_area = theta * pow(kRadius, 2);
+  const double segment_area = sector_area - (centre_distance * segment_half_length / 2);
+
+  cout.precision(5);
+  cout &lt;&lt; (2 * circle_area) - (2 * segment_area) &lt;&lt; endl;
+}
+</code></pre></noscript></div>
+</p>
 ]]></content>
   </entry>
   
@@ -186,7 +610,92 @@ raised bump is an upper-case &lsquo;O&rsquo; character.</p>
 <p>Print the transcribed Braille.
 ```</p>
 
-<p>{% gist 8308823 %}</p>
+<p><div><script src='https://gist.github.com/8308823.js'></script>
+<script type="text/javascript">$(".gist-file table tr td.line-numbers").remove();</script>
+<noscript><pre><code>#include &lt;cassert&gt;
+#include &lt;cmath&gt;
+#include &lt;cstdint&gt;
+#include &lt;cstdio&gt;
+#include &lt;cstdlib&gt;
+#include &lt;algorithm&gt;
+#include &lt;iomanip&gt;
+#include &lt;iostream&gt;
+#include &lt;limits&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+#include &lt;unordered_map&gt;
+
+using namespace std;
+
+void InitializeBrailleData(unordered_map&lt;string, char&gt;* rep) {
+  rep-&gt;insert(make_pair(&quot;O.....&quot;, &#39;A&#39;));
+  rep-&gt;insert(make_pair(&quot;O.O...&quot;, &#39;B&#39;));
+  rep-&gt;insert(make_pair(&quot;OO....&quot;, &#39;C&#39;));
+  rep-&gt;insert(make_pair(&quot;OO.O..&quot;, &#39;D&#39;));
+  rep-&gt;insert(make_pair(&quot;O..O..&quot;, &#39;E&#39;));
+  rep-&gt;insert(make_pair(&quot;OOO...&quot;, &#39;F&#39;));
+  rep-&gt;insert(make_pair(&quot;OOOO..&quot;, &#39;G&#39;));
+  rep-&gt;insert(make_pair(&quot;O.OO..&quot;, &#39;H&#39;));
+  rep-&gt;insert(make_pair(&quot;.OO...&quot;, &#39;I&#39;));
+  rep-&gt;insert(make_pair(&quot;.OOO..&quot;, &#39;J&#39;));
+  rep-&gt;insert(make_pair(&quot;O...O.&quot;, &#39;K&#39;));
+  rep-&gt;insert(make_pair(&quot;O.O.O.&quot;, &#39;L&#39;));
+  rep-&gt;insert(make_pair(&quot;OO..O.&quot;, &#39;M&#39;));
+  rep-&gt;insert(make_pair(&quot;OO.OO.&quot;, &#39;N&#39;));
+  rep-&gt;insert(make_pair(&quot;O..OO.&quot;, &#39;O&#39;));
+  rep-&gt;insert(make_pair(&quot;OOO.O.&quot;, &#39;P&#39;));
+  rep-&gt;insert(make_pair(&quot;OOOOO.&quot;, &#39;Q&#39;));
+  rep-&gt;insert(make_pair(&quot;O.OOO.&quot;, &#39;R&#39;));
+  rep-&gt;insert(make_pair(&quot;.OO.O.&quot;, &#39;S&#39;));
+  rep-&gt;insert(make_pair(&quot;.OOOO.&quot;, &#39;T&#39;));
+  rep-&gt;insert(make_pair(&quot;O...OO&quot;, &#39;U&#39;));
+  rep-&gt;insert(make_pair(&quot;O.O.OO&quot;, &#39;V&#39;));
+  rep-&gt;insert(make_pair(&quot;.OOO.O&quot;, &#39;W&#39;));
+  rep-&gt;insert(make_pair(&quot;OO..OO&quot;, &#39;X&#39;));
+  rep-&gt;insert(make_pair(&quot;OO.OOO&quot;, &#39;Y&#39;));
+  rep-&gt;insert(make_pair(&quot;O..OOO&quot;, &#39;Z&#39;));
+};
+
+void AddRepresentation(const string&amp; line, vector&lt;string&gt;* representations) {
+  for (int index = 0; index &lt; line.length(); index += 3) {
+    (*representations)[index / 3].push_back(line[index]);
+    (*representations)[index / 3].push_back(line[index + 1]);
+
+    assert((line[index + 2] == &#39; &#39;) || (index + 2 == line.length()));
+  }
+}
+
+int main() {
+  unordered_map&lt;string, char&gt; braille_representation;
+  InitializeBrailleData(&amp;braille_representation);
+
+  // Assume input is well formed.
+  // This means we read three lines from standard input,
+  // and each line&#39;s length is (2 * x + 3)
+  string line1, line2, line3;
+  getline(cin, line1);
+  getline(cin, line2);
+  getline(cin, line3);
+
+  // Basic invariants
+  assert(line1.length() == line2.length());
+  assert(line2.length() == line3.length());
+  assert((line1.length() + 1) % 3 == 0);
+
+  // Get the input into our desired form
+  vector&lt;string&gt; representations((line1.length() + 1) / 3);
+  AddRepresentation(line1, &amp;representations);
+  AddRepresentation(line2, &amp;representations);
+  AddRepresentation(line3, &amp;representations);
+
+  for (const string&amp; rep : representations) {
+    cout &lt;&lt; braille_representation[rep];
+  }
+  cout &lt;&lt; endl;
+}
+</code></pre></noscript></div>
+</p>
 ]]></content>
   </entry>
   
@@ -237,19 +746,196 @@ crab_cakes salad
 
 <p>So this implies a graph that looks something like this:</p>
 
-<p>{% img center /images/programming-fun/graph-dependency-1.jpg 300 %}</p>
+<p><img class="center" src="/images/programming-fun/graph-dependency-1.jpg" width="300"></p>
 
 <p>Or, if you wish, with the arrows reversed, like this:</p>
 
-<p>{% img center /images/programming-fun/graph-dependency-2.jpg 300 %}</p>
+<p><img class="center" src="/images/programming-fun/graph-dependency-2.jpg" width="300"></p>
 
 <p>So it&rsquo;s possible to start from the first <code>root</code> node, labelling it as <code>0</code> and its neighbors as <code>1</code>. This process can be repeated, with its neighbors' neighbors being labelled as <code>2</code>, and so on, until there are no nodes left to label.</p>
 
-<p>{% img center /images/programming-fun/graph-dependency-3.jpg 300  %}</p>
+<p><img class="center" src="/images/programming-fun/graph-dependency-3.jpg" width="300" title="" ></p>
 
 <p>Once all nodes are labelled, the solution is just a pairing of these numbers and the corresponding nodes.</p>
 
-<p>{% gist 8293739 %}</p>
+<p><div><script src='https://gist.github.com/8293739.js'></script>
+<script type="text/javascript">$(".gist-file table tr td.line-numbers").remove();</script>
+<noscript><pre><code>#include &lt;cmath&gt;
+#include &lt;cstdint&gt;
+#include &lt;cstdio&gt;
+#include &lt;cstdlib&gt;
+#include &lt;algorithm&gt;
+#include &lt;iomanip&gt;
+#include &lt;iostream&gt;
+#include &lt;limits&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+
+using namespace std;
+
+struct GraphNode {
+  vector&lt;GraphNode*&gt; neighbors;
+  string label;
+  int level = 0;
+
+  GraphNode(const string&amp; l) : label(l) {}
+};
+
+void FindFoodItems(
+    const string&amp; food_glob,
+    const vector&lt;GraphNode*&gt;&amp; food_nodes,
+    vector&lt;GraphNode*&gt;* results) {
+  for (auto&amp; food_node : food_nodes) {
+    // The only cases supported are:
+    //   (1) Exact match
+    //   (2) &#39;*&#39; at the beginning
+    //   (3) &#39;*&#39; at the end
+    if (food_glob.find_first_of(&#39;*&#39;) == string::npos) {
+      if (food_glob == food_node-&gt;label) {
+        results-&gt;push_back(food_node);
+        continue;
+      }
+    }
+    if (food_glob.front() == &#39;*&#39;) {
+      const string matcher = food_glob.substr(1);
+      if (food_node-&gt;label.substr(
+            food_node-&gt;label.length() - matcher.length()) ==
+          matcher) {
+        results-&gt;push_back(food_node);
+        continue;
+      }
+    }
+    if (food_glob.back() == &#39;*&#39;) {
+      const string matcher = food_glob.substr(0, food_glob.length() - 1);
+      if (food_node-&gt;label.substr(0, matcher.length()) == matcher) {
+        results-&gt;push_back(food_node);
+        continue;
+      }
+    }
+  }
+}
+
+int main() {
+  int num_food_items, num_food_relationships;
+  cin &gt;&gt; num_food_items &gt;&gt; num_food_relationships;
+  cout &lt;&lt; &quot;Will read in &quot; &lt;&lt; num_food_relationships &lt;&lt; &quot; relationships for &quot; &lt;&lt; num_food_items &lt;&lt; &quot; food items.&quot; &lt;&lt; endl;
+  vector&lt;pair&lt;string, string&gt;&gt; food_relationships;
+  vector&lt;GraphNode*&gt; food_nodes;
+  for (int i = 0; i &lt; num_food_items; ++i) {
+    string food_item;
+    cin &gt;&gt; food_item;
+    food_nodes.push_back(new GraphNode(food_item));
+  }
+  for (int i = 0; i &lt; num_food_relationships; ++i) {
+    string food_item_1, food_item_2;
+    cin &gt;&gt; food_item_1 &gt;&gt; food_item_2;
+    // We are going to use regex matching whereas the input is in &#39;glob&#39; format,
+    // so make a small adjustment.
+    food_relationships.push_back(make_pair(food_item_1, food_item_2));
+  }
+
+  // Sanity check what we got.
+  cout  &lt;&lt; &quot;Read in the following food items :- \n&quot;;
+  for (const auto&amp; food_item : food_nodes) {
+    cout &lt;&lt; food_item-&gt;label &lt;&lt; endl;
+  }
+  cout &lt;&lt; &quot;Read in the following food relationships :- \n&quot;;
+  for (const auto&amp; food_relationship : food_relationships) {
+    cout &lt;&lt; food_relationship.first &lt;&lt; &quot; &lt; &quot; &lt;&lt; food_relationship.second &lt;&lt; endl;
+  }
+
+  // General approach:
+  // 1. Create a graph which each node corresponding to a food item
+  // 2. For every relationship, expand the regex to determine the nodes involved, and
+  // then create a dependency link.
+  // 3. Go through the dependency links and number the nodes
+  //    - Increment the number of each of a node&#39;s dependencies
+  //    - Repeat for each of the dependent nodes
+  //    - Add the nodes into a numbered list.
+  //    - Note: this will require adding and removing nodes from the list
+  // 4. Once no more dependencies have to be processed, print out numbered list
+  // 5. Go through graph and print out &#39;isolated&#39; nodes
+  //
+  // Edge cases: Multiple origins, multiple nodes of the same number, isolated nodes
+
+  // Step 2
+  vector&lt;GraphNode*&gt; root_nodes = food_nodes;
+  vector&lt;GraphNode*&gt; isolated_nodes = food_nodes;
+  for (const auto&amp; food_relationship : food_relationships) {
+    vector&lt;GraphNode*&gt; dependents, dependees;
+    // Each relationship can potentially be many-&gt;many
+    // Note: the c++ regex implementation isn&#39;t available in my standard library
+    // right now, so I&#39;m going to support a limited range of globs:
+    //   only those where the &#39;*&#39; is either right at the beginning or at the end
+    FindFoodItems(food_relationship.first, food_nodes, &amp;dependents);
+    FindFoodItems(food_relationship.second, food_nodes, &amp;dependees);
+
+    // Now create dependency links
+    for (auto&amp; nodeA : dependents) {
+      for (auto&amp; nodeB : dependees) {
+        nodeA-&gt;neighbors.push_back(nodeB);
+      }
+    }
+
+    // Also as part of this process weed out non-root nodes for the next step, as well as isolated nodes.
+    for (auto&amp; node : dependees) {
+      root_nodes.erase(
+          remove(root_nodes.begin(), root_nodes.end(), node),
+          root_nodes.end());
+      isolated_nodes.erase(
+          remove(isolated_nodes.begin(), isolated_nodes.end(), node),
+          isolated_nodes.end());
+    }
+    for (auto&amp; node : dependents) {
+      isolated_nodes.erase(
+          remove(isolated_nodes.begin(), isolated_nodes.end(), node),
+          isolated_nodes.end());
+    }
+  }
+
+  // Step 3
+  // Process all the nodes in the current &#39;frontier&#39; until there are non left.
+  // The first frontier is the set of root nodes
+  queue&lt;GraphNode*&gt; frontier;
+  for (auto&amp; node : root_nodes) {
+    frontier.push(node);
+  }
+  while (!frontier.empty()) {
+    GraphNode* current_node = frontier.front();
+    for (auto&amp; neighbor : current_node-&gt;neighbors) {
+      neighbor-&gt;level = current_node-&gt;level + 1;
+      frontier.push(neighbor);
+    }
+    frontier.pop();
+  }
+
+  // Step 4
+  vector&lt;vector&lt;GraphNode*&gt;&gt; levels(food_nodes.size());
+  for (const auto&amp; node : food_nodes) {
+    if (find(isolated_nodes.begin(), isolated_nodes.end(), node) ==
+        isolated_nodes.end()) {
+      levels[node-&gt;level].push_back(node);
+    }
+  }
+
+  for (int i = 0; i &lt; levels.size() &amp;&amp; !levels[i].empty(); ++i) {
+    cout &lt;&lt; i + 1 &lt;&lt; &quot; : &quot;;
+    for (const auto&amp; node : levels[i]) {
+      cout &lt;&lt; node-&gt;label &lt;&lt; &quot;  &quot;;
+    }
+    cout &lt;&lt; endl;
+  }
+  cout &lt;&lt; endl;
+
+  // Step 5
+  // Finally, print out the nodes without dependees
+  for (const auto&amp; node : isolated_nodes) {
+    cout &lt;&lt; &quot;Warning: &quot; &lt;&lt; node-&gt;label &lt;&lt; &quot; does not have any ordering.&quot; &lt;&lt; endl;
+  }
+}
+</code></pre></noscript></div>
+</p>
 ]]></content>
   </entry>
   
