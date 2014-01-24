@@ -111,6 +111,60 @@
   
 
 
+<i class="icon-calendar-empty"></i> <time datetime="2014-01-05T20:42:00+00:00" pubdate data-updated="true">Jan 5<span>th</span>, 2014</time></h5>
+          <div class="row-fluid">
+          
+          </div>
+          
+          <div class="row-fluid">
+          
+          <a href="/blog/categories/plan/"><span class="badge">plan</span></a>
+          
+          </div>
+          
+    </div>
+    <div class="span10 post-container">
+      <h1 class="link"><a href="/blog/2014/01/05/resolutions/">Resolutions</a></h1>
+      <p>It&rsquo;s that time of year again. I can&rsquo;t believe 2013 is already over.</p>
+
+<p>I thought about what possible resolutions I could make, but either nothing came to mind, or too many. One thing that does bug me is that I feel I&rsquo;m not as good a programmer as I once was. And so I have a simple resolution: improve on &ldquo;always be coding&rdquo;.</p>
+
+<p>There is a simple way to do this: make it routine and consistent to do lots of programming problems. I had started to do the <a href="http://www.reddit.com/r/dailyprogrammer/">&lsquo;daily programmer&rsquo;</a> ones on reddit, I have to make this more consistent (how about 3 every week ?)</p>
+
+<p>The other obvious way is to get into <a href="www.topcoder.com">TopCoder</a>. Go through all the <a href="http://community.topcoder.com/tc?module=Static&amp;d1=tutorials&amp;d2=alg_index">tutorials</a>, examples, every SRM that comes along. Even if it can&rsquo;t be attempted live, do it eventually.</p>
+
+<p>So that&rsquo;s all for now. I&rsquo;ll evaluate this next year!</p>
+
+      
+      
+    </div>
+  </div>
+
+
+
+    </article>
+    
+    <hr>
+    
+  
+  
+    <article>
+      
+
+  <div class="row-fluid">
+    <div class="span2 post-meta">
+	  <h5 class="date-time">
+
+
+
+
+
+
+
+
+  
+
+
 <i class="icon-calendar-empty"></i> <time datetime="2013-12-24T06:22:00+00:00" pubdate data-updated="true">Dec 24<span>th</span>, 2013</time></h5>
           <div class="row-fluid">
           
@@ -897,372 +951,6 @@ int main() {
  *  . ..
  */
 </code></pre></noscript></div>
-
-
-
-
-      
-      
-    </div>
-  </div>
-
-
-
-    </article>
-    
-    <hr>
-    
-  
-  
-    <article>
-      
-
-  <div class="row-fluid">
-    <div class="span2 post-meta">
-	  <h5 class="date-time">
-
-
-
-
-
-
-
-
-  
-
-
-<i class="icon-calendar-empty"></i> <time datetime="2013-11-26T14:50:00+00:00" pubdate data-updated="true">Nov 26<span>th</span>, 2013</time></h5>
-          <div class="row-fluid">
-          
-          </div>
-          
-          <div class="row-fluid">
-          
-          <a href="/blog/categories/alwaysbecoding/"><span class="badge">AlwaysBeCoding</span></a>
-          
-          <a href="/blog/categories/reddit,/"><span class="badge">reddit,</span></a>
-          
-          </div>
-          
-    </div>
-    <div class="span10 post-container">
-      <h1 class="link"><a href="/blog/2013/11/26/reddit-dailyprogrammer-computing-pi/">Reddit DailyProgrammer Computing Pi</a></h1>
-      <p>Another reddit programming exercise, <a href="http://www.reddit.com/r/dailyprogrammer/comments/1qply1/111513_challenge_129_hard_baking_pi/">this one</a> being classified as &lsquo;hard&rsquo; and indeed it <em>did</em> take a while longer, being a distributed programming setup.</p>
-
-<h3>Implementation Notes</h3>
-
-<ul>
-<li>In a real world application, I would use something like Protocol Buffers for serialization</li>
-<li>ditto for something like Thrift for RPCs</li>
-<li>I had to add a sleep to each client so the first client doesn&rsquo;t run through
-the whole batch on its own (machines are too fast these days!)</li>
-<li>The run was limited to 250 digits, seemed to exhaust accuracy after about 254 digits with my implementation</li>
-<li>Every client connects and sends &lsquo;-1&rsquo; before getting its first digit. On
-subsequent connections it sends its current digit and computed value, and
-receives the next digit to compute.</li>
-</ul>
-
-
-<h3>Server Code</h3>
-
-<div><script src='https://gist.github.com/7667732.js'></script>
-<script type="text/javascript">$(".gist-file table tr td.line-numbers").remove();</script>
-<noscript><pre><code>#include &lt;cmath&gt;
-#include &lt;cstdint&gt;
-#include &lt;cstdio&gt;
-#include &lt;cstdlib&gt;
-#include &lt;iostream&gt;
-#include &lt;limits&gt;
-#include &lt;string&gt;
-#include &lt;vector&gt;
-
-#include &quot;Poco/Net/ServerSocket.h&quot;
-#include &quot;Poco/Net/SocketAddress.h&quot;
-#include &quot;Poco/Net/StreamSocket.h&quot;
-#include &quot;Poco/Timespan.h&quot;
-
-using namespace std;
-
-int getNextDigit() {
-  static int next_digit = -1;
-  ++next_digit;
-  return next_digit;
-}
-
-int main() {
-  Poco::Net::ServerSocket srv(9090);
-  cout &lt;&lt; &quot;Waiting for clients ...&quot; &lt;&lt; endl;
-
-  // Arbitrary number of clients are supported. Each client is given the &#39;next&#39;
-  // digit once it&#39;s done.
-
-  double mysum = 3.0;  // used to sanity check
-  static const float kComparisonMultiplier = 10000.0;
-  for (;;) {
-    Poco::Net::StreamSocket ss = srv.acceptConnection();
-    ss.setReceiveTimeout(20000);
-    ss.setSendTimeout(20000);
-    int last_digit;
-    unsigned int computed_value;
-    char client_buf[10];
-    ss.receiveBytes(client_buf, 10);
-    sscanf(client_buf, &quot;%d-%u&quot;, &amp;last_digit, &amp;computed_value);
-    cout &lt;&lt; &quot;Received &quot; &lt;&lt; last_digit
-         &lt;&lt; &quot;th digit as &quot; &lt;&lt; hex &lt;&lt; computed_value &lt;&lt; dec &lt;&lt; endl;
-    if (computed_value != 1000) {
-      mysum += (1.0 * computed_value / pow(16.0, (last_digit + 1)));
-      cout &lt;&lt; &quot;  Divergence from PI &quot;
-           &lt;&lt; &quot;(to &quot; &lt;&lt; kComparisonMultiplier &lt;&lt; &quot; accuracy) so far = &quot;
-           &lt;&lt; fabs((mysum - M_PI) * kComparisonMultiplier)  &lt;&lt; endl;
-    }
-
-    // Send next command
-    int next_digit = getNextDigit();
-    snprintf(client_buf, 10, &quot;*%d*&quot;, next_digit);
-    ss.sendBytes(client_buf, 10);
-    cout &lt;&lt; &quot;Sent &quot; &lt;&lt; client_buf &lt;&lt; endl;
-  }
-  return 0;
-}
-
-/*
- * Input Description
- * There is no formal input description, though this is the desired behavior:
- * You launch your main dispatcher-application on Computer A. You then launch
- * the computing-applications on Computer W, X, Y and Z. Computer A wants to
- * compute the first four digits of Pi, and sends the appropriate network
- * commands, one to each computer. Computer Y returns a result first, so the
- * dispatcher receives the data, saves in your output file the line &quot;0:2&quot;, and
- * then gives the command to compute the 5th digit of Pi. Computers X, Z, W
- * finish in that order, returning the results to the dispatcher, which in turn
- * saves in the same format. They are then asked to compute digits 6, 7, and 8.
- * This repeats until your dispatcher application sends a &quot;stop&quot; or &quot;kill&quot;
- * command to the computing processes. It is up to you how many hexadecimal
- * digits each process computes.
- * Output Description
- * For each computed base-16 (hexadecimal) digit of Pi, write to a file a line
- * of text in the format of &lt;Digit-Index&gt;:&lt;Computed-Digit&gt;. The order does not
- * matter, and you may skip digits. An example of the file, after eight computed
- * digits, would be as follows:
- * 0:2
- * 1:4
- * 2:3
- * 3:F
- * 4:6
- * 5:A
- * 6:8
- * 7:8
- */
-</code></pre></noscript></div>
-
-
-<h3>Client Code</h3>
-
-<div><script src='https://gist.github.com/7667742.js'></script>
-<script type="text/javascript">$(".gist-file table tr td.line-numbers").remove();</script>
-<noscript><pre><code>#include &lt;cmath&gt;
-#include &lt;cstdint&gt;
-#include &lt;cstdio&gt;
-#include &lt;cstdlib&gt;
-#include &lt;iostream&gt;
-#include &lt;limits&gt;
-#include &lt;string&gt;
-#include &lt;vector&gt;
-
-#include &quot;Poco/Net/SocketAddress.h&quot;
-#include &quot;Poco/Net/StreamSocket.h&quot;
-
-using namespace std;
-
-double Series(unsigned int digit, int j) {
-  double termsum = 0.0;
-  for (int k = 0; k &lt; digit; k++) {
-    double numerator = pow(16.0, digit - k);
-    double denominator = (8 * k + j);
-    termsum += (numerator / denominator);
-    termsum -= floor(termsum);
-  }
-  for (int k = digit; ; k++) {
-    double numerator = 1.0;
-    double denominator = (8 * k + j) * pow(16, k - digit);
-    double fraction = numerator / denominator;
-    if (fraction - 0.0  &lt; 1e-32) break;
-    termsum += (numerator / denominator);
-    termsum -= floor(termsum);
-  }
-  return termsum;
-}
-
-double ComputePiDigit(unsigned int digit) {
-  double value = (4 * Series(digit, 1) -
-                  2 * Series(digit, 4) -
-                  1 * Series(digit, 5) -
-                  1 * Series(digit, 6));
-  value = value - (unsigned long long) value + 1.0;
-  return value;
-}
-
-// Special case for very first client connection: digitNum == -1
-// Value has valid hex range, or else &#39;1000&#39;
-
-struct PiState {
-  int digitNum;
-  unsigned int value;
-};
-
-int main(int argc, char **argv) {
-  cout &lt;&lt; &quot;Connecting to &quot; &lt;&lt; argv[1] &lt;&lt; &quot;:&quot; &lt;&lt; argv[2] &lt;&lt; endl;
-  static const int kMaxDigits = 250;
-  // Connect to the server, work with upto 10000 digits, then stop.
-  Poco::Net::SocketAddress sa(argv[1], atoi(argv[2]));
-  PiState my_pi_state;
-  // First request is special
-  my_pi_state.digitNum = -1;;
-  my_pi_state.value = 1000;
-
-  while (my_pi_state.digitNum &lt; kMaxDigits) {
-
-    Poco::Net::StreamSocket socket(sa);
-    socket.setReceiveTimeout(100000);
-
-    // contact server, give current result, get new digit to compute
-    char bufstr[10];
-    snprintf(bufstr, 10, &quot;%d-%u&quot;, my_pi_state.digitNum, my_pi_state.value);
-    socket.sendBytes(bufstr, 10);
-    socket.receiveBytes(bufstr, 10);
-    sscanf(bufstr, &quot;*%d*&quot;, &amp;my_pi_state.digitNum);
-    double calculated_value = ComputePiDigit(my_pi_state.digitNum);
-    // common case: compute the current digit and send it to the server
-
-    cout &lt;&lt; &quot;Digit: &quot; &lt;&lt; dec &lt;&lt; my_pi_state.digitNum &lt;&lt; &quot;...&quot;;
-    float hexval = fabs(calculated_value);
-    my_pi_state.value =
-        static_cast&lt;unsigned int&gt;(16.0 * (hexval - floor(hexval)));
-    cout &lt;&lt; &quot;Value: &quot; &lt;&lt; hex &lt;&lt; my_pi_state.value &lt;&lt; endl;
-
-    // Anti-performance, but we want to work slowly here so I can start up
-    // multiple clients and show their interleaved output :)
-    sleep(1);
-  }
-  cout &lt;&lt; &quot;Pi Client exiting ...&quot; &lt;&lt; endl &lt;&lt; endl;
-}
-</code></pre></noscript></div>
-
-
-<h3>Compiling</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>clang++ -std<span class="o">=</span>c++0x pi-compute-server.cpp  -lPocoNet -lPocoFoundation -o server
-</span><span class='line'><span class="nv">$ </span>clang++ -std<span class="o">=</span>c++0x pi-compute-client.cpp  -lPocoNet -lPocoFoundation -o client
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Running</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>./server
-</span><span class='line'>Waiting <span class="k">for </span>clients ...
-</span><span class='line'>Received -1th digit as 1000
-</span><span class='line'>Sent *0*
-</span><span class='line'>Received 0th digit as 2
-</span><span class='line'>Divergence from PI <span class="o">(</span>to 10000 accuracy<span class="o">)</span> so <span class="nv">far</span> <span class="o">=</span> 165.927
-</span><span class='line'>Sent *1*
-</span><span class='line'>Received -1th digit as 1000
-</span><span class='line'>Sent *2*
-</span><span class='line'>Received 1th digit as 4
-</span><span class='line'>Divergence from PI <span class="o">(</span>to 10000 accuracy<span class="o">)</span> so <span class="nv">far</span> <span class="o">=</span> 9.67654
-</span><span class='line'>Sent *3*
-</span><span class='line'>Received 2th digit as 3
-</span><span class='line'>Divergence from PI <span class="o">(</span>to 10000 accuracy<span class="o">)</span> so <span class="nv">far</span> <span class="o">=</span> 2.35232
-</span><span class='line'>Sent *4*
-</span><span class='line'>Received -1th digit as 1000
-</span><span class='line'>Sent *5*
-</span><span class='line'>Received 3th digit as 15
-</span><span class='line'>Divergence from PI <span class="o">(</span>to 10000 accuracy<span class="o">)</span> so <span class="nv">far</span> <span class="o">=</span> 0.0634988
-</span><span class='line'>Sent *6*
-</span><span class='line'>Received 4th digit as 6
-</span><span class='line'>Divergence from PI <span class="o">(</span>to 10000 accuracy<span class="o">)</span> so <span class="nv">far</span> <span class="o">=</span> 0.00627833
-</span><span class='line'>Sent *7*
-</span><span class='line'>...
-</span><span class='line'>Sent *249*
-</span><span class='line'>Received 246th digit as 1
-</span><span class='line'>Divergence from PI <span class="o">(</span>to 10000 accuracy<span class="o">)</span> so <span class="nv">far</span> <span class="o">=</span> 0.00597909
-</span><span class='line'>Sent *250*
-</span><span class='line'>Received 247th digit as 0
-</span><span class='line'>Divergence from PI <span class="o">(</span>to 10000 accuracy<span class="o">)</span> so <span class="nv">far</span> <span class="o">=</span> 0.00597909
-</span><span class='line'>Sent *251*
-</span><span class='line'>Received 248th digit as 11
-</span><span class='line'>Divergence from PI <span class="o">(</span>to 10000 accuracy<span class="o">)</span> so <span class="nv">far</span> <span class="o">=</span> 0.00597909
-</span><span class='line'>Sent *252*
-</span><span class='line'>Received 249th digit as 3
-</span><span class='line'>Divergence from PI <span class="o">(</span>to 10000 accuracy<span class="o">)</span> so <span class="nv">far</span> <span class="o">=</span> 0.00597909
-</span><span class='line'>Sent *253*
-</span><span class='line'>^C
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="nv">$ </span>./client localhost 9090
-</span><span class='line'>Connecting to localhost:9090
-</span><span class='line'>Digit: 0...Value: 2
-</span><span class='line'>Digit: 1...Value: 4
-</span><span class='line'>Digit: 3...Value: f
-</span><span class='line'>Digit: 6...Value: 8
-</span><span class='line'>Digit: 9...Value: 5
-</span><span class='line'>Digit: 13...Value: 8
-</span><span class='line'>Digit: 17...Value: 0
-</span><span class='line'>Digit: 21...Value: 7
-</span><span class='line'>...
-</span></code></pre></td></tr></table></div></figure>
 
 
 
