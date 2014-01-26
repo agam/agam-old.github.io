@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2014-01-24T23:54:34+00:00</updated>
+  <updated>2014-01-26T00:13:33+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,73 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Minsky Turing Lecture: Part 1]]></title>
+    <link href="http://agam.github.io/blog/2014/01/26/minsky-turing-lecture-part-1/"/>
+    <updated>2014-01-26T00:10:00+00:00</updated>
+    <id>http://agam.github.io/blog/2014/01/26/minsky-turing-lecture-part-1</id>
+    <content type="html"><![CDATA[<p>I came across a reference to Marvin Minsky&rsquo;s 1970 Turing Award Lecture. I&rsquo;ve barely read any of these lectures, always assuming they would be empty or pedantic or plain boring. Reading this changed that perception completely.</p>
+
+<h2>Science and Education</h2>
+
+<p>The structure of this lecture seems very interesting to me; it seems to be divided into two parts. The first focussing more on computer science and its failings, and the second on (what seems to me) education.</p>
+
+<p>This post is about the first part. And by &ldquo;about&rdquo; I mean just extracts with minimal commentary.</p>
+
+<h2>The trouble with Computer Science &hellip;</h2>
+
+<blockquote><p>The trouble with computer science today is an obsessive concern with form instead of content.</p></blockquote>
+
+<p>(yes, that&rsquo;s the opening line!)</p>
+
+<blockquote><p>This essay has three parts, suggesting form-content confusion in <em>theory of computation</em>, in <em>programming languages</em>, and in <em>education</em>.</p></blockquote>
+
+<p>(yes, I said two parts earlier &hellip; I just clubbed the first two together)</p>
+
+<blockquote><p>Suppose that we had <em>n</em> computers instead of just one. How much can we speed up what kinds of calculations? For some, we can surely gain a factor of <em>n</em>. But these are rare. For others, we can gain log <em>n</em>, but it is hard to find any or to prove what are their properties. And for most, I think, we can gain hardly anything; this is the case in which there are many highly branched conditionals, so that look-ahead on possible branches will usually be wasted. <strong>We know almost nothing about this; most people think, with surely incorrect optimism, that parallelism is usually a profitable way to speed up most computations.</strong></p></blockquote>
+
+<p>(&ldquo;surely incorrect optimism&rdquo;! I agree!)</p>
+
+<blockquote><p>&hellip; in today&rsquo;s computer science curricula &hellip; almost all their time is devoted to formal classifications of syntactic language types, defeatist unsolvability theories, <strong>folklore about systems programming</strong>, and generally trivial fragments of &ldquo;optimization of logic design&rdquo; &mdash; the latter often in situations where the art of heuristic programming has far outstretched the special-case &ldquo;theories&rdquo; so grimly taught and tested &mdash; and <strong>invocations about programming style almost sure to be outmoded before the student graduates</strong>.</p></blockquote>
+
+<p>(yup, quite true even today)</p>
+
+<h2>The trouble with programming languages &hellip;</h2>
+
+<blockquote><p><em>SYNTAX IS OFTEN UNNECESSARY</em>. <strong>One can survive with much less syntax than is generally realized</strong>. Much of programming syntax is concerned with suppression of parentheses or with emphasis of scope markers. There are alternatives that have been much underused.
+&hellip; such devices as infixes and operator precedence &hellip; have their place. But <em>their importance to computer science as a whole has been so exaggerated that it is beginning to corrupt the youth</em>.</p></blockquote>
+
+<p>(I wonder what he would have thought of <em>C++</em> !)</p>
+
+<blockquote><p>The clumsiness, for humans, of writing all the parentheses is evident; <strong>the advantages of not having to learn all the conventions &hellip; is often overlooked</strong>.
+It remains to be seen whether a syntax with explicit delimiters is reactionary, or whether it is the wave of the future.</p></blockquote>
+
+<p>(a possible nod to Lisp ?)</p>
+
+<blockquote><p>Much can be done to clarify the structure of expressions in such a &ldquo;syntax-weak&rdquo; language by using indentation and other layout devices that are outside the language proper.</p></blockquote>
+
+<p>(a possible precursory nod to Python ?)</p>
+
+<h2>Moving forward &hellip;</h2>
+
+<blockquote><p>What is a compiler for? The usual answers resemble &ldquo;to translate from one language to another&rdquo; or &ldquo;to take a description of an algorithm and assemble it into a program, filling in many small details.&rdquo; For the future, a more ambitious view is required. Most compilers will be systems that &ldquo;produce an algorithm, given a description of its effect.&rdquo;</p></blockquote>
+
+<p>(not sure what to make of this)</p>
+
+<blockquote><p>No matter how a language is described, a computer must use a procedure to interpret it. One should remember that <em>in describing a language the main goal is to explain how to write programs in int and what such programs mean</em>. The main goal <em>isn&rsquo;t</em> to describe the syntax.</p></blockquote>
+
+<p>(Sure, ok)</p>
+
+<blockquote><p>Paradoxically, though modern programming ideas were developed because processes were hard to depict with classical mathematical notations, designers are turning back to an earlier form &mdash; the equation &mdash; in just the kind of situation that <em>needs</em> program.</p></blockquote>
+
+<p>(aha! wait, what?)</p>
+
+<h2>Stay tuned</h2>
+
+<p>So much for Part 1. I&rsquo;ll pick up the rest of the extracts next time.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Cost comparison: Google Cloud vs DigitalOcean]]></title>
@@ -2133,128 +2200,6 @@ For each round of computation, print the percentage of votes for each candidate,
 <p>That led me to <a href="https://gist.github.com/arnab/4584901">this gist</a>. <code>export LANG=en_US.utf-8</code> fixed the generate problem.</p>
 
 <p>And then <code>rake deploy</code> worked as expected, so yay!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Moar Reddit DailyProgramming: Falling Sand]]></title>
-    <link href="http://agam.github.io/blog/2013/11/26/moar-reddit-dailyprogramming-falling-sand/"/>
-    <updated>2013-11-26T17:33:00+00:00</updated>
-    <id>http://agam.github.io/blog/2013/11/26/moar-reddit-dailyprogramming-falling-sand</id>
-    <content type="html"><![CDATA[<p>Another <a href="http://www.reddit.com/r/dailyprogrammer/comments/1rdtky/111113_challenge_142_easy_falling_sand/">easy challenge</a>.</p>
-
-<p>One thing I learnt while doing this: I had to test the program with standard
-input and had created a couple of files with sample input that I could pipe in.
-I wasted a lot of time debugging a spurious newline (!), so in the future I
-should remember to do the following:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nb">set </span><span class="nv">listchars</span><span class="o">=</span>eol:<span class="err">$</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>What this does is show you <code>$</code> wherever the file has <code>\n</code> in it, so you can use
-this to distinguish between &lsquo;real&rsquo; spaces and whitespace.</p>
-
-<div><script src='https://gist.github.com/7669304.js'></script>
-<script type="text/javascript">$(".gist-file table tr td.line-numbers").remove();</script>
-<noscript><pre><code>#include &lt;cmath&gt;
-#include &lt;cstdint&gt;
-#include &lt;cstdio&gt;
-#include &lt;cstdlib&gt;
-#include &lt;iostream&gt;
-#include &lt;limits&gt;
-#include &lt;string&gt;
-#include &lt;vector&gt;
-
-using namespace std;
-
-void PrintGrid(const vector&lt;vector&lt;char&gt;&gt;&amp; grid) {
-  for (int i = 0; i &lt; grid.size(); ++i) {
-    for (int j = 0; j &lt; grid.size(); ++j) {
-      cout &lt;&lt; grid[i][j];
-    }
-    cout &lt;&lt; endl;
-  }
-}
-
-bool GridFall(vector&lt;vector&lt;char&gt;&gt;* grid) {
-  bool changed = false;
-  // Skip row above ground
-  for (int i = grid-&gt;size() - 2; i &gt;= 0; --i) {
-    auto&amp; current_row = grid-&gt;at(i);
-    auto&amp; next_row = grid-&gt;at(i + 1);
-    for (int j = 0; j &lt; grid-&gt;size(); ++j) {
-      if (current_row[j] == &#39;.&#39; &amp;&amp; next_row[j] == &#39; &#39;) {
-        changed = true;
-        current_row[j] = &#39; &#39;;
-        next_row[j] = &#39;.&#39;;
-      }
-    }
-  }
-  return changed;
-}
-
-int main() {
-  int grid_size;
-  cin &gt;&gt; grid_size;
-
-  vector&lt;vector&lt;char&gt;&gt; grid(grid_size);
-  char dummy_newline;
-  cin.get(dummy_newline);
-  cin &gt;&gt; noskipws;
-  for (int i = 0; i &lt; grid_size; ++i) {
-    for (int j = 0; j &lt; grid_size; ++j) {
-      char grid_char;
-      cin.get(grid_char);
-      grid[i].push_back(grid_char);
-    }
-    cin.get(dummy_newline);
-  }
-
-  do {
-    // Uncomment to view/debug transitory steps.
-    //cout &lt;&lt; &quot;Intermediate grid state :- &quot; &lt;&lt; endl;
-    //PrintGrid(grid);
-  } while (GridFall(&amp;grid));
-
-  PrintGrid(grid);
-
-  return 0;
-}
-
-/*
- * Input Description
- * On standard console input, you will be given an integer N which represents
- * the N x N grid of ASCII characters. This means there will be N-lines of
- * N-characters long. This is the starting grid of your simulated world: the
- * character &#39; &#39; (space) means an empty space, while &#39;.&#39; (dot) means sand, and
- * &#39;#&#39; (hash or pound) means stone. Once you parse this input, simulate the
- * world until all particles are settled (e.g. the sand has fallen and either
- * settled on the ground or on stone). &quot;Ground&quot; is defined as the solid surface
- * right below the last row.
- * Output Description
- * Print the end result of all particle positions using the input format for
- * particles.
- * Sample Inputs &amp; Outputs
- * Sample Input
- * 5
- * .....
- *   #  
- *   #    
- *
- *       .
- * Sample Output
- *   .  
- * . #  
- * #    
- *     .
- *  . ..
- */
-</code></pre></noscript></div>
-
-
-
 ]]></content>
   </entry>
   
