@@ -4,7 +4,7 @@
   <title><![CDATA[Category: reddit | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/reddit/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2014-01-27T00:12:46+00:00</updated>
+  <updated>2014-01-27T03:59:20+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,100 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Programming Fun: Adjacency Matrix]]></title>
+    <link href="http://agam.github.io/blog/2014/01/27/programming-fun-adjacency-matrix/"/>
+    <updated>2014-01-27T03:55:00+00:00</updated>
+    <id>http://agam.github.io/blog/2014/01/27/programming-fun-adjacency-matrix</id>
+    <content type="html"><![CDATA[<p>Another &ldquo;intermediate&rdquo; <a href="http://www.reddit.com/r/dailyprogrammer/comments/1t6dlf/121813_challenge_140_intermediate_adjacency_matrix/">problem</a> today.</p>
+
+<p>```</p>
+
+<h2>Input Description</h2>
+
+<p>On standard console input, you will be first given a line with two space-delimited integers N and M. N is the number of nodes / vertices in the graph, while M is the number of following lines of edge-node data. A line of edge-node data is a space-delimited set of integers, with the special &ldquo;&ndash;>&rdquo; symbol indicating an edge. This symbol shows the edge-relationship between the set of left-sided integers and the right-sided integers. This symbol will only have one element to its left, or one element to its right. These lines of data will also never have duplicate information; you do not have to handle re-definitions of the same edges.</p>
+
+<p>An example of data that maps the node 1 to the nodes 2 and 3 is as follows:
+1 &ndash;> 2 3</p>
+
+<p>Another example where multiple nodes points to the same node:
+3 8 &ndash;> 2</p>
+
+<p>You can expect input to sometimes create cycles and self-references in the graph. The following is valid:
+2 &ndash;> 2 3
+3 &ndash;> 2</p>
+
+<p>Note that there is no order in the given integers; thus &ldquo;1 &ndash;> 2 3&rdquo; is the same as &ldquo;1 &ndash;> 3 2&rdquo;.</p>
+
+<h2>Output Description</h2>
+
+<p>Print the N x N adjacency matrix as a series of 0&rsquo;s (no-edge) and 1&rsquo;s (edge).
+```</p>
+
+<p>Since the C++ Standard Library doesn&rsquo;t have a built-in matrix library (or maybe it does and I&rsquo;m unaware of it), I just used a vector of size <code>M * N</code> to stand in for an <code>M * N</code> matrix.</p>
+
+<p><div><script src='https://gist.github.com/8643006.js'></script>
+<script type="text/javascript">$(".gist-file table tr td.line-numbers").remove();</script>
+<noscript><pre><code>#include &lt;cassert&gt;
+#include &lt;cmath&gt;
+#include &lt;cstdint&gt;
+#include &lt;cstdio&gt;
+#include &lt;cstdlib&gt;
+#include &lt;algorithm&gt;
+#include &lt;array&gt;
+#include &lt;fstream&gt;
+#include &lt;iomanip&gt;
+#include &lt;iostream&gt;
+#include &lt;limits&gt;
+#include &lt;map&gt;
+#include &lt;memory&gt;
+#include &lt;sstream&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+#include &lt;unordered_map&gt;
+
+using namespace std;
+
+const static char* kRelationshipMarker = &quot;-&gt;&quot;;
+
+int main(int argc, char* argv[]) {
+  int number_nodes, number_relationships;
+  string line;
+  getline(cin, line);
+  istringstream is(line);
+  is &gt;&gt; number_nodes &gt;&gt; number_relationships;
+
+  vector&lt;int&gt; connections;
+  connections.assign(number_nodes * number_nodes, 0);
+
+  for (int i = 0; i &lt; number_relationships; ++i) {
+    getline(cin, line);
+    int connectee;
+    string marker;
+    istringstream ris(line);
+    ris &gt;&gt; connectee;
+    ris &gt;&gt; marker;
+    assert(marker == kRelationshipMarker);
+    int connected_node;
+    while (ris &gt;&gt; connected_node) {
+      connections[connectee * number_nodes + connected_node] = 1;
+    }
+  }
+
+  for (int i = 0; i &lt; number_nodes; ++i) {
+    for (int j = 0; j &lt; number_nodes; ++j) {
+      cout &lt;&lt; connections[i * number_nodes + j];
+    }
+    cout &lt;&lt; endl;
+  }
+}
+
+</code></pre></noscript></div>
+</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Programming Fun: Nuts and Bolts]]></title>
@@ -693,246 +787,6 @@ int main() {
     cout &lt;&lt; braille_representation[rep];
   }
   cout &lt;&lt; endl;
-}
-</code></pre></noscript></div>
-</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Programming Fun: Banquet Planning]]></title>
-    <link href="http://agam.github.io/blog/2014/01/07/programming-fun-banquet-planning/"/>
-    <updated>2014-01-07T02:27:00+00:00</updated>
-    <id>http://agam.github.io/blog/2014/01/07/programming-fun-banquet-planning</id>
-    <content type="html"><![CDATA[<p>Here&rsquo;s <a href="http://www.reddit.com/r/dailyprogrammer/comments/1rnrs2/112813_challenge_137_intermediate_hard_banquet/">another</a> daily programming problem:</p>
-
-<p>```</p>
-
-<h2>Input Description</h2>
-
-<p>On standard console input, you will be given two space-delimited integers, N and M. N is the number of food items, while M is the number of food-relationships. Food-items are unique single-word lower-case names with optional underscores (the &lsquo;<em>&rsquo; character), while food-relationships are two food items that are space delimited. All food-items will be listed first on their own lines, then all food-relationships will be listed on their own lines afterwards. A food-relationship is where the first item must be served before the second item.
-Note that in the food-relationships list, some food-item names can use the wildcard-character &lsquo;<em>&rsquo;. You must support this by expanding the rule to fulfill any combination of strings that fit the wildcard. For example, using the items from Sample Input 2, the rule &ldquo;turkey</em> *</em>pie&rdquo; expands to the following four rules:
-turkey almond_pie
-turkey_stuffing almond_pie
-turkey pecan_pie
-turkey_stuffing pecan_pie
-A helpful way to think about the wildcard expansion is to use the phrase &ldquo;any item A must be before any item B&rdquo;. An example would be the food-relationship &ldquo;*pie coffee&rdquo;, which can be read as &ldquo;any pie must be before coffee&rdquo;.
-Some orderings may be ambiguous: you might have two desserts before coffee, but the ordering of desserts may not be explicit. In such a case, group the items together.</p>
-
-<h2>Output Description</h2>
-
-<p>Print the correct order of food-items with a preceding index, starting from 1. If there are ambiguous ordering for items, list them together on the same line as a comma-delimited array of food-items. Any items that do not have a relationship must be printed with a warning or error message.</p>
-
-<p>```</p>
-
-<p>The second sample input (to take an example) is as follows:</p>
-
-<p><code>
-8 5
-turkey
-pecan_pie
-salad
-crab_cakes
-almond_pie
-rice
-coffee
-turkey_stuffing
-turkey_stuffing turkey
-turkey* *_pie
-*pie coffee
-salad turkey*
-crab_cakes salad
-</code></p>
-
-<p>So this implies a graph that looks something like this:</p>
-
-<p><img class="center" src="/images/programming-fun/graph-dependency-1.jpg" width="300"></p>
-
-<p>Or, if you wish, with the arrows reversed, like this:</p>
-
-<p><img class="center" src="/images/programming-fun/graph-dependency-2.jpg" width="300"></p>
-
-<p>So it&rsquo;s possible to start from the first <code>root</code> node, labelling it as <code>0</code> and its neighbors as <code>1</code>. This process can be repeated, with its neighbors' neighbors being labelled as <code>2</code>, and so on, until there are no nodes left to label.</p>
-
-<p><img class="center" src="/images/programming-fun/graph-dependency-3.jpg" width="300" title="" ></p>
-
-<p>Once all nodes are labelled, the solution is just a pairing of these numbers and the corresponding nodes.</p>
-
-<p><div><script src='https://gist.github.com/8293739.js'></script>
-<script type="text/javascript">$(".gist-file table tr td.line-numbers").remove();</script>
-<noscript><pre><code>#include &lt;cmath&gt;
-#include &lt;cstdint&gt;
-#include &lt;cstdio&gt;
-#include &lt;cstdlib&gt;
-#include &lt;algorithm&gt;
-#include &lt;iomanip&gt;
-#include &lt;iostream&gt;
-#include &lt;limits&gt;
-#include &lt;string&gt;
-#include &lt;vector&gt;
-#include &lt;queue&gt;
-
-using namespace std;
-
-struct GraphNode {
-  vector&lt;GraphNode*&gt; neighbors;
-  string label;
-  int level = 0;
-
-  GraphNode(const string&amp; l) : label(l) {}
-};
-
-void FindFoodItems(
-    const string&amp; food_glob,
-    const vector&lt;GraphNode*&gt;&amp; food_nodes,
-    vector&lt;GraphNode*&gt;* results) {
-  for (auto&amp; food_node : food_nodes) {
-    // The only cases supported are:
-    //   (1) Exact match
-    //   (2) &#39;*&#39; at the beginning
-    //   (3) &#39;*&#39; at the end
-    if (food_glob.find_first_of(&#39;*&#39;) == string::npos) {
-      if (food_glob == food_node-&gt;label) {
-        results-&gt;push_back(food_node);
-        continue;
-      }
-    }
-    if (food_glob.front() == &#39;*&#39;) {
-      const string matcher = food_glob.substr(1);
-      if (food_node-&gt;label.substr(
-            food_node-&gt;label.length() - matcher.length()) ==
-          matcher) {
-        results-&gt;push_back(food_node);
-        continue;
-      }
-    }
-    if (food_glob.back() == &#39;*&#39;) {
-      const string matcher = food_glob.substr(0, food_glob.length() - 1);
-      if (food_node-&gt;label.substr(0, matcher.length()) == matcher) {
-        results-&gt;push_back(food_node);
-        continue;
-      }
-    }
-  }
-}
-
-int main() {
-  int num_food_items, num_food_relationships;
-  cin &gt;&gt; num_food_items &gt;&gt; num_food_relationships;
-  cout &lt;&lt; &quot;Will read in &quot; &lt;&lt; num_food_relationships &lt;&lt; &quot; relationships for &quot; &lt;&lt; num_food_items &lt;&lt; &quot; food items.&quot; &lt;&lt; endl;
-  vector&lt;pair&lt;string, string&gt;&gt; food_relationships;
-  vector&lt;GraphNode*&gt; food_nodes;
-  for (int i = 0; i &lt; num_food_items; ++i) {
-    string food_item;
-    cin &gt;&gt; food_item;
-    food_nodes.push_back(new GraphNode(food_item));
-  }
-  for (int i = 0; i &lt; num_food_relationships; ++i) {
-    string food_item_1, food_item_2;
-    cin &gt;&gt; food_item_1 &gt;&gt; food_item_2;
-    // We are going to use regex matching whereas the input is in &#39;glob&#39; format,
-    // so make a small adjustment.
-    food_relationships.push_back(make_pair(food_item_1, food_item_2));
-  }
-
-  // Sanity check what we got.
-  cout  &lt;&lt; &quot;Read in the following food items :- \n&quot;;
-  for (const auto&amp; food_item : food_nodes) {
-    cout &lt;&lt; food_item-&gt;label &lt;&lt; endl;
-  }
-  cout &lt;&lt; &quot;Read in the following food relationships :- \n&quot;;
-  for (const auto&amp; food_relationship : food_relationships) {
-    cout &lt;&lt; food_relationship.first &lt;&lt; &quot; &lt; &quot; &lt;&lt; food_relationship.second &lt;&lt; endl;
-  }
-
-  // General approach:
-  // 1. Create a graph which each node corresponding to a food item
-  // 2. For every relationship, expand the regex to determine the nodes involved, and
-  // then create a dependency link.
-  // 3. Go through the dependency links and number the nodes
-  //    - Increment the number of each of a node&#39;s dependencies
-  //    - Repeat for each of the dependent nodes
-  //    - Add the nodes into a numbered list.
-  //    - Note: this will require adding and removing nodes from the list
-  // 4. Once no more dependencies have to be processed, print out numbered list
-  // 5. Go through graph and print out &#39;isolated&#39; nodes
-  //
-  // Edge cases: Multiple origins, multiple nodes of the same number, isolated nodes
-
-  // Step 2
-  vector&lt;GraphNode*&gt; root_nodes = food_nodes;
-  vector&lt;GraphNode*&gt; isolated_nodes = food_nodes;
-  for (const auto&amp; food_relationship : food_relationships) {
-    vector&lt;GraphNode*&gt; dependents, dependees;
-    // Each relationship can potentially be many-&gt;many
-    // Note: the c++ regex implementation isn&#39;t available in my standard library
-    // right now, so I&#39;m going to support a limited range of globs:
-    //   only those where the &#39;*&#39; is either right at the beginning or at the end
-    FindFoodItems(food_relationship.first, food_nodes, &amp;dependents);
-    FindFoodItems(food_relationship.second, food_nodes, &amp;dependees);
-
-    // Now create dependency links
-    for (auto&amp; nodeA : dependents) {
-      for (auto&amp; nodeB : dependees) {
-        nodeA-&gt;neighbors.push_back(nodeB);
-      }
-    }
-
-    // Also as part of this process weed out non-root nodes for the next step, as well as isolated nodes.
-    for (auto&amp; node : dependees) {
-      root_nodes.erase(
-          remove(root_nodes.begin(), root_nodes.end(), node),
-          root_nodes.end());
-      isolated_nodes.erase(
-          remove(isolated_nodes.begin(), isolated_nodes.end(), node),
-          isolated_nodes.end());
-    }
-    for (auto&amp; node : dependents) {
-      isolated_nodes.erase(
-          remove(isolated_nodes.begin(), isolated_nodes.end(), node),
-          isolated_nodes.end());
-    }
-  }
-
-  // Step 3
-  // Process all the nodes in the current &#39;frontier&#39; until there are non left.
-  // The first frontier is the set of root nodes
-  queue&lt;GraphNode*&gt; frontier;
-  for (auto&amp; node : root_nodes) {
-    frontier.push(node);
-  }
-  while (!frontier.empty()) {
-    GraphNode* current_node = frontier.front();
-    for (auto&amp; neighbor : current_node-&gt;neighbors) {
-      neighbor-&gt;level = current_node-&gt;level + 1;
-      frontier.push(neighbor);
-    }
-    frontier.pop();
-  }
-
-  // Step 4
-  vector&lt;vector&lt;GraphNode*&gt;&gt; levels(food_nodes.size());
-  for (const auto&amp; node : food_nodes) {
-    if (find(isolated_nodes.begin(), isolated_nodes.end(), node) ==
-        isolated_nodes.end()) {
-      levels[node-&gt;level].push_back(node);
-    }
-  }
-
-  for (int i = 0; i &lt; levels.size() &amp;&amp; !levels[i].empty(); ++i) {
-    cout &lt;&lt; i + 1 &lt;&lt; &quot; : &quot;;
-    for (const auto&amp; node : levels[i]) {
-      cout &lt;&lt; node-&gt;label &lt;&lt; &quot;  &quot;;
-    }
-    cout &lt;&lt; endl;
-  }
-  cout &lt;&lt; endl;
-
-  // Step 5
-  // Finally, print out the nodes without dependees
-  for (const auto&amp; node : isolated_nodes) {
-    cout &lt;&lt; &quot;Warning: &quot; &lt;&lt; node-&gt;label &lt;&lt; &quot; does not have any ordering.&quot; &lt;&lt; endl;
-  }
 }
 </code></pre></noscript></div>
 </p>

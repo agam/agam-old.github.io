@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2014-01-27T00:12:46+00:00</updated>
+  <updated>2014-01-27T03:59:20+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,119 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Programming Fun: Adjacency Matrix]]></title>
+    <link href="http://agam.github.io/blog/2014/01/27/programming-fun-adjacency-matrix/"/>
+    <updated>2014-01-27T03:55:00+00:00</updated>
+    <id>http://agam.github.io/blog/2014/01/27/programming-fun-adjacency-matrix</id>
+    <content type="html"><![CDATA[<p>Another &ldquo;intermediate&rdquo; <a href="http://www.reddit.com/r/dailyprogrammer/comments/1t6dlf/121813_challenge_140_intermediate_adjacency_matrix/">problem</a> today.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Input Description
+</span><span class='line'>-----------------
+</span><span class='line'>On standard console input, you will be first given a line with two space-delimited integers N and M. N is the number of nodes / vertices in the graph, while M is the number of following lines of edge-node data. A line of edge-node data is a space-delimited set of integers, with the special "-&gt;" symbol indicating an edge. This symbol shows the edge-relationship between the set of left-sided integers and the right-sided integers. This symbol will only have one element to its left, or one element to its right. These lines of data will also never have duplicate information; you do not have to handle re-definitions of the same edges.
+</span><span class='line'>
+</span><span class='line'>An example of data that maps the node 1 to the nodes 2 and 3 is as follows:
+</span><span class='line'>1 -&gt; 2 3
+</span><span class='line'>
+</span><span class='line'>Another example where multiple nodes points to the same node:
+</span><span class='line'>3 8 -&gt; 2
+</span><span class='line'>
+</span><span class='line'>You can expect input to sometimes create cycles and self-references in the graph. The following is valid:
+</span><span class='line'>2 -&gt; 2 3
+</span><span class='line'>3 -&gt; 2
+</span><span class='line'>
+</span><span class='line'>Note that there is no order in the given integers; thus "1 -&gt; 2 3" is the same as "1 -&gt; 3 2".
+</span><span class='line'>
+</span><span class='line'>Output Description
+</span><span class='line'>-----------------
+</span><span class='line'>Print the N x N adjacency matrix as a series of 0's (no-edge) and 1's (edge).</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Since the C++ Standard Library doesn&rsquo;t have a built-in matrix library (or maybe it does and I&rsquo;m unaware of it), I just used a vector of size <code>M * N</code> to stand in for an <code>M * N</code> matrix.</p>
+
+<div><script src='https://gist.github.com/8643006.js'></script>
+<script type="text/javascript">$(".gist-file table tr td.line-numbers").remove();</script>
+<noscript><pre><code>#include &lt;cassert&gt;
+#include &lt;cmath&gt;
+#include &lt;cstdint&gt;
+#include &lt;cstdio&gt;
+#include &lt;cstdlib&gt;
+#include &lt;algorithm&gt;
+#include &lt;array&gt;
+#include &lt;fstream&gt;
+#include &lt;iomanip&gt;
+#include &lt;iostream&gt;
+#include &lt;limits&gt;
+#include &lt;map&gt;
+#include &lt;memory&gt;
+#include &lt;sstream&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+#include &lt;unordered_map&gt;
+
+using namespace std;
+
+const static char* kRelationshipMarker = &quot;-&gt;&quot;;
+
+int main(int argc, char* argv[]) {
+  int number_nodes, number_relationships;
+  string line;
+  getline(cin, line);
+  istringstream is(line);
+  is &gt;&gt; number_nodes &gt;&gt; number_relationships;
+
+  vector&lt;int&gt; connections;
+  connections.assign(number_nodes * number_nodes, 0);
+
+  for (int i = 0; i &lt; number_relationships; ++i) {
+    getline(cin, line);
+    int connectee;
+    string marker;
+    istringstream ris(line);
+    ris &gt;&gt; connectee;
+    ris &gt;&gt; marker;
+    assert(marker == kRelationshipMarker);
+    int connected_node;
+    while (ris &gt;&gt; connected_node) {
+      connections[connectee * number_nodes + connected_node] = 1;
+    }
+  }
+
+  for (int i = 0; i &lt; number_nodes; ++i) {
+    for (int j = 0; j &lt; number_nodes; ++j) {
+      cout &lt;&lt; connections[i * number_nodes + j];
+    }
+    cout &lt;&lt; endl;
+  }
+}
+
+</code></pre></noscript></div>
+
+
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Fun with Processing: Spinning Ellipses]]></title>
@@ -2153,85 +2266,6 @@ For each round of computation, print the percentage of votes for each candidate,
 <p>I picked <a href="http://alexgaribay.com/"><code>octoflat</code></a> which doesn&rsquo;t have a sidebar, but is otherwise pleasing to look at.</p>
 
 <p>Happy customizing!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Augmenting my Chromebook with a VM]]></title>
-    <link href="http://agam.github.io/blog/2013/12/14/augmenting-my-chromebook-with-a-vm/"/>
-    <updated>2013-12-14T17:14:00+00:00</updated>
-    <id>http://agam.github.io/blog/2013/12/14/augmenting-my-chromebook-with-a-vm</id>
-    <content type="html"><![CDATA[<p>I had tried this out about a year ago, creating a small VM instance on Google Compute Engine. But a maintenance window occurred, my VM died, and that was that. I cleaned up and walked away.</p>
-
-<h2>Comparison</h2>
-
-<p>Sometime back, I heard about <a href="https://www.digitalocean.com/">Digital Ocean</a> from a friend. I had just switched to a chromebook and was missing the shell of my previous Linux laptop. So I once again looked into the current cloud offerings.</p>
-
-<p>There is an excellent comparison at <a href="http://cloudpricegrid.com/">cloud price grid</a> so I won&rsquo;t waste time repeating that.</p>
-
-<p>DigitalOcean seems the cheapest for a couple of options</p>
-
-<ul>
-<li><em>1core/512Mb/20G &mdash;> $5/mo</em></li>
-<li><em>1core/1G/30G  &mdash;> $10/mo</em></li>
-</ul>
-
-
-<p>(See <a href="https://www.digitalocean.com/pricing/">detailed pricing</a>)</p>
-
-<p>However, this is without any firewall or networking capability, and the datacenter seems to be near New York, so that&rsquo;s something to keep in mind.</p>
-
-<p>Meanwhile at Google Compute Engine, the right comparison would be with a combination of</p>
-
-<ul>
-<li><em>Persistent disk &mdash;> 20G for $0.8/mo</em></li>
-<li><em>f1-micro [1core/600Mb] &mdash;> $0.019/hr</em>
-[which by the way at max utilization turns out to be $13.78/mo]</li>
-</ul>
-
-
-<p>(See <a href="https://cloud.google.com/products/compute-engine/#pricing">detailed pricing</a>)</p>
-
-<p>A similar comparison for Amazon (I could be off in apples-to-apples here (what I think are apples may in fact be oranges))</p>
-
-<p><em>t1.micro [1core/630Mb] &mdash;> $0.025/hr</em></p>
-
-<p>So the cheapest Amazon has to offer seems more expensive than the cheapest Google has to offer (both of these instances will be pretty useless for hosting something substantial, but we&rsquo;re assuming the idea here is to have a small &ldquo;developer space&rdquo;).</p>
-
-<p>But keep in mind Amazon also has a <a href="http://aws.amazon.com/free/">free tier</a> so if you just want to try it out for a year, the micro instance is actually FREE (!)</p>
-
-<h2>Getting (re-)started with Google Compute Engine</h2>
-
-<p>I elected to stay with Google. The new <a href="https://cloud.google.com/console#/project">cloud console</a> is much better than it was before, with a nice grouping by project and sub-links to Appengine, CloudSql, CloudStorage, ComputeEngine, etc.</p>
-
-<p>Within the Cloud Engine dashboard, it is possible (and in fact, easy) to create a new VM, set up its associated disk and static IPs, OS, etc from the UI.</p>
-
-<h2>SSHing</h2>
-
-<p>One thing to point out is that the first time I set it up I used the <code>gcutil</code> tool to ssh into the instance; this creates local ssh keys and uploads the public key to the instance (it can be viewed in the <code>Metadata</code> part of the console). So I had to do this from a non-chromebook &ldquo;real&rdquo; computer (though there may be a workaround I&rsquo;m unaware of).</p>
-
-<p>For subsequent SSHs, the recommended way is to use a long SSH command</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>ssh -o <span class="nv">UserKnownHostsFile</span><span class="o">=</span>/dev/null -o <span class="nv">CheckHostIP</span><span class="o">=</span>no -o  <span class="nv">StrictHostKeyChecking</span><span class="o">=</span>no <span class="se">\</span>
-</span><span class='line'> -i &lt;key-file&gt; -o <span class="nv">LogLevel</span><span class="o">=</span>QUIET -A  -p 22 &lt;username&gt;@&lt;ipaddress&gt;
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>and this worked when I tried it from the computer I signed up on.</p>
-
-<p>Before trying to SSH from a chromebook, you have to copy ssh keys locally (how? I Dropbox&rsquo;d them and then deleted them from Dropbox, which is admittedly less secure &hellip; maybe I should have written it down and recreated manually?!).</p>
-
-<p>Anyway, so once you have copied the keys, you can use the <a href="https://chrome.google.com/webstore/detail/secure-shell/pnhechapfaindjhompbnflcldabbghjo?hl=en">Secure Shell</a> app.</p>
-
-<p>You have to click on <code>import...</code> to select the public/private key pair. At this point, when I used the long SSH command mentioned above, it didn&rsquo;t work. Eventually it only worked when I tried with a blank command (so the only arguments were username, host IP and the key file).</p>
-
-<h2>Chromebook + VM</h2>
-
-<p>Having tried this out for a while, I can&rsquo;t imagine living without it. Obviously it depends on internet access, but that&rsquo;s a common caveat these days.</p>
-
-<p>But I strongly encourage it, since it&rsquo;s a perfect complement to the otherwise &ldquo;browser-only&rdquo; world.</p>
 ]]></content>
   </entry>
   
