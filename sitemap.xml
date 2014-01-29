@@ -199,8 +199,12 @@
         <lastmod>2014-01-29T02:15:54+00:00</lastmod>
     </url>
     <url>
+        <loc>http://agam.github.io/blog/2014/01/29/getting-started-with-clojure-part-1/</loc>
+        <lastmod>2014-01-29T18:07:00+00:00</lastmod>
+    </url>
+    <url>
         <loc>http://agam.github.io/blog/archives/</loc>
-        <lastmod>2014-01-29T02:15:54+00:00</lastmod>
+        <lastmod>2014-01-29T18:07:00+00:00</lastmod>
     </url>
     <url>
         <loc>http://agam.github.io/robots.txt</loc>
@@ -208,6 +212,6 @@
     </url>
     <url>
         <loc>http://agam.github.io/</loc>
-        <lastmod>2014-01-29T02:15:54+00:00</lastmod>
+        <lastmod>2014-01-29T18:07:00+00:00</lastmod>
     </url>
 </urlset>

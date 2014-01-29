@@ -111,6 +111,256 @@
   
 
 
+<i class="icon-calendar-empty"></i> <time datetime="2014-01-29T18:04:00+00:00" pubdate data-updated="true">Jan 29<span>th</span>, 2014</time></h5>
+          <div class="row-fluid">
+          
+          </div>
+          
+          <div class="row-fluid">
+          
+          <a href="/blog/categories/clojure,/"><span class="badge">Clojure,</span></a>
+          
+          <a href="/blog/categories/gettingstarted/"><span class="badge">GettingStarted</span></a>
+          
+          </div>
+          
+    </div>
+    <div class="span10 post-container">
+      <h1 class="link"><a href="/blog/2014/01/29/getting-started-with-clojure-part-1/">Getting started with clojure: Part 1</a></h1>
+      <h1>Getting started with Clojure: Part 1</h1>
+
+<p>(Just a personal log so I don&rsquo;t forget some basic steps here. There may or may not be a Part 2)</p>
+
+<h2>Setting up the REPL</h2>
+
+<p>First, install relevant stuff. This is usually, at the minimum, something like <code>sudo apt-get install clojure1.4</code></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ java -cp /usr/share/java/clojure-1.4.jar clojure.main
+</span><span class='line'>Clojure 1.4.0
+</span><span class='line'>user=&gt; </span></code></pre></td></tr></table></div></figure>
+
+
+<h2>First steps</h2>
+
+<p>Basic Arithmetic</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>user=&gt; (+ 2 3)
+</span><span class='line'>5</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Basic string operation</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>user=&gt; "foo"
+</span><span class='line'>"foo"
+</span><span class='line'>
+</span><span class='line'>user=&gt; (concat "foo" "bar")
+</span><span class='line'>(\f \o \o \b \a \r)</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Variables</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>user=&gt; (def x 4)
+</span><span class='line'>#'user/x
+</span><span class='line'>
+</span><span class='line'>user=&gt; (+ x 5)
+</span><span class='line'>9
+</span><span class='line'>
+</span><span class='line'>user=&gt; (def strarr ["foo" "bar"])
+</span><span class='line'>#'user/strarr</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Basic arrays</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>user=&gt; (count [6 5 3 4 2])
+</span><span class='line'>5
+</span><span class='line'>
+</span><span class='line'>user=&gt; (get strarr 1)
+</span><span class='line'>"bar"
+</span><span class='line'>
+</span><span class='line'>user=&gt; (get strarr 0)
+</span><span class='line'>"foo"</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Basic maps</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>user=&gt; (def mymap {:foo "Here is foo" :bar "... and here is bar!"})
+</span><span class='line'>#'user/mymap
+</span><span class='line'>
+</span><span class='line'>user=&gt; (get mymap :bar)
+</span><span class='line'>"... and here is bar!"</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Errors</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>user=&gt; (^ 6 4)
+</span><span class='line'>IllegalArgumentException Metadata must be Symbol,Keyword,String or Map  clojure.lang.LispReader$MetaReader.invoke (LispReader.java:720)
+</span><span class='line'>4
+</span><span class='line'>RuntimeException Unmatched delimiter: )  clojure.lang.Util.runtimeException (Util.java:170)
+</span><span class='line'>
+</span><span class='line'>user=&gt; (% 6 4)
+</span><span class='line'>CompilerException java.lang.RuntimeException: Unable to resolve symbol: % in this context, compiling:(NO_SOURCE_PATH:2) </span></code></pre></td></tr></table></div></figure>
+
+
+<p>Stack Overflow (!)</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>user=&gt; (defn foo [x] (foo (- x 1)))
+</span><span class='line'>#'user/foo
+</span><span class='line'>
+</span><span class='line'>user=&gt; (foo 4)
+</span><span class='line'>StackOverflowError   user/foo (NO_SOURCE_FILE:7)</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Simple function</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>user=&gt; (defn expt [x y] (if (= y 0) 1 (* x (expt x (- y 1)))))
+</span><span class='line'>#'user/expt
+</span><span class='line'>
+</span><span class='line'>user=&gt; (expt 6 4)
+</span><span class='line'>1296</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Default REPL namespace (<code>user</code>)</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>user=&gt; (user/expt 6 4)
+</span><span class='line'>1296</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Programming primitives</h2>
+
+<p>For loop</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>user=&gt; (dotimes [_ 5] (println "Hello World."))
+</span><span class='line'>Hello World.
+</span><span class='line'>Hello World.
+</span><span class='line'>Hello World.
+</span><span class='line'>Hello World.
+</span><span class='line'>Hello World.
+</span><span class='line'>nil</span></code></pre></td></tr></table></div></figure>
+
+
+<p>While loop</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>user=&gt; (for [i (range 5) j (range 5) :when (and (&gt; i 0) (&lt; i j))] (println (* i j)))
+</span><span class='line'>(2
+</span><span class='line'>3
+</span><span class='line'>4
+</span><span class='line'>nil nil 6
+</span><span class='line'>8
+</span><span class='line'>nil nil 12
+</span><span class='line'>nil nil)</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Switch case</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>user=&gt; (for [i (range 5) j (range 5)]
+</span><span class='line'>(case (* i j)
+</span><span class='line'>0 "zero"
+</span><span class='line'>(* i j)))
+</span><span class='line'>("zero" "zero" "zero" "zero" "zero" "zero" 1 2 3 4 "zero" 2 4 6 8 "zero" 3 6 9 12 "zero" 4 8 12 16)</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&hellip; the rest in Part 2, if there is one.</p>
+
+      
+      
+    </div>
+  </div>
+
+
+
+    </article>
+    
+    <hr>
+    
+  
+  
+    <article>
+      
+
+  <div class="row-fluid">
+    <div class="span2 post-meta">
+	  <h5 class="date-time">
+
+
+
+
+
+
+
+
+  
+
+
 <i class="icon-calendar-empty"></i> <time datetime="2014-01-29T02:11:00+00:00" pubdate data-updated="true">Jan 29<span>th</span>, 2014</time></h5>
           <div class="row-fluid">
           
@@ -1474,101 +1724,6 @@ int main() {
 
 
 
-
-      
-      
-    </div>
-  </div>
-
-
-
-    </article>
-    
-    <hr>
-    
-  
-  
-    <article>
-      
-
-  <div class="row-fluid">
-    <div class="span2 post-meta">
-	  <h5 class="date-time">
-
-
-
-
-
-
-
-
-  
-
-
-<i class="icon-calendar-empty"></i> <time datetime="2014-01-08T08:47:00+00:00" pubdate data-updated="true">Jan 8<span>th</span>, 2014</time></h5>
-          <div class="row-fluid">
-          
-          </div>
-          
-          <div class="row-fluid">
-          
-          <a href="/blog/categories/urbit/"><span class="badge">urbit</span></a>
-          
-          </div>
-          
-    </div>
-    <div class="span10 post-container">
-      <h1 class="link"><a href="/blog/2014/01/08/urbit-back-again/">Urbit: Back Again</a></h1>
-      <p>Turns out I was affected by the last &ldquo;continuity breach&rdquo;.</p>
-
-<p>So I had to delete everything and start over. In my case this meant</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span><span class="nb">cd </span>urbit
-</span><span class='line'><span class="nv">$ </span>git pull origin master
-</span><span class='line'><span class="nv">$ </span>make clean
-</span><span class='line'><span class="nv">$ </span>make
-</span><span class='line'><span class="nv">$ </span>rm -rf urb/*-*
-</span><span class='line'><span class="nv">$ </span>rm -rf frogstar
-</span><span class='line'><span class="nv">$ </span>vere -c frogstar
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This time when I ran <code>:begin</code> it succeeded</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>generating 2048-bit RSA key...
-</span><span class='line'>; ~doznec _Urban Republic_ is your neighbor
-</span><span class='line'>; ~doznec _Urban Republic_ is your neighbor
-</span><span class='line'>request approved
-</span><span class='line'>; ~zod |Tianming| is your neighbor
-</span><span class='line'>; ~zod |Tianming| is your neighbor
-</span><span class='line'>; ~doznec _Urban Republic_ is your neighbor
-</span><span class='line'>; ~doznec _Urban Republic_ is your neighbor
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>&hellip; and then more hoon files were downloaded, after which I got my new prompt:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>~todbyt-nathes/try<span class="o">=</span>&gt;
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Next time I&rsquo;ll start exploring <em>Nock</em> and <em>Hoon</em> some more &hellip;</p>
 
       
       
