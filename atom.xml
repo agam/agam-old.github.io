@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2014-01-29T18:06:26+00:00</updated>
+  <updated>2014-01-29T18:07:47+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -18,9 +18,7 @@
     <link href="http://agam.github.io/blog/2014/01/29/getting-started-with-clojure-part-1/"/>
     <updated>2014-01-29T18:04:00+00:00</updated>
     <id>http://agam.github.io/blog/2014/01/29/getting-started-with-clojure-part-1</id>
-    <content type="html"><![CDATA[<h1>Getting started with Clojure: Part 1</h1>
-
-<p>(Just a personal log so I don&rsquo;t forget some basic steps here. There may or may not be a Part 2)</p>
+    <content type="html"><![CDATA[<p>(Just a personal log so I don&rsquo;t forget some basic steps here. There may or may not be a Part 2)</p>
 
 <h2>Setting up the REPL</h2>
 
