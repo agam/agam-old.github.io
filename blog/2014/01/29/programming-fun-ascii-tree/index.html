@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Programming Fun: Adjacency Matrix - Agam's Mashed-Up Pome</title>
+  <title>Programming Fun: Ascii Tree - Agam's Mashed-Up Pome</title>
   <meta name="author" content="Agam">
 
    
@@ -19,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://agam.github.io/blog/2014/01/27/programming-fun-adjacency-matrix">
+  <link rel="canonical" href="http://agam.github.io/blog/2014/01/29/programming-fun-ascii-tree">
   <link href="/favicon.png" rel="icon">
   <link href='http://fonts.googleapis.com/css?family=Quicksand:300,400' rel='stylesheet' type='text/css'>
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
@@ -88,7 +88,7 @@
 
   <header>
   <div class="jumbotron">
-    Programming Fun: Adjacency Matrix
+    Programming Fun: Ascii Tree
 	<h5>
 
 
@@ -101,12 +101,12 @@
   
 
 
-<i class="icon-calendar-empty"></i> <time datetime="2014-01-27T03:55:00+00:00" pubdate data-updated="true">Jan 27<span>th</span>, 2014</time></h5>
+<i class="icon-calendar-empty"></i> <time datetime="2014-01-29T02:11:00+00:00" pubdate data-updated="true">Jan 29<span>th</span>, 2014</time></h5>
   </div>
 </header>
   <div class="row-fluid">
     <div class="span12">
-      <p>Another &ldquo;intermediate&rdquo; <a href="http://www.reddit.com/r/dailyprogrammer/comments/1t6dlf/121813_challenge_140_intermediate_adjacency_matrix/">problem</a> today.</p>
+      <p>Another <a href="http://www.reddit.com/r/dailyprogrammer/comments/1t0r09/121613_challenge_145_easy_tree_generation/">easy problem</a> (I&rsquo;m not picking easy problems! I&rsquo;m just going in sequence!)</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -127,90 +127,73 @@
 <span class='line-number'>17</span>
 <span class='line-number'>18</span>
 <span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
 </pre></td><td class='code'><pre><code class=''><span class='line'>Input Description
 </span><span class='line'>-----------------
-</span><span class='line'>On standard console input, you will be first given a line with two space-delimited integers N and M. N is the number of nodes / vertices in the graph, while M is the number of following lines of edge-node data. A line of edge-node data is a space-delimited set of integers, with the special "-&gt;" symbol indicating an edge. This symbol shows the edge-relationship between the set of left-sided integers and the right-sided integers. This symbol will only have one element to its left, or one element to its right. These lines of data will also never have duplicate information; you do not have to handle re-definitions of the same edges.
-</span><span class='line'>
-</span><span class='line'>An example of data that maps the node 1 to the nodes 2 and 3 is as follows:
-</span><span class='line'>1 -&gt; 2 3
-</span><span class='line'>
-</span><span class='line'>Another example where multiple nodes points to the same node:
-</span><span class='line'>3 8 -&gt; 2
-</span><span class='line'>
-</span><span class='line'>You can expect input to sometimes create cycles and self-references in the graph. The following is valid:
-</span><span class='line'>2 -&gt; 2 3
-</span><span class='line'>3 -&gt; 2
-</span><span class='line'>
-</span><span class='line'>Note that there is no order in the given integers; thus "1 -&gt; 2 3" is the same as "1 -&gt; 3 2".
+</span><span class='line'>You will be given one line of text on standard-console input: an integer and
+</span><span class='line'>two characters, all space-delimited. The integer, N, will range inclusively
+</span><span class='line'>from 3 to 21 and always be odd. The next character will be your trunk
+</span><span class='line'>character. The next character will be your leaves character. Draw the trunk and
+</span><span class='line'>leaves components with these characters, respectively.
 </span><span class='line'>
 </span><span class='line'>Output Description
-</span><span class='line'>-----------------
-</span><span class='line'>Print the N x N adjacency matrix as a series of 0's (no-edge) and 1's (edge).</span></code></pre></td></tr></table></div></figure>
+</span><span class='line'>------------------
+</span><span class='line'>Given the three input arguments, draw a centered-tree. It should follow this
+</span><span class='line'>pattern: (this is the smallest tree possible, with a base of 3)
+</span><span class='line'>   *
+</span><span class='line'>  ***
+</span><span class='line'>  ###
+</span><span class='line'>Here's a much larger tree, of base 7:
+</span><span class='line'>   *
+</span><span class='line'>  ***
+</span><span class='line'> *****
+</span><span class='line'>*******
+</span><span class='line'>  ###</span></code></pre></td></tr></table></div></figure>
 
 
-<p>Since the C++ Standard Library doesn&rsquo;t have a built-in matrix library (or maybe it does and I&rsquo;m unaware of it), I just used a vector of size <code>M * N</code> to stand in for an <code>M * N</code> matrix.</p>
+<p>Is this really programming at all? More like basic <em>arithmetic</em>. Anyway &hellip;</p>
 
-<div><script src='https://gist.github.com/8643006.js'></script>
+<div><script src='https://gist.github.com/8679031.js'></script>
 <script type="text/javascript">$(".gist-file table tr td.line-numbers").remove();</script>
-<noscript><pre><code>#include &lt;cassert&gt;
-#include &lt;cmath&gt;
-#include &lt;cstdint&gt;
-#include &lt;cstdio&gt;
-#include &lt;cstdlib&gt;
-#include &lt;algorithm&gt;
-#include &lt;array&gt;
-#include &lt;fstream&gt;
-#include &lt;iomanip&gt;
-#include &lt;iostream&gt;
-#include &lt;limits&gt;
-#include &lt;map&gt;
-#include &lt;memory&gt;
-#include &lt;sstream&gt;
-#include &lt;string&gt;
-#include &lt;vector&gt;
-#include &lt;queue&gt;
-#include &lt;unordered_map&gt;
+<noscript><pre><code>// Skipped includes
 
 using namespace std;
 
-const static char* kRelationshipMarker = &quot;-&gt;&quot;;
-
 int main(int argc, char* argv[]) {
-  int number_nodes, number_relationships;
-  string line;
-  getline(cin, line);
-  istringstream is(line);
-  is &gt;&gt; number_nodes &gt;&gt; number_relationships;
+  int tree_width;
+  char trunk_char, leaf_char;
+  cin &gt;&gt; tree_width &gt;&gt; trunk_char &gt;&gt; leaf_char;
 
-  vector&lt;int&gt; connections;
-  connections.assign(number_nodes * number_nodes, 0);
+  // Since the top of the tree is triangular, if the height is N the base will
+  // be 2 * N - 1.
+  assert(tree_width % 2 == 1);
+  assert(tree_width &gt; 0);
+  int tree_height = (tree_width + 1) / 2;
 
-  for (int i = 0; i &lt; number_relationships; ++i) {
-    getline(cin, line);
-    int connectee;
-    string marker;
-    istringstream ris(line);
-    ris &gt;&gt; connectee;
-    ris &gt;&gt; marker;
-    assert(marker == kRelationshipMarker);
-    int connected_node;
-    while (ris &gt;&gt; connected_node) {
-      connections[connectee * number_nodes + connected_node] = 1;
+  for (int i = 0; i &lt; tree_height; ++i) {
+    // The i_th row will have 2 * i + 1 leaves, in the center
+    for (int j = 0; j &lt; (tree_height - i); ++j) {
+      cout &lt;&lt; &quot; &quot;;
     }
-  }
-
-  for (int i = 0; i &lt; number_nodes; ++i) {
-    for (int j = 0; j &lt; number_nodes; ++j) {
-      cout &lt;&lt; connections[i * number_nodes + j];
+    for (int j = 0; j &lt; (2 * i + 1); ++j) {
+      cout &lt;&lt; leaf_char;
     }
     cout &lt;&lt; endl;
   }
+  // Trunk is always of width 3, in the center
+  for (int j = 0; j &lt; (tree_height - 1); ++j) {
+    cout &lt;&lt; &quot; &quot;;
+  }
+  for (int j = 0; j &lt; 3; ++j) {
+    cout &lt;&lt; trunk_char;
+  }
+  cout &lt;&lt; endl;
 }
-
 </code></pre></noscript></div>
 
 
-
+<p>[Also, I realized I&rsquo;m wasting everyone&rsquo;s time by having all those redundant <code>#include</code> lines, so I got rid of them here]</p>
 
     </div>
   </div>
@@ -263,10 +246,8 @@ int main(int argc, char* argv[]) {
       <div class="span12">
         <p class="meta">
           
-            <a class="basic-alignment left" href="/blog/2014/01/27/fun-with-processing-spinning-ellipses/" title="Previous Post: Fun with Processing: Spinning Ellipses">&laquo; Fun with Processing: Spinning Ellipses</a>
+            <a class="basic-alignment left" href="/blog/2014/01/27/programming-fun-adjacency-matrix/" title="Previous Post: Programming Fun: Adjacency Matrix">&laquo; Programming Fun: Adjacency Matrix</a>
           
-          
-            <a class="basic-alignment right" href="/blog/2014/01/29/programming-fun-ascii-tree/" title="Next Post: Programming Fun: Ascii Tree">Programming Fun: Ascii Tree &raquo;</a>
           
         </p>
       </div>
@@ -304,8 +285,8 @@ int main(int argc, char* argv[]) {
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://agam.github.io/blog/2014/01/27/programming-fun-adjacency-matrix/';
-        var disqus_url = 'http://agam.github.io/blog/2014/01/27/programming-fun-adjacency-matrix/';
+        var disqus_identifier = 'http://agam.github.io/blog/2014/01/29/programming-fun-ascii-tree/';
+        var disqus_url = 'http://agam.github.io/blog/2014/01/29/programming-fun-ascii-tree/';
         var disqus_script = 'embed.js';
       
     (function () {
