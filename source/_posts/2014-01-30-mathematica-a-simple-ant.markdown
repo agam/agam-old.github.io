@@ -6,8 +6,6 @@ comments: true
 categories: Mathematica, Ant, Plot
 ---
 
-# Mathematica: A simple ant
-
 Here's a simple, exploratory sketch: Imagine an ant which can either move left or right, or stay in its place.
 
 For simplicity, we'll imagine the ant starts at the center of a scale from `1` to `100`, and moves one unit at a time.
