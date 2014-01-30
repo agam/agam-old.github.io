@@ -4,7 +4,7 @@
   <title><![CDATA[Category: Plot | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/plot/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2014-01-30T18:22:14+00:00</updated>
+  <updated>2014-01-30T18:25:31+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -18,9 +18,7 @@
     <link href="http://agam.github.io/blog/2014/01/30/mathematica-a-simple-ant/"/>
     <updated>2014-01-30T18:16:00+00:00</updated>
     <id>http://agam.github.io/blog/2014/01/30/mathematica-a-simple-ant</id>
-    <content type="html"><![CDATA[<h1>Mathematica: A simple ant</h1>
-
-<p>Here&rsquo;s a simple, exploratory sketch: Imagine an ant which can either move left or right, or stay in its place.</p>
+    <content type="html"><![CDATA[<p>Here&rsquo;s a simple, exploratory sketch: Imagine an ant which can either move left or right, or stay in its place.</p>
 
 <p>For simplicity, we&rsquo;ll imagine the ant starts at the center of a scale from <code>1</code> to <code>100</code>, and moves one unit at a time.</p>
 
