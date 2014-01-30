@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: Mathematica, | Agam's Mashed-Up Pome]]></title>
+  <title><![CDATA[Category: Mathematica | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/mathematica/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2014-01-30T18:25:31+00:00</updated>
+  <updated>2014-01-30T23:06:51+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -14,28 +14,65 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Mathematica: A simple ant]]></title>
-    <link href="http://agam.github.io/blog/2014/01/30/mathematica-a-simple-ant/"/>
-    <updated>2014-01-30T18:16:00+00:00</updated>
-    <id>http://agam.github.io/blog/2014/01/30/mathematica-a-simple-ant</id>
-    <content type="html"><![CDATA[<p>Here&rsquo;s a simple, exploratory sketch: Imagine an ant which can either move left or right, or stay in its place.</p>
+    <title type="html"><![CDATA[Mathematica: 1/9998]]></title>
+    <link href="http://agam.github.io/blog/2014/01/30/mathematica-1-slash-9998/"/>
+    <updated>2014-01-30T23:00:00+00:00</updated>
+    <id>http://agam.github.io/blog/2014/01/30/mathematica-1-slash-9998</id>
+    <content type="html"><![CDATA[<p>I saw this piece about how <code>1/1998</code> was approximated by series of powers of <code>2</code>, which raised the question, &ldquo;Can Mathematica help confirm this?&rdquo; (<em>of course it can!</em>)</p>
 
-<p>For simplicity, we&rsquo;ll imagine the ant starts at the center of a scale from <code>1</code> to <code>100</code>, and moves one unit at a time.</p>
+<p>First, a gut check to see the decimal expansion</p>
 
-<p>```
-Ant[k<em>, u</em>] :=
- If[ u &lt; 1/3, Min[k + 1, 100], If[u > 2/3, Max[0, k &ndash; 1], k]]</p>
-
-<p>RecAnt[k_] := Ant[k, RandomReal[]]
-```</p>
-
-<p> <img class="center <a" src="href="http://farm8.staticflickr.com/7351/12224251723_4d24311967_d.jpg">http://farm8.staticflickr.com/7351/12224251723_4d24311967_d.jpg</a>"></p>
-
-<p> <code>
- ListPlot[NestList[RecAnt, 50, 100000], ImageSize -&gt; Large, Background -&gt; LightGray]
+<p><code>
+N[1/9998, 100]
 </code></p>
 
-<p> <img class="center <a" src="href="http://farm8.staticflickr.com/7418/12224482144_6ef516fd03_z_d.jpg">http://farm8.staticflickr.com/7418/12224482144_6ef516fd03_z_d.jpg</a>"></p>
+<p>which shows</p>
+
+<p><code>
+0.00010002000400080016003200640128025605121024204840968193638727745549 \
+10982196439287857571514302860572114
+</code></p>
+
+<p>(if you don&rsquo;t specify the <code>100</code> in the argument to <code>N[]</code>, it will show you just <code>0.00010002</code> by default)</p>
+
+<p>This can be visualized as</p>
+
+<p><code>
+0.0001 +
+0.00000002 +
+0.000000000004 +
+0.0000000000000008 +
+0.00000000000000000016 +
+...
+0.000000000000000000000000000000000256 +
+...
+</code></p>
+
+<p>All right, so we do see these powers of 2! They seem to be in &ldquo;groups&rdquo; &mdash; <code>0004</code>, <code>0016</code>, <code>1024</code> and so on.</p>
+
+<p>So we want to check if something like <code>2^i/10000^i</code> can add up to this number.</p>
+
+<p><code>
+Parallelize[
+ Table[1/9998 - Total[Table[2^i/10000^i, {i, 1, n}]], {n, 1, 10000}] ]
+</code></p>
+
+<p>I initially tried this <em>without</em> <code>Parallelize[]</code>, but that kept going <em>for a while</em>, so I had to abort it (<code>Evaluation</code>&ndash;><code>Abort Evaluation</code>) and try this version instead.</p>
+
+<p>Anyway, so this whirs for a while. As this <code>htop</code> output shows, it really does use as many cores as possible.</p>
+
+<p><img class="center <a" src="href="http://farm6.staticflickr.com/5504/12227941034_4ce9d69db4_z_d.jpg">http://farm6.staticflickr.com/5504/12227941034_4ce9d69db4_z_d.jpg</a>"></p>
+
+<p>Eventually when it&rsquo;s done, we can <code>ListPlot</code> it.</p>
+
+<p><code>
+ListPlot[%118, Frame -&gt; True, FrameStyle -&gt; Black,
+ PlotRange -&gt; { {1, 10000}, {-0.000105, -0.000095} }]
+</code></p>
+
+<p><img class="center <a" src="href="http://farm6.staticflickr.com/5535/12227532975_ee70979b52_z_d.jpg">http://farm6.staticflickr.com/5535/12227532975_ee70979b52_z_d.jpg</a>"></p>
+
+<p>As this graph shows, the result is remarkably close to a constant value of <code>-0.0001</code> !!</p>
 ]]></content>
   </entry>
   

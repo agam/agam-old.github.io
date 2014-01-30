@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2014-01-30T18:25:31+00:00</updated>
+  <updated>2014-01-30T23:06:51+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,79 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Mathematica: 1/9998]]></title>
+    <link href="http://agam.github.io/blog/2014/01/30/mathematica-1-slash-9998/"/>
+    <updated>2014-01-30T23:00:00+00:00</updated>
+    <id>http://agam.github.io/blog/2014/01/30/mathematica-1-slash-9998</id>
+    <content type="html"><![CDATA[<p>I saw this piece about how <code>1/1998</code> was approximated by series of powers of <code>2</code>, which raised the question, &ldquo;Can Mathematica help confirm this?&rdquo; (<em>of course it can!</em>)</p>
+
+<p>First, a gut check to see the decimal expansion</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>N[1/9998, 100]</span></code></pre></td></tr></table></div></figure>
+
+
+<p>which shows</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>0.00010002000400080016003200640128025605121024204840968193638727745549 \
+</span><span class='line'>10982196439287857571514302860572114</span></code></pre></td></tr></table></div></figure>
+
+
+<p>(if you don&rsquo;t specify the <code>100</code> in the argument to <code>N[]</code>, it will show you just <code>0.00010002</code> by default)</p>
+
+<p>This can be visualized as</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>0.0001 +
+</span><span class='line'>0.00000002 +
+</span><span class='line'>0.000000000004 +
+</span><span class='line'>0.0000000000000008 +
+</span><span class='line'>0.00000000000000000016 +
+</span><span class='line'>...
+</span><span class='line'>0.000000000000000000000000000000000256 +
+</span><span class='line'>...</span></code></pre></td></tr></table></div></figure>
+
+
+<p>All right, so we do see these powers of 2! They seem to be in &ldquo;groups&rdquo; &mdash; <code>0004</code>, <code>0016</code>, <code>1024</code> and so on.</p>
+
+<p>So we want to check if something like <code>2^i/10000^i</code> can add up to this number.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Parallelize[
+</span><span class='line'> Table[1/9998 - Total[Table[2^i/10000^i, {i, 1, n}]], {n, 1, 10000}] ]</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I initially tried this <em>without</em> <code>Parallelize[]</code>, but that kept going <em>for a while</em>, so I had to abort it (<code>Evaluation</code>&ndash;><code>Abort Evaluation</code>) and try this version instead.</p>
+
+<p>Anyway, so this whirs for a while. As this <code>htop</code> output shows, it really does use as many cores as possible.</p>
+
+<p><img class="center" src="http://farm6.staticflickr.com/5504/12227941034_4ce9d69db4_z_d.jpg"></p>
+
+<p>Eventually when it&rsquo;s done, we can <code>ListPlot</code> it.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ListPlot[%118, Frame -&gt; True, FrameStyle -&gt; Black, 
+</span><span class='line'> PlotRange -&gt; { {1, 10000}, {-0.000105, -0.000095} }]</span></code></pre></td></tr></table></div></figure>
+
+
+<p><img class="center" src="http://farm6.staticflickr.com/5535/12227532975_ee70979b52_z_d.jpg"></p>
+
+<p>As this graph shows, the result is remarkably close to a constant value of <code>-0.0001</code> !!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Mathematica: A simple ant]]></title>
@@ -2509,37 +2582,6 @@ Given the candidates and ballots, compute the first-round of successful candidat
 For each round of computation, print the percentage of votes for each candidate, and rank them based on that percentage, using the output format.
 */
 </code></pre></noscript></div>
-
-
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Small change for Vim and Git]]></title>
-    <link href="http://agam.github.io/blog/2013/12/16/small-change-for-vim-and-git/"/>
-    <updated>2013-12-16T06:04:00+00:00</updated>
-    <id>http://agam.github.io/blog/2013/12/16/small-change-for-vim-and-git</id>
-    <content type="html"><![CDATA[<h2>Vim</h2>
-
-<p>I hate seeing <code>.swp</code> and <code>~</code> files when I&rsquo;m editing. If I really need to go back to an earlier version of something there are other ways.</p>
-
-<p>So I added this to my .vimrc:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>set nobackup
-</span><span class='line'>set nowritebackup
-</span><span class='line'>set noswapfile</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Git</h2>
-
-<p>If there&rsquo;s one config change to make for <code>git</code>, it should be this one:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ git config --global --add color.ui true</span></code></pre></td></tr></table></div></figure>
 
 
 
