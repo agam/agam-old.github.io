@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2014-01-30T23:06:51+00:00</updated>
+  <updated>2014-02-01T06:33:12+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,21 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Change That Font!]]></title>
+    <link href="http://agam.github.io/blog/2014/02/01/change-that-font/"/>
+    <updated>2014-02-01T06:25:00+00:00</updated>
+    <id>http://agam.github.io/blog/2014/02/01/change-that-font</id>
+    <content type="html"><![CDATA[<p>You don&rsquo;t have to be chained to <code>Monaco</code> if you don&rsquo;t like it. I changed it to <code>Inconsolata</code>, which is as simply as <a href="http://www.levien.com/type/myfonts/inconsolata.html">downloading it</a> (click on the <em>Open Type File</em> link).</p>
+
+<p><img class="center" src="http://farm6.staticflickr.com/5509/12246575643_d92ae27492_z_d.jpg"></p>
+
+<p>Once you click on the downloaded file, the <strong>Font Book</strong> app should open up automatically, showing the font face and with a <code>Install</code> button.</p>
+
+<p>Once you do this (I love this part) <em>any open font selection windows will refresh automatically</em>, and you can pick this new font for your terminal (which, by the way, I hope is <a href="http://iterm.sourceforge.net/">iTerm</a> because &hellip; if not, why?)</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Mathematica: 1/9998]]></title>
@@ -2452,139 +2467,6 @@ int main() {
 <p>Watch <a href="http://www.infoq.com/presentations/functional-pros-cons">this video</a> and unless you&rsquo;re an overly sensitive haskell zealot, you&rsquo;ll find some humor here. There&rsquo;s a lot of hype-busting and sacred-cow-killing.</p>
 
 <p>Of course, he&rsquo;s no stranger to controversial programming views (<a href="http://gbracha.blogspot.com/2011/01/maybe-monads-might-not-matter.html">&ldquo;Maybe Monads Might Not Matter&rdquo;</a>, <a href="http://gbracha.blogspot.com/2011/06/types-are-anti-modular.html">&ldquo;Types are anti modular&rdquo;</a>, <a href="http://gbracha.blogspot.com/2009/11/objects-are-not-hash-tables.html">&ldquo;Objects are not hash tables&rdquo;</a>, and <a href="http://gbracha.blogspot.com/2009/12/chased-by-ones-own-tail.html">&ldquo;Chased by One&rsquo;s Own Tail&rdquo;</a>), so you might enjoy reading his blog after watching the video!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Ranked Voting]]></title>
-    <link href="http://agam.github.io/blog/2013/12/19/ranked-voting/"/>
-    <updated>2013-12-19T02:23:00+00:00</updated>
-    <id>http://agam.github.io/blog/2013/12/19/ranked-voting</id>
-    <content type="html"><![CDATA[<p>This one might actually make for a medium level interview question (assuming the problem can be successfully communicated)</p>
-
-<p>Here is <a href="http://www.reddit.com/r/dailyprogrammer/comments/1r2mcz/112013_challenge_136_intermediate_ranked_voting/">the problem</a> (also found at the bottom of the gist)</p>
-
-<div><script src='https://gist.github.com/8033346.js'></script>
-<script type="text/javascript">$(".gist-file table tr td.line-numbers").remove();</script>
-<noscript><pre><code>#include &lt;cmath&gt;
-#include &lt;cstdint&gt;
-#include &lt;cstdio&gt;
-#include &lt;cstdlib&gt;
-#include &lt;iomanip&gt;
-#include &lt;iostream&gt;
-#include &lt;limits&gt;
-#include &lt;string&gt;
-#include &lt;vector&gt;
-
-using namespace std;
-
-void GetVotes(
-    const vector&lt;vector&lt;int&gt;&gt;&amp; votes,
-    int loser_index,
-    vector&lt;int&gt;* candidate_votes) {
-  // Use the round# to determine if votes should be transferred.
-  for (const vector&lt;int&gt;&amp; vote : votes) {
-    int first_choice = vote[0];
-    int second_choice = vote[1];
-    if (loser_index &gt;= 0) {
-      if (loser_index == first_choice) {
-        ++((*candidate_votes)[second_choice]);
-      }
-    } else {
-      // first pass; just add the votes
-      ++((*candidate_votes)[first_choice]);
-    }
-  }
-  if (loser_index &gt;=0) { ((*candidate_votes)[loser_index]) = 0; }
-}
-
-bool CheckMajority(const vector&lt;int&gt;&amp; candidate_votes, int total_votes, int* winner, int* loser) {
-  int max_votes = 0, min_votes = total_votes;
-  for (int i = 0; i &lt; candidate_votes.size(); ++i) {
-    int v = candidate_votes[i];
-    if (max_votes &lt; v) {
-      max_votes = v;
-      *winner = i;
-    }
-    if (min_votes &gt; v) {
-      min_votes = v;
-      *loser = i;
-    }
-  }
-  if (max_votes * 2 &gt; total_votes) {
-    return true;
-  } else {
-    return false;
-  }
-}
-
-void PrintStats(const vector&lt;int&gt;&amp; candidate_votes, int total_votes, const vector&lt;string&gt;&amp; candidate_names) {
-  for (int i = 0; i &lt; candidate_votes.size(); ++i) {
-    if (candidate_votes[i] == 0) continue;
-    cout &lt;&lt; fixed &lt;&lt; setprecision(2) &lt;&lt; (100.0 * candidate_votes[i])/total_votes &lt;&lt; &quot;% &quot; &lt;&lt; candidate_names[i];
-    if (i &lt; candidate_votes.size() - 1) {
-      cout &lt;&lt; &quot;, &quot;;
-    }
-  }
-  cout &lt;&lt; endl;
-}
-
-int main() {
-  int num_votes, num_candidates;
-  cin &gt;&gt; num_votes &gt;&gt; num_candidates;
-  cout &lt;&lt; &quot;Will read in &quot; &lt;&lt; num_votes &lt;&lt; &quot; votes for &quot; &lt;&lt; num_candidates &lt;&lt; &quot; candidates.&quot; &lt;&lt; endl;
-  vector&lt;string&gt; candidate_names;
-  vector&lt;vector&lt;int&gt;&gt; votes(num_votes, vector&lt;int&gt;(num_candidates));
-  for (int i = 0; i &lt; num_candidates; ++i) {
-    string name;
-    cin &gt;&gt; name;
-    candidate_names.push_back(name);
-  }
-  for (int i = 0; i &lt; num_votes; ++i) {
-    for (int j = 0; j &lt; num_candidates; ++j) {
-      cin &gt;&gt; votes[i][j];
-    }
-  }
-
-  // Sanity check what we got.
-  cout  &lt;&lt; &quot;Read in the following candidates :- \n&quot;;
-  for (const string&amp; name : candidate_names) {
-    cout &lt;&lt; name &lt;&lt; endl;
-  }
-  cout &lt;&lt; &quot;Read in the following votes :- \n&quot;;
-  for (int i = 0; i &lt; num_votes; ++i) {
-    for (int j = 0; j &lt; num_candidates; ++j) {
-      cout &lt;&lt; votes[i][j] &lt;&lt; &quot; &quot;;
-    }
-    cout &lt;&lt; endl;
-  }
-
-  vector&lt;int&gt; candidate_votes(num_candidates);
-  int round = 0, winner_index = -1, loser_index = -1;
-  do {
-    ++round;
-    GetVotes(votes, loser_index, &amp;candidate_votes);
-    cout &lt;&lt; &quot;Round &quot; &lt;&lt; round &lt;&lt; &quot;: &quot;;
-    PrintStats(candidate_votes, num_votes, candidate_names);
-  } while (!CheckMajority(candidate_votes, num_votes, &amp;winner_index, &amp;loser_index) &amp;&amp; round &lt; 10);
-  cout &lt;&lt; candidate_names[winner_index] &lt;&lt; &quot; is the winner.\n&quot;;
-}
-
-/*
-Input Description
------------------
-On standard console input, you will be given two space-delimited integers, N and M. N is the number of votes, while M is the number of candidates. After this line, you will be given the candidates line, which is a space-delimited set of M-number of candidate names. These names are one-word lower-case letters only. This is followed by N-lines of ballots, where each ballot is a list of M-integers, from 0 to M-1, representing the order of preference.
-Note that the order of preference for ballots goes from left-to-right. The integers are the index into the candidate list. For the example below, you can map 0: Knuth, 1: Turing, 2: Church. This means that if the ballot row is &quot;1 0 2&quot;, that means the voter prefers Turing over Knuth over Church.
-
-Output Description
-------------------
-Given the candidates and ballots, compute the first-round of successful candidates (e.g. rank them based on all ballot&#39;s first choice). If the percentage of votes for any one candidate is more than 50%, print the candidate name as the winner. Else, take all the votes of the least-successful candidate, and use their ballot&#39;s 2nd choice, summing again the total votes. If needed (e.g. there is no candidate that has more than 50% of the votes), repeat this process for the 3rd, 4th, etc. choice, and print the winner of the election.
-For each round of computation, print the percentage of votes for each candidate, and rank them based on that percentage, using the output format.
-*/
-</code></pre></noscript></div>
-
-
-
 ]]></content>
   </entry>
   
