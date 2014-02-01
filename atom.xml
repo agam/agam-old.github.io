@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2014-02-01T06:33:12+00:00</updated>
+  <updated>2014-02-01T08:20:39+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,31 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Playing with the exponential curve]]></title>
+    <link href="http://agam.github.io/blog/2014/02/01/playing-with-the-exponential-curve/"/>
+    <updated>2014-02-01T06:35:00+00:00</updated>
+    <id>http://agam.github.io/blog/2014/02/01/playing-with-the-exponential-curve</id>
+    <content type="html"><![CDATA[<p>I remember hearing about the <a href="http://britton.disted.camosun.bc.ca/jbchessgrain.htm">apocryphal story</a> about doubling grains of rice on a chessboard. I even tried writing powers of 2 (which at my age then just meant adding <code>2+2</code> then <code>4+4</code> etc).</p>
+
+<p><img class="center" src="http://britton.disted.camosun.bc.ca/firdau1.jpg"></p>
+
+<p>This is obviously the <a href="http://www.wolframalpha.com/input/?i=e+%5E+x"><code>e^x</code></a> curve, but when you normally see it drawn its self-similarity is not obvious. Mathematica&rsquo;s <code>Manipulate</code> function can help in this regard &hellip;</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Manipulate[ListPlot[Table[Power[2, i], {i, 1, n}]], {n, 1, 64}]</span></code></pre></td></tr></table></div></figure>
+
+
+<p><img class="center" src="http://farm3.staticflickr.com/2853/12244178256_251f9fcfae_d.jpg">
+<img class="center" src="http://farm6.staticflickr.com/5496/12243600435_e6faac3bbb_d.jpg">
+<img class="center" src="http://farm6.staticflickr.com/5547/12244178226_2258c2c2ce_d.jpg">
+<img class="center" src="http://farm3.staticflickr.com/2882/12243785163_3822d7299b_d.jpg">
+<img class="center" src="http://farm8.staticflickr.com/7332/12243785183_6243378edf_d.jpg"></p>
+
+<p>These are screenshots for increasing values of <code>n</code>: Note how they all look the same (except for the first one, where the curve is just starting out), over several orders of magnitude!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Change That Font!]]></title>
@@ -2454,19 +2479,6 @@ int main() {
 <p>The other obvious way is to get into <a href="www.topcoder.com">TopCoder</a>. Go through all the <a href="http://community.topcoder.com/tc?module=Static&amp;d1=tutorials&amp;d2=alg_index">tutorials</a>, examples, every SRM that comes along. Even if it can&rsquo;t be attempted live, do it eventually.</p>
 
 <p>So that&rsquo;s all for now. I&rsquo;ll evaluate this next year!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[FP takedown]]></title>
-    <link href="http://agam.github.io/blog/2013/12/24/fp-takedown/"/>
-    <updated>2013-12-24T06:22:00+00:00</updated>
-    <id>http://agam.github.io/blog/2013/12/24/fp-takedown</id>
-    <content type="html"><![CDATA[<p>Don&rsquo;t blame the messenger. I just saw this and it&rsquo;s hilarious. Gilad Bracha is one of my new heroes now :)</p>
-
-<p>Watch <a href="http://www.infoq.com/presentations/functional-pros-cons">this video</a> and unless you&rsquo;re an overly sensitive haskell zealot, you&rsquo;ll find some humor here. There&rsquo;s a lot of hype-busting and sacred-cow-killing.</p>
-
-<p>Of course, he&rsquo;s no stranger to controversial programming views (<a href="http://gbracha.blogspot.com/2011/01/maybe-monads-might-not-matter.html">&ldquo;Maybe Monads Might Not Matter&rdquo;</a>, <a href="http://gbracha.blogspot.com/2011/06/types-are-anti-modular.html">&ldquo;Types are anti modular&rdquo;</a>, <a href="http://gbracha.blogspot.com/2009/11/objects-are-not-hash-tables.html">&ldquo;Objects are not hash tables&rdquo;</a>, and <a href="http://gbracha.blogspot.com/2009/12/chased-by-ones-own-tail.html">&ldquo;Chased by One&rsquo;s Own Tail&rdquo;</a>), so you might enjoy reading his blog after watching the video!</p>
 ]]></content>
   </entry>
   

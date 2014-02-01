@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Change That Font! - Agam's Mashed-Up Pome</title>
+  <title>Playing with the exponential curve - Agam's Mashed-Up Pome</title>
   <meta name="author" content="Agam">
 
    
@@ -19,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://agam.github.io/blog/2014/02/01/change-that-font">
+  <link rel="canonical" href="http://agam.github.io/blog/2014/02/01/playing-with-the-exponential-curve">
   <link href="/favicon.png" rel="icon">
   <link href='http://fonts.googleapis.com/css?family=Quicksand:300,400' rel='stylesheet' type='text/css'>
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
@@ -88,7 +88,7 @@
 
   <header>
   <div class="jumbotron">
-    Change That Font!
+    Playing With the Exponential Curve
 	<h5>
 
 
@@ -101,18 +101,28 @@
   
 
 
-<i class="icon-calendar-empty"></i> <time datetime="2014-02-01T06:25:00+00:00" pubdate data-updated="true">Feb 1<span>st</span>, 2014</time></h5>
+<i class="icon-calendar-empty"></i> <time datetime="2014-02-01T06:35:00+00:00" pubdate data-updated="true">Feb 1<span>st</span>, 2014</time></h5>
   </div>
 </header>
   <div class="row-fluid">
     <div class="span12">
-      <p>You don&rsquo;t have to be chained to <code>Monaco</code> if you don&rsquo;t like it. I changed it to <code>Inconsolata</code>, which is as simply as <a href="http://www.levien.com/type/myfonts/inconsolata.html">downloading it</a> (click on the <em>Open Type File</em> link).</p>
+      <p>I remember hearing about the <a href="http://britton.disted.camosun.bc.ca/jbchessgrain.htm">apocryphal story</a> about doubling grains of rice on a chessboard. I even tried writing powers of 2 (which at my age then just meant adding <code>2+2</code> then <code>4+4</code> etc).</p>
 
-<p><img class="center" src="http://farm6.staticflickr.com/5509/12246575643_d92ae27492_z_d.jpg"></p>
+<p><img class="center" src="http://britton.disted.camosun.bc.ca/firdau1.jpg"></p>
 
-<p>Once you click on the downloaded file, the <strong>Font Book</strong> app should open up automatically, showing the font face and with a <code>Install</code> button.</p>
+<p>This is obviously the <a href="http://www.wolframalpha.com/input/?i=e+%5E+x"><code>e^x</code></a> curve, but when you normally see it drawn its self-similarity is not obvious. Mathematica&rsquo;s <code>Manipulate</code> function can help in this regard &hellip;</p>
 
-<p>Once you do this (I love this part) <em>any open font selection windows will refresh automatically</em>, and you can pick this new font for your terminal (which, by the way, I hope is <a href="http://iterm.sourceforge.net/">iTerm</a> because &hellip; if not, why?)</p>
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Manipulate[ListPlot[Table[Power[2, i], {i, 1, n}]], {n, 1, 64}]</span></code></pre></td></tr></table></div></figure>
+
+
+<p><img class="center" src="http://farm3.staticflickr.com/2853/12244178256_251f9fcfae_d.jpg">
+<img class="center" src="http://farm6.staticflickr.com/5496/12243600435_e6faac3bbb_d.jpg">
+<img class="center" src="http://farm6.staticflickr.com/5547/12244178226_2258c2c2ce_d.jpg">
+<img class="center" src="http://farm3.staticflickr.com/2882/12243785163_3822d7299b_d.jpg">
+<img class="center" src="http://farm8.staticflickr.com/7332/12243785183_6243378edf_d.jpg"></p>
+
+<p>These are screenshots for increasing values of <code>n</code>: Note how they all look the same (except for the first one, where the curve is just starting out), over several orders of magnitude!</p>
 
     </div>
   </div>
@@ -131,9 +141,11 @@
 
 
 
-  <a href="/blog/categories/font,/"><span class="badge">Font,</span></a>
+  <a href="/blog/categories/exponential/"><span class="badge">Exponential</span></a>
 
-  <a href="/blog/categories/osx/"><span class="badge">OSX</span></a>
+  <a href="/blog/categories/manipulate,/"><span class="badge">Manipulate,</span></a>
+
+  <a href="/blog/categories/mathematica,/"><span class="badge">Mathematica,</span></a>
 
 
 
@@ -165,10 +177,8 @@
       <div class="span12">
         <p class="meta">
           
-            <a class="basic-alignment left" href="/blog/2014/01/30/mathematica-1-slash-9998/" title="Previous Post: Mathematica: 1/9998">&laquo; Mathematica: 1/9998</a>
+            <a class="basic-alignment left" href="/blog/2014/02/01/change-that-font/" title="Previous Post: Change That Font!">&laquo; Change That Font!</a>
           
-          
-            <a class="basic-alignment right" href="/blog/2014/02/01/playing-with-the-exponential-curve/" title="Next Post: Playing with the exponential curve">Playing with the exponential curve &raquo;</a>
           
         </p>
       </div>
@@ -206,8 +216,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://agam.github.io/blog/2014/02/01/change-that-font/';
-        var disqus_url = 'http://agam.github.io/blog/2014/02/01/change-that-font/';
+        var disqus_identifier = 'http://agam.github.io/blog/2014/02/01/playing-with-the-exponential-curve/';
+        var disqus_url = 'http://agam.github.io/blog/2014/02/01/playing-with-the-exponential-curve/';
         var disqus_script = 'embed.js';
       
     (function () {
