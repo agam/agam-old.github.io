@@ -111,6 +111,306 @@
   
 
 
+<i class="icon-calendar-empty"></i> <time datetime="2013-03-12T00:00:00+00:00" pubdate data-updated="true">Mar 12<span>th</span>, 2013</time></h5>
+          <div class="row-fluid">
+          
+          </div>
+          
+          <div class="row-fluid">
+          
+          <a href="/blog/categories/assembly/"><span class="badge">Assembly</span></a>
+          
+          <a href="/blog/categories/go/"><span class="badge">Go</span></a>
+          
+          </div>
+          
+    </div>
+    <div class="span10 post-container">
+      <h1 class="link"><a href="/blog/2013/03/12/hello-world-in-go-compared/">Comparing &#8216;Hello World&#8217; in Go</a></h1>
+      <p>Since I looked at printing &ldquo;Hello World&rdquo; <a href="/posts/hello-world-comparison.html">in C and Haskell earlier</a>, I thought I would look at what <em><a href="http://golang.org/">Go</a></em> does diferently.</p>
+
+<h2>Source program</h2>
+
+<p>So we start with this</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='go'><span class='line'><span class="kn">package</span> <span class="nx">main</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="s">&quot;fmt&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Hello, World&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Binary info</h2>
+
+<p>The generated binary is large, like haskell, since (like haskell) it has a runtime linked in</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>ls -lh | grep <span class="s1">&#39;\-x\-&#39;</span>
+</span><span class='line'>-rwxr-x--- 1 agam eng 1.1M Mar 10 17:27 haskellhelloworld
+</span><span class='line'>-rwxr-x--- 1 agam eng 8.8K Dec 14 16:10 helloworldcpp
+</span><span class='line'>-rwxr-x--- 1 agam eng 1.3M Mar 12 18:07 helloworldgo
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It does define an intermediate number of symbols though:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>nm helloworldgo | wc -l
+</span><span class='line'>1748
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Unlike both C++ and Haskell though (and this is really impressive) the Go binary is statically linked. So presumably I can copy it to a different location and expect it to run without worry too much about the environment (although I don&rsquo;t know if this is true for all supported libraries (i.e. there might be certain Go libraries that don&rsquo;t allow static linking)).</p>
+
+<h2>Object code</h2>
+
+<p>To see the generated assembly, run the following (the <code>sed</code> here is to get rid of the filename + linenumber that shows up on every line).</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>go build -gcflags<span class="o">=</span>-S helloworld.go  | sed <span class="s1">&#39;s/([^ ]*)//&#39;</span> &gt; helloworldgo.s
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I&rsquo;ve <a href="https://gist.github.com/agam/5148575">saved the output in one piece</a> if you want to look at it.</p>
+
+<p>The assembly format here looks very different from what we saw before; that&rsquo;s because it&rsquo;s in the <a href="http://doc.cat-v.org/plan_9/4th_edition/papers/asm">Plan 9 assembler</a> format, and it&rsquo;s a bit confusing since it introduces new pseudo-instructions and pseudo-registers.</p>
+
+<p>Luckily, the generated assembly is somewhat annotated so it is much easier to follow along.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="err">---</span> <span class="nf">prog</span> <span class="nv">list</span> <span class="s">&quot;main&quot;</span> <span class="o">---</span>
+</span><span class='line'><span class="err">0000</span>  <span class="nf">TEXT</span>    <span class="nv">main</span><span class="o">+</span><span class="mi">0</span><span class="p">(</span><span class="nv">SB</span><span class="p">),</span><span class="kc">$</span><span class="mi">72</span><span class="o">-</span><span class="mi">0</span>
+</span><span class='line'><span class="err">0001</span>  <span class="nf">LEAQ</span>    <span class="nv">autotmp_0002</span><span class="o">+-</span><span class="mi">16</span><span class="p">(</span><span class="nb">SP</span><span class="p">),</span><span class="nb">DI</span>
+</span><span class='line'><span class="err">0002</span>  <span class="nf">MOVQ</span>    <span class="kc">$</span><span class="mi">0</span><span class="p">,</span><span class="nb">AX</span>
+</span><span class='line'><span class="err">0003</span>  <span class="nf">STOSQ</span>   <span class="p">,</span>
+</span><span class='line'><span class="err">0004</span>  <span class="nf">STOSQ</span>   <span class="p">,</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I was confused by the <code>autotmp_000x</code> all over the code, until I looked at the <a href="http://golang.org/src/cmd/gc/gen.c">corresponding runtime code</a> and realized these were unique names for temporary variables in the original code.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="err">0005</span>  <span class="nf">LEAQ</span>    <span class="nv">autotmp_0002</span><span class="o">+-</span><span class="mi">16</span><span class="p">(</span><span class="nb">SP</span><span class="p">),</span><span class="nb">BX</span>
+</span><span class='line'><span class="err">0006</span>  <span class="nf">MOVL</span>    <span class="kc">$</span><span class="mi">1</span><span class="p">,</span><span class="nv">autotmp_0000</span><span class="o">+-</span><span class="mi">24</span><span class="p">(</span><span class="nb">SP</span><span class="p">)</span>
+</span><span class='line'><span class="err">0007</span>  <span class="nf">MOVL</span>    <span class="kc">$</span><span class="mi">1</span><span class="p">,</span><span class="nv">autotmp_0000</span><span class="o">+-</span><span class="mi">20</span><span class="p">(</span><span class="nb">SP</span><span class="p">)</span>
+</span><span class='line'><span class="err">0008</span>  <span class="nf">MOVQ</span>    <span class="nb">BX</span><span class="p">,</span><span class="nv">autotmp_0000</span><span class="o">+-</span><span class="mi">32</span><span class="p">(</span><span class="nb">SP</span><span class="p">)</span>
+</span><span class='line'><span class="err">0009</span>  <span class="nf">MOVQ</span>    <span class="kc">$</span><span class="nv">type.string</span><span class="o">+</span><span class="mi">0</span><span class="p">(</span><span class="nv">SB</span><span class="p">),(</span><span class="nb">SP</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Raw data, such as the string &ldquo;Hello, World&rdquo; here, <a href="http://golang.org/src/pkg/runtime/iface.c">have to be converted</a> to types within the program.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="err">0010</span>  <span class="nf">LEAQ</span>    <span class="nv">go.string.</span><span class="s">&quot;Hello, World&quot;</span><span class="o">+</span><span class="mi">0</span><span class="p">(</span><span class="nv">SB</span><span class="p">),</span><span class="nb">SI</span>
+</span><span class='line'><span class="err">0011</span>  <span class="nf">LEAQ</span>    <span class="mi">8</span><span class="p">(</span><span class="nb">SP</span><span class="p">),</span><span class="nb">DI</span>
+</span><span class='line'><span class="err">0012</span>  <span class="nf">MOVSQ</span>   <span class="p">,</span>
+</span><span class='line'><span class="err">0013</span>  <span class="nf">MOVSQ</span>   <span class="p">,</span>
+</span><span class='line'><span class="err">0014</span>  <span class="nf">CALL</span>    <span class="p">,</span><span class="nv">runtime.convT2E</span><span class="o">+</span><span class="mi">0</span><span class="p">(</span><span class="nv">SB</span><span class="p">)</span>
+</span><span class='line'><span class="err">0015</span>  <span class="nf">LEAQ</span>    <span class="mi">24</span><span class="p">(</span><span class="nb">SP</span><span class="p">),</span><span class="nb">SI</span>
+</span><span class='line'><span class="err">0016</span>  <span class="nf">LEAQ</span>    <span class="nv">autotmp_0000</span><span class="o">+-</span><span class="mi">32</span><span class="p">(</span><span class="nb">SP</span><span class="p">),</span><span class="nb">DI</span>
+</span><span class='line'><span class="err">0017</span>  <span class="nf">MOVQ</span>    <span class="p">(</span><span class="nb">DI</span><span class="p">),</span><span class="nb">DI</span>
+</span><span class='line'><span class="err">0018</span>  <span class="nf">MOVSQ</span>   <span class="p">,</span>
+</span><span class='line'><span class="err">0019</span>  <span class="nf">MOVSQ</span>   <span class="p">,</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Not sure here &hellip; looks like the string is being copied, as an argument to <code>fmt.Println</code> ?</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="err">0020</span>  <span class="nf">LEAQ</span>    <span class="p">(</span><span class="nb">SP</span><span class="p">),</span><span class="nb">BX</span>
+</span><span class='line'><span class="err">0021</span>  <span class="nf">MOVQ</span>    <span class="nv">autotmp_0000</span><span class="o">+-</span><span class="mi">32</span><span class="p">(</span><span class="nb">SP</span><span class="p">),</span><span class="nb">BP</span>
+</span><span class='line'><span class="err">0022</span>  <span class="nf">MOVQ</span>    <span class="nb">BP</span><span class="p">,(</span><span class="nb">BX</span><span class="p">)</span>
+</span><span class='line'><span class="err">0023</span>  <span class="nf">MOVL</span>    <span class="nv">autotmp_0000</span><span class="o">+-</span><span class="mi">24</span><span class="p">(</span><span class="nb">SP</span><span class="p">),</span><span class="nb">BP</span>
+</span><span class='line'><span class="err">0024</span>  <span class="nf">MOVL</span>    <span class="nb">BP</span><span class="p">,</span><span class="mi">8</span><span class="p">(</span><span class="nb">BX</span><span class="p">)</span>
+</span><span class='line'><span class="err">0025</span>  <span class="nf">MOVL</span>    <span class="nv">autotmp_0000</span><span class="o">+-</span><span class="mi">20</span><span class="p">(</span><span class="nb">SP</span><span class="p">),</span><span class="nb">BP</span>
+</span><span class='line'><span class="err">0026</span>  <span class="nf">MOVL</span>    <span class="nb">BP</span><span class="p">,</span><span class="mi">12</span><span class="p">(</span><span class="nb">BX</span><span class="p">)</span>
+</span><span class='line'><span class="err">0027</span>  <span class="nf">CALL</span>    <span class="p">,</span><span class="nv">fmt.Println</span><span class="o">+</span><span class="mi">0</span><span class="p">(</span><span class="nv">SB</span><span class="p">)</span>
+</span><span class='line'><span class="err">0028</span>  <span class="nf">RET</span>     <span class="p">,</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>General runtime initialization &hellip; including a call to <code>fmt.init</code> to initialize static data in the <code>fmt</code> package.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="err">---</span> <span class="nf">prog</span> <span class="nv">list</span> <span class="s">&quot;init&quot;</span> <span class="o">---</span>
+</span><span class='line'><span class="err">0029</span>  <span class="nf">TEXT</span>    <span class="nv">init</span><span class="o">+</span><span class="mi">0</span><span class="p">(</span><span class="nv">SB</span><span class="p">),</span><span class="kc">$</span><span class="mi">0</span><span class="o">-</span><span class="mi">0</span>
+</span><span class='line'><span class="err">0030</span>  <span class="nf">MOVB</span>    <span class="nv">initdone</span><span class="err">·</span><span class="o">+</span><span class="mi">0</span><span class="p">(</span><span class="nv">SB</span><span class="p">),</span><span class="nb">AX</span>
+</span><span class='line'><span class="err">0031</span>  <span class="nf">MOVB</span>    <span class="nb">AX</span><span class="p">,</span><span class="nb">BX</span>
+</span><span class='line'><span class="err">0032</span>  <span class="nf">CMPB</span>    <span class="nb">BX</span><span class="p">,</span><span class="kc">$</span><span class="mi">0</span>
+</span><span class='line'><span class="err">0033</span>  <span class="nf">JEQ</span>     <span class="p">,</span><span class="mi">39</span>
+</span><span class='line'><span class="err">0034</span>  <span class="nf">MOVB</span>    <span class="nb">AX</span><span class="p">,</span><span class="nb">BX</span>
+</span><span class='line'><span class="err">0035</span>  <span class="nf">CMPB</span>    <span class="nb">BX</span><span class="p">,</span><span class="kc">$</span><span class="mi">2</span>
+</span><span class='line'><span class="err">0036</span>  <span class="nf">JNE</span>     <span class="p">,</span><span class="mi">38</span>
+</span><span class='line'><span class="err">0037</span>  <span class="nf">RET</span>     <span class="p">,</span>
+</span><span class='line'><span class="err">0038</span>  <span class="nf">CALL</span>    <span class="p">,</span><span class="nv">runtime.throwinit</span><span class="o">+</span><span class="mi">0</span><span class="p">(</span><span class="nv">SB</span><span class="p">)</span>
+</span><span class='line'><span class="err">0039</span>  <span class="nf">MOVB</span>    <span class="kc">$</span><span class="mi">1</span><span class="p">,</span><span class="nv">initdone</span><span class="err">·</span><span class="o">+</span><span class="mi">0</span><span class="p">(</span><span class="nv">SB</span><span class="p">)</span>
+</span><span class='line'><span class="err">0040</span>  <span class="nf">CALL</span>    <span class="p">,</span><span class="nv">fmt.init</span><span class="o">+</span><span class="mi">0</span><span class="p">(</span><span class="nv">SB</span><span class="p">)</span>
+</span><span class='line'><span class="err">0041</span>  <span class="nf">MOVB</span>    <span class="kc">$</span><span class="mi">2</span><span class="p">,</span><span class="nv">initdone</span><span class="err">·</span><span class="o">+</span><span class="mi">0</span><span class="p">(</span><span class="nv">SB</span><span class="p">)</span>
+</span><span class='line'><span class="err">0042</span>  <span class="nf">RET</span>     <span class="p">,</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The data section &hellip;</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="err">---</span> <span class="nf">prog</span> <span class="nv">list</span> <span class="s">&quot;&lt;S&gt;&quot;</span> <span class="o">---</span>
+</span><span class='line'><span class="err">0043</span>  <span class="nf">DATA</span>    <span class="nv">go.string.</span><span class="s">&quot;Hello, World&quot;</span><span class="o">+</span><span class="mi">0</span><span class="p">(</span><span class="nv">SB</span><span class="p">)</span><span class="o">/</span><span class="mi">8</span><span class="p">,</span><span class="kc">$</span><span class="nv">go.string.</span><span class="s">&quot;Hello, World&quot;</span><span class="o">+</span><span class="mi">12</span><span class="p">(</span><span class="nv">SB</span><span class="p">)</span>
+</span><span class='line'><span class="err">0043</span>  <span class="nf">DATA</span>    <span class="nv">go.string.</span><span class="s">&quot;Hello, World&quot;</span><span class="o">+</span><span class="mi">8</span><span class="p">(</span><span class="nv">SB</span><span class="p">)</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span><span class="kc">$</span><span class="mi">12</span>
+</span><span class='line'><span class="err">0043</span>  <span class="nf">DATA</span>    <span class="nv">go.string.</span><span class="s">&quot;Hello, World&quot;</span><span class="o">+</span><span class="mi">12</span><span class="p">(</span><span class="nv">SB</span><span class="p">)</span><span class="o">/</span><span class="mi">8</span><span class="p">,</span><span class="kc">$</span><span class="s">&quot;Hello, W&quot;</span>
+</span><span class='line'><span class="err">0043</span>  <span class="nf">DATA</span>    <span class="nv">go.string.</span><span class="s">&quot;Hello, World&quot;</span><span class="o">+</span><span class="mi">20</span><span class="p">(</span><span class="nv">SB</span><span class="p">)</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span><span class="kc">$</span><span class="s">&quot;orld&quot;</span>
+</span><span class='line'><span class="err">0043</span>  <span class="nf">DATA</span>    <span class="nv">go.string.</span><span class="s">&quot;Hello, World&quot;</span><span class="o">+</span><span class="mi">24</span><span class="p">(</span><span class="nv">SB</span><span class="p">)</span><span class="o">/</span><span class="mi">1</span><span class="p">,</span><span class="kc">$</span><span class="mi">0</span>
+</span><span class='line'><span class="err">0043</span>  <span class="nf">GLOBL</span>   <span class="nv">go.string.</span><span class="s">&quot;Hello, World&quot;</span><span class="o">+</span><span class="mi">0</span><span class="p">(</span><span class="nv">SB</span><span class="p">),</span><span class="mi">10</span><span class="p">,</span><span class="kc">$</span><span class="mi">32</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Omitted most of the rest of the data section, althought it has some weird stuff that I&rsquo;d like to dig into later, such as</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nf">...</span>
+</span><span class='line'><span class="nf">...</span>
+</span><span class='line'><span class="nf">...</span>
+</span><span class='line'><span class="err">0043</span>  <span class="nf">DATA</span>    <span class="nv">go.string.</span><span class="s">&quot;func(*uint8, string) interface {}&quot;</span><span class="o">+</span><span class="mi">0</span><span class="p">(</span><span class="nv">SB</span><span class="p">)</span><span class="o">/</span><span class="mi">8</span><span class="p">,</span><span class="kc">$</span><span class="nv">go.string.</span><span class="s">&quot;func(*uint8, string) interface {}&quot;</span><span class="o">+</span><span class="mi">12</span><span class="p">(</span><span class="nv">SB</span><span class="p">)</span>
+</span><span class='line'><span class="err">0043</span>  <span class="nf">DATA</span>    <span class="nv">go.string.</span><span class="s">&quot;func(*uint8, string) interface {}&quot;</span><span class="o">+</span><span class="mi">8</span><span class="p">(</span><span class="nv">SB</span><span class="p">)</span><span class="o">/</span><span class="mi">4</span><span class="p">,</span><span class="kc">$</span><span class="mi">33</span>
+</span><span class='line'><span class="err">0043</span>  <span class="nf">DATA</span>    <span class="nv">go.string.</span><span class="s">&quot;func(*uint8, string) interface {}&quot;</span><span class="o">+</span><span class="mi">12</span><span class="p">(</span><span class="nv">SB</span><span class="p">)</span><span class="o">/</span><span class="mi">8</span><span class="p">,</span><span class="kc">$</span><span class="s">&quot;func(*ui&quot;</span>
+</span><span class='line'><span class="err">0043</span>  <span class="nf">DATA</span>    <span class="nv">go.string.</span><span class="s">&quot;func(*uint8, string) interface {}&quot;</span><span class="o">+</span><span class="mi">20</span><span class="p">(</span><span class="nv">SB</span><span class="p">)</span><span class="o">/</span><span class="mi">8</span><span class="p">,</span><span class="kc">$</span><span class="s">&quot;nt8, str&quot;</span>
+</span><span class='line'><span class="err">0043</span>  <span class="nf">DATA</span>    <span class="nv">go.string.</span><span class="s">&quot;func(*uint8, string) interface {}&quot;</span><span class="o">+</span><span class="mi">28</span><span class="p">(</span><span class="nv">SB</span><span class="p">)</span><span class="o">/</span><span class="mi">8</span><span class="p">,</span><span class="kc">$</span><span class="s">&quot;ing) int&quot;</span>
+</span><span class='line'><span class="err">0043</span>  <span class="nf">DATA</span>    <span class="nv">go.string.</span><span class="s">&quot;func(*uint8, string) interface {}&quot;</span><span class="o">+</span><span class="mi">36</span><span class="p">(</span><span class="nv">SB</span><span class="p">)</span><span class="o">/</span><span class="mi">8</span><span class="p">,</span><span class="kc">$</span><span class="s">&quot;erface {&quot;</span>
+</span><span class='line'><span class="err">0043</span>  <span class="nf">DATA</span>    <span class="nv">go.string.</span><span class="s">&quot;func(*uint8, string) interface {}&quot;</span><span class="o">+</span><span class="mi">44</span><span class="p">(</span><span class="nv">SB</span><span class="p">)</span><span class="o">/</span><span class="mi">1</span><span class="p">,</span><span class="kc">$</span><span class="s">&quot;}&quot;</span>
+</span><span class='line'><span class="err">0043</span>  <span class="nf">DATA</span>    <span class="nv">go.string.</span><span class="s">&quot;func(*uint8, string) interface {}&quot;</span><span class="o">+</span><span class="mi">45</span><span class="p">(</span><span class="nv">SB</span><span class="p">)</span><span class="o">/</span><span class="mi">1</span><span class="p">,</span><span class="kc">$</span><span class="mi">0</span>
+</span><span class='line'><span class="err">0043</span>  <span class="nf">GLOBL</span>   <span class="nv">go.string.</span><span class="s">&quot;func(*uint8, string) interface {}&quot;</span><span class="o">+</span><span class="mi">0</span><span class="p">(</span><span class="nv">SB</span><span class="p">),</span><span class="mi">10</span><span class="p">,</span><span class="kc">$</span><span class="mi">48</span>
+</span><span class='line'><span class="nf">...</span>
+</span><span class='line'><span class="nf">...</span>
+</span><span class='line'><span class="nf">...</span>
+</span><span class='line'><span class="err">0043</span>  <span class="nf">END</span>     <span class="p">,</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>(What exactly is going on here ? Perhaps encoding strings to use for runtime error reporting ?)</p>
+
+<h2>Running time</h2>
+
+<p>Again, running a string output program for time comparison is stupid, but I can&rsquo;t help doing this stupid thing. So &hellip;</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span><span class="nb">time</span> <span class="o">(</span><span class="k">while</span> <span class="o">((</span>n++ &lt; 100<span class="o">))</span>; <span class="k">do</span> ./helloworldgo; <span class="k">done</span><span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'>real  0m0.567s
+</span><span class='line'>user  0m0.196s
+</span><span class='line'>sys   0m0.132s
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+      
+      
+    </div>
+  </div>
+
+
+
+    </article>
+    
+    <hr>
+    
+  
+  
+    <article>
+      
+
+  <div class="row-fluid">
+    <div class="span2 post-meta">
+	  <h5 class="date-time">
+
+
+
+
+
+
+
+
+  
+
+
 <i class="icon-calendar-empty"></i> <time datetime="2013-03-11T00:00:00+00:00" pubdate data-updated="true">Mar 11<span>th</span>, 2013</time></h5>
           <div class="row-fluid">
           

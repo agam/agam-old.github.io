@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2014-02-01T08:59:00+00:00</updated>
+  <updated>2014-02-03T23:21:47+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,109 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Programming Fun: Graph distances]]></title>
+    <link href="http://agam.github.io/blog/2014/02/03/programming-fun-graph-distances/"/>
+    <updated>2014-02-03T23:12:00+00:00</updated>
+    <id>http://agam.github.io/blog/2014/02/03/programming-fun-graph-distances</id>
+    <content type="html"><![CDATA[<p>Interesting <a href="http://www.reddit.com/r/dailyprogrammer/comments/1tiz4z/122313_challenge_140_intermediate_graph_radius/">problem</a>: given a graph, find out the <em>minimum distance between any two nodes</em>.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Input Description
+</span><span class='line'>-----------------
+</span><span class='line'>On standard console input you will be given an integer N, followed by an
+</span><span class='line'>Adjacency matrix. The graph is not directed, so the matrix will always be
+</span><span class='line'>reflected about the main diagonal.
+</span><span class='line'>
+</span><span class='line'>Output Description
+</span><span class='line'>------------------
+</span><span class='line'>Print the radius of the graph as an integer.</span></code></pre></td></tr></table></div></figure>
+
+
+<p>There are a few ways to do this &mdash; you can run <a href="http://en.wikipedia.org/wiki/Dijkstra%27s_algorithm">Dijkstra&rsquo;s algorithm</a> or <a href="http://en.wikipedia.org/wiki/Floyd%E2%80%93Warshall_algorithm">Floyd-Warshall algorithm</a> on the graph to find the path from each node to each other node. I sort of took a short cut &mdash; when the graph is represented as a matrix (as it is here), multiplying the matrix with itself (and adding the result to itself, so as not to lose the <em>0-step</em> info) can be used as a way of checking whether or not two nodes are connected.</p>
+
+<p>Concretely, after <code>k</code> steps, if <code>Graph[i][j]</code> is <code>0</code> this means there is no path from <code>i</code> to <code>j</code> in <code>k</code> steps. So if you repeat this multiplication and stop when there are no zero elements, the number of multiplication steps is the minimum distance you need.</p>
+
+<div><script src='https://gist.github.com/8794234.js'></script>
+<script type="text/javascript">$(".gist-file table tr td.line-numbers").remove();</script>
+<noscript><pre><code>// Omitting headers
+
+using namespace std;
+
+void MatrixMultiply(
+    const vector&lt;vector&lt;uint64_t&gt;&gt;&amp; source_mat1,
+    const vector&lt;vector&lt;uint64_t&gt;&gt;&amp; source_mat2,
+    int N,
+    vector&lt;vector&lt;uint64_t&gt;&gt;* dest_mat) {
+  for (int i = 0; i &lt; N; ++i) {
+    vector&lt;uint64_t&gt; row;
+    for (int j = 0; j &lt; N; ++j) {
+      uint64_t sum = source_mat1[i][j];
+      for (int k = 0; k &lt; N; ++k) {
+        sum += (source_mat1[i][k] * source_mat2[k][j]);
+      }
+      row.push_back(sum);
+    }
+    dest_mat-&gt;push_back(row);
+  }
+}
+
+bool AllVerticesReachable(const vector&lt;vector&lt;uint64_t&gt;&gt;&amp; mat, int N) {
+  for (int i = 0; i &lt; N; ++i) {
+    for (int j = 0; j &lt; N; ++j) {
+      if (mat[i][j] == 0) {
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
+int main(int argc, char* argv[]) {
+  int graph_size;
+  cin &gt;&gt; graph_size;
+  vector&lt;vector&lt;uint64_t&gt;&gt; graph;
+  for (int i = 0; i &lt; graph_size; ++i) {
+    int num;
+    vector&lt;uint64_t&gt; row;
+    for (int j = 0; j &lt; graph_size; ++j) {
+      cin &gt;&gt; num;
+      row.push_back(num);
+    }
+    graph.push_back(row);
+  }
+
+  // Multiply the matrix with itself
+  int num_edges = 1;
+  vector&lt;vector&lt;uint64_t&gt;&gt; multiplied_graph = graph;
+  do {
+    vector&lt;vector&lt;uint64_t&gt;&gt; temp_graph;
+    MatrixMultiply(graph, multiplied_graph, graph_size, &amp;temp_graph);
+    multiplied_graph = temp_graph;
+
+    if (AllVerticesReachable(multiplied_graph, graph_size)) {
+      break;
+    }
+
+    ++num_edges;
+  } while (num_edges &lt; graph_size);
+  cout &lt;&lt; &quot;Radius = &quot; &lt;&lt; num_edges + 1 &lt;&lt; endl;
+}
+</code></pre></noscript></div>
+
+
+<p>[I&rsquo;m a little bored of these daily programmer questions now :( I&rsquo;ll do one more hard one and then find a new theme here.]</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Minsky Turing Lecture: Part 2]]></title>
@@ -2409,143 +2512,6 @@ int main() {
 
 
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Urbit]]></title>
-    <link href="http://agam.github.io/blog/2014/01/06/urbit/"/>
-    <updated>2014-01-06T07:44:00+00:00</updated>
-    <id>http://agam.github.io/blog/2014/01/06/urbit</id>
-    <content type="html"><![CDATA[<p>I will confess that I initially thought this was a big joke, some April Fool&rsquo;s Day kind of thing.</p>
-
-<h2>WTF is Urbit ?</h2>
-
-<p>Supposedly it&rsquo;s an <em>&ldquo;operating function&rdquo;</em>. You could try reading the <a href="http://www.urbit.org/faq.html">FAQ</a> but it&rsquo;s pretty sparse right now. Don&rsquo;t let that stop you from playing around with it though.</p>
-
-<p>After watching the demo video (below), it seemed like something worth checking out.</p>
-
-<iframe src="http://agam.github.io//player.vimeo.com/video/75312418" width="500" height="281" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
-
-
-<p>Even if it isn&rsquo;t really <em>useful</em>, there&rsquo;s something to be learnt from what is clearly a well-thought-out, complex piece of work.</p>
-
-<h2>Getting started</h2>
-
-<p>First, get some essential stuff.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>sudo apt-get install libgmp3-dev libsigsegv-dev openssl libssl-dev libncurses5-dev git make exuberant-ctags
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Then get the source and build it.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>git clone https://github.com/urbit/urbit.git
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Add to your <code>.bashrc</code> the equivalent of</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span><span class="nb">export </span><span class="nv">URBIT_HOME</span><span class="o">=</span>/home/agam/urbit/urb
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>and then</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span><span class="nb">cd </span>urbit
-</span><span class='line'><span class="nv">$ </span>make
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This will go on for a short while, and if all goes well, you should end up with a new <code>bin</code> subdirectory, with a single executable. Run it.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>bin/vere
-</span><span class='line'>vere: urbit home is /home/agam/urbit/urb
-</span><span class='line'>bin/vere: usage: <span class="o">[</span>-v<span class="o">]</span> <span class="o">[</span>-k stage<span class="o">]</span> computer
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Excellently terse. Get used to it. It&rsquo;s also not exactly up-to-date. We&rsquo;re going to use a different parameter.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>bin/vere -c frogstar
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Obviously, substitute some made-up-name instead of <code>frogstar</code> above. Now you should see something like</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>bin/vere -c frogstar
-</span><span class='line'>vere: urbit home is /home/agam/urbit/urb
-</span><span class='line'>loom: mapped 1024MB
-</span><span class='line'>loading /home/agam/urbit/urb/urbit.pill
-</span><span class='line'><span class="nb">time</span>: ~2014.1.6..07.34.20..58b0
-</span><span class='line'>ames: on localhost, UDP 44342.
-</span><span class='line'>http: live on 8080
-</span><span class='line'>generating 2048-bit RSA pair...
-</span><span class='line'>ames: czar zod.urbit.org: ip .198.199.112.32
-</span><span class='line'>saving passcode in /home/agam/.urbit/~fiddyn-lavpun.txt
-</span><span class='line'><span class="o">(</span><span class="k">for </span>real security, write it down and delete the file...<span class="o">)</span>
-</span><span class='line'>; ~zod |Tianming| is your neighbor
-</span><span class='line'>; ~zod |Tianming| is your neighbor
-</span><span class='line'>waiting...
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>and after half a minute of waiting, it should download a whole bunch of <code>hoon</code> files &hellip;</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>updating...
-</span><span class='line'>: /~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/main/1/bin/update/hoon
-</span><span class='line'>: /~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/main/1/bin/update/hoon
-</span><span class='line'>: /~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/main/1/bin/update/hoon
-</span><span class='line'>: /~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/main/1/bin/update/hoon
-</span><span class='line'>...
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Going off on an adventure!</h2>
-
-<p>At this point you should find yourself staring at the <em><code>Arvo</code> prompt</em></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt;
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>(which, it turns out, is also a REPL)</p>
-
-<p>That&rsquo;s all for now &hellip; more on Urbit later.</p>
-
-<p>Meanwhile, check out their website at <a href="http://www.urbit.org/">www.urbit.org</a> or explore <a href="https://github.com/urbit/urbit">the code on github</a> or follow them on twitter <a href="https://twitter.com/urbit_">@urbit_</a>.</p>
-
-<p>Happy <em>urbiting</em> !!</p>
 ]]></content>
   </entry>
   
