@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Programming Fun: Graph distances - Agam's Mashed-Up Pome</title>
+  <title>How fast can you factor ? - Agam's Mashed-Up Pome</title>
   <meta name="author" content="Agam">
 
    
@@ -19,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://agam.github.io/blog/2014/02/03/programming-fun-graph-distances">
+  <link rel="canonical" href="http://agam.github.io/blog/2014/02/04/how-fast-can-you-factor">
   <link href="/favicon.png" rel="icon">
   <link href='http://fonts.googleapis.com/css?family=Quicksand:300,400' rel='stylesheet' type='text/css'>
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
@@ -88,7 +88,7 @@
 
   <header>
   <div class="jumbotron">
-    Programming Fun: Graph Distances
+    How Fast Can You Factor ?
 	<h5>
 
 
@@ -101,106 +101,30 @@
   
 
 
-<i class="icon-calendar-empty"></i> <time datetime="2014-02-03T23:12:00+00:00" pubdate data-updated="true">Feb 3<span>rd</span>, 2014</time></h5>
+<i class="icon-calendar-empty"></i> <time datetime="2014-02-04T18:52:00+00:00" pubdate data-updated="true">Feb 4<span>th</span>, 2014</time></h5>
   </div>
 </header>
   <div class="row-fluid">
     <div class="span12">
-      <p>Interesting <a href="http://www.reddit.com/r/dailyprogrammer/comments/1tiz4z/122313_challenge_140_intermediate_graph_radius/">problem</a>: given a graph, find out the <em>minimum distance between any two nodes</em>.</p>
+      <p>For no other reason than <em>because it&rsquo;s there</em>, here is the result of asking Mathematica to factor <a href="http://en.wikipedia.org/wiki/RSA_numbers#RSA-100">RSA 100</a>.</p>
 
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>Input Description
-</span><span class='line'>-----------------
-</span><span class='line'>On standard console input you will be given an integer N, followed by an
-</span><span class='line'>Adjacency matrix. The graph is not directed, so the matrix will always be
-</span><span class='line'>reflected about the main diagonal.
-</span><span class='line'>
-</span><span class='line'>Output Description
-</span><span class='line'>------------------
-</span><span class='line'>Print the radius of the graph as an integer.</span></code></pre></td></tr></table></div></figure>
+<p>In 1991,</p>
 
+<blockquote><p>&hellip; the factorization took a few days using the multiple-polynomial quadratic sieve algorithm on a MasPar parallel computer.</p></blockquote>
 
-<p>There are a few ways to do this &mdash; you can run <a href="http://en.wikipedia.org/wiki/Dijkstra%27s_algorithm">Dijkstra&rsquo;s algorithm</a> or <a href="http://en.wikipedia.org/wiki/Floyd%E2%80%93Warshall_algorithm">Floyd-Warshall algorithm</a> on the graph to find the path from each node to each other node. I sort of took a short cut &mdash; when the graph is represented as a matrix (as it is here), multiplying the matrix with itself (and adding the result to itself, so as not to lose the <em>0-step</em> info) can be used as a way of checking whether or not two nodes are connected.</p>
+<p>and now,</p>
 
-<p>Concretely, after <code>k</code> steps, if <code>Graph[i][j]</code> is <code>0</code> this means there is no path from <code>i</code> to <code>j</code> in <code>k</code> steps. So if you repeat this multiplication and stop when there are no zero elements, the number of multiplication steps is the minimum distance you need.</p>
+<blockquote><p>It takes four hours to repeat this factorization using the program Msieve on a 2200 MHz Athlon 64 processor.</p></blockquote>
 
-<div><script src='https://gist.github.com/8794234.js'></script>
-<script type="text/javascript">$(".gist-file table tr td.line-numbers").remove();</script>
-<noscript><pre><code>// Omitting headers
+<p>In comparison, Mathematica took little more than an hour. Unfortunately, it was not able to parallelize it (for a <em>real</em> comparison, the <a href="http://sourceforge.net/projects/msieve/files/msieve/Msieve%20v1.51/">Msieve code</a> would have to be ported over).</p>
 
-using namespace std;
+<p><img class="center" src="http://farm6.staticflickr.com/5510/12309071334_575cda01f9_z_d.jpg" title="" ></p>
 
-void MatrixMultiply(
-    const vector&lt;vector&lt;uint64_t&gt;&gt;&amp; source_mat1,
-    const vector&lt;vector&lt;uint64_t&gt;&gt;&amp; source_mat2,
-    int N,
-    vector&lt;vector&lt;uint64_t&gt;&gt;* dest_mat) {
-  for (int i = 0; i &lt; N; ++i) {
-    vector&lt;uint64_t&gt; row;
-    for (int j = 0; j &lt; N; ++j) {
-      uint64_t sum = source_mat1[i][j];
-      for (int k = 0; k &lt; N; ++k) {
-        sum += (source_mat1[i][k] * source_mat2[k][j]);
-      }
-      row.push_back(sum);
-    }
-    dest_mat-&gt;push_back(row);
-  }
-}
+<p><strong>Update:</strong> This has been much better documented on <a href="http://mathematica.stackexchange.com/questions/14964/time-approximation-of-decrypting-rsa-algorithm">this StackExchange thread</a>, which also links to <a href="http://reference.wolfram.com/mathematica/tutorial/SomeNotesOnInternalImplementation.html#12915">notes on internal implementation</a>, in case you&rsquo;re interested:</p>
 
-bool AllVerticesReachable(const vector&lt;vector&lt;uint64_t&gt;&gt;&amp; mat, int N) {
-  for (int i = 0; i &lt; N; ++i) {
-    for (int j = 0; j &lt; N; ++j) {
-      if (mat[i][j] == 0) {
-        return false;
-      }
-    }
-  }
-  return true;
-}
+<blockquote><p>FactorInteger switches between trial division, Pollard , Pollard rho, elliptic curve, and quadratic sieve algorithms.</p></blockquote>
 
-int main(int argc, char* argv[]) {
-  int graph_size;
-  cin &gt;&gt; graph_size;
-  vector&lt;vector&lt;uint64_t&gt;&gt; graph;
-  for (int i = 0; i &lt; graph_size; ++i) {
-    int num;
-    vector&lt;uint64_t&gt; row;
-    for (int j = 0; j &lt; graph_size; ++j) {
-      cin &gt;&gt; num;
-      row.push_back(num);
-    }
-    graph.push_back(row);
-  }
-
-  // Multiply the matrix with itself
-  int num_edges = 1;
-  vector&lt;vector&lt;uint64_t&gt;&gt; multiplied_graph = graph;
-  do {
-    vector&lt;vector&lt;uint64_t&gt;&gt; temp_graph;
-    MatrixMultiply(graph, multiplied_graph, graph_size, &amp;temp_graph);
-    multiplied_graph = temp_graph;
-
-    if (AllVerticesReachable(multiplied_graph, graph_size)) {
-      break;
-    }
-
-    ++num_edges;
-  } while (num_edges &lt; graph_size);
-  cout &lt;&lt; &quot;Radius = &quot; &lt;&lt; num_edges + 1 &lt;&lt; endl;
-}
-</code></pre></noscript></div>
-
-
-<p>[I&rsquo;m a little bored of these daily programmer questions now :( I&rsquo;ll do one more hard one and then find a new theme here.]</p>
+<p>Finally, more on RSA Numbers, as well as a Mathematica Notebook, <a href="http://mathworld.wolfram.com/RSANumber.html">here</a></p>
 
     </div>
   </div>
@@ -219,9 +143,9 @@ int main(int argc, char* argv[]) {
 
 
 
-  <a href="/blog/categories/alwaysbecoding,/"><span class="badge">AlwaysBeCoding,</span></a>
+  <a href="/blog/categories/factoring/"><span class="badge">Factoring</span></a>
 
-  <a href="/blog/categories/reddit/"><span class="badge">reddit</span></a>
+  <a href="/blog/categories/mathematica,/"><span class="badge">Mathematica,</span></a>
 
 
 
@@ -253,10 +177,8 @@ int main(int argc, char* argv[]) {
       <div class="span12">
         <p class="meta">
           
-            <a class="basic-alignment left" href="/blog/2014/02/01/minsky-turing-lecture-part-2/" title="Previous Post: Minsky Turing Lecture: Part 2">&laquo; Minsky Turing Lecture: Part 2</a>
+            <a class="basic-alignment left" href="/blog/2014/02/03/programming-fun-graph-distances/" title="Previous Post: Programming Fun: Graph distances">&laquo; Programming Fun: Graph distances</a>
           
-          
-            <a class="basic-alignment right" href="/blog/2014/02/04/how-fast-can-you-factor/" title="Next Post: How fast can you factor ?">How fast can you factor ? &raquo;</a>
           
         </p>
       </div>
@@ -294,8 +216,8 @@ int main(int argc, char* argv[]) {
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://agam.github.io/blog/2014/02/03/programming-fun-graph-distances/';
-        var disqus_url = 'http://agam.github.io/blog/2014/02/03/programming-fun-graph-distances/';
+        var disqus_identifier = 'http://agam.github.io/blog/2014/02/04/how-fast-can-you-factor/';
+        var disqus_url = 'http://agam.github.io/blog/2014/02/04/how-fast-can-you-factor/';
         var disqus_script = 'embed.js';
       
     (function () {
