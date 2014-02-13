@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: AbstractSyntax, | Agam's Mashed-Up Pome]]></title>
+  <link href="http://agam.github.io/blog/categories/abstractsyntax/atom.xml" rel="self"/>
+  <link href="http://agam.github.io/"/>
+  <updated>2014-02-13T03:30:26+00:00</updated>
+  <id>http://agam.github.io/</id>
+  <author>
+    <name><![CDATA[Agam]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Mutually recursive LET statements]]></title>
+    <link href="http://agam.github.io/blog/2014/02/13/mutually-recursive-let-statements/"/>
+    <updated>2014-02-13T02:52:00+00:00</updated>
+    <id>http://agam.github.io/blog/2014/02/13/mutually-recursive-let-statements</id>
+    <content type="html"><![CDATA[<p>(Apologies for how &ldquo;out of the blue&rdquo; this appears &mdash; the right way would have been to plan a whole series of these and then lead up to something and so on &hellip; but <em>something is better than nothing</em>, isn&rsquo;t it?)</p>
+
+<p>I was reading the chapter on <em>abstract syntax</em> in Peter Kogge&rsquo;s excellent book <a href="http://www.amazon.com/Architecture-Computers-Mcgraw-Hill-Supercomputing-Processing/dp/0070355967">&ldquo;The Architecture of Symbolic Computers&rdquo;</a>.</p>
+
+<p>He mentioned a way to construct a mapping from lambda calculus to abstract syntax for <em>two</em> mutually recursive functions in a <code>LET</code> block, and left the case for <em>three</em> functions as an exercise for the reader.</p>
+
+<p>Just for context, the abstract <code>LET</code> would look something like</p>
+
+<p><code>scheme
+LET f(x) = x + 2
+IN
+f(3) * 2
+</code></p>
+
+<p>while the abstract <code>LETREC</code> would loo like</p>
+
+<p><code>scheme
+LETREC f(x,y) = g(y) * 2
+AND    g(x) = x + 4
+IN
+f(4,5) + g(2)
+</code></p>
+
+<p>So here is my short solution: Given something like</p>
+
+<p><code>scheme
+LETREC f(x,y) = g(y) * 2 * h(x)
+AND    g(y) = h(y) - 5
+AND    h(z) = f(z, 3)
+IN
+f(4,5)
+</code></p>
+
+<p>where functions <code>f</code>, <code>g</code> and <code>h</code> have function bodies <code>F</code>, <code>G</code> and <code>H</code> respectively, we would replace the expression by something like</p>
+
+<p><code>scheme
+(lambda(fghxy)|f 4 5) (Y1 R S T) (Y2 R S T) (Y3 R S T)
+</code></p>
+
+<p>where</p>
+
+<p><code>scheme
+R = lambda(rst) | f (r r s t) (s r s t) (t r s t)
+S = lambda(rst) | g (r r s t) (s r s t) (t r s t)
+T = lambda(rst) | h (t r s t) (s r s t) (t r s t)
+</code></p>
+
+<p>such that</p>
+
+<p><code>
+Y1 R S T = F (Y1 R S T) (Y2 R S T) (Y3 R S T)
+Y2 R S T = G (Y1 R S T) (Y2 R S T) (Y3 R S T)
+Y3 R S T = H (Y1 R S T) (Y2 R S T) (Y3 R S T)
+</code></p>
+
+<p>I&rsquo;m not sure if that&rsquo;s all kosher, but let me know if it isn&rsquo;t!</p>
+
+<p>(If the functions were <em>not</em> mutually recursive, <code>(lambda(fgh)|f 4 5) F G H</code> is what this would&rsquo;ve simplified into)</p>
+]]></content>
+  </entry>
+  
+</feed>
