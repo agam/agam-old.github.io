@@ -21,6 +21,10 @@ subscribe_email:
 # RSS feeds can list your email address if you like
 email:
 
+navigation:
+- text: Home
+  url: /index.html
+
 # ----------------------- #
 #    Jekyll & Plugins     #
 # ----------------------- #
