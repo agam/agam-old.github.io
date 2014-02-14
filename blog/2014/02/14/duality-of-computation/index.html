@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>SOP - Agam's Mashed-Up Pome</title>
+  <title>Duality of Computation - Agam's Mashed-Up Pome</title>
   <meta name="author" content="Agam">
 
    
@@ -19,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://agam.github.io/blog/2014/02/13/sop">
+  <link rel="canonical" href="http://agam.github.io/blog/2014/02/14/duality-of-computation">
   <link href="/favicon.png" rel="icon">
   <link href='http://fonts.googleapis.com/css?family=Quicksand:300,400' rel='stylesheet' type='text/css'>
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
@@ -90,7 +90,7 @@
 
   <header>
   <div class="jumbotron">
-    SOP
+    Duality of Computation
 	<h5>
 
 
@@ -103,16 +103,58 @@
   
 
 
-<i class="icon-calendar-empty"></i> <time datetime="2014-02-13T23:11:00+00:00" pubdate data-updated="true">Feb 13<span>th</span>, 2014</time></h5>
+<i class="icon-calendar-empty"></i> <time datetime="2014-02-14T00:22:00+00:00" pubdate data-updated="true">Feb 14<span>th</span>, 2014</time></h5>
   </div>
 </header>
   <div class="row-fluid">
     <div class="span12">
-      <p>I feel like adding this obligatory preface to everything I write here:</p>
+      <p>The notion of computabilty includes two very different abstractions &mdash; turing machines, and lambda calculus. I like to think of them as representing two extreme ends of a spectrum.</p>
 
-<blockquote><p>I know very little about programming language theory, and this is just vague theorizing, with a high probability of being nonsense.</p></blockquote>
+<h2>Turing&rsquo;s Zoo of Things</h2>
 
-<p>In order not to repeat myself, I will refer to this as my <code>Standard Obligatory Preface</code>, or <em><em>SOP</em></em>.</p>
+<p>One, the turing machine, deals very specifically with <em>things</em>. Things are encoded in some form, and by jumping back and forth, reading and writing individual <em>bits</em>, we can transform some things into different things, or &ldquo;create&rdquo; and &ldquo;destroy&rdquo; things.</p>
+
+<h3>Doing, Doing, Always Doing</h3>
+
+<p>All operations in the turing machine are essentially some sort of &ldquo;thing&rdquo; operations. An operation may or may not change the given representation of some object that is its nominal argument, but it has to <em>do</em> something. This <em>doing</em> has to be represented by the modification of <em>some</em> state, <em>somewhere</em>.</p>
+
+<h3>Turingness, Complete</h3>
+
+<p>The fact that we are able to construct large ordered sets of bits, trillions of them clustered in a tiny physical volume, is why the abstraction of the turing machine most closely matches our physical computers.</p>
+
+<h2>Frozen Functions, Frozen Time</h2>
+
+<p>Lambda Calculus exists at the other end of this computation spectrum. Here everything is a <em>pattern</em> (a <em>function</em>, but that name is so overloaded everywhere &mdash; how else to refrain from confusing these with the <em>operations</em> in the turing machine?).</p>
+
+<p>&ldquo;Constants&rdquo; are patterns too. <code>One</code> and <code>Two</code> are just &ldquo;a pattern that looks like this&rdquo; or &ldquo;a pattern that looks like that&rdquo;. More complicated patterns might be composed of simpler ones, though what is &ldquo;complex&rdquo; vs &ldquo;simple&rdquo;, or &ldquo;large&rdquo; vs &ldquo;small&rdquo; is not readily apparent here.</p>
+
+<p>So what is analogous to the turing machine&rsquo;s <em>doing</em>, here ? It might be <em>application</em>.</p>
+
+<h3>(Apply This)</h3>
+
+<p>Application is this strange (process? idea?) concept where the conjunction of two patterns can <em>result</em> in a new pattern. Except it doesn&rsquo;t really (or at least I don&rsquo;t think of it that way).</p>
+
+<p>The application of pattern <code>X</code> to pattern <code>Y</code> may <em>result</em> in pattern <code>Z</code> (which by the way might be (representationally) vastly simpler than either, or more complicated than both), but this just means that <code>(X Y)</code> is a notation for <code>Z</code>, and if you had to refer to <code>Z</code> you would use whichever was shorter.</p>
+
+<h2>Common ground: Agency</h2>
+
+<p>The only common concept that I see between the two is (atleast conceptually) the necessity (?) of an <em>agent</em>.</p>
+
+<p>That is to say, whatever is <em>doing</em> in a turing machine, is <em>applying</em> in lambda calculus.</p>
+
+<h2>Differences, or Analogies</h2>
+
+<p>One of the two <em>processes</em> (if I may call them that) results in large scale state change, while the other results in different patterns being (created? revealed?) referenced.</p>
+
+<p>One has built into it an explicit notion of digital time (steps in a turing machine) while the other doesn&rsquo;t. You might say that given state <code>s1</code> and current position <code>p</code>, after time <code>t</code> you would find state <code>s2</code>, but it&rsquo;s not obvious to me what the analogous concept in lambda calculus would be.</p>
+
+<p>All patterns (or <em>forms</em>) already exist (in some sense) and while the agent, as the result of successive application (or <em>evaluation</em>) of a given &ldquo;initial pattern&rdquo; might &ldquo;see&rdquo; a series of patterns over time, there is no equivalent mapping of a pattern to an instant of time (though in practice, we can speak of the &ldquo;representation&rdquo; of a given pattern being evaluated at the current tick).</p>
+
+<p>One has <em>meaning</em> determined by some interpretation of the state at a given instant of time, the other has meaning determined by the <em>shape</em> of the current pattern.</p>
+
+<h2>Conclusion</h2>
+
+<p>I have none. This post ends abruptly, right here (again, apologies for being so vague; but thats why I posted my <a href="http://agam.github.io/blog/2014/02/13/sop/"><em>SOP</em></a>).</p>
 
     </div>
   </div>
@@ -131,7 +173,11 @@
 
 
 
-  <a href="/blog/categories/preface/"><span class="badge">Preface</span></a>
+  <a href="/blog/categories/computation,/"><span class="badge">Computation,</span></a>
+
+  <a href="/blog/categories/lambdacalculus/"><span class="badge">LambdaCalculus</span></a>
+
+  <a href="/blog/categories/turingmachine,/"><span class="badge">TuringMachine,</span></a>
 
 
 
@@ -163,10 +209,8 @@
       <div class="span12">
         <p class="meta">
           
-            <a class="basic-alignment left" href="/blog/2014/02/13/mutually-recursive-let-statements/" title="Previous Post: Mutually recursive LET statements">&laquo; Mutually recursive LET statements</a>
+            <a class="basic-alignment left" href="/blog/2014/02/13/sop/" title="Previous Post: SOP">&laquo; SOP</a>
           
-          
-            <a class="basic-alignment right" href="/blog/2014/02/14/duality-of-computation/" title="Next Post: Duality of Computation">Duality of Computation &raquo;</a>
           
         </p>
       </div>
@@ -204,8 +248,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://agam.github.io/blog/2014/02/13/sop/';
-        var disqus_url = 'http://agam.github.io/blog/2014/02/13/sop/';
+        var disqus_identifier = 'http://agam.github.io/blog/2014/02/14/duality-of-computation/';
+        var disqus_url = 'http://agam.github.io/blog/2014/02/14/duality-of-computation/';
         var disqus_script = 'embed.js';
       
     (function () {
