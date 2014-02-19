@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2014-02-14T00:27:45+00:00</updated>
+  <updated>2014-02-19T01:34:29+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -14,155 +14,17 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Duality of Computation]]></title>
-    <link href="http://agam.github.io/blog/2014/02/14/duality-of-computation/"/>
-    <updated>2014-02-14T00:22:00+00:00</updated>
-    <id>http://agam.github.io/blog/2014/02/14/duality-of-computation</id>
-    <content type="html"><![CDATA[<p>The notion of computabilty includes two very different abstractions &mdash; turing machines, and lambda calculus. I like to think of them as representing two extreme ends of a spectrum.</p>
+    <title type="html"><![CDATA[Living Pseudonymously]]></title>
+    <link href="http://agam.github.io/blog/2014/02/19/living-pseudonymously/"/>
+    <updated>2014-02-19T01:29:00+00:00</updated>
+    <id>http://agam.github.io/blog/2014/02/19/living-pseudonymously</id>
+    <content type="html"><![CDATA[<p>For various reasons, this blog is going to be focussed just on C++ programming, as boring as that may sound.</p>
 
-<h2>Turing&rsquo;s Zoo of Things</h2>
+<p>I&rsquo;ll try not to make it <em>too</em> boring, but we&rsquo;ll see.</p>
 
-<p>One, the turing machine, deals very specifically with <em>things</em>. Things are encoded in some form, and by jumping back and forth, reading and writing individual <em>bits</em>, we can transform some things into different things, or &ldquo;create&rdquo; and &ldquo;destroy&rdquo; things.</p>
+<p>Meanwhile everything <em>else</em> will still exist, just not here. Starting with the last two posts.</p>
 
-<h3>Doing, Doing, Always Doing</h3>
-
-<p>All operations in the turing machine are essentially some sort of &ldquo;thing&rdquo; operations. An operation may or may not change the given representation of some object that is its nominal argument, but it has to <em>do</em> something. This <em>doing</em> has to be represented by the modification of <em>some</em> state, <em>somewhere</em>.</p>
-
-<h3>Turingness, Complete</h3>
-
-<p>The fact that we are able to construct large ordered sets of bits, trillions of them clustered in a tiny physical volume, is why the abstraction of the turing machine most closely matches our physical computers.</p>
-
-<h2>Frozen Functions, Frozen Time</h2>
-
-<p>Lambda Calculus exists at the other end of this computation spectrum. Here everything is a <em>pattern</em> (a <em>function</em>, but that name is so overloaded everywhere &mdash; how else to refrain from confusing these with the <em>operations</em> in the turing machine?).</p>
-
-<p>&ldquo;Constants&rdquo; are patterns too. <code>One</code> and <code>Two</code> are just &ldquo;a pattern that looks like this&rdquo; or &ldquo;a pattern that looks like that&rdquo;. More complicated patterns might be composed of simpler ones, though what is &ldquo;complex&rdquo; vs &ldquo;simple&rdquo;, or &ldquo;large&rdquo; vs &ldquo;small&rdquo; is not readily apparent here.</p>
-
-<p>So what is analogous to the turing machine&rsquo;s <em>doing</em>, here ? It might be <em>application</em>.</p>
-
-<h3>(Apply This)</h3>
-
-<p>Application is this strange (process? idea?) concept where the conjunction of two patterns can <em>result</em> in a new pattern. Except it doesn&rsquo;t really (or at least I don&rsquo;t think of it that way).</p>
-
-<p>The application of pattern <code>X</code> to pattern <code>Y</code> may <em>result</em> in pattern <code>Z</code> (which by the way might be (representationally) vastly simpler than either, or more complicated than both), but this just means that <code>(X Y)</code> is a notation for <code>Z</code>, and if you had to refer to <code>Z</code> you would use whichever was shorter.</p>
-
-<h2>Common ground: Agency</h2>
-
-<p>The only common concept that I see between the two is (atleast conceptually) the necessity (?) of an <em>agent</em>.</p>
-
-<p>That is to say, whatever is <em>doing</em> in a turing machine, is <em>applying</em> in lambda calculus.</p>
-
-<h2>Differences, or Analogies</h2>
-
-<p>One of the two <em>processes</em> (if I may call them that) results in large scale state change, while the other results in different patterns being (created? revealed?) referenced.</p>
-
-<p>One has built into it an explicit notion of digital time (steps in a turing machine) while the other doesn&rsquo;t. You might say that given state <code>s1</code> and current position <code>p</code>, after time <code>t</code> you would find state <code>s2</code>, but it&rsquo;s not obvious to me what the analogous concept in lambda calculus would be.</p>
-
-<p>All patterns (or <em>forms</em>) already exist (in some sense) and while the agent, as the result of successive application (or <em>evaluation</em>) of a given &ldquo;initial pattern&rdquo; might &ldquo;see&rdquo; a series of patterns over time, there is no equivalent mapping of a pattern to an instant of time (though in practice, we can speak of the &ldquo;representation&rdquo; of a given pattern being evaluated at the current tick).</p>
-
-<p>One has <em>meaning</em> determined by some interpretation of the state at a given instant of time, the other has meaning determined by the <em>shape</em> of the current pattern.</p>
-
-<h2>Conclusion</h2>
-
-<p>I have none. This post ends abruptly, right here (again, apologies for being so vague; but thats why I posted my <a href="http://agam.github.io/blog/2014/02/13/sop/"><em>SOP</em></a>).</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[SOP]]></title>
-    <link href="http://agam.github.io/blog/2014/02/13/sop/"/>
-    <updated>2014-02-13T23:11:00+00:00</updated>
-    <id>http://agam.github.io/blog/2014/02/13/sop</id>
-    <content type="html"><![CDATA[<p>I feel like adding this obligatory preface to everything I write here:</p>
-
-<blockquote><p>I know very little about programming language theory, and this is just vague theorizing, with a high probability of being nonsense.</p></blockquote>
-
-<p>In order not to repeat myself, I will refer to this as my <code>Standard Obligatory Preface</code>, or <em><em>SOP</em></em>.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Mutually recursive LET statements]]></title>
-    <link href="http://agam.github.io/blog/2014/02/13/mutually-recursive-let-statements/"/>
-    <updated>2014-02-13T02:52:00+00:00</updated>
-    <id>http://agam.github.io/blog/2014/02/13/mutually-recursive-let-statements</id>
-    <content type="html"><![CDATA[<p>(Apologies for how &ldquo;out of the blue&rdquo; this appears &mdash; the right way would have been to plan a whole series of these and then lead up to something and so on &hellip; but <em>something is better than nothing</em>, isn&rsquo;t it?)</p>
-
-<p>I was reading the chapter on <em>abstract syntax</em> in Peter Kogge&rsquo;s excellent book <a href="http://www.amazon.com/Architecture-Computers-Mcgraw-Hill-Supercomputing-Processing/dp/0070355967">&ldquo;The Architecture of Symbolic Computers&rdquo;</a>.</p>
-
-<p>He mentioned a way to construct a mapping from lambda calculus to abstract syntax for <em>two</em> mutually recursive functions in a <code>LET</code> block, and left the case for <em>three</em> functions as an exercise for the reader.</p>
-
-<p>Just for context, the abstract <code>LET</code> would look something like</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='scheme'><span class='line'><span class="nv">LET</span> <span class="nv">f</span><span class="p">(</span><span class="nf">x</span><span class="p">)</span> <span class="nv">=</span> <span class="nv">x</span> <span class="nv">+</span> <span class="mi">2</span>
-</span><span class='line'><span class="nv">IN</span>
-</span><span class='line'><span class="nv">f</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="nv">*</span> <span class="mi">2</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>while the abstract <code>LETREC</code> would loo like</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='scheme'><span class='line'><span class="nv">LETREC</span> <span class="nv">f</span><span class="p">(</span><span class="nf">x,y</span><span class="p">)</span> <span class="nv">=</span> <span class="nv">g</span><span class="p">(</span><span class="nf">y</span><span class="p">)</span> <span class="nv">*</span> <span class="mi">2</span>
-</span><span class='line'><span class="nv">AND</span>    <span class="nv">g</span><span class="p">(</span><span class="nf">x</span><span class="p">)</span> <span class="nv">=</span> <span class="nv">x</span> <span class="nv">+</span> <span class="mi">4</span>
-</span><span class='line'><span class="nv">IN</span>
-</span><span class='line'><span class="nv">f</span><span class="p">(</span><span class="mi">4</span><span class="o">,</span><span class="mi">5</span><span class="p">)</span> <span class="nv">+</span> <span class="nv">g</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>So here is my short solution: Given something like</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='scheme'><span class='line'><span class="nv">LETREC</span> <span class="nv">f</span><span class="p">(</span><span class="nf">x,y</span><span class="p">)</span> <span class="nv">=</span> <span class="nv">g</span><span class="p">(</span><span class="nf">y</span><span class="p">)</span> <span class="nv">*</span> <span class="mi">2</span> <span class="nv">*</span> <span class="nv">h</span><span class="p">(</span><span class="nf">x</span><span class="p">)</span>
-</span><span class='line'><span class="nv">AND</span>    <span class="nv">g</span><span class="p">(</span><span class="nf">y</span><span class="p">)</span> <span class="nv">=</span> <span class="nv">h</span><span class="p">(</span><span class="nf">y</span><span class="p">)</span> <span class="nv">-</span> <span class="mi">5</span>
-</span><span class='line'><span class="nv">AND</span>    <span class="nv">h</span><span class="p">(</span><span class="nf">z</span><span class="p">)</span> <span class="nv">=</span> <span class="nv">f</span><span class="p">(</span><span class="nf">z,</span> <span class="mi">3</span><span class="p">)</span>
-</span><span class='line'><span class="nv">IN</span>
-</span><span class='line'><span class="nv">f</span><span class="p">(</span><span class="mi">4</span><span class="o">,</span><span class="mi">5</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>where functions <code>f</code>, <code>g</code> and <code>h</code> have function bodies <code>F</code>, <code>G</code> and <code>H</code> respectively, we would replace the expression by something like</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='scheme'><span class='line'><span class="p">(</span><span class="nf">lambda</span><span class="p">(</span><span class="nf">fghxy</span><span class="p">)</span><span class="nv">|f</span> <span class="mi">4</span> <span class="mi">5</span><span class="p">)</span> <span class="p">(</span><span class="nf">Y1</span> <span class="nv">R</span> <span class="nv">S</span> <span class="nv">T</span><span class="p">)</span> <span class="p">(</span><span class="nf">Y2</span> <span class="nv">R</span> <span class="nv">S</span> <span class="nv">T</span><span class="p">)</span> <span class="p">(</span><span class="nf">Y3</span> <span class="nv">R</span> <span class="nv">S</span> <span class="nv">T</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>where</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='scheme'><span class='line'><span class="nv">R</span> <span class="nv">=</span> <span class="nv">lambda</span><span class="p">(</span><span class="nf">rst</span><span class="p">)</span> <span class="nv">|</span> <span class="nv">f</span> <span class="p">(</span><span class="nf">r</span> <span class="nv">r</span> <span class="nv">s</span> <span class="nv">t</span><span class="p">)</span> <span class="p">(</span><span class="nf">s</span> <span class="nv">r</span> <span class="nv">s</span> <span class="nv">t</span><span class="p">)</span> <span class="p">(</span><span class="nf">t</span> <span class="nv">r</span> <span class="nv">s</span> <span class="nv">t</span><span class="p">)</span>
-</span><span class='line'><span class="nv">S</span> <span class="nv">=</span> <span class="nv">lambda</span><span class="p">(</span><span class="nf">rst</span><span class="p">)</span> <span class="nv">|</span> <span class="nv">g</span> <span class="p">(</span><span class="nf">r</span> <span class="nv">r</span> <span class="nv">s</span> <span class="nv">t</span><span class="p">)</span> <span class="p">(</span><span class="nf">s</span> <span class="nv">r</span> <span class="nv">s</span> <span class="nv">t</span><span class="p">)</span> <span class="p">(</span><span class="nf">t</span> <span class="nv">r</span> <span class="nv">s</span> <span class="nv">t</span><span class="p">)</span>
-</span><span class='line'><span class="nv">T</span> <span class="nv">=</span> <span class="nv">lambda</span><span class="p">(</span><span class="nf">rst</span><span class="p">)</span> <span class="nv">|</span> <span class="nv">h</span> <span class="p">(</span><span class="nf">t</span> <span class="nv">r</span> <span class="nv">s</span> <span class="nv">t</span><span class="p">)</span> <span class="p">(</span><span class="nf">s</span> <span class="nv">r</span> <span class="nv">s</span> <span class="nv">t</span><span class="p">)</span> <span class="p">(</span><span class="nf">t</span> <span class="nv">r</span> <span class="nv">s</span> <span class="nv">t</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>such that</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='scheme'><span class='line'><span class="nv">Y1</span> <span class="nv">R</span> <span class="nv">S</span> <span class="nv">T</span> <span class="nv">=</span> <span class="nv">F</span> <span class="p">(</span><span class="nf">Y1</span> <span class="nv">R</span> <span class="nv">S</span> <span class="nv">T</span><span class="p">)</span> <span class="p">(</span><span class="nf">Y2</span> <span class="nv">R</span> <span class="nv">S</span> <span class="nv">T</span><span class="p">)</span> <span class="p">(</span><span class="nf">Y3</span> <span class="nv">R</span> <span class="nv">S</span> <span class="nv">T</span><span class="p">)</span>
-</span><span class='line'><span class="nv">Y2</span> <span class="nv">R</span> <span class="nv">S</span> <span class="nv">T</span> <span class="nv">=</span> <span class="nv">G</span> <span class="p">(</span><span class="nf">Y1</span> <span class="nv">R</span> <span class="nv">S</span> <span class="nv">T</span><span class="p">)</span> <span class="p">(</span><span class="nf">Y2</span> <span class="nv">R</span> <span class="nv">S</span> <span class="nv">T</span><span class="p">)</span> <span class="p">(</span><span class="nf">Y3</span> <span class="nv">R</span> <span class="nv">S</span> <span class="nv">T</span><span class="p">)</span>
-</span><span class='line'><span class="nv">Y3</span> <span class="nv">R</span> <span class="nv">S</span> <span class="nv">T</span> <span class="nv">=</span> <span class="nv">H</span> <span class="p">(</span><span class="nf">Y1</span> <span class="nv">R</span> <span class="nv">S</span> <span class="nv">T</span><span class="p">)</span> <span class="p">(</span><span class="nf">Y2</span> <span class="nv">R</span> <span class="nv">S</span> <span class="nv">T</span><span class="p">)</span> <span class="p">(</span><span class="nf">Y3</span> <span class="nv">R</span> <span class="nv">S</span> <span class="nv">T</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>I&rsquo;m not sure if that&rsquo;s all kosher, but let me know if it isn&rsquo;t!</p>
-
-<p>(If the functions were <em>not</em> mutually recursive, <code>(lambda(fgh)|f 4 5) F G H</code> is what this would&rsquo;ve simplified into)</p>
+<p>If you want to try to find me you still can; but I&rsquo;m just not going to advertise it, that&rsquo;s all.</p>
 ]]></content>
   </entry>
   
@@ -1760,6 +1622,190 @@ int main() {
 
   cout.precision(5);
   cout &lt;&lt; (2 * circle_area) - (2 * segment_area) &lt;&lt; endl;
+}
+</code></pre></noscript></div>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Urbit: Back Again]]></title>
+    <link href="http://agam.github.io/blog/2014/01/08/urbit-back-again/"/>
+    <updated>2014-01-08T08:47:00+00:00</updated>
+    <id>http://agam.github.io/blog/2014/01/08/urbit-back-again</id>
+    <content type="html"><![CDATA[<p>Turns out I was affected by the last &ldquo;continuity breach&rdquo;.</p>
+
+<p>So I had to delete everything and start over. In my case this meant</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span><span class="nb">cd </span>urbit
+</span><span class='line'><span class="nv">$ </span>git pull origin master
+</span><span class='line'><span class="nv">$ </span>make clean
+</span><span class='line'><span class="nv">$ </span>make
+</span><span class='line'><span class="nv">$ </span>rm -rf urb/*-*
+</span><span class='line'><span class="nv">$ </span>rm -rf frogstar
+</span><span class='line'><span class="nv">$ </span>vere -c frogstar
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This time when I ran <code>:begin</code> it succeeded</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>generating 2048-bit RSA key...
+</span><span class='line'>; ~doznec _Urban Republic_ is your neighbor
+</span><span class='line'>; ~doznec _Urban Republic_ is your neighbor
+</span><span class='line'>request approved
+</span><span class='line'>; ~zod |Tianming| is your neighbor
+</span><span class='line'>; ~zod |Tianming| is your neighbor
+</span><span class='line'>; ~doznec _Urban Republic_ is your neighbor
+</span><span class='line'>; ~doznec _Urban Republic_ is your neighbor
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&hellip; and then more hoon files were downloaded, after which I got my new prompt:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>~todbyt-nathes/try<span class="o">=</span>&gt;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Next time I&rsquo;ll start exploring <em>Nock</em> and <em>Hoon</em> some more &hellip;</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Programming Fun: Braille]]></title>
+    <link href="http://agam.github.io/blog/2014/01/07/programming-fun-braille/"/>
+    <updated>2014-01-07T23:31:00+00:00</updated>
+    <id>http://agam.github.io/blog/2014/01/07/programming-fun-braille</id>
+    <content type="html"><![CDATA[<p>Here&rsquo;s a simple <a href="http://www.reddit.com/r/dailyprogrammer/comments/1s061q/120313_challenge_143_easy_braille/">one</a>.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Input Description
+</span><span class='line'>-----------------
+</span><span class='line'>
+</span><span class='line'>Input will consistent of an array of 2x6 space-delimited Braille characters.
+</span><span class='line'>This array is always on the same line, so regardless of how long the text is, it
+</span><span class='line'>will always be on 3-rows of text. A lowered bump is a dot character '.', while a
+</span><span class='line'>raised bump is an upper-case 'O' character.
+</span><span class='line'>
+</span><span class='line'>Output Description
+</span><span class='line'>------------------
+</span><span class='line'>
+</span><span class='line'>Print the transcribed Braille.</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<div><script src='https://gist.github.com/8308823.js'></script>
+<script type="text/javascript">$(".gist-file table tr td.line-numbers").remove();</script>
+<noscript><pre><code>#include &lt;cassert&gt;
+#include &lt;cmath&gt;
+#include &lt;cstdint&gt;
+#include &lt;cstdio&gt;
+#include &lt;cstdlib&gt;
+#include &lt;algorithm&gt;
+#include &lt;iomanip&gt;
+#include &lt;iostream&gt;
+#include &lt;limits&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+#include &lt;unordered_map&gt;
+
+using namespace std;
+
+void InitializeBrailleData(unordered_map&lt;string, char&gt;* rep) {
+  rep-&gt;insert(make_pair(&quot;O.....&quot;, &#39;A&#39;));
+  rep-&gt;insert(make_pair(&quot;O.O...&quot;, &#39;B&#39;));
+  rep-&gt;insert(make_pair(&quot;OO....&quot;, &#39;C&#39;));
+  rep-&gt;insert(make_pair(&quot;OO.O..&quot;, &#39;D&#39;));
+  rep-&gt;insert(make_pair(&quot;O..O..&quot;, &#39;E&#39;));
+  rep-&gt;insert(make_pair(&quot;OOO...&quot;, &#39;F&#39;));
+  rep-&gt;insert(make_pair(&quot;OOOO..&quot;, &#39;G&#39;));
+  rep-&gt;insert(make_pair(&quot;O.OO..&quot;, &#39;H&#39;));
+  rep-&gt;insert(make_pair(&quot;.OO...&quot;, &#39;I&#39;));
+  rep-&gt;insert(make_pair(&quot;.OOO..&quot;, &#39;J&#39;));
+  rep-&gt;insert(make_pair(&quot;O...O.&quot;, &#39;K&#39;));
+  rep-&gt;insert(make_pair(&quot;O.O.O.&quot;, &#39;L&#39;));
+  rep-&gt;insert(make_pair(&quot;OO..O.&quot;, &#39;M&#39;));
+  rep-&gt;insert(make_pair(&quot;OO.OO.&quot;, &#39;N&#39;));
+  rep-&gt;insert(make_pair(&quot;O..OO.&quot;, &#39;O&#39;));
+  rep-&gt;insert(make_pair(&quot;OOO.O.&quot;, &#39;P&#39;));
+  rep-&gt;insert(make_pair(&quot;OOOOO.&quot;, &#39;Q&#39;));
+  rep-&gt;insert(make_pair(&quot;O.OOO.&quot;, &#39;R&#39;));
+  rep-&gt;insert(make_pair(&quot;.OO.O.&quot;, &#39;S&#39;));
+  rep-&gt;insert(make_pair(&quot;.OOOO.&quot;, &#39;T&#39;));
+  rep-&gt;insert(make_pair(&quot;O...OO&quot;, &#39;U&#39;));
+  rep-&gt;insert(make_pair(&quot;O.O.OO&quot;, &#39;V&#39;));
+  rep-&gt;insert(make_pair(&quot;.OOO.O&quot;, &#39;W&#39;));
+  rep-&gt;insert(make_pair(&quot;OO..OO&quot;, &#39;X&#39;));
+  rep-&gt;insert(make_pair(&quot;OO.OOO&quot;, &#39;Y&#39;));
+  rep-&gt;insert(make_pair(&quot;O..OOO&quot;, &#39;Z&#39;));
+};
+
+void AddRepresentation(const string&amp; line, vector&lt;string&gt;* representations) {
+  for (int index = 0; index &lt; line.length(); index += 3) {
+    (*representations)[index / 3].push_back(line[index]);
+    (*representations)[index / 3].push_back(line[index + 1]);
+
+    assert((line[index + 2] == &#39; &#39;) || (index + 2 == line.length()));
+  }
+}
+
+int main() {
+  unordered_map&lt;string, char&gt; braille_representation;
+  InitializeBrailleData(&amp;braille_representation);
+
+  // Assume input is well formed.
+  // This means we read three lines from standard input,
+  // and each line&#39;s length is (2 * x + 3)
+  string line1, line2, line3;
+  getline(cin, line1);
+  getline(cin, line2);
+  getline(cin, line3);
+
+  // Basic invariants
+  assert(line1.length() == line2.length());
+  assert(line2.length() == line3.length());
+  assert((line1.length() + 1) % 3 == 0);
+
+  // Get the input into our desired form
+  vector&lt;string&gt; representations((line1.length() + 1) / 3);
+  AddRepresentation(line1, &amp;representations);
+  AddRepresentation(line2, &amp;representations);
+  AddRepresentation(line3, &amp;representations);
+
+  for (const string&amp; rep : representations) {
+    cout &lt;&lt; braille_representation[rep];
+  }
+  cout &lt;&lt; endl;
 }
 </code></pre></noscript></div>
 

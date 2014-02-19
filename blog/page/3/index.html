@@ -113,266 +113,6 @@
   
 
 
-<i class="icon-calendar-empty"></i> <time datetime="2014-01-08T08:47:00+00:00" pubdate data-updated="true">Jan 8<span>th</span>, 2014</time></h5>
-          <div class="row-fluid">
-          
-          </div>
-          
-          <div class="row-fluid">
-          
-          <a href="/blog/categories/urbit/"><span class="badge">urbit</span></a>
-          
-          </div>
-          
-    </div>
-    <div class="span10 post-container">
-      <h1 class="link"><a href="/blog/2014/01/08/urbit-back-again/">Urbit: Back Again</a></h1>
-      <p>Turns out I was affected by the last &ldquo;continuity breach&rdquo;.</p>
-
-<p>So I had to delete everything and start over. In my case this meant</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span><span class="nb">cd </span>urbit
-</span><span class='line'><span class="nv">$ </span>git pull origin master
-</span><span class='line'><span class="nv">$ </span>make clean
-</span><span class='line'><span class="nv">$ </span>make
-</span><span class='line'><span class="nv">$ </span>rm -rf urb/*-*
-</span><span class='line'><span class="nv">$ </span>rm -rf frogstar
-</span><span class='line'><span class="nv">$ </span>vere -c frogstar
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This time when I ran <code>:begin</code> it succeeded</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>generating 2048-bit RSA key...
-</span><span class='line'>; ~doznec _Urban Republic_ is your neighbor
-</span><span class='line'>; ~doznec _Urban Republic_ is your neighbor
-</span><span class='line'>request approved
-</span><span class='line'>; ~zod |Tianming| is your neighbor
-</span><span class='line'>; ~zod |Tianming| is your neighbor
-</span><span class='line'>; ~doznec _Urban Republic_ is your neighbor
-</span><span class='line'>; ~doznec _Urban Republic_ is your neighbor
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>&hellip; and then more hoon files were downloaded, after which I got my new prompt:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>~todbyt-nathes/try<span class="o">=</span>&gt;
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Next time I&rsquo;ll start exploring <em>Nock</em> and <em>Hoon</em> some more &hellip;</p>
-
-      
-      
-    </div>
-  </div>
-
-
-
-    </article>
-    
-    <hr>
-    
-  
-  
-    <article>
-      
-
-  <div class="row-fluid">
-    <div class="span2 post-meta">
-	  <h5 class="date-time">
-
-
-
-
-
-
-
-
-  
-
-
-<i class="icon-calendar-empty"></i> <time datetime="2014-01-07T23:31:00+00:00" pubdate data-updated="true">Jan 7<span>th</span>, 2014</time></h5>
-          <div class="row-fluid">
-          
-          </div>
-          
-          <div class="row-fluid">
-          
-          <a href="/blog/categories/alwaysbecoding,/"><span class="badge">AlwaysBeCoding,</span></a>
-          
-          <a href="/blog/categories/reddit/"><span class="badge">reddit</span></a>
-          
-          </div>
-          
-    </div>
-    <div class="span10 post-container">
-      <h1 class="link"><a href="/blog/2014/01/07/programming-fun-braille/">Programming Fun: Braille</a></h1>
-      <p>Here&rsquo;s a simple <a href="http://www.reddit.com/r/dailyprogrammer/comments/1s061q/120313_challenge_143_easy_braille/">one</a>.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>Input Description
-</span><span class='line'>-----------------
-</span><span class='line'>
-</span><span class='line'>Input will consistent of an array of 2x6 space-delimited Braille characters.
-</span><span class='line'>This array is always on the same line, so regardless of how long the text is, it
-</span><span class='line'>will always be on 3-rows of text. A lowered bump is a dot character '.', while a
-</span><span class='line'>raised bump is an upper-case 'O' character.
-</span><span class='line'>
-</span><span class='line'>Output Description
-</span><span class='line'>------------------
-</span><span class='line'>
-</span><span class='line'>Print the transcribed Braille.</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<div><script src='https://gist.github.com/8308823.js'></script>
-<script type="text/javascript">$(".gist-file table tr td.line-numbers").remove();</script>
-<noscript><pre><code>#include &lt;cassert&gt;
-#include &lt;cmath&gt;
-#include &lt;cstdint&gt;
-#include &lt;cstdio&gt;
-#include &lt;cstdlib&gt;
-#include &lt;algorithm&gt;
-#include &lt;iomanip&gt;
-#include &lt;iostream&gt;
-#include &lt;limits&gt;
-#include &lt;string&gt;
-#include &lt;vector&gt;
-#include &lt;queue&gt;
-#include &lt;unordered_map&gt;
-
-using namespace std;
-
-void InitializeBrailleData(unordered_map&lt;string, char&gt;* rep) {
-  rep-&gt;insert(make_pair(&quot;O.....&quot;, &#39;A&#39;));
-  rep-&gt;insert(make_pair(&quot;O.O...&quot;, &#39;B&#39;));
-  rep-&gt;insert(make_pair(&quot;OO....&quot;, &#39;C&#39;));
-  rep-&gt;insert(make_pair(&quot;OO.O..&quot;, &#39;D&#39;));
-  rep-&gt;insert(make_pair(&quot;O..O..&quot;, &#39;E&#39;));
-  rep-&gt;insert(make_pair(&quot;OOO...&quot;, &#39;F&#39;));
-  rep-&gt;insert(make_pair(&quot;OOOO..&quot;, &#39;G&#39;));
-  rep-&gt;insert(make_pair(&quot;O.OO..&quot;, &#39;H&#39;));
-  rep-&gt;insert(make_pair(&quot;.OO...&quot;, &#39;I&#39;));
-  rep-&gt;insert(make_pair(&quot;.OOO..&quot;, &#39;J&#39;));
-  rep-&gt;insert(make_pair(&quot;O...O.&quot;, &#39;K&#39;));
-  rep-&gt;insert(make_pair(&quot;O.O.O.&quot;, &#39;L&#39;));
-  rep-&gt;insert(make_pair(&quot;OO..O.&quot;, &#39;M&#39;));
-  rep-&gt;insert(make_pair(&quot;OO.OO.&quot;, &#39;N&#39;));
-  rep-&gt;insert(make_pair(&quot;O..OO.&quot;, &#39;O&#39;));
-  rep-&gt;insert(make_pair(&quot;OOO.O.&quot;, &#39;P&#39;));
-  rep-&gt;insert(make_pair(&quot;OOOOO.&quot;, &#39;Q&#39;));
-  rep-&gt;insert(make_pair(&quot;O.OOO.&quot;, &#39;R&#39;));
-  rep-&gt;insert(make_pair(&quot;.OO.O.&quot;, &#39;S&#39;));
-  rep-&gt;insert(make_pair(&quot;.OOOO.&quot;, &#39;T&#39;));
-  rep-&gt;insert(make_pair(&quot;O...OO&quot;, &#39;U&#39;));
-  rep-&gt;insert(make_pair(&quot;O.O.OO&quot;, &#39;V&#39;));
-  rep-&gt;insert(make_pair(&quot;.OOO.O&quot;, &#39;W&#39;));
-  rep-&gt;insert(make_pair(&quot;OO..OO&quot;, &#39;X&#39;));
-  rep-&gt;insert(make_pair(&quot;OO.OOO&quot;, &#39;Y&#39;));
-  rep-&gt;insert(make_pair(&quot;O..OOO&quot;, &#39;Z&#39;));
-};
-
-void AddRepresentation(const string&amp; line, vector&lt;string&gt;* representations) {
-  for (int index = 0; index &lt; line.length(); index += 3) {
-    (*representations)[index / 3].push_back(line[index]);
-    (*representations)[index / 3].push_back(line[index + 1]);
-
-    assert((line[index + 2] == &#39; &#39;) || (index + 2 == line.length()));
-  }
-}
-
-int main() {
-  unordered_map&lt;string, char&gt; braille_representation;
-  InitializeBrailleData(&amp;braille_representation);
-
-  // Assume input is well formed.
-  // This means we read three lines from standard input,
-  // and each line&#39;s length is (2 * x + 3)
-  string line1, line2, line3;
-  getline(cin, line1);
-  getline(cin, line2);
-  getline(cin, line3);
-
-  // Basic invariants
-  assert(line1.length() == line2.length());
-  assert(line2.length() == line3.length());
-  assert((line1.length() + 1) % 3 == 0);
-
-  // Get the input into our desired form
-  vector&lt;string&gt; representations((line1.length() + 1) / 3);
-  AddRepresentation(line1, &amp;representations);
-  AddRepresentation(line2, &amp;representations);
-  AddRepresentation(line3, &amp;representations);
-
-  for (const string&amp; rep : representations) {
-    cout &lt;&lt; braille_representation[rep];
-  }
-  cout &lt;&lt; endl;
-}
-</code></pre></noscript></div>
-
-
-
-
-      
-      
-    </div>
-  </div>
-
-
-
-    </article>
-    
-    <hr>
-    
-  
-  
-    <article>
-      
-
-  <div class="row-fluid">
-    <div class="span2 post-meta">
-	  <h5 class="date-time">
-
-
-
-
-
-
-
-
-  
-
-
 <i class="icon-calendar-empty"></i> <time datetime="2014-01-07T09:50:00+00:00" pubdate data-updated="true">Jan 7<span>th</span>, 2014</time></h5>
           <div class="row-fluid">
           
@@ -1747,6 +1487,114 @@ For each round of computation, print the percentage of votes for each candidate,
 <p>I&rsquo;m sure you know all about switching tabs, detaching and resuming sessions and all that. The only (in hindsight obvious) rule of thumb I&rsquo;ve learnt is to <em>always</em> launch a session with a name. Because you might just want to start two sessions. And then when it comes time to resume them, you won&rsquo;t know which is which. So make <code>screen -S &lt;sessionname&gt;</code> your friend.</p>
 
 <p>Anyway I have a github repo for my &ldquo;dotfiles&rdquo; and you can see my basic screenrc <a href="https://github.com/agam/dotfiles/blob/master/.screenrc">here</a></p>
+
+      
+      
+    </div>
+  </div>
+
+
+
+    </article>
+    
+    <hr>
+    
+  
+  
+    <article>
+      
+
+  <div class="row-fluid">
+    <div class="span2 post-meta">
+	  <h5 class="date-time">
+
+
+
+
+
+
+
+
+  
+
+
+<i class="icon-calendar-empty"></i> <time datetime="2013-12-16T03:41:00+00:00" pubdate data-updated="true">Dec 16<span>th</span>, 2013</time></h5>
+          <div class="row-fluid">
+          
+          </div>
+          
+          <div class="row-fluid">
+          
+          <a href="/blog/categories/vm/"><span class="badge">VM</span></a>
+          
+          </div>
+          
+    </div>
+    <div class="span10 post-container">
+      <h1 class="link"><a href="/blog/2013/12/16/starting-from-scratch-on-a-vm/">Starting from scratch on a VM</a></h1>
+      <p>I&rsquo;ve started from scratch many times on new linux installations. It gets old after a while though, so I prefer to do it as infrequently as possible.</p>
+
+<p>Getting started with a bare-bones VM is one of the occasions for this, so I&rsquo;ll take the time to record what I do so that I don&rsquo;t have to revisit this stuff the <em>next time</em>.</p>
+
+      
+      
+    </div>
+  </div>
+
+
+
+    </article>
+    
+    <hr>
+    
+  
+  
+    <article>
+      
+
+  <div class="row-fluid">
+    <div class="span2 post-meta">
+	  <h5 class="date-time">
+
+
+
+
+
+
+
+
+  
+
+
+<i class="icon-calendar-empty"></i> <time datetime="2013-12-14T18:22:00+00:00" pubdate data-updated="true">Dec 14<span>th</span>, 2013</time></h5>
+          <div class="row-fluid">
+          
+          </div>
+          
+          <div class="row-fluid">
+          
+          <a href="/blog/categories/octopress,/"><span class="badge">octopress,</span></a>
+          
+          <a href="/blog/categories/social/"><span class="badge">social</span></a>
+          
+          </div>
+          
+    </div>
+    <div class="span10 post-container">
+      <h1 class="link"><a href="/blog/2013/12/14/adding-social-elements-to-octopress/">Adding social elements to octopress</a></h1>
+      <p>This is almost too easy. Octopress already comes with basic integration options built-in.</p>
+
+<p>See <a href="http://jekyllrb.com/docs/configuration/">here</a> for more details than I care about, but the short version is that you just have to edit <code>_config.yml</code> and fill in fields for your Google+ username, a true/false value indicating whether users can share your posts on Google+/Twitter, a Disqus shortname for comments, a Google Analytics tracking code &hellip; you get the idea.</p>
+
+<p>(though there seems to be some <a href="http://blog.jmac.org/blog/2013/03/30/putting-twitter-back-into-octopress/">extra work</a> required to get Twitter to show up in the sidebar.</p>
+
+<p>While we&rsquo;re at it, might as well change the theme too. There&rsquo;s a huge collection of options at <a href="http://opthemes.com/">OPThemes</a>. So, pick one and replace the default dark grey one!</p>
+
+<p>The usual flow is something like <code>git submodule add &lt;the theme's git repo&gt;</code> followed by <code>rake install["&lt;the theme name&gt;"]</code></p>
+
+<p>I picked <a href="http://alexgaribay.com/"><code>octoflat</code></a> which doesn&rsquo;t have a sidebar, but is otherwise pleasing to look at.</p>
+
+<p>Happy customizing!</p>
 
       
       
