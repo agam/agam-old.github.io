@@ -4,11 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-<<<<<<< HEAD
-  <updated>2014-04-01T16:36:46-07:00</updated>
-=======
-  <updated>2014-02-19T01:34:29+00:00</updated>
->>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
+  <updated>2014-04-01T16:44:49-07:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -18,7 +14,6 @@
 
   
   <entry>
-<<<<<<< HEAD
     <title type="html"><![CDATA[Some Lisp exercises]]></title>
     <link href="http://agam.github.io/blog/2014/03/31/some-lisp-exercises/"/>
     <updated>2014-03-31T10:25:00-07:00</updated>
@@ -262,11 +257,6 @@
     <title type="html"><![CDATA[Living Pseudonymously]]></title>
     <link href="http://agam.github.io/blog/2014/02/19/living-pseudonymously/"/>
     <updated>2014-02-19T01:29:00-08:00</updated>
-=======
-    <title type="html"><![CDATA[Living Pseudonymously]]></title>
-    <link href="http://agam.github.io/blog/2014/02/19/living-pseudonymously/"/>
-    <updated>2014-02-19T01:29:00+00:00</updated>
->>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
     <id>http://agam.github.io/blog/2014/02/19/living-pseudonymously</id>
     <content type="html"><![CDATA[<p>For various reasons, this blog is going to be focussed just on C++ programming, as boring as that may sound.</p>
 
@@ -275,22 +265,15 @@
 <p>Meanwhile everything <em>else</em> will still exist, just not here. Starting with the last two posts.</p>
 
 <p>If you want to try to find me you still can; but I&rsquo;m just not going to advertise it, that&rsquo;s all.</p>
-<<<<<<< HEAD
 
-<p>Edit: Ok, It doesn&rsquo;t <em>entirely</em> have to be limited to that, I can still share some additional stuff, perhaps just not the <em>interesting</em> stuff.</p>
-=======
->>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
+<p><strong>Edit</strong>: Ok, It doesn&rsquo;t <em>entirely</em> have to be limited to that, I can still share some additional stuff, perhaps just not the <em>interesting</em> stuff.</p>
 ]]></content>
   </entry>
   
   <entry>
     <title type="html"><![CDATA[How fast can you factor ?]]></title>
     <link href="http://agam.github.io/blog/2014/02/04/how-fast-can-you-factor/"/>
-<<<<<<< HEAD
     <updated>2014-02-04T18:52:00-08:00</updated>
-=======
-    <updated>2014-02-04T18:52:00+00:00</updated>
->>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
     <id>http://agam.github.io/blog/2014/02/04/how-fast-can-you-factor</id>
     <content type="html"><![CDATA[<p>For no other reason than <em>because it&rsquo;s there</em>, here is the result of asking Mathematica to factor <a href="http://en.wikipedia.org/wiki/RSA_numbers#RSA-100">RSA 100</a>.</p>
 
@@ -317,11 +300,7 @@
   <entry>
     <title type="html"><![CDATA[Programming Fun: Graph distances]]></title>
     <link href="http://agam.github.io/blog/2014/02/03/programming-fun-graph-distances/"/>
-<<<<<<< HEAD
     <updated>2014-02-03T23:12:00-08:00</updated>
-=======
-    <updated>2014-02-03T23:12:00+00:00</updated>
->>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
     <id>http://agam.github.io/blog/2014/02/03/programming-fun-graph-distances</id>
     <content type="html"><![CDATA[<p>Interesting <a href="http://www.reddit.com/r/dailyprogrammer/comments/1tiz4z/122313_challenge_140_intermediate_graph_radius/">problem</a>: given a graph, find out the <em>minimum distance between any two nodes</em>.</p>
 
@@ -350,10 +329,6 @@
 <p>Concretely, after <code>k</code> steps, if <code>Graph[i][j]</code> is <code>0</code> this means there is no path from <code>i</code> to <code>j</code> in <code>k</code> steps. So if you repeat this multiplication and stop when there are no zero elements, the number of multiplication steps is the minimum distance you need.</p>
 
 <div><script src='https://gist.github.com/8794234.js'></script>
-<<<<<<< HEAD
-=======
-<script type="text/javascript">$(".gist-file table tr td.line-numbers").remove();</script>
->>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
 <noscript><pre><code>// Omitting headers
 
 using namespace std;
@@ -427,11 +402,7 @@ int main(int argc, char* argv[]) {
   <entry>
     <title type="html"><![CDATA[Minsky Turing Lecture: Part 2]]></title>
     <link href="http://agam.github.io/blog/2014/02/01/minsky-turing-lecture-part-2/"/>
-<<<<<<< HEAD
     <updated>2014-02-01T08:55:00-08:00</updated>
-=======
-    <updated>2014-02-01T08:55:00+00:00</updated>
->>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
     <id>http://agam.github.io/blog/2014/02/01/minsky-turing-lecture-part-2</id>
     <content type="html"><![CDATA[<p>(This picks up where <a href="http://agam.github.io/blog/2014/01/26/minsky-turing-lecture-part-1/">Part 1</a> left off)</p>
 
@@ -515,11 +486,7 @@ If we extrapolate today&rsquo;s trend, his mathematical education will be conduc
   <entry>
     <title type="html"><![CDATA[Playing with the exponential curve]]></title>
     <link href="http://agam.github.io/blog/2014/02/01/playing-with-the-exponential-curve/"/>
-<<<<<<< HEAD
     <updated>2014-02-01T06:35:00-08:00</updated>
-=======
-    <updated>2014-02-01T06:35:00+00:00</updated>
->>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
     <id>http://agam.github.io/blog/2014/02/01/playing-with-the-exponential-curve</id>
     <content type="html"><![CDATA[<p>I remember hearing about the <a href="http://britton.disted.camosun.bc.ca/jbchessgrain.htm">apocryphal story</a> about doubling grains of rice on a chessboard. I even tried writing powers of 2 (which at my age then just meant adding <code>2+2</code> then <code>4+4</code> etc).</p>
 
@@ -544,11 +511,7 @@ If we extrapolate today&rsquo;s trend, his mathematical education will be conduc
   <entry>
     <title type="html"><![CDATA[Change That Font!]]></title>
     <link href="http://agam.github.io/blog/2014/02/01/change-that-font/"/>
-<<<<<<< HEAD
     <updated>2014-02-01T06:25:00-08:00</updated>
-=======
-    <updated>2014-02-01T06:25:00+00:00</updated>
->>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
     <id>http://agam.github.io/blog/2014/02/01/change-that-font</id>
     <content type="html"><![CDATA[<p>You don&rsquo;t have to be chained to <code>Monaco</code> if you don&rsquo;t like it. I changed it to <code>Inconsolata</code>, which is as simply as <a href="http://www.levien.com/type/myfonts/inconsolata.html">downloading it</a> (click on the <em>Open Type File</em> link).</p>
 
@@ -563,11 +526,7 @@ If we extrapolate today&rsquo;s trend, his mathematical education will be conduc
   <entry>
     <title type="html"><![CDATA[Mathematica: 1/9998]]></title>
     <link href="http://agam.github.io/blog/2014/01/30/mathematica-1-slash-9998/"/>
-<<<<<<< HEAD
     <updated>2014-01-30T23:00:00-08:00</updated>
-=======
-    <updated>2014-01-30T23:00:00+00:00</updated>
->>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
     <id>http://agam.github.io/blog/2014/01/30/mathematica-1-slash-9998</id>
     <content type="html"><![CDATA[<p>I saw this piece about how <code>1/1998</code> was approximated by series of powers of <code>2</code>, which raised the question, &ldquo;Can Mathematica help confirm this?&rdquo; (<em>of course it can!</em>)</p>
 
@@ -640,11 +599,7 @@ If we extrapolate today&rsquo;s trend, his mathematical education will be conduc
   <entry>
     <title type="html"><![CDATA[Mathematica: A simple ant]]></title>
     <link href="http://agam.github.io/blog/2014/01/30/mathematica-a-simple-ant/"/>
-<<<<<<< HEAD
     <updated>2014-01-30T18:16:00-08:00</updated>
-=======
-    <updated>2014-01-30T18:16:00+00:00</updated>
->>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
     <id>http://agam.github.io/blog/2014/01/30/mathematica-a-simple-ant</id>
     <content type="html"><![CDATA[<p>Here&rsquo;s a simple, exploratory sketch: Imagine an ant which can either move left or right, or stay in its place.</p>
 
@@ -673,11 +628,7 @@ If we extrapolate today&rsquo;s trend, his mathematical education will be conduc
   <entry>
     <title type="html"><![CDATA[Getting started with clojure: Part 1]]></title>
     <link href="http://agam.github.io/blog/2014/01/29/getting-started-with-clojure-part-1/"/>
-<<<<<<< HEAD
     <updated>2014-01-29T18:04:00-08:00</updated>
-=======
-    <updated>2014-01-29T18:04:00+00:00</updated>
->>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
     <id>http://agam.github.io/blog/2014/01/29/getting-started-with-clojure-part-1</id>
     <content type="html"><![CDATA[<p>(Just a personal log so I don&rsquo;t forget some basic steps here. There may or may not be a Part 2)</p>
 
@@ -886,11 +837,7 @@ If we extrapolate today&rsquo;s trend, his mathematical education will be conduc
   <entry>
     <title type="html"><![CDATA[Programming Fun: Ascii Tree]]></title>
     <link href="http://agam.github.io/blog/2014/01/29/programming-fun-ascii-tree/"/>
-<<<<<<< HEAD
     <updated>2014-01-29T02:11:00-08:00</updated>
-=======
-    <updated>2014-01-29T02:11:00+00:00</updated>
->>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
     <id>http://agam.github.io/blog/2014/01/29/programming-fun-ascii-tree</id>
     <content type="html"><![CDATA[<p>Another <a href="http://www.reddit.com/r/dailyprogrammer/comments/1t0r09/121613_challenge_145_easy_tree_generation/">easy problem</a> (I&rsquo;m not picking easy problems! I&rsquo;m just going in sequence!)</p>
 
@@ -941,10 +888,6 @@ If we extrapolate today&rsquo;s trend, his mathematical education will be conduc
 <p>Is this really programming at all? More like basic <em>arithmetic</em>. Anyway &hellip;</p>
 
 <div><script src='https://gist.github.com/8679031.js'></script>
-<<<<<<< HEAD
-=======
-<script type="text/javascript">$(".gist-file table tr td.line-numbers").remove();</script>
->>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
 <noscript><pre><code>// Skipped includes
 
 using namespace std;
@@ -989,11 +932,7 @@ int main(int argc, char* argv[]) {
   <entry>
     <title type="html"><![CDATA[Programming Fun: Adjacency Matrix]]></title>
     <link href="http://agam.github.io/blog/2014/01/27/programming-fun-adjacency-matrix/"/>
-<<<<<<< HEAD
     <updated>2014-01-27T03:55:00-08:00</updated>
-=======
-    <updated>2014-01-27T03:55:00+00:00</updated>
->>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
     <id>http://agam.github.io/blog/2014/01/27/programming-fun-adjacency-matrix</id>
     <content type="html"><![CDATA[<p>Another &ldquo;intermediate&rdquo; <a href="http://www.reddit.com/r/dailyprogrammer/comments/1t6dlf/121813_challenge_140_intermediate_adjacency_matrix/">problem</a> today.</p>
 
@@ -1040,10 +979,6 @@ int main(int argc, char* argv[]) {
 <p>Since the C++ Standard Library doesn&rsquo;t have a built-in matrix library (or maybe it does and I&rsquo;m unaware of it), I just used a vector of size <code>M * N</code> to stand in for an <code>M * N</code> matrix.</p>
 
 <div><script src='https://gist.github.com/8643006.js'></script>
-<<<<<<< HEAD
-=======
-<script type="text/javascript">$(".gist-file table tr td.line-numbers").remove();</script>
->>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
 <noscript><pre><code>#include &lt;cassert&gt;
 #include &lt;cmath&gt;
 #include &lt;cstdint&gt;
@@ -1109,11 +1044,7 @@ int main(int argc, char* argv[]) {
   <entry>
     <title type="html"><![CDATA[Fun with Processing: Spinning Ellipses]]></title>
     <link href="http://agam.github.io/blog/2014/01/27/fun-with-processing-spinning-ellipses/"/>
-<<<<<<< HEAD
     <updated>2014-01-27T00:11:00-08:00</updated>
-=======
-    <updated>2014-01-27T00:11:00+00:00</updated>
->>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
     <id>http://agam.github.io/blog/2014/01/27/fun-with-processing-spinning-ellipses</id>
     <content type="html"><![CDATA[<p><a href="http://www.processing.org/">Processing</a> is intended to be a &ldquo;creative coding&rdquo; tool for non-programmers. It runs on top of Java, which is good enough to get started. The performance-anxious folks might eventually prefer something like <a href="http://libcinder.org/">Cinder</a>, which has C++ libraries instead.</p>
 
@@ -1185,11 +1116,7 @@ int main(int argc, char* argv[]) {
   <entry>
     <title type="html"><![CDATA[Minsky Turing Lecture: Part 1]]></title>
     <link href="http://agam.github.io/blog/2014/01/26/minsky-turing-lecture-part-1/"/>
-<<<<<<< HEAD
     <updated>2014-01-26T00:10:00-08:00</updated>
-=======
-    <updated>2014-01-26T00:10:00+00:00</updated>
->>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
     <id>http://agam.github.io/blog/2014/01/26/minsky-turing-lecture-part-1</id>
     <content type="html"><![CDATA[<p>I came across a reference to Marvin Minsky&rsquo;s 1970 Turing Award Lecture. I&rsquo;ve barely read any of these lectures, always assuming they would be empty or pedantic or plain boring. Reading this changed that perception completely.</p>
 
@@ -1256,11 +1183,7 @@ It remains to be seen whether a syntax with explicit delimiters is reactionary, 
   <entry>
     <title type="html"><![CDATA[Cost comparison: Google Cloud vs DigitalOcean]]></title>
     <link href="http://agam.github.io/blog/2014/01/24/cost-comparison-google-cloud-vs-digitalocean/"/>
-<<<<<<< HEAD
     <updated>2014-01-24T23:07:00-08:00</updated>
-=======
-    <updated>2014-01-24T23:07:00+00:00</updated>
->>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
     <id>http://agam.github.io/blog/2014/01/24/cost-comparison-google-cloud-vs-digitalocean</id>
     <content type="html"><![CDATA[<p>I&rsquo;ve been using a VM within the Google Compute Engine cloud, for the last two months (mostly from my chromebook, occasionally from a couple of other locations).</p>
 
@@ -1283,11 +1206,7 @@ It remains to be seen whether a syntax with explicit delimiters is reactionary, 
   <entry>
     <title type="html"><![CDATA[Programming Fun: Nuts and Bolts]]></title>
     <link href="http://agam.github.io/blog/2014/01/19/programming-fun-nuts-and-bolts/"/>
-<<<<<<< HEAD
     <updated>2014-01-19T00:39:00-08:00</updated>
-=======
-    <updated>2014-01-19T00:39:00+00:00</updated>
->>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
     <id>http://agam.github.io/blog/2014/01/19/programming-fun-nuts-and-bolts</id>
     <content type="html"><![CDATA[<p><a href="http://www.reddit.com/r/dailyprogrammer/comments/1sob1e/121113_challenge_144_easy_nuts_bolts/">This one</a> is <em>too easy</em> but included anyway for completeness (why not?)</p>
 
@@ -1331,10 +1250,6 @@ It remains to be seen whether a syntax with explicit delimiters is reactionary, 
 
 
 <div><script src='https://gist.github.com/8498879.js'></script>
-<<<<<<< HEAD
-=======
-<script type="text/javascript">$(".gist-file table tr td.line-numbers").remove();</script>
->>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
 <noscript><pre><code>#include &lt;cassert&gt;
 #include &lt;cmath&gt;
 #include &lt;cstdint&gt;
@@ -1393,11 +1308,7 @@ int main(int argc, char* argv[]) {
   <entry>
     <title type="html"><![CDATA[Programming Fun: Telephone Keypads]]></title>
     <link href="http://agam.github.io/blog/2014/01/18/programming-fun-telephone-keypads/"/>
-<<<<<<< HEAD
     <updated>2014-01-18T02:21:00-08:00</updated>
-=======
-    <updated>2014-01-18T02:21:00+00:00</updated>
->>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
     <id>http://agam.github.io/blog/2014/01/18/programming-fun-telephone-keypads</id>
     <content type="html"><![CDATA[<p><a href="http://www.reddit.com/r/dailyprogrammer/comments/1sody4/12113_challenge_139_intermediate_telephone_keypads/">This is a <em>medium</em> level problem</a>  with two levels of difficulty.</p>
 
@@ -1468,10 +1379,6 @@ int main(int argc, char* argv[]) {
 <p>This is a sort of naive implementation, you could compress this by storing strings and only expanding out to character chains if needed, but I skipped that optimization here.</p>
 
 <div><script src='https://gist.github.com/8422418.js'></script>
-<<<<<<< HEAD
-=======
-<script type="text/javascript">$(".gist-file table tr td.line-numbers").remove();</script>
->>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
 <noscript><pre><code>#include &lt;cassert&gt;
 #include &lt;cmath&gt;
 #include &lt;cstdint&gt;
@@ -1648,10 +1555,6 @@ int main(int argc, char* argv[]) {
 <p>(Note: there&rsquo;s some duplication of common code, especially in the <code>Trie</code> class; sorry about that!)</p>
 
 <div><script src='https://gist.github.com/8460783.js'></script>
-<<<<<<< HEAD
-=======
-<script type="text/javascript">$(".gist-file table tr td.line-numbers").remove();</script>
->>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
 <noscript><pre><code>#include &lt;cassert&gt;
 #include &lt;cmath&gt;
 #include &lt;cstdint&gt;
@@ -1834,11 +1737,7 @@ int main(int argc, char* argv[]) {
   <entry>
     <title type="html"><![CDATA[Programming: Technology and Science]]></title>
     <link href="http://agam.github.io/blog/2014/01/16/programming-technology-and-science/"/>
-<<<<<<< HEAD
     <updated>2014-01-16T06:21:00-08:00</updated>
-=======
-    <updated>2014-01-16T06:21:00+00:00</updated>
->>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
     <id>http://agam.github.io/blog/2014/01/16/programming-technology-and-science</id>
     <content type="html"><![CDATA[<p>I liked this quote from the <a href="http://www.amazon.com/Concepts-Techniques-Models-Computer-Programming/dp/0262220695">&ldquo;Concepts, Techniques and Models of Computer Programming&rdquo;</a>:</p>
 
@@ -1858,11 +1757,7 @@ craft, i.e., we lack deep understanding</strong></p></blockquote>
   <entry>
     <title type="html"><![CDATA[Programming Fun: Circle Area]]></title>
     <link href="http://agam.github.io/blog/2014/01/08/programming-fun-circle-area/"/>
-<<<<<<< HEAD
     <updated>2014-01-08T20:22:00-08:00</updated>
-=======
-    <updated>2014-01-08T20:22:00+00:00</updated>
->>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
     <id>http://agam.github.io/blog/2014/01/08/programming-fun-circle-area</id>
     <content type="html"><![CDATA[<p>Straightforward <em>math-only, no-algorithm</em> <a href="http://www.reddit.com/r/dailyprogrammer/comments/1s6484/120513_challenge_138_intermediate_overlapping/">problem</a></p>
 
@@ -1921,10 +1816,6 @@ craft, i.e., we lack deep understanding</strong></p></blockquote>
 <p><img class="center" src="http://agam.github.io/images/programming-fun/circle-area-5.jpg" width="300"></p>
 
 <div><script src='https://gist.github.com/8323896.js'></script>
-<<<<<<< HEAD
-=======
-<script type="text/javascript">$(".gist-file table tr td.line-numbers").remove();</script>
->>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
 <noscript><pre><code>#include &lt;cassert&gt;
 #include &lt;cmath&gt;
 #include &lt;cstdint&gt;
@@ -1977,11 +1868,7 @@ int main() {
   <entry>
     <title type="html"><![CDATA[Urbit: Back Again]]></title>
     <link href="http://agam.github.io/blog/2014/01/08/urbit-back-again/"/>
-<<<<<<< HEAD
     <updated>2014-01-08T08:47:00-08:00</updated>
-=======
-    <updated>2014-01-08T08:47:00+00:00</updated>
->>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
     <id>http://agam.github.io/blog/2014/01/08/urbit-back-again</id>
     <content type="html"><![CDATA[<p>Turns out I was affected by the last &ldquo;continuity breach&rdquo;.</p>
 
@@ -2036,133 +1923,4 @@ int main() {
 ]]></content>
   </entry>
   
-<<<<<<< HEAD
-=======
-  <entry>
-    <title type="html"><![CDATA[Programming Fun: Braille]]></title>
-    <link href="http://agam.github.io/blog/2014/01/07/programming-fun-braille/"/>
-    <updated>2014-01-07T23:31:00+00:00</updated>
-    <id>http://agam.github.io/blog/2014/01/07/programming-fun-braille</id>
-    <content type="html"><![CDATA[<p>Here&rsquo;s a simple <a href="http://www.reddit.com/r/dailyprogrammer/comments/1s061q/120313_challenge_143_easy_braille/">one</a>.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>Input Description
-</span><span class='line'>-----------------
-</span><span class='line'>
-</span><span class='line'>Input will consistent of an array of 2x6 space-delimited Braille characters.
-</span><span class='line'>This array is always on the same line, so regardless of how long the text is, it
-</span><span class='line'>will always be on 3-rows of text. A lowered bump is a dot character '.', while a
-</span><span class='line'>raised bump is an upper-case 'O' character.
-</span><span class='line'>
-</span><span class='line'>Output Description
-</span><span class='line'>------------------
-</span><span class='line'>
-</span><span class='line'>Print the transcribed Braille.</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<div><script src='https://gist.github.com/8308823.js'></script>
-<script type="text/javascript">$(".gist-file table tr td.line-numbers").remove();</script>
-<noscript><pre><code>#include &lt;cassert&gt;
-#include &lt;cmath&gt;
-#include &lt;cstdint&gt;
-#include &lt;cstdio&gt;
-#include &lt;cstdlib&gt;
-#include &lt;algorithm&gt;
-#include &lt;iomanip&gt;
-#include &lt;iostream&gt;
-#include &lt;limits&gt;
-#include &lt;string&gt;
-#include &lt;vector&gt;
-#include &lt;queue&gt;
-#include &lt;unordered_map&gt;
-
-using namespace std;
-
-void InitializeBrailleData(unordered_map&lt;string, char&gt;* rep) {
-  rep-&gt;insert(make_pair(&quot;O.....&quot;, &#39;A&#39;));
-  rep-&gt;insert(make_pair(&quot;O.O...&quot;, &#39;B&#39;));
-  rep-&gt;insert(make_pair(&quot;OO....&quot;, &#39;C&#39;));
-  rep-&gt;insert(make_pair(&quot;OO.O..&quot;, &#39;D&#39;));
-  rep-&gt;insert(make_pair(&quot;O..O..&quot;, &#39;E&#39;));
-  rep-&gt;insert(make_pair(&quot;OOO...&quot;, &#39;F&#39;));
-  rep-&gt;insert(make_pair(&quot;OOOO..&quot;, &#39;G&#39;));
-  rep-&gt;insert(make_pair(&quot;O.OO..&quot;, &#39;H&#39;));
-  rep-&gt;insert(make_pair(&quot;.OO...&quot;, &#39;I&#39;));
-  rep-&gt;insert(make_pair(&quot;.OOO..&quot;, &#39;J&#39;));
-  rep-&gt;insert(make_pair(&quot;O...O.&quot;, &#39;K&#39;));
-  rep-&gt;insert(make_pair(&quot;O.O.O.&quot;, &#39;L&#39;));
-  rep-&gt;insert(make_pair(&quot;OO..O.&quot;, &#39;M&#39;));
-  rep-&gt;insert(make_pair(&quot;OO.OO.&quot;, &#39;N&#39;));
-  rep-&gt;insert(make_pair(&quot;O..OO.&quot;, &#39;O&#39;));
-  rep-&gt;insert(make_pair(&quot;OOO.O.&quot;, &#39;P&#39;));
-  rep-&gt;insert(make_pair(&quot;OOOOO.&quot;, &#39;Q&#39;));
-  rep-&gt;insert(make_pair(&quot;O.OOO.&quot;, &#39;R&#39;));
-  rep-&gt;insert(make_pair(&quot;.OO.O.&quot;, &#39;S&#39;));
-  rep-&gt;insert(make_pair(&quot;.OOOO.&quot;, &#39;T&#39;));
-  rep-&gt;insert(make_pair(&quot;O...OO&quot;, &#39;U&#39;));
-  rep-&gt;insert(make_pair(&quot;O.O.OO&quot;, &#39;V&#39;));
-  rep-&gt;insert(make_pair(&quot;.OOO.O&quot;, &#39;W&#39;));
-  rep-&gt;insert(make_pair(&quot;OO..OO&quot;, &#39;X&#39;));
-  rep-&gt;insert(make_pair(&quot;OO.OOO&quot;, &#39;Y&#39;));
-  rep-&gt;insert(make_pair(&quot;O..OOO&quot;, &#39;Z&#39;));
-};
-
-void AddRepresentation(const string&amp; line, vector&lt;string&gt;* representations) {
-  for (int index = 0; index &lt; line.length(); index += 3) {
-    (*representations)[index / 3].push_back(line[index]);
-    (*representations)[index / 3].push_back(line[index + 1]);
-
-    assert((line[index + 2] == &#39; &#39;) || (index + 2 == line.length()));
-  }
-}
-
-int main() {
-  unordered_map&lt;string, char&gt; braille_representation;
-  InitializeBrailleData(&amp;braille_representation);
-
-  // Assume input is well formed.
-  // This means we read three lines from standard input,
-  // and each line&#39;s length is (2 * x + 3)
-  string line1, line2, line3;
-  getline(cin, line1);
-  getline(cin, line2);
-  getline(cin, line3);
-
-  // Basic invariants
-  assert(line1.length() == line2.length());
-  assert(line2.length() == line3.length());
-  assert((line1.length() + 1) % 3 == 0);
-
-  // Get the input into our desired form
-  vector&lt;string&gt; representations((line1.length() + 1) / 3);
-  AddRepresentation(line1, &amp;representations);
-  AddRepresentation(line2, &amp;representations);
-  AddRepresentation(line3, &amp;representations);
-
-  for (const string&amp; rep : representations) {
-    cout &lt;&lt; braille_representation[rep];
-  }
-  cout &lt;&lt; endl;
-}
-</code></pre></noscript></div>
-
-
-
-]]></content>
-  </entry>
-  
->>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
 </feed>

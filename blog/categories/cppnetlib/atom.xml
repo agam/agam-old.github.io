@@ -4,11 +4,7 @@
   <title><![CDATA[Category: CppNetlib | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/cppnetlib/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-<<<<<<< HEAD
-  <updated>2014-04-01T16:36:46-07:00</updated>
-=======
-  <updated>2014-02-19T01:34:49+00:00</updated>
->>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
+  <updated>2014-04-01T16:44:49-07:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -20,11 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Learning how to build (part 2)]]></title>
     <link href="http://agam.github.io/blog/2013/09/09/building-stuff-part-2/"/>
-<<<<<<< HEAD
     <updated>2013-09-09T00:00:00-07:00</updated>
-=======
-    <updated>2013-09-09T00:00:00+00:00</updated>
->>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
     <id>http://agam.github.io/blog/2013/09/09/building-stuff-part-2</id>
     <content type="html"><![CDATA[<p>I wanted to get an idea of the state of open source C++ tools and idioms, so I decided to pick something small to start with.</p>
 

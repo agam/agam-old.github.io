@@ -4,11 +4,7 @@
   <title><![CDATA[Category: Appengine | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/appengine/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-<<<<<<< HEAD
-  <updated>2014-04-01T16:36:46-07:00</updated>
-=======
-  <updated>2014-02-19T01:34:49+00:00</updated>
->>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
+  <updated>2014-04-01T16:44:49-07:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -20,11 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Appengine transition from Python to Go]]></title>
     <link href="http://agam.github.io/blog/2013/06/22/python-to-go/"/>
-<<<<<<< HEAD
     <updated>2013-06-22T00:00:00-07:00</updated>
-=======
-    <updated>2013-06-22T00:00:00+00:00</updated>
->>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
     <id>http://agam.github.io/blog/2013/06/22/python-to-go</id>
     <content type="html"><![CDATA[<p>Hadn&rsquo;t updated this blog for a few months, and neither the &ldquo;personal web site&rdquo; that I had started earlier. So, to try something new, I decided to port that appengine site from python to go (looking at the Github logs, I haven&rsquo;t updated that for 2 years !!)</p>
 

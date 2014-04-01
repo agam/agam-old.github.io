@@ -4,11 +4,7 @@
   <title><![CDATA[Category: Plot | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/plot/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-<<<<<<< HEAD
-  <updated>2014-04-01T16:36:46-07:00</updated>
-=======
-  <updated>2014-02-19T01:34:49+00:00</updated>
->>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
+  <updated>2014-04-01T16:44:49-07:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -20,11 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Mathematica: A simple ant]]></title>
     <link href="http://agam.github.io/blog/2014/01/30/mathematica-a-simple-ant/"/>
-<<<<<<< HEAD
     <updated>2014-01-30T18:16:00-08:00</updated>
-=======
-    <updated>2014-01-30T18:16:00+00:00</updated>
->>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
     <id>http://agam.github.io/blog/2014/01/30/mathematica-a-simple-ant</id>
     <content type="html"><![CDATA[<p>Here&rsquo;s a simple, exploratory sketch: Imagine an ant which can either move left or right, or stay in its place.</p>
 
@@ -37,21 +29,13 @@ Ant[k<em>, u</em>] :=
 <p>RecAnt[k_] := Ant[k, RandomReal[]]
 ```</p>
 
-<<<<<<< HEAD
 <p> <img class="center <a" src="href="http://farm8.staticflickr.com/7351/12224251723_4d24311967_d.jpg">http://farm8.staticflickr.com/7351/12224251723_4d24311967_d.jpg</a>"></p>
-=======
-<p> {% img center <a href="http://farm8.staticflickr.com/7351/12224251723_4d24311967_d.jpg">http://farm8.staticflickr.com/7351/12224251723_4d24311967_d.jpg</a> %}</p>
->>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
 
 <p> <code>
  ListPlot[NestList[RecAnt, 50, 100000], ImageSize -&gt; Large, Background -&gt; LightGray]
 </code></p>
 
-<<<<<<< HEAD
 <p> <img class="center <a" src="href="http://farm8.staticflickr.com/7418/12224482144_6ef516fd03_z_d.jpg">http://farm8.staticflickr.com/7418/12224482144_6ef516fd03_z_d.jpg</a>"></p>
-=======
-<p> {% img center <a href="http://farm8.staticflickr.com/7418/12224482144_6ef516fd03_z_d.jpg">http://farm8.staticflickr.com/7418/12224482144_6ef516fd03_z_d.jpg</a> %}</p>
->>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
 ]]></content>
   </entry>
   

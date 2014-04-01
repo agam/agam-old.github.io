@@ -4,11 +4,7 @@
   <title><![CDATA[Category: Factoring | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/factoring/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-<<<<<<< HEAD
-  <updated>2014-04-01T16:36:46-07:00</updated>
-=======
-  <updated>2014-02-19T01:34:49+00:00</updated>
->>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
+  <updated>2014-04-01T16:44:49-07:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -20,11 +16,7 @@
   <entry>
     <title type="html"><![CDATA[How fast can you factor ?]]></title>
     <link href="http://agam.github.io/blog/2014/02/04/how-fast-can-you-factor/"/>
-<<<<<<< HEAD
     <updated>2014-02-04T18:52:00-08:00</updated>
-=======
-    <updated>2014-02-04T18:52:00+00:00</updated>
->>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
     <id>http://agam.github.io/blog/2014/02/04/how-fast-can-you-factor</id>
     <content type="html"><![CDATA[<p>For no other reason than <em>because it&rsquo;s there</em>, here is the result of asking Mathematica to factor <a href="http://en.wikipedia.org/wiki/RSA_numbers#RSA-100">RSA 100</a>.</p>
 
@@ -38,11 +30,7 @@
 
 <p>In comparison, Mathematica took little more than an hour. Unfortunately, it was not able to parallelize it (for a <em>real</em> comparison, the <a href="http://sourceforge.net/projects/msieve/files/msieve/Msieve%20v1.51/">Msieve code</a> would have to be ported over).</p>
 
-<<<<<<< HEAD
 <p><img class="center <a" src="href="http://farm6.staticflickr.com/5510/12309071334_575cda01f9_z_d.jpg">http://farm6.staticflickr.com/5510/12309071334_575cda01f9_z_d.jpg</a>" title="" ></p>
-=======
-<p>{% img center <a href="http://farm6.staticflickr.com/5510/12309071334_575cda01f9_z_d.jpg">http://farm6.staticflickr.com/5510/12309071334_575cda01f9_z_d.jpg</a>  %}</p>
->>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
 
 <p><strong>Update:</strong> This has been much better documented on <a href="http://mathematica.stackexchange.com/questions/14964/time-approximation-of-decrypting-rsa-algorithm">this StackExchange thread</a>, which also links to <a href="http://reference.wolfram.com/mathematica/tutorial/SomeNotesOnInternalImplementation.html#12915">notes on internal implementation</a>, in case you&rsquo;re interested:</p>
 

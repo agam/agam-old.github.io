@@ -1,17 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-<<<<<<< HEAD
   <title><![CDATA[Category: AlwaysBeCoding | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/alwaysbecoding/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2014-04-01T16:36:46-07:00</updated>
-=======
-  <title><![CDATA[Category: AlwaysBeCoding, | Agam's Mashed-Up Pome]]></title>
-  <link href="http://agam.github.io/blog/categories/alwaysbecoding/atom.xml" rel="self"/>
-  <link href="http://agam.github.io/"/>
-  <updated>2014-02-19T01:34:49+00:00</updated>
->>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
+  <updated>2014-04-01T16:44:49-07:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -21,7 +14,6 @@
 
   
   <entry>
-<<<<<<< HEAD
     <title type="html"><![CDATA[Moar Reddit DailyProgramming: Falling Sand]]></title>
     <link href="http://agam.github.io/blog/2013/11/26/moar-reddit-dailyprogramming-falling-sand/"/>
     <updated>2013-11-26T17:33:00-08:00</updated>
@@ -136,39 +128,10 @@ int main() {
  */
 </code></pre></noscript></div>
 </p>
-=======
-    <title type="html"><![CDATA[Programming Fun: Graph distances]]></title>
-    <link href="http://agam.github.io/blog/2014/02/03/programming-fun-graph-distances/"/>
-    <updated>2014-02-03T23:12:00+00:00</updated>
-    <id>http://agam.github.io/blog/2014/02/03/programming-fun-graph-distances</id>
-    <content type="html"><![CDATA[<p>Interesting <a href="http://www.reddit.com/r/dailyprogrammer/comments/1tiz4z/122313_challenge_140_intermediate_graph_radius/">problem</a>: given a graph, find out the <em>minimum distance between any two nodes</em>.</p>
-
-<p>```</p>
-
-<h2>Input Description</h2>
-
-<p>On standard console input you will be given an integer N, followed by an
-Adjacency matrix. The graph is not directed, so the matrix will always be
-reflected about the main diagonal.</p>
-
-<h2>Output Description</h2>
-
-<p>Print the radius of the graph as an integer.
-```</p>
-
-<p>There are a few ways to do this &mdash; you can run <a href="http://en.wikipedia.org/wiki/Dijkstra%27s_algorithm">Dijkstra&rsquo;s algorithm</a> or <a href="http://en.wikipedia.org/wiki/Floyd%E2%80%93Warshall_algorithm">Floyd-Warshall algorithm</a> on the graph to find the path from each node to each other node. I sort of took a short cut &mdash; when the graph is represented as a matrix (as it is here), multiplying the matrix with itself (and adding the result to itself, so as not to lose the <em>0-step</em> info) can be used as a way of checking whether or not two nodes are connected.</p>
-
-<p>Concretely, after <code>k</code> steps, if <code>Graph[i][j]</code> is <code>0</code> this means there is no path from <code>i</code> to <code>j</code> in <code>k</code> steps. So if you repeat this multiplication and stop when there are no zero elements, the number of multiplication steps is the minimum distance you need.</p>
-
-<p>{% gist 8794234 %}</p>
-
-<p>[I&rsquo;m a little bored of these daily programmer questions now :( I&rsquo;ll do one more hard one and then find a new theme here.]</p>
->>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
 ]]></content>
   </entry>
   
   <entry>
-<<<<<<< HEAD
     <title type="html"><![CDATA[Reddit DailyProgrammer Computing Pi]]></title>
     <link href="http://agam.github.io/blog/2013/11/26/reddit-dailyprogrammer-computing-pi/"/>
     <updated>2013-11-26T14:50:00-08:00</updated>
@@ -434,55 +397,10 @@ Digit: 17&hellip;Value: 0
 Digit: 21&hellip;Value: 7
 &hellip;
 ```</p>
-=======
-    <title type="html"><![CDATA[Programming Fun: Ascii Tree]]></title>
-    <link href="http://agam.github.io/blog/2014/01/29/programming-fun-ascii-tree/"/>
-    <updated>2014-01-29T02:11:00+00:00</updated>
-    <id>http://agam.github.io/blog/2014/01/29/programming-fun-ascii-tree</id>
-    <content type="html"><![CDATA[<p>Another <a href="http://www.reddit.com/r/dailyprogrammer/comments/1t0r09/121613_challenge_145_easy_tree_generation/">easy problem</a> (I&rsquo;m not picking easy problems! I&rsquo;m just going in sequence!)</p>
-
-<p>```</p>
-
-<h2>Input Description</h2>
-
-<p>You will be given one line of text on standard-console input: an integer and
-two characters, all space-delimited. The integer, N, will range inclusively
-from 3 to 21 and always be odd. The next character will be your trunk
-character. The next character will be your leaves character. Draw the trunk and
-leaves components with these characters, respectively.</p>
-
-<h2>Output Description</h2>
-
-<p>Given the three input arguments, draw a centered-tree. It should follow this
-pattern: (this is the smallest tree possible, with a base of 3)
-   *</p>
-
-<hr />
-
-<p>  ###
-Here&rsquo;s a much larger tree, of base 7:
-   *</p>
-
-<hr />
-
-<hr />
-
-<hr />
-
-<p>  ###
-```</p>
-
-<p>Is this really programming at all? More like basic <em>arithmetic</em>. Anyway &hellip;</p>
-
-<p>{% gist 8679031 %}</p>
-
-<p>[Also, I realized I&rsquo;m wasting everyone&rsquo;s time by having all those redundant <code>#include</code> lines, so I got rid of them here]</p>
->>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
 ]]></content>
   </entry>
   
   <entry>
-<<<<<<< HEAD
     <title type="html"><![CDATA[Reddit DailyProgrammer Getting Started]]></title>
     <link href="http://agam.github.io/blog/2013/11/19/reddit-dailyprogrammer-getting-started/"/>
     <updated>2013-11-19T18:57:00-08:00</updated>
@@ -560,142 +478,6 @@ int main() {
  * 3 404D
  */     </code></pre></noscript></div>
 </p>
-=======
-    <title type="html"><![CDATA[Programming Fun: Adjacency Matrix]]></title>
-    <link href="http://agam.github.io/blog/2014/01/27/programming-fun-adjacency-matrix/"/>
-    <updated>2014-01-27T03:55:00+00:00</updated>
-    <id>http://agam.github.io/blog/2014/01/27/programming-fun-adjacency-matrix</id>
-    <content type="html"><![CDATA[<p>Another &ldquo;intermediate&rdquo; <a href="http://www.reddit.com/r/dailyprogrammer/comments/1t6dlf/121813_challenge_140_intermediate_adjacency_matrix/">problem</a> today.</p>
-
-<p>```</p>
-
-<h2>Input Description</h2>
-
-<p>On standard console input, you will be first given a line with two space-delimited integers N and M. N is the number of nodes / vertices in the graph, while M is the number of following lines of edge-node data. A line of edge-node data is a space-delimited set of integers, with the special &ldquo;&ndash;>&rdquo; symbol indicating an edge. This symbol shows the edge-relationship between the set of left-sided integers and the right-sided integers. This symbol will only have one element to its left, or one element to its right. These lines of data will also never have duplicate information; you do not have to handle re-definitions of the same edges.</p>
-
-<p>An example of data that maps the node 1 to the nodes 2 and 3 is as follows:
-1 &ndash;> 2 3</p>
-
-<p>Another example where multiple nodes points to the same node:
-3 8 &ndash;> 2</p>
-
-<p>You can expect input to sometimes create cycles and self-references in the graph. The following is valid:
-2 &ndash;> 2 3
-3 &ndash;> 2</p>
-
-<p>Note that there is no order in the given integers; thus &ldquo;1 &ndash;> 2 3&rdquo; is the same as &ldquo;1 &ndash;> 3 2&rdquo;.</p>
-
-<h2>Output Description</h2>
-
-<p>Print the N x N adjacency matrix as a series of 0&rsquo;s (no-edge) and 1&rsquo;s (edge).
-```</p>
-
-<p>Since the C++ Standard Library doesn&rsquo;t have a built-in matrix library (or maybe it does and I&rsquo;m unaware of it), I just used a vector of size <code>M * N</code> to stand in for an <code>M * N</code> matrix.</p>
-
-<p>{% gist 8643006 %}</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Programming Fun: Nuts and Bolts]]></title>
-    <link href="http://agam.github.io/blog/2014/01/19/programming-fun-nuts-and-bolts/"/>
-    <updated>2014-01-19T00:39:00+00:00</updated>
-    <id>http://agam.github.io/blog/2014/01/19/programming-fun-nuts-and-bolts</id>
-    <content type="html"><![CDATA[<p><a href="http://www.reddit.com/r/dailyprogrammer/comments/1sob1e/121113_challenge_144_easy_nuts_bolts/">This one</a> is <em>too easy</em> but included anyway for completeness (why not?)</p>
-
-<p>```</p>
-
-<h2>Input Description</h2>
-
-<p>The first line of input will be an integer N, which is for the number of rows
-in each list. Each list has N-lines of two space-delimited strings: the first
-string will be the unique item name (without spaces), the second string will be
-the price (in whole-integer cents). The second list, following the same format,
-will have the same unique item-names, but with the correct price. Note that the
-lists may not be in the same order!</p>
-
-<h2>Output Description</h2>
-
-<p>For each item that has had its price changed, print a row with the item name
-and the price difference (in cents). Print the sign of the change (e.g. &lsquo;+&rsquo; for
-a growth in price, or &lsquo;&ndash;&rsquo; for a loss in price). Order does not matter for
-output.</p>
-
-<p>```</p>
-
-<p>{% gist 8498879 %}</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Programming Fun: Telephone Keypads]]></title>
-    <link href="http://agam.github.io/blog/2014/01/18/programming-fun-telephone-keypads/"/>
-    <updated>2014-01-18T02:21:00+00:00</updated>
-    <id>http://agam.github.io/blog/2014/01/18/programming-fun-telephone-keypads</id>
-    <content type="html"><![CDATA[<p><a href="http://www.reddit.com/r/dailyprogrammer/comments/1sody4/12113_challenge_139_intermediate_telephone_keypads/">This is a <em>medium</em> level problem</a>  with two levels of difficulty.</p>
-
-<p>```</p>
-
-<h2>Input Description</h2>
-
-<p>On standard console input, you will be given an array of digits (0 to 9) and
-spaces. All digits will be space-delimited, unless the digits represent
-multiple presses of the same button (for example pressing 2 twice gives you the
-letter &lsquo;B&rsquo;).  Use the modern Telephone Keypads digit-letter layout:
-0 = Not used
-1 = Not used
-2 = ABC
-3 = DEF
-4 = GHI
-5 = JKL
-6 = MNO
-7 = PQRS
-8 = TUV
-9 = WXYZ
-You may use any source for looking up English-language words, though this
-simple English-language dictionary is complete enough for the challenge.</p>
-
-<h2>Output Description</h2>
-
-<p>Print a list of all best-fitting words, meaning words that start with the word
-generated using the given input on a telephone keypad. You do not have to only
-print words of the same length as the input (e.g. even if the input is
-4-digits, it&rsquo;s possible there are many long words that start with those
-4-digits).
-```</p>
-
-<p>You could do this by reading the dictionary into a vector of strings, then figuring out the prefix determined by the input and matching it against each dictionary word. There is a better way to do this though, which makes more sense considering the second part of this question.</p>
-
-<p>Instead of using a vector, you could use a <a href="http://en.wikipedia.org/wiki/Trie">Trie</a> which in this case would look something like:</p>
-
-<p>(showing the words &lsquo;sailor&rsquo;, &lsquo;soldier&rsquo; and &lsquo;solder&rsquo;)</p>
-
-<p>{% img center <a href="http://farm6.staticflickr.com/5534/12005243014_69145160ae_o_d.jpg">http://farm6.staticflickr.com/5534/12005243014_69145160ae_o_d.jpg</a> 400 %}</p>
-
-<p>This is a sort of naive implementation, you could compress this by storing strings and only expanding out to character chains if needed, but I skipped that optimization here.</p>
-
-<p>{% gist 8422418 %}</p>
-
-<p>There is a harder version of this problem:</p>
-
-<p>```</p>
-
-<h2>Challenge++</h2>
-
-<p>If you want an extra challenge, accomplish the same challenge but without
-knowing the number of times a digit is pressed. For example &ldquo;7653&rdquo; could mean
-sold, or poke, or even solenoid! You must do this efficiently with regards to
-Big-O complexity.
-```</p>
-
-<p>This would have been more inefficient with a vector of strings (you would sort the vector and then for each prefix, print out all subsequent ones until you encounter a string with a different prefix. So it&rsquo;s O(n log n) where n is the size of the dictionary).</p>
-
-<p>With our trie, we can (once we have a list of all combinatorially possible prefixes) look them up <em>quickly</em> (O(k + n), where k is the length of the prefix; O(k) time for each lookup and O(n) time for creating the trie (or O(mn) where m is the length of the largest word, though I would consider that a constant here)).</p>
-
-<p>(Note: there&rsquo;s some duplication of common code, especially in the <code>Trie</code> class; sorry about that!)</p>
-
-<p>{% gist 8460783 %}</p>
->>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
 ]]></content>
   </entry>
   

@@ -4,11 +4,7 @@
   <title><![CDATA[Category: Yesod | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/yesod/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-<<<<<<< HEAD
-  <updated>2014-04-01T16:36:46-07:00</updated>
-=======
-  <updated>2014-02-19T01:34:49+00:00</updated>
->>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
+  <updated>2014-04-01T16:44:49-07:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -20,11 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Setting up a Haskell webserver to run in Google Compute Engine]]></title>
     <link href="http://agam.github.io/blog/2013/03/11/webserver-in-google-compute-engine/"/>
-<<<<<<< HEAD
     <updated>2013-03-11T00:00:00-07:00</updated>
-=======
-    <updated>2013-03-11T00:00:00+00:00</updated>
->>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
     <id>http://agam.github.io/blog/2013/03/11/webserver-in-google-compute-engine</id>
     <content type="html"><![CDATA[<p>I signed up for a project at the <a href="https://cloud.google.com/console#c=l">Google Cloud Console</a>, and decided to try running a webserver on it, as a prerequisite to other future toy projects I might link to it.</p>
 
