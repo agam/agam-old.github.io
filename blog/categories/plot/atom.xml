@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Plot | Agam's Mashed-Up Pome]]></title>
+  <link href="http://agam.github.io/blog/categories/plot/atom.xml" rel="self"/>
+  <link href="http://agam.github.io/"/>
+  <updated>2014-04-01T16:05:21-07:00</updated>
+  <id>http://agam.github.io/</id>
+  <author>
+    <name><![CDATA[Agam]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Mathematica: A simple ant]]></title>
+    <link href="http://agam.github.io/blog/2014/01/30/mathematica-a-simple-ant/"/>
+    <updated>2014-01-30T18:16:00-08:00</updated>
+    <id>http://agam.github.io/blog/2014/01/30/mathematica-a-simple-ant</id>
+    <content type="html"><![CDATA[<p>Here&rsquo;s a simple, exploratory sketch: Imagine an ant which can either move left or right, or stay in its place.</p>
+
+<p>For simplicity, we&rsquo;ll imagine the ant starts at the center of a scale from <code>1</code> to <code>100</code>, and moves one unit at a time.</p>
+
+<p>```
+Ant[k<em>, u</em>] :=
+ If[ u &lt; 1/3, Min[k + 1, 100], If[u > 2/3, Max[0, k &ndash; 1], k]]</p>
+
+<p>RecAnt[k_] := Ant[k, RandomReal[]]
+```</p>
+
+<p> <img class="center <a" src="href="http://farm8.staticflickr.com/7351/12224251723_4d24311967_d.jpg">http://farm8.staticflickr.com/7351/12224251723_4d24311967_d.jpg</a>"></p>
+
+<p> <code>
+ ListPlot[NestList[RecAnt, 50, 100000], ImageSize -&gt; Large, Background -&gt; LightGray]
+</code></p>
+
+<p> <img class="center <a" src="href="http://farm8.staticflickr.com/7418/12224482144_6ef516fd03_z_d.jpg">http://farm8.staticflickr.com/7418/12224482144_6ef516fd03_z_d.jpg</a>"></p>
+]]></content>
+  </entry>
+  
+</feed>

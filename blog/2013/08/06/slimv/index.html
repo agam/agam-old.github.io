@@ -1,0 +1,282 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>SlimV and Vim (as an equivalent to Emacs and Slime) - Agam's Mashed-Up Pome</title>
+  <meta name="author" content="Agam">
+
+   
+  <meta name="description" content="">
+  
+  <meta name="keywords" content="">
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://agam.github.io/blog/2013/08/06/slimv">
+  <link href="/favicon.png" rel="icon">
+  <link href='http://fonts.googleapis.com/css?family=Quicksand:300,400' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Agam's Mashed-Up Pome" type="application/atom+xml">
+  <script src="/js/jquery.js"></script>
+  <script src="/js/bootstrap-collapse.js"></script>
+  <script src="/js/modernizr-2.0.js"></script>
+  <script src="/js/octopress.js" type="text/javascript"></script>
+  <script src="/js/application.js"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-16612682-4']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <div class="navbar navbar-inverse navbar-static-top">
+  	<div class="navbar-inner">
+  	  <div class="container">
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+          <span class="fui-menu-24"></span>
+        </a>
+  	  	<div class="nav-collapse collapse navbar-responsive-collapse" style="height:0;">
+  	      <ul class="nav">
+    
+        <li ><a href="/index.html">Home</a></li>
+    
+</ul>
+
+<ul class="nav pull-right">
+    
+    
+    
+    <li><a href="http://twitter.com/agambrahma" title="Twitter Profile"><i class="icon-twitter-sign social-navbar"></i></a></li>
+    
+    
+    <li><a href="http://plus.google.com/+AgamBrahma" title="Google+ Profile"><i class="icon-google-plus-sign social-navbar"></i></a></li>
+    
+    
+    
+</ul>
+
+  	    </div>
+  	  </div>
+  	</div>
+  </div>
+  <div class="container" id="main">
+      <div class="row-fluid">
+        <div id="content">
+          <div>
+<article class="hentry" role="article">
+  
+
+  <header>
+  <div class="jumbotron">
+    SlimV and Vim (as an Equivalent to Emacs and Slime)
+	<h5>
+
+
+
+
+
+
+
+
+  
+
+
+<i class="icon-calendar-empty"></i> <time datetime="2013-08-06T00:00:00-07:00" pubdate data-updated="true">Aug 6<span>th</span>, 2013</time></h5>
+  </div>
+</header>
+  <div class="row-fluid">
+    <div class="span12">
+      <p>I&rsquo;ve switched between Emacs and Vim a few times over the last 15-odd years, before finally (?) settling on Vim. I&rsquo;ve come to the realization, as many have before me, that for all the elegant awesomeness of Emacs Lisp,</p>
+
+<blockquote><p>Vim is a better <em>text</em> editor, Emacs is good for everything else</p></blockquote>
+
+<p>Perhaps one day if <a href="http://www.gnu.org/software/guile/">Guile</a> or <a href="https://google-melange.appspot.com/gsoc/proposal/review/google/gsoc2013/shanecelis/1">Emacsey</a> deliver their full promise, I&rsquo;ll happily live inside a REPL forever.</p>
+
+<p>Until then, it&rsquo;s just <em>much, much, much</em> faster to do the equivalent <em>text</em> operations in Vim than in Emacs (yes, I mapped CapsLock to Control; yes, I replaced <code>M-</code> by <code>C-xC-m-</code>).</p>
+
+<p>There were still a few Emacs-only things that haunted me (I outgrew the need to have a <a href="http://emacs-w3m.namazu.org/">web browser</a> or an <a href="http://www.gnu.org/software/emacs/manual/html_mono/erc.html">IRC client</a> in my editor environment, I now use Google Chrome for the former and BitchX/Irssi/Xchat for the latter. I also don&rsquo;t mind reading my <a href="http://gmail.com">email</a> in the browser), such as <a href="http://orgmode.org/"><code>org-mode</code></a>. Fortunately for me, I don&rsquo;t most of its features, and keeping a timestamped diary is something I was able to fix for myself with some shell scripting and vim shortcuts.</p>
+
+<p>Recently, I decided to learn Common Lisp with as much of a newbie attitude as possible. And here I ran into a veritable wall of convention. <em>Of course, didn&rsquo;t I know, that Emacs + Slime is the one true way ?</em>
+<em><strong>Update</strong></em>: Uh no, I take back that decision (why? maybe a future post to
+answer that question)</p>
+
+<p>I dithered, was flustered and nearly reconsidered.</p>
+
+<p>And then I discovered the awesomeness I was looking for, a replacement for Slime in Vim, <a href="http://www.vim.org/scripts/script.php?script_id=2531">Slimv</a>!</p>
+
+<p><a href="http://kovisoft.bitbucket.org/tutorial.html">Here is a tutorial</a> to get you started, but basically all I had to do was to install the plugin and the rest pretty much <em>just worked</em>.</p>
+
+<p>There are quite a lot of nifty tricks here, but my most frequently used commands are:</p>
+
+<ul>
+<li><code>,L</code>: that&rsquo;s a comma followed by L): compile current file</li>
+<li><code>,D</code>: compile current form</li>
+<li><code>,s</code>: lookup a short summary description of the keyword under the cursor</li>
+<li><code>,c</code>: Open Slimv session (splits the window horizontally)</li>
+</ul>
+
+
+<p>I was also new to <code>paredit mode</code>, which is pretty much necessary for making changes to heavily nested parantheses, and it has useful commands there too:</p>
+
+<ul>
+<li><code>,W</code>: wrap an extra set of parentheses around the current form</li>
+<li><code>,S</code>: it&rsquo;s opposite; remove <em>one</em> set of parentheses from the current form</li>
+<li><code>,&lt;</code>, <code>,&gt;</code>: move the parentheses under the cursor one form to the left or right</li>
+</ul>
+
+
+<p>&hellip; and much more. So next time someone tells you how <code>Slime</code> is indispensable and hence Emacs is indispensable, throw <code>Slimv</code> in their face! Kudos to <a href="http://www.vim.org/account/profile.php?user_id=16470">the guy who built it</a>!</p>
+
+    </div>
+  </div>
+
+
+
+  <footer>
+    <hr>
+    
+    <div class="row-fluid">
+      
+      <div class="span6">
+        <p class="meta">
+        
+        
+
+
+
+  <a href="/blog/categories/vim/"><span class="badge">Vim</span></a>
+
+
+
+
+        </p>
+      </div>
+      
+      <div class="span6 social-sharing">
+        <div class="sharing">
+  <div class="addthis_toolbox addthis_default_style ">
+  
+  
+  <a class="addthis_button_tweet"></a>
+  
+  
+  <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+  
+  <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+      </div>
+      
+      
+    </div>
+    
+    <div class="row-fluid">
+      <div class="span12">
+        <p class="meta">
+          
+            <a class="basic-alignment left" href="/blog/2013/07/24/rudimentary-command-line-note-taking/" title="Previous Post: Rudimentary note taking on the command line">&laquo; Rudimentary note taking on the command line</a>
+          
+          
+            <a class="basic-alignment right" href="/blog/2013/08/14/switching-to-kde/" title="Next Post: Switching to KDE">Switching to KDE &raquo;</a>
+          
+        </p>
+      </div>
+    </div>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+
+
+        </div>
+      </div>
+      <div class="row-fluid">
+        <footer class="footer-page" role="contentinfo">
+          <p>
+  Copyright &copy; 2014 - Agam -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span> - Theme by <a href="http://alexgaribay.com">Alex Garibay</a>
+</p>
+
+
+        </footer>
+      </div>
+  </div>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'agamamp';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://agam.github.io/blog/2013/08/06/slimv/';
+        var disqus_url = 'http://agam.github.io/blog/2013/08/06/slimv/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

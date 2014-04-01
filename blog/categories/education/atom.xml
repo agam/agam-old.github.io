@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Education, | Agam's Mashed-Up Pome]]></title>
+  <link href="http://agam.github.io/blog/categories/education/atom.xml" rel="self"/>
+  <link href="http://agam.github.io/"/>
+  <updated>2014-04-01T16:05:21-07:00</updated>
+  <id>http://agam.github.io/</id>
+  <author>
+    <name><![CDATA[Agam]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Minsky Turing Lecture: Part 2]]></title>
+    <link href="http://agam.github.io/blog/2014/02/01/minsky-turing-lecture-part-2/"/>
+    <updated>2014-02-01T08:55:00-08:00</updated>
+    <id>http://agam.github.io/blog/2014/02/01/minsky-turing-lecture-part-2</id>
+    <content type="html"><![CDATA[<p>(This picks up where <a href="http://agam.github.io/blog/2014/01/26/minsky-turing-lecture-part-1/">Part 1</a> left off)</p>
+
+<p>If you thought Minsky cared a lot about how programming languages work, he cares even more about how education &ldquo;works&rdquo;. I recently picked up <a href="http://www.amazon.com/The-Society-Mind-Marvin-Minsky/dp/0671657135">The Society of the Mind</a> so it seems a little less surprising, but read on &hellip;</p>
+
+<h2>Computer Science and Educational models</h2>
+
+<blockquote><p>He [the computer scientist] perceives his principal function to provide programs and machines for use in old and new educational schemes. Well and good, but I believe he has a more complex responsibility &mdash; to work out and communicate models of the process of education itself.</p></blockquote>
+
+<p>And lest anyone doubt this &hellip;</p>
+
+<blockquote><p>We cannot digress here to answer skeptics who feel it too simpleminded (if not impious, or obscene) to compare minds with programs. We can refer many such critics to <a href="http://www.loebner.net/Prizef/TuringArticle.html">Turing&rsquo;s paper</a>. For those who feel that the answer cannot lie in any machine, digital or otherwise, one can argue that machines, when they become intelligent, very likely will feel the same way.</p></blockquote>
+
+<p>(If I might digress a bit, there is a very interesting footnote here by Minsky that might completely change the image in your head of <a href="http://en.wikipedia.org/wiki/Alan_Turing">Turing</a>: &ldquo; <strong>Turing was quite good at debugging hardware</strong>. He would leave the power on, so as not to lose the &lsquo;feel&rsquo; of the thing. Everyone does that today, but it is not the same thing now that the <em>circuits all work on three or five volts</em>.&rdquo;)</p>
+
+<blockquote><p>There is a fundamental pragmatic point in favor of our propositions. The child needs models &hellip;
+&hellip;
+But to model his own self he <em>cannot</em> use the engine or the organism or the city or the telephone switchboard; <em>nothing will serve at all but the computer with its programs and their bugs</em></p></blockquote>
+
+<h2>Children and Mathematics</h2>
+
+<blockquote><p>Imagine a small child &hellip;
+&hellip;
+If we extrapolate today&rsquo;s trend, his mathematical education will be conducted by poorly oriented teachers and, partly, <em>by poorly programmed machines</em>; neither will be able to respond to much beyond &ldquo;correct&rdquo; and &ldquo;wrong&rdquo; answers, let alone to make reasonable interpretations of what the child does or says, because neither will contain good models of the children, or good theories of children&rsquo;s intellectual development.</p></blockquote>
+
+<p>He goes on to give examples of how the child&rsquo;s geometric world is <em>so different</em> from ours, such as some numbers having a different <em>weight</em> or <em>depth</em> than others, or not knowing how squares and diamonds are the same shape, as shown below:</p>
+
+<p><img class="center <a" src="href="http://farm6.staticflickr.com/5529/12246677434_860cbfa222_z_d.jpg">http://farm6.staticflickr.com/5529/12246677434_860cbfa222_z_d.jpg</a>"></p>
+
+<p>This builds up to something I really like (if I may let my personal biases show, I like it because it validates some of my own beliefs): the idea that computational analogies can (and indeed <em>should!</em>) be more generally used to describe patterns of thought and behavior.</p>
+
+<blockquote><p>Before computation, the community of ideas about the nature of thought was too feeble to support an effective theory of learning and development. Neither the finite-state models of the Behaviorists, the hydraulic and economic analogies of the Freudians, nor the rabbit-in-the-hat insights of the Gestaltists supplied enough ingredients to understand so intricate a subject. It needs <em>a substrate of already debugged theories and solutions</em> of related but simpler problems. Now we have a flood of such ideas, <em>well defined and implemented</em>, for <strong>thinking about thinking</strong>; only a fraction are represented in traditional psychology:</p></blockquote>
+
+<p>Some of the ideas listed are</p>
+
+<ul>
+<li>microprogram</li>
+<li>interrupt</li>
+<li>garbage collection</li>
+<li>macro</li>
+<li>symbol table</li>
+</ul>
+
+
+<p>He goes on:</p>
+
+<blockquote><p>All these serve today as tools of a curious and intricate craft, <strong>programming</strong>. But just as astronomy succeeded astrology, following Kepler&rsquo;s regularities, the discovery of <em>principles in empirical explorations of intellectual process in machines</em> should lead to a science.</p></blockquote>
+
+<p>This finally brings him to a polemic against the nature of math education itself.</p>
+
+<h2>Against the &ldquo;New Mathematics&rdquo; curriculum</h2>
+
+<p>What Minsky seems to be railing here is the excessive formalism in Mathematics introduced early on, where abstract concepts like sets are introduced before trying to create a <em>familiarity</em> with numbers.</p>
+
+<blockquote><p>Because of the formalistic approach the teacher will not be able to help the child very much with problems of formulation. For she will feel insecure herself as she drills him on such matters as the <em>difference between the empty set and nothing</em>, or the distinction between the &ldquo;numeral&rdquo; 3+5 and the numeral 8 which is the &ldquo;common name&rdquo; of the number eight, hoping he will not ask what is the common name of the fraction 8/1, which is probably different from the rational 8/1 and different from the quotient 8/1 &hellip;</p></blockquote>
+
+<p>Here, the fractions, quotients and rationals obviously <em>should</em> be identified with each other, rather than siloed and separated by this &ldquo;maze of formalism&rdquo;. Also &hellip;</p>
+
+<blockquote><p>It is very bad to insist that the child keep his knowledge in a simple ordered hierarchy. In order to retrieve what he needs, he must have a multiply connected network, so that he can try several ways to do each thing &hellip; Emphasis on the &ldquo;formal proof&rdquo; is destructive at this stage, because the <strong>knowledge needed for finding proofs, and for understanding them, is far more complex (and less useful) than the knowledge mentioned <em>in</em> proofs.</strong></p></blockquote>
+
+<p>Minsky suggests that this might stem from a misconception of the form &ldquo;You can teach a child anything, if you just get the definitions precise enough&rdquo;.</p>
+
+<p>He doesn&rsquo;t care too much about overly focusing on set theory either:</p>
+
+<blockquote><p>Set theory is not, as the logicians and publishers would have it, <em>the</em> only and true foundation of mathematics; it is a viewpoint that is pretty good for investigating the transfinite, <em>but undistinguished for comprehending the real numbers, and quite substandard for learning about arithmetic, algebra, and geometry</em>.</p></blockquote>
+
+<p>If there is a way to sum up his argument with one line, it is probably this:</p>
+
+<blockquote><p>The child is expected to learn how to solve problems but we do not teach him what we know, either about the subject, or about problem-solving.</p></blockquote>
+
+<h2>Contradiction and Solution</h2>
+
+<blockquote><p>There is a real conflict between the logician&rsquo;s goal and the educator&rsquo;s. The logical wants to minimize the variety of ideas, and doesn&rsquo;t mind a long, thin path. The educator (rightly) wants to make the paths short and doesn&rsquo;t mind &mdash; in fact, prefers &mdash; connection to many other ideas. <em>And he cares almost not at all about the directions of the links.</em></p></blockquote>
+
+<p>So where does the computer scientist come in to this ? In a heroic way !</p>
+
+<blockquote><p>The computer scientist thus has a responsibility to education. Not as he thinks, <em>because he will have to program the teaching machines</em>. Certainly not because he is a skilled user of &ldquo;finite mathematics&rdquo;. <em>He knows how to debug programs</em>; he must tell the educators how to help the children to debug their own problem-solving processes. <em>He knows how procedures depend on their data structures</em>; he can tell educators how to prepare children for new ideas.</p></blockquote>
+]]></content>
+  </entry>
+  
+</feed>

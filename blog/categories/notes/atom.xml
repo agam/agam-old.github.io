@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Notes | Agam's Mashed-Up Pome]]></title>
+  <link href="http://agam.github.io/blog/categories/notes/atom.xml" rel="self"/>
+  <link href="http://agam.github.io/"/>
+  <updated>2014-04-01T16:05:21-07:00</updated>
+  <id>http://agam.github.io/</id>
+  <author>
+    <name><![CDATA[Agam]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Rudimentary note taking on the command line]]></title>
+    <link href="http://agam.github.io/blog/2013/07/24/rudimentary-command-line-note-taking/"/>
+    <updated>2013-07-24T00:00:00-07:00</updated>
+    <id>http://agam.github.io/blog/2013/07/24/rudimentary-command-line-note-taking</id>
+    <content type="html"><![CDATA[<p>Everyone has their own pet setup; here&rsquo;s mine. Its just a bunch of text files, shared on Dropbox.</p>
+
+<p>I have a bash alias to make a directory if required, create the file, and open it in Vim.</p>
+
+<p>Within the file, I use markdown for text, and a few additional conventions to make it easier to search through them.</p>
+
+<p>I use one file per date, with the name being something like <code>~/notes/2013/07/24</code>.</p>
+
+<p>The following one-liner in my <code>.bashrc</code> accomplishes this:</p>
+
+<p>```sh</p>
+
+<h1>Bring up the day&rsquo;s notes</h1>
+
+<p>function diary() {
+  year=<code>date "+%Y"</code>
+  month=<code>date "+%m"</code>
+  day=<code>date "+%d"</code>
+  diarydir=~/Dropbox/personalnotes/$year/$month
+  if [[ ! -d &ldquo;$diarydir&rdquo; ]]; then</p>
+
+<pre><code>mkdir -p "$diarydir"
+</code></pre>
+
+<p>  fi
+  vi $diarydir/$day
+}
+```</p>
+
+<p>I also use some additional <em>metadata</em> within it, such as adding &lsquo;@14:45&rsquo; to indicate a timestamp before a paragraph, and &lsquo;#category&rsquo; to mark off sections (I use &lsquo;##category&rsquo; to denote one-line or one paragraph sections, otherwise all text is assumed to belong to the last declared section).</p>
+
+<p>For convenience, I defined the following mapping in my <code>.vimrc</code> that inserts the timestamp when required:</p>
+
+<p><code>sh
+nmap &lt;C-c&gt;&lt;C-t&gt; o@&lt;C-R&gt;=strftime("%H:%M")&lt;CR&gt;&lt;CR&gt;&lt;CR&gt;
+</code></p>
+
+<p>I&rsquo;ll cover the retrieval part of this in a separate post. If you don&rsquo;t have any note taking system yet, and don&rsquo;t want to go to the extent of <em>blogging</em> every little thing you want to note down, and find it a bit of a hassle to open up Evernote or something similar to jot something down, you might like to try this quick and simple text-based solution!</p>
+]]></content>
+  </entry>
+  
+</feed>

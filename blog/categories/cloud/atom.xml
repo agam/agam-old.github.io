@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Cloud, | Agam's Mashed-Up Pome]]></title>
+  <link href="http://agam.github.io/blog/categories/cloud/atom.xml" rel="self"/>
+  <link href="http://agam.github.io/"/>
+  <updated>2014-04-01T16:05:21-07:00</updated>
+  <id>http://agam.github.io/</id>
+  <author>
+    <name><![CDATA[Agam]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Cost comparison: Google Cloud vs DigitalOcean]]></title>
+    <link href="http://agam.github.io/blog/2014/01/24/cost-comparison-google-cloud-vs-digitalocean/"/>
+    <updated>2014-01-24T23:07:00-08:00</updated>
+    <id>http://agam.github.io/blog/2014/01/24/cost-comparison-google-cloud-vs-digitalocean</id>
+    <content type="html"><![CDATA[<p>I&rsquo;ve been using a VM within the Google Compute Engine cloud, for the last two months (mostly from my chromebook, occasionally from a couple of other locations).</p>
+
+<p>Specifically, this is a &ldquo;small&rdquo; (<code>g1-small</code>) VM, though there are <a href="https://developers.google.com/compute/docs/machine-types">many other options available</a>.</p>
+
+<p>This comes with a single CPU core and 1.7G of memory (the disk space is provisioned separately).</p>
+
+<p>For perspective, the only one smaller than this is an <code>f1-micro</code> instance (also with a single core, but with 0.6G of memory).</p>
+
+<p>So it makes sense to look at what this costs &hellip;</p>
+
+<p><img class="center <a" src="href="http://farm3.staticflickr.com/2818/12124686505_6db70c0917_o_d.png">http://farm3.staticflickr.com/2818/12124686505_6db70c0917_o_d.png</a>"></p>
+
+<p>For comparison, <a href="https://www.digitalocean.com/">Digital Ocean</a> has far less flexibility, but I just might switch to it, considering that I have absolutely no plans to ever host a user-facing service or do anything of that sort, on my VM (if I did, there really wouldn&rsquo;t be any point; you want those features, folks &mdash; network protection, scalability, all that jazz).</p>
+
+<p>So long as it&rsquo;s just little old me accessing my portable home in the cloud, the $10/mo for a 1G/30G SSD option looks just as good (or  $5/mo for 512M; also, DigitalOcean keeps running free trial offers, which are a good way to try out the service).</p>
+]]></content>
+  </entry>
+  
+</feed>

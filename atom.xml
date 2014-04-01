@@ -1,0 +1,1926 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Agam's Mashed-Up Pome]]></title>
+  <link href="http://agam.github.io/atom.xml" rel="self"/>
+  <link href="http://agam.github.io/"/>
+  <updated>2014-04-01T16:05:21-07:00</updated>
+  <id>http://agam.github.io/</id>
+  <author>
+    <name><![CDATA[Agam]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Some Lisp exercises]]></title>
+    <link href="http://agam.github.io/blog/2014/03/31/some-lisp-exercises/"/>
+    <updated>2014-03-31T10:25:00-07:00</updated>
+    <id>http://agam.github.io/blog/2014/03/31/some-lisp-exercises</id>
+    <content type="html"><![CDATA[<p>Reading through ANSI Common Lisp, and doing some of the exercises as I come across them. Here are a few from Ch 4 and 5:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+<span class='line-number'>114</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">rotate-square-array</span> <span class="p">(</span><span class="nv">arr</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">let*</span> <span class="p">((</span><span class="nv">dim</span> <span class="p">(</span><span class="nb">car</span> <span class="p">(</span><span class="nb">array-dimensions</span> <span class="nv">arr</span><span class="p">)))</span>
+</span><span class='line'>  <span class="p">(</span><span class="nv">newarr</span> <span class="p">(</span><span class="nb">make-array</span> <span class="p">(</span><span class="nb">list</span> <span class="nv">dim</span> <span class="nv">dim</span><span class="p">))))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nb">dotimes</span> <span class="p">(</span><span class="nv">i</span> <span class="nv">dim</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">(</span><span class="nb">dotimes</span> <span class="p">(</span><span class="nv">j</span> <span class="nv">dim</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">setf</span> <span class="p">(</span><span class="nb">aref</span> <span class="nv">newarr</span> <span class="nv">j</span> <span class="p">(</span><span class="nb">-</span> <span class="nv">dim</span> <span class="p">(</span><span class="nb">1+</span> <span class="nv">i</span><span class="p">)))</span> <span class="p">(</span><span class="nb">aref</span> <span class="nv">arr</span> <span class="nv">i</span> <span class="nv">j</span><span class="p">))))</span>
+</span><span class='line'>    <span class="nv">newarr</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">rev-l</span> <span class="p">(</span><span class="nv">lst</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">reduce</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">elem</span> <span class="nv">acc</span><span class="p">)</span> <span class="p">(</span><span class="nb">cons</span> <span class="nv">acc</span> <span class="nv">elem</span><span class="p">))</span> <span class="nv">lst</span> <span class="ss">:initial-value</span> <span class="no">nil</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">copy-l</span> <span class="p">(</span><span class="nv">lst</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">reduce</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">elem</span> <span class="nv">acc</span><span class="p">)</span> <span class="p">(</span><span class="nb">cons</span> <span class="nv">elem</span> <span class="nv">acc</span><span class="p">))</span> <span class="nv">lst</span>
+</span><span class='line'>    <span class="ss">:initial-value</span> <span class="no">nil</span> <span class="ss">:from-end</span> <span class="no">t</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">alist-to-ht</span> <span class="p">(</span><span class="nv">alist</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">ht</span> <span class="p">(</span><span class="nb">make-hash-table</span><span class="p">)))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nb">mapcar</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">kvpair</span><span class="p">)</span>
+</span><span class='line'>        <span class="p">(</span><span class="nb">setf</span> <span class="p">(</span><span class="nb">gethash</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">kvpair</span><span class="p">)</span> <span class="nv">ht</span><span class="p">)</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">kvpair</span><span class="p">)))</span>
+</span><span class='line'>      <span class="nv">alist</span><span class="p">)</span>
+</span><span class='line'>    <span class="nv">ht</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">ht-to-alist</span> <span class="p">(</span><span class="nv">ht</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">alist</span> <span class="o">&#39;</span><span class="p">()))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nb">maphash</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">k</span> <span class="nv">v</span><span class="p">)</span>
+</span><span class='line'>         <span class="p">(</span><span class="nb">setf</span> <span class="nv">alist</span> <span class="p">(</span><span class="nb">acons</span> <span class="nv">k</span> <span class="nv">v</span> <span class="nv">alist</span><span class="p">)))</span>
+</span><span class='line'>       <span class="nv">ht</span><span class="p">)</span>
+</span><span class='line'>    <span class="nv">alist</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">precedes-iter</span> <span class="p">(</span><span class="nv">obj</span> <span class="nv">vec</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">pos-list</span> <span class="o">&#39;</span><span class="p">()))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nb">do*</span> <span class="p">((</span><span class="nv">last-pos</span> <span class="p">(</span><span class="nb">position</span> <span class="nv">obj</span> <span class="nv">vec</span><span class="p">)</span>
+</span><span class='line'>          <span class="p">(</span><span class="nb">position</span> <span class="nv">obj</span> <span class="nv">vec</span> <span class="ss">:start</span> <span class="p">(</span><span class="nb">1+</span> <span class="nv">last-pos</span><span class="p">))))</span>
+</span><span class='line'>   <span class="p">((</span><span class="nb">eql</span> <span class="nv">last-pos</span> <span class="no">nil</span><span class="p">)</span> <span class="nv">pos-list</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">(</span><span class="nb">and</span> <span class="p">(</span><span class="nb">&gt;</span> <span class="nv">last-pos</span> <span class="mi">0</span><span class="p">)</span>
+</span><span class='line'>     <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">elem</span> <span class="p">(</span><span class="nb">elt</span> <span class="nv">vec</span> <span class="p">(</span><span class="nb">-</span> <span class="nv">last-pos</span> <span class="mi">1</span><span class="p">))))</span>
+</span><span class='line'>       <span class="p">(</span><span class="nb">setf</span> <span class="nv">pos-list</span> <span class="p">(</span><span class="nb">adjoin</span> <span class="nv">elem</span> <span class="nv">pos-list</span><span class="p">)))))))</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">precedes-recur</span> <span class="p">(</span><span class="nv">obj</span> <span class="nv">vec</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">labels</span> <span class="p">((</span><span class="nv">precedes-helper</span> <span class="p">(</span><span class="nv">obj</span> <span class="nv">vec</span> <span class="nv">pos-list</span> <span class="nv">start-pos</span><span class="p">)</span>
+</span><span class='line'>       <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">next-pos</span> <span class="p">(</span><span class="nb">position</span> <span class="nv">obj</span> <span class="nv">vec</span> <span class="ss">:start</span> <span class="nv">start-pos</span><span class="p">)))</span>
+</span><span class='line'>         <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">null</span> <span class="nv">next-pos</span><span class="p">)</span>
+</span><span class='line'>         <span class="nv">pos-list</span>
+</span><span class='line'>         <span class="p">(</span><span class="nv">precedes-helper</span> <span class="nv">obj</span> <span class="nv">vec</span>
+</span><span class='line'>                  <span class="p">(</span><span class="nb">adjoin</span> <span class="p">(</span><span class="nb">elt</span> <span class="nv">vec</span> <span class="p">(</span><span class="nb">-</span> <span class="nv">next-pos</span> <span class="mi">1</span><span class="p">))</span>
+</span><span class='line'>                      <span class="nv">pos-list</span><span class="p">)</span>
+</span><span class='line'>                  <span class="p">(</span><span class="nb">1+</span> <span class="nv">next-pos</span><span class="p">))))))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nv">precedes-helper</span> <span class="nv">obj</span> <span class="nv">vec</span> <span class="o">&#39;</span><span class="p">()</span> <span class="mi">1</span><span class="p">)))</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">intersperse-recur</span> <span class="p">(</span><span class="nv">obj</span> <span class="nv">lst</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">labels</span> <span class="p">((</span><span class="nv">intersperse-helper</span> <span class="p">(</span><span class="nv">obj</span> <span class="nv">lst</span><span class="p">)</span>
+</span><span class='line'>       <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">null</span> <span class="nv">lst</span><span class="p">)</span>
+</span><span class='line'>       <span class="no">nil</span>
+</span><span class='line'>       <span class="p">(</span><span class="nb">cons</span> <span class="nv">obj</span> <span class="p">(</span><span class="nb">cons</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">lst</span><span class="p">)</span>
+</span><span class='line'>               <span class="p">(</span><span class="nv">intersperse-helper</span> <span class="nv">obj</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">lst</span><span class="p">)))))))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nb">cons</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">lst</span><span class="p">)</span> <span class="p">(</span><span class="nv">intersperse-helper</span> <span class="nv">obj</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">lst</span><span class="p">)))))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">intersperse-iter</span> <span class="p">(</span><span class="nv">obj</span> <span class="nv">lst</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">do</span> <span class="p">((</span><span class="nv">iter-lst</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">lst</span><span class="p">)</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">iter-lst</span><span class="p">))</span>
+</span><span class='line'>       <span class="p">(</span><span class="nv">result</span> <span class="p">(</span><span class="nb">list</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">lst</span><span class="p">))</span> <span class="p">(</span><span class="nb">cons</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">iter-lst</span><span class="p">)</span> <span class="p">(</span><span class="nb">cons</span> <span class="nv">obj</span> <span class="nv">result</span><span class="p">))))</span>
+</span><span class='line'>      <span class="p">((</span><span class="nb">null</span> <span class="nv">iter-lst</span><span class="p">)</span>
+</span><span class='line'>       <span class="p">(</span><span class="nb">reverse</span> <span class="nv">result</span><span class="p">))))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">within-one</span> <span class="p">(</span><span class="nv">x</span> <span class="nv">y</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">or</span> <span class="p">(</span><span class="nb">=</span> <span class="nv">x</span> <span class="p">(</span><span class="nb">1+</span> <span class="nv">y</span><span class="p">))</span>
+</span><span class='line'>      <span class="p">(</span><span class="nb">=</span> <span class="nv">y</span> <span class="p">(</span><span class="nb">1+</span> <span class="nv">x</span><span class="p">))))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">orderedlistp-recur</span> <span class="p">(</span><span class="nv">lst</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">labels</span> <span class="p">((</span><span class="nv">ordered-list-helper</span> <span class="p">(</span><span class="nv">elem</span> <span class="nv">lst</span><span class="p">)</span>
+</span><span class='line'>       <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">null</span> <span class="nv">lst</span><span class="p">)</span>
+</span><span class='line'>       <span class="no">t</span>
+</span><span class='line'>       <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">x</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">lst</span><span class="p">)))</span>
+</span><span class='line'>         <span class="p">(</span><span class="nb">and</span> <span class="p">(</span><span class="nv">within-one</span> <span class="nv">elem</span> <span class="nv">x</span><span class="p">)</span>
+</span><span class='line'>          <span class="p">(</span><span class="nv">ordered-list-helper</span> <span class="nv">x</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">lst</span><span class="p">)))))))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nv">ordered-list-helper</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">lst</span><span class="p">)</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">lst</span><span class="p">))))</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">orderedlistp-iter</span> <span class="p">(</span><span class="nv">lst</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">do*</span> <span class="p">((</span><span class="nv">ordered</span> <span class="no">t</span>
+</span><span class='line'>       <span class="p">(</span><span class="nv">within-one</span> <span class="nv">first-elem</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">remaining</span><span class="p">)))</span>
+</span><span class='line'>  <span class="p">(</span><span class="nv">first-elem</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">lst</span><span class="p">)</span>
+</span><span class='line'>          <span class="p">(</span><span class="nb">car</span> <span class="nv">remaining</span><span class="p">))</span>
+</span><span class='line'>  <span class="p">(</span><span class="nv">remaining</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">lst</span><span class="p">)</span>
+</span><span class='line'>         <span class="p">(</span><span class="nb">cdr</span> <span class="nv">remaining</span><span class="p">)))</span>
+</span><span class='line'>       <span class="p">((</span><span class="nb">or</span> <span class="p">(</span><span class="nb">null</span> <span class="nv">remaining</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">(</span><span class="nb">not</span> <span class="nv">ordered</span><span class="p">))</span>
+</span><span class='line'>  <span class="nv">ordered</span><span class="p">)))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">orderedlistp-map</span> <span class="p">(</span><span class="nv">lst</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">flet</span> <span class="p">((</span><span class="nv">ordered-list-mapper</span> <span class="p">(</span><span class="nv">elem1</span> <span class="nv">elem2</span><span class="p">)</span>
+</span><span class='line'>     <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">not</span> <span class="p">(</span><span class="nv">within-one</span> <span class="nv">elem1</span> <span class="nv">elem2</span><span class="p">))</span>
+</span><span class='line'>         <span class="p">(</span><span class="k">return-from</span> <span class="nv">orderedlistp-map</span> <span class="no">nil</span><span class="p">))))</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">mapc</span> <span class="nf">#&#39;</span><span class="nv">ordered-list-mapper</span> <span class="nv">lst</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">lst</span><span class="p">))</span>
+</span><span class='line'>  <span class="no">t</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">max-and-min</span> <span class="p">(</span><span class="nv">lst</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">labels</span> <span class="p">((</span><span class="nv">max-min-helper</span> <span class="p">(</span><span class="nv">lst</span> <span class="nv">curmin</span> <span class="nv">curmax</span><span class="p">)</span>
+</span><span class='line'>       <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">null</span> <span class="nv">lst</span><span class="p">)</span>
+</span><span class='line'>       <span class="p">(</span><span class="nb">values</span> <span class="nv">curmin</span> <span class="nv">curmax</span><span class="p">)</span>
+</span><span class='line'>       <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">elem</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">lst</span><span class="p">))</span>
+</span><span class='line'>             <span class="p">(</span><span class="nb">rest</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">lst</span><span class="p">)))</span>
+</span><span class='line'>         <span class="p">(</span><span class="nb">cond</span>
+</span><span class='line'>           <span class="p">((</span><span class="nb">and</span> <span class="p">(</span><span class="nb">eql</span> <span class="nv">curmin</span> <span class="no">nil</span><span class="p">)</span>
+</span><span class='line'>             <span class="p">(</span><span class="nb">eql</span> <span class="nv">curmax</span> <span class="no">nil</span><span class="p">))</span>
+</span><span class='line'>            <span class="p">(</span><span class="nv">max-min-helper</span> <span class="nb">rest</span> <span class="nv">elem</span> <span class="nv">elem</span><span class="p">))</span>
+</span><span class='line'>           <span class="p">((</span><span class="nb">&gt;</span> <span class="nv">elem</span> <span class="nv">curmax</span><span class="p">)</span>
+</span><span class='line'>            <span class="p">(</span><span class="nv">max-min-helper</span> <span class="nb">rest</span> <span class="nv">curmin</span> <span class="nv">elem</span><span class="p">))</span>
+</span><span class='line'>           <span class="p">((</span><span class="nb">&lt;</span> <span class="nv">elem</span> <span class="nv">curmin</span><span class="p">)</span>
+</span><span class='line'>            <span class="p">(</span><span class="nv">max-min-helper</span> <span class="nb">rest</span> <span class="nv">elem</span> <span class="nv">curmax</span><span class="p">))</span>
+</span><span class='line'>           <span class="p">(</span><span class="no">t</span>
+</span><span class='line'>            <span class="p">(</span><span class="nv">max-min-helper</span> <span class="nb">rest</span> <span class="nv">curmin</span> <span class="nv">curmax</span><span class="p">)))))))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nv">max-min-helper</span> <span class="nv">lst</span> <span class="no">nil</span> <span class="no">nil</span><span class="p">)))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Living Pseudonymously]]></title>
+    <link href="http://agam.github.io/blog/2014/02/19/living-pseudonymously/"/>
+    <updated>2014-02-19T01:29:00-08:00</updated>
+    <id>http://agam.github.io/blog/2014/02/19/living-pseudonymously</id>
+    <content type="html"><![CDATA[<p>For various reasons, this blog is going to be focussed just on C++ programming, as boring as that may sound.</p>
+
+<p>I&rsquo;ll try not to make it <em>too</em> boring, but we&rsquo;ll see.</p>
+
+<p>Meanwhile everything <em>else</em> will still exist, just not here. Starting with the last two posts.</p>
+
+<p>If you want to try to find me you still can; but I&rsquo;m just not going to advertise it, that&rsquo;s all.</p>
+
+<p>Edit: Ok, It doesn&rsquo;t <em>entirely</em> have to be limited to that, I can still share some additional stuff, perhaps just not the <em>interesting</em> stuff.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[How fast can you factor ?]]></title>
+    <link href="http://agam.github.io/blog/2014/02/04/how-fast-can-you-factor/"/>
+    <updated>2014-02-04T18:52:00-08:00</updated>
+    <id>http://agam.github.io/blog/2014/02/04/how-fast-can-you-factor</id>
+    <content type="html"><![CDATA[<p>For no other reason than <em>because it&rsquo;s there</em>, here is the result of asking Mathematica to factor <a href="http://en.wikipedia.org/wiki/RSA_numbers#RSA-100">RSA 100</a>.</p>
+
+<p>In 1991,</p>
+
+<blockquote><p>&hellip; the factorization took a few days using the multiple-polynomial quadratic sieve algorithm on a MasPar parallel computer.</p></blockquote>
+
+<p>and now,</p>
+
+<blockquote><p>It takes four hours to repeat this factorization using the program Msieve on a 2200 MHz Athlon 64 processor.</p></blockquote>
+
+<p>In comparison, Mathematica took little more than an hour. Unfortunately, it was not able to parallelize it (for a <em>real</em> comparison, the <a href="http://sourceforge.net/projects/msieve/files/msieve/Msieve%20v1.51/">Msieve code</a> would have to be ported over).</p>
+
+<p><img class="center" src="http://farm6.staticflickr.com/5510/12309071334_575cda01f9_z_d.jpg" title="" ></p>
+
+<p><strong>Update:</strong> This has been much better documented on <a href="http://mathematica.stackexchange.com/questions/14964/time-approximation-of-decrypting-rsa-algorithm">this StackExchange thread</a>, which also links to <a href="http://reference.wolfram.com/mathematica/tutorial/SomeNotesOnInternalImplementation.html#12915">notes on internal implementation</a>, in case you&rsquo;re interested:</p>
+
+<blockquote><p>FactorInteger switches between trial division, Pollard , Pollard rho, elliptic curve, and quadratic sieve algorithms.</p></blockquote>
+
+<p>Finally, more on RSA Numbers, as well as a Mathematica Notebook, <a href="http://mathworld.wolfram.com/RSANumber.html">here</a></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Programming Fun: Graph distances]]></title>
+    <link href="http://agam.github.io/blog/2014/02/03/programming-fun-graph-distances/"/>
+    <updated>2014-02-03T23:12:00-08:00</updated>
+    <id>http://agam.github.io/blog/2014/02/03/programming-fun-graph-distances</id>
+    <content type="html"><![CDATA[<p>Interesting <a href="http://www.reddit.com/r/dailyprogrammer/comments/1tiz4z/122313_challenge_140_intermediate_graph_radius/">problem</a>: given a graph, find out the <em>minimum distance between any two nodes</em>.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Input Description
+</span><span class='line'>-----------------
+</span><span class='line'>On standard console input you will be given an integer N, followed by an
+</span><span class='line'>Adjacency matrix. The graph is not directed, so the matrix will always be
+</span><span class='line'>reflected about the main diagonal.
+</span><span class='line'>
+</span><span class='line'>Output Description
+</span><span class='line'>------------------
+</span><span class='line'>Print the radius of the graph as an integer.</span></code></pre></td></tr></table></div></figure>
+
+
+<p>There are a few ways to do this &mdash; you can run <a href="http://en.wikipedia.org/wiki/Dijkstra%27s_algorithm">Dijkstra&rsquo;s algorithm</a> or <a href="http://en.wikipedia.org/wiki/Floyd%E2%80%93Warshall_algorithm">Floyd-Warshall algorithm</a> on the graph to find the path from each node to each other node. I sort of took a short cut &mdash; when the graph is represented as a matrix (as it is here), multiplying the matrix with itself (and adding the result to itself, so as not to lose the <em>0-step</em> info) can be used as a way of checking whether or not two nodes are connected.</p>
+
+<p>Concretely, after <code>k</code> steps, if <code>Graph[i][j]</code> is <code>0</code> this means there is no path from <code>i</code> to <code>j</code> in <code>k</code> steps. So if you repeat this multiplication and stop when there are no zero elements, the number of multiplication steps is the minimum distance you need.</p>
+
+<div><script src='https://gist.github.com/8794234.js'></script>
+<noscript><pre><code>// Omitting headers
+
+using namespace std;
+
+void MatrixMultiply(
+    const vector&lt;vector&lt;uint64_t&gt;&gt;&amp; source_mat1,
+    const vector&lt;vector&lt;uint64_t&gt;&gt;&amp; source_mat2,
+    int N,
+    vector&lt;vector&lt;uint64_t&gt;&gt;* dest_mat) {
+  for (int i = 0; i &lt; N; ++i) {
+    vector&lt;uint64_t&gt; row;
+    for (int j = 0; j &lt; N; ++j) {
+      uint64_t sum = source_mat1[i][j];
+      for (int k = 0; k &lt; N; ++k) {
+        sum += (source_mat1[i][k] * source_mat2[k][j]);
+      }
+      row.push_back(sum);
+    }
+    dest_mat-&gt;push_back(row);
+  }
+}
+
+bool AllVerticesReachable(const vector&lt;vector&lt;uint64_t&gt;&gt;&amp; mat, int N) {
+  for (int i = 0; i &lt; N; ++i) {
+    for (int j = 0; j &lt; N; ++j) {
+      if (mat[i][j] == 0) {
+        return false;
+      }
+    }
+  }
+  return true;
+}
+
+int main(int argc, char* argv[]) {
+  int graph_size;
+  cin &gt;&gt; graph_size;
+  vector&lt;vector&lt;uint64_t&gt;&gt; graph;
+  for (int i = 0; i &lt; graph_size; ++i) {
+    int num;
+    vector&lt;uint64_t&gt; row;
+    for (int j = 0; j &lt; graph_size; ++j) {
+      cin &gt;&gt; num;
+      row.push_back(num);
+    }
+    graph.push_back(row);
+  }
+
+  // Multiply the matrix with itself
+  int num_edges = 1;
+  vector&lt;vector&lt;uint64_t&gt;&gt; multiplied_graph = graph;
+  do {
+    vector&lt;vector&lt;uint64_t&gt;&gt; temp_graph;
+    MatrixMultiply(graph, multiplied_graph, graph_size, &amp;temp_graph);
+    multiplied_graph = temp_graph;
+
+    if (AllVerticesReachable(multiplied_graph, graph_size)) {
+      break;
+    }
+
+    ++num_edges;
+  } while (num_edges &lt; graph_size);
+  cout &lt;&lt; &quot;Radius = &quot; &lt;&lt; num_edges + 1 &lt;&lt; endl;
+}
+</code></pre></noscript></div>
+
+
+<p>[I&rsquo;m a little bored of these daily programmer questions now :( I&rsquo;ll do one more hard one and then find a new theme here.]</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Minsky Turing Lecture: Part 2]]></title>
+    <link href="http://agam.github.io/blog/2014/02/01/minsky-turing-lecture-part-2/"/>
+    <updated>2014-02-01T08:55:00-08:00</updated>
+    <id>http://agam.github.io/blog/2014/02/01/minsky-turing-lecture-part-2</id>
+    <content type="html"><![CDATA[<p>(This picks up where <a href="http://agam.github.io/blog/2014/01/26/minsky-turing-lecture-part-1/">Part 1</a> left off)</p>
+
+<p>If you thought Minsky cared a lot about how programming languages work, he cares even more about how education &ldquo;works&rdquo;. I recently picked up <a href="http://www.amazon.com/The-Society-Mind-Marvin-Minsky/dp/0671657135">The Society of the Mind</a> so it seems a little less surprising, but read on &hellip;</p>
+
+<h2>Computer Science and Educational models</h2>
+
+<blockquote><p>He [the computer scientist] perceives his principal function to provide programs and machines for use in old and new educational schemes. Well and good, but I believe he has a more complex responsibility &mdash; to work out and communicate models of the process of education itself.</p></blockquote>
+
+<p>And lest anyone doubt this &hellip;</p>
+
+<blockquote><p>We cannot digress here to answer skeptics who feel it too simpleminded (if not impious, or obscene) to compare minds with programs. We can refer many such critics to <a href="http://www.loebner.net/Prizef/TuringArticle.html">Turing&rsquo;s paper</a>. For those who feel that the answer cannot lie in any machine, digital or otherwise, one can argue that machines, when they become intelligent, very likely will feel the same way.</p></blockquote>
+
+<p>(If I might digress a bit, there is a very interesting footnote here by Minsky that might completely change the image in your head of <a href="http://en.wikipedia.org/wiki/Alan_Turing">Turing</a>: &ldquo; <strong>Turing was quite good at debugging hardware</strong>. He would leave the power on, so as not to lose the &lsquo;feel&rsquo; of the thing. Everyone does that today, but it is not the same thing now that the <em>circuits all work on three or five volts</em>.&rdquo;)</p>
+
+<blockquote><p>There is a fundamental pragmatic point in favor of our propositions. The child needs models &hellip;
+&hellip;
+But to model his own self he <em>cannot</em> use the engine or the organism or the city or the telephone switchboard; <em>nothing will serve at all but the computer with its programs and their bugs</em></p></blockquote>
+
+<h2>Children and Mathematics</h2>
+
+<blockquote><p>Imagine a small child &hellip;
+&hellip;
+If we extrapolate today&rsquo;s trend, his mathematical education will be conducted by poorly oriented teachers and, partly, <em>by poorly programmed machines</em>; neither will be able to respond to much beyond &ldquo;correct&rdquo; and &ldquo;wrong&rdquo; answers, let alone to make reasonable interpretations of what the child does or says, because neither will contain good models of the children, or good theories of children&rsquo;s intellectual development.</p></blockquote>
+
+<p>He goes on to give examples of how the child&rsquo;s geometric world is <em>so different</em> from ours, such as some numbers having a different <em>weight</em> or <em>depth</em> than others, or not knowing how squares and diamonds are the same shape, as shown below:</p>
+
+<p><img class="center" src="http://farm6.staticflickr.com/5529/12246677434_860cbfa222_z_d.jpg"></p>
+
+<p>This builds up to something I really like (if I may let my personal biases show, I like it because it validates some of my own beliefs): the idea that computational analogies can (and indeed <em>should!</em>) be more generally used to describe patterns of thought and behavior.</p>
+
+<blockquote><p>Before computation, the community of ideas about the nature of thought was too feeble to support an effective theory of learning and development. Neither the finite-state models of the Behaviorists, the hydraulic and economic analogies of the Freudians, nor the rabbit-in-the-hat insights of the Gestaltists supplied enough ingredients to understand so intricate a subject. It needs <em>a substrate of already debugged theories and solutions</em> of related but simpler problems. Now we have a flood of such ideas, <em>well defined and implemented</em>, for <strong>thinking about thinking</strong>; only a fraction are represented in traditional psychology:</p></blockquote>
+
+<p>Some of the ideas listed are</p>
+
+<ul>
+<li>microprogram</li>
+<li>interrupt</li>
+<li>garbage collection</li>
+<li>macro</li>
+<li>symbol table</li>
+</ul>
+
+
+<p>He goes on:</p>
+
+<blockquote><p>All these serve today as tools of a curious and intricate craft, <strong>programming</strong>. But just as astronomy succeeded astrology, following Kepler&rsquo;s regularities, the discovery of <em>principles in empirical explorations of intellectual process in machines</em> should lead to a science.</p></blockquote>
+
+<p>This finally brings him to a polemic against the nature of math education itself.</p>
+
+<h2>Against the &ldquo;New Mathematics&rdquo; curriculum</h2>
+
+<p>What Minsky seems to be railing here is the excessive formalism in Mathematics introduced early on, where abstract concepts like sets are introduced before trying to create a <em>familiarity</em> with numbers.</p>
+
+<blockquote><p>Because of the formalistic approach the teacher will not be able to help the child very much with problems of formulation. For she will feel insecure herself as she drills him on such matters as the <em>difference between the empty set and nothing</em>, or the distinction between the &ldquo;numeral&rdquo; 3+5 and the numeral 8 which is the &ldquo;common name&rdquo; of the number eight, hoping he will not ask what is the common name of the fraction 8/1, which is probably different from the rational 8/1 and different from the quotient 8/1 &hellip;</p></blockquote>
+
+<p>Here, the fractions, quotients and rationals obviously <em>should</em> be identified with each other, rather than siloed and separated by this &ldquo;maze of formalism&rdquo;. Also &hellip;</p>
+
+<blockquote><p>It is very bad to insist that the child keep his knowledge in a simple ordered hierarchy. In order to retrieve what he needs, he must have a multiply connected network, so that he can try several ways to do each thing &hellip; Emphasis on the &ldquo;formal proof&rdquo; is destructive at this stage, because the <strong>knowledge needed for finding proofs, and for understanding them, is far more complex (and less useful) than the knowledge mentioned <em>in</em> proofs.</strong></p></blockquote>
+
+<p>Minsky suggests that this might stem from a misconception of the form &ldquo;You can teach a child anything, if you just get the definitions precise enough&rdquo;.</p>
+
+<p>He doesn&rsquo;t care too much about overly focusing on set theory either:</p>
+
+<blockquote><p>Set theory is not, as the logicians and publishers would have it, <em>the</em> only and true foundation of mathematics; it is a viewpoint that is pretty good for investigating the transfinite, <em>but undistinguished for comprehending the real numbers, and quite substandard for learning about arithmetic, algebra, and geometry</em>.</p></blockquote>
+
+<p>If there is a way to sum up his argument with one line, it is probably this:</p>
+
+<blockquote><p>The child is expected to learn how to solve problems but we do not teach him what we know, either about the subject, or about problem-solving.</p></blockquote>
+
+<h2>Contradiction and Solution</h2>
+
+<blockquote><p>There is a real conflict between the logician&rsquo;s goal and the educator&rsquo;s. The logical wants to minimize the variety of ideas, and doesn&rsquo;t mind a long, thin path. The educator (rightly) wants to make the paths short and doesn&rsquo;t mind &mdash; in fact, prefers &mdash; connection to many other ideas. <em>And he cares almost not at all about the directions of the links.</em></p></blockquote>
+
+<p>So where does the computer scientist come in to this ? In a heroic way !</p>
+
+<blockquote><p>The computer scientist thus has a responsibility to education. Not as he thinks, <em>because he will have to program the teaching machines</em>. Certainly not because he is a skilled user of &ldquo;finite mathematics&rdquo;. <em>He knows how to debug programs</em>; he must tell the educators how to help the children to debug their own problem-solving processes. <em>He knows how procedures depend on their data structures</em>; he can tell educators how to prepare children for new ideas.</p></blockquote>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Playing with the exponential curve]]></title>
+    <link href="http://agam.github.io/blog/2014/02/01/playing-with-the-exponential-curve/"/>
+    <updated>2014-02-01T06:35:00-08:00</updated>
+    <id>http://agam.github.io/blog/2014/02/01/playing-with-the-exponential-curve</id>
+    <content type="html"><![CDATA[<p>I remember hearing about the <a href="http://britton.disted.camosun.bc.ca/jbchessgrain.htm">apocryphal story</a> about doubling grains of rice on a chessboard. I even tried writing powers of 2 (which at my age then just meant adding <code>2+2</code> then <code>4+4</code> etc).</p>
+
+<p><img class="center" src="http://britton.disted.camosun.bc.ca/firdau1.jpg"></p>
+
+<p>This is obviously the <a href="http://www.wolframalpha.com/input/?i=e+%5E+x"><code>e^x</code></a> curve, but when you normally see it drawn its self-similarity is not obvious. Mathematica&rsquo;s <code>Manipulate</code> function can help in this regard &hellip;</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Manipulate[ListPlot[Table[Power[2, i], {i, 1, n}]], {n, 1, 64}]</span></code></pre></td></tr></table></div></figure>
+
+
+<p><img class="center" src="http://farm3.staticflickr.com/2853/12244178256_251f9fcfae_d.jpg">
+<img class="center" src="http://farm6.staticflickr.com/5496/12243600435_e6faac3bbb_d.jpg">
+<img class="center" src="http://farm6.staticflickr.com/5547/12244178226_2258c2c2ce_d.jpg">
+<img class="center" src="http://farm3.staticflickr.com/2882/12243785163_3822d7299b_d.jpg">
+<img class="center" src="http://farm8.staticflickr.com/7332/12243785183_6243378edf_d.jpg"></p>
+
+<p>These are screenshots for increasing values of <code>n</code>: Note how they all look the same (except for the first one, where the curve is just starting out), over several orders of magnitude!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Change That Font!]]></title>
+    <link href="http://agam.github.io/blog/2014/02/01/change-that-font/"/>
+    <updated>2014-02-01T06:25:00-08:00</updated>
+    <id>http://agam.github.io/blog/2014/02/01/change-that-font</id>
+    <content type="html"><![CDATA[<p>You don&rsquo;t have to be chained to <code>Monaco</code> if you don&rsquo;t like it. I changed it to <code>Inconsolata</code>, which is as simply as <a href="http://www.levien.com/type/myfonts/inconsolata.html">downloading it</a> (click on the <em>Open Type File</em> link).</p>
+
+<p><img class="center" src="http://farm6.staticflickr.com/5509/12246575643_d92ae27492_z_d.jpg"></p>
+
+<p>Once you click on the downloaded file, the <strong>Font Book</strong> app should open up automatically, showing the font face and with a <code>Install</code> button.</p>
+
+<p>Once you do this (I love this part) <em>any open font selection windows will refresh automatically</em>, and you can pick this new font for your terminal (which, by the way, I hope is <a href="http://iterm.sourceforge.net/">iTerm</a> because &hellip; if not, why?)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Mathematica: 1/9998]]></title>
+    <link href="http://agam.github.io/blog/2014/01/30/mathematica-1-slash-9998/"/>
+    <updated>2014-01-30T23:00:00-08:00</updated>
+    <id>http://agam.github.io/blog/2014/01/30/mathematica-1-slash-9998</id>
+    <content type="html"><![CDATA[<p>I saw this piece about how <code>1/1998</code> was approximated by series of powers of <code>2</code>, which raised the question, &ldquo;Can Mathematica help confirm this?&rdquo; (<em>of course it can!</em>)</p>
+
+<p>First, a gut check to see the decimal expansion</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>N[1/9998, 100]</span></code></pre></td></tr></table></div></figure>
+
+
+<p>which shows</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>0.00010002000400080016003200640128025605121024204840968193638727745549 \
+</span><span class='line'>10982196439287857571514302860572114</span></code></pre></td></tr></table></div></figure>
+
+
+<p>(if you don&rsquo;t specify the <code>100</code> in the argument to <code>N[]</code>, it will show you just <code>0.00010002</code> by default)</p>
+
+<p>This can be visualized as</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>0.0001 +
+</span><span class='line'>0.00000002 +
+</span><span class='line'>0.000000000004 +
+</span><span class='line'>0.0000000000000008 +
+</span><span class='line'>0.00000000000000000016 +
+</span><span class='line'>...
+</span><span class='line'>0.000000000000000000000000000000000256 +
+</span><span class='line'>...</span></code></pre></td></tr></table></div></figure>
+
+
+<p>All right, so we do see these powers of 2! They seem to be in &ldquo;groups&rdquo; &mdash; <code>0004</code>, <code>0016</code>, <code>1024</code> and so on.</p>
+
+<p>So we want to check if something like <code>2^i/10000^i</code> can add up to this number.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Parallelize[
+</span><span class='line'> Table[1/9998 - Total[Table[2^i/10000^i, {i, 1, n}]], {n, 1, 10000}] ]</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I initially tried this <em>without</em> <code>Parallelize[]</code>, but that kept going <em>for a while</em>, so I had to abort it (<code>Evaluation</code>&ndash;><code>Abort Evaluation</code>) and try this version instead.</p>
+
+<p>Anyway, so this whirs for a while. As this <code>htop</code> output shows, it really does use as many cores as possible.</p>
+
+<p><img class="center" src="http://farm6.staticflickr.com/5504/12227941034_4ce9d69db4_z_d.jpg"></p>
+
+<p>Eventually when it&rsquo;s done, we can <code>ListPlot</code> it.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ListPlot[%118, Frame -&gt; True, FrameStyle -&gt; Black, 
+</span><span class='line'> PlotRange -&gt; { {1, 10000}, {-0.000105, -0.000095} }]</span></code></pre></td></tr></table></div></figure>
+
+
+<p><img class="center" src="http://farm6.staticflickr.com/5535/12227532975_ee70979b52_z_d.jpg"></p>
+
+<p>As this graph shows, the result is remarkably close to a constant value of <code>-0.0001</code> !!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Mathematica: A simple ant]]></title>
+    <link href="http://agam.github.io/blog/2014/01/30/mathematica-a-simple-ant/"/>
+    <updated>2014-01-30T18:16:00-08:00</updated>
+    <id>http://agam.github.io/blog/2014/01/30/mathematica-a-simple-ant</id>
+    <content type="html"><![CDATA[<p>Here&rsquo;s a simple, exploratory sketch: Imagine an ant which can either move left or right, or stay in its place.</p>
+
+<p>For simplicity, we&rsquo;ll imagine the ant starts at the center of a scale from <code>1</code> to <code>100</code>, and moves one unit at a time.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Ant[k_, u_] := 
+</span><span class='line'> If[ u &lt; 1/3, Min[k + 1, 100], If[u &gt; 2/3, Max[0, k - 1], k]]
+</span><span class='line'>
+</span><span class='line'>RecAnt[k_] := Ant[k, RandomReal[]]</span></code></pre></td></tr></table></div></figure>
+
+
+<p> <img class="center" src="http://farm8.staticflickr.com/7351/12224251723_4d24311967_d.jpg"></p>
+
+<p> <code>
+ ListPlot[NestList[RecAnt, 50, 100000], ImageSize -&gt; Large, Background -&gt; LightGray]
+</code></p>
+
+<p> <img class="center" src="http://farm8.staticflickr.com/7418/12224482144_6ef516fd03_z_d.jpg"></p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Getting started with clojure: Part 1]]></title>
+    <link href="http://agam.github.io/blog/2014/01/29/getting-started-with-clojure-part-1/"/>
+    <updated>2014-01-29T18:04:00-08:00</updated>
+    <id>http://agam.github.io/blog/2014/01/29/getting-started-with-clojure-part-1</id>
+    <content type="html"><![CDATA[<p>(Just a personal log so I don&rsquo;t forget some basic steps here. There may or may not be a Part 2)</p>
+
+<h2>Setting up the REPL</h2>
+
+<p>First, install relevant stuff. This is usually, at the minimum, something like <code>sudo apt-get install clojure1.4</code></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ java -cp /usr/share/java/clojure-1.4.jar clojure.main
+</span><span class='line'>Clojure 1.4.0
+</span><span class='line'>user=&gt; </span></code></pre></td></tr></table></div></figure>
+
+
+<h2>First steps</h2>
+
+<p>Basic Arithmetic</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>user=&gt; (+ 2 3)
+</span><span class='line'>5</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Basic string operation</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>user=&gt; "foo"
+</span><span class='line'>"foo"
+</span><span class='line'>
+</span><span class='line'>user=&gt; (concat "foo" "bar")
+</span><span class='line'>(\f \o \o \b \a \r)</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Variables</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>user=&gt; (def x 4)
+</span><span class='line'>#'user/x
+</span><span class='line'>
+</span><span class='line'>user=&gt; (+ x 5)
+</span><span class='line'>9
+</span><span class='line'>
+</span><span class='line'>user=&gt; (def strarr ["foo" "bar"])
+</span><span class='line'>#'user/strarr</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Basic arrays</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>user=&gt; (count [6 5 3 4 2])
+</span><span class='line'>5
+</span><span class='line'>
+</span><span class='line'>user=&gt; (get strarr 1)
+</span><span class='line'>"bar"
+</span><span class='line'>
+</span><span class='line'>user=&gt; (get strarr 0)
+</span><span class='line'>"foo"</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Basic maps</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>user=&gt; (def mymap {:foo "Here is foo" :bar "... and here is bar!"})
+</span><span class='line'>#'user/mymap
+</span><span class='line'>
+</span><span class='line'>user=&gt; (get mymap :bar)
+</span><span class='line'>"... and here is bar!"</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Errors</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>user=&gt; (^ 6 4)
+</span><span class='line'>IllegalArgumentException Metadata must be Symbol,Keyword,String or Map  clojure.lang.LispReader$MetaReader.invoke (LispReader.java:720)
+</span><span class='line'>4
+</span><span class='line'>RuntimeException Unmatched delimiter: )  clojure.lang.Util.runtimeException (Util.java:170)
+</span><span class='line'>
+</span><span class='line'>user=&gt; (% 6 4)
+</span><span class='line'>CompilerException java.lang.RuntimeException: Unable to resolve symbol: % in this context, compiling:(NO_SOURCE_PATH:2) </span></code></pre></td></tr></table></div></figure>
+
+
+<p>Stack Overflow (!)</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>user=&gt; (defn foo [x] (foo (- x 1)))
+</span><span class='line'>#'user/foo
+</span><span class='line'>
+</span><span class='line'>user=&gt; (foo 4)
+</span><span class='line'>StackOverflowError   user/foo (NO_SOURCE_FILE:7)</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Simple function</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>user=&gt; (defn expt [x y] (if (= y 0) 1 (* x (expt x (- y 1)))))
+</span><span class='line'>#'user/expt
+</span><span class='line'>
+</span><span class='line'>user=&gt; (expt 6 4)
+</span><span class='line'>1296</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Default REPL namespace (<code>user</code>)</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>user=&gt; (user/expt 6 4)
+</span><span class='line'>1296</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Programming primitives</h2>
+
+<p>For loop</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>user=&gt; (dotimes [_ 5] (println "Hello World."))
+</span><span class='line'>Hello World.
+</span><span class='line'>Hello World.
+</span><span class='line'>Hello World.
+</span><span class='line'>Hello World.
+</span><span class='line'>Hello World.
+</span><span class='line'>nil</span></code></pre></td></tr></table></div></figure>
+
+
+<p>While loop</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>user=&gt; (for [i (range 5) j (range 5) :when (and (&gt; i 0) (&lt; i j))] (println (* i j)))
+</span><span class='line'>(2
+</span><span class='line'>3
+</span><span class='line'>4
+</span><span class='line'>nil nil 6
+</span><span class='line'>8
+</span><span class='line'>nil nil 12
+</span><span class='line'>nil nil)</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Switch case</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>user=&gt; (for [i (range 5) j (range 5)]
+</span><span class='line'>(case (* i j)
+</span><span class='line'>0 "zero"
+</span><span class='line'>(* i j)))
+</span><span class='line'>("zero" "zero" "zero" "zero" "zero" "zero" 1 2 3 4 "zero" 2 4 6 8 "zero" 3 6 9 12 "zero" 4 8 12 16)</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&hellip; the rest in Part 2, if there is one.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Programming Fun: Ascii Tree]]></title>
+    <link href="http://agam.github.io/blog/2014/01/29/programming-fun-ascii-tree/"/>
+    <updated>2014-01-29T02:11:00-08:00</updated>
+    <id>http://agam.github.io/blog/2014/01/29/programming-fun-ascii-tree</id>
+    <content type="html"><![CDATA[<p>Another <a href="http://www.reddit.com/r/dailyprogrammer/comments/1t0r09/121613_challenge_145_easy_tree_generation/">easy problem</a> (I&rsquo;m not picking easy problems! I&rsquo;m just going in sequence!)</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Input Description
+</span><span class='line'>-----------------
+</span><span class='line'>You will be given one line of text on standard-console input: an integer and
+</span><span class='line'>two characters, all space-delimited. The integer, N, will range inclusively
+</span><span class='line'>from 3 to 21 and always be odd. The next character will be your trunk
+</span><span class='line'>character. The next character will be your leaves character. Draw the trunk and
+</span><span class='line'>leaves components with these characters, respectively.
+</span><span class='line'>
+</span><span class='line'>Output Description
+</span><span class='line'>------------------
+</span><span class='line'>Given the three input arguments, draw a centered-tree. It should follow this
+</span><span class='line'>pattern: (this is the smallest tree possible, with a base of 3)
+</span><span class='line'>   *
+</span><span class='line'>  ***
+</span><span class='line'>  ###
+</span><span class='line'>Here's a much larger tree, of base 7:
+</span><span class='line'>   *
+</span><span class='line'>  ***
+</span><span class='line'> *****
+</span><span class='line'>*******
+</span><span class='line'>  ###</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Is this really programming at all? More like basic <em>arithmetic</em>. Anyway &hellip;</p>
+
+<div><script src='https://gist.github.com/8679031.js'></script>
+<noscript><pre><code>// Skipped includes
+
+using namespace std;
+
+int main(int argc, char* argv[]) {
+  int tree_width;
+  char trunk_char, leaf_char;
+  cin &gt;&gt; tree_width &gt;&gt; trunk_char &gt;&gt; leaf_char;
+
+  // Since the top of the tree is triangular, if the height is N the base will
+  // be 2 * N - 1.
+  assert(tree_width % 2 == 1);
+  assert(tree_width &gt; 0);
+  int tree_height = (tree_width + 1) / 2;
+
+  for (int i = 0; i &lt; tree_height; ++i) {
+    // The i_th row will have 2 * i + 1 leaves, in the center
+    for (int j = 0; j &lt; (tree_height - i); ++j) {
+      cout &lt;&lt; &quot; &quot;;
+    }
+    for (int j = 0; j &lt; (2 * i + 1); ++j) {
+      cout &lt;&lt; leaf_char;
+    }
+    cout &lt;&lt; endl;
+  }
+  // Trunk is always of width 3, in the center
+  for (int j = 0; j &lt; (tree_height - 1); ++j) {
+    cout &lt;&lt; &quot; &quot;;
+  }
+  for (int j = 0; j &lt; 3; ++j) {
+    cout &lt;&lt; trunk_char;
+  }
+  cout &lt;&lt; endl;
+}
+</code></pre></noscript></div>
+
+
+<p>[Also, I realized I&rsquo;m wasting everyone&rsquo;s time by having all those redundant <code>#include</code> lines, so I got rid of them here]</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Programming Fun: Adjacency Matrix]]></title>
+    <link href="http://agam.github.io/blog/2014/01/27/programming-fun-adjacency-matrix/"/>
+    <updated>2014-01-27T03:55:00-08:00</updated>
+    <id>http://agam.github.io/blog/2014/01/27/programming-fun-adjacency-matrix</id>
+    <content type="html"><![CDATA[<p>Another &ldquo;intermediate&rdquo; <a href="http://www.reddit.com/r/dailyprogrammer/comments/1t6dlf/121813_challenge_140_intermediate_adjacency_matrix/">problem</a> today.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Input Description
+</span><span class='line'>-----------------
+</span><span class='line'>On standard console input, you will be first given a line with two space-delimited integers N and M. N is the number of nodes / vertices in the graph, while M is the number of following lines of edge-node data. A line of edge-node data is a space-delimited set of integers, with the special "-&gt;" symbol indicating an edge. This symbol shows the edge-relationship between the set of left-sided integers and the right-sided integers. This symbol will only have one element to its left, or one element to its right. These lines of data will also never have duplicate information; you do not have to handle re-definitions of the same edges.
+</span><span class='line'>
+</span><span class='line'>An example of data that maps the node 1 to the nodes 2 and 3 is as follows:
+</span><span class='line'>1 -&gt; 2 3
+</span><span class='line'>
+</span><span class='line'>Another example where multiple nodes points to the same node:
+</span><span class='line'>3 8 -&gt; 2
+</span><span class='line'>
+</span><span class='line'>You can expect input to sometimes create cycles and self-references in the graph. The following is valid:
+</span><span class='line'>2 -&gt; 2 3
+</span><span class='line'>3 -&gt; 2
+</span><span class='line'>
+</span><span class='line'>Note that there is no order in the given integers; thus "1 -&gt; 2 3" is the same as "1 -&gt; 3 2".
+</span><span class='line'>
+</span><span class='line'>Output Description
+</span><span class='line'>-----------------
+</span><span class='line'>Print the N x N adjacency matrix as a series of 0's (no-edge) and 1's (edge).</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Since the C++ Standard Library doesn&rsquo;t have a built-in matrix library (or maybe it does and I&rsquo;m unaware of it), I just used a vector of size <code>M * N</code> to stand in for an <code>M * N</code> matrix.</p>
+
+<div><script src='https://gist.github.com/8643006.js'></script>
+<noscript><pre><code>#include &lt;cassert&gt;
+#include &lt;cmath&gt;
+#include &lt;cstdint&gt;
+#include &lt;cstdio&gt;
+#include &lt;cstdlib&gt;
+#include &lt;algorithm&gt;
+#include &lt;array&gt;
+#include &lt;fstream&gt;
+#include &lt;iomanip&gt;
+#include &lt;iostream&gt;
+#include &lt;limits&gt;
+#include &lt;map&gt;
+#include &lt;memory&gt;
+#include &lt;sstream&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+#include &lt;unordered_map&gt;
+
+using namespace std;
+
+const static char* kRelationshipMarker = &quot;-&gt;&quot;;
+
+int main(int argc, char* argv[]) {
+  int number_nodes, number_relationships;
+  string line;
+  getline(cin, line);
+  istringstream is(line);
+  is &gt;&gt; number_nodes &gt;&gt; number_relationships;
+
+  vector&lt;int&gt; connections;
+  connections.assign(number_nodes * number_nodes, 0);
+
+  for (int i = 0; i &lt; number_relationships; ++i) {
+    getline(cin, line);
+    int connectee;
+    string marker;
+    istringstream ris(line);
+    ris &gt;&gt; connectee;
+    ris &gt;&gt; marker;
+    assert(marker == kRelationshipMarker);
+    int connected_node;
+    while (ris &gt;&gt; connected_node) {
+      connections[connectee * number_nodes + connected_node] = 1;
+    }
+  }
+
+  for (int i = 0; i &lt; number_nodes; ++i) {
+    for (int j = 0; j &lt; number_nodes; ++j) {
+      cout &lt;&lt; connections[i * number_nodes + j];
+    }
+    cout &lt;&lt; endl;
+  }
+}
+
+</code></pre></noscript></div>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Fun with Processing: Spinning Ellipses]]></title>
+    <link href="http://agam.github.io/blog/2014/01/27/fun-with-processing-spinning-ellipses/"/>
+    <updated>2014-01-27T00:11:00-08:00</updated>
+    <id>http://agam.github.io/blog/2014/01/27/fun-with-processing-spinning-ellipses</id>
+    <content type="html"><![CDATA[<p><a href="http://www.processing.org/">Processing</a> is intended to be a &ldquo;creative coding&rdquo; tool for non-programmers. It runs on top of Java, which is good enough to get started. The performance-anxious folks might eventually prefer something like <a href="http://libcinder.org/">Cinder</a>, which has C++ libraries instead.</p>
+
+<p>I tweaked a simple snippet from a tutorial as a first step:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>  <span class="n">size</span><span class="o">(</span><span class="mi">600</span><span class="o">,</span> <span class="mi">600</span><span class="o">);</span>
+</span><span class='line'>  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+</span><span class='line'>  <span class="n">smooth</span><span class="o">();</span>
+</span><span class='line'>  <span class="n">translate</span><span class="o">(</span><span class="mi">300</span><span class="o">,</span> <span class="mi">300</span><span class="o">);</span>
+</span><span class='line'>  <span class="k">for</span> <span class="o">(</span><span class="kt">float</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">360</span><span class="o">;</span> <span class="n">i</span><span class="o">+=</span> <span class="mf">0.3</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">pushMatrix</span><span class="o">();</span>
+</span><span class='line'>      <span class="n">rotate</span><span class="o">(</span><span class="n">radians</span><span class="o">(</span><span class="n">i</span><span class="o">));</span>
+</span><span class='line'>      <span class="n">translate</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">300</span><span class="o">);</span>
+</span><span class='line'>      <span class="n">rotate</span><span class="o">(</span><span class="n">radians</span><span class="o">(</span><span class="n">i</span> <span class="o">*</span> <span class="mi">10</span><span class="o">));</span>
+</span><span class='line'>      <span class="n">scale</span><span class="o">(</span><span class="n">map</span><span class="o">(</span><span class="n">sin</span><span class="o">(</span><span class="n">radians</span><span class="o">(</span><span class="n">i</span> <span class="o">*</span> <span class="mi">6</span><span class="o">)),</span> <span class="o">-</span><span class="mi">1</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span> <span class="o">.</span><span class="mi">5</span><span class="o">,</span> <span class="mi">1</span><span class="o">),</span>
+</span><span class='line'>        <span class="n">map</span><span class="o">(</span><span class="n">sin</span><span class="o">(</span><span class="n">radians</span><span class="o">(</span><span class="n">i</span> <span class="o">*</span> <span class="mi">3</span><span class="o">)),</span> <span class="o">-</span><span class="mi">1</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span> <span class="o">.</span><span class="mi">5</span><span class="o">,</span> <span class="mi">1</span><span class="o">));</span>
+</span><span class='line'>      <span class="n">drawEllipse</span><span class="o">();</span>
+</span><span class='line'>    <span class="n">popMatrix</span><span class="o">();</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">void</span> <span class="nf">drawEllipse</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>  <span class="n">noFill</span><span class="o">();</span>
+</span><span class='line'>  <span class="n">stroke</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">128</span><span class="o">);</span>
+</span><span class='line'>  <span class="n">ellipse</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">600</span><span class="o">,</span> <span class="mi">100</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>and got some funky looking images.</p>
+
+<p><img class="center" src="http://farm4.staticflickr.com/3776/12162399443_14fd4eea37_z_d.jpg"></p>
+
+<p><img class="center" src="http://farm8.staticflickr.com/7423/12162160705_5bc891cfa6_z_d.jpg"></p>
+
+<p><img class="center" src="http://farm8.staticflickr.com/7341/12162577004_ee1689e71f_z_d.jpg"></p>
+
+<p><img class="center" src="http://farm4.staticflickr.com/3742/12162819596_176dc1a9d3_z_d.jpg"></p>
+
+<p><img class="center" src="http://farm6.staticflickr.com/5513/12162574864_10b7b887f3_z_d.jpg"></p>
+
+<p>Before you say <em>meh</em>, none of this is supposed to make you Michaelangelo. But it provides a kind of instant-gratification, since you can tweak your <em>sketch</em>, run it, tweak it again, run it again, and so on &hellip; which is rather hard to come by.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Minsky Turing Lecture: Part 1]]></title>
+    <link href="http://agam.github.io/blog/2014/01/26/minsky-turing-lecture-part-1/"/>
+    <updated>2014-01-26T00:10:00-08:00</updated>
+    <id>http://agam.github.io/blog/2014/01/26/minsky-turing-lecture-part-1</id>
+    <content type="html"><![CDATA[<p>I came across a reference to Marvin Minsky&rsquo;s 1970 Turing Award Lecture. I&rsquo;ve barely read any of these lectures, always assuming they would be empty or pedantic or plain boring. Reading this changed that perception completely.</p>
+
+<h2>Science and Education</h2>
+
+<p>The structure of this lecture seems very interesting to me; it seems to be divided into two parts. The first focussing more on computer science and its failings, and the second on (what seems to me) education.</p>
+
+<p>This post is about the first part. And by &ldquo;about&rdquo; I mean just extracts with minimal commentary.</p>
+
+<h2>The trouble with Computer Science &hellip;</h2>
+
+<blockquote><p>The trouble with computer science today is an obsessive concern with form instead of content.</p></blockquote>
+
+<p>(yes, that&rsquo;s the opening line!)</p>
+
+<blockquote><p>This essay has three parts, suggesting form-content confusion in <em>theory of computation</em>, in <em>programming languages</em>, and in <em>education</em>.</p></blockquote>
+
+<p>(yes, I said two parts earlier &hellip; I just clubbed the first two together)</p>
+
+<blockquote><p>Suppose that we had <em>n</em> computers instead of just one. How much can we speed up what kinds of calculations? For some, we can surely gain a factor of <em>n</em>. But these are rare. For others, we can gain log <em>n</em>, but it is hard to find any or to prove what are their properties. And for most, I think, we can gain hardly anything; this is the case in which there are many highly branched conditionals, so that look-ahead on possible branches will usually be wasted. <strong>We know almost nothing about this; most people think, with surely incorrect optimism, that parallelism is usually a profitable way to speed up most computations.</strong></p></blockquote>
+
+<p>(&ldquo;surely incorrect optimism&rdquo;! I agree!)</p>
+
+<blockquote><p>&hellip; in today&rsquo;s computer science curricula &hellip; almost all their time is devoted to formal classifications of syntactic language types, defeatist unsolvability theories, <strong>folklore about systems programming</strong>, and generally trivial fragments of &ldquo;optimization of logic design&rdquo; &mdash; the latter often in situations where the art of heuristic programming has far outstretched the special-case &ldquo;theories&rdquo; so grimly taught and tested &mdash; and <strong>invocations about programming style almost sure to be outmoded before the student graduates</strong>.</p></blockquote>
+
+<p>(yup, quite true even today)</p>
+
+<h2>The trouble with programming languages &hellip;</h2>
+
+<blockquote><p><em>SYNTAX IS OFTEN UNNECESSARY</em>. <strong>One can survive with much less syntax than is generally realized</strong>. Much of programming syntax is concerned with suppression of parentheses or with emphasis of scope markers. There are alternatives that have been much underused.
+&hellip; such devices as infixes and operator precedence &hellip; have their place. But <em>their importance to computer science as a whole has been so exaggerated that it is beginning to corrupt the youth</em>.</p></blockquote>
+
+<p>(I wonder what he would have thought of <em>C++</em> !)</p>
+
+<blockquote><p>The clumsiness, for humans, of writing all the parentheses is evident; <strong>the advantages of not having to learn all the conventions &hellip; is often overlooked</strong>.
+It remains to be seen whether a syntax with explicit delimiters is reactionary, or whether it is the wave of the future.</p></blockquote>
+
+<p>(a possible nod to Lisp ?)</p>
+
+<blockquote><p>Much can be done to clarify the structure of expressions in such a &ldquo;syntax-weak&rdquo; language by using indentation and other layout devices that are outside the language proper.</p></blockquote>
+
+<p>(a possible precursory nod to Python ?)</p>
+
+<h2>Moving forward &hellip;</h2>
+
+<blockquote><p>What is a compiler for? The usual answers resemble &ldquo;to translate from one language to another&rdquo; or &ldquo;to take a description of an algorithm and assemble it into a program, filling in many small details.&rdquo; For the future, a more ambitious view is required. Most compilers will be systems that &ldquo;produce an algorithm, given a description of its effect.&rdquo;</p></blockquote>
+
+<p>(not sure what to make of this)</p>
+
+<blockquote><p>No matter how a language is described, a computer must use a procedure to interpret it. One should remember that <em>in describing a language the main goal is to explain how to write programs in int and what such programs mean</em>. The main goal <em>isn&rsquo;t</em> to describe the syntax.</p></blockquote>
+
+<p>(Sure, ok)</p>
+
+<blockquote><p>Paradoxically, though modern programming ideas were developed because processes were hard to depict with classical mathematical notations, designers are turning back to an earlier form &mdash; the equation &mdash; in just the kind of situation that <em>needs</em> program.</p></blockquote>
+
+<p>(aha! wait, what?)</p>
+
+<h2>Stay tuned</h2>
+
+<p>So much for Part 1. I&rsquo;ll pick up the rest of the extracts next time.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Cost comparison: Google Cloud vs DigitalOcean]]></title>
+    <link href="http://agam.github.io/blog/2014/01/24/cost-comparison-google-cloud-vs-digitalocean/"/>
+    <updated>2014-01-24T23:07:00-08:00</updated>
+    <id>http://agam.github.io/blog/2014/01/24/cost-comparison-google-cloud-vs-digitalocean</id>
+    <content type="html"><![CDATA[<p>I&rsquo;ve been using a VM within the Google Compute Engine cloud, for the last two months (mostly from my chromebook, occasionally from a couple of other locations).</p>
+
+<p>Specifically, this is a &ldquo;small&rdquo; (<code>g1-small</code>) VM, though there are <a href="https://developers.google.com/compute/docs/machine-types">many other options available</a>.</p>
+
+<p>This comes with a single CPU core and 1.7G of memory (the disk space is provisioned separately).</p>
+
+<p>For perspective, the only one smaller than this is an <code>f1-micro</code> instance (also with a single core, but with 0.6G of memory).</p>
+
+<p>So it makes sense to look at what this costs &hellip;</p>
+
+<p><img class="center" src="http://farm3.staticflickr.com/2818/12124686505_6db70c0917_o_d.png"></p>
+
+<p>For comparison, <a href="https://www.digitalocean.com/">Digital Ocean</a> has far less flexibility, but I just might switch to it, considering that I have absolutely no plans to ever host a user-facing service or do anything of that sort, on my VM (if I did, there really wouldn&rsquo;t be any point; you want those features, folks &mdash; network protection, scalability, all that jazz).</p>
+
+<p>So long as it&rsquo;s just little old me accessing my portable home in the cloud, the $10/mo for a 1G/30G SSD option looks just as good (or  $5/mo for 512M; also, DigitalOcean keeps running free trial offers, which are a good way to try out the service).</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Programming Fun: Nuts and Bolts]]></title>
+    <link href="http://agam.github.io/blog/2014/01/19/programming-fun-nuts-and-bolts/"/>
+    <updated>2014-01-19T00:39:00-08:00</updated>
+    <id>http://agam.github.io/blog/2014/01/19/programming-fun-nuts-and-bolts</id>
+    <content type="html"><![CDATA[<p><a href="http://www.reddit.com/r/dailyprogrammer/comments/1sob1e/121113_challenge_144_easy_nuts_bolts/">This one</a> is <em>too easy</em> but included anyway for completeness (why not?)</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Input Description
+</span><span class='line'>-----------------
+</span><span class='line'>
+</span><span class='line'>The first line of input will be an integer N, which is for the number of rows
+</span><span class='line'>in each list. Each list has N-lines of two space-delimited strings: the first
+</span><span class='line'>string will be the unique item name (without spaces), the second string will be
+</span><span class='line'>the price (in whole-integer cents). The second list, following the same format,
+</span><span class='line'>will have the same unique item-names, but with the correct price. Note that the
+</span><span class='line'>lists may not be in the same order!
+</span><span class='line'>
+</span><span class='line'>Output Description
+</span><span class='line'>------------------
+</span><span class='line'>
+</span><span class='line'>For each item that has had its price changed, print a row with the item name
+</span><span class='line'>and the price difference (in cents). Print the sign of the change (e.g. '+' for
+</span><span class='line'>a growth in price, or '-' for a loss in price). Order does not matter for
+</span><span class='line'>output.
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<div><script src='https://gist.github.com/8498879.js'></script>
+<noscript><pre><code>#include &lt;cassert&gt;
+#include &lt;cmath&gt;
+#include &lt;cstdint&gt;
+#include &lt;cstdio&gt;
+#include &lt;cstdlib&gt;
+#include &lt;algorithm&gt;
+#include &lt;array&gt;
+#include &lt;fstream&gt;
+#include &lt;iomanip&gt;
+#include &lt;iostream&gt;
+#include &lt;limits&gt;
+#include &lt;map&gt;
+#include &lt;memory&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+#include &lt;unordered_map&gt;
+
+using namespace std;
+
+typedef unordered_map&lt;string, int&gt; Inventory;
+
+void ReadInventory(int number_items, Inventory* inventory) {
+  for (int i = 0; i &lt; number_items; ++i) {
+    string item;
+    int quantity;
+    cin &gt;&gt; item &gt;&gt; quantity;
+    inventory-&gt;insert(make_pair(item, quantity));
+  }
+}
+
+int main(int argc, char* argv[]) {
+  int number_items;
+  cin &gt;&gt; number_items;
+
+  Inventory before, after;
+  ReadInventory(number_items, &amp;before);
+  ReadInventory(number_items, &amp;after);
+
+  for (const auto&amp; it : before) {
+    assert(after.find(it.first) != after.end());
+    int diff_quantity = after[it.first] - it.second;
+    if (diff_quantity != 0) {
+      cout &lt;&lt; it.first &lt;&lt; &quot; &quot; &lt;&lt; showpos &lt;&lt; diff_quantity &lt;&lt; endl;
+    }
+  }
+}
+
+</code></pre></noscript></div>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Programming Fun: Telephone Keypads]]></title>
+    <link href="http://agam.github.io/blog/2014/01/18/programming-fun-telephone-keypads/"/>
+    <updated>2014-01-18T02:21:00-08:00</updated>
+    <id>http://agam.github.io/blog/2014/01/18/programming-fun-telephone-keypads</id>
+    <content type="html"><![CDATA[<p><a href="http://www.reddit.com/r/dailyprogrammer/comments/1sody4/12113_challenge_139_intermediate_telephone_keypads/">This is a <em>medium</em> level problem</a>  with two levels of difficulty.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Input Description
+</span><span class='line'>-----------------
+</span><span class='line'>
+</span><span class='line'>On standard console input, you will be given an array of digits (0 to 9) and
+</span><span class='line'>spaces. All digits will be space-delimited, unless the digits represent
+</span><span class='line'>multiple presses of the same button (for example pressing 2 twice gives you the
+</span><span class='line'>letter 'B').  Use the modern Telephone Keypads digit-letter layout:
+</span><span class='line'>0 = Not used
+</span><span class='line'>1 = Not used
+</span><span class='line'>2 = ABC
+</span><span class='line'>3 = DEF
+</span><span class='line'>4 = GHI
+</span><span class='line'>5 = JKL
+</span><span class='line'>6 = MNO
+</span><span class='line'>7 = PQRS
+</span><span class='line'>8 = TUV
+</span><span class='line'>9 = WXYZ
+</span><span class='line'>You may use any source for looking up English-language words, though this
+</span><span class='line'>simple English-language dictionary is complete enough for the challenge.
+</span><span class='line'>
+</span><span class='line'>Output Description
+</span><span class='line'>------------------
+</span><span class='line'>Print a list of all best-fitting words, meaning words that start with the word
+</span><span class='line'>generated using the given input on a telephone keypad. You do not have to only
+</span><span class='line'>print words of the same length as the input (e.g. even if the input is
+</span><span class='line'>4-digits, it's possible there are many long words that start with those
+</span><span class='line'>4-digits).</span></code></pre></td></tr></table></div></figure>
+
+
+<p>You could do this by reading the dictionary into a vector of strings, then figuring out the prefix determined by the input and matching it against each dictionary word. There is a better way to do this though, which makes more sense considering the second part of this question.</p>
+
+<p>Instead of using a vector, you could use a <a href="http://en.wikipedia.org/wiki/Trie">Trie</a> which in this case would look something like:</p>
+
+<p>(showing the words &lsquo;sailor&rsquo;, &lsquo;soldier&rsquo; and &lsquo;solder&rsquo;)</p>
+
+<p><img class="center" src="http://farm6.staticflickr.com/5534/12005243014_69145160ae_o_d.jpg" width="400"></p>
+
+<p>This is a sort of naive implementation, you could compress this by storing strings and only expanding out to character chains if needed, but I skipped that optimization here.</p>
+
+<div><script src='https://gist.github.com/8422418.js'></script>
+<noscript><pre><code>#include &lt;cassert&gt;
+#include &lt;cmath&gt;
+#include &lt;cstdint&gt;
+#include &lt;cstdio&gt;
+#include &lt;cstdlib&gt;
+#include &lt;algorithm&gt;
+#include &lt;array&gt;
+#include &lt;fstream&gt;
+#include &lt;iomanip&gt;
+#include &lt;iostream&gt;
+#include &lt;limits&gt;
+#include &lt;map&gt;
+#include &lt;memory&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+#include &lt;unordered_map&gt;
+
+using namespace std;
+
+static const array&lt;string,10&gt; kKeypadLetters {
+  &quot;&quot;,
+  &quot;&quot;,
+  &quot;abc&quot;,
+  &quot;def&quot;,
+  &quot;ghi&quot;,
+  &quot;jkl&quot;,
+  &quot;mno&quot;,
+  &quot;pqrs&quot;,
+  &quot;tuv&quot;,
+  &quot;wxyz&quot;
+};
+
+// Naive trie implementation
+struct TrieNode {
+  map&lt;char, unique_ptr&lt;TrieNode&gt;&gt; children;
+  bool terminal_node = false;
+};
+
+class Trie {
+public:
+  Trie() {
+    head_.reset(new TrieNode());
+  }
+
+  void Insert(const string&amp; str) {
+    InsertHelper(str, head_.get());
+  }
+
+  bool Lookup(const string&amp; str) {
+    return (LookupHelper(str, head_.get()) != nullptr);
+  }
+
+  void FindAllWithPrefix(const string&amp; str, vector&lt;string&gt;* matches) {
+    const TrieNode* start_node = LookupHelper(str, head_.get());
+    if (start_node == nullptr) { return; }
+    FindAllHelper(str, start_node, matches);
+  }
+
+private:
+  void InsertHelper(const string&amp; str, TrieNode* node) {
+    if (str.empty()) {
+      node-&gt;terminal_node = true;
+      return;
+    }
+    assert(node != nullptr);
+    char c = str.front();
+    const auto&amp; it = node-&gt;children.find(c);
+    if (it == node-&gt;children.end()) {
+      node-&gt;children.insert(make_pair(c, unique_ptr&lt;TrieNode&gt;(new TrieNode)));
+    }
+    TrieNode* next_node = node-&gt;children.find(c)-&gt;second.get();
+    InsertHelper(str.substr(1), next_node);
+  }
+
+  const TrieNode* LookupHelper(const string&amp; str, const TrieNode* node) {
+    if (str.empty()) { return node; }
+    assert(node != nullptr);
+    const auto&amp; it = node-&gt;children.find(str.front());
+    if (it == node-&gt;children.end()) {
+      return nullptr;
+    } else {
+      return LookupHelper(str.substr(1), it-&gt;second.get());
+    }
+  }
+
+  void FindAllHelper(
+      const string&amp; current_str,
+      const TrieNode* current_node,
+      vector&lt;string&gt;* matches) {
+    if (current_node-&gt;terminal_node) {
+      matches-&gt;push_back(current_str);
+    }
+    for (const auto&amp; it : current_node-&gt;children) {
+      FindAllHelper(current_str + it.first, it.second.get(), matches);
+    }
+  }
+
+  unique_ptr&lt;TrieNode&gt; head_;
+};
+
+void PopulateTrie(const string&amp; fname, Trie* trie) {
+  ifstream ifs;
+  ifs.open(fname, ifstream::in);
+  while (!ifs.eof()) {
+    string word;
+    getline(ifs, word);
+    if (word.size()) {
+      trie-&gt;Insert(word);
+    }
+  }
+}
+
+int main(int argc, char* argv[]) {
+  // Read digiletters from stdin
+  vector&lt;int&gt; digiletters;
+  int digiletter;
+  while (cin &gt;&gt; digiletter) {
+    digiletters.push_back(digiletter);
+  }
+
+  // Read strings from file into Trie
+  assert(argc == 2);
+  Trie dict_trie;
+  PopulateTrie(argv[1], &amp;dict_trie);
+
+  // Get letter counts
+  string keypad_str;
+  for (int dl : digiletters) {
+    int count = 0;
+    const int letter = dl % 10;
+    while (dl &gt; 0) {
+      assert(dl % 10 == letter);
+      dl /= 10;
+      ++count;
+    }
+    const string&amp; keypad_letters = kKeypadLetters[letter];
+    assert(count &lt;= keypad_letters.size());
+    keypad_str.push_back(keypad_letters[count - 1]);
+  }
+
+  // Get matches
+  vector&lt;string&gt; possible_matches;
+  dict_trie.FindAllWithPrefix(keypad_str, &amp;possible_matches);
+
+  // Print matches
+  for (const string&amp; s : possible_matches) {
+    cout &lt;&lt; s &lt;&lt; endl;
+  }
+}
+</code></pre></noscript></div>
+
+
+<p>There is a harder version of this problem:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Challenge++
+</span><span class='line'>-----------
+</span><span class='line'>If you want an extra challenge, accomplish the same challenge but without
+</span><span class='line'>knowing the number of times a digit is pressed. For example "7653" could mean
+</span><span class='line'>sold, or poke, or even solenoid! You must do this efficiently with regards to
+</span><span class='line'>Big-O complexity.</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This would have been more inefficient with a vector of strings (you would sort the vector and then for each prefix, print out all subsequent ones until you encounter a string with a different prefix. So it&rsquo;s O(n log n) where n is the size of the dictionary).</p>
+
+<p>With our trie, we can (once we have a list of all combinatorially possible prefixes) look them up <em>quickly</em> (O(k + n), where k is the length of the prefix; O(k) time for each lookup and O(n) time for creating the trie (or O(mn) where m is the length of the largest word, though I would consider that a constant here)).</p>
+
+<p>(Note: there&rsquo;s some duplication of common code, especially in the <code>Trie</code> class; sorry about that!)</p>
+
+<div><script src='https://gist.github.com/8460783.js'></script>
+<noscript><pre><code>#include &lt;cassert&gt;
+#include &lt;cmath&gt;
+#include &lt;cstdint&gt;
+#include &lt;cstdio&gt;
+#include &lt;cstdlib&gt;
+#include &lt;algorithm&gt;
+#include &lt;array&gt;
+#include &lt;fstream&gt;
+#include &lt;iomanip&gt;
+#include &lt;iostream&gt;
+#include &lt;limits&gt;
+#include &lt;map&gt;
+#include &lt;memory&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+#include &lt;unordered_map&gt;
+
+using namespace std;
+
+static const array&lt;string,10&gt; kKeypadLetters {
+  &quot;&quot;,
+  &quot;&quot;,
+  &quot;abc&quot;,
+  &quot;def&quot;,
+  &quot;ghi&quot;,
+  &quot;jkl&quot;,
+  &quot;mno&quot;,
+  &quot;pqrs&quot;,
+  &quot;tuv&quot;,
+  &quot;wxyz&quot;
+};
+
+// Naive trie implementation
+struct TrieNode {
+  map&lt;char, unique_ptr&lt;TrieNode&gt;&gt; children;
+  bool terminal_node = false;
+};
+
+class Trie {
+public:
+  Trie() {
+    head_.reset(new TrieNode());
+  }
+
+  void Insert(const string&amp; str) {
+    InsertHelper(str, head_.get());
+  }
+
+  bool Lookup(const string&amp; str) {
+    return (LookupHelper(str, head_.get()) != nullptr);
+  }
+
+  void FindAllWithPrefix(const string&amp; str, vector&lt;string&gt;* matches) {
+    const TrieNode* start_node = LookupHelper(str, head_.get());
+    if (start_node == nullptr) { return; }
+    FindAllHelper(str, start_node, matches);
+  }
+
+private:
+  void InsertHelper(const string&amp; str, TrieNode* node) {
+    if (str.empty()) {
+      node-&gt;terminal_node = true;
+      return;
+    }
+    assert(node != nullptr);
+    char c = str.front();
+    const auto&amp; it = node-&gt;children.find(c);
+    if (it == node-&gt;children.end()) {
+      node-&gt;children.insert(make_pair(c, unique_ptr&lt;TrieNode&gt;(new TrieNode)));
+    }
+    TrieNode* next_node = node-&gt;children.find(c)-&gt;second.get();
+    InsertHelper(str.substr(1), next_node);
+  }
+
+  const TrieNode* LookupHelper(const string&amp; str, const TrieNode* node) {
+    if (str.empty()) { return node; }
+    assert(node != nullptr);
+    const auto&amp; it = node-&gt;children.find(str.front());
+    if (it == node-&gt;children.end()) {
+      return nullptr;
+    } else {
+      return LookupHelper(str.substr(1), it-&gt;second.get());
+    }
+  }
+
+  void FindAllHelper(
+      const string&amp; current_str,
+      const TrieNode* current_node,
+      vector&lt;string&gt;* matches) {
+    if (current_node-&gt;terminal_node) {
+      matches-&gt;push_back(current_str);
+    }
+    for (const auto&amp; it : current_node-&gt;children) {
+      FindAllHelper(current_str + it.first, it.second.get(), matches);
+    }
+  }
+
+  unique_ptr&lt;TrieNode&gt; head_;
+};
+
+void PopulateTrie(const string&amp; fname, Trie* trie) {
+  ifstream ifs;
+  ifs.open(fname, ifstream::in);
+  while (!ifs.eof()) {
+    string word;
+    getline(ifs, word);
+    if (word.size()) {
+      trie-&gt;Insert(word);
+    }
+  }
+}
+
+void GetPrefixesHelper(
+    const vector&lt;int&gt;&amp; digiletters,
+    int index,
+    const string current_prefix,
+    vector&lt;string&gt;* possible_prefixes) {
+  if (index == digiletters.size()) {
+    possible_prefixes-&gt;push_back(current_prefix);
+    return;
+  }
+  const string candidates = kKeypadLetters[digiletters.at(index)];
+  for (char c : candidates) {
+    GetPrefixesHelper(
+        digiletters,
+        index + 1,
+        current_prefix + c,
+        possible_prefixes);
+  }
+}
+
+void GetPrefixes(
+    const vector&lt;int&gt;&amp; digiletters, vector&lt;string&gt;* possible_prefixes) {
+  GetPrefixesHelper(digiletters, 0, &quot;&quot;, possible_prefixes);
+}
+
+int main(int argc, char* argv[]) {
+  // Read the keypad input
+  int keypad_input;
+  cin &gt;&gt; keypad_input;
+
+  // Read strings from file into Trie
+  assert(argc == 2);
+  Trie dict_trie;
+  PopulateTrie(argv[1], &amp;dict_trie);
+
+  // Get letter counts
+  vector&lt;int&gt; digiletters;
+  while (keypad_input) {
+    digiletters.push_back(keypad_input % 10);
+    keypad_input /= 10;
+  }
+  reverse(digiletters.begin(), digiletters.end());
+
+  // First get the combinatorially possible prefixes
+  vector&lt;string&gt; possible_prefixes;
+  GetPrefixes(digiletters, &amp;possible_prefixes);
+
+  // Use the prefixes to get complete matches.
+  vector&lt;string&gt; possible_matches;
+  for (const string&amp; prefix : possible_prefixes) {
+    if (dict_trie.Lookup(prefix)) {
+      dict_trie.FindAllWithPrefix(prefix, &amp;possible_matches);
+    }
+  }
+
+  // Print matches
+  for (const string&amp; s : possible_matches) {
+    cout &lt;&lt; s &lt;&lt; endl;
+  }
+}
+</code></pre></noscript></div>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Programming: Technology and Science]]></title>
+    <link href="http://agam.github.io/blog/2014/01/16/programming-technology-and-science/"/>
+    <updated>2014-01-16T06:21:00-08:00</updated>
+    <id>http://agam.github.io/blog/2014/01/16/programming-technology-and-science</id>
+    <content type="html"><![CDATA[<p>I liked this quote from the <a href="http://www.amazon.com/Concepts-Techniques-Models-Computer-Programming/dp/0262220695">&ldquo;Concepts, Techniques and Models of Computer Programming&rdquo;</a>:</p>
+
+<blockquote><p>Programming as defined above has two essential parts: a technology and its scientific foundation.</p>
+
+<p>The technology consists of tools, practical techniques, and
+standards, allowing us to do programming.</p>
+
+<p>The science consists of a broad and deep theory with predictive power, allowing us to understand programming. <em>Ideally, the science should explain the technology in a way that is as direct and useful as possible.</em></p>
+
+<p>If either part is left out, we are no longer doing programming. <strong>Without the
+technology, we are doing pure mathematics. Without the science, we are doing a
+craft, i.e., we lack deep understanding</strong></p></blockquote>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Programming Fun: Circle Area]]></title>
+    <link href="http://agam.github.io/blog/2014/01/08/programming-fun-circle-area/"/>
+    <updated>2014-01-08T20:22:00-08:00</updated>
+    <id>http://agam.github.io/blog/2014/01/08/programming-fun-circle-area</id>
+    <content type="html"><![CDATA[<p>Straightforward <em>math-only, no-algorithm</em> <a href="http://www.reddit.com/r/dailyprogrammer/comments/1s6484/120513_challenge_138_intermediate_overlapping/">problem</a></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Input Description
+</span><span class='line'>-----------------
+</span><span class='line'>
+</span><span class='line'>On standard input you will be given four floating-point space-delimited values:
+</span><span class='line'>x y u w. x and y are the first circle's position in Cartesian coordinates. The
+</span><span class='line'>second pair u and w are the second circle's position.
+</span><span class='line'>
+</span><span class='line'>Note that the given circles may not actually intersect. If this is the case,
+</span><span class='line'>return the sum of both circles (which will always be Pi x 2 since our circles
+</span><span class='line'>are unit-circles).
+</span><span class='line'>
+</span><span class='line'>Output Description
+</span><span class='line'>------------------
+</span><span class='line'>
+</span><span class='line'>Print the summed volume of the two circles, up to an accuracy of 4 digits after the decimal place.</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This is just trigonometry, so I made some Post-It illustrations. This one shows the general problem we have to solve.</p>
+
+<p><img class="center" src="http://agam.github.io/images/programming-fun/circle-area-1.jpg" width="300"></p>
+
+<p>Given the centres of the two circles, and their radii, we know <em>d</em>, the distance between their centres and whether it leads to overlap at all.</p>
+
+<p><img class="center" src="http://agam.github.io/images/programming-fun/circle-area-2.jpg" width="300"></p>
+
+<p>Overlap only occurs when <em>d &lt; 2r</em>. When <em>d > 2r</em> the answer is just the sum of the areas.</p>
+
+<p><img class="center" src="http://agam.github.io/images/programming-fun/circle-area-3.jpg" width="300"></p>
+
+<p>From this figure, it should be clear that the overlapping area is the segment of the circle subtended by the chord that is common to both circles. We can find the length of this chord by considering the right triangle formed by half of it, the radius, and half the centre distance.</p>
+
+<p>This then leads to the relationship between the area of the sector (<em>A</em>), the area of the triangle inside it (<em>A_1</em>) and the segment area (<em>A_2</em>)</p>
+
+<p><img class="center" src="http://agam.github.io/images/programming-fun/circle-area-4.jpg" width="300"></p>
+
+<p>Finally, we subtract the segment area from the area of the circle (and then double it, for two circles) to get our answer.</p>
+
+<p><img class="center" src="http://agam.github.io/images/programming-fun/circle-area-5.jpg" width="300"></p>
+
+<div><script src='https://gist.github.com/8323896.js'></script>
+<noscript><pre><code>#include &lt;cassert&gt;
+#include &lt;cmath&gt;
+#include &lt;cstdint&gt;
+#include &lt;cstdio&gt;
+#include &lt;cstdlib&gt;
+#include &lt;algorithm&gt;
+#include &lt;iomanip&gt;
+#include &lt;iostream&gt;
+#include &lt;limits&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+#include &lt;unordered_map&gt;
+
+using namespace std;
+
+int main() {
+  double x1, y1, x2, y2;
+  cin &gt;&gt; x1 &gt;&gt; y1 &gt;&gt; x2 &gt;&gt; y2;
+  cout &lt;&lt; &quot;Got circle 1 as (&quot; &lt;&lt; x1 &lt;&lt; &quot;, &quot; &lt;&lt; y1 &lt;&lt; &quot;)\n&quot;;
+  cout &lt;&lt; &quot;Got circle 2 as (&quot; &lt;&lt; x2 &lt;&lt; &quot;, &quot; &lt;&lt; y2 &lt;&lt; &quot;)\n&quot;;
+
+  // Total area = 2 * (area of each circle) - 2 * (segment area of overlap)
+  const double kPI = atan(1.0) * 4.0;
+  const double kRadius = 1.0;
+  const double circle_area = kPI * pow(kRadius, 2);
+
+  const double centre_distance = sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
+  if (centre_distance &gt; (2 * kRadius)) {
+    // No overlap
+    cout &lt;&lt; (2 * circle_area) &lt;&lt; endl;
+    return 0;
+  }
+
+  const double segment_half_length = sqrt(pow(kRadius, 2) - pow(centre_distance/2.0, 2));
+  const double theta = asin(segment_half_length / kRadius);
+  const double sector_area = theta * pow(kRadius, 2);
+  const double segment_area = sector_area - (centre_distance * segment_half_length / 2);
+
+  cout.precision(5);
+  cout &lt;&lt; (2 * circle_area) - (2 * segment_area) &lt;&lt; endl;
+}
+</code></pre></noscript></div>
+
+
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Urbit: Back Again]]></title>
+    <link href="http://agam.github.io/blog/2014/01/08/urbit-back-again/"/>
+    <updated>2014-01-08T08:47:00-08:00</updated>
+    <id>http://agam.github.io/blog/2014/01/08/urbit-back-again</id>
+    <content type="html"><![CDATA[<p>Turns out I was affected by the last &ldquo;continuity breach&rdquo;.</p>
+
+<p>So I had to delete everything and start over. In my case this meant</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span><span class="nb">cd </span>urbit
+</span><span class='line'><span class="nv">$ </span>git pull origin master
+</span><span class='line'><span class="nv">$ </span>make clean
+</span><span class='line'><span class="nv">$ </span>make
+</span><span class='line'><span class="nv">$ </span>rm -rf urb/*-*
+</span><span class='line'><span class="nv">$ </span>rm -rf frogstar
+</span><span class='line'><span class="nv">$ </span>vere -c frogstar
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This time when I ran <code>:begin</code> it succeeded</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>generating 2048-bit RSA key...
+</span><span class='line'>; ~doznec _Urban Republic_ is your neighbor
+</span><span class='line'>; ~doznec _Urban Republic_ is your neighbor
+</span><span class='line'>request approved
+</span><span class='line'>; ~zod |Tianming| is your neighbor
+</span><span class='line'>; ~zod |Tianming| is your neighbor
+</span><span class='line'>; ~doznec _Urban Republic_ is your neighbor
+</span><span class='line'>; ~doznec _Urban Republic_ is your neighbor
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&hellip; and then more hoon files were downloaded, after which I got my new prompt:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>~todbyt-nathes/try<span class="o">=</span>&gt;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Next time I&rsquo;ll start exploring <em>Nock</em> and <em>Hoon</em> some more &hellip;</p>
+]]></content>
+  </entry>
+  
+</feed>

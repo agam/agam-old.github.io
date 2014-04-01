@@ -1,0 +1,590 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Less Gcc, More Clang - Agam's Mashed-Up Pome</title>
+  <meta name="author" content="Agam">
+
+   
+  <meta name="description" content="">
+  
+  <meta name="keywords" content="">
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://agam.github.io/blog/2013/09/30/less-gcc-more-clang">
+  <link href="/favicon.png" rel="icon">
+  <link href='http://fonts.googleapis.com/css?family=Quicksand:300,400' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Agam's Mashed-Up Pome" type="application/atom+xml">
+  <script src="/js/jquery.js"></script>
+  <script src="/js/bootstrap-collapse.js"></script>
+  <script src="/js/modernizr-2.0.js"></script>
+  <script src="/js/octopress.js" type="text/javascript"></script>
+  <script src="/js/application.js"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-16612682-4']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <div class="navbar navbar-inverse navbar-static-top">
+  	<div class="navbar-inner">
+  	  <div class="container">
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+          <span class="fui-menu-24"></span>
+        </a>
+  	  	<div class="nav-collapse collapse navbar-responsive-collapse" style="height:0;">
+  	      <ul class="nav">
+    
+        <li ><a href="/index.html">Home</a></li>
+    
+</ul>
+
+<ul class="nav pull-right">
+    
+    
+    
+    <li><a href="http://twitter.com/agambrahma" title="Twitter Profile"><i class="icon-twitter-sign social-navbar"></i></a></li>
+    
+    
+    <li><a href="http://plus.google.com/+AgamBrahma" title="Google+ Profile"><i class="icon-google-plus-sign social-navbar"></i></a></li>
+    
+    
+    
+</ul>
+
+  	    </div>
+  	  </div>
+  	</div>
+  </div>
+  <div class="container" id="main">
+      <div class="row-fluid">
+        <div id="content">
+          <div>
+<article class="hentry" role="article">
+  
+
+  <header>
+  <div class="jumbotron">
+    Less Gcc, More Clang
+	<h5>
+
+
+
+
+
+
+
+
+  
+
+
+<i class="icon-calendar-empty"></i> <time datetime="2013-09-30T00:00:00-07:00" pubdate data-updated="true">Sep 30<span>th</span>, 2013</time></h5>
+  </div>
+</header>
+  <div class="row-fluid">
+    <div class="span12">
+      <p>I was unhappy with how I had not fully figured out my <code>libstdc++ &lt;-&gt; gcc/clang &lt;-&gt; boost</code> issues, and was feeling a bit ashamed that I had let the complexity of the system beat me.</p>
+
+<p><em>First, burn your boats</em></p>
+
+<p>The first thing I decided to do was get rid of the newly installed <code>gcc 4.7</code> and commit to getting a working version, recompiling/downloading/installing whatever it took.</p>
+
+<p>The second was to recompile Boost with Clang.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nb">export </span><span class="nv">PATH</span><span class="o">=</span>/usr/clang_3_3/bin:<span class="nv">$PATH</span>
+</span><span class='line'>./bootstrap.sh --with-toolset<span class="o">=</span>clang
+</span><span class='line'>./b2 install --prefix<span class="o">=</span>/opt/boost/boost_1_54_0
+</span><span class='line'><span class="nb">echo </span><span class="nv">PATH</span><span class="o">=</span>/opt/boost/boost_1_54_0/bin:<span class="nv">$PATH</span>
+</span><span class='line'>./b2 --build-dir<span class="o">=</span>/tmp/build-boost <span class="nv">toolset</span><span class="o">=</span>clang stage
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This took a while to run, but in the end, I got</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>...failed updating 4 targets...
+</span><span class='line'>...skipped 6 targets...
+</span><span class='line'>...updated 1073 targets...
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Wha &hellip; 4 failed ? Scrolling up, I see for example:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>clang: /home/agam/Documents/Code/Building/Clang/llvm/lib/IR/Instructions.cpp:2929: llvm::BitCastInst::BitCastInst<span class="o">(</span>llvm::Value*, llvm::Type*, const llvm::Twine&amp;, llvm::Instruction*<span class="o">)</span>: Assertion <span class="sb">`</span>castIsValid<span class="o">(</span>getOpcode<span class="o">()</span>, S, Ty<span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="s2">&quot;Illegal BitCast&quot;</span><span class="s1">&#39; failed.</span>
+</span><span class='line'><span class="s1">0  clang           0x0000000002569c72 llvm::sys::PrintStackTrace(_IO_FILE*) + 34</span>
+</span><span class='line'><span class="s1">1  clang           0x0000000002569059</span>
+</span><span class='line'><span class="s1">2  libpthread.so.0 0x00007f13948eecb0</span>
+</span><span class='line'><span class="s1">3  libc.so.6       0x00007f1393919425 gsignal + 53</span>
+</span><span class='line'><span class="s1">4  libc.so.6       0x00007f139391cb8b abort + 379</span>
+</span><span class='line'><span class="s1">5  libc.so.6       0x00007f13939120ee</span>
+</span><span class='line'><span class="s1">6  libc.so.6       0x00007f1393912192</span>
+</span><span class='line'><span class="s1">7  clang           0x00000000024de388</span>
+</span><span class='line'><span class="s1">8  clang           0x0000000002192568</span>
+</span><span class='line'><span class="s1">9  clang           0x00000000021928ae</span>
+</span><span class='line'><span class="s1">10 clang           0x000000000215748e</span>
+</span><span class='line'><span class="s1">11 clang           0x00000000021584a0</span>
+</span><span class='line'><span class="s1">12 clang           0x00000000024fa4cf llvm::FPPassManager::runOnFunction(llvm::Function&amp;) + 607</span>
+</span><span class='line'><span class="s1">13 clang           0x000000000224ac48</span>
+</span><span class='line'><span class="s1">14 clang           0x000000000224e7b9</span>
+</span><span class='line'><span class="s1">15 clang           0x00000000024f9fd0 llvm::MPPassManager::runOnModule(llvm::Module&amp;) + 688</span>
+</span><span class='line'><span class="s1">16 clang           0x00000000024fa1a5 llvm::PassManagerImpl::run(llvm::Module&amp;) + 245</span>
+</span><span class='line'><span class="s1">17 clang           0x0000000000903e8e clang::EmitBackendOutput(clang::DiagnosticsEngine&amp;, clang::CodeGenOptions const&amp;, clang::TargetOptions const&amp;, clang::LangOptions const&amp;, llvm::Module*, clang::BackendAction, llvm::raw_ostream*) + 3550</span>
+</span><span class='line'><span class="s1">18 clang           0x00000000009013bd</span>
+</span><span class='line'><span class="s1">19 clang           0x0000000000aa8c24 clang::ParseAST(clang::Sema&amp;, bool, bool) + 372</span>
+</span><span class='line'><span class="s1">20 clang           0x000000000077bafa clang::FrontendAction::Execute() + 282</span>
+</span><span class='line'><span class="s1">21 clang           0x000000000075eca0 clang::CompilerInstance::ExecuteAction(clang::FrontendAction&amp;) + 352</span>
+</span><span class='line'><span class="s1">22 clang           0x0000000000744a8a clang::ExecuteCompilerInvocation(clang::CompilerInstance*) + 1722 23 clang           0x000000000073ddf0 cc1_main(char const**, char const**, char const*, void*) + 1232</span>
+</span><span class='line'><span class="s1">24 clang           0x000000000072190e main + 622</span>
+</span><span class='line'><span class="s1">25 libc.so.6       0x00007f139390476d __libc_start_main + 237</span>
+</span><span class='line'><span class="s1">26 clang           0x000000000073d7ad</span>
+</span><span class='line'><span class="s1">Stack dump:</span>
+</span><span class='line'><span class="s1">0.      Program arguments: /usr/clang_3_3/bin/clang -cc1 -triple</span>
+</span><span class='line'><span class="s1">x86_64-unknown-linux-gnu -emit-obj -disable-free -main-file-name</span>
+</span><span class='line'><span class="s1">settings_parser.cpp -mrelocation-model pic -pic-level 2 -fmath-errno</span>
+</span><span class='line'><span class="s1">-masm-verbose -mconstructor-aliases -munwind-tables -target-cpu x86-64</span>
+</span><span class='line'><span class="s1">-target-linker-version 2.22 -momit-leaf-frame-pointer -coverage-file</span>
+</span><span class='line'><span class="s1">/tmp/build-boost/boost/bin.v2/libs/log/build/clang-linux-3.4/release/log-api-</span>
+</span><span class='line'><span class="s1">unix/threading-multi/settings_parser.o -resource-dir</span>
+</span><span class='line'><span class="s1">/usr/clang_3_3/bin/../lib/clang/3.4 -D BOOST_ALL_NO_LIB=1 -D</span>
+</span><span class='line'><span class="s1">BOOST_CHRONO_DYN_LINK=1 -D BOOST_DATE_TIME_DYN_LINK=1 -D</span>
+</span><span class='line'><span class="s1">BOOST_FILESYSTEM_DYN_LINK=1 -D BOOST_LOG_DYN_LINK=1 -D</span>
+</span><span class='line'><span class="s1">BOOST_LOG_SETUP_BUILDING_THE_LIB=1 -D BOOST_LOG_SETUP_DLL -D BOOST_LOG_USE_AVX2</span>
+</span><span class='line'><span class="s1">-D BOOST_LOG_USE_NATIVE_SYSLOG -D BOOST_LOG_USE_SSSE3 -D</span>
+</span><span class='line'><span class="s1">BOOST_LOG_WITHOUT_EVENT_LOG -D BOOST_SPIRIT_USE_PHOENIX_V3=1 -D</span>
+</span><span class='line'><span class="s1">BOOST_SYSTEM_DYN_LINK=1 -D BOOST_SYSTEM_NO_DEPRECATED -D</span>
+</span><span class='line'><span class="s1">BOOST_THREAD_BUILD_DLL=1 -D BOOST_THREAD_DONT_USE_CHRONO=1 -D BOOST_THREAD_POSIX</span>
+</span><span class='line'><span class="s1">-D BOOST_THREAD_USE_DLL=1 -D DATE_TIME_INLINE -D NDEBUG -I . -internal-isystem</span>
+</span><span class='line'><span class="s1">/usr/lib/gcc/x86_64-linux-gnu/4.6/../../../../include/c++/4.6 -internal-isystem</span>
+</span><span class='line'><span class="s1">/usr/lib/gcc/x86_64-linux-gnu/4.6/../../../../include/c++/4.6/x86_64-linux-gnu</span>
+</span><span class='line'><span class="s1">-internal-isystem</span>
+</span><span class='line'><span class="s1">/usr/lib/gcc/x86_64-linux-gnu/4.6/../../../../include/c++/4.6/backward</span>
+</span><span class='line'><span class="s1">-internal-isystem</span>
+</span><span class='line'><span class="s1">/usr/lib/gcc/x86_64-linux-gnu/4.6/../../../../include/x86_64-linux-gnu/c++/4.6</span>
+</span><span class='line'><span class="s1">-internal-isystem /usr/local/include -internal-isystem</span>
+</span><span class='line'><span class="s1">/usr/clang_3_3/bin/../lib/clang/3.4/include -internal-externc-isystem</span>
+</span><span class='line'><span class="s1">/usr/include/x86_64-linux-gnu -internal-externc-isystem /include</span>
+</span><span class='line'><span class="s1">-internal-externc-isystem /usr/include -O3 -Wno-bind-to-temporary-copy</span>
+</span><span class='line'><span class="s1">-Wno-unused-function -Wno-inline -Wall -Wno-bind-to-temporary-copy</span>
+</span><span class='line'><span class="s1">-Wno-unused-function -fdeprecated-macro -fdebug-compilation-dir</span>
+</span><span class='line'><span class="s1">/opt/boost/boost_1_54_0 -ferror-limit 19 -fmessage-length 0 -pthread</span>
+</span><span class='line'><span class="s1">-mstackrealign -fobjc-runtime=gcc -fobjc-default-synthesize-properties</span>
+</span><span class='line'><span class="s1">-fcxx-exceptions -fexceptions -fdiagnostics-show-option -vectorize-loops</span>
+</span><span class='line'><span class="s1">-vectorize-slp -o</span>
+</span><span class='line'><span class="s1">/tmp/build-boost/boost/bin.v2/libs/log/build/clang-linux-3.4/release/log-api-</span>
+</span><span class='line'><span class="s1">unix/threading-multi/settings_parser.o -x c++ libs/log/src/settings_parser.cpp</span>
+</span><span class='line'><span class="s1">1.      &lt;eof&gt; parser at end of file</span>
+</span><span class='line'><span class="s1">2.      Per-module optimization passes</span>
+</span><span class='line'><span class="s1">3.      Running pass &#39;</span>CallGraph Pass Manager<span class="s1">&#39; on module &#39;</span>libs/log/src/settings_parser.cpp<span class="s1">&#39;.</span>
+</span><span class='line'><span class="s1">4.      Running pass &#39;</span>Combine redundant instructions<span class="s1">&#39; on function &#39;</span>@_ZNK5boost6spirit6detail18make_binary_helperINS0_13meta_compilerINS0_2qi6domainEE12meta_grammarEE4implIRKNS_5proto7exprns_4exprINSA_6tagns_3tag10bitwise_orENSA_7argsns_5list2IRKNSC_ISF_NSH_IRNS4_4ruleIPKcNSC_INSE_8terminalENSG_4termINS0_3tag9char_codeINSN_5spaceENS0_13char_encoding8standardEEEEELl0EEENS0_11unused_typeESV_SV_EESX_EELl2EEESX_EELl2EEENS_6fusion4consINS4_10eoi_parserENS16_3nilEEERSV_EclES15_RKS1A_S1B_<span class="err">&#39;</span>
+</span><span class='line'>clang: error: unable to execute <span class="nb">command</span>: Aborted <span class="o">(</span>core dumped<span class="o">)</span>
+</span><span class='line'>clang: error: clang frontend <span class="nb">command </span>failed due to signal <span class="o">(</span>use -v to see invocation<span class="o">)</span>
+</span><span class='line'>clang version 3.4 <span class="o">(</span>trunk 189210<span class="o">)</span>
+</span><span class='line'>Target: x86_64-unknown-linux-gnu
+</span><span class='line'>Thread model: posix
+</span><span class='line'>clang: note: diagnostic msg: PLEASE submit a bug report to http://llvm.org/bugs/ and include the crash backtrace, preprocessed <span class="nb">source</span>, and associated run script.
+</span><span class='line'>clang: note: diagnostic msg:
+</span><span class='line'>********************
+</span><span class='line'>
+</span><span class='line'>PLEASE ATTACH THE FOLLOWING FILES TO THE BUG REPORT:
+</span><span class='line'>Preprocessed <span class="nb">source</span><span class="o">(</span>s<span class="o">)</span> and associated run script<span class="o">(</span>s<span class="o">)</span> are located at:
+</span><span class='line'>clang: note: diagnostic msg: /tmp/settings_parser-7f5a26.cpp
+</span><span class='line'>clang: note: diagnostic msg: /tmp/settings_parser-7f5a26.sh
+</span><span class='line'>clang: note: diagnostic msg:
+</span><span class='line'>
+</span><span class='line'>********************
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Ignoring these few Boost failures for now &hellip; I do want to use Clang with <code>-stdlib=libc++</code>, so I also wanted to build <code>libcxx</code> with Clang</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">CC</span><span class="o">=</span>clang <span class="nv">CXX</span><span class="o">=</span>clang++ cmake -G <span class="s2">&quot;Unix Makefiles&quot;</span> -DLIBCXX_CXX_ABI<span class="o">=</span>libsupc++ -DLIBCXX_LIBSUPCXX_INCLUDE_PATHS<span class="o">=</span><span class="s2">&quot;/usr/include/c++/4.6/;/usr/include/c++/4.6/x86_64-linux-gnu/&quot;</span> -DCMAKE_BUILD_TYPE<span class="o">=</span>Release -DCMAKE_INSTALL_PREFIX<span class="o">=</span>/usr ../libcxx/
+</span><span class='line'>make -j 4
+</span><span class='line'>sudo make install
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Time for our test program from earlier:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#include &lt;boost/lambda/lambda.hpp&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;iostream&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;algorithm&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;iterator&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">using</span> <span class="n">boost</span><span class="o">::</span><span class="n">lambda</span><span class="o">::</span><span class="n">_1</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">typedef</span> <span class="n">std</span><span class="o">::</span><span class="n">istream_iterator</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">in</span><span class="p">;</span>
+</span><span class='line'>      <span class="n">std</span><span class="o">::</span><span class="n">for_each</span><span class="p">(</span>
+</span><span class='line'>                <span class="n">in</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">cin</span><span class="p">),</span> <span class="n">in</span><span class="p">(),</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">_1</span> <span class="o">*</span> <span class="mi">3</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; &quot;</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>However, this results in a clang error:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>/usr/clang_3_3/bin/clang++ -std<span class="o">=</span>c++11 -stdlib<span class="o">=</span>libc++ -L/usr/lib -I/opt/boost/boost_1_54_0 hello-world.cpp -o hello-world -lc++abi
+</span><span class='line'>/usr/bin/ld: cannot find -lc++abi
+</span><span class='line'>clang: error: linker <span class="nb">command </span>failed with <span class="nb">exit </span>code 1 <span class="o">(</span>use -v to see invocation<span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Wohkay, so I&rsquo;m assuming we need to build libc++abi</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>svn co http://llvm.org/svn/llvm-project/libcxxabi/trunk libcxxabi
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>libcxxabi/lib
+</span><span class='line'><span class="nv">$ </span>./buildit
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now move over to the <code>libcxx</code> branch again, and</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ CC</span><span class="o">=</span>clang <span class="nv">CXX</span><span class="o">=</span>clang++ cmake -G <span class="s2">&quot;Unix Makefiles&quot;</span> -DLIBCXX_CXX_ABI<span class="o">=</span>libcxxabi -DLIBCXX_LIBCXXABI_INCLUDE_PATHS<span class="o">=</span><span class="s2">&quot;/home/agam/Documents/Code/Building/libcxxabi/include&quot;</span> -DCMAKE_BUILD_TYPE<span class="o">=</span>Release -DCMAKE_INSTALL_PREFIX<span class="o">=</span>/usr ../libcxx
+</span><span class='line'>-- The CXX compiler identification is Clang 3.4.0
+</span><span class='line'>-- The C compiler identification is Clang 3.4.0
+</span><span class='line'>-- Check <span class="k">for </span>working CXX compiler: /usr/clang_3_3/bin/clang++
+</span><span class='line'>-- Check <span class="k">for </span>working CXX compiler: /usr/clang_3_3/bin/clang++ -- works
+</span><span class='line'>-- Detecting CXX compiler ABI info
+</span><span class='line'>-- Detecting CXX compiler ABI info - <span class="k">done</span>
+</span><span class='line'>-- Check <span class="k">for </span>working C compiler: /usr/clang_3_3/bin/clang
+</span><span class='line'>-- Check <span class="k">for </span>working C compiler: /usr/clang_3_3/bin/clang -- works
+</span><span class='line'>-- Detecting C compiler ABI info
+</span><span class='line'>-- Detecting C compiler ABI info - <span class="k">done</span>
+</span><span class='line'>-- Host triple: x86_64-pc-linux
+</span><span class='line'>-- Target triple: x86_64-pc-linux
+</span><span class='line'>CMake Error at CMakeLists.txt:119 <span class="o">(</span>message<span class="o">)</span>:
+</span><span class='line'>  Failed to find cxa_demangle.h
+</span><span class='line'>Call Stack <span class="o">(</span>most recent call first<span class="o">)</span>:
+</span><span class='line'>  CMakeLists.txt:141 <span class="o">(</span>setup_abi_lib<span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>-- Configuring incomplete, errors occurred!
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I looked into this and &hellip; this seemed like a bug ? WTF. Anyway I just edited this out of <code>CMakeLists.txt</code> and tried again.</p>
+
+<p>That worked! So then <code>make &amp;&amp; sudo make install</code> as usual.</p>
+
+<p>Note: I also had to copy the <code>libcxxabi</code> library built above to a global location, since I got an error trying to build <code>libcxx</code> without it</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>/usr/bin/ld: cannot find -lc++abi
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>After a while it occurred to me: <a href="http://memegenerator.net/instance/41718307">one does not simply copy a library to /usr/local/lib</a></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>sudo ldconfig -f /etc/ld.so.conf.d/libc.conf
+</span><span class='line'><span class="nv">$ </span>ldconfig -p | grep c++abi
+</span><span class='line'>...
+</span><span class='line'>        libc++abi.so.1 <span class="o">(</span>libc6,x86-64<span class="o">)</span> <span class="o">=</span>&gt; /usr/local/lib/libc++abi.so.1
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Hmm not quite. Some <a href="http://comments.gmane.org/gmane.comp.compilers.clang.devel/30074">discussion I came across</a> suggests a different format for the symlink</p>
+
+<p>Yup, this was fixed by <code>sudo ln libc++abi.so.1.0 libc++abi.so</code></p>
+
+<p>Now, adding this library works:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>/usr/clang_3_3/bin/clang++ -std<span class="o">=</span>c++11 -stdlib<span class="o">=</span>libc++ -L/usr/lib -I/opt/boost/boost_1_54_0 hello-world.cpp -o hello-world -lc++abi
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Just to confirm, I also verified that the toy <code>wget</code> equivalent I had built with the Poco libraries works with Clang, and it does.</p>
+
+    </div>
+  </div>
+
+
+
+  <footer>
+    <hr>
+    
+    <div class="row-fluid">
+      
+      <div class="span6">
+        <p class="meta">
+        
+        
+
+
+
+  <a href="/blog/categories/boost/"><span class="badge">Boost</span></a>
+
+  <a href="/blog/categories/clang/"><span class="badge">Clang</span></a>
+
+  <a href="/blog/categories/gcc/"><span class="badge">Gcc</span></a>
+
+
+
+
+        </p>
+      </div>
+      
+      <div class="span6 social-sharing">
+        <div class="sharing">
+  <div class="addthis_toolbox addthis_default_style ">
+  
+  
+  <a class="addthis_button_tweet"></a>
+  
+  
+  <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+  
+  <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+      </div>
+      
+      
+    </div>
+    
+    <div class="row-fluid">
+      <div class="span12">
+        <p class="meta">
+          
+            <a class="basic-alignment left" href="/blog/2013/09/29/http-client-with-poco/" title="Previous Post: Basic HTTP Client with Poco">&laquo; Basic HTTP Client with Poco</a>
+          
+          
+            <a class="basic-alignment right" href="/blog/2013/09/30/usb-music-transfer-android/" title="Next Post: Getting music onto an Android phone's external storage">Getting music onto an Android phone's external storage &raquo;</a>
+          
+        </p>
+      </div>
+    </div>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+
+
+        </div>
+      </div>
+      <div class="row-fluid">
+        <footer class="footer-page" role="contentinfo">
+          <p>
+  Copyright &copy; 2014 - Agam -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span> - Theme by <a href="http://alexgaribay.com">Alex Garibay</a>
+</p>
+
+
+        </footer>
+      </div>
+  </div>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'agamamp';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://agam.github.io/blog/2013/09/30/less-gcc-more-clang/';
+        var disqus_url = 'http://agam.github.io/blog/2013/09/30/less-gcc-more-clang/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
