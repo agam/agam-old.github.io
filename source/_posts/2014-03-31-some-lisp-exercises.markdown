@@ -8,7 +8,7 @@ categories:
 
 Reading through ANSI Common Lisp, and doing some of the exercises as I come across them. Here are a few from Ch 4 and 5:
 
-```lisp
+```cl
 
 
 (defun rotate-square-array (arr)
