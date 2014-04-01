@@ -4,7 +4,11 @@
   <title><![CDATA[Category: Exponential | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/exponential/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
+<<<<<<< HEAD
   <updated>2014-04-01T16:36:46-07:00</updated>
+=======
+  <updated>2014-02-19T01:34:49+00:00</updated>
+>>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -16,11 +20,19 @@
   <entry>
     <title type="html"><![CDATA[Playing with the exponential curve]]></title>
     <link href="http://agam.github.io/blog/2014/02/01/playing-with-the-exponential-curve/"/>
+<<<<<<< HEAD
     <updated>2014-02-01T06:35:00-08:00</updated>
     <id>http://agam.github.io/blog/2014/02/01/playing-with-the-exponential-curve</id>
     <content type="html"><![CDATA[<p>I remember hearing about the <a href="http://britton.disted.camosun.bc.ca/jbchessgrain.htm">apocryphal story</a> about doubling grains of rice on a chessboard. I even tried writing powers of 2 (which at my age then just meant adding <code>2+2</code> then <code>4+4</code> etc).</p>
 
 <p><img class="center <a" src="href="http://britton.disted.camosun.bc.ca/firdau1.jpg">http://britton.disted.camosun.bc.ca/firdau1.jpg</a>"></p>
+=======
+    <updated>2014-02-01T06:35:00+00:00</updated>
+    <id>http://agam.github.io/blog/2014/02/01/playing-with-the-exponential-curve</id>
+    <content type="html"><![CDATA[<p>I remember hearing about the <a href="http://britton.disted.camosun.bc.ca/jbchessgrain.htm">apocryphal story</a> about doubling grains of rice on a chessboard. I even tried writing powers of 2 (which at my age then just meant adding <code>2+2</code> then <code>4+4</code> etc).</p>
+
+<p>{% img center <a href="http://britton.disted.camosun.bc.ca/firdau1.jpg">http://britton.disted.camosun.bc.ca/firdau1.jpg</a> %}</p>
+>>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
 
 <p>This is obviously the <a href="http://www.wolframalpha.com/input/?i=e+%5E+x"><code>e^x</code></a> curve, but when you normally see it drawn its self-similarity is not obvious. Mathematica&rsquo;s <code>Manipulate</code> function can help in this regard &hellip;</p>
 
@@ -28,11 +40,19 @@
 Manipulate[ListPlot[Table[Power[2, i], {i, 1, n}]], {n, 1, 64}]
 </code></p>
 
+<<<<<<< HEAD
 <p><img class="center <a" src="href="http://farm3.staticflickr.com/2853/12244178256_251f9fcfae_d.jpg">http://farm3.staticflickr.com/2853/12244178256_251f9fcfae_d.jpg</a>">
 <img class="center <a" src="href="http://farm6.staticflickr.com/5496/12243600435_e6faac3bbb_d.jpg">http://farm6.staticflickr.com/5496/12243600435_e6faac3bbb_d.jpg</a>">
 <img class="center <a" src="href="http://farm6.staticflickr.com/5547/12244178226_2258c2c2ce_d.jpg">http://farm6.staticflickr.com/5547/12244178226_2258c2c2ce_d.jpg</a>">
 <img class="center <a" src="href="http://farm3.staticflickr.com/2882/12243785163_3822d7299b_d.jpg">http://farm3.staticflickr.com/2882/12243785163_3822d7299b_d.jpg</a>">
 <img class="center <a" src="href="http://farm8.staticflickr.com/7332/12243785183_6243378edf_d.jpg">http://farm8.staticflickr.com/7332/12243785183_6243378edf_d.jpg</a>"></p>
+=======
+<p>{% img center <a href="http://farm3.staticflickr.com/2853/12244178256_251f9fcfae_d.jpg">http://farm3.staticflickr.com/2853/12244178256_251f9fcfae_d.jpg</a> %}
+{% img center <a href="http://farm6.staticflickr.com/5496/12243600435_e6faac3bbb_d.jpg">http://farm6.staticflickr.com/5496/12243600435_e6faac3bbb_d.jpg</a> %}
+{% img center <a href="http://farm6.staticflickr.com/5547/12244178226_2258c2c2ce_d.jpg">http://farm6.staticflickr.com/5547/12244178226_2258c2c2ce_d.jpg</a> %}
+{% img center <a href="http://farm3.staticflickr.com/2882/12243785163_3822d7299b_d.jpg">http://farm3.staticflickr.com/2882/12243785163_3822d7299b_d.jpg</a> %}
+{% img center <a href="http://farm8.staticflickr.com/7332/12243785183_6243378edf_d.jpg">http://farm8.staticflickr.com/7332/12243785183_6243378edf_d.jpg</a> %}</p>
+>>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
 
 <p>These are screenshots for increasing values of <code>n</code>: Note how they all look the same (except for the first one, where the curve is just starting out), over several orders of magnitude!</p>
 ]]></content>

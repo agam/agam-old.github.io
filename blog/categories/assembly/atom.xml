@@ -4,7 +4,11 @@
   <title><![CDATA[Category: Assembly | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/assembly/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
+<<<<<<< HEAD
   <updated>2014-04-01T16:36:46-07:00</updated>
+=======
+  <updated>2014-02-19T01:34:49+00:00</updated>
+>>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -16,7 +20,11 @@
   <entry>
     <title type="html"><![CDATA[Comparing basic iteration in C++ and Haskell: Part 1]]></title>
     <link href="http://agam.github.io/blog/2013/03/13/basic-iteration-comparison/"/>
+<<<<<<< HEAD
     <updated>2013-03-13T00:00:00-07:00</updated>
+=======
+    <updated>2013-03-13T00:00:00+00:00</updated>
+>>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
     <id>http://agam.github.io/blog/2013/03/13/basic-iteration-comparison</id>
     <content type="html"><![CDATA[<h2><code>For loop</code> iteration: C</h2>
 
@@ -760,7 +768,11 @@ sys 0m0.060s
   <entry>
     <title type="html"><![CDATA[Comparing 'Hello World' in Go]]></title>
     <link href="http://agam.github.io/blog/2013/03/12/hello-world-in-go-compared/"/>
+<<<<<<< HEAD
     <updated>2013-03-12T00:00:00-07:00</updated>
+=======
+    <updated>2013-03-12T00:00:00+00:00</updated>
+>>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
     <id>http://agam.github.io/blog/2013/03/12/hello-world-in-go-compared</id>
     <content type="html"><![CDATA[<p>Since I looked at printing &ldquo;Hello World&rdquo; <a href="/posts/hello-world-comparison.html">in C and Haskell earlier</a>, I thought I would look at what <em><a href="http://golang.org/">Go</a></em> does diferently.</p>
 
@@ -935,7 +947,11 @@ sys 0m0.132s
   <entry>
     <title type="html"><![CDATA[Comparing "Hello World" in C++ and Haskell]]></title>
     <link href="http://agam.github.io/blog/2013/03/10/hello-world-comparison/"/>
+<<<<<<< HEAD
     <updated>2013-03-10T00:00:00-08:00</updated>
+=======
+    <updated>2013-03-10T00:00:00+00:00</updated>
+>>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
     <id>http://agam.github.io/blog/2013/03/10/hello-world-comparison</id>
     <content type="html"><![CDATA[<p>I feel I&rsquo;ve totally forgotten all about assembly, and I was curious anyway about how Haskell differed fundamentally in its basic code generation, so I decided to contrast a basic example against C++.</p>
 

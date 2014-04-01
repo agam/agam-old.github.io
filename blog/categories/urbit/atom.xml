@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
+<<<<<<< HEAD
   <title><![CDATA[Category: urbit | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/urbit/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
   <updated>2014-04-01T16:36:46-07:00</updated>
+=======
+  <title><![CDATA[Category: urbit, | Agam's Mashed-Up Pome]]></title>
+  <link href="http://agam.github.io/blog/categories/urbit/atom.xml" rel="self"/>
+  <link href="http://agam.github.io/"/>
+  <updated>2014-02-19T01:34:49+00:00</updated>
+>>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -14,6 +21,7 @@
 
   
   <entry>
+<<<<<<< HEAD
     <title type="html"><![CDATA[Urbit: Back Again]]></title>
     <link href="http://agam.github.io/blog/2014/01/08/urbit-back-again/"/>
     <updated>2014-01-08T08:47:00-08:00</updated>
@@ -159,6 +167,298 @@ updating...
 <p>Meanwhile, check out their website at <a href="http://www.urbit.org/">www.urbit.org</a> or explore <a href="https://github.com/urbit/urbit">the code on github</a> or follow them on twitter <a href="https://twitter.com/urbit_">@urbit_</a>.</p>
 
 <p>Happy <em>urbiting</em> !!</p>
+=======
+    <title type="html"><![CDATA[Urbit: Hoon]]></title>
+    <link href="http://agam.github.io/blog/2014/01/07/urbit-hoon/"/>
+    <updated>2014-01-07T09:50:00+00:00</updated>
+    <id>http://agam.github.io/blog/2014/01/07/urbit-hoon</id>
+    <content type="html"><![CDATA[<p>First off, just in case you closed your shell, terminal, screen session, whatever: you can easily resume your Arvo session</p>
+
+<p>```sh
+agam@myvm:~/urbit$ bin/vere frogstar
+vere: urbit home is /home/agam/urbit/urb
+loom: loaded 11MB
+init: gc: 2.361.752 bytes live
+time: ~2014.1.7..09.04.14..a902
+ames: on localhost, UDP 57882.
+<a href="http:">http:</a> live on 8080
+rest: checkpoint to event 7.319
+rest: old 0v1i.p6o91, new 0v1k.b3ul0
+loaded passcode from /home/agam/.urbit/~fiddyn-lavpun.txt
+rest: replaying through event 7323
+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash; playback starting&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;
+&hellip;..
+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash; playback complete&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;
+save: gc: 28 bytes shed; 2.361.836 bytes live</p>
+
+<p>~wicmet-balful-tipdet-tardul&mdash;nisred-divpen-panref-sicbet/try=>
+```</p>
+
+<p>(hmm &hellip; &ldquo;<em>playback complete</em>&rdquo; ?? Yeah apparently everything you ever do is known forever, but that makes my head hurt right now so I won&rsquo;t try too hard to understand it just yet)</p>
+
+<p>Alright, continuing on &hellip;</p>
+
+<h2>Fun at the REPL</h2>
+
+<p>If you remember from <a href="http://agam.github.io/blog/2014/01/06/urbit/">earlier on</a>, we were dropped into a REPL.</p>
+
+<p>Being a REPL means we can do stuff like</p>
+
+<p><code>sh
+~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try=&gt; (add 4 5)
+9
+</code></p>
+
+<p>and</p>
+
+<p><code>sh
+~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try=&gt; =a 17
+~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try=&gt; (add 14 a)
+31
+</code></p>
+
+<p>and also</p>
+
+<p><code>sh
+~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try=&gt; (mul 6 7)
+42
+</code></p>
+
+<p>or</p>
+
+<p><code>sh
+~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try=&gt; (mul 5 (add 4 7))
+55
+</code></p>
+
+<p>If you look at some of the <code>hoon</code> files that were downloaded at the initial setup, you might intuit that they are executable-ish.</p>
+
+<p><code>sh
++ /~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try/1/bin/reverse/hoon
+...
++ /~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try/1/bin/fib/hoon
+...
+</code>
+and more.</p>
+
+<p>These can be run (&ldquo;evaluated&rdquo; !!) at the command line. E.g. for <code>fib/hoon</code>:</p>
+
+<p><code>sh
+~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try=&gt; :fib 0
+1
+~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try=&gt; :fib 1
+1
+~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try=&gt; :fib 2
+2
+~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try=&gt; :fib 3
+3
+~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try=&gt; :fib 4
+5
+</code></p>
+
+<p>Or for <code>zero/hoon</code>:</p>
+
+<p><code>sh
+~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try=&gt; :zero
+0                             ::  0, ~zod
+0                             ::  1, ~nec
+0                             ::  2, ~bud
+0                             ::  3, ~wes
+0                             ::  4, ~sev
+0                             ::  5, ~per
+0                             ::  6, ~sut
+0                             ::  7, ~let
+0                             ::  8, ~ful
+...
+0                             ::  252, ~pec
+0                             ::  253, ~nel
+0                             ::  254, ~nev
+0                             ::  255, ~fes
+</code></p>
+
+<p>which is just 256 zeros &hellip; but you get the idea.</p>
+
+<h2>Hoon files</h2>
+
+<p>(More on what <code>hoon</code> really is and how to parse it later (it has to be later because I don&rsquo;t know WTF it is right now))</p>
+
+<p>As another example, let&rsquo;s examine <code>cat/hoon</code> (which fulfills a purpose similar to the Unix <code>cat</code> you&rsquo;re familiar with)</p>
+
+<p><code>sh
+~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try=&gt; :cat /=main=/toy/cat/hoon
+~ /cx/~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/main/~2014.1.7..09.24.24..4de6/toy/cat/hoon
+</code></p>
+
+<p>The &ldquo;real&rdquo; file is at a location <em>and</em> a date! Yes, seriously. Running it again &hellip;</p>
+
+<p><code>sh
+~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try=&gt; :cat /=main=/toy/cat/hoon
+~ /cx/~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/main/~2014.1.7..09.25.22..9bed/toy/cat/hoon
+</code></p>
+
+<p>&hellip; will give a different path.</p>
+
+<p>So far so good. What does the file actually contain ?</p>
+
+<p><code>sh
+~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try=&gt; :cat /=main=/bin/cat/hoon
+'!:'
+'::  /=main=/toy/cat/hoon'
+'::'
+'|=  *'
+'|=  ape=(list path)'
+':_  ~'
+':_  ~'
+'^-  gift'
+':+  %mu  [%atom %t]'
+'=-  |-  ^-  (list ,@t)'
+'    ?~(foz ~ (weld i.foz $(foz t.foz)))'
+'^=  foz'
+'=|  foz=(list (list ,@t))'
+'|-  ^+  foz'
+'?~  ape  ~'
+'[(lore ((hard ,@) .^(%cx i.ape))) $(ape t.ape)]'
+</code></p>
+
+<p>&ldquo;Yikes&rdquo; is an appropriate response at this point.</p>
+
+<p>BTW in case you were wondering: yes, right now Urbit <em>is</em> hosted on top of Unix (<strong>Arvo</strong> is written in <strong>Hoon</strong>, which is written in <strong>Nock</strong>, which is written in <strong>C</strong>), so you should see the exact same contents if you run</p>
+
+<p><code>sh
+$ cat wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/main/bin/cat.hoon
+</code></p>
+
+<h2>Setting up a destroyer</h2>
+
+<p>So I asked the nice folks at <a href="mailto:urbit@urbit.org">urbit</a> nicely and they sent me a (nice?) pair of destroyers (which if nothing else, should shorten the prompt by 75% or so).</p>
+
+<p>You&rsquo;ll receive a <em>ship</em> and its <em>ticket</em>, and then run</p>
+
+<p>```sh
+~wicmet-balful-tipdet-tardul&mdash;nisred-divpen-panref-sicbet/try=> :begin ~todbyt-nathes</p>
+
+<p>Launching ~todbyt-nathes, one of 4.278.124.800 Urbit destroyers&hellip;</p>
+
+<pre><code>        If I did not build for myself
+        for whom should I build?
+
+              -- Bunting, _Chomei at Toyama_
+</code></pre>
+
+<p>Let&rsquo;s configure your identity.  Warning &ndash; it&rsquo;s nontrivial to
+change this data once you&rsquo;ve sent it to the server.  If you enter
+something wrong, hit ^D to cancel, then run the program again.</p>
+
+<p>Your ticket: <Enter your ticket here></p>
+
+<p>Enter a passphrase or other unusual text.  You (or your enemies)
+can regenerate your ship from this entropy.</p>
+
+<p>Entropy: **********
+Entropy check: ~nildyl-hocmun
+```</p>
+
+<p>Customization follows. This would normally be boring boilerplate, but I&rsquo;ve chosen to reproduce it here since some if it is entertaining.</p>
+
+<p>```sh
+What language would your ship rather speak?  Enter it as a
+two-letter (ISO 639-1) code, like &ldquo;en&rdquo; for English.  Whatever
+language you pick, it&rsquo;ll all be English now, but in future
+we&rsquo;ll be more sensitive to your needs.</p>
+
+<p>Language: en</p>
+
+<p>Okay, we&rsquo;ll be speaking English.
+<code>
+</code>sh
+Please select one of the pre-chosen forms:</p>
+
+<p>  %lady   female-identified individual
+  %lord   male-identified individual
+  %punk   opaque handle
+  %anon   totally anonymous</p>
+
+<p>Form: %lord</p>
+
+<p>You&rsquo;ve selected a personal identity.  For a %lord or a %lady,
+please use your real name only.  If you&rsquo;d prefer a fictitious
+handle, you can hit ^D and start over as a %punk.  Or you can
+use %anon and go by your ship name alone.
+<code>
+</code>sh
+As a real person, we&rsquo;re going to ask you for a little bit of
+personal information &ndash; not enough to compromise your privacy,
+just enough to make everyone on Urbit feel like a neighbor.</p>
+
+<p>What we&rsquo;re going to ask you for is information that&rsquo;s (a)
+public (would be obvious, or at least easy to guess, for
+someone who met you in person); (b) durable (doesn&rsquo;t change
+often); and &copy; relevant (helps you connect with friends).</p>
+
+<p>For example, we&rsquo;ll ask for the year (not day) you were born,
+because your age is easy to guess in person, doesn&rsquo;t change,
+and has a big effect on how people perceive you.</p>
+
+<p><code>
+</code>sh
+Year you were born: <Enter your year of birth here></p>
+
+<p>Where are you?  This is totally optional, but we&rsquo;d like to
+know your vague general location.  You can enter nothing at
+all, just a country code, or country and postal code.</p>
+
+<p>Location: us/<Enter your zipcode here></p>
+
+<p>Please tell us your name &ndash; and please make it a real name.
+Pseudonyms are totally cool, but please use %punk.  Middle
+name and nickname are optional.  Ünicode is encouraged.</p>
+
+<p>First name: <Enter your name here>
+Middle name (or blank):
+Nickname/handle (or blank): agam
+Last name: <Enter your name here>
+```</p>
+
+<p>```sh
+One basic human instinct is the urge to form political tribes.
+In a network that fights this need, these tribes form anyway and
+they form badly.  Urbit designs them into the infrastructure.
+Inspired by the Qing Dynasty, you&rsquo;ll align yourself with one of
+five colored &ldquo;banners&rdquo; &ndash; %red, %blue, %orange, %black or %white.</p>
+
+<p>Political discourse across tribal boundaries is almost always an
+antisocial act &ndash; less communication, than symbolic violence.  In
+Urbit, messages marked political stay within your own banner;
+your friends in other banners simply won&rsquo;t see them.  Between
+banners, politics doesn&rsquo;t erode apolitical relationships; inside
+each banner, political discourse is harmonious and productive.</p>
+
+<p>Pick a banner by the adjective you feel best describes you:</p>
+
+<p>%red     far left: radical, anarchist
+%blue    center-left: moderate, liberal
+%orange  center-right: conservative, libertarian
+%black   far right: traditionalist, reactionary</p>
+
+<p>Or if digital agitation isn&rsquo;t your cup of tea, choose %white, and
+your Urbit experience will remain politics-free.</p>
+
+<p>Banner: %white
+```</p>
+
+<p>At this point, it got stuck &hellip;</p>
+
+<p><code>sh
+generating 2048-bit RSA key...
+ames: czar zod.urbit.org: ip .198.199.112.32
+; ~doznec ~doznec not responding still trying
+waiting on ~doznec/ta
+</code></p>
+
+<p>&hellip; so I hit <code>Ctrl-D</code> and ran it again.</p>
+
+<p>Still nothing. I guess I&rsquo;ll continue the next post once I get this working (!)</p>
+>>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
 ]]></content>
   </entry>
   

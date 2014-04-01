@@ -4,7 +4,11 @@
   <title><![CDATA[Category: CommandLine | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/commandline/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
+<<<<<<< HEAD
   <updated>2014-04-01T16:36:46-07:00</updated>
+=======
+  <updated>2014-02-19T01:34:49+00:00</updated>
+>>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -16,7 +20,11 @@
   <entry>
     <title type="html"><![CDATA[Rudimentary note taking on the command line]]></title>
     <link href="http://agam.github.io/blog/2013/07/24/rudimentary-command-line-note-taking/"/>
+<<<<<<< HEAD
     <updated>2013-07-24T00:00:00-07:00</updated>
+=======
+    <updated>2013-07-24T00:00:00+00:00</updated>
+>>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
     <id>http://agam.github.io/blog/2013/07/24/rudimentary-command-line-note-taking</id>
     <content type="html"><![CDATA[<p>Everyone has their own pet setup; here&rsquo;s mine. Its just a bunch of text files, shared on Dropbox.</p>
 

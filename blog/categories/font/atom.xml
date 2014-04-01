@@ -4,7 +4,11 @@
   <title><![CDATA[Category: Font, | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/font/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
+<<<<<<< HEAD
   <updated>2014-04-01T16:36:46-07:00</updated>
+=======
+  <updated>2014-02-19T01:34:49+00:00</updated>
+>>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -16,11 +20,19 @@
   <entry>
     <title type="html"><![CDATA[Change That Font!]]></title>
     <link href="http://agam.github.io/blog/2014/02/01/change-that-font/"/>
+<<<<<<< HEAD
     <updated>2014-02-01T06:25:00-08:00</updated>
     <id>http://agam.github.io/blog/2014/02/01/change-that-font</id>
     <content type="html"><![CDATA[<p>You don&rsquo;t have to be chained to <code>Monaco</code> if you don&rsquo;t like it. I changed it to <code>Inconsolata</code>, which is as simply as <a href="http://www.levien.com/type/myfonts/inconsolata.html">downloading it</a> (click on the <em>Open Type File</em> link).</p>
 
 <p><img class="center <a" src="href="http://farm6.staticflickr.com/5509/12246575643_d92ae27492_z_d.jpg">http://farm6.staticflickr.com/5509/12246575643_d92ae27492_z_d.jpg</a>"></p>
+=======
+    <updated>2014-02-01T06:25:00+00:00</updated>
+    <id>http://agam.github.io/blog/2014/02/01/change-that-font</id>
+    <content type="html"><![CDATA[<p>You don&rsquo;t have to be chained to <code>Monaco</code> if you don&rsquo;t like it. I changed it to <code>Inconsolata</code>, which is as simply as <a href="http://www.levien.com/type/myfonts/inconsolata.html">downloading it</a> (click on the <em>Open Type File</em> link).</p>
+
+<p>{% img center <a href="http://farm6.staticflickr.com/5509/12246575643_d92ae27492_z_d.jpg">http://farm6.staticflickr.com/5509/12246575643_d92ae27492_z_d.jpg</a> %}</p>
+>>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
 
 <p>Once you click on the downloaded file, the <strong>Font Book</strong> app should open up automatically, showing the font face and with a <code>Install</code> button.</p>
 

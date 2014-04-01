@@ -4,7 +4,11 @@
   <title><![CDATA[Category: Haskell | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/haskell/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
+<<<<<<< HEAD
   <updated>2014-04-01T16:36:46-07:00</updated>
+=======
+  <updated>2014-02-19T01:34:49+00:00</updated>
+>>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -16,7 +20,11 @@
   <entry>
     <title type="html"><![CDATA[Comparison of data structures in C++ and Haskell]]></title>
     <link href="http://agam.github.io/blog/2013/06/26/data-structures-haskell-vs-cpp/"/>
+<<<<<<< HEAD
     <updated>2013-06-26T00:00:00-07:00</updated>
+=======
+    <updated>2013-06-26T00:00:00+00:00</updated>
+>>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
     <id>http://agam.github.io/blog/2013/06/26/data-structures-haskell-vs-cpp</id>
     <content type="html"><![CDATA[<p>Once again, just to satisfy my curiosity, I want to do a tiny comparison of a basic feature in both languages, trying to see how data structures are implemented. Ok, I&rsquo;m fairly certain how it works for in C++, I&rsquo;m really just curious about Haskell.</p>
 
@@ -256,7 +264,11 @@ sys 0m0.000s
   <entry>
     <title type="html"><![CDATA[Hakyll broken ?]]></title>
     <link href="http://agam.github.io/blog/2013/03/20/hakyll-broken/"/>
+<<<<<<< HEAD
     <updated>2013-03-20T00:00:00-07:00</updated>
+=======
+    <updated>2013-03-20T00:00:00+00:00</updated>
+>>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
     <id>http://agam.github.io/blog/2013/03/20/hakyll-broken</id>
     <content type="html"><![CDATA[<p>I noticed that the dates in my blog were all wrong, and now the blog
 doesn&rsquo;t build.</p>
@@ -378,7 +390,11 @@ obsolete.</p>
   <entry>
     <title type="html"><![CDATA[Comparing basic iteration in C++ and Haskell: Part 1]]></title>
     <link href="http://agam.github.io/blog/2013/03/13/basic-iteration-comparison/"/>
+<<<<<<< HEAD
     <updated>2013-03-13T00:00:00-07:00</updated>
+=======
+    <updated>2013-03-13T00:00:00+00:00</updated>
+>>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
     <id>http://agam.github.io/blog/2013/03/13/basic-iteration-comparison</id>
     <content type="html"><![CDATA[<h2><code>For loop</code> iteration: C</h2>
 
@@ -1122,7 +1138,11 @@ sys 0m0.060s
   <entry>
     <title type="html"><![CDATA[Setting up a Haskell webserver to run in Google Compute Engine]]></title>
     <link href="http://agam.github.io/blog/2013/03/11/webserver-in-google-compute-engine/"/>
+<<<<<<< HEAD
     <updated>2013-03-11T00:00:00-07:00</updated>
+=======
+    <updated>2013-03-11T00:00:00+00:00</updated>
+>>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
     <id>http://agam.github.io/blog/2013/03/11/webserver-in-google-compute-engine</id>
     <content type="html"><![CDATA[<p>I signed up for a project at the <a href="https://cloud.google.com/console#c=l">Google Cloud Console</a>, and decided to try running a webserver on it, as a prerequisite to other future toy projects I might link to it.</p>
 
@@ -1440,7 +1460,11 @@ sudo yesod devel --port=80
   <entry>
     <title type="html"><![CDATA[Comparing "Hello World" in C++ and Haskell]]></title>
     <link href="http://agam.github.io/blog/2013/03/10/hello-world-comparison/"/>
+<<<<<<< HEAD
     <updated>2013-03-10T00:00:00-08:00</updated>
+=======
+    <updated>2013-03-10T00:00:00+00:00</updated>
+>>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
     <id>http://agam.github.io/blog/2013/03/10/hello-world-comparison</id>
     <content type="html"><![CDATA[<p>I feel I&rsquo;ve totally forgotten all about assembly, and I was curious anyway about how Haskell differed fundamentally in its basic code generation, so I decided to contrast a basic example against C++.</p>
 

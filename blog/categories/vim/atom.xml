@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
+<<<<<<< HEAD
   <title><![CDATA[Category: vim, | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/vim/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
   <updated>2014-04-01T16:36:46-07:00</updated>
+=======
+  <title><![CDATA[Category: Vim | Agam's Mashed-Up Pome]]></title>
+  <link href="http://agam.github.io/blog/categories/vim/atom.xml" rel="self"/>
+  <link href="http://agam.github.io/"/>
+  <updated>2014-02-19T01:34:49+00:00</updated>
+>>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -14,6 +21,7 @@
 
   
   <entry>
+<<<<<<< HEAD
     <title type="html"><![CDATA[Small change for Vim and Git]]></title>
     <link href="http://agam.github.io/blog/2013/12/16/small-change-for-vim-and-git/"/>
     <updated>2013-12-16T06:04:00-08:00</updated>
@@ -37,6 +45,103 @@ set noswapfile
 <p><code>
 $ git config --global --add color.ui true
 </code></p>
+=======
+    <title type="html"><![CDATA[Using Typewriter mode, ALWAYS]]></title>
+    <link href="http://agam.github.io/blog/2013/11/06/typewriter-mode/"/>
+    <updated>2013-11-06T00:00:00+00:00</updated>
+    <id>http://agam.github.io/blog/2013/11/06/typewriter-mode</id>
+    <content type="html"><![CDATA[<p>I used to have two giant monitors to work with, and reduced them to one since I
+found myself frequently moving my neck from side to side.</p>
+
+<p>I got rid of one of them, and felt much better after that &mdash; but now I was still
+moving my neck up and down. When editing large source files (wait, why are these
+files large to begin with ? That&rsquo;s a different conversation!), you do end up
+tracking the cursor on each find, on each scroll.</p>
+
+<p>The solution is obvious &mdash; as far as possible, keep the horizontal location of
+the cursor fixed.</p>
+
+<p>I&rsquo;m sure what the Emacs equivalent of this is, but if you use the <a href="http://www.sbf5.com/~cduan/technical/vi/">One True
+Editor</a>, try typing <code>:help scrolloff</code> right now; you should see this:</p>
+
+<p>```</p>
+
+<pre><code>                    *'scrolloff'* *'so'*
+</code></pre>
+
+<p>&lsquo;scrolloff&rsquo; &lsquo;so&rsquo;    number  (default 0)</p>
+
+<pre><code>        global
+        {not in Vi}
+Minimal number of screen lines to keep above and below the cursor.
+This will make some context visible around where you are working.  If
+you set it to a very large value (999) the cursor line will always be
+in the middle of the window (except at the start or end of the file or
+when long lines wrap).
+For scrolling horizontally see 'sidescrolloff'.
+NOTE: This option is set to 0 when 'compatible' is set.
+</code></pre>
+
+<p>```</p>
+
+<p>So you can add this to your <code>.vimrc</code> later, but try it out right now. Type</p>
+
+<p><code>
+:set scrolloff=999
+</code></p>
+
+<p>&hellip; and scroll around a bit.</p>
+
+<p>Enjoy.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[SlimV and Vim (as an equivalent to Emacs and Slime)]]></title>
+    <link href="http://agam.github.io/blog/2013/08/06/slimv/"/>
+    <updated>2013-08-06T00:00:00+00:00</updated>
+    <id>http://agam.github.io/blog/2013/08/06/slimv</id>
+    <content type="html"><![CDATA[<p>I&rsquo;ve switched between Emacs and Vim a few times over the last 15-odd years, before finally (?) settling on Vim. I&rsquo;ve come to the realization, as many have before me, that for all the elegant awesomeness of Emacs Lisp,</p>
+
+<blockquote><p>Vim is a better <em>text</em> editor, Emacs is good for everything else</p></blockquote>
+
+<p>Perhaps one day if <a href="http://www.gnu.org/software/guile/">Guile</a> or <a href="https://google-melange.appspot.com/gsoc/proposal/review/google/gsoc2013/shanecelis/1">Emacsey</a> deliver their full promise, I&rsquo;ll happily live inside a REPL forever.</p>
+
+<p>Until then, it&rsquo;s just <em>much, much, much</em> faster to do the equivalent <em>text</em> operations in Vim than in Emacs (yes, I mapped CapsLock to Control; yes, I replaced <code>M-</code> by <code>C-xC-m-</code>).</p>
+
+<p>There were still a few Emacs-only things that haunted me (I outgrew the need to have a <a href="http://emacs-w3m.namazu.org/">web browser</a> or an <a href="http://www.gnu.org/software/emacs/manual/html_mono/erc.html">IRC client</a> in my editor environment, I now use Google Chrome for the former and BitchX/Irssi/Xchat for the latter. I also don&rsquo;t mind reading my <a href="http://gmail.com">email</a> in the browser), such as <a href="http://orgmode.org/"><code>org-mode</code></a>. Fortunately for me, I don&rsquo;t most of its features, and keeping a timestamped diary is something I was able to fix for myself with some shell scripting and vim shortcuts.</p>
+
+<p>Recently, I decided to learn Common Lisp with as much of a newbie attitude as possible. And here I ran into a veritable wall of convention. <em>Of course, didn&rsquo;t I know, that Emacs + Slime is the one true way ?</em>
+<em><strong>Update</strong></em>: Uh no, I take back that decision (why? maybe a future post to
+answer that question)</p>
+
+<p>I dithered, was flustered and nearly reconsidered.</p>
+
+<p>And then I discovered the awesomeness I was looking for, a replacement for Slime in Vim, <a href="http://www.vim.org/scripts/script.php?script_id=2531">Slimv</a>!</p>
+
+<p><a href="http://kovisoft.bitbucket.org/tutorial.html">Here is a tutorial</a> to get you started, but basically all I had to do was to install the plugin and the rest pretty much <em>just worked</em>.</p>
+
+<p>There are quite a lot of nifty tricks here, but my most frequently used commands are:</p>
+
+<ul>
+<li><code>,L</code>: that&rsquo;s a comma followed by L): compile current file</li>
+<li><code>,D</code>: compile current form</li>
+<li><code>,s</code>: lookup a short summary description of the keyword under the cursor</li>
+<li><code>,c</code>: Open Slimv session (splits the window horizontally)</li>
+</ul>
+
+
+<p>I was also new to <code>paredit mode</code>, which is pretty much necessary for making changes to heavily nested parantheses, and it has useful commands there too:</p>
+
+<ul>
+<li><code>,W</code>: wrap an extra set of parentheses around the current form</li>
+<li><code>,S</code>: it&rsquo;s opposite; remove <em>one</em> set of parentheses from the current form</li>
+<li><code>,&lt;</code>, <code>,&gt;</code>: move the parentheses under the cursor one form to the left or right</li>
+</ul>
+
+
+<p>&hellip; and much more. So next time someone tells you how <code>Slime</code> is indispensable and hence Emacs is indispensable, throw <code>Slimv</code> in their face! Kudos to <a href="http://www.vim.org/account/profile.php?user_id=16470">the guy who built it</a>!</p>
+>>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
 ]]></content>
   </entry>
   

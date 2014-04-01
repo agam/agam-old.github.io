@@ -4,7 +4,11 @@
   <title><![CDATA[Category: Blogging | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/blogging/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
+<<<<<<< HEAD
   <updated>2014-04-01T16:36:46-07:00</updated>
+=======
+  <updated>2014-02-19T01:34:49+00:00</updated>
+>>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -16,7 +20,11 @@
   <entry>
     <title type="html"><![CDATA[Living Pseudonymously]]></title>
     <link href="http://agam.github.io/blog/2014/02/19/living-pseudonymously/"/>
+<<<<<<< HEAD
     <updated>2014-02-19T01:29:00-08:00</updated>
+=======
+    <updated>2014-02-19T01:29:00+00:00</updated>
+>>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
     <id>http://agam.github.io/blog/2014/02/19/living-pseudonymously</id>
     <content type="html"><![CDATA[<p>For various reasons, this blog is going to be focussed just on C++ programming, as boring as that may sound.</p>
 
@@ -25,8 +33,11 @@
 <p>Meanwhile everything <em>else</em> will still exist, just not here. Starting with the last two posts.</p>
 
 <p>If you want to try to find me you still can; but I&rsquo;m just not going to advertise it, that&rsquo;s all.</p>
+<<<<<<< HEAD
 
 <p>Edit: Ok, It doesn&rsquo;t <em>entirely</em> have to be limited to that, I can still share some additional stuff, perhaps just not the <em>interesting</em> stuff.</p>
+=======
+>>>>>>> ba040aaeede0b2eb54d17b3ca85864ad11b93f70
 ]]></content>
   </entry>
   
