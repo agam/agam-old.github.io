@@ -14,4 +14,4 @@ Meanwhile everything _else_ will still exist, just not here. Starting with the l
 
 If you want to try to find me you still can; but I'm just not going to advertise it, that's all.
 
-Edit: Ok, It doesn't _entirely_ have to be limited to that, I can still share some additional stuff, perhaps just not the _interesting_ stuff.
+**Edit**: Ok, It doesn't _entirely_ have to be limited to that, I can still share some additional stuff, perhaps just not the _interesting_ stuff.
