@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2014-04-01T16:44:49-07:00</updated>
+  <updated>2014-04-02T14:27:21-07:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,19 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Google Cloud ... again !]]></title>
+    <link href="http://agam.github.io/blog/2014/04/02/google-cloud-dot-dot-dot-again/"/>
+    <updated>2014-04-02T14:06:00-07:00</updated>
+    <id>http://agam.github.io/blog/2014/04/02/google-cloud-dot-dot-dot-again</id>
+    <content type="html"><![CDATA[<p>If you didn&rsquo;t watch the recent Google Cloud Live presentation, you missed out twice. First, you missed learning about some awesome price reductions as well as some cool features; and <em>second</em>, you missed a possible $500 credit for signing up to watch it!</p>
+
+<p>(Though if you did, kudos, I hope you put that credit to good use!)</p>
+
+<p>So anyway, if this credit goes through, I might spin up a VM and give this whole thing a shot again once the price reduction is confirmed &hellip;</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Some Lisp exercises]]></title>
@@ -1862,64 +1875,6 @@ int main() {
 
 
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Urbit: Back Again]]></title>
-    <link href="http://agam.github.io/blog/2014/01/08/urbit-back-again/"/>
-    <updated>2014-01-08T08:47:00-08:00</updated>
-    <id>http://agam.github.io/blog/2014/01/08/urbit-back-again</id>
-    <content type="html"><![CDATA[<p>Turns out I was affected by the last &ldquo;continuity breach&rdquo;.</p>
-
-<p>So I had to delete everything and start over. In my case this meant</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span><span class="nb">cd </span>urbit
-</span><span class='line'><span class="nv">$ </span>git pull origin master
-</span><span class='line'><span class="nv">$ </span>make clean
-</span><span class='line'><span class="nv">$ </span>make
-</span><span class='line'><span class="nv">$ </span>rm -rf urb/*-*
-</span><span class='line'><span class="nv">$ </span>rm -rf frogstar
-</span><span class='line'><span class="nv">$ </span>vere -c frogstar
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This time when I ran <code>:begin</code> it succeeded</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>generating 2048-bit RSA key...
-</span><span class='line'>; ~doznec _Urban Republic_ is your neighbor
-</span><span class='line'>; ~doznec _Urban Republic_ is your neighbor
-</span><span class='line'>request approved
-</span><span class='line'>; ~zod |Tianming| is your neighbor
-</span><span class='line'>; ~zod |Tianming| is your neighbor
-</span><span class='line'>; ~doznec _Urban Republic_ is your neighbor
-</span><span class='line'>; ~doznec _Urban Republic_ is your neighbor
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>&hellip; and then more hoon files were downloaded, after which I got my new prompt:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>~todbyt-nathes/try<span class="o">=</span>&gt;
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Next time I&rsquo;ll start exploring <em>Nock</em> and <em>Hoon</em> some more &hellip;</p>
 ]]></content>
   </entry>
   
