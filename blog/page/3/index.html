@@ -68,12 +68,15 @@
     
     
     
+    
     <li><a href="http://twitter.com/agambrahma" title="Twitter Profile"><i class="icon-twitter-sign social-navbar"></i></a></li>
     
     
     <li><a href="http://plus.google.com/+AgamBrahma" title="Google+ Profile"><i class="icon-google-plus-sign social-navbar"></i></a></li>
     
     
+    
+
     
 </ul>
 
@@ -86,8 +89,14 @@
         <div id="content">
           <div class="jumbotron">
   <div class="container">
-    Agam&#8217;s Mashed-Up Pome
-    <h3 class="tagline">Thinking is hard; Let&#8217;s compute instead.</h3>
+    
+      Agam&#8217;s Mashed-Up Pome
+    
+    <h3 class="tagline">
+      
+        Thinking is hard; Let&#8217;s compute instead.
+      
+    </h3>
   </div>
 </div>
 
@@ -113,7 +122,216 @@
   
 
 
-<i class="icon-calendar-empty"></i> <time datetime="2014-01-08T08:47:00-08:00" pubdate data-updated="true">Jan 8<span>th</span>, 2014</time></h5>
+<i class="icon-calendar-empty"></i> <time datetime="2014-01-16T06:21:00-08:00" pubdate data-updated="true">Jan 16<sup>th</sup>, 2014</time></h5>
+          <div class="row-fluid">
+          
+          </div>
+          
+          <div class="row-fluid">
+          
+          <a href="/blog/categories/foundation/"><span class="badge">foundation</span></a>
+          
+          <a href="/blog/categories/programming,/"><span class="badge">programming,</span></a>
+          
+          </div>
+          
+    </div>
+    <div class="span10 post-container">
+      <h1 class="link"><a href="/blog/2014/01/16/programming-technology-and-science/">Programming: Technology and Science</a></h1>
+      <p>I liked this quote from the <a href="http://www.amazon.com/Concepts-Techniques-Models-Computer-Programming/dp/0262220695">&ldquo;Concepts, Techniques and Models of Computer Programming&rdquo;</a>:</p>
+
+<blockquote><p>Programming as defined above has two essential parts: a technology and its scientific foundation.</p>
+
+<p>The technology consists of tools, practical techniques, and
+standards, allowing us to do programming.</p>
+
+<p>The science consists of a broad and deep theory with predictive power, allowing us to understand programming. <em>Ideally, the science should explain the technology in a way that is as direct and useful as possible.</em></p>
+
+<p>If either part is left out, we are no longer doing programming. <strong>Without the
+technology, we are doing pure mathematics. Without the science, we are doing a
+craft, i.e., we lack deep understanding</strong></p></blockquote>
+
+      
+      
+    </div>
+  </div>
+
+
+
+    </article>
+    
+    <hr>
+    
+  
+  
+    <article>
+      
+
+  <div class="row-fluid">
+    <div class="span2 post-meta">
+	  <h5 class="date-time">
+
+
+
+
+
+
+
+
+  
+
+
+<i class="icon-calendar-empty"></i> <time datetime="2014-01-08T20:22:00-08:00" pubdate data-updated="true">Jan 8<sup>th</sup>, 2014</time></h5>
+          <div class="row-fluid">
+          
+          </div>
+          
+          <div class="row-fluid">
+          
+          <a href="/blog/categories/alwaysbecoding,/"><span class="badge">alwaysbecoding,</span></a>
+          
+          <a href="/blog/categories/reddit/"><span class="badge">reddit</span></a>
+          
+          </div>
+          
+    </div>
+    <div class="span10 post-container">
+      <h1 class="link"><a href="/blog/2014/01/08/programming-fun-circle-area/">Programming Fun: Circle Area</a></h1>
+      <p>Straightforward <em>math-only, no-algorithm</em> <a href="http://www.reddit.com/r/dailyprogrammer/comments/1s6484/120513_challenge_138_intermediate_overlapping/">problem</a></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Input Description
+</span><span class='line'>-----------------
+</span><span class='line'>
+</span><span class='line'>On standard input you will be given four floating-point space-delimited values:
+</span><span class='line'>x y u w. x and y are the first circle's position in Cartesian coordinates. The
+</span><span class='line'>second pair u and w are the second circle's position.
+</span><span class='line'>
+</span><span class='line'>Note that the given circles may not actually intersect. If this is the case,
+</span><span class='line'>return the sum of both circles (which will always be Pi x 2 since our circles
+</span><span class='line'>are unit-circles).
+</span><span class='line'>
+</span><span class='line'>Output Description
+</span><span class='line'>------------------
+</span><span class='line'>
+</span><span class='line'>Print the summed volume of the two circles, up to an accuracy of 4 digits after the decimal place.</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This is just trigonometry, so I made some Post-It illustrations. This one shows the general problem we have to solve.</p>
+
+<p><img class="center" src="/images/programming-fun/circle-area-1.jpg" width="300"></p>
+
+<p>Given the centres of the two circles, and their radii, we know <em>d</em>, the distance between their centres and whether it leads to overlap at all.</p>
+
+<p><img class="center" src="/images/programming-fun/circle-area-2.jpg" width="300"></p>
+
+<p>Overlap only occurs when <em>d &lt; 2r</em>. When <em>d > 2r</em> the answer is just the sum of the areas.</p>
+
+<p><img class="center" src="/images/programming-fun/circle-area-3.jpg" width="300"></p>
+
+<p>From this figure, it should be clear that the overlapping area is the segment of the circle subtended by the chord that is common to both circles. We can find the length of this chord by considering the right triangle formed by half of it, the radius, and half the centre distance.</p>
+
+<p>This then leads to the relationship between the area of the sector (<em>A</em>), the area of the triangle inside it (<em>A_1</em>) and the segment area (<em>A_2</em>)</p>
+
+<p><img class="center" src="/images/programming-fun/circle-area-4.jpg" width="300"></p>
+
+<p>Finally, we subtract the segment area from the area of the circle (and then double it, for two circles) to get our answer.</p>
+
+<p><img class="center" src="/images/programming-fun/circle-area-5.jpg" width="300"></p>
+
+<div><script src='https://gist.github.com/8323896.js'></script>
+<noscript><pre><code>#include &lt;cassert&gt;
+#include &lt;cmath&gt;
+#include &lt;cstdint&gt;
+#include &lt;cstdio&gt;
+#include &lt;cstdlib&gt;
+#include &lt;algorithm&gt;
+#include &lt;iomanip&gt;
+#include &lt;iostream&gt;
+#include &lt;limits&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+#include &lt;unordered_map&gt;
+
+using namespace std;
+
+int main() {
+  double x1, y1, x2, y2;
+  cin &gt;&gt; x1 &gt;&gt; y1 &gt;&gt; x2 &gt;&gt; y2;
+  cout &lt;&lt; &quot;Got circle 1 as (&quot; &lt;&lt; x1 &lt;&lt; &quot;, &quot; &lt;&lt; y1 &lt;&lt; &quot;)\n&quot;;
+  cout &lt;&lt; &quot;Got circle 2 as (&quot; &lt;&lt; x2 &lt;&lt; &quot;, &quot; &lt;&lt; y2 &lt;&lt; &quot;)\n&quot;;
+
+  // Total area = 2 * (area of each circle) - 2 * (segment area of overlap)
+  const double kPI = atan(1.0) * 4.0;
+  const double kRadius = 1.0;
+  const double circle_area = kPI * pow(kRadius, 2);
+
+  const double centre_distance = sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
+  if (centre_distance &gt; (2 * kRadius)) {
+    // No overlap
+    cout &lt;&lt; (2 * circle_area) &lt;&lt; endl;
+    return 0;
+  }
+
+  const double segment_half_length = sqrt(pow(kRadius, 2) - pow(centre_distance/2.0, 2));
+  const double theta = asin(segment_half_length / kRadius);
+  const double sector_area = theta * pow(kRadius, 2);
+  const double segment_area = sector_area - (centre_distance * segment_half_length / 2);
+
+  cout.precision(5);
+  cout &lt;&lt; (2 * circle_area) - (2 * segment_area) &lt;&lt; endl;
+}
+</code></pre></noscript></div>
+
+
+
+
+      
+      
+    </div>
+  </div>
+
+
+
+    </article>
+    
+    <hr>
+    
+  
+  
+    <article>
+      
+
+  <div class="row-fluid">
+    <div class="span2 post-meta">
+	  <h5 class="date-time">
+
+
+
+
+
+
+
+
+  
+
+
+<i class="icon-calendar-empty"></i> <time datetime="2014-01-08T08:47:00-08:00" pubdate data-updated="true">Jan 8<sup>th</sup>, 2014</time></h5>
           <div class="row-fluid">
           
           </div>
@@ -159,13 +377,13 @@
 <span class='line-number'>7</span>
 <span class='line-number'>8</span>
 </pre></td><td class='code'><pre><code class='sh'><span class='line'>generating 2048-bit RSA key...
-</span><span class='line'>; ~doznec _Urban Republic_ is your neighbor
-</span><span class='line'>; ~doznec _Urban Republic_ is your neighbor
+</span><span class='line'><span class="p">;</span> ~doznec _Urban Republic_ is your neighbor
+</span><span class='line'><span class="p">;</span> ~doznec _Urban Republic_ is your neighbor
 </span><span class='line'>request approved
-</span><span class='line'>; ~zod |Tianming| is your neighbor
-</span><span class='line'>; ~zod |Tianming| is your neighbor
-</span><span class='line'>; ~doznec _Urban Republic_ is your neighbor
-</span><span class='line'>; ~doznec _Urban Republic_ is your neighbor
+</span><span class='line'><span class="p">;</span> ~zod <span class="p">|</span>Tianming<span class="p">|</span> is your neighbor
+</span><span class='line'><span class="p">;</span> ~zod <span class="p">|</span>Tianming<span class="p">|</span> is your neighbor
+</span><span class='line'><span class="p">;</span> ~doznec _Urban Republic_ is your neighbor
+</span><span class='line'><span class="p">;</span> ~doznec _Urban Republic_ is your neighbor
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -208,14 +426,14 @@
   
 
 
-<i class="icon-calendar-empty"></i> <time datetime="2014-01-07T23:31:00-08:00" pubdate data-updated="true">Jan 7<span>th</span>, 2014</time></h5>
+<i class="icon-calendar-empty"></i> <time datetime="2014-01-07T23:31:00-08:00" pubdate data-updated="true">Jan 7<sup>th</sup>, 2014</time></h5>
           <div class="row-fluid">
           
           </div>
           
           <div class="row-fluid">
           
-          <a href="/blog/categories/alwaysbecoding,/"><span class="badge">AlwaysBeCoding,</span></a>
+          <a href="/blog/categories/alwaysbecoding,/"><span class="badge">alwaysbecoding,</span></a>
           
           <a href="/blog/categories/reddit/"><span class="badge">reddit</span></a>
           
@@ -272,32 +490,32 @@
 using namespace std;
 
 void InitializeBrailleData(unordered_map&lt;string, char&gt;* rep) {
-  rep-&gt;insert(make_pair(&quot;O.....&quot;, &#39;A&#39;));
-  rep-&gt;insert(make_pair(&quot;O.O...&quot;, &#39;B&#39;));
-  rep-&gt;insert(make_pair(&quot;OO....&quot;, &#39;C&#39;));
-  rep-&gt;insert(make_pair(&quot;OO.O..&quot;, &#39;D&#39;));
-  rep-&gt;insert(make_pair(&quot;O..O..&quot;, &#39;E&#39;));
-  rep-&gt;insert(make_pair(&quot;OOO...&quot;, &#39;F&#39;));
-  rep-&gt;insert(make_pair(&quot;OOOO..&quot;, &#39;G&#39;));
-  rep-&gt;insert(make_pair(&quot;O.OO..&quot;, &#39;H&#39;));
-  rep-&gt;insert(make_pair(&quot;.OO...&quot;, &#39;I&#39;));
-  rep-&gt;insert(make_pair(&quot;.OOO..&quot;, &#39;J&#39;));
-  rep-&gt;insert(make_pair(&quot;O...O.&quot;, &#39;K&#39;));
-  rep-&gt;insert(make_pair(&quot;O.O.O.&quot;, &#39;L&#39;));
-  rep-&gt;insert(make_pair(&quot;OO..O.&quot;, &#39;M&#39;));
-  rep-&gt;insert(make_pair(&quot;OO.OO.&quot;, &#39;N&#39;));
-  rep-&gt;insert(make_pair(&quot;O..OO.&quot;, &#39;O&#39;));
-  rep-&gt;insert(make_pair(&quot;OOO.O.&quot;, &#39;P&#39;));
-  rep-&gt;insert(make_pair(&quot;OOOOO.&quot;, &#39;Q&#39;));
-  rep-&gt;insert(make_pair(&quot;O.OOO.&quot;, &#39;R&#39;));
-  rep-&gt;insert(make_pair(&quot;.OO.O.&quot;, &#39;S&#39;));
-  rep-&gt;insert(make_pair(&quot;.OOOO.&quot;, &#39;T&#39;));
-  rep-&gt;insert(make_pair(&quot;O...OO&quot;, &#39;U&#39;));
-  rep-&gt;insert(make_pair(&quot;O.O.OO&quot;, &#39;V&#39;));
-  rep-&gt;insert(make_pair(&quot;.OOO.O&quot;, &#39;W&#39;));
-  rep-&gt;insert(make_pair(&quot;OO..OO&quot;, &#39;X&#39;));
-  rep-&gt;insert(make_pair(&quot;OO.OOO&quot;, &#39;Y&#39;));
-  rep-&gt;insert(make_pair(&quot;O..OOO&quot;, &#39;Z&#39;));
+  rep-&gt;insert(make_pair(&quot;O.....&quot;, 'A'));
+  rep-&gt;insert(make_pair(&quot;O.O...&quot;, 'B'));
+  rep-&gt;insert(make_pair(&quot;OO....&quot;, 'C'));
+  rep-&gt;insert(make_pair(&quot;OO.O..&quot;, 'D'));
+  rep-&gt;insert(make_pair(&quot;O..O..&quot;, 'E'));
+  rep-&gt;insert(make_pair(&quot;OOO...&quot;, 'F'));
+  rep-&gt;insert(make_pair(&quot;OOOO..&quot;, 'G'));
+  rep-&gt;insert(make_pair(&quot;O.OO..&quot;, 'H'));
+  rep-&gt;insert(make_pair(&quot;.OO...&quot;, 'I'));
+  rep-&gt;insert(make_pair(&quot;.OOO..&quot;, 'J'));
+  rep-&gt;insert(make_pair(&quot;O...O.&quot;, 'K'));
+  rep-&gt;insert(make_pair(&quot;O.O.O.&quot;, 'L'));
+  rep-&gt;insert(make_pair(&quot;OO..O.&quot;, 'M'));
+  rep-&gt;insert(make_pair(&quot;OO.OO.&quot;, 'N'));
+  rep-&gt;insert(make_pair(&quot;O..OO.&quot;, 'O'));
+  rep-&gt;insert(make_pair(&quot;OOO.O.&quot;, 'P'));
+  rep-&gt;insert(make_pair(&quot;OOOOO.&quot;, 'Q'));
+  rep-&gt;insert(make_pair(&quot;O.OOO.&quot;, 'R'));
+  rep-&gt;insert(make_pair(&quot;.OO.O.&quot;, 'S'));
+  rep-&gt;insert(make_pair(&quot;.OOOO.&quot;, 'T'));
+  rep-&gt;insert(make_pair(&quot;O...OO&quot;, 'U'));
+  rep-&gt;insert(make_pair(&quot;O.O.OO&quot;, 'V'));
+  rep-&gt;insert(make_pair(&quot;.OOO.O&quot;, 'W'));
+  rep-&gt;insert(make_pair(&quot;OO..OO&quot;, 'X'));
+  rep-&gt;insert(make_pair(&quot;OO.OOO&quot;, 'Y'));
+  rep-&gt;insert(make_pair(&quot;O..OOO&quot;, 'Z'));
 };
 
 void AddRepresentation(const string&amp; line, vector&lt;string&gt;* representations) {
@@ -305,7 +523,7 @@ void AddRepresentation(const string&amp; line, vector&lt;string&gt;* representat
     (*representations)[index / 3].push_back(line[index]);
     (*representations)[index / 3].push_back(line[index + 1]);
 
-    assert((line[index + 2] == &#39; &#39;) || (index + 2 == line.length()));
+    assert((line[index + 2] == ' ') || (index + 2 == line.length()));
   }
 }
 
@@ -315,7 +533,7 @@ int main() {
 
   // Assume input is well formed.
   // This means we read three lines from standard input,
-  // and each line&#39;s length is (3 * x - 1)
+  // and each line's length is (3 * x - 1)
   string line1, line2, line3;
   getline(cin, line1);
   getline(cin, line2);
@@ -372,7 +590,7 @@ int main() {
   
 
 
-<i class="icon-calendar-empty"></i> <time datetime="2014-01-07T09:50:00-08:00" pubdate data-updated="true">Jan 7<span>th</span>, 2014</time></h5>
+<i class="icon-calendar-empty"></i> <time datetime="2014-01-07T09:50:00-08:00" pubdate data-updated="true">Jan 7<sup>th</sup>, 2014</time></h5>
           <div class="row-fluid">
           
           </div>
@@ -421,7 +639,7 @@ int main() {
 </span><span class='line'>---------------- playback starting----------------
 </span><span class='line'>.....
 </span><span class='line'>---------------- playback <span class="nb">complete</span>----------------
-</span><span class='line'>save: gc: 28 bytes shed; 2.361.836 bytes live
+</span><span class='line'>save: gc: <span class="m">28</span> bytes shed<span class="p">;</span> 2.361.836 bytes live
 </span><span class='line'>
 </span><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt;
 </span></code></pre></td></tr></table></div></figure>
@@ -439,7 +657,7 @@ int main() {
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt; <span class="o">(</span>add 4 5<span class="o">)</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt; <span class="o">(</span>add <span class="m">4</span> 5<span class="o">)</span>
 </span><span class='line'>9
 </span></code></pre></td></tr></table></div></figure>
 
@@ -450,7 +668,7 @@ int main() {
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 </pre></td><td class='code'><pre><code class='sh'><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt; <span class="o">=</span>a 17
-</span><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt; <span class="o">(</span>add 14 a<span class="o">)</span>
+</span><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt; <span class="o">(</span>add <span class="m">14</span> a<span class="o">)</span>
 </span><span class='line'>31
 </span></code></pre></td></tr></table></div></figure>
 
@@ -459,7 +677,7 @@ int main() {
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt; <span class="o">(</span>mul 6 7<span class="o">)</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt; <span class="o">(</span>mul <span class="m">6</span> 7<span class="o">)</span>
 </span><span class='line'>42
 </span></code></pre></td></tr></table></div></figure>
 
@@ -468,7 +686,7 @@ int main() {
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt; <span class="o">(</span>mul 5 <span class="o">(</span>add 4 7<span class="o">))</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt; <span class="o">(</span>mul <span class="m">5</span> <span class="o">(</span>add <span class="m">4</span> 7<span class="o">))</span>
 </span><span class='line'>55
 </span></code></pre></td></tr></table></div></figure>
 
@@ -531,20 +749,20 @@ int main() {
 <span class='line-number'>14</span>
 <span class='line-number'>15</span>
 </pre></td><td class='code'><pre><code class='sh'><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt; :zero
-</span><span class='line'>0                             ::  0, ~zod
-</span><span class='line'>0                             ::  1, ~nec
-</span><span class='line'>0                             ::  2, ~bud
-</span><span class='line'>0                             ::  3, ~wes
-</span><span class='line'>0                             ::  4, ~sev
-</span><span class='line'>0                             ::  5, ~per
-</span><span class='line'>0                             ::  6, ~sut
-</span><span class='line'>0                             ::  7, ~let
-</span><span class='line'>0                             ::  8, ~ful
+</span><span class='line'><span class="m">0</span>                             ::  0, ~zod
+</span><span class='line'><span class="m">0</span>                             ::  1, ~nec
+</span><span class='line'><span class="m">0</span>                             ::  2, ~bud
+</span><span class='line'><span class="m">0</span>                             ::  3, ~wes
+</span><span class='line'><span class="m">0</span>                             ::  4, ~sev
+</span><span class='line'><span class="m">0</span>                             ::  5, ~per
+</span><span class='line'><span class="m">0</span>                             ::  6, ~sut
+</span><span class='line'><span class="m">0</span>                             ::  7, ~let
+</span><span class='line'><span class="m">0</span>                             ::  8, ~ful
 </span><span class='line'>...
-</span><span class='line'>0                             ::  252, ~pec
-</span><span class='line'>0                             ::  253, ~nel
-</span><span class='line'>0                             ::  254, ~nev
-</span><span class='line'>0                             ::  255, ~fes
+</span><span class='line'><span class="m">0</span>                             ::  252, ~pec
+</span><span class='line'><span class="m">0</span>                             ::  253, ~nel
+</span><span class='line'><span class="m">0</span>                             ::  254, ~nev
+</span><span class='line'><span class="m">0</span>                             ::  255, ~fes
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -652,14 +870,14 @@ int main() {
 </span><span class='line'>
 </span><span class='line'>Launching ~todbyt-nathes, one of 4.278.124.800 Urbit destroyers...
 </span><span class='line'>
-</span><span class='line'>            If I did not build <span class="k">for </span>myself
-</span><span class='line'>            <span class="k">for </span>whom should I build?
+</span><span class='line'>            If I did not build <span class="k">for</span> myself
+</span><span class='line'>            <span class="k">for</span> whom should I build?
 </span><span class='line'>
 </span><span class='line'>                  -- Bunting, _Chomei at Toyama_
 </span><span class='line'>
 </span><span class='line'>Let<span class="s1">&#39;s configure your identity.  Warning - it&#39;</span>s nontrivial to
 </span><span class='line'>change this data once you<span class="err">&#39;</span>ve sent it to the server.  If you enter
-</span><span class='line'>something wrong, hit ^D to cancel, <span class="k">then </span>run the program again.
+</span><span class='line'>something wrong, hit ^D to cancel, <span class="k">then</span> run the program again.
 </span><span class='line'>
 </span><span class='line'>Your ticket: &lt;Enter your ticket here&gt;
 </span><span class='line'>
@@ -682,7 +900,7 @@ int main() {
 <span class='line-number'>7</span>
 <span class='line-number'>8</span>
 </pre></td><td class='code'><pre><code class='sh'><span class='line'>What language would your ship rather speak?  Enter it as a
-</span><span class='line'>two-letter <span class="o">(</span>ISO 639-1<span class="o">)</span> code, like <span class="s2">&quot;en&quot;</span> <span class="k">for </span>English.  Whatever
+</span><span class='line'>two-letter <span class="o">(</span>ISO 639-1<span class="o">)</span> code, like <span class="s2">&quot;en&quot;</span> <span class="k">for</span> English.  Whatever
 </span><span class='line'>language you pick, it<span class="s1">&#39;ll all be English now, but in future</span>
 </span><span class='line'><span class="s1">we&#39;</span>ll be more sensitive to your needs.
 </span><span class='line'>
@@ -705,7 +923,7 @@ int main() {
 <span class='line-number'>11</span>
 <span class='line-number'>12</span>
 <span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>Please <span class="k">select </span>one of the pre-chosen forms:
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>Please <span class="k">select</span> one of the pre-chosen forms:
 </span><span class='line'>
 </span><span class='line'>  %lady   female-identified individual
 </span><span class='line'>  %lord   male-identified individual
@@ -737,10 +955,10 @@ int main() {
 </span><span class='line'><span class="s1">personal information - not enough to compromise your privacy,</span>
 </span><span class='line'><span class="s1">just enough to make everyone on Urbit feel like a neighbor.</span>
 </span><span class='line'>
-</span><span class='line'><span class="s1">What we&#39;</span>re going to ask you <span class="k">for </span>is information that<span class="s1">&#39;s (a)</span>
+</span><span class='line'><span class="s1">What we&#39;</span>re going to ask you <span class="k">for</span> is information that<span class="s1">&#39;s (a)</span>
 </span><span class='line'><span class="s1">public (would be obvious, or at least easy to guess, for</span>
 </span><span class='line'><span class="s1">someone who met you in person); (b) durable (doesn&#39;</span>t change
-</span><span class='line'>often<span class="o">)</span>; and <span class="o">(</span>c<span class="o">)</span> relevant <span class="o">(</span>helps you connect with friends<span class="o">)</span>.
+</span><span class='line'>often<span class="o">)</span><span class="p">;</span> and <span class="o">(</span>c<span class="o">)</span> relevant <span class="o">(</span>helps you connect with friends<span class="o">)</span>.
 </span><span class='line'>
 </span><span class='line'>For example, we<span class="s1">&#39;ll ask for the year (not day) you were born,</span>
 </span><span class='line'><span class="s1">because your age is easy to guess in person, doesn&#39;</span>t change,
@@ -844,7 +1062,7 @@ int main() {
 <span class='line-number'>4</span>
 </pre></td><td class='code'><pre><code class='sh'><span class='line'>generating 2048-bit RSA key...
 </span><span class='line'>ames: czar zod.urbit.org: ip .198.199.112.32
-</span><span class='line'>; ~doznec ~doznec not responding still trying
+</span><span class='line'><span class="p">;</span> ~doznec ~doznec not responding still trying
 </span><span class='line'>waiting on ~doznec/ta
 </span></code></pre></td></tr></table></div></figure>
 
@@ -883,14 +1101,14 @@ int main() {
   
 
 
-<i class="icon-calendar-empty"></i> <time datetime="2014-01-07T02:27:00-08:00" pubdate data-updated="true">Jan 7<span>th</span>, 2014</time></h5>
+<i class="icon-calendar-empty"></i> <time datetime="2014-01-07T02:27:00-08:00" pubdate data-updated="true">Jan 7<sup>th</sup>, 2014</time></h5>
           <div class="row-fluid">
           
           </div>
           
           <div class="row-fluid">
           
-          <a href="/blog/categories/alwaysbecoding,/"><span class="badge">AlwaysBeCoding,</span></a>
+          <a href="/blog/categories/alwaysbecoding,/"><span class="badge">alwaysbecoding,</span></a>
           
           <a href="/blog/categories/reddit/"><span class="badge">reddit</span></a>
           
@@ -1012,15 +1230,15 @@ void FindFoodItems(
   for (auto&amp; food_node : food_nodes) {
     // The only cases supported are:
     //   (1) Exact match
-    //   (2) &#39;*&#39; at the beginning
-    //   (3) &#39;*&#39; at the end
-    if (food_glob.find_first_of(&#39;*&#39;) == string::npos) {
+    //   (2) '*' at the beginning
+    //   (3) '*' at the end
+    if (food_glob.find_first_of('*') == string::npos) {
       if (food_glob == food_node-&gt;label) {
         results-&gt;push_back(food_node);
         continue;
       }
     }
-    if (food_glob.front() == &#39;*&#39;) {
+    if (food_glob.front() == '*') {
       const string matcher = food_glob.substr(1);
       if (food_node-&gt;label.substr(
             food_node-&gt;label.length() - matcher.length()) ==
@@ -1029,7 +1247,7 @@ void FindFoodItems(
         continue;
       }
     }
-    if (food_glob.back() == &#39;*&#39;) {
+    if (food_glob.back() == '*') {
       const string matcher = food_glob.substr(0, food_glob.length() - 1);
       if (food_node-&gt;label.substr(0, matcher.length()) == matcher) {
         results-&gt;push_back(food_node);
@@ -1053,7 +1271,7 @@ int main() {
   for (int i = 0; i &lt; num_food_relationships; ++i) {
     string food_item_1, food_item_2;
     cin &gt;&gt; food_item_1 &gt;&gt; food_item_2;
-    // We are going to use regex matching whereas the input is in &#39;glob&#39; format,
+    // We are going to use regex matching whereas the input is in 'glob' format,
     // so make a small adjustment.
     food_relationships.push_back(make_pair(food_item_1, food_item_2));
   }
@@ -1073,12 +1291,12 @@ int main() {
   // 2. For every relationship, expand the regex to determine the nodes involved, and
   // then create a dependency link.
   // 3. Go through the dependency links and number the nodes
-  //    - Increment the number of each of a node&#39;s dependencies
+  //    - Increment the number of each of a node's dependencies
   //    - Repeat for each of the dependent nodes
   //    - Add the nodes into a numbered list.
   //    - Note: this will require adding and removing nodes from the list
   // 4. Once no more dependencies have to be processed, print out numbered list
-  // 5. Go through graph and print out &#39;isolated&#39; nodes
+  // 5. Go through graph and print out 'isolated' nodes
   //
   // Edge cases: Multiple origins, multiple nodes of the same number, isolated nodes
 
@@ -1088,9 +1306,9 @@ int main() {
   for (const auto&amp; food_relationship : food_relationships) {
     vector&lt;GraphNode*&gt; dependents, dependees;
     // Each relationship can potentially be many-&gt;many
-    // Note: the c++ regex implementation isn&#39;t available in my standard library
-    // right now, so I&#39;m going to support a limited range of globs:
-    //   only those where the &#39;*&#39; is either right at the beginning or at the end
+    // Note: the c++ regex implementation isn't available in my standard library
+    // right now, so I'm going to support a limited range of globs:
+    //   only those where the '*' is either right at the beginning or at the end
     FindFoodItems(food_relationship.first, food_nodes, &amp;dependents);
     FindFoodItems(food_relationship.second, food_nodes, &amp;dependees);
 
@@ -1118,7 +1336,7 @@ int main() {
   }
 
   // Step 3
-  // Process all the nodes in the current &#39;frontier&#39; until there are non left.
+  // Process all the nodes in the current 'frontier' until there are non left.
   // The first frontier is the set of root nodes
   queue&lt;GraphNode*&gt; frontier;
   for (auto&amp; node : root_nodes) {
@@ -1196,7 +1414,7 @@ int main() {
   
 
 
-<i class="icon-calendar-empty"></i> <time datetime="2014-01-06T07:44:00-08:00" pubdate data-updated="true">Jan 6<span>th</span>, 2014</time></h5>
+<i class="icon-calendar-empty"></i> <time datetime="2014-01-06T07:44:00-08:00" pubdate data-updated="true">Jan 6<sup>th</sup>, 2014</time></h5>
           <div class="row-fluid">
           
           </div>
@@ -1299,9 +1517,9 @@ int main() {
 </span><span class='line'>generating 2048-bit RSA pair...
 </span><span class='line'>ames: czar zod.urbit.org: ip .198.199.112.32
 </span><span class='line'>saving passcode in /home/agam/.urbit/~fiddyn-lavpun.txt
-</span><span class='line'><span class="o">(</span><span class="k">for </span>real security, write it down and delete the file...<span class="o">)</span>
-</span><span class='line'>; ~zod |Tianming| is your neighbor
-</span><span class='line'>; ~zod |Tianming| is your neighbor
+</span><span class='line'><span class="o">(</span><span class="k">for</span> real security, write it down and delete the file...<span class="o">)</span>
+</span><span class='line'><span class="p">;</span> ~zod <span class="p">|</span>Tianming<span class="p">|</span> is your neighbor
+</span><span class='line'><span class="p">;</span> ~zod <span class="p">|</span>Tianming<span class="p">|</span> is your neighbor
 </span><span class='line'>waiting...
 </span></code></pre></td></tr></table></div></figure>
 
@@ -1370,7 +1588,7 @@ int main() {
   
 
 
-<i class="icon-calendar-empty"></i> <time datetime="2014-01-05T20:42:00-08:00" pubdate data-updated="true">Jan 5<span>th</span>, 2014</time></h5>
+<i class="icon-calendar-empty"></i> <time datetime="2014-01-05T20:42:00-08:00" pubdate data-updated="true">Jan 5<sup>th</sup>, 2014</time></h5>
           <div class="row-fluid">
           
           </div>
@@ -1424,7 +1642,7 @@ int main() {
   
 
 
-<i class="icon-calendar-empty"></i> <time datetime="2013-12-24T06:22:00-08:00" pubdate data-updated="true">Dec 24<span>th</span>, 2013</time></h5>
+<i class="icon-calendar-empty"></i> <time datetime="2013-12-24T06:22:00-08:00" pubdate data-updated="true">Dec 24<sup>th</sup>, 2013</time></h5>
           <div class="row-fluid">
           
           </div>
@@ -1476,14 +1694,14 @@ int main() {
   
 
 
-<i class="icon-calendar-empty"></i> <time datetime="2013-12-19T02:23:00-08:00" pubdate data-updated="true">Dec 19<span>th</span>, 2013</time></h5>
+<i class="icon-calendar-empty"></i> <time datetime="2013-12-19T02:23:00-08:00" pubdate data-updated="true">Dec 19<sup>th</sup>, 2013</time></h5>
           <div class="row-fluid">
           
           </div>
           
           <div class="row-fluid">
           
-          <a href="/blog/categories/alwaysbecoding,/"><span class="badge">AlwaysBeCoding,</span></a>
+          <a href="/blog/categories/alwaysbecoding,/"><span class="badge">alwaysbecoding,</span></a>
           
           <a href="/blog/categories/reddit/"><span class="badge">reddit</span></a>
           
@@ -1609,145 +1827,13 @@ Note that the order of preference for ballots goes from left-to-right. The integ
 
 Output Description
 ------------------
-Given the candidates and ballots, compute the first-round of successful candidates (e.g. rank them based on all ballot&#39;s first choice). If the percentage of votes for any one candidate is more than 50%, print the candidate name as the winner. Else, take all the votes of the least-successful candidate, and use their ballot&#39;s 2nd choice, summing again the total votes. If needed (e.g. there is no candidate that has more than 50% of the votes), repeat this process for the 3rd, 4th, etc. choice, and print the winner of the election.
+Given the candidates and ballots, compute the first-round of successful candidates (e.g. rank them based on all ballot's first choice). If the percentage of votes for any one candidate is more than 50%, print the candidate name as the winner. Else, take all the votes of the least-successful candidate, and use their ballot's 2nd choice, summing again the total votes. If needed (e.g. there is no candidate that has more than 50% of the votes), repeat this process for the 3rd, 4th, etc. choice, and print the winner of the election.
 For each round of computation, print the percentage of votes for each candidate, and rank them based on that percentage, using the output format.
 */
 </code></pre></noscript></div>
 
 
 
-
-      
-      
-    </div>
-  </div>
-
-
-
-    </article>
-    
-    <hr>
-    
-  
-  
-    <article>
-      
-
-  <div class="row-fluid">
-    <div class="span2 post-meta">
-	  <h5 class="date-time">
-
-
-
-
-
-
-
-
-  
-
-
-<i class="icon-calendar-empty"></i> <time datetime="2013-12-16T06:04:00-08:00" pubdate data-updated="true">Dec 16<span>th</span>, 2013</time></h5>
-          <div class="row-fluid">
-          
-          </div>
-          
-          <div class="row-fluid">
-          
-          <a href="/blog/categories/git/"><span class="badge">git</span></a>
-          
-          <a href="/blog/categories/vim,/"><span class="badge">vim,</span></a>
-          
-          </div>
-          
-    </div>
-    <div class="span10 post-container">
-      <h1 class="link"><a href="/blog/2013/12/16/small-change-for-vim-and-git/">Small change for Vim and Git</a></h1>
-      <h2>Vim</h2>
-
-<p>I hate seeing <code>.swp</code> and <code>~</code> files when I&rsquo;m editing. If I really need to go back to an earlier version of something there are other ways.</p>
-
-<p>So I added this to my .vimrc:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>set nobackup
-</span><span class='line'>set nowritebackup
-</span><span class='line'>set noswapfile</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Git</h2>
-
-<p>If there&rsquo;s one config change to make for <code>git</code>, it should be this one:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>$ git config --global --add color.ui true</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-      
-      
-    </div>
-  </div>
-
-
-
-    </article>
-    
-    <hr>
-    
-  
-  
-    <article>
-      
-
-  <div class="row-fluid">
-    <div class="span2 post-meta">
-	  <h5 class="date-time">
-
-
-
-
-
-
-
-
-  
-
-
-<i class="icon-calendar-empty"></i> <time datetime="2013-12-16T05:30:00-08:00" pubdate data-updated="true">Dec 16<span>th</span>, 2013</time></h5>
-          <div class="row-fluid">
-          
-          </div>
-          
-          <div class="row-fluid">
-          
-          <a href="/blog/categories/screen/"><span class="badge">screen</span></a>
-          
-          </div>
-          
-    </div>
-    <div class="span10 post-container">
-      <h1 class="link"><a href="/blog/2013/12/16/setting-up-screen/">Setting up Screen</a></h1>
-      <p>This is pretty much the first thing I do. I&rsquo;ve learned the hard way that I really really need persistent terminal state.</p>
-
-<p>One of the changes I always make is to switch the default key combination away from <code>C-a</code>. Initially I did this during my &ldquo;year of trying Emacs&rdquo; (since it&rsquo;s the default &ldquo;move to beginning of line&rdquo; shortcut). I chose <code>C-z</code> (via <code>escape ^Zz</code>) but you might want to do this anyway if for example you feel <code>C-b</code> would be easier to type.</p>
-
-<p>The other must-have is labels for the tabs. I want to know what I&rsquo;m switching between (a suitable modification to <code>hardstatus</code>).</p>
-
-<p>The status line looks something like this.</p>
-
-<p><img src="https://pbs.twimg.com/media/BblUW36CQAAG_Ol.png:large" alt="screen status with 3 tabs open" /></p>
-
-<p>It&rsquo;s pretty minimal; you can add an arbitrary amount of customization to your status line, but this is all that I need.</p>
-
-<p>Finally, there are a couple of &ldquo;features&rdquo; that <em>have</em> to be disabled: the screen flash on tab completion (<code>vbell off</code>), and the annoying startup message (<code>startup_message off</code>).</p>
-
-<p>I&rsquo;m sure you know all about switching tabs, detaching and resuming sessions and all that. The only (in hindsight obvious) rule of thumb I&rsquo;ve learnt is to <em>always</em> launch a session with a name. Because you might just want to start two sessions. And then when it comes time to resume them, you won&rsquo;t know which is which. So make <code>screen -S &lt;sessionname&gt;</code> your friend.</p>
-
-<p>Anyway I have a github repo for my &ldquo;dotfiles&rdquo; and you can see my basic screenrc <a href="https://github.com/agam/dotfiles/blob/master/.screenrc">here</a></p>
 
       
       

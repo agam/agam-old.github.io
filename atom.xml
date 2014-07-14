@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2014-04-02T14:27:21-07:00</updated>
+  <updated>2014-07-14T15:45:27-07:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,375 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Grumbling about Jekyll]]></title>
+    <link href="http://agam.github.io/blog/2014/07/14/grumbling-about-jekyll/"/>
+    <updated>2014-07-14T12:48:00-07:00</updated>
+    <id>http://agam.github.io/blog/2014/07/14/grumbling-about-jekyll</id>
+    <content type="html"><![CDATA[<p>Yeah, not happy about how these dependencies keep breaking. It&rsquo;s a reminder about how fragile these scripting ecosystems are.</p>
+
+<p>Seeing &#8220;Gem::LoadError: You have already activated rake 10.2.2, but your Gemfile requires rake 0.9.6.&#8220;` once is enough.</p>
+
+<p>I tried a bunch of stuff and none of it worked. Eventually I gave up, deleted <code>Gemfile.lock</code>, ran <code>bundle install</code>, and just switched my workflow over to using <code>bundle exec rake ...</code> instead of just <code>rake ...</code>. Which grates on me now, but whatever.</p>
+
+<p>Oh wait, no that changed <em>nothing</em>. Bundle is still using <code>rake 0.9.6</code>. Do I need to muck around in the Gemfile now? Why can&rsquo;t it just, you know use this &ldquo;activated version&rdquo; instead?</p>
+
+<p>Nooo &hellip; I have an old version of ruby. I know, I&rsquo;ll use <code>rvm</code>, which I used when I got started with all this. Except &hellip;</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>RVM is not a function, selecting rubies with 'rvm use ...' will not work.
+</span><span class='line'>
+</span><span class='line'>You need to change your terminal emulator preferences to allow login shell.
+</span><span class='line'>Sometimes it is required to use `/bin/bash --login` as the command.
+</span><span class='line'>Please visit https://rvm.io/integration/gnome-terminal/ for a example.</span></code></pre></td></tr></table></div></figure>
+
+
+<p>There <em>must</em> be a way out. Doesn&rsquo;t Ubuntu update ruby? Let&rsquo;s try <code>sudo apt-get upgrade ruby</code>. No, it&rsquo;s already the &ldquo;latest version&rdquo;.</p>
+
+<p>What? Ah yes, the breakdown in sensible versioning: different versions are just different names here, let&rsquo;s try <code>sudo apt-get install ruby1.9</code> instead.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>The following packages have unmet dependencies:
+</span><span class='line'> libodbc-ruby1.9.1 : Depends: ruby-odbc but it is not going to be installed
+</span><span class='line'> libodbc-ruby1.9.1-dbg : Depends: ruby-odbc-dbg but it is not going to be installed
+</span><span class='line'>E: Unable to correct problems, you have held broken packages.</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I have &ldquo;held broken packages&rdquo;! Indeed! Regardless, something seems to have happened, so <code>sudo ln -sf /usr/bin/ruby1.9.1 /usr/bin/ruby</code> might do something ?</p>
+
+<p>Alriiite! Let&rsquo;s try to use <code>rake</code> again:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ bundle exec rake generate
+</span><span class='line'>Could not find rake-0.9.6 in any of the sources</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Hmm, perhaps I need to rerun <code>bundle update</code> ?</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Installing RedCloth (4.2.9) with native extensions /usr/lib/ruby/1.9.1/rubygems/installer.rb:552:in `rescue in block in build_extensions': ERROR: Failed to build gem native extension. (Gem::Installer::ExtensionBuildError)
+</span><span class='line'>
+</span><span class='line'>        /usr/bin/ruby1.9.1 extconf.rb 
+</span><span class='line'>/usr/lib/ruby/1.9.1/rubygems/custom_require.rb:36:in `require': cannot load such file -- mkmf (LoadError)
+</span><span class='line'>                           from /usr/lib/ruby/1.9.1/rubygems/custom_require.rb:36:in `require'
+</span><span class='line'>                           from extconf.rb:1:in `&lt;main&gt;'
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Clearly, I am the stupid n00b here. I&rsquo;ve managed to end up worse off than where I started. Help!</p>
+
+<p>Time to try something different. Overwrite the Gemfile with <a href="https://github.com/imathis/octopress/blob/master/Gemfile">the octopress master copy</a> and run <code>bundle install</code> again.</p>
+
+<p>BTW, did I mention how long this step takes? No? Too bad. You&rsquo;ll just have to find out for yourself.</p>
+
+<p><lolrus>Nooo! I still be getting error!</lolrus></p>
+
+<p>What does the great and benevolent <a href="http://stackoverflow.com/questions/12149503/snorby-setup-redcloth-error">Stackoverflow suggest</a>? <code>sudo apt-get install ruby1.9.1-dev</code></p>
+
+<p>At this point the magnitude of my true dependencies was revealed to me:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Fetching source index for https://rubygems.org/
+</span><span class='line'>Using rake (10.3.2) 
+</span><span class='line'>Installing RedCloth (4.2.9) with native extensions 
+</span><span class='line'>Installing blankslate (2.1.2.4) 
+</span><span class='line'>Installing timers (1.1.0) 
+</span><span class='line'>Installing celluloid (0.15.2) 
+</span><span class='line'>Installing chunky_png (1.3.1) 
+</span><span class='line'>Installing fast-stemmer (1.0.2) with native extensions 
+</span><span class='line'>Installing classifier (1.3.4) 
+</span><span class='line'>Installing coffee-script-source (1.7.1) 
+</span><span class='line'>Installing execjs (2.2.1) 
+</span><span class='line'>Installing coffee-script (2.3.0) 
+</span><span class='line'>Installing colorator (0.1) 
+</span><span class='line'>Installing fssm (0.2.10) 
+</span><span class='line'>Installing sass (3.2.19) 
+</span><span class='line'>Installing compass (0.12.6) 
+</span><span class='line'>Installing ffi (1.9.3) with native extensions 
+</span><span class='line'>Installing tilt (1.4.1) 
+</span><span class='line'>Installing haml (4.0.5) 
+</span><span class='line'>Installing jekyll-coffeescript (1.0.0) 
+</span><span class='line'>Installing jekyll-gist (1.1.0) 
+</span><span class='line'>Installing jekyll-paginate (1.0.0) 
+</span><span class='line'>Installing jekyll-sass-converter (1.0.0) 
+</span><span class='line'>Installing rb-fsevent (0.9.4) 
+</span><span class='line'>Installing rb-inotify (0.9.5) 
+</span><span class='line'>Installing listen (2.7.9) 
+</span><span class='line'>Installing jekyll-watch (1.0.0) 
+</span><span class='line'>Installing kramdown (1.4.0) 
+</span><span class='line'>Installing liquid (2.6.1) 
+</span><span class='line'>Installing mercenary (0.3.4) 
+</span><span class='line'>Installing posix-spawn (0.3.8) with native extensions 
+</span><span class='line'>Installing yajl-ruby (1.1.0) with native extensions 
+</span><span class='line'>Installing pygments.rb (0.6.0) 
+</span><span class='line'>Installing redcarpet (3.1.2) with native extensions 
+</span><span class='line'>Installing safe_yaml (1.0.3) 
+</span><span class='line'>Installing parslet (1.5.0) 
+</span><span class='line'>Installing toml (0.1.1) 
+</span><span class='line'>Installing jekyll (2.1.1) 
+</span><span class='line'>Installing jekyll-date-format (1.0.0) 
+</span><span class='line'>Installing jekyll-page-hooks (1.3.0) 
+</span><span class='line'>Installing jekyll-sitemap (0.5.0) 
+</span><span class='line'>Installing rack (1.5.2) 
+</span><span class='line'>Installing rack-protection (1.5.3) 
+</span><span class='line'>Installing rdiscount (2.0.7.3) with native extensions 
+</span><span class='line'>Installing rubypants (0.2.0) 
+</span><span class='line'>Installing sass-globbing (1.0.0) 
+</span><span class='line'>Installing sinatra (1.4.5) 
+</span><span class='line'>Installing stringex (1.4.0) 
+</span><span class='line'>Using bundler (1.0.15) 
+</span><span class='line'>Your bundle is complete! It was installed into ./liquid</span></code></pre></td></tr></table></div></figure>
+
+
+<p>After that cheeful status update, I thought I&rsquo;d start by trying out the old workflow again:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ rake generate
+</span><span class='line'>Could not find rake-10.3.2 in any of the sources
+</span><span class='line'>Run `bundle install` to install missing gems.</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Too optimistic too soon, eh?</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ bundle exec rake generate
+</span><span class='line'>## Generating Site with Jekyll
+</span><span class='line'>overwrite source/stylesheets/screen.css 
+</span><span class='line'>/usr/local/google/home/agam/Documents/agam.github.io/liquid/ruby/1.9.1/gems/execjs-2.2.1/lib/execjs/runtimes.rb:51:in `autodetect': Could not find a JavaScript runtime. See https://github.com/sstephenson/execjs for a list of available runtimes. (ExecJS::RuntimeUnavailable)
+</span><span class='line'>                                                            from /usr/local/google/home/agam/Documents/agam.github.io/liquid/ruby/1.9.1/gems/execjs-2.2.1/lib/execjs.rb:5:in `&lt;module:ExecJS&gt;'
+</span><span class='line'>                                                            from /usr/local/google/home/agam/Documents/agam.github.io/liquid/ruby/1.9.1/gems/execjs-2.2.1/lib/execjs.rb:4:in `&lt;top (required)&gt;'
+</span><span class='line'>                                                            from /usr/local/google/home/agam/Documents/agam.github.io/liquid/ruby/1.9.1/gems/coffee-script-2.3.0/lib/coffee_script.rb:1:in `require'
+</span><span class='line'>                                                            from /usr/local/google/home/agam/Documents/agam.github.io/liquid/ruby/1.9.1/gems/coffee-script-2.3.0/lib/coffee_script.rb:1:in `&lt;top (required)&gt;'
+</span><span class='line'>                                                            from /usr/local/google/home/agam/Documents/agam.github.io/liquid/ruby/1.9.1/gems/coffee-script-2.3.0/lib/coffee-script.rb:1:in `require'
+</span><span class='line'>                                                            from /usr/local/google/home/agam/Documents/agam.github.io/liquid/ruby/1.9.1/gems/coffee-script-2.3.0/lib/coffee-script.rb:1:in `&lt;top (required)&gt;'
+</span><span class='line'>                                                            from /usr/local/google/home/agam/Documents/agam.github.io/liquid/ruby/1.9.1/gems/jekyll-coffeescript-1.0.0/lib/jekyll-coffeescript.rb:2:in `require'
+</span><span class='line'>                                                            from /usr/local/google/home/agam/Documents/agam.github.io/liquid/ruby/1.9.1/gems/jekyll-coffeescript-1.0.0/lib/jekyll-coffeescript.rb:2:in `&lt;top (required)&gt;'
+</span><span class='line'>                                                            from /usr/local/google/home/agam/Documents/agam.github.io/liquid/ruby/1.9.1/gems/jekyll-2.1.1/lib/jekyll.rb:75:in `require'
+</span><span class='line'>                                                            from /usr/local/google/home/agam/Documents/agam.github.io/liquid/ruby/1.9.1/gems/jekyll-2.1.1/lib/jekyll.rb:75:in `&lt;top (required)&gt;'
+</span><span class='line'>                                                            from /usr/local/google/home/agam/Documents/agam.github.io/liquid/ruby/1.9.1/gems/jekyll-2.1.1/bin/jekyll:6:in `require'
+</span><span class='line'>                                                            from /usr/local/google/home/agam/Documents/agam.github.io/liquid/ruby/1.9.1/gems/jekyll-2.1.1/bin/jekyll:6:in `&lt;top (required)&gt;'
+</span><span class='line'>                                                            from /usr/local/google/home/agam/Documents/agam.github.io/liquid/ruby/1.9.1/bin/jekyll:19:in `load'
+</span><span class='line'>                                                            from /usr/local/google/home/agam/Documents/agam.github.io/liquid/ruby/1.9.1/bin/jekyll:19:in `&lt;main&gt;'</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Obviously, there&rsquo;s one dependency missing from the list above. What, you say, you <em>didn&rsquo;t</em> know you need to install <code>Node.js</code> too?</p>
+
+<p><code>sudo apt-get install nodejs</code></p>
+
+<p><strong>Are we there yet?</strong> The suspense is killing me. Nope, running <code>bundle exec rake generate</code> just (very helpfully!) shows me</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ bundle exec rake generate
+</span><span class='line'>## Generating Site with Jekyll
+</span><span class='line'>unchanged sass/screen.scss
+</span><span class='line'>jekyll 2.1.1 -- Jekyll is a blog-aware, static site generator in Ruby
+</span><span class='line'>
+</span><span class='line'>Usage:
+</span><span class='line'>
+</span><span class='line'>  jekyll &lt;subcommand&gt; [options]
+</span><span class='line'>
+</span><span class='line'>Options:
+</span><span class='line'>        -s, --source [DIR]  Source directory (defaults to ./)
+</span><span class='line'>        -d, --destination [DIR]  Destination directory (defaults to ./_site)
+</span><span class='line'>            --safe         Safe mode (defaults to false)
+</span><span class='line'>        -p, --plugins PLUGINS_DIR1[,PLUGINS_DIR2[,...]]  Plugins directory (defaults to ./_plugins)
+</span><span class='line'>            --layouts DIR  Layouts directory (defaults to ./_layouts)
+</span><span class='line'>        -h, --help         Show this message
+</span><span class='line'>        -v, --version      Print the name and version
+</span><span class='line'>        -t, --trace        Show the full backtrace when an error occurs
+</span><span class='line'>
+</span><span class='line'>Subcommands:
+</span><span class='line'>  build                 Build your site
+</span><span class='line'>  docs                  Launch local server with docs for Jekyll v2.1.1
+</span><span class='line'>  new                   Creates a new Jekyll site scaffold in PATH
+</span><span class='line'>  serve, server         Serve your site locally
+</span><span class='line'>  doctor, hyde          Search site and print specific deprecation warnings</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Yes, I knew Jekyll was under that somewhere. That&rsquo;s sort of why I started using all this in the first place. Thanks for reminding me though. When I started writing this post I thought it would be a couple of lines, a quick edit-save-post, all done in five minutes. Cue evil laughter.</p>
+
+<p><em>What, give up now? In our moment of triumph?</em> I overwrote the Gemfile earlier; what about doing the same for the Rakefile?</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>$ bundle exec rake generate
+</span><span class='line'>## Generating Site with Jekyll
+</span><span class='line'>unchanged sass/screen.scss
+</span><span class='line'>Configuration file: /usr/local/google/home/agam/Documents/agam.github.io/_config.yml
+</span><span class='line'>       Deprecation: The 'pygments' configuration option has been renamed to 'highlighter'. Please update your config file accordingly. The allowed values are 'rouge', 'pygments' or null.
+</span><span class='line'>            Source: source
+</span><span class='line'>       Destination: public
+</span><span class='line'>      Generating... 
+</span><span class='line'>jekyll 2.1.1 | Error:  undefined method `published' for &lt;Post: /blog/2013/06/26/data-structures-haskell-vs-cpp&gt;:Jekyll::Post</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now I&rsquo;ve <em>retroactively</em> broken stuff.</p>
+
+<p>Finally, a light dawns: I should have done the following right at the beginning: <code>git pull origin master</code>. And of course, doing this now gives merge conflicts galore.</p>
+
+<p>&hellip; many tens of minutes pass &hellip;</p>
+
+<p>I realized there is no alternative to delve into the source here. <code>lib/jekyll/post.rb' has a</code>published?<code>method, perhaps this is being called without the trailing</code>?` somewhere? (BTW this is EXACTLY why I <strong>hate</strong> dynamically-typed, uncompiled languages!).</p>
+
+<p><code>plugins/preview_unpublished.rb</code> shows a match &hellip; so I deleted it.</p>
+
+<p>Now we have a new problem &hellip;</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>jekyll 2.1.1 | Error:  undefined method `subclasses' for Jekyll::PostFilter:Class</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&hellip; but at least the old one is gone! We&rsquo;re getting closer!</p>
+
+<p>Sure enough, it&rsquo;s another plugin: <code>plugins/post_filters.rb</code>. At this point I realize there may be many more, so I see the list of plugins <a href="https://github.com/imathis/octopress/tree/master/plugins">that should exist by default</a> and get rid of any others. Turns out, it&rsquo;s just one more: <code>plugins/sitemap_generator.rb</code>.</p>
+
+<p>No luck yet.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Liquid Exception: undefined method `deep_merge' for #&lt;Hash:0x0000000277cb38&gt; in sitemap.xml</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now I&rsquo;m getting impatient. I just want to post a &ldquo;Goodbye&rdquo; post. One last post. I&rsquo;ll render it myself if I have to.</p>
+
+<p>Ok, it&rsquo;s the plugins again. I got rid of <code>plugins/date.rb</code> and updated <code>plugins/octopress_filters.rb</code>.</p>
+
+<p>IT WORKS! Oh god it works!</p>
+
+<p>Ok, my custom theme is gone and all, but that&rsquo;s ok, I won&rsquo;t complain. <em>Update</em>: Needless to say, I got it back (after all this, surely &hellip;)</p>
+
+<p>All&rsquo;s well that ends well, you say? <em>WTF!</em> Nothing new here &hellip; the whole point of relying on stuff like this is after all to engage in this periodic ritual sacrifice of time. Which is great when you&rsquo;re <em>12</em>, not so much now.</p>
+
+<p>I could just leave things as they are, or &hellip; the other option is to switch away to Wordpress or Ghost or Tumblr or whatever else (thought I don&rsquo;t want to migrate my posts <em>again</em>, so if I do something like that I&rsquo;ll just leave all this stuff here, with a pointer to it &hellip;).</p>
+
+<p><em><strong>Update</strong></em>: I realized I had once started <a href="http://agamposts.tumblr.com">a Tumblr blog</a> (or is that a <em>tumblog</em> ?), so might as well repurpose it for something other than just snippets. If you&rsquo;re one of the two people who read this blog (aha! I had Google Analytics enabled!), you can &ldquo;add&rdquo; me, or &ldquo;follow&rdquo; me there. Or whatever the cool kids are calling it these days.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Trying Out Prose]]></title>
+    <link href="http://agam.github.io/blog/2014/05/07/trying-out-prose/"/>
+    <updated>2014-05-07T00:00:00-07:00</updated>
+    <id>http://agam.github.io/blog/2014/05/07/trying-out-prose</id>
+    <content type="html"><![CDATA[<h2>Trying out Prose.IO</h2>
+
+<p>Hmm &hellip; let&rsquo;s see if this works. Would make the whole workflow much faster and much easier.</p>
+
+<p>OTOH my last update was way, way, <em>way</em> back. Yes, I should post more as myself.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Google Cloud ... again !]]></title>
@@ -23,6 +392,10 @@
 <p>(Though if you did, kudos, I hope you put that credit to good use!)</p>
 
 <p>So anyway, if this credit goes through, I might spin up a VM and give this whole thing a shot again once the price reduction is confirmed &hellip;</p>
+
+<p><strong>Edit</strong>: The credit expires in July :(</p>
+
+<p><strong>Edit</strong>: Amazon actually has a <a href="http://aws.amazon.com/free">free tier</a> which effectively amounts to the same thing</p>
 ]]></content>
   </entry>
   
@@ -1739,137 +2112,6 @@ int main(int argc, char* argv[]) {
   for (const string&amp; s : possible_matches) {
     cout &lt;&lt; s &lt;&lt; endl;
   }
-}
-</code></pre></noscript></div>
-
-
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Programming: Technology and Science]]></title>
-    <link href="http://agam.github.io/blog/2014/01/16/programming-technology-and-science/"/>
-    <updated>2014-01-16T06:21:00-08:00</updated>
-    <id>http://agam.github.io/blog/2014/01/16/programming-technology-and-science</id>
-    <content type="html"><![CDATA[<p>I liked this quote from the <a href="http://www.amazon.com/Concepts-Techniques-Models-Computer-Programming/dp/0262220695">&ldquo;Concepts, Techniques and Models of Computer Programming&rdquo;</a>:</p>
-
-<blockquote><p>Programming as defined above has two essential parts: a technology and its scientific foundation.</p>
-
-<p>The technology consists of tools, practical techniques, and
-standards, allowing us to do programming.</p>
-
-<p>The science consists of a broad and deep theory with predictive power, allowing us to understand programming. <em>Ideally, the science should explain the technology in a way that is as direct and useful as possible.</em></p>
-
-<p>If either part is left out, we are no longer doing programming. <strong>Without the
-technology, we are doing pure mathematics. Without the science, we are doing a
-craft, i.e., we lack deep understanding</strong></p></blockquote>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Programming Fun: Circle Area]]></title>
-    <link href="http://agam.github.io/blog/2014/01/08/programming-fun-circle-area/"/>
-    <updated>2014-01-08T20:22:00-08:00</updated>
-    <id>http://agam.github.io/blog/2014/01/08/programming-fun-circle-area</id>
-    <content type="html"><![CDATA[<p>Straightforward <em>math-only, no-algorithm</em> <a href="http://www.reddit.com/r/dailyprogrammer/comments/1s6484/120513_challenge_138_intermediate_overlapping/">problem</a></p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>Input Description
-</span><span class='line'>-----------------
-</span><span class='line'>
-</span><span class='line'>On standard input you will be given four floating-point space-delimited values:
-</span><span class='line'>x y u w. x and y are the first circle's position in Cartesian coordinates. The
-</span><span class='line'>second pair u and w are the second circle's position.
-</span><span class='line'>
-</span><span class='line'>Note that the given circles may not actually intersect. If this is the case,
-</span><span class='line'>return the sum of both circles (which will always be Pi x 2 since our circles
-</span><span class='line'>are unit-circles).
-</span><span class='line'>
-</span><span class='line'>Output Description
-</span><span class='line'>------------------
-</span><span class='line'>
-</span><span class='line'>Print the summed volume of the two circles, up to an accuracy of 4 digits after the decimal place.</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This is just trigonometry, so I made some Post-It illustrations. This one shows the general problem we have to solve.</p>
-
-<p><img class="center" src="http://agam.github.io/images/programming-fun/circle-area-1.jpg" width="300"></p>
-
-<p>Given the centres of the two circles, and their radii, we know <em>d</em>, the distance between their centres and whether it leads to overlap at all.</p>
-
-<p><img class="center" src="http://agam.github.io/images/programming-fun/circle-area-2.jpg" width="300"></p>
-
-<p>Overlap only occurs when <em>d &lt; 2r</em>. When <em>d > 2r</em> the answer is just the sum of the areas.</p>
-
-<p><img class="center" src="http://agam.github.io/images/programming-fun/circle-area-3.jpg" width="300"></p>
-
-<p>From this figure, it should be clear that the overlapping area is the segment of the circle subtended by the chord that is common to both circles. We can find the length of this chord by considering the right triangle formed by half of it, the radius, and half the centre distance.</p>
-
-<p>This then leads to the relationship between the area of the sector (<em>A</em>), the area of the triangle inside it (<em>A_1</em>) and the segment area (<em>A_2</em>)</p>
-
-<p><img class="center" src="http://agam.github.io/images/programming-fun/circle-area-4.jpg" width="300"></p>
-
-<p>Finally, we subtract the segment area from the area of the circle (and then double it, for two circles) to get our answer.</p>
-
-<p><img class="center" src="http://agam.github.io/images/programming-fun/circle-area-5.jpg" width="300"></p>
-
-<div><script src='https://gist.github.com/8323896.js'></script>
-<noscript><pre><code>#include &lt;cassert&gt;
-#include &lt;cmath&gt;
-#include &lt;cstdint&gt;
-#include &lt;cstdio&gt;
-#include &lt;cstdlib&gt;
-#include &lt;algorithm&gt;
-#include &lt;iomanip&gt;
-#include &lt;iostream&gt;
-#include &lt;limits&gt;
-#include &lt;string&gt;
-#include &lt;vector&gt;
-#include &lt;queue&gt;
-#include &lt;unordered_map&gt;
-
-using namespace std;
-
-int main() {
-  double x1, y1, x2, y2;
-  cin &gt;&gt; x1 &gt;&gt; y1 &gt;&gt; x2 &gt;&gt; y2;
-  cout &lt;&lt; &quot;Got circle 1 as (&quot; &lt;&lt; x1 &lt;&lt; &quot;, &quot; &lt;&lt; y1 &lt;&lt; &quot;)\n&quot;;
-  cout &lt;&lt; &quot;Got circle 2 as (&quot; &lt;&lt; x2 &lt;&lt; &quot;, &quot; &lt;&lt; y2 &lt;&lt; &quot;)\n&quot;;
-
-  // Total area = 2 * (area of each circle) - 2 * (segment area of overlap)
-  const double kPI = atan(1.0) * 4.0;
-  const double kRadius = 1.0;
-  const double circle_area = kPI * pow(kRadius, 2);
-
-  const double centre_distance = sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
-  if (centre_distance &gt; (2 * kRadius)) {
-    // No overlap
-    cout &lt;&lt; (2 * circle_area) &lt;&lt; endl;
-    return 0;
-  }
-
-  const double segment_half_length = sqrt(pow(kRadius, 2) - pow(centre_distance/2.0, 2));
-  const double theta = asin(segment_half_length / kRadius);
-  const double sector_area = theta * pow(kRadius, 2);
-  const double segment_area = sector_area - (centre_distance * segment_half_length / 2);
-
-  cout.precision(5);
-  cout &lt;&lt; (2 * circle_area) - (2 * segment_area) &lt;&lt; endl;
 }
 </code></pre></noscript></div>
 

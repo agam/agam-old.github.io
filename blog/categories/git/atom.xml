@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: git | Agam's Mashed-Up Pome]]></title>
+  <link href="http://agam.github.io/blog/categories/git/atom.xml" rel="self"/>
+  <link href="http://agam.github.io/"/>
+  <updated>2014-07-14T15:45:27-07:00</updated>
+  <id>http://agam.github.io/</id>
+  <author>
+    <name><![CDATA[Agam]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Small change for Vim and Git]]></title>
+    <link href="http://agam.github.io/blog/2013/12/16/small-change-for-vim-and-git/"/>
+    <updated>2013-12-16T06:04:00-08:00</updated>
+    <id>http://agam.github.io/blog/2013/12/16/small-change-for-vim-and-git</id>
+    <content type="html"><![CDATA[<h2>Vim</h2>
+
+<p>I hate seeing <code>.swp</code> and <code>~</code> files when I&rsquo;m editing. If I really need to go back to an earlier version of something there are other ways.</p>
+
+<p>So I added this to my .vimrc:</p>
+
+<p><code>
+set nobackup
+set nowritebackup
+set noswapfile
+</code></p>
+
+<h2>Git</h2>
+
+<p>If there&rsquo;s one config change to make for <code>git</code>, it should be this one:</p>
+
+<p><code>
+$ git config --global --add color.ui true
+</code></p>
+]]></content>
+  </entry>
+  
+</feed>

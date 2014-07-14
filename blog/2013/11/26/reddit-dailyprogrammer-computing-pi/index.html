@@ -68,12 +68,15 @@
     
     
     
+    
     <li><a href="http://twitter.com/agambrahma" title="Twitter Profile"><i class="icon-twitter-sign social-navbar"></i></a></li>
     
     
     <li><a href="http://plus.google.com/+AgamBrahma" title="Google+ Profile"><i class="icon-google-plus-sign social-navbar"></i></a></li>
     
     
+    
+
     
 </ul>
 
@@ -103,7 +106,7 @@
   
 
 
-<i class="icon-calendar-empty"></i> <time datetime="2013-11-26T14:50:00-08:00" pubdate data-updated="true">Nov 26<span>th</span>, 2013</time></h5>
+<i class="icon-calendar-empty"></i> <time datetime="2013-11-26T14:50:00-08:00" pubdate data-updated="true">Nov 26<sup>th</sup>, 2013</time></h5>
   </div>
 </header>
   <div class="row-fluid">
@@ -153,8 +156,8 @@ int main() {
   Poco::Net::ServerSocket srv(9090);
   cout &lt;&lt; &quot;Waiting for clients ...&quot; &lt;&lt; endl;
 
-  // Arbitrary number of clients are supported. Each client is given the &#39;next&#39;
-  // digit once it&#39;s done.
+  // Arbitrary number of clients are supported. Each client is given the 'next'
+  // digit once it's done.
 
   double mysum = 3.0;  // used to sanity check
   static const float kComparisonMultiplier = 10000.0;
@@ -262,7 +265,7 @@ double ComputePiDigit(unsigned int digit) {
 }
 
 // Special case for very first client connection: digitNum == -1
-// Value has valid hex range, or else &#39;1000&#39;
+// Value has valid hex range, or else '1000'
 
 struct PiState {
   int digitNum;
@@ -371,41 +374,41 @@ int main(int argc, char **argv) {
 <span class='line-number'>50</span>
 <span class='line-number'>51</span>
 </pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>./server
-</span><span class='line'>Waiting <span class="k">for </span>clients ...
+</span><span class='line'>Waiting <span class="k">for</span> clients ...
 </span><span class='line'>Received -1th digit as 1000
 </span><span class='line'>Sent *0*
 </span><span class='line'>Received 0th digit as 2
-</span><span class='line'>Divergence from PI <span class="o">(</span>to 10000 accuracy<span class="o">)</span> so <span class="nv">far</span> <span class="o">=</span> 165.927
+</span><span class='line'>Divergence from PI <span class="o">(</span>to <span class="m">10000</span> accuracy<span class="o">)</span> so <span class="nv">far</span> <span class="o">=</span> 165.927
 </span><span class='line'>Sent *1*
 </span><span class='line'>Received -1th digit as 1000
 </span><span class='line'>Sent *2*
 </span><span class='line'>Received 1th digit as 4
-</span><span class='line'>Divergence from PI <span class="o">(</span>to 10000 accuracy<span class="o">)</span> so <span class="nv">far</span> <span class="o">=</span> 9.67654
+</span><span class='line'>Divergence from PI <span class="o">(</span>to <span class="m">10000</span> accuracy<span class="o">)</span> so <span class="nv">far</span> <span class="o">=</span> 9.67654
 </span><span class='line'>Sent *3*
 </span><span class='line'>Received 2th digit as 3
-</span><span class='line'>Divergence from PI <span class="o">(</span>to 10000 accuracy<span class="o">)</span> so <span class="nv">far</span> <span class="o">=</span> 2.35232
+</span><span class='line'>Divergence from PI <span class="o">(</span>to <span class="m">10000</span> accuracy<span class="o">)</span> so <span class="nv">far</span> <span class="o">=</span> 2.35232
 </span><span class='line'>Sent *4*
 </span><span class='line'>Received -1th digit as 1000
 </span><span class='line'>Sent *5*
 </span><span class='line'>Received 3th digit as 15
-</span><span class='line'>Divergence from PI <span class="o">(</span>to 10000 accuracy<span class="o">)</span> so <span class="nv">far</span> <span class="o">=</span> 0.0634988
+</span><span class='line'>Divergence from PI <span class="o">(</span>to <span class="m">10000</span> accuracy<span class="o">)</span> so <span class="nv">far</span> <span class="o">=</span> 0.0634988
 </span><span class='line'>Sent *6*
 </span><span class='line'>Received 4th digit as 6
-</span><span class='line'>Divergence from PI <span class="o">(</span>to 10000 accuracy<span class="o">)</span> so <span class="nv">far</span> <span class="o">=</span> 0.00627833
+</span><span class='line'>Divergence from PI <span class="o">(</span>to <span class="m">10000</span> accuracy<span class="o">)</span> so <span class="nv">far</span> <span class="o">=</span> 0.00627833
 </span><span class='line'>Sent *7*
 </span><span class='line'>...
 </span><span class='line'>Sent *249*
 </span><span class='line'>Received 246th digit as 1
-</span><span class='line'>Divergence from PI <span class="o">(</span>to 10000 accuracy<span class="o">)</span> so <span class="nv">far</span> <span class="o">=</span> 0.00597909
+</span><span class='line'>Divergence from PI <span class="o">(</span>to <span class="m">10000</span> accuracy<span class="o">)</span> so <span class="nv">far</span> <span class="o">=</span> 0.00597909
 </span><span class='line'>Sent *250*
 </span><span class='line'>Received 247th digit as 0
-</span><span class='line'>Divergence from PI <span class="o">(</span>to 10000 accuracy<span class="o">)</span> so <span class="nv">far</span> <span class="o">=</span> 0.00597909
+</span><span class='line'>Divergence from PI <span class="o">(</span>to <span class="m">10000</span> accuracy<span class="o">)</span> so <span class="nv">far</span> <span class="o">=</span> 0.00597909
 </span><span class='line'>Sent *251*
 </span><span class='line'>Received 248th digit as 11
-</span><span class='line'>Divergence from PI <span class="o">(</span>to 10000 accuracy<span class="o">)</span> so <span class="nv">far</span> <span class="o">=</span> 0.00597909
+</span><span class='line'>Divergence from PI <span class="o">(</span>to <span class="m">10000</span> accuracy<span class="o">)</span> so <span class="nv">far</span> <span class="o">=</span> 0.00597909
 </span><span class='line'>Sent *252*
 </span><span class='line'>Received 249th digit as 3
-</span><span class='line'>Divergence from PI <span class="o">(</span>to 10000 accuracy<span class="o">)</span> so <span class="nv">far</span> <span class="o">=</span> 0.00597909
+</span><span class='line'>Divergence from PI <span class="o">(</span>to <span class="m">10000</span> accuracy<span class="o">)</span> so <span class="nv">far</span> <span class="o">=</span> 0.00597909
 </span><span class='line'>Sent *253*
 </span><span class='line'>^C
 </span><span class='line'>
@@ -443,7 +446,7 @@ int main(int argc, char **argv) {
 
 
 
-  <a href="/blog/categories/alwaysbecoding/"><span class="badge">AlwaysBeCoding</span></a>
+  <a href="/blog/categories/alwaysbecoding/"><span class="badge">alwaysbecoding</span></a>
 
   <a href="/blog/categories/reddit,/"><span class="badge">reddit,</span></a>
 

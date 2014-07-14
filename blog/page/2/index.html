@@ -68,12 +68,15 @@
     
     
     
+    
     <li><a href="http://twitter.com/agambrahma" title="Twitter Profile"><i class="icon-twitter-sign social-navbar"></i></a></li>
     
     
     <li><a href="http://plus.google.com/+AgamBrahma" title="Google+ Profile"><i class="icon-google-plus-sign social-navbar"></i></a></li>
     
     
+    
+
     
 </ul>
 
@@ -86,8 +89,14 @@
         <div id="content">
           <div class="jumbotron">
   <div class="container">
-    Agam&#8217;s Mashed-Up Pome
-    <h3 class="tagline">Thinking is hard; Let&#8217;s compute instead.</h3>
+    
+      Agam&#8217;s Mashed-Up Pome
+    
+    <h3 class="tagline">
+      
+        Thinking is hard; Let&#8217;s compute instead.
+      
+    </h3>
   </div>
 </div>
 
@@ -113,16 +122,196 @@
   
 
 
-<i class="icon-calendar-empty"></i> <time datetime="2014-01-29T18:04:00-08:00" pubdate data-updated="true">Jan 29<span>th</span>, 2014</time></h5>
+<i class="icon-calendar-empty"></i> <time datetime="2014-01-30T23:00:00-08:00" pubdate data-updated="true">Jan 30<sup>th</sup>, 2014</time></h5>
           <div class="row-fluid">
           
           </div>
           
           <div class="row-fluid">
           
-          <a href="/blog/categories/clojure,/"><span class="badge">Clojure,</span></a>
+          <a href="/blog/categories/mathematica/"><span class="badge">mathematica</span></a>
           
-          <a href="/blog/categories/gettingstarted/"><span class="badge">GettingStarted</span></a>
+          </div>
+          
+    </div>
+    <div class="span10 post-container">
+      <h1 class="link"><a href="/blog/2014/01/30/mathematica-1-slash-9998/">Mathematica: 1/9998</a></h1>
+      <p>I saw this piece about how <code>1/1998</code> was approximated by series of powers of <code>2</code>, which raised the question, &ldquo;Can Mathematica help confirm this?&rdquo; (<em>of course it can!</em>)</p>
+
+<p>First, a gut check to see the decimal expansion</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>N[1/9998, 100]</span></code></pre></td></tr></table></div></figure>
+
+
+<p>which shows</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>0.00010002000400080016003200640128025605121024204840968193638727745549 \
+</span><span class='line'>10982196439287857571514302860572114</span></code></pre></td></tr></table></div></figure>
+
+
+<p>(if you don&rsquo;t specify the <code>100</code> in the argument to <code>N[]</code>, it will show you just <code>0.00010002</code> by default)</p>
+
+<p>This can be visualized as</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>0.0001 +
+</span><span class='line'>0.00000002 +
+</span><span class='line'>0.000000000004 +
+</span><span class='line'>0.0000000000000008 +
+</span><span class='line'>0.00000000000000000016 +
+</span><span class='line'>...
+</span><span class='line'>0.000000000000000000000000000000000256 +
+</span><span class='line'>...</span></code></pre></td></tr></table></div></figure>
+
+
+<p>All right, so we do see these powers of 2! They seem to be in &ldquo;groups&rdquo; &mdash; <code>0004</code>, <code>0016</code>, <code>1024</code> and so on.</p>
+
+<p>So we want to check if something like <code>2^i/10000^i</code> can add up to this number.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Parallelize[
+</span><span class='line'> Table[1/9998 - Total[Table[2^i/10000^i, {i, 1, n}]], {n, 1, 10000}] ]</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I initially tried this <em>without</em> <code>Parallelize[]</code>, but that kept going <em>for a while</em>, so I had to abort it (<code>Evaluation</code>&ndash;><code>Abort Evaluation</code>) and try this version instead.</p>
+
+<p>Anyway, so this whirs for a while. As this <code>htop</code> output shows, it really does use as many cores as possible.</p>
+
+<p><img class="center" src="http://farm6.staticflickr.com/5504/12227941034_4ce9d69db4_z_d.jpg"></p>
+
+<p>Eventually when it&rsquo;s done, we can <code>ListPlot</code> it.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>ListPlot[%118, Frame -&gt; True, FrameStyle -&gt; Black, 
+</span><span class='line'> PlotRange -&gt; { {1, 10000}, {-0.000105, -0.000095} }]</span></code></pre></td></tr></table></div></figure>
+
+
+<p><img class="center" src="http://farm6.staticflickr.com/5535/12227532975_ee70979b52_z_d.jpg"></p>
+
+<p>As this graph shows, the result is remarkably close to a constant value of <code>-0.0001</code> !!</p>
+
+      
+      
+    </div>
+  </div>
+
+
+
+    </article>
+    
+    <hr>
+    
+  
+  
+    <article>
+      
+
+  <div class="row-fluid">
+    <div class="span2 post-meta">
+	  <h5 class="date-time">
+
+
+
+
+
+
+
+
+  
+
+
+<i class="icon-calendar-empty"></i> <time datetime="2014-01-30T18:16:00-08:00" pubdate data-updated="true">Jan 30<sup>th</sup>, 2014</time></h5>
+          <div class="row-fluid">
+          
+          </div>
+          
+          <div class="row-fluid">
+          
+          <a href="/blog/categories/ant,/"><span class="badge">ant,</span></a>
+          
+          <a href="/blog/categories/mathematica,/"><span class="badge">mathematica,</span></a>
+          
+          <a href="/blog/categories/plot/"><span class="badge">plot</span></a>
+          
+          </div>
+          
+    </div>
+    <div class="span10 post-container">
+      <h1 class="link"><a href="/blog/2014/01/30/mathematica-a-simple-ant/">Mathematica: A simple ant</a></h1>
+      <p>Here&rsquo;s a simple, exploratory sketch: Imagine an ant which can either move left or right, or stay in its place.</p>
+
+<p>For simplicity, we&rsquo;ll imagine the ant starts at the center of a scale from <code>1</code> to <code>100</code>, and moves one unit at a time.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Ant[k_, u_] := 
+</span><span class='line'> If[ u &lt; 1/3, Min[k + 1, 100], If[u &gt; 2/3, Max[0, k - 1], k]]
+</span><span class='line'>
+</span><span class='line'>RecAnt[k_] := Ant[k, RandomReal[]]</span></code></pre></td></tr></table></div></figure>
+
+
+<p> <img class="center" src="http://farm8.staticflickr.com/7351/12224251723_4d24311967_d.jpg"></p>
+
+<p> <code>
+ ListPlot[NestList[RecAnt, 50, 100000], ImageSize -&gt; Large, Background -&gt; LightGray]
+</code></p>
+
+<p> <img class="center" src="http://farm8.staticflickr.com/7418/12224482144_6ef516fd03_z_d.jpg"></p>
+
+      
+      
+    </div>
+  </div>
+
+
+
+    </article>
+    
+    <hr>
+    
+  
+  
+    <article>
+      
+
+  <div class="row-fluid">
+    <div class="span2 post-meta">
+	  <h5 class="date-time">
+
+
+
+
+
+
+
+
+  
+
+
+<i class="icon-calendar-empty"></i> <time datetime="2014-01-29T18:04:00-08:00" pubdate data-updated="true">Jan 29<sup>th</sup>, 2014</time></h5>
+          <div class="row-fluid">
+          
+          </div>
+          
+          <div class="row-fluid">
+          
+          <a href="/blog/categories/clojure,/"><span class="badge">clojure,</span></a>
+          
+          <a href="/blog/categories/gettingstarted/"><span class="badge">gettingstarted</span></a>
           
           </div>
           
@@ -361,14 +550,14 @@
   
 
 
-<i class="icon-calendar-empty"></i> <time datetime="2014-01-29T02:11:00-08:00" pubdate data-updated="true">Jan 29<span>th</span>, 2014</time></h5>
+<i class="icon-calendar-empty"></i> <time datetime="2014-01-29T02:11:00-08:00" pubdate data-updated="true">Jan 29<sup>th</sup>, 2014</time></h5>
           <div class="row-fluid">
           
           </div>
           
           <div class="row-fluid">
           
-          <a href="/blog/categories/alwaysbecoding,/"><span class="badge">AlwaysBeCoding,</span></a>
+          <a href="/blog/categories/alwaysbecoding,/"><span class="badge">alwaysbecoding,</span></a>
           
           <a href="/blog/categories/reddit/"><span class="badge">reddit</span></a>
           
@@ -495,14 +684,14 @@ int main(int argc, char* argv[]) {
   
 
 
-<i class="icon-calendar-empty"></i> <time datetime="2014-01-27T03:55:00-08:00" pubdate data-updated="true">Jan 27<span>th</span>, 2014</time></h5>
+<i class="icon-calendar-empty"></i> <time datetime="2014-01-27T03:55:00-08:00" pubdate data-updated="true">Jan 27<sup>th</sup>, 2014</time></h5>
           <div class="row-fluid">
           
           </div>
           
           <div class="row-fluid">
           
-          <a href="/blog/categories/alwaysbecoding,/"><span class="badge">AlwaysBeCoding,</span></a>
+          <a href="/blog/categories/alwaysbecoding,/"><span class="badge">alwaysbecoding,</span></a>
           
           <a href="/blog/categories/reddit/"><span class="badge">reddit</span></a>
           
@@ -646,16 +835,16 @@ int main(int argc, char* argv[]) {
   
 
 
-<i class="icon-calendar-empty"></i> <time datetime="2014-01-27T00:11:00-08:00" pubdate data-updated="true">Jan 27<span>th</span>, 2014</time></h5>
+<i class="icon-calendar-empty"></i> <time datetime="2014-01-27T00:11:00-08:00" pubdate data-updated="true">Jan 27<sup>th</sup>, 2014</time></h5>
           <div class="row-fluid">
           
           </div>
           
           <div class="row-fluid">
           
-          <a href="/blog/categories/ellipses/"><span class="badge">Ellipses</span></a>
+          <a href="/blog/categories/ellipses/"><span class="badge">ellipses</span></a>
           
-          <a href="/blog/categories/processing,/"><span class="badge">Processing,</span></a>
+          <a href="/blog/categories/processing,/"><span class="badge">processing,</span></a>
           
           </div>
           
@@ -757,22 +946,22 @@ int main(int argc, char* argv[]) {
   
 
 
-<i class="icon-calendar-empty"></i> <time datetime="2014-01-26T00:10:00-08:00" pubdate data-updated="true">Jan 26<span>th</span>, 2014</time></h5>
+<i class="icon-calendar-empty"></i> <time datetime="2014-01-26T00:10:00-08:00" pubdate data-updated="true">Jan 26<sup>th</sup>, 2014</time></h5>
           <div class="row-fluid">
           
           </div>
           
           <div class="row-fluid">
           
-          <a href="/blog/categories/languages/"><span class="badge">Languages</span></a>
+          <a href="/blog/categories/languages/"><span class="badge">languages</span></a>
           
-          <a href="/blog/categories/lecture,/"><span class="badge">Lecture,</span></a>
+          <a href="/blog/categories/lecture,/"><span class="badge">lecture,</span></a>
           
-          <a href="/blog/categories/minsky,/"><span class="badge">Minsky,</span></a>
+          <a href="/blog/categories/minsky,/"><span class="badge">minsky,</span></a>
           
-          <a href="/blog/categories/programming/"><span class="badge">Programming</span></a>
+          <a href="/blog/categories/programming/"><span class="badge">programming</span></a>
           
-          <a href="/blog/categories/turing/"><span class="badge">Turing</span></a>
+          <a href="/blog/categories/turing/"><span class="badge">turing</span></a>
           
           </div>
           
@@ -869,16 +1058,16 @@ It remains to be seen whether a syntax with explicit delimiters is reactionary, 
   
 
 
-<i class="icon-calendar-empty"></i> <time datetime="2014-01-24T23:07:00-08:00" pubdate data-updated="true">Jan 24<span>th</span>, 2014</time></h5>
+<i class="icon-calendar-empty"></i> <time datetime="2014-01-24T23:07:00-08:00" pubdate data-updated="true">Jan 24<sup>th</sup>, 2014</time></h5>
           <div class="row-fluid">
           
           </div>
           
           <div class="row-fluid">
           
-          <a href="/blog/categories/cloud,/"><span class="badge">Cloud,</span></a>
+          <a href="/blog/categories/cloud,/"><span class="badge">cloud,</span></a>
           
-          <a href="/blog/categories/vm/"><span class="badge">VM</span></a>
+          <a href="/blog/categories/vm/"><span class="badge">vm</span></a>
           
           </div>
           
@@ -931,14 +1120,14 @@ It remains to be seen whether a syntax with explicit delimiters is reactionary, 
   
 
 
-<i class="icon-calendar-empty"></i> <time datetime="2014-01-19T00:39:00-08:00" pubdate data-updated="true">Jan 19<span>th</span>, 2014</time></h5>
+<i class="icon-calendar-empty"></i> <time datetime="2014-01-19T00:39:00-08:00" pubdate data-updated="true">Jan 19<sup>th</sup>, 2014</time></h5>
           <div class="row-fluid">
           
           </div>
           
           <div class="row-fluid">
           
-          <a href="/blog/categories/alwaysbecoding,/"><span class="badge">AlwaysBeCoding,</span></a>
+          <a href="/blog/categories/alwaysbecoding,/"><span class="badge">alwaysbecoding,</span></a>
           
           <a href="/blog/categories/reddit/"><span class="badge">reddit</span></a>
           
@@ -1072,14 +1261,14 @@ int main(int argc, char* argv[]) {
   
 
 
-<i class="icon-calendar-empty"></i> <time datetime="2014-01-18T02:21:00-08:00" pubdate data-updated="true">Jan 18<span>th</span>, 2014</time></h5>
+<i class="icon-calendar-empty"></i> <time datetime="2014-01-18T02:21:00-08:00" pubdate data-updated="true">Jan 18<sup>th</sup>, 2014</time></h5>
           <div class="row-fluid">
           
           </div>
           
           <div class="row-fluid">
           
-          <a href="/blog/categories/alwaysbecoding,/"><span class="badge">AlwaysBeCoding,</span></a>
+          <a href="/blog/categories/alwaysbecoding,/"><span class="badge">alwaysbecoding,</span></a>
           
           <a href="/blog/categories/reddit/"><span class="badge">reddit</span></a>
           
@@ -1504,215 +1693,6 @@ int main(int argc, char* argv[]) {
   for (const string&amp; s : possible_matches) {
     cout &lt;&lt; s &lt;&lt; endl;
   }
-}
-</code></pre></noscript></div>
-
-
-
-
-      
-      
-    </div>
-  </div>
-
-
-
-    </article>
-    
-    <hr>
-    
-  
-  
-    <article>
-      
-
-  <div class="row-fluid">
-    <div class="span2 post-meta">
-	  <h5 class="date-time">
-
-
-
-
-
-
-
-
-  
-
-
-<i class="icon-calendar-empty"></i> <time datetime="2014-01-16T06:21:00-08:00" pubdate data-updated="true">Jan 16<span>th</span>, 2014</time></h5>
-          <div class="row-fluid">
-          
-          </div>
-          
-          <div class="row-fluid">
-          
-          <a href="/blog/categories/foundation/"><span class="badge">foundation</span></a>
-          
-          <a href="/blog/categories/programming,/"><span class="badge">programming,</span></a>
-          
-          </div>
-          
-    </div>
-    <div class="span10 post-container">
-      <h1 class="link"><a href="/blog/2014/01/16/programming-technology-and-science/">Programming: Technology and Science</a></h1>
-      <p>I liked this quote from the <a href="http://www.amazon.com/Concepts-Techniques-Models-Computer-Programming/dp/0262220695">&ldquo;Concepts, Techniques and Models of Computer Programming&rdquo;</a>:</p>
-
-<blockquote><p>Programming as defined above has two essential parts: a technology and its scientific foundation.</p>
-
-<p>The technology consists of tools, practical techniques, and
-standards, allowing us to do programming.</p>
-
-<p>The science consists of a broad and deep theory with predictive power, allowing us to understand programming. <em>Ideally, the science should explain the technology in a way that is as direct and useful as possible.</em></p>
-
-<p>If either part is left out, we are no longer doing programming. <strong>Without the
-technology, we are doing pure mathematics. Without the science, we are doing a
-craft, i.e., we lack deep understanding</strong></p></blockquote>
-
-      
-      
-    </div>
-  </div>
-
-
-
-    </article>
-    
-    <hr>
-    
-  
-  
-    <article>
-      
-
-  <div class="row-fluid">
-    <div class="span2 post-meta">
-	  <h5 class="date-time">
-
-
-
-
-
-
-
-
-  
-
-
-<i class="icon-calendar-empty"></i> <time datetime="2014-01-08T20:22:00-08:00" pubdate data-updated="true">Jan 8<span>th</span>, 2014</time></h5>
-          <div class="row-fluid">
-          
-          </div>
-          
-          <div class="row-fluid">
-          
-          <a href="/blog/categories/alwaysbecoding,/"><span class="badge">AlwaysBeCoding,</span></a>
-          
-          <a href="/blog/categories/reddit/"><span class="badge">reddit</span></a>
-          
-          </div>
-          
-    </div>
-    <div class="span10 post-container">
-      <h1 class="link"><a href="/blog/2014/01/08/programming-fun-circle-area/">Programming Fun: Circle Area</a></h1>
-      <p>Straightforward <em>math-only, no-algorithm</em> <a href="http://www.reddit.com/r/dailyprogrammer/comments/1s6484/120513_challenge_138_intermediate_overlapping/">problem</a></p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>Input Description
-</span><span class='line'>-----------------
-</span><span class='line'>
-</span><span class='line'>On standard input you will be given four floating-point space-delimited values:
-</span><span class='line'>x y u w. x and y are the first circle's position in Cartesian coordinates. The
-</span><span class='line'>second pair u and w are the second circle's position.
-</span><span class='line'>
-</span><span class='line'>Note that the given circles may not actually intersect. If this is the case,
-</span><span class='line'>return the sum of both circles (which will always be Pi x 2 since our circles
-</span><span class='line'>are unit-circles).
-</span><span class='line'>
-</span><span class='line'>Output Description
-</span><span class='line'>------------------
-</span><span class='line'>
-</span><span class='line'>Print the summed volume of the two circles, up to an accuracy of 4 digits after the decimal place.</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This is just trigonometry, so I made some Post-It illustrations. This one shows the general problem we have to solve.</p>
-
-<p><img class="center" src="/images/programming-fun/circle-area-1.jpg" width="300"></p>
-
-<p>Given the centres of the two circles, and their radii, we know <em>d</em>, the distance between their centres and whether it leads to overlap at all.</p>
-
-<p><img class="center" src="/images/programming-fun/circle-area-2.jpg" width="300"></p>
-
-<p>Overlap only occurs when <em>d &lt; 2r</em>. When <em>d > 2r</em> the answer is just the sum of the areas.</p>
-
-<p><img class="center" src="/images/programming-fun/circle-area-3.jpg" width="300"></p>
-
-<p>From this figure, it should be clear that the overlapping area is the segment of the circle subtended by the chord that is common to both circles. We can find the length of this chord by considering the right triangle formed by half of it, the radius, and half the centre distance.</p>
-
-<p>This then leads to the relationship between the area of the sector (<em>A</em>), the area of the triangle inside it (<em>A_1</em>) and the segment area (<em>A_2</em>)</p>
-
-<p><img class="center" src="/images/programming-fun/circle-area-4.jpg" width="300"></p>
-
-<p>Finally, we subtract the segment area from the area of the circle (and then double it, for two circles) to get our answer.</p>
-
-<p><img class="center" src="/images/programming-fun/circle-area-5.jpg" width="300"></p>
-
-<div><script src='https://gist.github.com/8323896.js'></script>
-<noscript><pre><code>#include &lt;cassert&gt;
-#include &lt;cmath&gt;
-#include &lt;cstdint&gt;
-#include &lt;cstdio&gt;
-#include &lt;cstdlib&gt;
-#include &lt;algorithm&gt;
-#include &lt;iomanip&gt;
-#include &lt;iostream&gt;
-#include &lt;limits&gt;
-#include &lt;string&gt;
-#include &lt;vector&gt;
-#include &lt;queue&gt;
-#include &lt;unordered_map&gt;
-
-using namespace std;
-
-int main() {
-  double x1, y1, x2, y2;
-  cin &gt;&gt; x1 &gt;&gt; y1 &gt;&gt; x2 &gt;&gt; y2;
-  cout &lt;&lt; &quot;Got circle 1 as (&quot; &lt;&lt; x1 &lt;&lt; &quot;, &quot; &lt;&lt; y1 &lt;&lt; &quot;)\n&quot;;
-  cout &lt;&lt; &quot;Got circle 2 as (&quot; &lt;&lt; x2 &lt;&lt; &quot;, &quot; &lt;&lt; y2 &lt;&lt; &quot;)\n&quot;;
-
-  // Total area = 2 * (area of each circle) - 2 * (segment area of overlap)
-  const double kPI = atan(1.0) * 4.0;
-  const double kRadius = 1.0;
-  const double circle_area = kPI * pow(kRadius, 2);
-
-  const double centre_distance = sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
-  if (centre_distance &gt; (2 * kRadius)) {
-    // No overlap
-    cout &lt;&lt; (2 * circle_area) &lt;&lt; endl;
-    return 0;
-  }
-
-  const double segment_half_length = sqrt(pow(kRadius, 2) - pow(centre_distance/2.0, 2));
-  const double theta = asin(segment_half_length / kRadius);
-  const double sector_area = theta * pow(kRadius, 2);
-  const double segment_area = sector_area - (centre_distance * segment_half_length / 2);
-
-  cout.precision(5);
-  cout &lt;&lt; (2 * circle_area) - (2 * segment_area) &lt;&lt; endl;
 }
 </code></pre></noscript></div>
 

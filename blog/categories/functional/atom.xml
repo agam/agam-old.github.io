@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: functional | Agam's Mashed-Up Pome]]></title>
+  <link href="http://agam.github.io/blog/categories/functional/atom.xml" rel="self"/>
+  <link href="http://agam.github.io/"/>
+  <updated>2014-07-14T15:45:27-07:00</updated>
+  <id>http://agam.github.io/</id>
+  <author>
+    <name><![CDATA[Agam]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[FP takedown]]></title>
+    <link href="http://agam.github.io/blog/2013/12/24/fp-takedown/"/>
+    <updated>2013-12-24T06:22:00-08:00</updated>
+    <id>http://agam.github.io/blog/2013/12/24/fp-takedown</id>
+    <content type="html"><![CDATA[<p>Don&rsquo;t blame the messenger. I just saw this and it&rsquo;s hilarious. Gilad Bracha is one of my new heroes now :)</p>
+
+<p>Watch <a href="http://www.infoq.com/presentations/functional-pros-cons">this video</a> and unless you&rsquo;re an overly sensitive haskell zealot, you&rsquo;ll find some humor here. There&rsquo;s a lot of hype-busting and sacred-cow-killing.</p>
+
+<p>Of course, he&rsquo;s no stranger to controversial programming views (<a href="http://gbracha.blogspot.com/2011/01/maybe-monads-might-not-matter.html">&ldquo;Maybe Monads Might Not Matter&rdquo;</a>, <a href="http://gbracha.blogspot.com/2011/06/types-are-anti-modular.html">&ldquo;Types are anti modular&rdquo;</a>, <a href="http://gbracha.blogspot.com/2009/11/objects-are-not-hash-tables.html">&ldquo;Objects are not hash tables&rdquo;</a>, and <a href="http://gbracha.blogspot.com/2009/12/chased-by-ones-own-tail.html">&ldquo;Chased by One&rsquo;s Own Tail&rdquo;</a>), so you might enjoy reading his blog after watching the video!</p>
+]]></content>
+  </entry>
+  
+</feed>

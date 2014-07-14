@@ -1,0 +1,617 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: jekyll | Agam's Mashed-Up Pome]]></title>
+  <link href="http://agam.github.io/blog/categories/jekyll/atom.xml" rel="self"/>
+  <link href="http://agam.github.io/"/>
+  <updated>2014-07-14T15:45:27-07:00</updated>
+  <id>http://agam.github.io/</id>
+  <author>
+    <name><![CDATA[Agam]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Grumbling about Jekyll]]></title>
+    <link href="http://agam.github.io/blog/2014/07/14/grumbling-about-jekyll/"/>
+    <updated>2014-07-14T12:48:00-07:00</updated>
+    <id>http://agam.github.io/blog/2014/07/14/grumbling-about-jekyll</id>
+    <content type="html"><![CDATA[<p>Yeah, not happy about how these dependencies keep breaking. It&rsquo;s a reminder about how fragile these scripting ecosystems are.</p>
+
+<p>Seeing ``Gem::LoadError: You have already activated rake 10.2.2, but your Gemfile requires rake 0.9.6.``` once is enough.</p>
+
+<p>I tried a bunch of stuff and none of it worked. Eventually I gave up, deleted <code>Gemfile.lock</code>, ran <code>bundle install</code>, and just switched my workflow over to using <code>bundle exec rake ...</code> instead of just <code>rake ...</code>. Which grates on me now, but whatever.</p>
+
+<p>Oh wait, no that changed <em>nothing</em>. Bundle is still using <code>rake 0.9.6</code>. Do I need to muck around in the Gemfile now? Why can&rsquo;t it just, you know use this &ldquo;activated version&rdquo; instead?</p>
+
+<p>Nooo &hellip; I have an old version of ruby. I know, I&rsquo;ll use <code>rvm</code>, which I used when I got started with all this. Except &hellip;</p>
+
+<p>```
+RVM is not a function, selecting rubies with &lsquo;rvm use &hellip;&rsquo; will not work.</p>
+
+<p>You need to change your terminal emulator preferences to allow login shell.
+Sometimes it is required to use <code>/bin/bash --login</code> as the command.
+Please visit <a href="https://rvm.io/integration/gnome-terminal/">https://rvm.io/integration/gnome-terminal/</a> for a example.
+```</p>
+
+<p>There <em>must</em> be a way out. Doesn&rsquo;t Ubuntu update ruby? Let&rsquo;s try <code>sudo apt-get upgrade ruby</code>. No, it&rsquo;s already the &ldquo;latest version&rdquo;.</p>
+
+<p>What? Ah yes, the breakdown in sensible versioning: different versions are just different names here, let&rsquo;s try <code>sudo apt-get install ruby1.9</code> instead.</p>
+
+<p><code>
+The following packages have unmet dependencies:
+ libodbc-ruby1.9.1 : Depends: ruby-odbc but it is not going to be installed
+ libodbc-ruby1.9.1-dbg : Depends: ruby-odbc-dbg but it is not going to be installed
+E: Unable to correct problems, you have held broken packages.
+</code></p>
+
+<p>I have &ldquo;held broken packages&rdquo;! Indeed! Regardless, something seems to have happened, so <code>sudo ln -sf /usr/bin/ruby1.9.1 /usr/bin/ruby</code> might do something ?</p>
+
+<p>Alriiite! Let&rsquo;s try to use <code>rake</code> again:</p>
+
+<p><code>
+$ bundle exec rake generate
+Could not find rake-0.9.6 in any of the sources
+</code></p>
+
+<p>Hmm, perhaps I need to rerun <code>bundle update</code> ?</p>
+
+<p><code>``
+Installing RedCloth (4.2.9) with native extensions /usr/lib/ruby/1.9.1/rubygems/installer.rb:552:in</code>rescue in block in build_extensions': ERROR: Failed to build gem native extension. (Gem::Installer::ExtensionBuildError)</p>
+
+<pre><code>    /usr/bin/ruby1.9.1 extconf.rb 
+</code></pre>
+
+<p>/usr/lib/ruby/1.9.1/rubygems/custom_require.rb:36:in `require': cannot load such file &mdash; mkmf (LoadError)</p>
+
+<pre><code>                         from /usr/lib/ruby/1.9.1/rubygems/custom_require.rb:36:in `require'
+                         from extconf.rb:1:in `&lt;main&gt;'
+</code></pre>
+
+<p>```</p>
+
+<p>Clearly, I am the stupid n00b here. I&rsquo;ve managed to end up worse off than where I started. Help!</p>
+
+<p>Time to try something different. Overwrite the Gemfile with <a href="https://github.com/imathis/octopress/blob/master/Gemfile">the octopress master copy</a> and run <code>bundle install</code> again.</p>
+
+<p>BTW, did I mention how long this step takes? No? Too bad. You&rsquo;ll just have to find out for yourself.</p>
+
+<p><lolrus>Nooo! I still be getting error!</lolrus></p>
+
+<p>What does the great and benevolent <a href="http://stackoverflow.com/questions/12149503/snorby-setup-redcloth-error">Stackoverflow suggest</a>? <code>sudo apt-get install ruby1.9.1-dev</code></p>
+
+<p>At this point the magnitude of my true dependencies was revealed to me:</p>
+
+<p><code>
+Fetching source index for https://rubygems.org/
+Using rake (10.3.2)
+Installing RedCloth (4.2.9) with native extensions
+Installing blankslate (2.1.2.4)
+Installing timers (1.1.0)
+Installing celluloid (0.15.2)
+Installing chunky_png (1.3.1)
+Installing fast-stemmer (1.0.2) with native extensions
+Installing classifier (1.3.4)
+Installing coffee-script-source (1.7.1)
+Installing execjs (2.2.1)
+Installing coffee-script (2.3.0)
+Installing colorator (0.1)
+Installing fssm (0.2.10)
+Installing sass (3.2.19)
+Installing compass (0.12.6)
+Installing ffi (1.9.3) with native extensions
+Installing tilt (1.4.1)
+Installing haml (4.0.5)
+Installing jekyll-coffeescript (1.0.0)
+Installing jekyll-gist (1.1.0)
+Installing jekyll-paginate (1.0.0)
+Installing jekyll-sass-converter (1.0.0)
+Installing rb-fsevent (0.9.4)
+Installing rb-inotify (0.9.5)
+Installing listen (2.7.9)
+Installing jekyll-watch (1.0.0)
+Installing kramdown (1.4.0)
+Installing liquid (2.6.1)
+Installing mercenary (0.3.4)
+Installing posix-spawn (0.3.8) with native extensions
+Installing yajl-ruby (1.1.0) with native extensions
+Installing pygments.rb (0.6.0)
+Installing redcarpet (3.1.2) with native extensions
+Installing safe_yaml (1.0.3)
+Installing parslet (1.5.0)
+Installing toml (0.1.1)
+Installing jekyll (2.1.1)
+Installing jekyll-date-format (1.0.0)
+Installing jekyll-page-hooks (1.3.0)
+Installing jekyll-sitemap (0.5.0)
+Installing rack (1.5.2)
+Installing rack-protection (1.5.3)
+Installing rdiscount (2.0.7.3) with native extensions
+Installing rubypants (0.2.0)
+Installing sass-globbing (1.0.0)
+Installing sinatra (1.4.5)
+Installing stringex (1.4.0)
+Using bundler (1.0.15)
+Your bundle is complete! It was installed into ./liquid
+</code></p>
+
+<p>After that cheeful status update, I thought I&rsquo;d start by trying out the old workflow again:</p>
+
+<p><code>
+$ rake generate
+Could not find rake-10.3.2 in any of the sources
+Run `bundle install` to install missing gems.
+</code></p>
+
+<p>Too optimistic too soon, eh?</p>
+
+<p>```
+$ bundle exec rake generate</p>
+
+<h2>Generating Site with Jekyll</h2>
+
+<p>overwrite source/stylesheets/screen.css
+/usr/local/google/home/agam/Documents/agam.github.io/liquid/ruby/1.9.1/gems/execjs-2.2.1/lib/execjs/runtimes.rb:51:in `autodetect': Could not find a JavaScript runtime. See <a href="https://github.com/sstephenson/execjs">https://github.com/sstephenson/execjs</a> for a list of available runtimes. (ExecJS::RuntimeUnavailable)</p>
+
+<pre><code>                                                          from /usr/local/google/home/agam/Documents/agam.github.io/liquid/ruby/1.9.1/gems/execjs-2.2.1/lib/execjs.rb:5:in `&lt;module:ExecJS&gt;'
+                                                          from /usr/local/google/home/agam/Documents/agam.github.io/liquid/ruby/1.9.1/gems/execjs-2.2.1/lib/execjs.rb:4:in `&lt;top (required)&gt;'
+                                                          from /usr/local/google/home/agam/Documents/agam.github.io/liquid/ruby/1.9.1/gems/coffee-script-2.3.0/lib/coffee_script.rb:1:in `require'
+                                                          from /usr/local/google/home/agam/Documents/agam.github.io/liquid/ruby/1.9.1/gems/coffee-script-2.3.0/lib/coffee_script.rb:1:in `&lt;top (required)&gt;'
+                                                          from /usr/local/google/home/agam/Documents/agam.github.io/liquid/ruby/1.9.1/gems/coffee-script-2.3.0/lib/coffee-script.rb:1:in `require'
+                                                          from /usr/local/google/home/agam/Documents/agam.github.io/liquid/ruby/1.9.1/gems/coffee-script-2.3.0/lib/coffee-script.rb:1:in `&lt;top (required)&gt;'
+                                                          from /usr/local/google/home/agam/Documents/agam.github.io/liquid/ruby/1.9.1/gems/jekyll-coffeescript-1.0.0/lib/jekyll-coffeescript.rb:2:in `require'
+                                                          from /usr/local/google/home/agam/Documents/agam.github.io/liquid/ruby/1.9.1/gems/jekyll-coffeescript-1.0.0/lib/jekyll-coffeescript.rb:2:in `&lt;top (required)&gt;'
+                                                          from /usr/local/google/home/agam/Documents/agam.github.io/liquid/ruby/1.9.1/gems/jekyll-2.1.1/lib/jekyll.rb:75:in `require'
+                                                          from /usr/local/google/home/agam/Documents/agam.github.io/liquid/ruby/1.9.1/gems/jekyll-2.1.1/lib/jekyll.rb:75:in `&lt;top (required)&gt;'
+                                                          from /usr/local/google/home/agam/Documents/agam.github.io/liquid/ruby/1.9.1/gems/jekyll-2.1.1/bin/jekyll:6:in `require'
+                                                          from /usr/local/google/home/agam/Documents/agam.github.io/liquid/ruby/1.9.1/gems/jekyll-2.1.1/bin/jekyll:6:in `&lt;top (required)&gt;'
+                                                          from /usr/local/google/home/agam/Documents/agam.github.io/liquid/ruby/1.9.1/bin/jekyll:19:in `load'
+                                                          from /usr/local/google/home/agam/Documents/agam.github.io/liquid/ruby/1.9.1/bin/jekyll:19:in `&lt;main&gt;'
+</code></pre>
+
+<p>```</p>
+
+<p>Obviously, there&rsquo;s one dependency missing from the list above. What, you say, you <em>didn&rsquo;t</em> know you need to install <code>Node.js</code> too?</p>
+
+<p><code>sudo apt-get install nodejs</code></p>
+
+<p><strong>Are we there yet?</strong> The suspense is killing me. Nope, running <code>bundle exec rake generate</code> just (very helpfully!) shows me</p>
+
+<p>```
+$ bundle exec rake generate</p>
+
+<h2>Generating Site with Jekyll</h2>
+
+<p>unchanged sass/screen.scss
+jekyll 2.1.1 &mdash; Jekyll is a blog-aware, static site generator in Ruby</p>
+
+<p>Usage:</p>
+
+<p>  jekyll <subcommand> [options]</p>
+
+<p>Options:</p>
+
+<pre><code>    -s, --source [DIR]  Source directory (defaults to ./)
+    -d, --destination [DIR]  Destination directory (defaults to ./_site)
+        --safe         Safe mode (defaults to false)
+    -p, --plugins PLUGINS_DIR1[,PLUGINS_DIR2[,...]]  Plugins directory (defaults to ./_plugins)
+        --layouts DIR  Layouts directory (defaults to ./_layouts)
+    -h, --help         Show this message
+    -v, --version      Print the name and version
+    -t, --trace        Show the full backtrace when an error occurs
+</code></pre>
+
+<p>Subcommands:
+  build                 Build your site
+  docs                  Launch local server with docs for Jekyll v2.1.1
+  new                   Creates a new Jekyll site scaffold in PATH
+  serve, server         Serve your site locally
+  doctor, hyde          Search site and print specific deprecation warnings
+```</p>
+
+<p>Yes, I knew Jekyll was under that somewhere. That&rsquo;s sort of why I started using all this in the first place. Thanks for reminding me though. When I started writing this post I thought it would be a couple of lines, a quick edit-save-post, all done in five minutes. Cue evil laughter.</p>
+
+<p><em>What, give up now? In our moment of triumph?</em> I overwrote the Gemfile earlier; what about doing the same for the Rakefile?</p>
+
+<p>```
+$ bundle exec rake generate</p>
+
+<h2>Generating Site with Jekyll</h2>
+
+<p>unchanged sass/screen.scss
+Configuration file: /usr/local/google/home/agam/Documents/agam.github.io/_config.yml</p>
+
+<pre><code>   Deprecation: The 'pygments' configuration option has been renamed to 'highlighter'. Please update your config file accordingly. The allowed values are 'rouge', 'pygments' or null.
+        Source: source
+   Destination: public
+  Generating... 
+</code></pre>
+
+<p>jekyll 2.1.1 | Error:  undefined method `published' for &lt;Post: /blog/2013/06/26/data-structures-haskell-vs-cpp>:Jekyll::Post
+```</p>
+
+<p>Now I&rsquo;ve <em>retroactively</em> broken stuff.</p>
+
+<p>Finally, a light dawns: I should have done the following right at the beginning: <code>git pull origin master</code>. And of course, doing this now gives merge conflicts galore.</p>
+
+<p>&hellip; many tens of minutes pass &hellip;</p>
+
+<p>I realized there is no alternative to delve into the source here. <code>lib/jekyll/post.rb' has a</code>published?<code>method, perhaps this is being called without the trailing</code>?` somewhere? (BTW this is EXACTLY why I <strong>hate</strong> dynamically-typed, uncompiled languages!).</p>
+
+<p><code>plugins/preview_unpublished.rb</code> shows a match &hellip; so I deleted it.</p>
+
+<p>Now we have a new problem &hellip;</p>
+
+<p><code>
+jekyll 2.1.1 | Error:  undefined method `subclasses' for Jekyll::PostFilter:Class
+</code></p>
+
+<p>&hellip; but at least the old one is gone! We&rsquo;re getting closer!</p>
+
+<p>Sure enough, it&rsquo;s another plugin: <code>plugins/post_filters.rb</code>. At this point I realize there may be many more, so I see the list of plugins <a href="https://github.com/imathis/octopress/tree/master/plugins">that should exist by default</a> and get rid of any others. Turns out, it&rsquo;s just one more: <code>plugins/sitemap_generator.rb</code>.</p>
+
+<p>No luck yet.</p>
+
+<p><code>
+Liquid Exception: undefined method `deep_merge' for #&lt;Hash:0x0000000277cb38&gt; in sitemap.xml
+</code></p>
+
+<p>Now I&rsquo;m getting impatient. I just want to post a &ldquo;Goodbye&rdquo; post. One last post. I&rsquo;ll render it myself if I have to.</p>
+
+<p>Ok, it&rsquo;s the plugins again. I got rid of <code>plugins/date.rb</code> and updated <code>plugins/octopress_filters.rb</code>.</p>
+
+<p>IT WORKS! Oh god it works!</p>
+
+<p>Ok, my custom theme is gone and all, but that&rsquo;s ok, I won&rsquo;t complain. <em>Update</em>: Needless to say, I got it back (after all this, surely &hellip;)</p>
+
+<p>All&rsquo;s well that ends well, you say? <em>WTF!</em> Nothing new here &hellip; the whole point of relying on stuff like this is after all to engage in this periodic ritual sacrifice of time. Which is great when you&rsquo;re <em>12</em>, not so much now.</p>
+
+<p>I could just leave things as they are, or &hellip; the other option is to switch away to Wordpress or Ghost or Tumblr or whatever else (thought I don&rsquo;t want to migrate my posts <em>again</em>, so if I do something like that I&rsquo;ll just leave all this stuff here, with a pointer to it &hellip;).</p>
+
+<p><em><strong>Update</strong></em>: I realized I had once started <a href="http://agamposts.tumblr.com">a Tumblr blog</a> (or is that a <em>tumblog</em> ?), so might as well repurpose it for something other than just snippets. If you&rsquo;re one of the two people who read this blog (aha! I had Google Analytics enabled!), you can &ldquo;add&rdquo; me, or &ldquo;follow&rdquo; me there. Or whatever the cool kids are calling it these days.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[The Octopress Revolution]]></title>
+    <link href="http://agam.github.io/blog/2013/11/15/the-octopress-revolution/"/>
+    <updated>2013-11-15T17:06:00-08:00</updated>
+    <id>http://agam.github.io/blog/2013/11/15/the-octopress-revolution</id>
+    <content type="html"><![CDATA[<p>Stumbled across Octopress and realized I could get a &ldquo;better minimalism&rdquo; with
+it.</p>
+
+<p>First, you have to get it.</p>
+
+<p><code>bash
+  $  git clone
+  git://github.com/imathis/octopress.git
+  octopress
+</code></p>
+
+<p>Then, you have to get a few dependencies.</p>
+
+<p>```bash
+$ ruby &mdash;version
+ruby 1.8.7 (2011-06-30 patchlevel 352) [x86_64-linux]</p>
+
+<p>$ curl -L <a href="https://get.rvm.io">https://get.rvm.io</a> | bash -s stable &mdash;ruby
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+  Dload  Upload   Total   Spent    Left  Speed
+  100   184  100   184    0     0    468      0
+  &mdash;:&mdash;:&mdash; &mdash;:&mdash;:&mdash; &mdash;:&mdash;:&mdash;  1688
+  100 19527  100 19527    0     0  37740      0
+  &mdash;:&mdash;:&mdash; &mdash;:&mdash;:&mdash; &mdash;:&mdash;:&mdash; 37740
+  Please read and follow further instructions.
+  Downloading RVM branch stable
+  &hellip;</p>
+
+<p>  $ source /home/agam/.rvm/scripts/rvm</p>
+
+<p>  $ rvm install 1.9.3</p>
+
+<p>  $ rvm use 1.9.3</p>
+
+<p>  $ rvm rubygems latest
+```</p>
+
+<p>(Note: <a href="http://rbenv.org/">rbenv</a> is an alternative to <a href="http://rvm.io/">rvm</a> above)</p>
+
+<p>The next step is to set up some of the gems we downloaded.</p>
+
+<p>```bash
+  $  cd octopress</p>
+
+<p>  $ gem install bundler
+Fetching: bundler-1.3.5.gem (100%)
+  Successfully installed bundler-1.3.5
+  Installing ri documentation for bundler-1.3.5
+  1 gem installed</p>
+
+<p>  $ bundle install
+  Fetching gem metadata from
+  <a href="https://rubygems.org/.......">https://rubygems.org/.......</a>
+  Fetching gem metadata from
+  <a href="https://rubygems.org/..">https://rubygems.org/..</a>
+  Installing rake (0.9.2.2)
+  Installing RedCloth (4.2.9)
+  Installing chunky_png (1.2.5)
+  Installing fast-stemmer (1.0.1)
+  Installing classifier (1.3.3)
+  Installing fssm (0.2.9)
+  Installing sass (3.2.9)
+  Installing compass (0.12.2)
+  Installing directory_watcher (1.4.1)
+  Installing haml (3.1.7)
+  Installing kramdown (0.13.8)
+  Installing liquid (2.3.0)
+  Installing syntax (1.0.0)
+  Installing maruku (0.6.1)
+  Installing posix-spawn (0.3.6)
+  Installing yajl-ruby (1.1.0)
+  Installing pygments.rb (0.3.4)
+  Installing jekyll (0.12.0)
+  Installing rack (1.5.2)
+  Installing rack-protection (1.5.0)
+  Installing rb-fsevent (0.9.1)
+  Installing rdiscount (2.0.7.3)
+  Installing rubypants (0.2.0)
+  Installing sass-globbing (1.0.0)
+  Installing tilt (1.3.7)
+  Installing sinatra (1.4.2)
+  Installing stringex (1.4.0)
+Using bundler (1.3.5)
+  Your bundle is complete!
+  Use <code>bundle show [gemname]</code> to see where a
+  bundled gem is installed.
+```</p>
+
+<p>Finally, we&rsquo;re ready to get a &ldquo;blank blog&rdquo; up and running</p>
+
+<p>```bash
+  $ rake install</p>
+
+<h2>Copying classic theme into ./source and</h2>
+
+<p>  ./sass
+  mkdir -p source
+  cp -r .themes/classic/source/. source
+  mkdir -p sass
+  cp -r .themes/classic/sass/. sass
+  mkdir -p source/_posts
+  mkdir -p public
+```</p>
+
+<p>I use Github Pages, but this setup works out of the box with Heroku (or just
+plain rsync) too.</p>
+
+<p><code>bash
+  $ rake setup_github_pages
+  Enter the read/write url for your repository
+  (For example,
+   'git@github.com:your_username/your_username.github.io.git)
+  or
+  'https://github.com/your_username/your_username.github.io')
+  Repository url:
+  https://github.com/agam/agam.github.com.git
+  Added remote
+  https://github.com/agam/agam.github.com.git
+  as origin
+  Set origin as default remote
+  Master branch renamed to 'source'
+  for committing your blog source
+  files
+  rm -rf _deploy
+  mkdir _deploy
+  cd _deploy
+  Initialized empty Git repository
+  in
+  /home/agam/Documents/octopress/_deploy/.git/
+  [master (root-commit) 5a90a3a]
+  Octopress init
+1 file changed, 1 insertion(+)
+  create mode 100644 index.html
+  cd -
+</code></p>
+
+<p>Take a look at what we made !</p>
+
+<p>```bash
+  $ rake generate</p>
+
+<p>  $ rake preview
+```</p>
+
+<p>Push it out and call it a day &hellip;</p>
+
+<p>```bash
+  $ git add .</p>
+
+<p>  $ git commit -m &lsquo;New (Empty) Blog&rsquo;</p>
+
+<p>  $ git push origin source
+```</p>
+
+<h2>Migrating static content</h2>
+
+<p>But wait, in my case, I also need to get all my old stuff over.</p>
+
+<p><code>bash
+  $ cp ../hakyll-source/posts/* source/_posts/
+</code></p>
+
+<p>But when I try to generate again &hellip; sadness</p>
+
+<p><code>``bash
+/usr/local/google/home/agam/Documents/octopress/plugins/pygments_code.rb:27:in
+</code>rescue in pygments': Pygments can&rsquo;t parse unknown language: shell.
+(RuntimeError)
+from
+/usr/local/google/home/agam/Documents/octopress/plugins/pygments_code.rb:24:in
+<code>pygments'
+from
+/usr/local/google/home/agam/Documents/octopress/plugins/pygments_code.rb:14:in
+</code>highlight'
+from
+/usr/local/google/home/agam/Documents/octopress/plugins/backtick_code_block.rb:37:in
+<code>block in render_code_block'
+from
+/usr/local/google/home/agam/Documents/octopress/plugins/backtick_code_block.rb:13:in
+</code>gsub'
+from
+/usr/local/google/home/agam/Documents/octopress/plugins/backtick_code_block.rb:13:in
+<code>render_code_block'
+from
+/usr/local/google/home/agam/Documents/octopress/plugins/octopress_filters.rb:12:in
+</code>pre_filter'
+from
+/usr/local/google/home/agam/Documents/octopress/plugins/octopress_filters.rb:28:in
+<code>pre_render'
+from
+/usr/local/google/home/agam/Documents/octopress/plugins/post_filters.rb:112:in
+</code>block in
+pre_render'
+from
+/usr/local/google/home/agam/Documents/octopress/plugins/post_filters.rb:111:in
+<code>each'
+from
+/usr/local/google/home/agam/Documents/octopress/plugins/post_filters.rb:111:in
+</code>pre_render'
+from
+/usr/local/google/home/agam/Documents/octopress/plugins/post_filters.rb:166:in
+<code>do_layout'
+from
+/usr/local/google/home/agam/.rvm/gems/ruby-1.9.3-p448/gems/jekyll-0.12.0/lib/jekyll/post.rb:195:in
+</code>render'
+from
+/usr/local/google/home/agam/.rvm/gems/ruby-1.9.3-p448/gems/jekyll-0.12.0/lib/jekyll/site.rb:200:in
+<code>block
+in
+render'
+from
+/usr/local/google/home/agam/.rvm/gems/ruby-1.9.3-p448/gems/jekyll-0.12.0/lib/jekyll/site.rb:199:in
+</code>each'
+from
+/usr/local/google/home/agam/.rvm/gems/ruby-1.9.3-p448/gems/jekyll-0.12.0/lib/jekyll/site.rb:199:in
+<code>render'
+from
+/usr/local/google/home/agam/.rvm/gems/ruby-1.9.3-p448/gems/jekyll-0.12.0/lib/jekyll/site.rb:41:in
+</code>process'
+from
+/usr/local/google/home/agam/.rvm/gems/ruby-1.9.3-p448/gems/jekyll-0.12.0/bin/jekyll:264:in
+<code>&lt;top
+(required)&gt;'
+from
+/usr/local/google/home/agam/.rvm/gems/ruby-1.9.3-p448/bin/jekyll:23:in
+</code>load'
+from
+/usr/local/google/home/agam/.rvm/gems/ruby-1.9.3-p448/bin/jekyll:23:in
+<code>&lt;main&gt;'
+from
+  /usr/local/google/home/agam/.rvm/gems/ruby-1.9.3-p448/bin/ruby_executable_hooks:15:in
+ </code>eval'
+  from
+  /usr/local/google/home/agam/.rvm/gems/ruby-1.9.3-p448/bin/ruby_executable_hooks:15:in
+  `<main>'</p>
+
+<p>```</p>
+
+<p><a href="https://plus.google.com/photos?pid=5946667874240500674&amp;oid=116824588290880385608">Nothing to panic</a> about, turns out I just had to use different names for the
+<a href="http://pygments.org/docs/lexers/">Lexers in Pygments</a>. So it&rsquo;s &ldquo;sh&rdquo; or &ldquo;bash&rdquo;
+instead of &ldquo;shell&rdquo;, and &ldquo;haskell&rdquo; instead of &ldquo;Haskell&rdquo;.</p>
+
+<p>Also, I had to make other cosmetic changes like
+&ndash; changing the title to be in the <em>yyyy-mm-dd-title</em> format
+&ndash; added quotes around the &lsquo;title&rsquo; in the header metadata
+&ndash; added categories (retroactively) for each post</p>
+
+<h2>Sorting out the old repo</h2>
+
+<p>Almost there, but not there yet. Running <code>rake deploy</code> doesn&rsquo;t work out of the
+box:</p>
+
+<p><code>sh
+ ! [rejected]        master -&gt; master (non-fast-forward)
+ error: failed to push some refs to
+ 'https://github.com/agam/agam.github.com.git'
+ hint: Updates were rejected because the tip of your current branch is behind
+ hint: its remote counterpart. Integrate the remote changes (e.g.
+ hint: 'git pull ...') before pushing again.
+ hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+</code></p>
+
+<p>Ah what the hell, its just a static blog repo! I deleted the old repo, created a
+new repo, ran <code>rake setup_github_pages</code> again, and this time <code>rake deploy</code>
+worked flawlessly.</p>
+
+<p>```sh</p>
+
+<h2>Pushing generated _deploy website</h2>
+
+<p>Username for &lsquo;<a href="https://github.com">https://github.com</a>&rsquo;: agam
+Password for &lsquo;<a href="https://agam@github.com">https://agam@github.com</a>&rsquo;:
+Counting objects: 262, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (217/217), done.
+Writing objects: 100% (262/262), 677.07 KiB | 0 bytes/s, done.
+Total 262 (delta 59), reused 0 (delta 0)
+To <a href="https://github.com/agam/agam.github.io.git">https://github.com/agam/agam.github.io.git</a>
+ * [new branch]      master &ndash;> master</p>
+
+<p> ## Github Pages deploy complete
+ cd &ndash;
+```</p>
+
+<p>BTW if you do this you might also need to recreate the <code>source</code> remote branch,
+e.g. in my case</p>
+
+<p><code>sh
+agam@terminus:~/Documents/octopress$ git remote set-url origin
+https://github.com/agam/agam.github.io.git
+agam@terminus:~/Documents/octopress$ git push origin source
+Username for 'https://github.com': agam
+Password for 'https://agam@github.com':
+Counting objects: 4975, done.
+Delta compression using up to 8 threads.
+Compressing objects: 100% (2173/2173), done.
+Writing objects: 100% (4975/4975), 1.56 MiB | 816.00 KiB/s, done.
+Total 4975 (delta 2611), reused 4694 (delta 2428)
+To https://github.com/agam/agam.github.io.git
+ * [new branch]      source -&gt; source
+</code></p>
+
+<p>Finally, keep in mind that <code>rake deploy</code> only updates the generated content. You
+obviously also want to version your posts in markdown format (along with any
+images etc that you might be hosting too), so every once in a while,</p>
+
+<p><code>sh
+git commit -a -m 'sync to latest post'
+git push origin source
+</code></p>
+
+<p>(you might want to replace that with a more descriptive message !)</p>
+
+<p>So that&rsquo;s that. If you use git or write code setting this up is pretty easy, and
+as you can see, it&rsquo;s not too bad to look at either!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Moving to Jekyll]]></title>
+    <link href="http://agam.github.io/blog/2013/11/15/moving-to-jekyll/"/>
+    <updated>2013-11-15T00:00:00-08:00</updated>
+    <id>http://agam.github.io/blog/2013/11/15/moving-to-jekyll</id>
+    <content type="html"><![CDATA[<p>Wait, what ? Seriously ? Yes, seriously.</p>
+
+<p>If it goes well you&rsquo;re reading this on my Jekyll-generated static blog (or
+perhaps <a href="http://www.tumblr.com">something else</a>). In that case, you should know
+that this post and the ones before it were generated by <a href="http://jaspervdj.be/hakyll/">Hakyll</a>. It was fun, I made my point, but I have a general <em>be-more-practical-than-ideological</em> theme going in my life, and this is part of that.</p>
+
+<p>For future reference, this is what my Hakyll blog looked like (!)</p>
+
+<p><img src="/images/pre-jekyll-blog.png" alt="Pre-Jekyll Blog" /></p>
+]]></content>
+  </entry>
+  
+</feed>

@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: clojure, | Agam's Mashed-Up Pome]]></title>
+  <link href="http://agam.github.io/blog/categories/clojure/atom.xml" rel="self"/>
+  <link href="http://agam.github.io/"/>
+  <updated>2014-07-14T15:45:27-07:00</updated>
+  <id>http://agam.github.io/</id>
+  <author>
+    <name><![CDATA[Agam]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Getting started with clojure: Part 1]]></title>
+    <link href="http://agam.github.io/blog/2014/01/29/getting-started-with-clojure-part-1/"/>
+    <updated>2014-01-29T18:04:00-08:00</updated>
+    <id>http://agam.github.io/blog/2014/01/29/getting-started-with-clojure-part-1</id>
+    <content type="html"><![CDATA[<p>(Just a personal log so I don&rsquo;t forget some basic steps here. There may or may not be a Part 2)</p>
+
+<h2>Setting up the REPL</h2>
+
+<p>First, install relevant stuff. This is usually, at the minimum, something like <code>sudo apt-get install clojure1.4</code></p>
+
+<p><code>
+$ java -cp /usr/share/java/clojure-1.4.jar clojure.main
+Clojure 1.4.0
+user=&gt;
+</code></p>
+
+<h2>First steps</h2>
+
+<p>Basic Arithmetic</p>
+
+<p><code>
+user=&gt; (+ 2 3)
+5
+</code></p>
+
+<p>Basic string operation</p>
+
+<p>```
+user=> &ldquo;foo&rdquo;
+&ldquo;foo&rdquo;</p>
+
+<p>user=> (concat &ldquo;foo&rdquo; &ldquo;bar&rdquo;)
+(\f \o \o \b \a \r)
+```</p>
+
+<p>Variables
+```
+user=> (def x 4)</p>
+
+<h1>&lsquo;user/x</h1>
+
+<p>user=> (+ x 5)
+9</p>
+
+<p>user=> (def strarr [&ldquo;foo&rdquo; &ldquo;bar&rdquo;])</p>
+
+<h1>&lsquo;user/strarr</h1>
+
+<p>```</p>
+
+<p>Basic arrays</p>
+
+<p>```
+user=> (count [6 5 3 4 2])
+5</p>
+
+<p>user=> (get strarr 1)
+&ldquo;bar&rdquo;</p>
+
+<p>user=> (get strarr 0)
+&ldquo;foo&rdquo;
+```</p>
+
+<p>Basic maps</p>
+
+<p>```
+user=> (def mymap {:foo &ldquo;Here is foo&rdquo; :bar &ldquo;&hellip; and here is bar!&rdquo;})</p>
+
+<h1>&lsquo;user/mymap</h1>
+
+<p>user=> (get mymap :bar)
+&ldquo;&hellip; and here is bar!&rdquo;
+```</p>
+
+<p>Errors</p>
+
+<p>```
+user=> (^ 6 4)
+IllegalArgumentException Metadata must be Symbol,Keyword,String or Map  clojure.lang.LispReader$MetaReader.invoke (LispReader.java:720)
+4
+RuntimeException Unmatched delimiter: )  clojure.lang.Util.runtimeException (Util.java:170)</p>
+
+<p>user=> (% 6 4)
+CompilerException java.lang.RuntimeException: Unable to resolve symbol: % in this context, compiling:(NO_SOURCE_PATH:2)
+```</p>
+
+<p>Stack Overflow (!)</p>
+
+<p>```
+user=> (defn foo [x] (foo (&ndash; x 1)))</p>
+
+<h1>&lsquo;user/foo</h1>
+
+<p>user=> (foo 4)
+StackOverflowError   user/foo (NO_SOURCE_FILE:7)
+```</p>
+
+<p>Simple function</p>
+
+<p>```
+user=> (defn expt [x y] (if (= y 0) 1 (* x (expt x (&ndash; y 1)))))</p>
+
+<h1>&lsquo;user/expt</h1>
+
+<p>user=> (expt 6 4)
+1296
+```</p>
+
+<p>Default REPL namespace (<code>user</code>)</p>
+
+<p><code>
+user=&gt; (user/expt 6 4)
+1296
+</code></p>
+
+<h2>Programming primitives</h2>
+
+<p>For loop</p>
+
+<p><code>
+user=&gt; (dotimes [_ 5] (println "Hello World."))
+Hello World.
+Hello World.
+Hello World.
+Hello World.
+Hello World.
+nil
+</code></p>
+
+<p>While loop</p>
+
+<p><code>
+user=&gt; (for [i (range 5) j (range 5) :when (and (&gt; i 0) (&lt; i j))] (println (* i j)))
+(2
+3
+4
+nil nil 6
+8
+nil nil 12
+nil nil)
+</code></p>
+
+<p>Switch case</p>
+
+<p><code>
+user=&gt; (for [i (range 5) j (range 5)]
+(case (* i j)
+0 "zero"
+(* i j)))
+("zero" "zero" "zero" "zero" "zero" "zero" 1 2 3 4 "zero" 2 4 6 8 "zero" 3 6 9 12 "zero" 4 8 12 16)
+</code></p>
+
+<p>&hellip; the rest in Part 2, if there is one.</p>
+]]></content>
+  </entry>
+  
+</feed>
