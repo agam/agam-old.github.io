@@ -1,0 +1,2253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Haskell | Agam's Mashed-Up Pome]]></title>
+  <link href="http://agam.github.io/blog/categories/haskell/atom.xml" rel="self"/>
+  <link href="http://agam.github.io/"/>
+  <updated>2014-03-31T10:48:03-07:00</updated>
+  <id>http://agam.github.io/</id>
+  <author>
+    <name><![CDATA[Agam]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Comparison of data structures in C++ and Haskell]]></title>
+    <link href="http://agam.github.io/blog/2013/06/26/data-structures-haskell-vs-cpp/"/>
+    <updated>2013-06-26T00:00:00-07:00</updated>
+    <id>http://agam.github.io/blog/2013/06/26/data-structures-haskell-vs-cpp</id>
+    <content type="html"><![CDATA[<p>Once again, just to satisfy my curiosity, I want to do a tiny comparison of a basic feature in both languages, trying to see how data structures are implemented. Ok, I&rsquo;m fairly certain how it works for in C++, I&rsquo;m really just curious about Haskell.</p>
+
+<h2>C++ version</h2>
+
+<p>```c</p>
+
+<h1>include <iostream></h1>
+
+<h1>include <memory></h1>
+
+<h1>include <vector></h1>
+
+<p>struct BinaryNode {
+  int val;
+  BinaryNode <em>leftchild, </em>rightchild;
+  BinaryNode(int v, BinaryNode<em> lc = nullptr, BinaryNode</em> rc = nullptr)</p>
+
+<pre><code>: val(v), leftchild(lc), rightchild(rc) {}
+</code></pre>
+
+<p>};</p>
+
+<p>struct NaryNode {
+  int val;
+  std::vector&lt;NaryNode<em>> children;
+  NaryNode(int v, std::vector&lt;NaryNode</em>>&amp; c) : val(v), children&copy; {}
+};</p>
+
+<p>int binarySum(BinaryNode* node) {
+  if (node == nullptr) {</p>
+
+<pre><code>return 0;
+</code></pre>
+
+<p>  }
+  return node->val + binarySum(node->leftchild) + binarySum(node->rightchild);
+}</p>
+
+<p>int narySum(NaryNode* node) {
+  if (node == nullptr) {</p>
+
+<pre><code>return 0;
+</code></pre>
+
+<p>  }
+  int sum = node->val;
+  for (const auto it : node->children) {</p>
+
+<pre><code>sum += narySum(it);
+</code></pre>
+
+<p>  }
+  return sum;
+}</p>
+
+<p>// Create dummy binary and n-ary trees and print out their sum
+int main() {
+  std::unique_ptr<BinaryNode> bnode1(new BinaryNode(4));
+  std::unique_ptr<BinaryNode> bnode2(new BinaryNode(5));
+  std::unique_ptr<BinaryNode> broot(new BinaryNode(0, bnode1.get(), bnode2.get()));
+  std::cout &lt;&lt; &ldquo;BinarySum = &rdquo; &lt;&lt; binarySum(broot.get()) &lt;&lt; std::endl;</p>
+
+<p>  std::vector&lt;NaryNode*> children;
+  std::unique_ptr<NaryNode> nnode1(new NaryNode(4, children));
+  std::unique_ptr<NaryNode> nnode2(new NaryNode(5, children));
+  std::unique_ptr<NaryNode> nnode3(new NaryNode(6, children));
+  children.push_back(nnode1.get());
+  children.push_back(nnode2.get());
+  children.push_back(nnode3.get());
+  std::unique_ptr<NaryNode> nroot(new NaryNode(0, children));
+  std::cout &lt;&lt; &ldquo;NarySum = &rdquo; &lt;&lt; narySum(nroot.get()) &lt;&lt; std::endl;
+}
+```</p>
+
+<p>Assembly highlights:</p>
+
+<p>Uploaded the full file as a <a href="https://gist.github.com/agam/5872178">Gist</a> (it&rsquo;s 6437 lines long, we aren&rsquo;t in <em>Hello World</em> territory any more; on the other hand, this program would have been much longer in C.</p>
+
+<p>The function <code>_Z9binarySumP10BinaryNode</code> is defined near the top, and the function <code>_Z7narySumP8NaryNode</code> right under it.</p>
+
+<p>The assembly code follows along almost exactly as the C++ code above (of course all the struct offsets are &ldquo;just added&rdquo; and you don&rsquo;t see the members being accessed directly).</p>
+
+<p>The recursion is more obviously visible for the first function, where you see a pattern of &ldquo;call the function&rdquo;, &ldquo;call the function again&rdquo; and then add the node value to it. For the second function, you can see calls to <code>vector&lt;NaryNode&gt;::begin()</code> and <code>vector&lt;NaryNode&gt;::end()</code> at the beginning of the loop, and the test &lsquo;n&rsquo; jump and the recursive call in the middle of the body.</p>
+
+<p>It is useful also to see how <code>main()</code> works here, you can see three calls to the <code>BinaryNode</code> constructor (<code>_ZN10BinaryNodeC1EiPS_S0_</code>), and then similar stuff for the <code>NaryNode</code> objects. At the end are multiple calls to the destructors (similar to <code>callq _ZNSt10unique_ptrI8NaryNodeSt14default_deleteIS0_EED1Ev</code>).</p>
+
+<p>Most of the rest of the code is the definition of these functions (vector begin/end and unique_ptr delete etc.)</p>
+
+<p>Note: I found a better way to show the assembly &lt;&ndash;> source correspondence, in an interactive way: <a href="http://gcc.godbolt.org/">GCC Explorer</a> and I&rsquo;ll use that next time, it&rsquo;s just way more convenient. Also, I&rsquo;ve been showing unoptimized assembly, which is <em>just noise</em>, will refer to <code>-O2</code> next time.</p>
+
+<h2>Haskell version</h2>
+
+<p>```haskell
+data BinaryTree a = BinaryLeaf a | BinaryBranch (BinaryTree a) (BinaryTree a)
+data NaryTree a = NaryLeaf a | NaryBranch [NaryTree a]</p>
+
+<p>binarySum :: (Num a) => (BinaryTree a) &ndash;> a
+binarySum (BinaryLeaf x) = x
+binarySum (BinaryBranch a b) =  (binarySum a) + (binarySum b)</p>
+
+<p>narySum :: (Num a) => NaryTree a &ndash;> a
+narySum (NaryLeaf x) = x
+narySum (NaryBranch b) = foldl (\acc x &ndash;> acc + (narySum x)) 0 b</p>
+
+<p>&mdash;Create dummy binary and n-ary trees and print out their sum
+main = let bt = BinaryBranch (BinaryLeaf 4) (BinaryLeaf 5)</p>
+
+<pre><code>       nt = NaryBranch ((NaryLeaf 4) : (NaryLeaf 5) : (NaryLeaf 6) : [])
+   in do
+      putStrLn ("BinarySum = " ++ show(binarySum bt))
+      putStrLn ("NarySum = " ++ show(narySum nt))
+</code></pre>
+
+<p>```</p>
+
+<p>Assembly highlights:</p>
+
+<p>Uploaded the <a href="https://gist.github.com/agam/5974455">full file (core) as a Gist</a></p>
+
+<p><code>main</code> is present as <code>main1</code> near the bottom, which has two calls to <code>Handle.Text.hPutStr2</code></p>
+
+<p>The binary sum is unpacked quite straightforwardly :&ndash;</p>
+
+<p>```haskell
+main_$sbinarySum =
+  \ (ds_dBk :: BinaryTree Type.Integer) &ndash;></p>
+
+<pre><code>case ds_dBk of _ {
+  BinaryLeaf x_aaA -&gt; x_aaA;
+  BinaryBranch a_aaB b_aaC -&gt;
+    Type.plusInteger
+      (main_$sbinarySum a_aaB) (main_$sbinarySum b_aaC)
+}
+</code></pre>
+
+<p>```</p>
+
+<p>whereas the nary sum is less so :&ndash;</p>
+
+<p>```haskell
+main_$snarySum =
+  \ (ds_dtA :: NaryTree Type.Integer) &ndash;></p>
+
+<pre><code>case ds_dtA of _ {
+  NaryLeaf x_aad -&gt; x_aad;
+  NaryBranch b_aae -&gt; lgo_r1MR lvl_r1MQ b_aae
+}
+</code></pre>
+
+<p>lgo_r1MR =
+  \ (z_atM :: Type.Integer)</p>
+
+<pre><code>(ds_atN :: [NaryTree Type.Integer]) -&gt;
+case ds_atN of _ {
+  [] -&gt; z_atM;
+  : x_atS xs_atT -&gt;
+    lgo_r1MR
+      (Type.plusInteger z_atM (main_$snarySum x_atS))
+      xs_atT
+}
+</code></pre>
+
+<p>```</p>
+
+<p>with the second function being defined for iteration. I uploaded a gist with the <a href="https://gist.github.com/agam/5974501">assembly output</a>, which is of course tedious and quite spaghetti-like.</p>
+
+<p>Here is an example of the nary leaf:</p>
+
+<p>```nasm
+.globl Main_NaryLeaf_closure
+.type Main_NaryLeaf_closure, @object
+Main_NaryLeaf_closure:</p>
+
+<pre><code>.quad   Main_NaryLeaf_info
+</code></pre>
+
+<p>.text</p>
+
+<pre><code>.align 8
+.quad   4294967301
+.quad   0
+.quad   15
+</code></pre>
+
+<p>Main_NaryLeaf_info:
+.LcBb:</p>
+
+<pre><code>addq $16,%r12
+cmpq 144(%r13),%r12
+ja .LcBg
+movq $Main_NaryLeaf_con_info,-8(%r12)
+movq %r14,0(%r12)
+leaq -7(%r12),%rbx
+jmp *0(%rbp)
+</code></pre>
+
+<p>.LcBg:</p>
+
+<pre><code>movq $16,192(%r13)
+</code></pre>
+
+<p>.LcBe:</p>
+
+<pre><code>movl $Main_NaryLeaf_closure,%ebx
+jmp *-8(%r13)
+.size Main_NaryLeaf_info, .-Main_NaryLeaf_info
+</code></pre>
+
+<p>```</p>
+
+<h2>Running time</h2>
+
+<p>Pretty much on par here:</p>
+
+<p>```sh
+$ time ./cpptree
+BinarySum = 9
+NarySum = 15</p>
+
+<p>real    0m0.005s
+user    0m0.000s</p>
+
+<p>$ time ./haskelltree
+BinarySum = 9
+NarySum = 15</p>
+
+<p>real    0m0.004s
+user    0m0.000s
+sys 0m0.000s
+```</p>
+
+<p>Fast compilation, comparable run-time, shorter code &hellip; we&rsquo;re talking serious competition here :)</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Hakyll broken ?]]></title>
+    <link href="http://agam.github.io/blog/2013/03/20/hakyll-broken/"/>
+    <updated>2013-03-20T00:00:00-07:00</updated>
+    <id>http://agam.github.io/blog/2013/03/20/hakyll-broken</id>
+    <content type="html"><![CDATA[<p>I noticed that the dates in my blog were all wrong, and now the blog
+doesn&rsquo;t build.</p>
+
+<p>```sh
+ghc &mdash;make blog.hs
+[1 of 1] Compiling Main             ( blog.hs, blog.o )</p>
+
+<p>blog.hs:27:12:</p>
+
+<pre><code>Not in scope: `list'
+Perhaps you meant `last' (imported from Prelude)
+</code></pre>
+
+<p>blog.hs:29:21: Not in scope: `pageCompiler'</p>
+
+<p>blog.hs:30:17: Not in scope: `applyTemplateCompiler'</p>
+
+<p>blog.hs:31:17: Not in scope: `relativizeUrlsCompiler'</p>
+
+<p>blog.hs:34:27:</p>
+
+<pre><code>Not in scope: `constA'
+Perhaps you meant `const' (imported from Prelude)
+</code></pre>
+
+<p>blog.hs:35:18: Not in scope: `setField'</p>
+
+<p>blog.hs:36:13: Not in scope: `requireAllA'</p>
+
+<p>blog.hs:37:13: Not in scope: `applyTemplateCompiler'</p>
+
+<p>blog.hs:38:13: Not in scope: `applyTemplateCompiler'</p>
+
+<p>blog.hs:39:13: Not in scope: `relativizeUrlsCompiler'</p>
+
+<p>blog.hs:43:21: Not in scope: `pageCompiler'</p>
+
+<p>blog.hs:44:17: Not in scope: `applyTemplateCompiler'</p>
+
+<p>blog.hs:45:17: Not in scope: `applyTemplateCompiler'</p>
+
+<p>blog.hs:46:17: Not in scope: `relativizeUrlsCompiler'
+```</p>
+
+<p>The price to pay for using a system in flux &hellip; oh well, time to read up on
+the <a href="http://jaspervdj.be/hakyll/tutorials/04-compilers.html">hakyll
+transition</a> from v3 to v4.</p>
+
+<p>Alright, that isn&rsquo;t good enough &hellip; need some &lsquo;patterns&rsquo; to work with.
+Luckily, I found <a href="http://wmasson.com/">another Hakyll blog</a> that made the jump, and shameless
+plagiarized. (So thank you, <code>wmasson</code>!)</p>
+
+<p>Well, I didn&rsquo;t even plagiarize well. I used tabs instead of spaces at one
+point and stared at a <code>parse error on input `='</code> error message for
+<em>some time</em>.</p>
+
+<p>I spent some more time staring at</p>
+
+<p>```
+blog.hs:39:47:</p>
+
+<pre><code>Couldn't match expected type `Item String'
+            with actual type `[Item String]'
+Expected type: [Item String] -&gt; [Item String]
+  Actual type: [Item String] -&gt; [[Item String]]
+In the second argument of `(.)', namely `recentFirst'
+In the second argument of `($)', namely `take 3 . recentFirst'
+</code></pre>
+
+<p>```</p>
+
+<p>&hellip; and then I realized that the signature of <code>postList</code> was wrong and should have its second argument as <code>([Item String] -&gt; Compiler [Item String])</code> instead of <code>([Item String] -&gt; [Item String])</code>.
+Had to change <code>prep &lt;$&gt; loadAll pattern</code> to <code>prep =&lt;&lt; loadAll pattern</code> to accomodate this change.</p>
+
+<p>Somehow the type signature of the main page function didn&rsquo;t match, so I modified the <code>postList</code> function to take a <code>listmodifier</code>; this way I could pass in <code>id</code> for the list of all posts and <code>(take 3)</code> for the main page.</p>
+
+<p>I also had to change the date format from <code>%d %m %Y</code> to <code>%Y-%m-%d</code>, since I was getting an</p>
+
+<p><code>
+[ERROR] Hakyll.Web.Template.Context.getItemUTC: could not parse time for ...
+</code></p>
+
+<p>error message, looking at the <a href="https://github.com/jaspervdj/hakyll/blob/master/src/Hakyll/Web/Template/Context.hs#L200">source</a> I found that only a few formats were supported.</p>
+
+<p>Finally, right at the end, I clobbered the git submodule in my output directory when I did a <code>./blog rebuild</code>. So to bring it back, I had to</p>
+
+<p><code>sh
+$ rm -f .gitmodules
+$ ./blog clean
+Removing _site...
+Removing _cache...
+Removing _cache/tmp...
+$ git rm -r _site
+rm '_site'
+$ git submodule add --force git@github.com:agam/agam.github.com.git _site
+Reactivating local git directory for submodule '_site'.
+$ cd _site
+$ git checkout master
+$ cd ..
+$ ./blog build
+</code></p>
+
+<p>So &hellip; no outward change in appearance, but a lot of time wasted, and all because I was bold enough to run <code>cabal update</code>.</p>
+
+<p>Yes, I know. Sad.</p>
+
+<p>But it works! (atleast the chronological sorting works again).</p>
+
+<p><em><strong>Update:</strong></em> <a href="https://github.com/agam/hakyll-source/commit/9af1c492dc34e2ffb677a619ac86113a8a716703">This diff</a> might help to show the changes required.
+<em><strong>Update:</strong></em> Just for fun, I tweaked the CSS of the page a bit, to make it a little less bland.</p>
+
+<p><em>Update</em>: I have sinced moved to <a href="http://jekyllrb.com/">Jekyll</a>, so if Hakyll
+has moved on to a different version, this blog post should be considered
+obsolete.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Comparing basic iteration in C++ and Haskell: Part 1]]></title>
+    <link href="http://agam.github.io/blog/2013/03/13/basic-iteration-comparison/"/>
+    <updated>2013-03-13T00:00:00-07:00</updated>
+    <id>http://agam.github.io/blog/2013/03/13/basic-iteration-comparison</id>
+    <content type="html"><![CDATA[<h2><code>For loop</code> iteration: C</h2>
+
+<p>First, basic iteration over an array.</p>
+
+<p>C++ Source :</p>
+
+<p>```c</p>
+
+<h1>include <iostream></h1>
+
+<h1>include <vector></h1>
+
+<p>int main(int argc, char**argv) {
+  std::vector<int> v { 12, 23, 34 ,45 ,56 ,67 ,78, 89 };
+  for (auto i : v) {</p>
+
+<pre><code>std::cout &lt;&lt; i &lt;&lt; std::endl;
+</code></pre>
+
+<p>  }
+}
+```</p>
+
+<p>Compile/Assemble:</p>
+
+<p><code>sh
+$ g++ -std=c++0x -S -o simpleloopcpp simpleloop.cpp
+</code></p>
+
+<p>I&rsquo;ve stored the result in <a href="https://gist.github.com/agam/5194257">this
+gist</a>. As you can see, this is
+<em>enormous</em> !! And all because we introduced <code>STL</code> into the picture !!!</p>
+
+<p>So I obviously won&rsquo;t include all 1742 lines here, but let&rsquo;s see if we can
+scan some high level features and go a bit deeper into the parts of the
+code we&rsquo;ll compare with the haskell version of this.</p>
+
+<p>(Skipping some boiler plate and the initializer list creater )</p>
+
+<p>```nasm</p>
+
+<pre><code>.text
+.globl  main
+.type   main, @function
+</code></pre>
+
+<p>main:
+.LFB1490:</p>
+
+<pre><code>.cfi_startproc
+.cfi_personality 0x3,__gxx_personality_v0
+.cfi_lsda 0x3,.LLSDA1490
+pushq   %rbp
+.cfi_def_cfa_offset 16
+.cfi_offset 6, -16
+movq    %rsp, %rbp
+.cfi_def_cfa_register 6
+pushq   %rbx
+subq    $120, %rsp
+movl    %edi, -116(%rbp)
+movq    %rsi, -128(%rbp)
+leaq    -17(%rbp), %rax
+movq    %rax, %rdi
+.cfi_offset 3, -24
+</code></pre>
+
+<p>```</p>
+
+<p>Here is the
+<a href="http://en.cppreference.com/w/cpp/utility/initializer_list"><code>std::initializer_list</code></a> being initialized</p>
+
+<p>```nasm</p>
+
+<pre><code>call    _ZNSaIiEC1Ev
+leaq    -80(%rbp), %rax
+movl    $8, %edx
+movl    $._89, %esi
+movq    %rax, %rdi
+call    _ZNSt16initializer_listIiEC1EPKim
+</code></pre>
+
+<p>```</p>
+
+<p>(It is declared elsewhere)</p>
+
+<p>```nasm</p>
+
+<pre><code>.size   ._89, 32
+</code></pre>
+
+<p>._89:</p>
+
+<pre><code>.long   12
+.long   23
+.long   34
+.long   45
+.long   56
+.long   67
+.long   78
+.long   89
+</code></pre>
+
+<p>```</p>
+
+<p>&hellip; and then the <code>vector</code> initialized from it &hellip;`</p>
+
+<p>```nasm</p>
+
+<pre><code>leaq    -17(%rbp), %rcx
+movq    -80(%rbp), %rsi
+movq    -72(%rbp), %rdx
+leaq    -112(%rbp), %rax
+movq    %rax, %rdi
+</code></pre>
+
+<p>.LEHB0:</p>
+
+<pre><code>call    _ZNSt6vectorIiSaIiEEC1ESt16initializer_listIiERKS0_
+</code></pre>
+
+<p>```</p>
+
+<p>Ignore this, it&rsquo;s just freeing up the <code>std::allocator</code> object that is
+passed to the vector (the actual function signature for the constructor is
+<code>c std::vector(std::initializer_list, std::allocator const&amp;)</code>)</p>
+
+<p>```nasm
+.LEHE0:</p>
+
+<pre><code>leaq    -17(%rbp), %rax
+movq    %rax, %rdi
+call    _ZNSaIiED1Ev
+leaq    -112(%rbp), %rax
+movq    %rax, -32(%rbp)
+movq    -32(%rbp), %rax
+movq    %rax, %rdi
+</code></pre>
+
+<p>```</p>
+
+<p>Aha &hellip; finally, the iteration, from beginning</p>
+
+<p>```nasm
+.LEHB1:</p>
+
+<pre><code>call    _ZSt5beginISt6vectorIiSaIiEEEDTcldtfp_5beginEERT_
+movq    %rax, -64(%rbp)
+movq    -32(%rbp), %rax
+movq    %rax, %rdi
+</code></pre>
+
+<p>```</p>
+
+<p>&hellip; to end</p>
+
+<p>```nasm</p>
+
+<pre><code>call    _ZSt3endISt6vectorIiSaIiEEEDTcldtfp_3endEERT_
+movq    %rax, -48(%rbp)
+jmp .L3
+</code></pre>
+
+<p>```</p>
+
+<p>Beginning of the loop: we take the value of the iterator &hellip;</p>
+
+<p>```nasm
+.L4:</p>
+
+<pre><code>leaq    -64(%rbp), %rax
+movq    %rax, %rdi
+call    _ZNK9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEdeEv
+movl    (%rax), %eax
+movl    %eax, -24(%rbp)
+movl    -24(%rbp), %eax
+movl    %eax, %esi
+</code></pre>
+
+<p>```</p>
+
+<p>&hellip; and print it out.
+(This is the <code>operator &lt;&lt;</code>, being called on the contents of <code>edi</code>,
+which is <code>std::cout</code>)</p>
+
+<p>```nasm</p>
+
+<pre><code>movl    $_ZSt4cout, %edi
+call    _ZNSolsEi
+</code></pre>
+
+<p>```</p>
+
+<p>And this big mangled symbol is <code>std::endl</code>.</p>
+
+<p>```nasm</p>
+
+<pre><code>movl
+</code></pre>
+
+<p>$<em>ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6</em>, %esi</p>
+
+<pre><code>movq    %rax, %rdi
+call    _ZNSolsEPFRSoS_E
+</code></pre>
+
+<p>```</p>
+
+<p>BTW a useful tool to find
+unmangled symbols is <code>c++filt</code>, use it as</p>
+
+<p>```sh
+$ c++filt <em>ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6</em></p>
+
+<p>std::basic_ostream&lt;char, std::char_traits<char> >&amp; std::endl&lt;char,
+std::char_traits<char> >(std::basic_ostream&lt;char, std::char_traits<char></p>
+
+<blockquote><p>&amp;)</p></blockquote>
+
+<p>```</p>
+
+<p>I googled and found an <a href="http://slush.warosu.org/c++filtjs/">online version of the
+same</a> but it wasn&rsquo;t always accurate, so
+YMMV.</p>
+
+<p>Moving on &hellip; then the iterator advances along the vector &hellip;</p>
+
+<p>```nasm</p>
+
+<pre><code>leaq    -64(%rbp), %rax
+movq    %rax, %rdi
+call    _ZN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEppEv
+</code></pre>
+
+<p>.L3:</p>
+
+<pre><code>leaq    -48(%rbp), %rdx
+leaq    -64(%rbp), %rax
+movq    %rdx, %rsi
+movq    %rax, %rdi
+</code></pre>
+
+<p>```</p>
+
+<p>&hellip; and if we haven&rsquo;t reached the end yet, jump back to the beginning of
+the loop (the <code>.L4</code> label above)</p>
+
+<p>```nasm</p>
+
+<pre><code>call
+</code></pre>
+
+<p><em>ZN9<strong>gnu_cxxneIPiSt6vectorIiSaIiEEEEbRKNS_17</strong>normal_iteratorIT_T0_EESA</em>
+.LEHE1:</p>
+
+<pre><code>testb   %al, %al
+jne .L4
+leaq    -112(%rbp), %rax
+movq    %rax, %rdi
+</code></pre>
+
+<p>```</p>
+
+<p>When done, destroy the vector (with some error handling, so
+<code>nasm _Unwind_Resume</code>)</p>
+
+<p>```nasm
+.LEHB2:</p>
+
+<pre><code>call    _ZNSt6vectorIiSaIiEED1Ev
+movl    $0, %eax
+addq    $120, %rsp
+popq    %rbx
+popq    %rbp
+.cfi_remember_state
+.cfi_def_cfa 7, 8
+ret
+</code></pre>
+
+<p>.L7:</p>
+
+<pre><code>.cfi_restore_state
+movq    %rax, %rbx
+leaq    -17(%rbp), %rax
+movq    %rax, %rdi
+call    _ZNSaIiED1Ev
+movq    %rbx, %rax
+movq    %rax, %rdi
+call    _Unwind_Resume
+</code></pre>
+
+<p>.LEHE2:
+.L8:</p>
+
+<pre><code>movq    %rax, %rbx
+leaq    -112(%rbp), %rax
+movq    %rax, %rdi
+call    _ZNSt6vectorIiSaIiEED1Ev
+movq    %rbx, %rax
+movq    %rax, %rdi
+</code></pre>
+
+<p>.LEHB3:</p>
+
+<pre><code>call    _Unwind_Resume
+</code></pre>
+
+<p>.LEHE3:</p>
+
+<pre><code>.cfi_endproc
+</code></pre>
+
+<p>```</p>
+
+<p>Now I&rsquo;ve skipped <em>quite</em> a lot of the generated assembly, and you should
+look at the gist I mentioned above for the code for each of the function
+calls mentioned above, e.g. the code for
+the &lsquo;beginning&rsquo; of the iterator:</p>
+
+<p>```nasm
+<em>ZSt5beginISt6vectorIiSaIiEEEDTcldtfp_5beginEERT</em>:
+.LFB1564:</p>
+
+<pre><code>.cfi_startproc
+pushq   %rbp
+.cfi_def_cfa_offset 16
+.cfi_offset 6, -16
+movq    %rsp, %rbp
+.cfi_def_cfa_register 6
+subq    $16, %rsp
+movq    %rdi, -8(%rbp)
+movq    -8(%rbp), %rax
+movq    %rax, %rdi
+call    _ZNSt6vectorIiSaIiEE5beginEv
+leave
+.cfi_def_cfa 7, 8
+ret
+.cfi_endproc
+</code></pre>
+
+<p>```</p>
+
+<p>(which wraps around a call to <code>std::vector::begin()</code>)</p>
+
+<h2><code>For loop</code> iteration: Haskell (Basic lists)</h2>
+
+<p>Here&rsquo;s a simple program that uses the standard <code>Prelude</code> list type.</p>
+
+<p>```haskell
+x = [ 12, 23, 34, 45, 56, 67, 78 ,89 ]</p>
+
+<p>main = mapM_ print x
+```</p>
+
+<p>Full assembly is <a href="https://gist.github.com/agam/5194680">here</a> &hellip; and would
+you believe it, it&rsquo;s one-fifth the size of the C++ assembly.</p>
+
+<p>Based on our experience in the <a href="/posts/hello-world-comparison.html">Hello World
+example</a>, the Haskell assembly won&rsquo;t
+have a linear one-to-one mapping with the source, so let&rsquo;s start with the
+<code>haskell main</code> function.</p>
+
+<p>```nasm
+.globl Main_main_info
+.type Main_main_info, @object
+Main_main_info:
+.Lcuj:</p>
+
+<pre><code>leaq -16(%rbp),%rax
+cmpq %r15,%rax
+jb .Lcul
+addq $16,%r12
+cmpq 144(%r13),%r12
+ja .Lcun
+movq $stg_CAF_BLACKHOLE_info,-8(%r12)
+movq 160(%r13),%rax
+movq %rax,0(%r12)
+movq %r13,%rdi
+movq %rbx,%rsi
+leaq -8(%r12),%rdx
+</code></pre>
+
+<p>```</p>
+
+<p>Once again, we see the <code>CAF</code> allocation</p>
+
+<p>```nasm</p>
+
+<pre><code>subq $8,%rsp
+movl $0,%eax
+call newCAF
+addq $8,%rsp
+testq %rax,%rax
+je .Lcuo
+</code></pre>
+
+<p>.Lcup:</p>
+
+<pre><code>movq $stg_bh_upd_frame_info,-16(%rbp)
+leaq -8(%r12),%rax
+movq %rax,-8(%rbp)
+</code></pre>
+
+<p>```</p>
+
+<p>Somewhat boring &hellip; it uses <code>Control::MapM</code> and <code>
+GHC::Base::IO</code></p>
+
+<p>```nasm</p>
+
+<pre><code>movl $base_ControlziMonad_mapMzu_closure,%ebx
+movl $base_GHCziBase_zdfMonadIO_closure,%r14d
+movl $stc_closure,%esi
+movl $stb_closure+2,%edi
+addq $-16,%rbp
+jmp stg_ap_ppp_fast
+</code></pre>
+
+<p>.Lcun:</p>
+
+<pre><code>movq $16,192(%r13)
+</code></pre>
+
+<p>.Lcul:</p>
+
+<pre><code>jmp *-16(%r13)
+</code></pre>
+
+<p>.Lcuo:</p>
+
+<pre><code>jmp *(%rbx)
+</code></pre>
+
+<p>```</p>
+
+<p>&hellip; which in turn is defined as (skipping the usual paperwork of
+<code>haskell newCAF</code> and <code>stg_CAF_BLACKHOLE_info</code>)</p>
+
+<p>```nasm
+.Lcu2:</p>
+
+<pre><code>movq $stg_bh_upd_frame_info,-16(%rbp)
+leaq -8(%r12),%rax
+movq %rax,-8(%rbp)
+movl $base_SystemziIO_print_closure,%ebx
+movl $base_GHCziShow_zdfShowInteger_closure,%r14d
+addq $-16,%rbp
+jmp stg_ap_p_fast
+</code></pre>
+
+<p>.Lcu0:</p>
+
+<pre><code>movq $16,192(%r13)
+</code></pre>
+
+<p>.LctY:</p>
+
+<pre><code>jmp *-16(%r13)
+</code></pre>
+
+<p>.Lcu1:</p>
+
+<pre><code>jmp *(%rbx)
+</code></pre>
+
+<p>```</p>
+
+<p>(using <code>System::IO::print</code> and <code>GHC::Show::ShowInteger</code>)</p>
+
+<p>So nothing much to directly glean here &mdash; iteration isn&rsquo;t anything special
+in haskell, it&rsquo;s another function call.</p>
+
+<p>The assembly for the data is incredibly verbose, on the lines of</p>
+
+<p>```nasm
+.data</p>
+
+<pre><code>.align 8
+</code></pre>
+
+<p>.align 1
+ssX_closure:</p>
+
+<pre><code>.quad   integerzmgmp_GHCziIntegerziType_Szh_static_info
+.quad   56
+</code></pre>
+
+<p>.data</p>
+
+<pre><code>.align 8
+</code></pre>
+
+<p>.align 1
+ssZ_closure:</p>
+
+<pre><code>.quad   ghczmprim_GHCziTypes_ZC_static_info
+.quad   ssX_closure+1
+.quad   ssW_closure+2
+.quad   0
+</code></pre>
+
+<p>&hellip;
+&hellip;
+&hellip;</p>
+
+<p>.data</p>
+
+<pre><code>.align 8
+</code></pre>
+
+<p>.align 1
+st6_closure:</p>
+
+<pre><code>.quad   integerzmgmp_GHCziIntegerziType_Szh_static_info
+.quad   23
+</code></pre>
+
+<p>.data</p>
+
+<pre><code>.align 8
+</code></pre>
+
+<p>.align 1
+st8_closure:</p>
+
+<pre><code>.quad   ghczmprim_GHCziTypes_ZC_static_info
+.quad   st6_closure+1
+.quad   st5_closure+2
+.quad   0
+</code></pre>
+
+<p>```</p>
+
+<h2><code>For loop</code> iteration: Haskell (Other list structures)</h2>
+
+<p>Let&rsquo;s look at a different kind of list in haskell</p>
+
+<p>```haskell
+import Prelude hiding (mapM<em>);
+import Data.Sequence;
+import Data.Foldable (mapM</em>);</p>
+
+<p>x = Data.Sequence.singleton 12 |> 23 |> 34 |> 45 |> 56 |> 67 |> 78  |> 89
+main = mapM_  print  x
+```</p>
+
+<p>(Assembly <a href="https://gist.github.com/agam/5202781">here</a>)</p>
+
+<p>The cells of this sequence are still constructed in what seems to me a bit
+heavyweight manner:</p>
+
+<p>```nasm
+sEH_info:
+.LcGi:</p>
+
+<pre><code>leaq -16(%rbp),%rax
+cmpq %r15,%rax
+jb .LcGk
+addq $32,%r12
+cmpq 144(%r13),%r12
+ja .LcGm
+movq $stg_upd_frame_info,-16(%rbp)
+movq %rbx,-8(%rbp)
+movq $integerzmgmp_GHCziIntegerziType_Szh_con_info,-24(%r12)
+movq $67,-16(%r12)
+movq $sED_info,-8(%r12)
+movl $containerszm0zi4zi2zi1_DataziSequence_zbzg_closure,%ebx
+leaq -8(%r12),%r14
+leaq -23(%r12),%rsi
+addq $-16,%rbp
+jmp stg_ap_pp_fast
+</code></pre>
+
+<p>.LcGm:</p>
+
+<pre><code>movq $32,192(%r13)
+</code></pre>
+
+<p>```</p>
+
+<p>(This extract shows the closure that adds <code>67</code> in the list)</p>
+
+<p>It&rsquo;s possible to construct this directly from a finite list, and the same
+can be done for the <code>Data.Vector</code> type too :</p>
+
+<p>```haskell
+import Prelude hiding (mapM_);
+import Data.Vector;</p>
+
+<p>x = Data.Vector.fromList [ 12, 23, 34, 45, 56, 67, 78, 89 ]
+main = mapM_  print  x
+```</p>
+
+<p>(Assembly <a href="https://gist.github.com/agam/5202839">here</a>)</p>
+
+<p>The vector is still constructed piece by piece though:</p>
+
+<p>```nasm</p>
+
+<pre><code>movq $23,-64(%r12)
+movq $ghczmprim_GHCziTypes_ZC_con_info,-56(%r12)
+leaq -71(%r12),%rax
+movq %rax,-48(%r12)
+leaq -94(%r12),%rax
+movq %rax,-40(%r12)
+movq $integerzmgmp_GHCziIntegerziType_Szh_con_info,-32(%r12)
+movq $12,-24(%r12)
+movq $ghczmprim_GHCziTypes_ZC_con_info,-16(%r12)
+leaq -31(%r12),%rax
+movq %rax,-8(%r12)
+leaq -54(%r12),%rax
+movq %rax,0(%r12)
+movl $vectorzm0zi9zi1_DataziVector_fromList_closure,%ebx
+leaq -14(%r12),%r14
+addq $-16,%rbp
+jmp stg_ap_p_fast
+</code></pre>
+
+<p>```</p>
+
+<p>(This extract shows the steps for picking up 23 and 12 (skipping similar
+steps for the other numbers)</p>
+
+<p>I was curious if there was a way to avoid constructing the list</p>
+
+<p>```haskell
+import Data.Vector.Unboxed as U;</p>
+
+<p>x :: U.Vector Double
+x = U.fromList [ 12, 23, 34, 45, 56, 67, 78, 89 ]
+main = U.foldr ((>>) . print) (return ())  x
+```</p>
+
+<p>(Assembly <a href="https://gist.github.com/agam/5203008">here</a>)</p>
+
+<p>```nasm
+&hellip;
+&hellip; (skipping numbers after 23)
+&hellip;</p>
+
+<pre><code>movq $23,-48(%r12)
+movq $ghczmprim_GHCziTypes_ZC_con_info,-40(%r12)
+leaq -55(%r12),%rax
+movq %rax,-32(%r12)
+leaq -78(%r12),%rax
+movq %rax,-24(%r12)
+movq $ghczmprim_GHCziTypes_ZC_con_info,-16(%r12)
+movq $stg_INTLIKE_closure+449,-8(%r12)
+leaq -38(%r12),%rax
+movq %rax,0(%r12)
+movl $vectorzm0zi9zi1_DataziVectorziUnboxed_fromList_closure,%ebx
+movl
+</code></pre>
+
+<p>$vectorzm0zi9zi1_DataziVectorziUnboxedziBase_zdfUnboxInt_closure,%r14d</p>
+
+<pre><code>leaq -14(%r12),%rsi
+addq $-16,%rbp
+jmp stg_ap_pp_fast
+</code></pre>
+
+<p>```</p>
+
+<p>In this case, looking at <code>Core</code> might help.</p>
+
+<p>```haskell</p>
+
+<p>Main.main :: GHC.Types.IO ()
+[LclIdX]
+Main.main =
+  Data.Vector.Unboxed.foldr</p>
+
+<pre><code>@ GHC.Types.Int
+@ (GHC.Types.IO ())
+Data.Vector.Unboxed.Base.$fUnboxInt
+(GHC.Base..
+   @ (GHC.Types.IO ())
+   @ (GHC.Types.IO () -&gt; GHC.Types.IO ())
+   @ GHC.Types.Int
+   (GHC.Base.&gt;&gt; @ GHC.Types.IO GHC.Base.$fMonadIO @ () @ ())
+   (System.IO.print @ GHC.Types.Int GHC.Show.$fShowInt))
+(GHC.Base.return
+   @ GHC.Types.IO GHC.Base.$fMonadIO @ () GHC.Tuple.())
+(Data.Vector.Unboxed.fromList
+   @ GHC.Types.Int
+   Data.Vector.Unboxed.Base.$fUnboxInt
+   (GHC.Types.:
+      @ GHC.Types.Int
+      (GHC.Types.I# 12)
+      (GHC.Types.:
+         @ GHC.Types.Int
+         (GHC.Types.I# 23)
+         (GHC.Types.:
+            @ GHC.Types.Int
+            (GHC.Types.I# 34)
+            (GHC.Types.:
+               @ GHC.Types.Int
+               (GHC.Types.I# 45)
+               (GHC.Types.:
+                  @ GHC.Types.Int
+                  (GHC.Types.I# 56)
+                  (GHC.Types.:
+                     @ GHC.Types.Int
+                     (GHC.Types.I# 67)
+                     (GHC.Types.:
+                        @ GHC.Types.Int
+                        (GHC.Types.I# 78)
+                        (GHC.Types.:
+                           @ GHC.Types.Int
+                           (GHC.Types.I# 89)
+                           (GHC.Types.[] @ GHC.Types.Int))))))))))
+</code></pre>
+
+<p>:Main.main :: GHC.Types.IO ()
+[LclIdX]
+:Main.main = GHC.TopHandler.runMainIO @ () Main.main
+```</p>
+
+<p>But no, even in the case of a <code>Data.Vector.Unboxed</code>, the representation
+for the array data is never as compact as the C++ version.</p>
+
+<p>In terms of running speed though (again, printing out tiny lists is a poor,
+poor benchmark, but still) it seems close enough:</p>
+
+<p>```sh
+$ time (while ((n++ &lt; 100)); do ./simpleloopcpp; done)</p>
+
+<p>real    0m0.312s
+user    0m0.016s
+sys 0m0.044s</p>
+
+<p>$ time (while ((n++ &lt; 100)); do ./simpleloophaskell; done)</p>
+
+<p>real    0m0.355s
+user    0m0.024s
+sys 0m0.060s
+```</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Setting up a Haskell webserver to run in Google Compute Engine]]></title>
+    <link href="http://agam.github.io/blog/2013/03/11/webserver-in-google-compute-engine/"/>
+    <updated>2013-03-11T00:00:00-07:00</updated>
+    <id>http://agam.github.io/blog/2013/03/11/webserver-in-google-compute-engine</id>
+    <content type="html"><![CDATA[<p>I signed up for a project at the <a href="https://cloud.google.com/console#c=l">Google Cloud Console</a>, and decided to try running a webserver on it, as a prerequisite to other future toy projects I might link to it.</p>
+
+<h2>First steps</h2>
+
+<p>Get <a href="https://developers.google.com/compute/docs/gcutil/"><code>gcutil</code></a> and install it</p>
+
+<p><code>sh
+$ sudo tar xvpzf gcutil-1.7.1.tar.gz  -C /usr/local/share
+$ sudo ln -s /usr/local/share/gcutil-1.7.1/gcutil /usr/local/bin/gcutil
+</code></p>
+
+<p>Then, link it up to your project</p>
+
+<p><code>sh
+$ gcutil auth --project=agam-personal-project
+</code></p>
+
+<p>It&rsquo;s a good idea to avoid entering the <code>--project=</code> bit every time, by saving your project name</p>
+
+<p><code>sh
+$ gcutil getproject --project=agam-personal-project --cache_flag_values
++--------------------------+-------------------------------+
+|         property         |             value             |
++--------------------------+-------------------------------+
+| name                     | agam-personal-project                     |
+| description              |                               |
+| creation-time            | 2012-10-30T13:52:46.571-07:00 |
+| ips                      | 108.59.85.232,173.255.125.245 |
+|                          |                               |
+| usage                    |                               |
+|   instances              | 0.0/4.0                       |
+|   cpus                   | 0.0/4.0                       |
+|   ephemeral-addresses    | 0.0/4.0                       |
+|   disks                  | 0.0/4.0                       |
+|   disks-total-gb         | 0.0/250.0                     |
+|   snapshots              | 0.0/20.0                      |
+|   networks               | 1.0/1.0                       |
+|   firewalls              | 2.0/10.0                      |
+|   images                 | 0.0/4.0                       |
+|                          |                               |
+| common-instance-metadata |                               |
++--------------------------+-------------------------------+
+</code></p>
+
+<p>By default, incoming HTTP is blocked. So enable it.</p>
+
+<p>```sh
+$ gcutil addfirewall http2 &mdash;description=&ldquo;Allow incoming http&rdquo; &mdash;allowed=&ldquo;tcp:http&rdquo;
+INFO: Waiting for insert of firewall http2. Sleeping for 3s.
+INFO: Waiting for insert of firewall http2. Sleeping for 3s.</p>
+
+<p>Table of resources:</p>
+
+<p>+&mdash;&mdash;&mdash;&ndash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;+
+| name  |     description     |     network      | source-ips | source-tags | target-tags |
++&mdash;&mdash;&mdash;&ndash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;+
+| http2 | Allow incoming http | networks/default | 0.0.0.0/0  |             |             |
++&mdash;&mdash;&mdash;&ndash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;+</p>
+
+<p>Table of operations:</p>
+
+<p>+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&ndash;+&mdash;&mdash;&mdash;&mdash;&ndash;+
+|                      name                      | zone | status | status-message |     target      |          insert-time          | operation-type | error | warning |
++&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&ndash;+&mdash;&mdash;&mdash;&mdash;&ndash;+
+| operation-1362984707558-4d7a09b531841-ea2eb01d |      | DONE   |                | firewalls/http2 | 2013-03-10T23:51:47.558-07:00 | insert         |       |         |
++&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&ndash;+&mdash;&mdash;&mdash;&mdash;&ndash;+
+```</p>
+
+<p>And now it&rsquo;s time to make choices!</p>
+
+<p>```sh
+gcutil addinstance basic-webserver-instance
+1: europe-west1-a  (currently in maintenance)
+2: europe-west1-b
+3: us-central1-a
+4: us-central1-b
+5: us-central2-a</p>
+
+<blockquote><blockquote><blockquote><p>3
+```</p></blockquote></blockquote></blockquote>
+
+<p>No particular reason, I picked <code>us-central1-a</code> (why no <code>us-west</code> ?). I wasn&rsquo;t sure which <a href="https://cloud.google.com/pricing/compute-engine">instance type</a> to pick &hellip; I went with the cheapest option with a disk (#2) for now.</p>
+
+<p>```sh
+1: n1-standard-1
+2: n1-standard-1-d
+3: n1-standard-2
+4: n1-standard-2-d
+5: n1-standard-4
+6: n1-standard-4-d
+7: n1-standard-8
+8: n1-standard-8-d
+9: n1-highcpu-2
+10: n1-highcpu-2-d
+11: n1-highcpu-4
+12: n1-highcpu-4-d
+13: n1-highcpu-8
+14: n1-highcpu-8-d
+15: n1-highmem-2
+16: n1-highmem-2-d
+17: n1-highmem-4
+18: n1-highmem-4-d
+19: n1-highmem-8
+20: n1-highmem-8-d</p>
+
+<blockquote><blockquote><blockquote><p>2
+```</p></blockquote></blockquote></blockquote>
+
+<p>10 choices of a host OS, I picked what seemed to be the latest <code>gcel</code> one.</p>
+
+<p>```sh
+1: projects/google/global/images/centos-6-v20121106
+2: projects/google/global/images/centos-6-v20130104
+3: projects/google/global/images/centos-6-v20130225
+4: projects/google/global/images/gcel-10-04-v20121106
+5: projects/google/global/images/gcel-10-04-v20130104
+6: projects/google/global/images/gcel-10-04-v20130225
+7: projects/google/global/images/gcel-12-04-v20121106
+8: projects/google/global/images/gcel-12-04-v20130104
+9: projects/google/global/images/gcel-12-04-v20130225
+10: projects/google/global/images/centos-6-v20120912 (DEPRECATED)</p>
+
+<blockquote><blockquote><blockquote><p>9
+```</p></blockquote></blockquote></blockquote>
+
+<p>If this is the first time running <code>gcutil</code> it will ask you to enter a passphrase for authentication, and then your instance should be inserted. As you can see below, this took about 35s for me.</p>
+
+<p>```sh
+INFO: Waiting for insert of instance basic-webserver-instance. Sleeping for 3s.
+INFO: Waiting for insert of instance basic-webserver-instance. Sleeping for 3s.
+INFO: Waiting for insert of instance basic-webserver-instance. Sleeping for 3s.
+INFO: Waiting for insert of instance basic-webserver-instance. Sleeping for 3s.
+INFO: Waiting for insert of instance basic-webserver-instance. Sleeping for 3s.
+INFO: Waiting for insert of instance basic-webserver-instance. Sleeping for 3s.
+INFO: Waiting for insert of instance basic-webserver-instance. Sleeping for 3s.
+INFO: Waiting for insert of instance basic-webserver-instance. Sleeping for 3s.
+INFO: Waiting for insert of instance basic-webserver-instance. Sleeping for 3s.
+INFO: Waiting for insert of instance basic-webserver-instance. Sleeping for 3s.
+INFO: Waiting for insert of instance basic-webserver-instance. Sleeping for 3s.</p>
+
+<p>Table of resources:</p>
+
+<p>+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;+&mdash;&mdash;&mdash;&ndash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;+&mdash;&mdash;&mdash;&mdash;&ndash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+
+|           name           |         machine-type         |                       image                        |     network      |  network-ip   |  external-ip  | disks |     zone      | status  | status-message |
++&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;+&mdash;&mdash;&mdash;&ndash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;+&mdash;&mdash;&mdash;&mdash;&ndash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+
+| basic-webserver-instance | machineTypes/n1-standard-1-d | projects/google/global/images/gcel-12-04-v20130225 | networks/default | 10.240.31.254 | 108.59.80.144 |       | us-central1-a | RUNNING |                |
++&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;+&mdash;&mdash;&mdash;&ndash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;+&mdash;&mdash;&mdash;&mdash;&ndash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+</p>
+
+<p>Table of operations:</p>
+
+<p>+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;+&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&ndash;+&mdash;&mdash;&mdash;&mdash;&ndash;+
+|                      name                      |     zone      | status | status-message |                      target                      |          insert-time          | operation-type | error | warning |
++&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;+&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&ndash;+&mdash;&mdash;&mdash;&mdash;&ndash;+
+| operation-1362986355529-4d7a0fd8d07a1-a21d7f92 | us-central1-a | DONE   |                | us-central1-a/instances/basic-webserver-instance | 2013-03-11T00:19:15.529-07:00 | insert         |       |         |
++&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;+&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&ndash;+&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;&mdash;+&mdash;&mdash;&mdash;&ndash;+&mdash;&mdash;&mdash;&mdash;&ndash;+
+```</p>
+
+<p>You can then check if the instance matches what you wanted.</p>
+
+<p><code>sh
+$ gcutil getinstance basic-webserver-instance
+(output skipped)
+</code></p>
+
+<h2>Installing Stuff</h2>
+
+<p>Now that the instance is ready to go, you can ssh to it and get the stuff we need.</p>
+
+<p>```sh
+$ gcutil ssh basic-webserver-instance
+&hellip;
+&hellip; (skipping boilerplate)
+&hellip;
+ * You appear to be running on an EPHEMERAL root disk.  Changes may be lost.
+  For persistent data, use Persistent Disks:
+  <a href="https://developers.google.com/compute/docs/disks#persistentdisks">https://developers.google.com/compute/docs/disks#persistentdisks</a></p>
+
+<p>agam@basic-webserver-instance:~$ sudo df -h
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1       9.6G 1019M  8.1G  12% /
+none            1.9G  4.0K  1.9G   1% /dev
+none            377M  140K  377M   1% /run
+none            5.0M     0  5.0M   0% /run/lock
+none            1.9G     0  1.9G   0% /run/shm
+```</p>
+
+<p>Yeah, the instance doesn&rsquo;t come with a persistent disk. So if you decide to delete the instance, your data is gone.</p>
+
+<p>Eventually, I&rsquo;ll attach <a href="https://developers.google.com/compute/docs/disks#persistentdisks">persistent disks</a> and also use a <a href="https://developers.google.com/compute/docs/robustsystems#startup">startup script</a> to allow me to quickly recreate VM state on new instances, but I&rsquo;ll punt on those for now.</p>
+
+<p>Anyway, let&rsquo;s start installing stuff</p>
+
+<p><code>sh
+$ sudo apt-get install haskell-platform
+...
+$ cabal update
+...
+$ cabal install yesod-platform
+...
+</code></p>
+
+<p>Haskell packages are still a bit flaky. For instance, I got this error and had to ignore it and pray nothing broke:</p>
+
+<p><code>sh
+Warning: The following packages are likely to be broken by the reinstalls:
+regex-posix-0.95.1
+</code></p>
+
+<p>BTW this takes a <em>long</em> <em>long</em> time to complete, so go do something else for 5-10 minutes and then come back.</p>
+
+<h2>Running Yesod</h2>
+
+<p>For this example, I&rsquo;m going to do a basic webserver, though the right thing to do in this case is to choose the option to configure the urls to be used with <a href="https://developers.google.com/storage/docs/getting-started">Google Cloud Storage</a></p>
+
+<p>```sh
+agam@basic-webserver-instance:~$ yesod init
+Welcome to the Yesod scaffolder.
+I&rsquo;m going to be creating a skeleton Yesod project for you.</p>
+
+<p>What do you want to call your project? We&rsquo;ll use this for the cabal name.</p>
+
+<p>Project name: AgamsWeb
+Yesod uses Persistent for its (you guessed it) persistence layer.
+This tool will build in either SQLite or PostgreSQL or MongoDB support for you.
+We recommend starting with SQLite: it has no dependencies.</p>
+
+<pre><code>s      = sqlite
+p      = postgresql
+pf     = postgresql + Fay (experimental)
+mongo  = mongodb
+mysql  = MySQL
+simple = no database, no auth
+url    = Let me specify URL containing a site (advanced)
+</code></pre>
+
+<p>So, what&rsquo;ll it be? s
+```</p>
+
+<p>This sets up a basic scaffold with a few directories</p>
+
+<p><code>sh
+agam@basic-webserver-instance:~/AgamsWeb$ ls -l
+total 68
+-rw-rw-r-- 1 agam agam 3907 Mar 11 08:18 AgamsWeb.cabal
+-rw-rw-r-- 1 agam agam 2723 Mar 11 08:18 Application.hs
+-rw-rw-r-- 1 agam agam 6583 Mar 11 08:18 Foundation.hs
+drwxrwxr-x 2 agam agam 4096 Mar 11 08:18 Handler
+-rw-rw-r-- 1 agam agam 1057 Mar 11 08:18 Import.hs
+-rw-rw-r-- 1 agam agam  415 Mar 11 08:18 Model.hs
+drwxrwxr-x 2 agam agam 4096 Mar 11 08:18 Settings
+-rw-rw-r-- 1 agam agam 2736 Mar 11 08:18 Settings.hs
+drwxrwxr-x 2 agam agam 4096 Mar 11 08:18 app
+drwxrwxr-x 2 agam agam 4096 Mar 11 08:18 config
+drwxrwxr-x 2 agam agam 4096 Mar 11 08:18 deploy
+-rw-rw-r-- 1 agam agam  709 Mar 11 08:18 devel.hs
+drwxrwxr-x 2 agam agam 4096 Mar 11 08:18 messages
+drwxrwxr-x 4 agam agam 4096 Mar 11 08:18 static
+drwxrwxr-x 2 agam agam 4096 Mar 11 08:18 templates
+drwxrwxr-x 2 agam agam 4096 Mar 11 08:18 tests
+</code></p>
+
+<p>Now to start this (empty) webserver</p>
+
+<p><code>sh
+$ cabal install
+$ yesod devel
+</code></p>
+
+<p>This starts the server on <code>localhost:3000</code>. Now the Yesod folks recommend running <code>nginx</code> as a reverse proxy in front, so let&rsquo;s do that (though it&rsquo;s obviously overkill for this example).</p>
+
+<p><code>sh
+$ sudo apt-get install nginx
+</code></p>
+
+<p>Create a basic reverse proxy config</p>
+
+<p>```yaml
+events {</p>
+
+<pre><code>worker_connections 4096;
+</code></pre>
+
+<p>}</p>
+
+<p>http {</p>
+
+<pre><code>server {
+    listen 80;
+    location / {
+        proxy_pass http://127.0.0.1:3000/;
+    }
+}
+</code></pre>
+
+<p>}
+```</p>
+
+<p>Then run nginx</p>
+
+<p><code>sh
+sudo nginx -c nginx.conf
+</code></p>
+
+<p>Hmm &hellip; ok &hellip; for whatever reason that didn&rsquo;t work. This seems like a fairly straightforward config. Screw it, run yesod directly on port 80.</p>
+
+<p><code>sh
+sudo yesod devel --port=80
+</code></p>
+
+<p>Now, if you open the associated IP in your browser, you should see the standard &ldquo;Welcome to Yesod&rdquo; placeholder !!</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Comparing "Hello World" in C++ and Haskell]]></title>
+    <link href="http://agam.github.io/blog/2013/03/10/hello-world-comparison/"/>
+    <updated>2013-03-10T00:00:00-08:00</updated>
+    <id>http://agam.github.io/blog/2013/03/10/hello-world-comparison</id>
+    <content type="html"><![CDATA[<p>I feel I&rsquo;ve totally forgotten all about assembly, and I was curious anyway about how Haskell differed fundamentally in its basic code generation, so I decided to contrast a basic example against C++.</p>
+
+<p>The choice of C++ here is arbitrary; it just happens to be something I&rsquo;ve used most often, and pretty much all the time for the last decade or so. If it ends up being interesting, I can add similar comparisons for other languages.</p>
+
+<h2>Source Programs</h2>
+
+<p>The C++ version:</p>
+
+<p>```c</p>
+
+<h1>include <iostream></h1>
+
+<p>int main(int argc, char** argv) {
+  std::cout &lt;&lt; &ldquo;Hello world\n\n&rdquo;;
+}
+```</p>
+
+<p>The Haskell version:</p>
+
+<p><code>haskell
+main = putStrLn "Hello World"
+</code></p>
+
+<h2>Some high-level differences:</h2>
+
+<p>Difference in size of generated binary:</p>
+
+<p><code>sh
+$ ls -l
+-rwxr-x--- 1 agam eng 8.8K Dec 14 16:10 cpphelloworld
+-rwxr-x--- 1 agam eng 1.1M Dec 14 16:16 haskellhelloworld
+</code></p>
+
+<p>Difference in number of symbols defined:</p>
+
+<p><code>sh
+$ nm cpphelloworld | wc -l
+41
+$ nm haskellhelloworld | wc -l
+6578
+</code></p>
+
+<p>Differences in libraries linked in :&ndash;</p>
+
+<p>```sh
+$ ldd cpphelloworld</p>
+
+<pre><code>linux-vdso.so.1 =&gt;  (0x00007fffcb5a7000)
+libstdc++.so.6 =&gt; /usr/lib/x86_64-linux-gnu/libstdc++.so.6 (0x00007ffe35064000)
+libc.so.6 =&gt; /lib/x86_64-linux-gnu/libc.so.6 (0x00007ffe34ca5000)
+libm.so.6 =&gt; /lib/x86_64-linux-gnu/libm.so.6 (0x00007ffe349a8000)
+/lib64/ld-linux-x86-64.so.2 (0x00007ffe35381000)
+libgcc_s.so.1 =&gt; /lib/x86_64-linux-gnu/libgcc_s.so.1 (0x00007ffe34792000)
+</code></pre>
+
+<p>$ ldd haskellhelloworld</p>
+
+<pre><code>linux-vdso.so.1 =&gt;  (0x00007fff681b9000)
+libgmp.so.10 =&gt; /usr/lib/x86_64-linux-gnu/libgmp.so.10 (0x00007f427e124000)
+libffi.so.6 =&gt; /usr/lib/x86_64-linux-gnu/libffi.so.6 (0x00007f427df1c000)
+libm.so.6 =&gt; /lib/x86_64-linux-gnu/libm.so.6 (0x00007f427dc1f000)
+librt.so.1 =&gt; /lib/x86_64-linux-gnu/librt.so.1 (0x00007f427da17000)
+libdl.so.2 =&gt; /lib/x86_64-linux-gnu/libdl.so.2 (0x00007f427d813000)
+libc.so.6 =&gt; /lib/x86_64-linux-gnu/libc.so.6 (0x00007f427d453000)
+libpthread.so.0 =&gt; /lib/x86_64-linux-gnu/libpthread.so.0 (0x00007f427d236000)
+/lib64/ld-linux-x86-64.so.2 (0x00007f427e3af000)
+</code></pre>
+
+<p>```</p>
+
+<h2>C++ Object Code</h2>
+
+<p>The C++ version:</p>
+
+<p>Filename, and a static declaration of <code>c std::__ioinit</code> defined in <code>iostream</code>.</p>
+
+<p>```nasm</p>
+
+<pre><code>.file   "helloworld.cpp"
+.local  _ZStL8__ioinit
+.comm   _ZStL8__ioinit,1,1
+</code></pre>
+
+<p>```</p>
+
+<p>Read-only data, containing the string used in our program.</p>
+
+<p>```nasm</p>
+
+<pre><code>.section    .rodata
+</code></pre>
+
+<p>.LC0:</p>
+
+<pre><code>.string "Hello world\n\n"
+</code></pre>
+
+<p>```</p>
+
+<p>Beginning of the &lsquo;<code>main</code>&rsquo; function, which is globally visible.</p>
+
+<p>```nasm</p>
+
+<pre><code>.text
+.globl  main
+.type   main, @function
+</code></pre>
+
+<p>```</p>
+
+<p>The C++ code has a lot of these <code>cfi_</code> declarations, which is Call Frame Information for the <a href="http://www.logix.cz/michal/devel/gas-cfi/dwarf-2.0.0.pdf">DWARF debugging format</a></p>
+
+<p>```nasm
+main:
+.LFB966:</p>
+
+<pre><code>.cfi_startproc
+</code></pre>
+
+<p>```</p>
+
+<p>Start new frame, Store old stack pointer.</p>
+
+<p>```nasm</p>
+
+<pre><code>pushq   %rbp
+.cfi_def_cfa_offset 16
+.cfi_offset 6, -16
+movq    %rsp, %rbp
+.cfi_def_cfa_register 6
+</code></pre>
+
+<p>```</p>
+
+<p>Create space for local variables on the stack.
+Copy the value of (empty) EDI and RSI onto this created space.
+Copy the string declared above into ESI.
+Store the address of the <code>std::cout</code> object into EDI.
+Reset EAX to 0.
+Call the std::basic_ostream&lt;std::char_traits> operator&lt;&lt;()</p>
+
+<p>```nasm</p>
+
+<pre><code>subq    $16, %rsp
+movl    %edi, -4(%rbp)
+movq    %rsi, -16(%rbp)
+movl    $.LC0, %esi
+movl    $_ZSt4cout, %edi
+call    _ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc
+movl    $0, %eax
+leave
+.cfi_def_cfa 7, 8
+ret
+.cfi_endproc
+</code></pre>
+
+<p>```</p>
+
+<p>This part is not particular to the specific program here; gcc creates a <code>static_initialization_and_destruction</code> section for each translation unit that needs any static constructors to be called.</p>
+
+<p>```nasm
+.LFE966:</p>
+
+<pre><code>.size   main, .-main
+.type   _Z41__static_initialization_and_destruction_0ii, @function
+</code></pre>
+
+<p>_Z41__static_initialization_and_destruction_0ii:
+.LFB970:</p>
+
+<pre><code>.cfi_startproc
+pushq   %rbp
+.cfi_def_cfa_offset 16
+.cfi_offset 6, -16
+movq    %rsp, %rbp
+.cfi_def_cfa_register 6
+subq    $16, %rsp
+movl    %edi, -4(%rbp)
+movl    %esi, -8(%rbp)
+cmpl    $1, -4(%rbp)
+jne .L2
+cmpl    $65535, -8(%rbp)
+jne .L2
+movl    $_ZStL8__ioinit, %edi
+call    _ZNSt8ios_base4InitC1Ev
+movl    $_ZNSt8ios_base4InitD1Ev, %eax
+movl    $__dso_handle, %edx
+movl    $_ZStL8__ioinit, %esi
+movq    %rax, %rdi
+call    __cxa_atexit
+</code></pre>
+
+<p>.L2:</p>
+
+<pre><code>leave
+.cfi_def_cfa 7, 8
+ret
+.cfi_endproc
+</code></pre>
+
+<p>```</p>
+
+<p>I&rsquo;m not sure <em>wtf</em> is going on here. When it calls the static initialization function, 1 and 65535 are passed as arguments. Then within the function, it verifies that it did actually get these two arguments, and only if they were passed in, it calls the static constructor <code>ios_base::init</code></p>
+
+<p>```nasm
+.LFE970:</p>
+
+<pre><code>.size   _Z41__static_initialization_and_destruction_0ii, .-_Z41__static_initialization_and_destruction_0ii
+.type   _GLOBAL__sub_I_main, @function
+</code></pre>
+
+<p>_GLOBAL__sub_I_main:
+.LFB971:</p>
+
+<pre><code>.cfi_startproc
+pushq   %rbp
+.cfi_def_cfa_offset 16
+.cfi_offset 6, -16
+movq    %rsp, %rbp
+.cfi_def_cfa_register 6
+movl    $65535, %esi
+movl    $1, %edi
+call    _Z41__static_initialization_and_destruction_0ii
+popq    %rbp
+.cfi_def_cfa 7, 8
+ret
+.cfi_endproc
+</code></pre>
+
+<p>.LFE971:</p>
+
+<pre><code>.size   _GLOBAL__sub_I_main, .-_GLOBAL__sub_I_main
+.section    .ctors,"aw",@progbits
+.align 8
+.quad   _GLOBAL__sub_I_main
+</code></pre>
+
+<p>```</p>
+
+<p>Omitted a bunch of library references that looked like</p>
+
+<p>```nasm</p>
+
+<pre><code>.weakref    _ZL22__gthrw_pthread_createPmPK14pthread_attr_tPFPvS3_ES3_,pthread_create
+</code></pre>
+
+<p>```</p>
+
+<h2>Haskell core</h2>
+
+<p>Haskell code generation is <strong>significantly</strong> different, so we&rsquo;ll look at generated <a href="http://www.haskell.org/haskellwiki/Performance/GHC#Looking_at_the_Core"><em>core</em></a> code first.</p>
+
+<p>The best way for this is to use the <code>ghc-core</code> package.</p>
+
+<p><code>sh
+$ cabal install ghc-core
+$ ~/.cabal/bin/ghc-core --no-cast --no-asm haskellhelloworld.hs
+</code></p>
+
+<p>I&rsquo;ve removed the <em>attributes</em> of functions, which look something like</p>
+
+<p>```haskell
+[GblId,
+ Unf=Unf{Src=<vanilla>, TopLvl=True, Arity=0, Value=False,</p>
+
+<pre><code>     ConLike=False, Cheap=False, Expandable=False,
+     Guidance=IF_ARGS [] 60 0}]
+</code></pre>
+
+<p>```</p>
+
+<p>The cleaned up core looks like this:</p>
+
+<p><code>haskell
+main2 :: [Char]
+main2 = unpackCString# "Hello World"
+</code></p>
+
+<p>The code seemse full of a lot of <code>#</code>s, these are <a href="http://www.haskell.org/ghc/docs/latest/html/users_guide/primitives.html">primitive types</a>. The &lsquo;raw&rsquo; string is made available as a different type to the program we wrote. Ghci is a good way to explore the type relationships here.</p>
+
+<p>```haskell
+Prelude> :t &ldquo;Hello world&rdquo;
+&ldquo;Hello world&rdquo; :: [Char]
+Prelude> :t putStrLn
+putStrLn :: String &ndash;> IO ()</p>
+
+<p>Prelude> :browse GHC.CString
+&hellip;
+&hellip; (other functions)
+&hellip;
+GHC.CString.unpackCString# :: GHC.Prim.Addr# &ndash;> [Char]
+```</p>
+
+<p>Continuing with our exploration of the core, <code>main1</code> is defined as a lambda function that effectively performs a<code>return</code> on the value returned by <code>Handle.Text.hPutStr2</code></p>
+
+<p>```haskell
+main1
+  :: State# RealWorld</p>
+
+<pre><code> -&gt; (# State# RealWorld, () #)
+</code></pre>
+
+<p>main1 =
+  \ (eta_B1 :: State# RealWorld) &ndash;></p>
+
+<pre><code>Handle.Text.hPutStr2
+  Handle.FD.stdout main2 True eta_B1
+</code></pre>
+
+<p>```</p>
+
+<p>Once again, ghci to the rescue:</p>
+
+<p><code>haskell
+Prelude&gt; :m GHC.IO.Handle.Text
+Prelude GHC.IO.Handle.Text&gt; :t hPutStrLn
+hPutStr :: GHC.IO.Handle.Types.Handle -&gt; String -&gt; IO ()
+Prelude GHC.IO.Handle.Text&gt; :m GHC.IO.Handle.FD
+Prelude GHC.IO.Handle.FD&gt; :t stdout
+stdout :: GHC.IO.Handle.Types.Handle
+</code></p>
+
+<p>Also, internally in <a href="http://hackage.haskell.org/packages/archive/base/4.3.1.0/doc/html/src/GHC-IO-Handle-Text.html">the source for this module</a>, <code>hPutStrLn</code> is implemented in terms of <code>hPutStr'</code>, which has the type signature</p>
+
+<p><code>haskell
+hPutStr' :: Handle -&gt; String -&gt; Bool -&gt; IO ()
+</code></p>
+
+<p>Moving on, a <code>main</code> is defined but never used (perhaps just for correspondence with the user program?). Anywya, that is followed by a <code>main3</code> which actually runs the code.</p>
+
+<p>```
+main :: IO ()
+main =
+  main1</p>
+
+<p>main3
+  :: State# RealWorld</p>
+
+<pre><code> -&gt; (# State# RealWorld, () #)
+</code></pre>
+
+<p>main3 =
+  \ (eta_X9 :: State# RealWorld) &ndash;></p>
+
+<pre><code>runMainIO1
+  @ ()
+  (main1
+   )
+  eta_X9
+</code></pre>
+
+<p>:main :: IO ()
+:main =
+  main3
+```</p>
+
+<p>Again, internally, the comments for <code>runMainIO</code> in the <a href="http://hackage.haskell.org/packages/archive/base/3.0.1.0/doc/html/src/GHC-TopHandler.html">corresponding source file</a> say:</p>
+
+<p><code>haskell
+-- | 'runMainIO' is wrapped around 'Main.main' (or whatever main is
+-- called in the program).  It catches otherwise uncaught exceptions,
+-- and also flushes stdout\/stderr before exiting.
+runMainIO :: IO a -&gt; IO a
+runMainIO main = (do a &lt;- main; cleanUp; return a) `catchException` topHandler
+</code></p>
+
+<p>Alright &hellip;. we&rsquo;re done with the core, and can look at the assembly, in full now.</p>
+
+<h2>Haskell object code</h2>
+
+<p>As mentioned earlier, the object code here hardly corresponds to our one-line program, but we can read it (sort of !) since we know the core. First off is a declaratoin for the &lsquo;real&rsquo; and &lsquo;dummy&rsquo; <code>main</code> methods.</p>
+
+<p>```nasm
+.data</p>
+
+<pre><code>.align 8
+</code></pre>
+
+<p>.align 1
+.globl <strong>stginit_Main
+.type </strong>stginit_Main, @object
+<strong>stginit_Main:
+.globl </strong>stginit_ZCMain
+.type <strong>stginit_ZCMain, @object
+</strong>stginit_ZCMain:
+.section .data</p>
+
+<pre><code>.align 8
+</code></pre>
+
+<p>.align 1
+```</p>
+
+<p>It is common in generated assembly to see functions wrapped in closures. So there will typically be &lsquo;info&rsquo; for the function, a &lsquo;closure&rsquo; for it, and when needed to be called, a &lsquo;jump&rsquo; to it.</p>
+
+<p>```nasm
+sfB_srt:</p>
+
+<pre><code>.quad   ghczmprim_GHCziCString_unpackCStringzh_closure
+</code></pre>
+
+<p>.data</p>
+
+<pre><code>.align 8
+</code></pre>
+
+<p>.align 1
+sfB_closure:</p>
+
+<pre><code>.quad   sfB_info
+.quad   0
+.quad   0
+.quad   0
+</code></pre>
+
+<p>```</p>
+
+<p>BTW I wanted to get the &ldquo;official&rdquo; line on this, so I went to the <a href="http://hackage.haskell.org/trac/ghc/wiki/Commentary/Compiler/GeneratedCode">haskell wiki</a> and found this:</p>
+
+<p>```text
+The goal of the STG machine is to reduce the current expression to a value.</p>
+
+<p>When it has done so, it:</p>
+
+<p>Stores a tagged pointer to evaluated closure in the STG register R1
+Jumps to the entry code of the info table pointed to by the value at the top
+of the STG stack
+This may also be called the info table of the continuation of the expression
+The continuation code is responsible for popping its info pointer (and stack-
+allocated free variables, if any) from the stack before returning.</p>
+
+<p>Arguments are passed on the stack, and are popped by the callee. Upon a
+jump to the entry code for a function, there are always precisely as many
+arguments on the stack as the (statically known) arity of that function,
+and those arguments will be followed by the info pointer of a continuation.
+```</p>
+
+<p>Moving on, this (<code>cf0_str</code>) is our output string, declared byte-by-byte.</p>
+
+<p>```nasm
+.section .rodata</p>
+
+<pre><code>.align 8
+</code></pre>
+
+<p>.align 1
+cfO_str:</p>
+
+<pre><code>.byte   72
+.byte   101
+.byte   108
+.byte   108
+.byte   111
+.byte   32
+.byte   87
+.byte   111
+.byte   114
+.byte   108
+.byte   100
+.byte   0
+</code></pre>
+
+<p>.text</p>
+
+<pre><code>.align 8
+.long   sfB_srt-(sfB_info)+0
+.long   0
+.quad   0
+.quad   4294967318
+</code></pre>
+
+<p>```</p>
+
+<p>I was totally stumped by <code>newCAF</code> and <code>CAF_BLACKHOLE_info</code> here, so I had to Google around to find <a href="http://mainisusuallyafunction.blogspot.com/2011/10/thunks-and-lazy-blackholes-introduction.html">some helpful info on it</a>.This in turn led me to the <a href="https://github.com/ghc/ghc/blob/master/rts/sm/Storage.c#L262">GHC runtime code</a> which says</p>
+
+<p>```</p>
+
+<p>   The entry code for every CAF does the following:</p>
+
+<pre><code>  - builds a CAF_BLACKHOLE in the heap
+
+  - calls newCaf, which atomically updates the CAF with
+    IND_STATIC pointing to the CAF_BLACKHOLE
+
+  - if newCaf returns zero, it re-enters the CAF (see Note [atomic
+    CAF entry])
+
+  - pushes an update frame pointing to the CAF_BLACKHOLE
+</code></pre>
+
+<p>   Why do we build an BLACKHOLE in the heap rather than just updating
+   the thunk directly?  It&rsquo;s so that we only need one kind of update
+   frame &ndash; otherwise we&rsquo;d need a static version of the update frame
+   too, and various other parts of the RTS that deal with update
+   frames would also need special cases for static update frames.</p>
+
+<p>   newCaf() does the following:</p>
+
+<pre><code>  - it updates the CAF with an IND_STATIC pointing to the
+    CAF_BLACKHOLE, atomically.
+
+  - it puts the CAF on the oldest generation's mutable list.
+    This is so that we treat the CAF as a root when collecting
+    younger generations.
+</code></pre>
+
+<p>```</p>
+
+<p>If you want to know more about CAFs (Constant Applicative Forms), see <a href="http://www.haskell.org/haskellwiki/Constant_applicative_form">this wiki page</a></p>
+
+<p>So, moving on, what follows is book-keeping (ok, I just really want to skip over these 20 lines)</p>
+
+<p>```haskell
+sfB_info:
+.LcfS:</p>
+
+<pre><code>leaq -16(%rbp),%rax
+cmpq %r15,%rax
+jb .LcfU
+addq $16,%r12
+cmpq 144(%r13),%r12
+ja .LcfW
+movq $stg_CAF_BLACKHOLE_info,-8(%r12)
+movq 160(%r13),%rax
+movq %rax,0(%r12)
+movq %r13,%rdi
+movq %rbx,%rsi
+leaq -8(%r12),%rdx
+subq $8,%rsp
+movl $0,%eax
+call newCAF
+addq $8,%rsp
+testq %rax,%rax
+je .LcfX
+</code></pre>
+
+<p>```</p>
+
+<p>Closures in action! Here we see the steps: Move the frame info into place, setup the function we want to call (here <code>GHC.String.unpackCString</code>) and its arguments (<code>cfo_str</code> from above) and then <code>jmp</code> to an evaluating function (here <code>stg_ap_n_fast</code>).</p>
+
+<p>```haskell
+.LcfY:</p>
+
+<pre><code>movq $stg_bh_upd_frame_info,-16(%rbp)
+leaq -8(%r12),%rax
+movq %rax,-8(%rbp)
+movl $ghczmprim_GHCziCString_unpackCStringzh_closure,%ebx
+movl $cfO_str,%r14d
+addq $-16,%rbp
+jmp stg_ap_n_fast
+</code></pre>
+
+<p>.LcfW:</p>
+
+<pre><code>movq $16,192(%r13)
+</code></pre>
+
+<p>.LcfU:</p>
+
+<pre><code>jmp *-16(%r13)
+</code></pre>
+
+<p>.LcfX:</p>
+
+<pre><code>jmp *(%rbx)
+.size sfB_info, .-sfB_info
+</code></pre>
+
+<p>```</p>
+
+<p>Setting up the <code>Main_main_closure</code>, which combines <code>base.SystemIO.putStrLn</code> and <code>sfB_closure</code>(above).</p>
+
+<p>```haskell
+.section .data</p>
+
+<pre><code>.align 8
+</code></pre>
+
+<p>.align 1
+Main_main_srt:</p>
+
+<pre><code>.quad   base_SystemziIO_putStrLn_closure
+.quad   sfB_closure
+</code></pre>
+
+<p>.data</p>
+
+<pre><code>.align 8
+</code></pre>
+
+<p>.align 1
+.globl Main_main_closure
+.type Main_main_closure, @object
+Main_main_closure:</p>
+
+<pre><code>.quad   Main_main_info
+.quad   0
+.quad   0
+.quad   0
+</code></pre>
+
+<p>.text</p>
+
+<pre><code>.align 8
+.long   Main_main_srt-(Main_main_info)+0
+.long   0
+.quad   0
+.quad   12884901910
+</code></pre>
+
+<p>.globl Main_main_info
+.type Main_main_info, @object
+```</p>
+
+<p>Moving on &hellip; bookkeeping for the main function similar for the functions above</p>
+
+<p>```haskell
+Main_main_info:
+.Lcgf:</p>
+
+<pre><code>leaq -16(%rbp),%rax
+cmpq %r15,%rax
+jb .Lcgh
+addq $16,%r12
+cmpq 144(%r13),%r12
+ja .Lcgj
+movq $stg_CAF_BLACKHOLE_info,-8(%r12)
+movq 160(%r13),%rax
+movq %rax,0(%r12)
+movq %r13,%rdi
+movq %rbx,%rsi
+leaq -8(%r12),%rdx
+subq $8,%rsp
+movl $0,%eax
+call newCAF
+addq $8,%rsp
+testq %rax,%rax
+je .Lcgk
+</code></pre>
+
+<p>```</p>
+
+<p>Running the <code>main</code> closure &hellip; this is also a demonstration of how functions are connected (one closure is an argument for the other closure)</p>
+
+<p>```haskell
+.Lcgl:</p>
+
+<pre><code>movq $stg_bh_upd_frame_info,-16(%rbp)
+leaq -8(%r12),%rax
+movq %rax,-8(%rbp)
+movl $base_SystemziIO_putStrLn_closure,%ebx
+movl $sfB_closure,%r14d
+addq $-16,%rbp
+jmp stg_ap_p_fast
+</code></pre>
+
+<p>.Lcgj:</p>
+
+<pre><code>movq $16,192(%r13)
+</code></pre>
+
+<p>.Lcgh:</p>
+
+<pre><code>jmp *-16(%r13)
+</code></pre>
+
+<p>.Lcgk:</p>
+
+<pre><code>jmp *(%rbx)
+.size Main_main_info, .-Main_main_info
+</code></pre>
+
+<p>.section .data</p>
+
+<pre><code>.align 8
+</code></pre>
+
+<p>.align 1
+```</p>
+
+<p>Ok, our last round of setting up the &lsquo;running main function&rsquo; and then its associated book-keeping</p>
+
+<p>```haskell
+ZCMain_main_srt:</p>
+
+<pre><code>.quad   base_GHCziTopHandler_runMainIO_closure
+.quad   Main_main_closure
+</code></pre>
+
+<p>.data</p>
+
+<pre><code>.align 8
+</code></pre>
+
+<p>.align 1
+.globl ZCMain_main_closure
+.type ZCMain_main_closure, @object
+ZCMain_main_closure:</p>
+
+<pre><code>.quad   ZCMain_main_info
+.quad   0
+.quad   0
+.quad   0
+</code></pre>
+
+<p>.text</p>
+
+<pre><code>.align 8
+.long   ZCMain_main_srt-(ZCMain_main_info)+0
+.long   0
+.quad   0
+.quad   12884901910
+</code></pre>
+
+<p>.globl ZCMain_main_info
+.type ZCMain_main_info, @object
+ZCMain_main_info:
+.LcgC:</p>
+
+<pre><code>leaq -16(%rbp),%rax
+cmpq %r15,%rax
+jb .LcgE
+addq $16,%r12
+cmpq 144(%r13),%r12
+ja .LcgG
+movq $stg_CAF_BLACKHOLE_info,-8(%r12)
+movq 160(%r13),%rax
+movq %rax,0(%r12)
+movq %r13,%rdi
+movq %rbx,%rsi
+leaq -8(%r12),%rdx
+subq $8,%rsp
+movl $0,%eax
+call newCAF
+addq $8,%rsp
+testq %rax,%rax
+je .LcgH
+</code></pre>
+
+<p>```</p>
+
+<p>And finally, this is the <code>GHC.TopHandler.runMainIO</code> closure being called (if you haven&rsquo;t noticed yet, there are no <code>call</code>s in this code at all (except for <code>newCAF</code>), and everything is done by <code>jmp</code> instructions!)</p>
+
+<p>The <code>Main_main_closure</code> above is an argument here to <code>runMainIO</code>.</p>
+
+<p>```nasm
+.LcgI:</p>
+
+<pre><code>movq $stg_bh_upd_frame_info,-16(%rbp)
+leaq -8(%r12),%rax
+movq %rax,-8(%rbp)
+movl $base_GHCziTopHandler_runMainIO_closure,%ebx
+movl $Main_main_closure,%r14d
+addq $-16,%rbp
+jmp stg_ap_p_fast
+</code></pre>
+
+<p>.LcgG:</p>
+
+<pre><code>movq $16,192(%r13)
+</code></pre>
+
+<p>.LcgE:</p>
+
+<pre><code>jmp *-16(%r13)
+</code></pre>
+
+<p>.LcgH:</p>
+
+<pre><code>jmp *(%rbx)
+.size ZCMain_main_info, .-ZCMain_main_info
+</code></pre>
+
+<p>.section .note.GNU-stack,&ldquo;&rdquo;,@progbits
+.ident &ldquo;GHC 7.4.1&rdquo;
+```</p>
+
+<p>And we&rsquo;re done!</p>
+
+<h2>Running time comparison</h2>
+
+<p>(only because I couldn&rsquo;t help myself, usual disclaimers about &lsquo;this-is-not-a-benchmark&rsquo; apply)</p>
+
+<p>C++:</p>
+
+<p><code>bash
+time (while ((n++ &lt; 100)); do ./cpphelloworld; done)
+real    0m0.250s
+user    0m0.004s
+sys 0m0.036s
+</code></p>
+
+<p>Haskell:</p>
+
+<p><code>bash
+time (while ((n++ &lt; 100)); do ./haskellhelloworld; done)
+real    0m0.366s
+user    0m0.004s
+sys 0m0.048s
+</code></p>
+
+<h2>Gists</h2>
+
+<p><em>Update</em>: I&rsquo;ve made the complete assembly version of both &lsquo;Hello World&rsquo; programs available as gists.
+So you can look at <a href="https://gist.github.com/agam/5148416">The C++ version</a> or <a href="https://gist.github.com/agam/5148398">The Haskell version</a>.</p>
+]]></content>
+  </entry>
+  
+</feed>

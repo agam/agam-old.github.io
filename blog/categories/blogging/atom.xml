@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: Blogging | Agam's Mashed-Up Pome]]></title>
+  <link href="http://agam.github.io/blog/categories/blogging/atom.xml" rel="self"/>
+  <link href="http://agam.github.io/"/>
+  <updated>2014-03-31T10:48:03-07:00</updated>
+  <id>http://agam.github.io/</id>
+  <author>
+    <name><![CDATA[Agam]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Living Pseudonymously]]></title>
+    <link href="http://agam.github.io/blog/2014/02/19/living-pseudonymously/"/>
+    <updated>2014-02-19T01:29:00-08:00</updated>
+    <id>http://agam.github.io/blog/2014/02/19/living-pseudonymously</id>
+    <content type="html"><![CDATA[<p>For various reasons, this blog is going to be focussed just on C++ programming, as boring as that may sound.</p>
+
+<p>I&rsquo;ll try not to make it <em>too</em> boring, but we&rsquo;ll see.</p>
+
+<p>Meanwhile everything <em>else</em> will still exist, just not here. Starting with the last two posts.</p>
+
+<p>If you want to try to find me you still can; but I&rsquo;m just not going to advertise it, that&rsquo;s all.</p>
+]]></content>
+  </entry>
+  
+</feed>
