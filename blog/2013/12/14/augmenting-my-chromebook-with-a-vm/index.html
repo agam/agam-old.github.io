@@ -1,0 +1,315 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>Augmenting my Chromebook with a VM - Agam's Mashed-Up Pome</title>
+  <meta name="author" content="Agam">
+
+   
+  <meta name="description" content="">
+  
+  <meta name="keywords" content="">
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://agam.github.io/blog/2013/12/14/augmenting-my-chromebook-with-a-vm">
+  <link href="/favicon.png" rel="icon">
+  <link href='http://fonts.googleapis.com/css?family=Quicksand:300,400' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Agam's Mashed-Up Pome" type="application/atom+xml">
+  <script src="/js/jquery.js"></script>
+  <script src="/js/bootstrap-collapse.js"></script>
+  <script src="/js/modernizr-2.0.js"></script>
+  <script src="/js/octopress.js" type="text/javascript"></script>
+  <script src="/js/application.js"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-16612682-4']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <div class="navbar navbar-inverse navbar-static-top">
+  	<div class="navbar-inner">
+  	  <div class="container">
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+          <span class="fui-menu-24"></span>
+        </a>
+  	  	<div class="nav-collapse collapse navbar-responsive-collapse" style="height:0;">
+  	      <ul class="nav">
+    
+        <li ><a href="/index.html">Home</a></li>
+    
+</ul>
+
+<ul class="nav pull-right">
+    
+    
+    
+    <li><a href="http://twitter.com/agambrahma" title="Twitter Profile"><i class="icon-twitter-sign social-navbar"></i></a></li>
+    
+    
+    <li><a href="http://plus.google.com/+AgamBrahma" title="Google+ Profile"><i class="icon-google-plus-sign social-navbar"></i></a></li>
+    
+    
+    
+</ul>
+
+  	    </div>
+  	  </div>
+  	</div>
+  </div>
+  <div class="container" id="main">
+      <div class="row-fluid">
+        <div id="content">
+          <div>
+<article class="hentry" role="article">
+  
+
+  <header>
+  <div class="jumbotron">
+    Augmenting My Chromebook With a VM
+	<h5>
+
+
+
+
+
+
+
+
+  
+
+
+<i class="icon-calendar-empty"></i> <time datetime="2013-12-14T17:14:00-08:00" pubdate data-updated="true">Dec 14<span>th</span>, 2013</time></h5>
+  </div>
+</header>
+  <div class="row-fluid">
+    <div class="span12">
+      <p>I had tried this out about a year ago, creating a small VM instance on Google Compute Engine. But a maintenance window occurred, my VM died, and that was that. I cleaned up and walked away.</p>
+
+<h2>Comparison</h2>
+
+<p>Sometime back, I heard about <a href="https://www.digitalocean.com/">Digital Ocean</a> from a friend. I had just switched to a chromebook and was missing the shell of my previous Linux laptop. So I once again looked into the current cloud offerings.</p>
+
+<p>There is an excellent comparison at <a href="http://cloudpricegrid.com/">cloud price grid</a> so I won&rsquo;t waste time repeating that.</p>
+
+<p>DigitalOcean seems the cheapest for a couple of options</p>
+
+<ul>
+<li><em>1core/512Mb/20G &mdash;> $5/mo</em></li>
+<li><em>1core/1G/30G  &mdash;> $10/mo</em></li>
+</ul>
+
+
+<p>(See <a href="https://www.digitalocean.com/pricing/">detailed pricing</a>)</p>
+
+<p>However, this is without any firewall or networking capability, and the datacenter seems to be near New York, so that&rsquo;s something to keep in mind.</p>
+
+<p>Meanwhile at Google Compute Engine, the right comparison would be with a combination of</p>
+
+<ul>
+<li><em>Persistent disk &mdash;> 20G for $0.8/mo</em></li>
+<li><em>f1-micro [1core/600Mb] &mdash;> $0.019/hr</em>
+[which by the way at max utilization turns out to be $13.78/mo]</li>
+</ul>
+
+
+<p>(See <a href="https://cloud.google.com/products/compute-engine/#pricing">detailed pricing</a>)</p>
+
+<p>A similar comparison for Amazon (I could be off in apples-to-apples here (what I think are apples may in fact be oranges))</p>
+
+<p><em>t1.micro [1core/630Mb] &mdash;> $0.025/hr</em></p>
+
+<p>So the cheapest Amazon has to offer seems more expensive than the cheapest Google has to offer (both of these instances will be pretty useless for hosting something substantial, but we&rsquo;re assuming the idea here is to have a small &ldquo;developer space&rdquo;).</p>
+
+<p>But keep in mind Amazon also has a <a href="http://aws.amazon.com/free/">free tier</a> so if you just want to try it out for a year, the micro instance is actually FREE (!)</p>
+
+<h2>Getting (re-)started with Google Compute Engine</h2>
+
+<p>I elected to stay with Google. The new <a href="https://cloud.google.com/console#/project">cloud console</a> is much better than it was before, with a nice grouping by project and sub-links to Appengine, CloudSql, CloudStorage, ComputeEngine, etc.</p>
+
+<p>Within the Cloud Engine dashboard, it is possible (and in fact, easy) to create a new VM, set up its associated disk and static IPs, OS, etc from the UI.</p>
+
+<h2>SSHing</h2>
+
+<p>One thing to point out is that the first time I set it up I used the <code>gcutil</code> tool to ssh into the instance; this creates local ssh keys and uploads the public key to the instance (it can be viewed in the <code>Metadata</code> part of the console). So I had to do this from a non-chromebook &ldquo;real&rdquo; computer (though there may be a workaround I&rsquo;m unaware of).</p>
+
+<p>For subsequent SSHs, the recommended way is to use a long SSH command</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>ssh -o <span class="nv">UserKnownHostsFile</span><span class="o">=</span>/dev/null -o <span class="nv">CheckHostIP</span><span class="o">=</span>no -o  <span class="nv">StrictHostKeyChecking</span><span class="o">=</span>no <span class="se">\</span>
+</span><span class='line'> -i &lt;key-file&gt; -o <span class="nv">LogLevel</span><span class="o">=</span>QUIET -A  -p 22 &lt;username&gt;@&lt;ipaddress&gt;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>and this worked when I tried it from the computer I signed up on.</p>
+
+<p>Before trying to SSH from a chromebook, you have to copy ssh keys locally (how? I Dropbox&rsquo;d them and then deleted them from Dropbox, which is admittedly less secure &hellip; maybe I should have written it down and recreated manually?!).</p>
+
+<p>Anyway, so once you have copied the keys, you can use the <a href="https://chrome.google.com/webstore/detail/secure-shell/pnhechapfaindjhompbnflcldabbghjo?hl=en">Secure Shell</a> app.</p>
+
+<p>You have to click on <code>import...</code> to select the public/private key pair. At this point, when I used the long SSH command mentioned above, it didn&rsquo;t work. Eventually it only worked when I tried with a blank command (so the only arguments were username, host IP and the key file).</p>
+
+<h2>Chromebook + VM</h2>
+
+<p>Having tried this out for a while, I can&rsquo;t imagine living without it. Obviously it depends on internet access, but that&rsquo;s a common caveat these days.</p>
+
+<p>But I strongly encourage it, since it&rsquo;s a perfect complement to the otherwise &ldquo;browser-only&rdquo; world.</p>
+
+    </div>
+  </div>
+
+
+
+  <footer>
+    <hr>
+    
+    <div class="row-fluid">
+      
+      <div class="span6">
+        <p class="meta">
+        
+        
+
+
+
+  <a href="/blog/categories/chromebook/"><span class="badge">Chromebook</span></a>
+
+  <a href="/blog/categories/vm,/"><span class="badge">VM,</span></a>
+
+
+
+
+        </p>
+      </div>
+      
+      <div class="span6 social-sharing">
+        <div class="sharing">
+  <div class="addthis_toolbox addthis_default_style ">
+  
+  
+  <a class="addthis_button_tweet"></a>
+  
+  
+  <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+  
+  <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+      </div>
+      
+      
+    </div>
+    
+    <div class="row-fluid">
+      <div class="span12">
+        <p class="meta">
+          
+            <a class="basic-alignment left" href="/blog/2013/12/14/problems-with-octopress-in-a-new-location/" title="Previous Post: Problems with Octopress in a new location">&laquo; Problems with Octopress in a new location</a>
+          
+          
+            <a class="basic-alignment right" href="/blog/2013/12/14/adding-social-elements-to-octopress/" title="Next Post: Adding social elements to octopress">Adding social elements to octopress &raquo;</a>
+          
+        </p>
+      </div>
+    </div>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+
+
+        </div>
+      </div>
+      <div class="row-fluid">
+        <footer class="footer-page" role="contentinfo">
+          <p>
+  Copyright &copy; 2014 - Agam -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span> - Theme by <a href="http://alexgaribay.com">Alex Garibay</a>
+</p>
+
+
+        </footer>
+      </div>
+  </div>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'agamamp';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://agam.github.io/blog/2013/12/14/augmenting-my-chromebook-with-a-vm/';
+        var disqus_url = 'http://agam.github.io/blog/2013/12/14/augmenting-my-chromebook-with-a-vm/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>
