@@ -122,6 +122,64 @@
   
 
 
+<i class="icon-calendar-empty"></i> <time datetime="2014-07-25T16:22:39-07:00" pubdate data-updated="true">Jul 25<sup>th</sup>, 2014</time></h5>
+          <div class="row-fluid">
+          
+          </div>
+          
+          <div class="row-fluid">
+          
+          <a href="/blog/categories/stats/"><span class="badge">stats</span></a>
+          
+          </div>
+          
+    </div>
+    <div class="span10 post-container">
+      <h1 class="link"><a href="/blog/2014/07/25/r-vs-python/">R vs Python</a></h1>
+      <p>A lot of virtual ink has been spilled on whether R or Python is better suited to the needs of <a href="http://www.analyticbridge.com/profiles/blogs/the-death-of-the-statistician">&ldquo;data scientists&rdquo;</a>.</p>
+
+<p>Numerous people (no, <em>evangelicals</em>) have weighed in <a href="http://inside-bigdata.com/2013/12/09/data-science-wars-python-vs-r/">with</a> <a href="http://readwrite.com/2013/11/25/python-displacing-r-as-the-programming-language-for-data-science">their</a> <a href="http://redmonk.com/sogrady/2013/11/26/python-r/">polemics</a> (summarized, briefly as &ldquo;R is not really a language!&rdquo;, &ldquo;Python is displacing R!&rdquo;, and &ldquo;Will Python kill R?&rdquo;).</p>
+
+<p>So, it&rsquo;s confusing (i.e., if you happen to care at all, though you don&rsquo;t have to; this is the internet, where the less people know or care about something, the stronger their opinions on it), but luckily someone did come up with a <em>data-driven approach</em> to solving this problem. Check it out:</p>
+
+<ul>
+<li><a href="http://www.theswarmlab.com/r-vs-python-round-1/">Round 1</a></li>
+<li>Round 2 (<a href="http://www.theswarmlab.com/r-vs-python-round-2/">part 1</a> and <a href="http://www.theswarmlab.com/r-vs-python-round-2-22/">part 2</a>)</li>
+</ul>
+
+
+<p>Now you can <em>make up your own damn mind</em>.</p>
+
+      
+      
+    </div>
+  </div>
+
+
+
+    </article>
+    
+    <hr>
+    
+  
+  
+    <article>
+      
+
+  <div class="row-fluid">
+    <div class="span2 post-meta">
+	  <h5 class="date-time">
+
+
+
+
+
+
+
+
+  
+
+
 <i class="icon-calendar-empty"></i> <time datetime="2014-07-25T13:11:30-07:00" pubdate data-updated="true">Jul 25<sup>th</sup>, 2014</time></h5>
           <div class="row-fluid">
           
@@ -1355,147 +1413,6 @@ itself implicitly at (radius,radius) set to 0&quot;
 <blockquote><p>FactorInteger switches between trial division, Pollard , Pollard rho, elliptic curve, and quadratic sieve algorithms.</p></blockquote>
 
 <p>Finally, more on RSA Numbers, as well as a Mathematica Notebook, <a href="http://mathworld.wolfram.com/RSANumber.html">here</a></p>
-
-      
-      
-    </div>
-  </div>
-
-
-
-    </article>
-    
-    <hr>
-    
-  
-  
-    <article>
-      
-
-  <div class="row-fluid">
-    <div class="span2 post-meta">
-	  <h5 class="date-time">
-
-
-
-
-
-
-
-
-  
-
-
-<i class="icon-calendar-empty"></i> <time datetime="2014-02-03T23:12:00-08:00" pubdate data-updated="true">Feb 3<sup>rd</sup>, 2014</time></h5>
-          <div class="row-fluid">
-          
-          </div>
-          
-          <div class="row-fluid">
-          
-          <a href="/blog/categories/alwaysbecoding,/"><span class="badge">alwaysbecoding,</span></a>
-          
-          <a href="/blog/categories/reddit/"><span class="badge">reddit</span></a>
-          
-          </div>
-          
-    </div>
-    <div class="span10 post-container">
-      <h1 class="link"><a href="/blog/2014/02/03/programming-fun-graph-distances/">Programming Fun: Graph distances</a></h1>
-      <p>Interesting <a href="http://www.reddit.com/r/dailyprogrammer/comments/1tiz4z/122313_challenge_140_intermediate_graph_radius/">problem</a>: given a graph, find out the <em>minimum distance between any two nodes</em>.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>Input Description
-</span><span class='line'>-----------------
-</span><span class='line'>On standard console input you will be given an integer N, followed by an
-</span><span class='line'>Adjacency matrix. The graph is not directed, so the matrix will always be
-</span><span class='line'>reflected about the main diagonal.
-</span><span class='line'>
-</span><span class='line'>Output Description
-</span><span class='line'>------------------
-</span><span class='line'>Print the radius of the graph as an integer.</span></code></pre></td></tr></table></div></figure>
-
-
-<p>There are a few ways to do this &mdash; you can run <a href="http://en.wikipedia.org/wiki/Dijkstra%27s_algorithm">Dijkstra&rsquo;s algorithm</a> or <a href="http://en.wikipedia.org/wiki/Floyd%E2%80%93Warshall_algorithm">Floyd-Warshall algorithm</a> on the graph to find the path from each node to each other node. I sort of took a short cut &mdash; when the graph is represented as a matrix (as it is here), multiplying the matrix with itself (and adding the result to itself, so as not to lose the <em>0-step</em> info) can be used as a way of checking whether or not two nodes are connected.</p>
-
-<p>Concretely, after <code>k</code> steps, if <code>Graph[i][j]</code> is <code>0</code> this means there is no path from <code>i</code> to <code>j</code> in <code>k</code> steps. So if you repeat this multiplication and stop when there are no zero elements, the number of multiplication steps is the minimum distance you need.</p>
-
-<div><script src='https://gist.github.com/8794234.js'></script>
-<noscript><pre><code>// Omitting headers
-
-using namespace std;
-
-void MatrixMultiply(
-    const vector&lt;vector&lt;uint64_t&gt;&gt;&amp; source_mat1,
-    const vector&lt;vector&lt;uint64_t&gt;&gt;&amp; source_mat2,
-    int N,
-    vector&lt;vector&lt;uint64_t&gt;&gt;* dest_mat) {
-  for (int i = 0; i &lt; N; ++i) {
-    vector&lt;uint64_t&gt; row;
-    for (int j = 0; j &lt; N; ++j) {
-      uint64_t sum = source_mat1[i][j];
-      for (int k = 0; k &lt; N; ++k) {
-        sum += (source_mat1[i][k] * source_mat2[k][j]);
-      }
-      row.push_back(sum);
-    }
-    dest_mat-&gt;push_back(row);
-  }
-}
-
-bool AllVerticesReachable(const vector&lt;vector&lt;uint64_t&gt;&gt;&amp; mat, int N) {
-  for (int i = 0; i &lt; N; ++i) {
-    for (int j = 0; j &lt; N; ++j) {
-      if (mat[i][j] == 0) {
-        return false;
-      }
-    }
-  }
-  return true;
-}
-
-int main(int argc, char* argv[]) {
-  int graph_size;
-  cin &gt;&gt; graph_size;
-  vector&lt;vector&lt;uint64_t&gt;&gt; graph;
-  for (int i = 0; i &lt; graph_size; ++i) {
-    int num;
-    vector&lt;uint64_t&gt; row;
-    for (int j = 0; j &lt; graph_size; ++j) {
-      cin &gt;&gt; num;
-      row.push_back(num);
-    }
-    graph.push_back(row);
-  }
-
-  // Multiply the matrix with itself
-  int num_edges = 1;
-  vector&lt;vector&lt;uint64_t&gt;&gt; multiplied_graph = graph;
-  do {
-    vector&lt;vector&lt;uint64_t&gt;&gt; temp_graph;
-    MatrixMultiply(graph, multiplied_graph, graph_size, &amp;temp_graph);
-    multiplied_graph = temp_graph;
-
-    if (AllVerticesReachable(multiplied_graph, graph_size)) {
-      break;
-    }
-
-    ++num_edges;
-  } while (num_edges &lt; graph_size);
-  cout &lt;&lt; &quot;Radius = &quot; &lt;&lt; num_edges + 1 &lt;&lt; endl;
-}
-</code></pre></noscript></div>
-
-
-<p>[I&rsquo;m a little bored of these daily programmer questions now :( I&rsquo;ll do one more hard one and then find a new theme here.]</p>
 
       
       

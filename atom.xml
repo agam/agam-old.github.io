@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2014-07-25T13:23:28-07:00</updated>
+  <updated>2014-07-25T16:34:21-07:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,27 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[R vs Python]]></title>
+    <link href="http://agam.github.io/blog/2014/07/25/r-vs-python/"/>
+    <updated>2014-07-25T16:22:39-07:00</updated>
+    <id>http://agam.github.io/blog/2014/07/25/r-vs-python</id>
+    <content type="html"><![CDATA[<p>A lot of virtual ink has been spilled on whether R or Python is better suited to the needs of <a href="http://www.analyticbridge.com/profiles/blogs/the-death-of-the-statistician">&ldquo;data scientists&rdquo;</a>.</p>
+
+<p>Numerous people (no, <em>evangelicals</em>) have weighed in <a href="http://inside-bigdata.com/2013/12/09/data-science-wars-python-vs-r/">with</a> <a href="http://readwrite.com/2013/11/25/python-displacing-r-as-the-programming-language-for-data-science">their</a> <a href="http://redmonk.com/sogrady/2013/11/26/python-r/">polemics</a> (summarized, briefly as &ldquo;R is not really a language!&rdquo;, &ldquo;Python is displacing R!&rdquo;, and &ldquo;Will Python kill R?&rdquo;).</p>
+
+<p>So, it&rsquo;s confusing (i.e., if you happen to care at all, though you don&rsquo;t have to; this is the internet, where the less people know or care about something, the stronger their opinions on it), but luckily someone did come up with a <em>data-driven approach</em> to solving this problem. Check it out:</p>
+
+<ul>
+<li><a href="http://www.theswarmlab.com/r-vs-python-round-1/">Round 1</a></li>
+<li>Round 2 (<a href="http://www.theswarmlab.com/r-vs-python-round-2/">part 1</a> and <a href="http://www.theswarmlab.com/r-vs-python-round-2-22/">part 2</a>)</li>
+</ul>
+
+
+<p>Now you can <em>make up your own damn mind</em>.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[On moving from development to writing]]></title>
@@ -1757,73 +1778,6 @@ int main(int argc, char* argv[]) {
 <p><img class="center" src="http://farm6.staticflickr.com/5513/12162574864_10b7b887f3_z_d.jpg"></p>
 
 <p>Before you say <em>meh</em>, none of this is supposed to make you Michaelangelo. But it provides a kind of instant-gratification, since you can tweak your <em>sketch</em>, run it, tweak it again, run it again, and so on &hellip; which is rather hard to come by.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Minsky Turing Lecture: Part 1]]></title>
-    <link href="http://agam.github.io/blog/2014/01/26/minsky-turing-lecture-part-1/"/>
-    <updated>2014-01-26T00:10:00-08:00</updated>
-    <id>http://agam.github.io/blog/2014/01/26/minsky-turing-lecture-part-1</id>
-    <content type="html"><![CDATA[<p>I came across a reference to Marvin Minsky&rsquo;s 1970 Turing Award Lecture. I&rsquo;ve barely read any of these lectures, always assuming they would be empty or pedantic or plain boring. Reading this changed that perception completely.</p>
-
-<h2>Science and Education</h2>
-
-<p>The structure of this lecture seems very interesting to me; it seems to be divided into two parts. The first focussing more on computer science and its failings, and the second on (what seems to me) education.</p>
-
-<p>This post is about the first part. And by &ldquo;about&rdquo; I mean just extracts with minimal commentary.</p>
-
-<h2>The trouble with Computer Science &hellip;</h2>
-
-<blockquote><p>The trouble with computer science today is an obsessive concern with form instead of content.</p></blockquote>
-
-<p>(yes, that&rsquo;s the opening line!)</p>
-
-<blockquote><p>This essay has three parts, suggesting form-content confusion in <em>theory of computation</em>, in <em>programming languages</em>, and in <em>education</em>.</p></blockquote>
-
-<p>(yes, I said two parts earlier &hellip; I just clubbed the first two together)</p>
-
-<blockquote><p>Suppose that we had <em>n</em> computers instead of just one. How much can we speed up what kinds of calculations? For some, we can surely gain a factor of <em>n</em>. But these are rare. For others, we can gain log <em>n</em>, but it is hard to find any or to prove what are their properties. And for most, I think, we can gain hardly anything; this is the case in which there are many highly branched conditionals, so that look-ahead on possible branches will usually be wasted. <strong>We know almost nothing about this; most people think, with surely incorrect optimism, that parallelism is usually a profitable way to speed up most computations.</strong></p></blockquote>
-
-<p>(&ldquo;surely incorrect optimism&rdquo;! I agree!)</p>
-
-<blockquote><p>&hellip; in today&rsquo;s computer science curricula &hellip; almost all their time is devoted to formal classifications of syntactic language types, defeatist unsolvability theories, <strong>folklore about systems programming</strong>, and generally trivial fragments of &ldquo;optimization of logic design&rdquo; &mdash; the latter often in situations where the art of heuristic programming has far outstretched the special-case &ldquo;theories&rdquo; so grimly taught and tested &mdash; and <strong>invocations about programming style almost sure to be outmoded before the student graduates</strong>.</p></blockquote>
-
-<p>(yup, quite true even today)</p>
-
-<h2>The trouble with programming languages &hellip;</h2>
-
-<blockquote><p><em>SYNTAX IS OFTEN UNNECESSARY</em>. <strong>One can survive with much less syntax than is generally realized</strong>. Much of programming syntax is concerned with suppression of parentheses or with emphasis of scope markers. There are alternatives that have been much underused.
-&hellip; such devices as infixes and operator precedence &hellip; have their place. But <em>their importance to computer science as a whole has been so exaggerated that it is beginning to corrupt the youth</em>.</p></blockquote>
-
-<p>(I wonder what he would have thought of <em>C++</em> !)</p>
-
-<blockquote><p>The clumsiness, for humans, of writing all the parentheses is evident; <strong>the advantages of not having to learn all the conventions &hellip; is often overlooked</strong>.
-It remains to be seen whether a syntax with explicit delimiters is reactionary, or whether it is the wave of the future.</p></blockquote>
-
-<p>(a possible nod to Lisp ?)</p>
-
-<blockquote><p>Much can be done to clarify the structure of expressions in such a &ldquo;syntax-weak&rdquo; language by using indentation and other layout devices that are outside the language proper.</p></blockquote>
-
-<p>(a possible precursory nod to Python ?)</p>
-
-<h2>Moving forward &hellip;</h2>
-
-<blockquote><p>What is a compiler for? The usual answers resemble &ldquo;to translate from one language to another&rdquo; or &ldquo;to take a description of an algorithm and assemble it into a program, filling in many small details.&rdquo; For the future, a more ambitious view is required. Most compilers will be systems that &ldquo;produce an algorithm, given a description of its effect.&rdquo;</p></blockquote>
-
-<p>(not sure what to make of this)</p>
-
-<blockquote><p>No matter how a language is described, a computer must use a procedure to interpret it. One should remember that <em>in describing a language the main goal is to explain how to write programs in int and what such programs mean</em>. The main goal <em>isn&rsquo;t</em> to describe the syntax.</p></blockquote>
-
-<p>(Sure, ok)</p>
-
-<blockquote><p>Paradoxically, though modern programming ideas were developed because processes were hard to depict with classical mathematical notations, designers are turning back to an earlier form &mdash; the equation &mdash; in just the kind of situation that <em>needs</em> program.</p></blockquote>
-
-<p>(aha! wait, what?)</p>
-
-<h2>Stay tuned</h2>
-
-<p>So much for Part 1. I&rsquo;ll pick up the rest of the extracts next time.</p>
 ]]></content>
   </entry>
   
