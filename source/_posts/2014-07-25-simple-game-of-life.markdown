@@ -8,7 +8,7 @@ categories: Lisp, Simulation
 
 (Just for fun)
 
-https://gist.github.com/agam/a832613064f958641330
+{% gist a832613064f958641330 %}
 
 Maybe I'll add a GUI and some tools later, but for now you have to do something like:
 
@@ -56,7 +56,7 @@ _Update:_
 
 It's easy to try out patterns. Here are a few typical ones:
 
-https://gist.github.com/agam/527c5fa85b316c84e9ba
+{% gist 527c5fa85b316c84e9ba %}
 
 Then you can do something like
 
