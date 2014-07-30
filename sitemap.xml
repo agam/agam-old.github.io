@@ -3,6 +3,12 @@
   
   
   <url>
+    <loc>http://agam.github.io/blog/2014/07/30/learning-other-languages/</loc>
+    <lastmod>2014-07-30T12:23:33-07:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
     <loc>http://agam.github.io/blog/2014/07/25/r-vs-python/</loc>
     <lastmod>2014-07-25T16:22:39-07:00</lastmod>
     <priority>0.8</priority>
@@ -395,14 +401,14 @@
   
   <url>
     <loc>http://agam.github.io/</loc>
-    <lastmod>2014-07-25T16:34:21-07:00</lastmod>
+    <lastmod>2014-07-30T12:28:50-07:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   
   <url>
     <loc>http://agam.github.io/blog/archives/</loc>
-    <lastmod>2014-07-25T16:34:21-07:00</lastmod>
+    <lastmod>2014-07-30T12:28:50-07:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>

@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2014-07-25T16:34:21-07:00</updated>
+  <updated>2014-07-30T12:28:50-07:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,23 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Learning Other Languages]]></title>
+    <link href="http://agam.github.io/blog/2014/07/30/learning-other-languages/"/>
+    <updated>2014-07-30T12:23:33-07:00</updated>
+    <id>http://agam.github.io/blog/2014/07/30/learning-other-languages</id>
+    <content type="html"><![CDATA[<p>I spent some time learning a decent amount of Common Lisp last year. Nothing fancy, but I&rsquo;m comfortable using quicklisp, playing around with libraries, modelling stuff, etc. I&rsquo;ve read through <a href="http://www.gigamonkeys.com/book/">PCL</a> and <a href="http://www.cs.cmu.edu/Groups/AI/html/cltl/clm/node1.html">ClTl2</a> (though unfortunately, not <a href="http://norvig.com/paip.html">PAIP</a> (not yet!)).</p>
+
+<p>They&rsquo;ve been a bunch of other new (as in, the last 7 years ?) languages that I&rsquo;ve looked at off and on. Gone through a few tutorials, read (no, lightly skimmed) some suggested material (learn you a X, learn Y in Z minutes, etc). I <em>love</em> Common Lisp (enough to simply call it &ldquo;Lisp&rdquo; to the exclusion of the gazillion varieties of scheme (and yes, Clojure too (!))), but yeah, the lack of libraries does get to be a pain point.</p>
+
+<p>So someone suggested I try Clojure, but I&rsquo;ll pass. I don&rsquo;t want to look at stuff ending with &ldquo;))]))})]})&rdquo;. If I need reader macros for hash-tables, <a href="http://cl21.org/">cl21</a> has it, though I think <a href="https://github.com/vseloved/rutils/blob/master/docs/ann-rutils.md">rutils</a> should suffice for a nice superset of useful library add-ons (OTOH the Overtone/Quil/ShaderTone combo does make me salivate, and I definitely <em>will</em> check try them out at some point).</p>
+
+<p>If I <em>have</em> to work with the JVM, I figure I might as well learn something new/different that isn&rsquo;t trying too hard to be <em>Lisp</em>. Hence, <a href="http://www.scala-lang.org/">Scala</a>. I may regret this later (but how bad can it be). I hear people loved the <a href="https://www.coursera.org/course/progfun">MOOC</a> on it last year, and looks like I <em>just</em> missed the one this year, but this being Coursera (yay) I can still do the videos and the assignments.</p>
+
+<p>Also <a href="https://www.dartlang.org/">Dart</a> because it&rsquo;s nice to get basic web UI stuff going when needed (and no, I don&rsquo;t want to know Javascript). So we&rsquo;ll see how that goes.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[R vs Python]]></title>
@@ -1706,78 +1723,6 @@ int main(int argc, char* argv[]) {
 
 
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Fun with Processing: Spinning Ellipses]]></title>
-    <link href="http://agam.github.io/blog/2014/01/27/fun-with-processing-spinning-ellipses/"/>
-    <updated>2014-01-27T00:11:00-08:00</updated>
-    <id>http://agam.github.io/blog/2014/01/27/fun-with-processing-spinning-ellipses</id>
-    <content type="html"><![CDATA[<p><a href="http://www.processing.org/">Processing</a> is intended to be a &ldquo;creative coding&rdquo; tool for non-programmers. It runs on top of Java, which is good enough to get started. The performance-anxious folks might eventually prefer something like <a href="http://libcinder.org/">Cinder</a>, which has C++ libraries instead.</p>
-
-<p>I tweaked a simple snippet from a tutorial as a first step:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>  <span class="n">size</span><span class="o">(</span><span class="mi">600</span><span class="o">,</span> <span class="mi">600</span><span class="o">);</span>
-</span><span class='line'>  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
-</span><span class='line'>  <span class="n">smooth</span><span class="o">();</span>
-</span><span class='line'>  <span class="n">translate</span><span class="o">(</span><span class="mi">300</span><span class="o">,</span> <span class="mi">300</span><span class="o">);</span>
-</span><span class='line'>  <span class="k">for</span> <span class="o">(</span><span class="kt">float</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">360</span><span class="o">;</span> <span class="n">i</span><span class="o">+=</span> <span class="mf">0.3</span><span class="o">)</span> <span class="o">{</span>
-</span><span class='line'>    <span class="n">pushMatrix</span><span class="o">();</span>
-</span><span class='line'>      <span class="n">rotate</span><span class="o">(</span><span class="n">radians</span><span class="o">(</span><span class="n">i</span><span class="o">));</span>
-</span><span class='line'>      <span class="n">translate</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">300</span><span class="o">);</span>
-</span><span class='line'>      <span class="n">rotate</span><span class="o">(</span><span class="n">radians</span><span class="o">(</span><span class="n">i</span> <span class="o">*</span> <span class="mi">10</span><span class="o">));</span>
-</span><span class='line'>      <span class="n">scale</span><span class="o">(</span><span class="n">map</span><span class="o">(</span><span class="n">sin</span><span class="o">(</span><span class="n">radians</span><span class="o">(</span><span class="n">i</span> <span class="o">*</span> <span class="mi">6</span><span class="o">)),</span> <span class="o">-</span><span class="mi">1</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span> <span class="o">.</span><span class="mi">5</span><span class="o">,</span> <span class="mi">1</span><span class="o">),</span>
-</span><span class='line'>        <span class="n">map</span><span class="o">(</span><span class="n">sin</span><span class="o">(</span><span class="n">radians</span><span class="o">(</span><span class="n">i</span> <span class="o">*</span> <span class="mi">3</span><span class="o">)),</span> <span class="o">-</span><span class="mi">1</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span> <span class="o">.</span><span class="mi">5</span><span class="o">,</span> <span class="mi">1</span><span class="o">));</span>
-</span><span class='line'>      <span class="n">drawEllipse</span><span class="o">();</span>
-</span><span class='line'>    <span class="n">popMatrix</span><span class="o">();</span>
-</span><span class='line'>  <span class="o">}</span>
-</span><span class='line'><span class="o">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">void</span> <span class="nf">drawEllipse</span><span class="o">()</span> <span class="o">{</span>
-</span><span class='line'>  <span class="n">noFill</span><span class="o">();</span>
-</span><span class='line'>  <span class="n">stroke</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">128</span><span class="o">);</span>
-</span><span class='line'>  <span class="n">ellipse</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">600</span><span class="o">,</span> <span class="mi">100</span><span class="o">);</span>
-</span><span class='line'><span class="o">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>and got some funky looking images.</p>
-
-<p><img class="center" src="http://farm4.staticflickr.com/3776/12162399443_14fd4eea37_z_d.jpg"></p>
-
-<p><img class="center" src="http://farm8.staticflickr.com/7423/12162160705_5bc891cfa6_z_d.jpg"></p>
-
-<p><img class="center" src="http://farm8.staticflickr.com/7341/12162577004_ee1689e71f_z_d.jpg"></p>
-
-<p><img class="center" src="http://farm4.staticflickr.com/3742/12162819596_176dc1a9d3_z_d.jpg"></p>
-
-<p><img class="center" src="http://farm6.staticflickr.com/5513/12162574864_10b7b887f3_z_d.jpg"></p>
-
-<p>Before you say <em>meh</em>, none of this is supposed to make you Michaelangelo. But it provides a kind of instant-gratification, since you can tweak your <em>sketch</em>, run it, tweak it again, run it again, and so on &hellip; which is rather hard to come by.</p>
 ]]></content>
   </entry>
   

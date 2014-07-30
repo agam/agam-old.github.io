@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: dart | Agam's Mashed-Up Pome]]></title>
+  <link href="http://agam.github.io/blog/categories/dart/atom.xml" rel="self"/>
+  <link href="http://agam.github.io/"/>
+  <updated>2014-07-30T12:28:50-07:00</updated>
+  <id>http://agam.github.io/</id>
+  <author>
+    <name><![CDATA[Agam]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Learning Other Languages]]></title>
+    <link href="http://agam.github.io/blog/2014/07/30/learning-other-languages/"/>
+    <updated>2014-07-30T12:23:33-07:00</updated>
+    <id>http://agam.github.io/blog/2014/07/30/learning-other-languages</id>
+    <content type="html"><![CDATA[<p>I spent some time learning a decent amount of Common Lisp last year. Nothing fancy, but I&rsquo;m comfortable using quicklisp, playing around with libraries, modelling stuff, etc. I&rsquo;ve read through <a href="http://www.gigamonkeys.com/book/">PCL</a> and <a href="http://www.cs.cmu.edu/Groups/AI/html/cltl/clm/node1.html">ClTl2</a> (though unfortunately, not <a href="http://norvig.com/paip.html">PAIP</a> (not yet!)).</p>
+
+<p>They&rsquo;ve been a bunch of other new (as in, the last 7 years ?) languages that I&rsquo;ve looked at off and on. Gone through a few tutorials, read (no, lightly skimmed) some suggested material (learn you a X, learn Y in Z minutes, etc). I <em>love</em> Common Lisp (enough to simply call it &ldquo;Lisp&rdquo; to the exclusion of the gazillion varieties of scheme (and yes, Clojure too (!))), but yeah, the lack of libraries does get to be a pain point.</p>
+
+<p>So someone suggested I try Clojure, but I&rsquo;ll pass. I don&rsquo;t want to look at stuff ending with &ldquo;))]))})]})&rdquo;. If I need reader macros for hash-tables, <a href="http://cl21.org/">cl21</a> has it, though I think <a href="https://github.com/vseloved/rutils/blob/master/docs/ann-rutils.md">rutils</a> should suffice for a nice superset of useful library add-ons (OTOH the Overtone/Quil/ShaderTone combo does make me salivate, and I definitely <em>will</em> check try them out at some point).</p>
+
+<p>If I <em>have</em> to work with the JVM, I figure I might as well learn something new/different that isn&rsquo;t trying too hard to be <em>Lisp</em>. Hence, <a href="http://www.scala-lang.org/">Scala</a>. I may regret this later (but how bad can it be). I hear people loved the <a href="https://www.coursera.org/course/progfun">MOOC</a> on it last year, and looks like I <em>just</em> missed the one this year, but this being Coursera (yay) I can still do the videos and the assignments.</p>
+
+<p>Also <a href="https://www.dartlang.org/">Dart</a> because it&rsquo;s nice to get basic web UI stuff going when needed (and no, I don&rsquo;t want to know Javascript). So we&rsquo;ll see how that goes.</p>
+]]></content>
+  </entry>
+  
+</feed>
