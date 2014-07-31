@@ -122,6 +122,137 @@
   
 
 
+<i class="icon-calendar-empty"></i> <time datetime="2014-07-30T12:31:30-07:00" pubdate data-updated="true">Jul 30<sup>th</sup>, 2014</time></h5>
+          <div class="row-fluid">
+          
+          </div>
+          
+          <div class="row-fluid">
+          
+          <a href="/blog/categories/gettingstarted/"><span class="badge">gettingstarted</span></a>
+          
+          <a href="/blog/categories/scala,/"><span class="badge">scala,</span></a>
+          
+          </div>
+          
+    </div>
+    <div class="span10 post-container">
+      <h1 class="link"><a href="/blog/2014/07/30/up-and-running-with-scala/">Up and Running with Scala</a></h1>
+      <p>The &ldquo;Getting started&rdquo; section of the &ldquo;Functional Programming with Scala&rdquo; course mentions using Eclipse to build the first &lsquo;hello world&rsquo; kind of project, but if you&rsquo;d rather not get out of your Emacs comfort zone, there is a different way to do the same (credits to numerous online sources).</p>
+
+<ul>
+<li><p>Install <code>sbt</code> (<code>sudo apt-get install sbt</code>) and <code>scala</code> (download <a href="http://www.scala-lang.org/download/">from here</a>)</p></li>
+<li><p>Install the <code>ensime</code> plugin for <code>sbt</code>: Create a directory <code>~/.sbt/0.13/plugins</code>, and create <code>plugins.sbt</code></p></li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="n">resolvers</span> <span class="o">+=</span> <span class="s">&quot;Sonatype releases&quot;</span> <span class="n">at</span> <span class="s">&quot;https://oss.sonatype.org/content/repositories/releases&quot;</span>
+</span><span class='line'><span class="n">addSbtPlugin</span><span class="o">(</span><span class="s">&quot;org.ensime&quot;</span> <span class="o">%</span> <span class="s">&quot;ensime-sbt-cmd&quot;</span> <span class="o">%</span> <span class="s">&quot;0.1.2&quot;</span><span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><p>Install the <code>scala-mode2</code> Emacs: if you have Emacs24, this is as straightforward as running <code>M-x package-list-packages</code> and finding it)</p></li>
+<li><p>Install <code>ensime</code>: <a href="https://github.com/ensime/ensime-server/downloads">Download</a> the latest <code>.tar.gz</code>, and install it somewhere under <code>.emacs.d</code>, then modify your <code>.emacs</code> to load the appropriate paths:</p></li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="o">(</span><span class="n">add</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">list</span> <span class="-Symbol">&#39;load</span><span class="o">-</span><span class="n">path</span> <span class="s">&quot;~/.emacs.d/ensime/elisp&quot;</span><span class="o">)</span>
+</span><span class='line'><span class="o">(</span><span class="n">require</span> <span class="-Symbol">&#39;ensime</span><span class="o">)</span>
+</span><span class='line'><span class="o">(</span><span class="n">add</span><span class="o">-</span><span class="n">hook</span> <span class="-Symbol">&#39;scala</span><span class="o">-</span><span class="n">mode</span><span class="o">-</span><span class="n">hook</span> <span class="-Symbol">&#39;ensime</span><span class="o">-</span><span class="n">scala</span><span class="o">-</span><span class="n">mode</span><span class="o">-</span><span class="n">hook</span><span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><p>Create a new directory: <code>mkdir helloworld; cd helloworld</code></p></li>
+<li><p>Initialize the project: Create <code>build.sbt</code> with the following</p></li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="n">name</span> <span class="o">:=</span> <span class="s">&quot;hello_world&quot;</span>
+</span><span class='line'><span class="n">version</span> <span class="o">:=</span> <span class="s">&quot;1.0&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><p>Set up <code>ensime</code>: <code>sbt ensime generate</code></p></li>
+<li><p>Open a file (say) <code>Main.scala</code></p></li>
+<li><p>Start <code>ensime</code> in Emacs: <code>M-x ensime</code> (say &lsquo;yes&rsquo; to various prompts). You should see something like &ldquo;ENSIME ready. May the _ be with you.&rdquo; in the minibuffer.</p></li>
+<li><p>Add something in the file, e.g. (copying from the tutorial)</p></li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">package</span> <span class="nn">greeter</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">object</span> <span class="nc">Hello</span> <span class="k">extends</span> <span class="nc">App</span> <span class="o">{</span>
+</span><span class='line'>  <span class="n">println</span><span class="o">(</span><span class="s">&quot;Hello World&quot;</span><span class="o">)</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><p>Hit <code>C-c C-b v</code>, this brings up an <code>sbt</code> console <em>inside Emacs</em> (similar to how Slime works with Lisp)</p></li>
+<li><p>Type <code>run</code> in the console, you should see something like</p></li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="o">&gt;</span> <span class="n">run</span>
+</span><span class='line'><span class="o">[</span><span class="kt">info</span><span class="o">]</span> <span class="nc">Compiling</span> <span class="mi">1</span> <span class="nc">Scala</span> <span class="n">source</span> <span class="n">to</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">agam</span><span class="o">/</span><span class="nc">Scala</span><span class="o">/</span><span class="n">hello</span><span class="o">-</span><span class="n">world</span><span class="o">/</span><span class="n">target</span><span class="o">/</span><span class="n">scala</span><span class="o">-</span><span class="mf">2.10</span><span class="o">/</span><span class="n">classes</span><span class="o">...</span>
+</span><span class='line'><span class="o">[</span><span class="kt">info</span><span class="o">]</span> <span class="nc">Running</span> <span class="n">greeter</span><span class="o">.</span><span class="nc">Hello</span>
+</span><span class='line'><span class="nc">Hello</span> <span class="nc">World</span>
+</span><span class='line'><span class="o">[</span><span class="kt">success</span><span class="o">]</span> <span class="nc">Total</span> <span class="n">time</span><span class="k">:</span> <span class="err">2</span> <span class="kt">s</span><span class="o">,</span> <span class="n">completed</span> <span class="nc">Jul</span> <span class="mi">30</span><span class="o">,</span> <span class="mi">2014</span> <span class="mi">5</span><span class="k">:</span><span class="err">03</span><span class="kt">:</span><span class="err">35</span> <span class="kt">PM</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&hellip; and that&rsquo;s it!</p>
+
+      
+      
+    </div>
+  </div>
+
+
+
+    </article>
+    
+    <hr>
+    
+  
+  
+    <article>
+      
+
+  <div class="row-fluid">
+    <div class="span2 post-meta">
+	  <h5 class="date-time">
+
+
+
+
+
+
+
+
+  
+
+
 <i class="icon-calendar-empty"></i> <time datetime="2014-07-30T12:23:33-07:00" pubdate data-updated="true">Jul 30<sup>th</sup>, 2014</time></h5>
           <div class="row-fluid">
           
@@ -1351,62 +1482,6 @@ itself implicitly at (radius,radius) set to 0&quot;
 </span><span class='line'>    <span class="p">(</span><span class="nv">max-min-helper</span> <span class="nv">lst</span> <span class="no">nil</span> <span class="no">nil</span><span class="p">)))</span>
 </span></code></pre></td></tr></table></div></figure>
 
-
-      
-      
-    </div>
-  </div>
-
-
-
-    </article>
-    
-    <hr>
-    
-  
-  
-    <article>
-      
-
-  <div class="row-fluid">
-    <div class="span2 post-meta">
-	  <h5 class="date-time">
-
-
-
-
-
-
-
-
-  
-
-
-<i class="icon-calendar-empty"></i> <time datetime="2014-02-19T01:29:00-08:00" pubdate data-updated="true">Feb 19<sup>th</sup>, 2014</time></h5>
-          <div class="row-fluid">
-          
-          </div>
-          
-          <div class="row-fluid">
-          
-          <a href="/blog/categories/blogging/"><span class="badge">blogging</span></a>
-          
-          <a href="/blog/categories/pseudonymous,/"><span class="badge">pseudonymous,</span></a>
-          
-          </div>
-          
-    </div>
-    <div class="span10 post-container">
-      <h1 class="link"><a href="/blog/2014/02/19/living-pseudonymously/">Living Pseudonymously</a></h1>
-      <p>For various reasons, this blog is going to be focussed just on C++ programming, as boring as that may sound.</p>
-
-<p>I&rsquo;ll try not to make it <em>too</em> boring, but we&rsquo;ll see.</p>
-
-<p>Meanwhile everything <em>else</em> will still exist, just not here. Starting with the last two posts.</p>
-
-<p>If you want to try to find me you still can; but I&rsquo;m just not going to advertise it, that&rsquo;s all.</p>
-
-<p><strong>Edit</strong>: Ok, It doesn&rsquo;t <em>entirely</em> have to be limited to that, I can still share some additional stuff, perhaps just not the <em>interesting</em> stuff.</p>
 
       
       

@@ -3,6 +3,12 @@
   
   
   <url>
+    <loc>http://agam.github.io/blog/2014/07/30/up-and-running-with-scala/</loc>
+    <lastmod>2014-07-30T12:31:30-07:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
     <loc>http://agam.github.io/blog/2014/07/30/learning-other-languages/</loc>
     <lastmod>2014-07-30T12:23:33-07:00</lastmod>
     <priority>0.8</priority>
@@ -401,14 +407,14 @@
   
   <url>
     <loc>http://agam.github.io/</loc>
-    <lastmod>2014-07-30T12:28:50-07:00</lastmod>
+    <lastmod>2014-07-30T17:10:33-07:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   
   <url>
     <loc>http://agam.github.io/blog/archives/</loc>
-    <lastmod>2014-07-30T12:28:50-07:00</lastmod>
+    <lastmod>2014-07-30T17:10:33-07:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>

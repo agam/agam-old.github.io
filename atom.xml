@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2014-07-30T12:28:50-07:00</updated>
+  <updated>2014-07-30T17:10:33-07:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,98 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Up and Running with Scala]]></title>
+    <link href="http://agam.github.io/blog/2014/07/30/up-and-running-with-scala/"/>
+    <updated>2014-07-30T12:31:30-07:00</updated>
+    <id>http://agam.github.io/blog/2014/07/30/up-and-running-with-scala</id>
+    <content type="html"><![CDATA[<p>The &ldquo;Getting started&rdquo; section of the &ldquo;Functional Programming with Scala&rdquo; course mentions using Eclipse to build the first &lsquo;hello world&rsquo; kind of project, but if you&rsquo;d rather not get out of your Emacs comfort zone, there is a different way to do the same (credits to numerous online sources).</p>
+
+<ul>
+<li><p>Install <code>sbt</code> (<code>sudo apt-get install sbt</code>) and <code>scala</code> (download <a href="http://www.scala-lang.org/download/">from here</a>)</p></li>
+<li><p>Install the <code>ensime</code> plugin for <code>sbt</code>: Create a directory <code>~/.sbt/0.13/plugins</code>, and create <code>plugins.sbt</code></p></li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="n">resolvers</span> <span class="o">+=</span> <span class="s">&quot;Sonatype releases&quot;</span> <span class="n">at</span> <span class="s">&quot;https://oss.sonatype.org/content/repositories/releases&quot;</span>
+</span><span class='line'><span class="n">addSbtPlugin</span><span class="o">(</span><span class="s">&quot;org.ensime&quot;</span> <span class="o">%</span> <span class="s">&quot;ensime-sbt-cmd&quot;</span> <span class="o">%</span> <span class="s">&quot;0.1.2&quot;</span><span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><p>Install the <code>scala-mode2</code> Emacs: if you have Emacs24, this is as straightforward as running <code>M-x package-list-packages</code> and finding it)</p></li>
+<li><p>Install <code>ensime</code>: <a href="https://github.com/ensime/ensime-server/downloads">Download</a> the latest <code>.tar.gz</code>, and install it somewhere under <code>.emacs.d</code>, then modify your <code>.emacs</code> to load the appropriate paths:</p></li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="o">(</span><span class="n">add</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">list</span> <span class="-Symbol">&#39;load</span><span class="o">-</span><span class="n">path</span> <span class="s">&quot;~/.emacs.d/ensime/elisp&quot;</span><span class="o">)</span>
+</span><span class='line'><span class="o">(</span><span class="n">require</span> <span class="-Symbol">&#39;ensime</span><span class="o">)</span>
+</span><span class='line'><span class="o">(</span><span class="n">add</span><span class="o">-</span><span class="n">hook</span> <span class="-Symbol">&#39;scala</span><span class="o">-</span><span class="n">mode</span><span class="o">-</span><span class="n">hook</span> <span class="-Symbol">&#39;ensime</span><span class="o">-</span><span class="n">scala</span><span class="o">-</span><span class="n">mode</span><span class="o">-</span><span class="n">hook</span><span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><p>Create a new directory: <code>mkdir helloworld; cd helloworld</code></p></li>
+<li><p>Initialize the project: Create <code>build.sbt</code> with the following</p></li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="n">name</span> <span class="o">:=</span> <span class="s">&quot;hello_world&quot;</span>
+</span><span class='line'><span class="n">version</span> <span class="o">:=</span> <span class="s">&quot;1.0&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><p>Set up <code>ensime</code>: <code>sbt ensime generate</code></p></li>
+<li><p>Open a file (say) <code>Main.scala</code></p></li>
+<li><p>Start <code>ensime</code> in Emacs: <code>M-x ensime</code> (say &lsquo;yes&rsquo; to various prompts). You should see something like &ldquo;ENSIME ready. May the _ be with you.&rdquo; in the minibuffer.</p></li>
+<li><p>Add something in the file, e.g. (copying from the tutorial)</p></li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="k">package</span> <span class="nn">greeter</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">object</span> <span class="nc">Hello</span> <span class="k">extends</span> <span class="nc">App</span> <span class="o">{</span>
+</span><span class='line'>  <span class="n">println</span><span class="o">(</span><span class="s">&quot;Hello World&quot;</span><span class="o">)</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><p>Hit <code>C-c C-b v</code>, this brings up an <code>sbt</code> console <em>inside Emacs</em> (similar to how Slime works with Lisp)</p></li>
+<li><p>Type <code>run</code> in the console, you should see something like</p></li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="o">&gt;</span> <span class="n">run</span>
+</span><span class='line'><span class="o">[</span><span class="kt">info</span><span class="o">]</span> <span class="nc">Compiling</span> <span class="mi">1</span> <span class="nc">Scala</span> <span class="n">source</span> <span class="n">to</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">agam</span><span class="o">/</span><span class="nc">Scala</span><span class="o">/</span><span class="n">hello</span><span class="o">-</span><span class="n">world</span><span class="o">/</span><span class="n">target</span><span class="o">/</span><span class="n">scala</span><span class="o">-</span><span class="mf">2.10</span><span class="o">/</span><span class="n">classes</span><span class="o">...</span>
+</span><span class='line'><span class="o">[</span><span class="kt">info</span><span class="o">]</span> <span class="nc">Running</span> <span class="n">greeter</span><span class="o">.</span><span class="nc">Hello</span>
+</span><span class='line'><span class="nc">Hello</span> <span class="nc">World</span>
+</span><span class='line'><span class="o">[</span><span class="kt">success</span><span class="o">]</span> <span class="nc">Total</span> <span class="n">time</span><span class="k">:</span> <span class="err">2</span> <span class="kt">s</span><span class="o">,</span> <span class="n">completed</span> <span class="nc">Jul</span> <span class="mi">30</span><span class="o">,</span> <span class="mi">2014</span> <span class="mi">5</span><span class="k">:</span><span class="err">03</span><span class="kt">:</span><span class="err">35</span> <span class="kt">PM</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&hellip; and that&rsquo;s it!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Learning Other Languages]]></title>
@@ -1611,118 +1703,6 @@ int main(int argc, char* argv[]) {
 
 
 <p>[Also, I realized I&rsquo;m wasting everyone&rsquo;s time by having all those redundant <code>#include</code> lines, so I got rid of them here]</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Programming Fun: Adjacency Matrix]]></title>
-    <link href="http://agam.github.io/blog/2014/01/27/programming-fun-adjacency-matrix/"/>
-    <updated>2014-01-27T03:55:00-08:00</updated>
-    <id>http://agam.github.io/blog/2014/01/27/programming-fun-adjacency-matrix</id>
-    <content type="html"><![CDATA[<p>Another &ldquo;intermediate&rdquo; <a href="http://www.reddit.com/r/dailyprogrammer/comments/1t6dlf/121813_challenge_140_intermediate_adjacency_matrix/">problem</a> today.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>Input Description
-</span><span class='line'>-----------------
-</span><span class='line'>On standard console input, you will be first given a line with two space-delimited integers N and M. N is the number of nodes / vertices in the graph, while M is the number of following lines of edge-node data. A line of edge-node data is a space-delimited set of integers, with the special "-&gt;" symbol indicating an edge. This symbol shows the edge-relationship between the set of left-sided integers and the right-sided integers. This symbol will only have one element to its left, or one element to its right. These lines of data will also never have duplicate information; you do not have to handle re-definitions of the same edges.
-</span><span class='line'>
-</span><span class='line'>An example of data that maps the node 1 to the nodes 2 and 3 is as follows:
-</span><span class='line'>1 -&gt; 2 3
-</span><span class='line'>
-</span><span class='line'>Another example where multiple nodes points to the same node:
-</span><span class='line'>3 8 -&gt; 2
-</span><span class='line'>
-</span><span class='line'>You can expect input to sometimes create cycles and self-references in the graph. The following is valid:
-</span><span class='line'>2 -&gt; 2 3
-</span><span class='line'>3 -&gt; 2
-</span><span class='line'>
-</span><span class='line'>Note that there is no order in the given integers; thus "1 -&gt; 2 3" is the same as "1 -&gt; 3 2".
-</span><span class='line'>
-</span><span class='line'>Output Description
-</span><span class='line'>-----------------
-</span><span class='line'>Print the N x N adjacency matrix as a series of 0's (no-edge) and 1's (edge).</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Since the C++ Standard Library doesn&rsquo;t have a built-in matrix library (or maybe it does and I&rsquo;m unaware of it), I just used a vector of size <code>M * N</code> to stand in for an <code>M * N</code> matrix.</p>
-
-<div><script src='https://gist.github.com/8643006.js'></script>
-<noscript><pre><code>#include &lt;cassert&gt;
-#include &lt;cmath&gt;
-#include &lt;cstdint&gt;
-#include &lt;cstdio&gt;
-#include &lt;cstdlib&gt;
-#include &lt;algorithm&gt;
-#include &lt;array&gt;
-#include &lt;fstream&gt;
-#include &lt;iomanip&gt;
-#include &lt;iostream&gt;
-#include &lt;limits&gt;
-#include &lt;map&gt;
-#include &lt;memory&gt;
-#include &lt;sstream&gt;
-#include &lt;string&gt;
-#include &lt;vector&gt;
-#include &lt;queue&gt;
-#include &lt;unordered_map&gt;
-
-using namespace std;
-
-const static char* kRelationshipMarker = &quot;-&gt;&quot;;
-
-int main(int argc, char* argv[]) {
-  int number_nodes, number_relationships;
-  string line;
-  getline(cin, line);
-  istringstream is(line);
-  is &gt;&gt; number_nodes &gt;&gt; number_relationships;
-
-  vector&lt;int&gt; connections;
-  connections.assign(number_nodes * number_nodes, 0);
-
-  for (int i = 0; i &lt; number_relationships; ++i) {
-    getline(cin, line);
-    int connectee;
-    string marker;
-    istringstream ris(line);
-    ris &gt;&gt; connectee;
-    ris &gt;&gt; marker;
-    assert(marker == kRelationshipMarker);
-    int connected_node;
-    while (ris &gt;&gt; connected_node) {
-      connections[connectee * number_nodes + connected_node] = 1;
-    }
-  }
-
-  for (int i = 0; i &lt; number_nodes; ++i) {
-    for (int j = 0; j &lt; number_nodes; ++j) {
-      cout &lt;&lt; connections[i * number_nodes + j];
-    }
-    cout &lt;&lt; endl;
-  }
-}
-
-</code></pre></noscript></div>
-
-
-
 ]]></content>
   </entry>
   

@@ -122,6 +122,215 @@
   
 
 
+<i class="icon-calendar-empty"></i> <time datetime="2013-03-20T00:00:00-07:00" pubdate data-updated="true">Mar 20<sup>th</sup>, 2013</time></h5>
+          <div class="row-fluid">
+          
+          </div>
+          
+          <div class="row-fluid">
+          
+          <a href="/blog/categories/hakyll/"><span class="badge">hakyll</span></a>
+          
+          <a href="/blog/categories/haskell/"><span class="badge">haskell</span></a>
+          
+          </div>
+          
+    </div>
+    <div class="span10 post-container">
+      <h1 class="link"><a href="/blog/2013/03/20/hakyll-broken/">Hakyll broken ?</a></h1>
+      <p>I noticed that the dates in my blog were all wrong, and now the blog
+doesn&rsquo;t build.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>ghc --make blog.hs
+</span><span class='line'><span class="o">[</span>1 of 1<span class="o">]</span> Compiling Main             <span class="o">(</span> blog.hs, blog.o <span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'>blog.hs:27:12:
+</span><span class='line'>    Not in scope: <span class="sb">`</span>list<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">    Perhaps you meant `last&#39;</span> <span class="o">(</span>imported from Prelude<span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'>blog.hs:29:21: Not in scope: <span class="sb">`</span>pageCompiler<span class="s1">&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s1">blog.hs:30:17: Not in scope: `applyTemplateCompiler&#39;</span>
+</span><span class='line'>
+</span><span class='line'>blog.hs:31:17: Not in scope: <span class="sb">`</span>relativizeUrlsCompiler<span class="s1">&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s1">blog.hs:34:27:</span>
+</span><span class='line'><span class="s1">    Not in scope: `constA&#39;</span>
+</span><span class='line'>    Perhaps you meant <span class="sb">`</span>const<span class="s1">&#39; (imported from Prelude)</span>
+</span><span class='line'>
+</span><span class='line'><span class="s1">blog.hs:35:18: Not in scope: `setField&#39;</span>
+</span><span class='line'>
+</span><span class='line'>blog.hs:36:13: Not in scope: <span class="sb">`</span>requireAllA<span class="s1">&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s1">blog.hs:37:13: Not in scope: `applyTemplateCompiler&#39;</span>
+</span><span class='line'>
+</span><span class='line'>blog.hs:38:13: Not in scope: <span class="sb">`</span>applyTemplateCompiler<span class="s1">&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s1">blog.hs:39:13: Not in scope: `relativizeUrlsCompiler&#39;</span>
+</span><span class='line'>
+</span><span class='line'>blog.hs:43:21: Not in scope: <span class="sb">`</span>pageCompiler<span class="s1">&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s1">blog.hs:44:17: Not in scope: `applyTemplateCompiler&#39;</span>
+</span><span class='line'>
+</span><span class='line'>blog.hs:45:17: Not in scope: <span class="sb">`</span>applyTemplateCompiler<span class="s1">&#39;</span>
+</span><span class='line'>
+</span><span class='line'><span class="s1">blog.hs:46:17: Not in scope: `relativizeUrlsCompiler&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The price to pay for using a system in flux &hellip; oh well, time to read up on
+the <a href="http://jaspervdj.be/hakyll/tutorials/04-compilers.html">hakyll
+transition</a> from v3 to v4.</p>
+
+<p>Alright, that isn&rsquo;t good enough &hellip; need some &lsquo;patterns&rsquo; to work with.
+Luckily, I found <a href="http://wmasson.com/">another Hakyll blog</a> that made the jump, and shameless
+plagiarized. (So thank you, <code>wmasson</code>!)</p>
+
+<p>Well, I didn&rsquo;t even plagiarize well. I used tabs instead of spaces at one
+point and stared at a <code>parse error on input `='</code> error message for
+<em>some time</em>.</p>
+
+<p>I spent some more time staring at</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>blog.hs:39:47:
+</span><span class='line'>    Couldn<span class="s1">&#39;t match expected type `Item String&#39;</span>
+</span><span class='line'>                with actual <span class="nb">type</span> <span class="sb">`</span><span class="o">[</span>Item String<span class="o">]</span><span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">    Expected type: [Item String] -&gt; [Item String]</span>
+</span><span class='line'><span class="s1">      Actual type: [Item String] -&gt; [[Item String]]</span>
+</span><span class='line'><span class="s1">    In the second argument of `(.)&#39;</span>, namely <span class="sb">`</span>recentFirst<span class="s1">&#39;</span>
+</span><span class='line'><span class="s1">    In the second argument of `($)&#39;</span>, namely <span class="sb">`</span>take 3 . recentFirst<span class="err">&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&hellip; and then I realized that the signature of <code>postList</code> was wrong and should have its second argument as <code>([Item String] -&gt; Compiler [Item String])</code> instead of <code>([Item String] -&gt; [Item String])</code>.
+Had to change <code>prep &lt;$&gt; loadAll pattern</code> to <code>prep =&lt;&lt; loadAll pattern</code> to accomodate this change.</p>
+
+<p>Somehow the type signature of the main page function didn&rsquo;t match, so I modified the <code>postList</code> function to take a <code>listmodifier</code>; this way I could pass in <code>id</code> for the list of all posts and <code>(take 3)</code> for the main page.</p>
+
+<p>I also had to change the date format from <code>%d %m %Y</code> to <code>%Y-%m-%d</code>, since I was getting an</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="o">[</span>ERROR<span class="o">]</span> Hakyll.Web.Template.Context.getItemUTC: could not parse <span class="nb">time </span><span class="k">for</span> ...
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>error message, looking at the <a href="https://github.com/jaspervdj/hakyll/blob/master/src/Hakyll/Web/Template/Context.hs#L200">source</a> I found that only a few formats were supported.</p>
+
+<p>Finally, right at the end, I clobbered the git submodule in my output directory when I did a <code>./blog rebuild</code>. So to bring it back, I had to</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>rm -f .gitmodules
+</span><span class='line'><span class="nv">$ </span>./blog clean
+</span><span class='line'>Removing _site...
+</span><span class='line'>Removing _cache...
+</span><span class='line'>Removing _cache/tmp...
+</span><span class='line'><span class="nv">$ </span>git rm -r _site
+</span><span class='line'>rm <span class="s1">&#39;_site&#39;</span>
+</span><span class='line'><span class="nv">$ </span>git submodule add --force git@github.com:agam/agam.github.com.git _site
+</span><span class='line'>Reactivating <span class="nb">local </span>git directory <span class="k">for </span>submodule <span class="s1">&#39;_site&#39;</span>.
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>_site
+</span><span class='line'><span class="nv">$ </span>git checkout master
+</span><span class='line'><span class="nv">$ </span><span class="nb">cd</span> ..
+</span><span class='line'><span class="nv">$ </span>./blog build
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So &hellip; no outward change in appearance, but a lot of time wasted, and all because I was bold enough to run <code>cabal update</code>.</p>
+
+<p>Yes, I know. Sad.</p>
+
+<p>But it works! (atleast the chronological sorting works again).</p>
+
+<p><em><strong>Update:</strong></em> <a href="https://github.com/agam/hakyll-source/commit/9af1c492dc34e2ffb677a619ac86113a8a716703">This diff</a> might help to show the changes required.
+<em><strong>Update:</strong></em> Just for fun, I tweaked the CSS of the page a bit, to make it a little less bland.</p>
+
+<p><em>Update</em>: I have sinced moved to <a href="http://jekyllrb.com/">Jekyll</a>, so if Hakyll
+has moved on to a different version, this blog post should be considered
+obsolete.</p>
+
+      
+      
+    </div>
+  </div>
+
+
+
+    </article>
+    
+    <hr>
+    
+  
+  
+    <article>
+      
+
+  <div class="row-fluid">
+    <div class="span2 post-meta">
+	  <h5 class="date-time">
+
+
+
+
+
+
+
+
+  
+
+
 <i class="icon-calendar-empty"></i> <time datetime="2013-03-13T00:00:00-07:00" pubdate data-updated="true">Mar 13<sup>th</sup>, 2013</time></h5>
           <div class="row-fluid">
           

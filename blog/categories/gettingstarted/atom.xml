@@ -4,7 +4,7 @@
   <title><![CDATA[Category: gettingstarted | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/gettingstarted/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2014-07-30T12:28:50-07:00</updated>
+  <updated>2014-07-30T17:10:33-07:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,82 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Up and Running with Scala]]></title>
+    <link href="http://agam.github.io/blog/2014/07/30/up-and-running-with-scala/"/>
+    <updated>2014-07-30T12:31:30-07:00</updated>
+    <id>http://agam.github.io/blog/2014/07/30/up-and-running-with-scala</id>
+    <content type="html"><![CDATA[<p>The &ldquo;Getting started&rdquo; section of the &ldquo;Functional Programming with Scala&rdquo; course mentions using Eclipse to build the first &lsquo;hello world&rsquo; kind of project, but if you&rsquo;d rather not get out of your Emacs comfort zone, there is a different way to do the same (credits to numerous online sources).</p>
+
+<ul>
+<li><p>Install <code>sbt</code> (<code>sudo apt-get install sbt</code>) and <code>scala</code> (download <a href="http://www.scala-lang.org/download/">from here</a>)</p></li>
+<li><p>Install the <code>ensime</code> plugin for <code>sbt</code>: Create a directory <code>~/.sbt/0.13/plugins</code>, and create <code>plugins.sbt</code></p></li>
+</ul>
+
+
+<p><code>scala
+resolvers += "Sonatype releases" at "https://oss.sonatype.org/content/repositories/releases"
+addSbtPlugin("org.ensime" % "ensime-sbt-cmd" % "0.1.2")
+</code></p>
+
+<ul>
+<li><p>Install the <code>scala-mode2</code> Emacs: if you have Emacs24, this is as straightforward as running <code>M-x package-list-packages</code> and finding it)</p></li>
+<li><p>Install <code>ensime</code>: <a href="https://github.com/ensime/ensime-server/downloads">Download</a> the latest <code>.tar.gz</code>, and install it somewhere under <code>.emacs.d</code>, then modify your <code>.emacs</code> to load the appropriate paths:</p></li>
+</ul>
+
+
+<p><code>
+(add-to-list 'load-path "~/.emacs.d/ensime/elisp")
+(require 'ensime)
+(add-hook 'scala-mode-hook 'ensime-scala-mode-hook)
+</code></p>
+
+<ul>
+<li><p>Create a new directory: <code>mkdir helloworld; cd helloworld</code></p></li>
+<li><p>Initialize the project: Create <code>build.sbt</code> with the following</p></li>
+</ul>
+
+
+<p><code>scala
+name := "hello_world"
+version := "1.0"
+</code>
+* Set up <code>ensime</code>: <code>sbt ensime generate</code></p>
+
+<ul>
+<li><p>Open a file (say) <code>Main.scala</code></p></li>
+<li><p>Start <code>ensime</code> in Emacs: <code>M-x ensime</code> (say &lsquo;yes&rsquo; to various prompts). You should see something like &ldquo;ENSIME ready. May the _ be with you.&rdquo; in the minibuffer.</p></li>
+<li><p>Add something in the file, e.g. (copying from the tutorial)</p></li>
+</ul>
+
+
+<p>```scala
+package greeter</p>
+
+<p>object Hello extends App {
+  println(&ldquo;Hello World&rdquo;)
+}
+```</p>
+
+<ul>
+<li><p>Hit <code>C-c C-b v</code>, this brings up an <code>sbt</code> console <em>inside Emacs</em> (similar to how Slime works with Lisp)</p></li>
+<li><p>Type <code>run</code> in the console, you should see something like</p></li>
+</ul>
+
+
+<p>```</p>
+
+<blockquote><p>run
+[info] Compiling 1 Scala source to /home/agam/Scala/hello-world/target/scala-2.10/classes&hellip;
+[info] Running greeter.Hello
+Hello World
+[success] Total time: 2 s, completed Jul 30, 2014 5:03:35 PM
+```</p></blockquote>
+
+<p>&hellip; and that&rsquo;s it!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Getting started with clojure: Part 1]]></title>
