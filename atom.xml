@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2014-07-31T13:06:47-07:00</updated>
+  <updated>2014-07-31T13:11:02-07:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -18,7 +18,9 @@
     <link href="http://agam.github.io/blog/2014/07/31/scala-var/"/>
     <updated>2014-07-31T13:04:30-07:00</updated>
     <id>http://agam.github.io/blog/2014/07/31/scala-var</id>
-    <content type="html"><![CDATA[<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+    <content type="html"><![CDATA[<p>Using all three (<code>val</code>, <code>var</code>, <code>def</code>), I initialize, and then attempt to reassign. Only <code>var</code> succeeds (as it should), but the other two fail in different ways.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
