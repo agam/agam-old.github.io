@@ -5,7 +5,7 @@
 <!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  <title>Scala: var, val, def - Agam's Mashed-Up Pome</title>
+  <title>Possibly unevaluated variables - Agam's Mashed-Up Pome</title>
   <meta name="author" content="Agam">
 
    
@@ -19,7 +19,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
-  <link rel="canonical" href="http://agam.github.io/blog/2014/07/31/scala-var">
+  <link rel="canonical" href="http://agam.github.io/blog/2014/07/31/possibly-unevaluated-variables">
   <link href="/favicon.png" rel="icon">
   <link href='http://fonts.googleapis.com/css?family=Quicksand:300,400' rel='stylesheet' type='text/css'>
   <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
@@ -93,7 +93,7 @@
 
   <header>
   <div class="jumbotron">
-    Scala: Var, Val, Def
+    Possibly Unevaluated Variables
 	<h5>
 
 
@@ -106,14 +106,12 @@
   
 
 
-<i class="icon-calendar-empty"></i> <time datetime="2014-07-31T13:04:30-07:00" pubdate data-updated="true">Jul 31<sup>st</sup>, 2014</time></h5>
+<i class="icon-calendar-empty"></i> <time datetime="2014-07-31T16:11:40-07:00" pubdate data-updated="true">Jul 31<sup>st</sup>, 2014</time></h5>
   </div>
 </header>
   <div class="row-fluid">
     <div class="span12">
-      <p>Using all three (<code>val</code>, <code>var</code>, <code>def</code>), I initialize, and then attempt to reassign. Only <code>var</code> succeeds (as it should), but the other two fail in different ways.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+      <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
@@ -125,40 +123,22 @@
 <span class='line-number'>10</span>
 <span class='line-number'>11</span>
 <span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="k">val</span> <span class="n">x</span> <span class="k">=</span> <span class="mi">6</span>
-</span><span class='line'><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">6</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="k">def</span> <span class="n">loop</span><span class="k">:</span> <span class="kt">Boolean</span> <span class="o">=</span> <span class="n">loop</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">console</span><span class="k">&gt;:</span><span class="mi">10</span><span class="k">:</span> <span class="kt">warning:</span> <span class="kt">method</span> <span class="kt">loop</span> <span class="kt">does</span> <span class="kt">nothing</span> <span class="kt">other</span> <span class="kt">than</span> <span class="kt">call</span> <span class="kt">itself</span> <span class="kt">recursively</span>
+</span><span class='line'>       <span class="k">def</span> <span class="n">loop</span><span class="k">:</span> <span class="kt">Boolean</span> <span class="o">=</span> <span class="n">loop</span>
+</span><span class='line'>                           <span class="o">^</span>
+</span><span class='line'><span class="n">loop</span><span class="k">:</span> <span class="kt">Boolean</span>
 </span><span class='line'>
-</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="n">x</span> <span class="k">=</span> <span class="mi">7</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">console</span><span class="k">&gt;:</span><span class="mi">11</span><span class="k">:</span> <span class="kt">error:</span> <span class="kt">reassignment</span> <span class="kt">to</span> <span class="kt">val</span>
-</span><span class='line'>       <span class="n">x</span> <span class="k">=</span> <span class="mi">7</span>
-</span><span class='line'>         <span class="o">^</span>
+</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="kc">true</span> <span class="o">||</span> <span class="n">loop</span>
+</span><span class='line'><span class="n">res34</span><span class="k">:</span> <span class="kt">Boolean</span> <span class="o">=</span> <span class="kc">true</span>
 </span><span class='line'>
-</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="k">var</span> <span class="n">x</span> <span class="k">=</span> <span class="mi">6</span>
-</span><span class='line'><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">6</span>
+</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="kc">true</span> <span class="o">&amp;&amp;</span> <span class="n">loop</span>
 </span><span class='line'>
-</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="n">x</span> <span class="k">=</span> <span class="mi">7</span>
-</span><span class='line'><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">7</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="k">def</span> <span class="n">x</span> <span class="k">=</span> <span class="mi">6</span>
-</span><span class='line'><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="n">x</span> <span class="k">=</span> <span class="mi">7</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">console</span><span class="k">&gt;:</span><span class="mi">11</span><span class="k">:</span> <span class="kt">error:</span> <span class="kt">value</span> <span class="kt">x_=</span> <span class="kt">is</span> <span class="kt">not</span> <span class="kt">a</span> <span class="kt">member</span> <span class="kt">of</span> <span class="kt">object</span> <span class="kt">$iw</span>
-</span><span class='line'>       <span class="n">x</span> <span class="k">=</span> <span class="mi">7</span>
-</span><span class='line'>       <span class="o">^</span>
+</span><span class='line'><span class="o">[</span><span class="kt">need</span> <span class="kt">to</span> <span class="kt">Ctrl-C</span> <span class="kt">out</span> <span class="kt">at</span> <span class="kt">this</span> <span class="kt">point</span><span class="o">]</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>Deceptively similar at first, but I suppose you get used to it. Also, what the heck is <code>$iw</code> ?? (I&rsquo;m guessing it&rsquo;s an internal Java representation of the <code>Int</code> class)</p>
+<p>(I like that warning message!)</p>
 
     </div>
   </div>
@@ -177,7 +157,7 @@
 
 
 
-  <a href="/blog/categories/scalax/"><span class="badge">scalax</span></a>
+  <a href="/blog/categories/scala/"><span class="badge">scala</span></a>
 
 
 
@@ -209,10 +189,8 @@
       <div class="span12">
         <p class="meta">
           
-            <a class="basic-alignment left" href="/blog/2014/07/30/up-and-running-with-scala/" title="Previous Post: Up and Running: Scala, Sbt, Ensime">&laquo; Up and Running: Scala, Sbt, Ensime</a>
+            <a class="basic-alignment left" href="/blog/2014/07/31/scala-var/" title="Previous Post: Scala: var, val, def">&laquo; Scala: var, val, def</a>
           
-          
-            <a class="basic-alignment right" href="/blog/2014/07/31/possibly-unevaluated-variables/" title="Next Post: Possibly unevaluated variables">Possibly unevaluated variables &raquo;</a>
           
         </p>
       </div>
@@ -250,8 +228,8 @@
       
         
         // var disqus_developer = 1;
-        var disqus_identifier = 'http://agam.github.io/blog/2014/07/31/scala-var/';
-        var disqus_url = 'http://agam.github.io/blog/2014/07/31/scala-var/';
+        var disqus_identifier = 'http://agam.github.io/blog/2014/07/31/possibly-unevaluated-variables/';
+        var disqus_url = 'http://agam.github.io/blog/2014/07/31/possibly-unevaluated-variables/';
         var disqus_script = 'embed.js';
       
     (function () {
