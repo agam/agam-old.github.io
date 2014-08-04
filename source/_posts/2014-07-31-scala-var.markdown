@@ -6,7 +6,9 @@ comments: true
 categories: scalax
 ---
 
-Using all three (`val`, `var`, `def`), I initialize, and then attempt to reassign. Only `var` succeeds (as it should), but the other two fail in different ways.
+Using all three (`val`, `var`, `d
+
+ef`), I initialize, and then attempt to reassign. Only `var` succeeds (as it should), but the other two fail in different ways.
 
 ```scala
 
