@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2014-07-31T16:13:16-07:00</updated>
+  <updated>2014-08-04T12:50:17-07:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,25 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Scala/Haskell/Go]]></title>
+    <link href="http://agam.github.io/blog/2014/08/04/scala-slash-haskell-slash-go/"/>
+    <updated>2014-08-04T12:33:51-07:00</updated>
+    <id>http://agam.github.io/blog/2014/08/04/scala-slash-haskell-slash-go</id>
+    <content type="html"><![CDATA[<p>Ok, Scala is neat. It&rsquo;s certainly the <em>only</em> way I can bring myself to use the JVM. The idea of everything being an object is a good one. You can &lsquo;cheat&rsquo; a bit since you can use statements, mix in side effects, do whatever, but I understand the compromises for Java-interop, without which it would would have been just another unused academic language.</p>
+
+<p>It seems to be a <em>completely unopinionated</em> language, which IMO seems not so great since there are too many ways to do anything, so in practice you&rsquo;d have to pick some subset of features and stick with that, enforced as a style guide rather than by the compiler (much like all reasonable C++ programming is done today).</p>
+
+<p>Even if you never plan to use Scala, the two courses on Coursera are recommended viewing.</p>
+
+<p>Having done that, would I still use Scala? If I needed to use the JVM or existing Java libraries, this is a no-brainer. But without that constraint? Not quite sure. One of Haskell (for the type safety) or Go (for the reactive concurrency) might fit the bill just as well.</p>
+
+<p>Anyway, I&rsquo;m still working through these videos and I&rsquo;ve yet to build anything half-way complex with it, so take all this with a grain of salt.</p>
+
+<p>One open question I do have is whether Scala benefits from subtyping (which Haskell lacks). I&rsquo;ve heard/read many viewpoints on this but haven&rsquo;t come to a conclusion yet &hellip;</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Possibly unevaluated variables]]></title>
@@ -54,7 +73,9 @@
     <link href="http://agam.github.io/blog/2014/07/31/scala-var/"/>
     <updated>2014-07-31T13:04:30-07:00</updated>
     <id>http://agam.github.io/blog/2014/07/31/scala-var</id>
-    <content type="html"><![CDATA[<p>Using all three (<code>val</code>, <code>var</code>, <code>def</code>), I initialize, and then attempt to reassign. Only <code>var</code> succeeds (as it should), but the other two fail in different ways.</p>
+    <content type="html"><![CDATA[<p>Using all three (<code>val</code>, <code>var</code>, `d</p>
+
+<p>ef<code>), I initialize, and then attempt to reassign. Only</code>var` succeeds (as it should), but the other two fail in different ways.</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -1462,35 +1483,6 @@ If we extrapolate today&rsquo;s trend, his mathematical education will be conduc
 <p><img class="center" src="http://farm6.staticflickr.com/5535/12227532975_ee70979b52_z_d.jpg"></p>
 
 <p>As this graph shows, the result is remarkably close to a constant value of <code>-0.0001</code> !!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Mathematica: A simple ant]]></title>
-    <link href="http://agam.github.io/blog/2014/01/30/mathematica-a-simple-ant/"/>
-    <updated>2014-01-30T18:16:00-08:00</updated>
-    <id>http://agam.github.io/blog/2014/01/30/mathematica-a-simple-ant</id>
-    <content type="html"><![CDATA[<p>Here&rsquo;s a simple, exploratory sketch: Imagine an ant which can either move left or right, or stay in its place.</p>
-
-<p>For simplicity, we&rsquo;ll imagine the ant starts at the center of a scale from <code>1</code> to <code>100</code>, and moves one unit at a time.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>Ant[k_, u_] := 
-</span><span class='line'> If[ u &lt; 1/3, Min[k + 1, 100], If[u &gt; 2/3, Max[0, k - 1], k]]
-</span><span class='line'>
-</span><span class='line'>RecAnt[k_] := Ant[k, RandomReal[]]</span></code></pre></td></tr></table></div></figure>
-
-
-<p> <img class="center" src="http://farm8.staticflickr.com/7351/12224251723_4d24311967_d.jpg"></p>
-
-<p> <code>
- ListPlot[NestList[RecAnt, 50, 100000], ImageSize -&gt; Large, Background -&gt; LightGray]
-</code></p>
-
-<p> <img class="center" src="http://farm8.staticflickr.com/7418/12224482144_6ef516fd03_z_d.jpg"></p>
 ]]></content>
   </entry>
   
