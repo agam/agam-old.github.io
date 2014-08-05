@@ -17,3 +17,5 @@ Having done that, would I still use Scala? If I needed to use the JVM or existin
 Anyway, I'm still working through these videos and I've yet to build anything half-way complex with it, so take all this with a grain of salt. 
 
 One open question I do have is whether Scala benefits from subtyping (which Haskell lacks). I've heard/read many viewpoints on this but haven't come to a conclusion yet ...
+
+**Update**: I got some feedback to the effect of "you're an idiot, you should just drop everything and use Go instead", so I'm going to try that for a while and report back in ... many months? Maybe.
