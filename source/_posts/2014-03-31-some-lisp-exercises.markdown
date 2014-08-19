@@ -9,8 +9,6 @@ categories:
 Reading through ANSI Common Lisp, and doing some of the exercises as I come across them. Here are a few from Ch 4 and 5:
 
 ```cl
-
-
 (defun rotate-square-array (arr)
   (let* ((dim (car (array-dimensions arr)))
 	(newarr (make-array (list dim dim))))
@@ -125,5 +123,4 @@ Reading through ANSI Common Lisp, and doing some of the exercises as I come acro
 		     (t
 		      (max-min-helper rest curmin curmax)))))))
     (max-min-helper lst nil nil)))
-
 ```
