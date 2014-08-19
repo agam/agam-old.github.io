@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2014-08-12T15:16:50-07:00</updated>
+  <updated>2014-08-19T14:31:23-07:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,54 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Command-line Gists]]></title>
+    <link href="http://agam.github.io/blog/2014/08/19/command-line-gists/"/>
+    <updated>2014-08-19T14:25:25-07:00</updated>
+    <id>http://agam.github.io/blog/2014/08/19/command-line-gists</id>
+    <content type="html"><![CDATA[<p>Every once in a while I need to share some code snippets, and <a href="https://gist.github.com/">Gist</a> has been the best way to do this so far. Using the browser wastes a few mouseclicks, especially if you already have the intended contents (either entirely or partially) in a text file, so here&rsquo;s a better way to do this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>sudo gem install gist
+</span><span class='line'>
+</span><span class='line'>gist --login
+</span><span class='line'>
+</span><span class='line'>gist myfile
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>A new gist containing the contents of <code>myfile</code> (along with the <em>appropriate source formatting</em>) will be created, and you should see something like</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>https://gist.github.com/3d82745c84c8f44dd51c
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>indicating success.</p>
+
+<p><strong>Note:</strong> If you want to upload anonymously, try <code>gist -a myfile</code> instead of the above.</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Golang setup]]></title>
+    <link href="http://agam.github.io/blog/2014/08/12/golang-setup/"/>
+    <updated>2014-08-12T15:21:15-07:00</updated>
+    <id>http://agam.github.io/blog/2014/08/12/golang-setup</id>
+    <content type="html"><![CDATA[<p>Just some basic personal notes here.</p>
+
+<p>Obviously, get the <code>go-mode</code> for Emacs. It has useful shortcuts, like <code>C-c C-a</code> to import a package while you&rsquo;re editing some code and don&rsquo;t want to scroll up and add this, or <code>C-c C-d</code> to show the signature of the function at point. There are other useful functions (for which you can add your own shortcuts), such as <code>gofmt</code> which does what you&rsquo;d expect, and <code>go-play-region</code>, which is nifty (but perhaps not that useful): it sends the selected code to <a href="http://play.golang.org/">the Go Playground</a>, and displays the result.</p>
+
+<p>It&rsquo;ll also be useful to get <code>godef</code>. So, just <code>go get code.google.com/p/rog-go/exp/cmd/godef</code> (remember to set <code>$GOPATH</code> first &mdash; I use <code>~/Golang/Packages</code>).</p>
+
+<p>If you&rsquo;re enthusiastic about further Emacs-Go integration, you can try out <a href="http://github.com/dougm/goflymake"><code>goflymake</code></a> &mdash; I haven&rsquo;t used it myself (the compile step is nearly-instantaneous for me anyway), but I&rsquo;ve heard its good, so YMMV.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Ridiculous Concurrency]]></title>
@@ -1387,46 +1435,6 @@ If we extrapolate today&rsquo;s trend, his mathematical education will be conduc
 <p>So where does the computer scientist come in to this ? In a heroic way !</p>
 
 <blockquote><p>The computer scientist thus has a responsibility to education. Not as he thinks, <em>because he will have to program the teaching machines</em>. Certainly not because he is a skilled user of &ldquo;finite mathematics&rdquo;. <em>He knows how to debug programs</em>; he must tell the educators how to help the children to debug their own problem-solving processes. <em>He knows how procedures depend on their data structures</em>; he can tell educators how to prepare children for new ideas.</p></blockquote>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Playing with the exponential curve]]></title>
-    <link href="http://agam.github.io/blog/2014/02/01/playing-with-the-exponential-curve/"/>
-    <updated>2014-02-01T06:35:00-08:00</updated>
-    <id>http://agam.github.io/blog/2014/02/01/playing-with-the-exponential-curve</id>
-    <content type="html"><![CDATA[<p>I remember hearing about the <a href="http://britton.disted.camosun.bc.ca/jbchessgrain.htm">apocryphal story</a> about doubling grains of rice on a chessboard. I even tried writing powers of 2 (which at my age then just meant adding <code>2+2</code> then <code>4+4</code> etc).</p>
-
-<p><img class="center" src="http://britton.disted.camosun.bc.ca/firdau1.jpg"></p>
-
-<p>This is obviously the <a href="http://www.wolframalpha.com/input/?i=e+%5E+x"><code>e^x</code></a> curve, but when you normally see it drawn its self-similarity is not obvious. Mathematica&rsquo;s <code>Manipulate</code> function can help in this regard &hellip;</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>Manipulate[ListPlot[Table[Power[2, i], {i, 1, n}]], {n, 1, 64}]</span></code></pre></td></tr></table></div></figure>
-
-
-<p><img class="center" src="http://farm3.staticflickr.com/2853/12244178256_251f9fcfae_d.jpg">
-<img class="center" src="http://farm6.staticflickr.com/5496/12243600435_e6faac3bbb_d.jpg">
-<img class="center" src="http://farm6.staticflickr.com/5547/12244178226_2258c2c2ce_d.jpg">
-<img class="center" src="http://farm3.staticflickr.com/2882/12243785163_3822d7299b_d.jpg">
-<img class="center" src="http://farm8.staticflickr.com/7332/12243785183_6243378edf_d.jpg"></p>
-
-<p>These are screenshots for increasing values of <code>n</code>: Note how they all look the same (except for the first one, where the curve is just starting out), over several orders of magnitude!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Change That Font!]]></title>
-    <link href="http://agam.github.io/blog/2014/02/01/change-that-font/"/>
-    <updated>2014-02-01T06:25:00-08:00</updated>
-    <id>http://agam.github.io/blog/2014/02/01/change-that-font</id>
-    <content type="html"><![CDATA[<p>You don&rsquo;t have to be chained to <code>Monaco</code> if you don&rsquo;t like it. I changed it to <code>Inconsolata</code>, which is as simply as <a href="http://www.levien.com/type/myfonts/inconsolata.html">downloading it</a> (click on the <em>Open Type File</em> link).</p>
-
-<p><img class="center" src="http://farm6.staticflickr.com/5509/12246575643_d92ae27492_z_d.jpg"></p>
-
-<p>Once you click on the downloaded file, the <strong>Font Book</strong> app should open up automatically, showing the font face and with a <code>Install</code> button.</p>
-
-<p>Once you do this (I love this part) <em>any open font selection windows will refresh automatically</em>, and you can pick this new font for your terminal (which, by the way, I hope is <a href="http://iterm.sourceforge.net/">iTerm</a> because &hellip; if not, why?)</p>
 ]]></content>
   </entry>
   

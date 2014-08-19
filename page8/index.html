@@ -122,6 +122,1304 @@
   
 
 
+<i class="icon-calendar-empty"></i> <time datetime="2013-03-10T00:00:00-08:00" pubdate data-updated="true">Mar 10<sup>th</sup>, 2013</time></h5>
+          <div class="row-fluid">
+          
+          </div>
+          
+          <div class="row-fluid">
+          
+          <a href="/blog/categories/assembly/"><span class="badge">assembly</span></a>
+          
+          <a href="/blog/categories/c++/"><span class="badge">c++</span></a>
+          
+          <a href="/blog/categories/haskell/"><span class="badge">haskell</span></a>
+          
+          </div>
+          
+    </div>
+    <div class="span10 post-container">
+      <h1 class="link"><a href="/blog/2013/03/10/hello-world-comparison/">Comparing &#8220;Hello World&#8221; in C++ and Haskell</a></h1>
+      <p>I feel I&rsquo;ve totally forgotten all about assembly, and I was curious anyway about how Haskell differed fundamentally in its basic code generation, so I decided to contrast a basic example against C++.</p>
+
+<p>The choice of C++ here is arbitrary; it just happens to be something I&rsquo;ve used most often, and pretty much all the time for the last decade or so. If it ends up being interesting, I can add similar comparisons for other languages.</p>
+
+<h2>Source Programs</h2>
+
+<p>The C++ version:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#include &lt;iostream&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">**</span> <span class="n">argv</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Hello world</span><span class="se">\n\n</span><span class="s">&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The Haskell version:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="nf">main</span> <span class="ow">=</span> <span class="n">putStrLn</span> <span class="s">&quot;Hello World&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Some high-level differences:</h2>
+
+<p>Difference in size of generated binary:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>ls -l
+</span><span class='line'>-rwxr-x--- 1 agam eng 8.8K Dec 14 16:10 cpphelloworld
+</span><span class='line'>-rwxr-x--- 1 agam eng 1.1M Dec 14 16:16 haskellhelloworld
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Difference in number of symbols defined:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>nm cpphelloworld | wc -l
+</span><span class='line'>41
+</span><span class='line'><span class="nv">$ </span>nm haskellhelloworld | wc -l
+</span><span class='line'>6578
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Differences in libraries linked in :&ndash;</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>ldd cpphelloworld
+</span><span class='line'>  linux-vdso.so.1 <span class="o">=</span>&gt;  <span class="o">(</span>0x00007fffcb5a7000<span class="o">)</span>
+</span><span class='line'>  libstdc++.so.6 <span class="o">=</span>&gt; /usr/lib/x86_64-linux-gnu/libstdc++.so.6 <span class="o">(</span>0x00007ffe35064000<span class="o">)</span>
+</span><span class='line'>  libc.so.6 <span class="o">=</span>&gt; /lib/x86_64-linux-gnu/libc.so.6 <span class="o">(</span>0x00007ffe34ca5000<span class="o">)</span>
+</span><span class='line'>  libm.so.6 <span class="o">=</span>&gt; /lib/x86_64-linux-gnu/libm.so.6 <span class="o">(</span>0x00007ffe349a8000<span class="o">)</span>
+</span><span class='line'>  /lib64/ld-linux-x86-64.so.2 <span class="o">(</span>0x00007ffe35381000<span class="o">)</span>
+</span><span class='line'>  libgcc_s.so.1 <span class="o">=</span>&gt; /lib/x86_64-linux-gnu/libgcc_s.so.1 <span class="o">(</span>0x00007ffe34792000<span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>ldd haskellhelloworld
+</span><span class='line'>  linux-vdso.so.1 <span class="o">=</span>&gt;  <span class="o">(</span>0x00007fff681b9000<span class="o">)</span>
+</span><span class='line'>  libgmp.so.10 <span class="o">=</span>&gt; /usr/lib/x86_64-linux-gnu/libgmp.so.10 <span class="o">(</span>0x00007f427e124000<span class="o">)</span>
+</span><span class='line'>  libffi.so.6 <span class="o">=</span>&gt; /usr/lib/x86_64-linux-gnu/libffi.so.6 <span class="o">(</span>0x00007f427df1c000<span class="o">)</span>
+</span><span class='line'>  libm.so.6 <span class="o">=</span>&gt; /lib/x86_64-linux-gnu/libm.so.6 <span class="o">(</span>0x00007f427dc1f000<span class="o">)</span>
+</span><span class='line'>  librt.so.1 <span class="o">=</span>&gt; /lib/x86_64-linux-gnu/librt.so.1 <span class="o">(</span>0x00007f427da17000<span class="o">)</span>
+</span><span class='line'>  libdl.so.2 <span class="o">=</span>&gt; /lib/x86_64-linux-gnu/libdl.so.2 <span class="o">(</span>0x00007f427d813000<span class="o">)</span>
+</span><span class='line'>  libc.so.6 <span class="o">=</span>&gt; /lib/x86_64-linux-gnu/libc.so.6 <span class="o">(</span>0x00007f427d453000<span class="o">)</span>
+</span><span class='line'>  libpthread.so.0 <span class="o">=</span>&gt; /lib/x86_64-linux-gnu/libpthread.so.0 <span class="o">(</span>0x00007f427d236000<span class="o">)</span>
+</span><span class='line'>  /lib64/ld-linux-x86-64.so.2 <span class="o">(</span>0x00007f427e3af000<span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>C++ Object Code</h2>
+
+<p>The C++ version:</p>
+
+<p>Filename, and a static declaration of <code>c std::__ioinit</code> defined in <code>iostream</code>.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nf">.file</span>    <span class="s">&quot;helloworld.cpp&quot;</span>
+</span><span class='line'><span class="nf">.local</span>    <span class="nv">_ZStL8__ioinit</span>
+</span><span class='line'><span class="nf">.comm</span> <span class="nv">_ZStL8__ioinit</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Read-only data, containing the string used in our program.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nf">.section</span> <span class="nv">.rodata</span>
+</span><span class='line'><span class="nl">.LC0:</span>
+</span><span class='line'><span class="nf">.string</span>   <span class="s">&quot;Hello world\n\n&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Beginning of the &lsquo;<code>main</code>&rsquo; function, which is globally visible.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nf">.text</span>
+</span><span class='line'><span class="nf">.globl</span>    <span class="nv">main</span>
+</span><span class='line'><span class="nf">.type</span> <span class="nv">main</span><span class="p">,</span> <span class="err">@</span><span class="nv">function</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The C++ code has a lot of these <code>cfi_</code> declarations, which is Call Frame Information for the <a href="http://www.logix.cz/michal/devel/gas-cfi/dwarf-2.0.0.pdf">DWARF debugging format</a></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nl">main:</span>
+</span><span class='line'><span class="nl">.LFB966:</span>
+</span><span class='line'>  <span class="nf">.cfi_startproc</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Start new frame, Store old stack pointer.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nf">pushq</span>    <span class="o">%</span><span class="nb">rbp</span>
+</span><span class='line'><span class="nf">.cfi_def_cfa_offset</span> <span class="mi">16</span>
+</span><span class='line'><span class="nf">.cfi_offset</span> <span class="mi">6</span><span class="p">,</span> <span class="o">-</span><span class="mi">16</span>
+</span><span class='line'><span class="nf">movq</span>  <span class="o">%</span><span class="nb">rsp</span><span class="p">,</span> <span class="o">%</span><span class="nb">rbp</span>
+</span><span class='line'><span class="nf">.cfi_def_cfa_register</span> <span class="mi">6</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Create space for local variables on the stack.
+Copy the value of (empty) EDI and RSI onto this created space.
+Copy the string declared above into ESI.
+Store the address of the <code>std::cout</code> object into EDI.
+Reset EAX to 0.
+Call the std::basic_ostream&lt;std::char_traits> operator&lt;&lt;()</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nf">subq</span> <span class="kc">$</span><span class="mi">16</span><span class="p">,</span> <span class="o">%</span><span class="nb">rsp</span>
+</span><span class='line'><span class="nf">movl</span>  <span class="o">%</span><span class="nb">edi</span><span class="p">,</span> <span class="o">-</span><span class="mi">4</span><span class="p">(</span><span class="o">%</span><span class="nb">rbp</span><span class="p">)</span>
+</span><span class='line'><span class="nf">movq</span>  <span class="o">%</span><span class="nb">rsi</span><span class="p">,</span> <span class="o">-</span><span class="mi">16</span><span class="p">(</span><span class="o">%</span><span class="nb">rbp</span><span class="p">)</span>
+</span><span class='line'><span class="nf">movl</span>  <span class="kc">$</span><span class="nv">.LC0</span><span class="p">,</span> <span class="o">%</span><span class="nb">esi</span>
+</span><span class='line'><span class="nf">movl</span>  <span class="kc">$</span><span class="nv">_ZSt4cout</span><span class="p">,</span> <span class="o">%</span><span class="nb">edi</span>
+</span><span class='line'><span class="nf">call</span>  <span class="nv">_ZStlsISt11char_traitsIcEERSt13basic_ostreamIcT_ES5_PKc</span>
+</span><span class='line'><span class="nf">movl</span>  <span class="kc">$</span><span class="mi">0</span><span class="p">,</span> <span class="o">%</span><span class="nb">eax</span>
+</span><span class='line'><span class="nf">leave</span>
+</span><span class='line'><span class="nf">.cfi_def_cfa</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span>
+</span><span class='line'><span class="nf">ret</span>
+</span><span class='line'><span class="nf">.cfi_endproc</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This part is not particular to the specific program here; gcc creates a <code>static_initialization_and_destruction</code> section for each translation unit that needs any static constructors to be called.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nl">.LFE966:</span>
+</span><span class='line'>  <span class="nf">.size</span>   <span class="nv">main</span><span class="p">,</span> <span class="nv">.</span><span class="o">-</span><span class="nv">main</span>
+</span><span class='line'>  <span class="nf">.type</span>   <span class="nv">_Z41__static_initialization_and_destruction_0ii</span><span class="p">,</span> <span class="err">@</span><span class="nv">function</span>
+</span><span class='line'><span class="nl">_Z41__static_initialization_and_destruction_0ii:</span>
+</span><span class='line'><span class="nl">.LFB970:</span>
+</span><span class='line'>  <span class="nf">.cfi_startproc</span>
+</span><span class='line'>  <span class="nf">pushq</span>   <span class="o">%</span><span class="nb">rbp</span>
+</span><span class='line'>  <span class="nf">.cfi_def_cfa_offset</span> <span class="mi">16</span>
+</span><span class='line'>  <span class="nf">.cfi_offset</span> <span class="mi">6</span><span class="p">,</span> <span class="o">-</span><span class="mi">16</span>
+</span><span class='line'>  <span class="nf">movq</span>    <span class="o">%</span><span class="nb">rsp</span><span class="p">,</span> <span class="o">%</span><span class="nb">rbp</span>
+</span><span class='line'>  <span class="nf">.cfi_def_cfa_register</span> <span class="mi">6</span>
+</span><span class='line'>  <span class="nf">subq</span>    <span class="kc">$</span><span class="mi">16</span><span class="p">,</span> <span class="o">%</span><span class="nb">rsp</span>
+</span><span class='line'>  <span class="nf">movl</span>    <span class="o">%</span><span class="nb">edi</span><span class="p">,</span> <span class="o">-</span><span class="mi">4</span><span class="p">(</span><span class="o">%</span><span class="nb">rbp</span><span class="p">)</span>
+</span><span class='line'>  <span class="nf">movl</span>    <span class="o">%</span><span class="nb">esi</span><span class="p">,</span> <span class="o">-</span><span class="mi">8</span><span class="p">(</span><span class="o">%</span><span class="nb">rbp</span><span class="p">)</span>
+</span><span class='line'>  <span class="nf">cmpl</span>    <span class="kc">$</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">4</span><span class="p">(</span><span class="o">%</span><span class="nb">rbp</span><span class="p">)</span>
+</span><span class='line'>  <span class="nf">jne</span> <span class="nv">.L2</span>
+</span><span class='line'>  <span class="nf">cmpl</span>    <span class="kc">$</span><span class="mi">65535</span><span class="p">,</span> <span class="o">-</span><span class="mi">8</span><span class="p">(</span><span class="o">%</span><span class="nb">rbp</span><span class="p">)</span>
+</span><span class='line'>  <span class="nf">jne</span> <span class="nv">.L2</span>
+</span><span class='line'>  <span class="nf">movl</span>    <span class="kc">$</span><span class="nv">_ZStL8__ioinit</span><span class="p">,</span> <span class="o">%</span><span class="nb">edi</span>
+</span><span class='line'>  <span class="nf">call</span>    <span class="nv">_ZNSt8ios_base4InitC1Ev</span>
+</span><span class='line'>  <span class="nf">movl</span>    <span class="kc">$</span><span class="nv">_ZNSt8ios_base4InitD1Ev</span><span class="p">,</span> <span class="o">%</span><span class="nb">eax</span>
+</span><span class='line'>  <span class="nf">movl</span>    <span class="kc">$</span><span class="nv">__dso_handle</span><span class="p">,</span> <span class="o">%</span><span class="nb">edx</span>
+</span><span class='line'>  <span class="nf">movl</span>    <span class="kc">$</span><span class="nv">_ZStL8__ioinit</span><span class="p">,</span> <span class="o">%</span><span class="nb">esi</span>
+</span><span class='line'>  <span class="nf">movq</span>    <span class="o">%</span><span class="nb">rax</span><span class="p">,</span> <span class="o">%</span><span class="nb">rdi</span>
+</span><span class='line'>  <span class="nf">call</span>    <span class="nv">__cxa_atexit</span>
+</span><span class='line'><span class="nl">.L2:</span>
+</span><span class='line'>  <span class="nf">leave</span>
+</span><span class='line'>  <span class="nf">.cfi_def_cfa</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span>
+</span><span class='line'>  <span class="nf">ret</span>
+</span><span class='line'>  <span class="nf">.cfi_endproc</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I&rsquo;m not sure <em>wtf</em> is going on here. When it calls the static initialization function, 1 and 65535 are passed as arguments. Then within the function, it verifies that it did actually get these two arguments, and only if they were passed in, it calls the static constructor <code>ios_base::init</code></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nl">.LFE970:</span>
+</span><span class='line'>  <span class="nf">.size</span>   <span class="nv">_Z41__static_initialization_and_destruction_0ii</span><span class="p">,</span> <span class="nv">.</span><span class="o">-</span><span class="nv">_Z41__static_initialization_and_destruction_0ii</span>
+</span><span class='line'>  <span class="nf">.type</span>   <span class="nv">_GLOBAL__sub_I_main</span><span class="p">,</span> <span class="err">@</span><span class="nv">function</span>
+</span><span class='line'><span class="nl">_GLOBAL__sub_I_main:</span>
+</span><span class='line'><span class="nl">.LFB971:</span>
+</span><span class='line'>  <span class="nf">.cfi_startproc</span>
+</span><span class='line'>  <span class="nf">pushq</span>   <span class="o">%</span><span class="nb">rbp</span>
+</span><span class='line'>  <span class="nf">.cfi_def_cfa_offset</span> <span class="mi">16</span>
+</span><span class='line'>  <span class="nf">.cfi_offset</span> <span class="mi">6</span><span class="p">,</span> <span class="o">-</span><span class="mi">16</span>
+</span><span class='line'>  <span class="nf">movq</span>    <span class="o">%</span><span class="nb">rsp</span><span class="p">,</span> <span class="o">%</span><span class="nb">rbp</span>
+</span><span class='line'>  <span class="nf">.cfi_def_cfa_register</span> <span class="mi">6</span>
+</span><span class='line'>  <span class="nf">movl</span>    <span class="kc">$</span><span class="mi">65535</span><span class="p">,</span> <span class="o">%</span><span class="nb">esi</span>
+</span><span class='line'>  <span class="nf">movl</span>    <span class="kc">$</span><span class="mi">1</span><span class="p">,</span> <span class="o">%</span><span class="nb">edi</span>
+</span><span class='line'>  <span class="nf">call</span>    <span class="nv">_Z41__static_initialization_and_destruction_0ii</span>
+</span><span class='line'>  <span class="nf">popq</span>    <span class="o">%</span><span class="nb">rbp</span>
+</span><span class='line'>  <span class="nf">.cfi_def_cfa</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span>
+</span><span class='line'>  <span class="nf">ret</span>
+</span><span class='line'>  <span class="nf">.cfi_endproc</span>
+</span><span class='line'><span class="nl">.LFE971:</span>
+</span><span class='line'>  <span class="nf">.size</span>   <span class="nv">_GLOBAL__sub_I_main</span><span class="p">,</span> <span class="nv">.</span><span class="o">-</span><span class="nv">_GLOBAL__sub_I_main</span>
+</span><span class='line'>  <span class="nf">.section</span>    <span class="nv">.ctors</span><span class="p">,</span><span class="s">&quot;aw&quot;</span><span class="p">,</span><span class="err">@</span><span class="nv">progbits</span>
+</span><span class='line'>  <span class="nf">.align</span> <span class="mi">8</span>
+</span><span class='line'>  <span class="nf">.quad</span>   <span class="nv">_GLOBAL__sub_I_main</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Omitted a bunch of library references that looked like</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nf">.weakref</span> <span class="nv">_ZL22__gthrw_pthread_createPmPK14pthread_attr_tPFPvS3_ES3_</span><span class="p">,</span><span class="nv">pthread_create</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Haskell core</h2>
+
+<p>Haskell code generation is <strong>significantly</strong> different, so we&rsquo;ll look at generated <a href="http://www.haskell.org/haskellwiki/Performance/GHC#Looking_at_the_Core"><em>core</em></a> code first.</p>
+
+<p>The best way for this is to use the <code>ghc-core</code> package.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>cabal install ghc-core
+</span><span class='line'><span class="nv">$ </span>~/.cabal/bin/ghc-core --no-cast --no-asm haskellhelloworld.hs
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I&rsquo;ve removed the <em>attributes</em> of functions, which look something like</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="p">[</span><span class="kt">GblId</span><span class="p">,</span>
+</span><span class='line'> <span class="kt">Unf</span><span class="ow">=</span><span class="kt">Unf</span><span class="p">{</span><span class="kt">Src</span><span class="o">=&lt;</span><span class="n">vanilla</span><span class="o">&gt;</span><span class="p">,</span> <span class="kt">TopLvl</span><span class="ow">=</span><span class="kt">True</span><span class="p">,</span> <span class="kt">Arity</span><span class="ow">=</span><span class="mi">0</span><span class="p">,</span> <span class="kt">Value</span><span class="ow">=</span><span class="kt">False</span><span class="p">,</span>
+</span><span class='line'>         <span class="kt">ConLike</span><span class="ow">=</span><span class="kt">False</span><span class="p">,</span> <span class="kt">Cheap</span><span class="ow">=</span><span class="kt">False</span><span class="p">,</span> <span class="kt">Expandable</span><span class="ow">=</span><span class="kt">False</span><span class="p">,</span>
+</span><span class='line'>         <span class="kt">Guidance</span><span class="ow">=</span><span class="kt">IF_ARGS</span> <span class="kt">[]</span> <span class="mi">60</span> <span class="mi">0</span><span class="p">}]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The cleaned up core looks like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="nf">main2</span> <span class="ow">::</span> <span class="p">[</span><span class="kt">Char</span><span class="p">]</span>
+</span><span class='line'><span class="nf">main2</span> <span class="ow">=</span> <span class="n">unpackCString</span><span class="o">#</span> <span class="s">&quot;Hello World&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The code seemse full of a lot of <code>#</code>s, these are <a href="http://www.haskell.org/ghc/docs/latest/html/users_guide/primitives.html">primitive types</a>. The &lsquo;raw&rsquo; string is made available as a different type to the program we wrote. Ghci is a good way to explore the type relationships here.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="kt">Prelude</span><span class="o">&gt;</span> <span class="kt">:</span><span class="n">t</span> <span class="s">&quot;Hello world&quot;</span>
+</span><span class='line'><span class="s">&quot;Hello world&quot;</span> <span class="ow">::</span> <span class="p">[</span><span class="kt">Char</span><span class="p">]</span>
+</span><span class='line'><span class="kt">Prelude</span><span class="o">&gt;</span> <span class="kt">:</span><span class="n">t</span> <span class="n">putStrLn</span>
+</span><span class='line'><span class="nf">putStrLn</span> <span class="ow">::</span> <span class="kt">String</span> <span class="ow">-&gt;</span> <span class="kt">IO</span> <span class="nb">()</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">Prelude</span><span class="o">&gt;</span> <span class="kt">:</span><span class="n">browse</span> <span class="kt">GHC</span><span class="o">.</span><span class="kt">CString</span>
+</span><span class='line'><span class="o">...</span>
+</span><span class='line'><span class="o">...</span> <span class="p">(</span><span class="n">other</span> <span class="n">functions</span><span class="p">)</span>
+</span><span class='line'><span class="o">...</span>
+</span><span class='line'><span class="kt">GHC</span><span class="o">.</span><span class="kt">CString</span><span class="o">.</span><span class="n">unpackCString</span><span class="o">#</span> <span class="ow">::</span> <span class="kt">GHC</span><span class="o">.</span><span class="kt">Prim</span><span class="o">.</span><span class="kt">Addr</span><span class="o">#</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="kt">Char</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Continuing with our exploration of the core, <code>main1</code> is defined as a lambda function that effectively performs a<code>return</code> on the value returned by <code>Handle.Text.hPutStr2</code></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="nf">main1</span>
+</span><span class='line'>  <span class="ow">::</span> <span class="kt">State</span><span class="o">#</span> <span class="kt">RealWorld</span>
+</span><span class='line'>     <span class="ow">-&gt;</span> <span class="p">(</span><span class="o">#</span> <span class="kt">State</span><span class="o">#</span> <span class="kt">RealWorld</span><span class="p">,</span> <span class="nb">()</span> <span class="o">#</span><span class="p">)</span>
+</span><span class='line'><span class="nf">main1</span> <span class="ow">=</span>
+</span><span class='line'>  <span class="nf">\</span> <span class="p">(</span><span class="n">eta_B1</span> <span class="ow">::</span> <span class="kt">State</span><span class="o">#</span> <span class="kt">RealWorld</span><span class="p">)</span> <span class="ow">-&gt;</span>
+</span><span class='line'>    <span class="kt">Handle</span><span class="o">.</span><span class="kt">Text</span><span class="o">.</span><span class="n">hPutStr2</span>
+</span><span class='line'>      <span class="kt">Handle</span><span class="o">.</span><span class="kt">FD</span><span class="o">.</span><span class="n">stdout</span> <span class="n">main2</span> <span class="kt">True</span> <span class="n">eta_B1</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Once again, ghci to the rescue:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="kt">Prelude</span><span class="o">&gt;</span> <span class="kt">:</span><span class="n">m</span> <span class="kt">GHC</span><span class="o">.</span><span class="kt">IO</span><span class="o">.</span><span class="kt">Handle</span><span class="o">.</span><span class="kt">Text</span>
+</span><span class='line'><span class="kt">Prelude</span> <span class="kt">GHC</span><span class="o">.</span><span class="kt">IO</span><span class="o">.</span><span class="kt">Handle</span><span class="o">.</span><span class="kt">Text</span><span class="o">&gt;</span> <span class="kt">:</span><span class="n">t</span> <span class="n">hPutStrLn</span>
+</span><span class='line'><span class="nf">hPutStr</span> <span class="ow">::</span> <span class="kt">GHC</span><span class="o">.</span><span class="kt">IO</span><span class="o">.</span><span class="kt">Handle</span><span class="o">.</span><span class="kt">Types</span><span class="o">.</span><span class="kt">Handle</span> <span class="ow">-&gt;</span> <span class="kt">String</span> <span class="ow">-&gt;</span> <span class="kt">IO</span> <span class="nb">()</span>
+</span><span class='line'><span class="kt">Prelude</span> <span class="kt">GHC</span><span class="o">.</span><span class="kt">IO</span><span class="o">.</span><span class="kt">Handle</span><span class="o">.</span><span class="kt">Text</span><span class="o">&gt;</span> <span class="kt">:</span><span class="n">m</span> <span class="kt">GHC</span><span class="o">.</span><span class="kt">IO</span><span class="o">.</span><span class="kt">Handle</span><span class="o">.</span><span class="kt">FD</span>
+</span><span class='line'><span class="kt">Prelude</span> <span class="kt">GHC</span><span class="o">.</span><span class="kt">IO</span><span class="o">.</span><span class="kt">Handle</span><span class="o">.</span><span class="kt">FD</span><span class="o">&gt;</span> <span class="kt">:</span><span class="n">t</span> <span class="n">stdout</span>
+</span><span class='line'><span class="nf">stdout</span> <span class="ow">::</span> <span class="kt">GHC</span><span class="o">.</span><span class="kt">IO</span><span class="o">.</span><span class="kt">Handle</span><span class="o">.</span><span class="kt">Types</span><span class="o">.</span><span class="kt">Handle</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Also, internally in <a href="http://hackage.haskell.org/packages/archive/base/4.3.1.0/doc/html/src/GHC-IO-Handle-Text.html">the source for this module</a>, <code>hPutStrLn</code> is implemented in terms of <code>hPutStr'</code>, which has the type signature</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="nf">hPutStr&#39;</span> <span class="ow">::</span> <span class="kt">Handle</span> <span class="ow">-&gt;</span> <span class="kt">String</span> <span class="ow">-&gt;</span> <span class="kt">Bool</span> <span class="ow">-&gt;</span> <span class="kt">IO</span> <span class="nb">()</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Moving on, a <code>main</code> is defined but never used (perhaps just for correspondence with the user program?). Anywya, that is followed by a <code>main3</code> which actually runs the code.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="nf">main</span> <span class="ow">::</span> <span class="kt">IO</span> <span class="nb">()</span>
+</span><span class='line'><span class="nf">main</span> <span class="ow">=</span>
+</span><span class='line'>  <span class="n">main1</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="nf">main3</span>
+</span><span class='line'>  <span class="ow">::</span> <span class="kt">State</span><span class="o">#</span> <span class="kt">RealWorld</span>
+</span><span class='line'>     <span class="ow">-&gt;</span> <span class="p">(</span><span class="o">#</span> <span class="kt">State</span><span class="o">#</span> <span class="kt">RealWorld</span><span class="p">,</span> <span class="nb">()</span> <span class="o">#</span><span class="p">)</span>
+</span><span class='line'><span class="nf">main3</span> <span class="ow">=</span>
+</span><span class='line'>  <span class="nf">\</span> <span class="p">(</span><span class="n">eta_X9</span> <span class="ow">::</span> <span class="kt">State</span><span class="o">#</span> <span class="kt">RealWorld</span><span class="p">)</span> <span class="ow">-&gt;</span>
+</span><span class='line'>    <span class="n">runMainIO1</span>
+</span><span class='line'>      <span class="o">@</span> <span class="nb">()</span>
+</span><span class='line'>      <span class="p">(</span><span class="n">main1</span>
+</span><span class='line'>       <span class="p">)</span>
+</span><span class='line'>      <span class="n">eta_X9</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">:</span><span class="n">main</span> <span class="ow">::</span> <span class="kt">IO</span> <span class="nb">()</span>
+</span><span class='line'><span class="kt">:</span><span class="n">main</span> <span class="ow">=</span>
+</span><span class='line'>  <span class="n">main3</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Again, internally, the comments for <code>runMainIO</code> in the <a href="http://hackage.haskell.org/packages/archive/base/3.0.1.0/doc/html/src/GHC-TopHandler.html">corresponding source file</a> say:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="c1">-- | &#39;runMainIO&#39; is wrapped around &#39;Main.main&#39; (or whatever main is</span>
+</span><span class='line'><span class="c1">-- called in the program).  It catches otherwise uncaught exceptions,</span>
+</span><span class='line'><span class="c1">-- and also flushes stdout\/stderr before exiting.</span>
+</span><span class='line'><span class="nf">runMainIO</span> <span class="ow">::</span> <span class="kt">IO</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="kt">IO</span> <span class="n">a</span>
+</span><span class='line'><span class="nf">runMainIO</span> <span class="n">main</span> <span class="ow">=</span> <span class="p">(</span><span class="kr">do</span> <span class="n">a</span> <span class="ow">&lt;-</span> <span class="n">main</span><span class="p">;</span> <span class="n">cleanUp</span><span class="p">;</span> <span class="n">return</span> <span class="n">a</span><span class="p">)</span> <span class="p">`</span><span class="n">catchException</span><span class="p">`</span> <span class="n">topHandler</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Alright &hellip;. we&rsquo;re done with the core, and can look at the assembly, in full now.</p>
+
+<h2>Haskell object code</h2>
+
+<p>As mentioned earlier, the object code here hardly corresponds to our one-line program, but we can read it (sort of !) since we know the core. First off is a declaratoin for the &lsquo;real&rsquo; and &lsquo;dummy&rsquo; <code>main</code> methods.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nf">.data</span>
+</span><span class='line'>  <span class="nf">.align</span> <span class="mi">8</span>
+</span><span class='line'><span class="nf">.align</span> <span class="mi">1</span>
+</span><span class='line'><span class="nf">.globl</span> <span class="nv">__stginit_Main</span>
+</span><span class='line'><span class="nf">.type</span> <span class="nv">__stginit_Main</span><span class="p">,</span> <span class="err">@</span><span class="nv">object</span>
+</span><span class='line'><span class="nl">__stginit_Main:</span>
+</span><span class='line'><span class="nf">.globl</span> <span class="nv">__stginit_ZCMain</span>
+</span><span class='line'><span class="nf">.type</span> <span class="nv">__stginit_ZCMain</span><span class="p">,</span> <span class="err">@</span><span class="nv">object</span>
+</span><span class='line'><span class="nl">__stginit_ZCMain:</span>
+</span><span class='line'><span class="nf">.section</span> <span class="nv">.data</span>
+</span><span class='line'>  <span class="nf">.align</span> <span class="mi">8</span>
+</span><span class='line'><span class="nf">.align</span> <span class="mi">1</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It is common in generated assembly to see functions wrapped in closures. So there will typically be &lsquo;info&rsquo; for the function, a &lsquo;closure&rsquo; for it, and when needed to be called, a &lsquo;jump&rsquo; to it.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nl">sfB_srt:</span>
+</span><span class='line'>  <span class="nf">.quad</span>   <span class="nv">ghczmprim_GHCziCString_unpackCStringzh_closure</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">.data</span>
+</span><span class='line'>  <span class="nf">.align</span> <span class="mi">8</span>
+</span><span class='line'><span class="nf">.align</span> <span class="mi">1</span>
+</span><span class='line'><span class="nl">sfB_closure:</span>
+</span><span class='line'>  <span class="nf">.quad</span>   <span class="nv">sfB_info</span>
+</span><span class='line'>  <span class="nf">.quad</span>   <span class="mi">0</span>
+</span><span class='line'>  <span class="nf">.quad</span>   <span class="mi">0</span>
+</span><span class='line'>  <span class="nf">.quad</span>   <span class="mi">0</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>BTW I wanted to get the &ldquo;official&rdquo; line on this, so I went to the <a href="http://hackage.haskell.org/trac/ghc/wiki/Commentary/Compiler/GeneratedCode">haskell wiki</a> and found this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='text'><span class='line'>The goal of the STG machine is to reduce the current expression to a value.
+</span><span class='line'>
+</span><span class='line'>When it has done so, it:
+</span><span class='line'>
+</span><span class='line'>Stores a tagged pointer to evaluated closure in the STG register R1
+</span><span class='line'>Jumps to the entry code of the info table pointed to by the value at the top
+</span><span class='line'>of the STG stack
+</span><span class='line'>This may also be called the info table of the continuation of the expression
+</span><span class='line'>The continuation code is responsible for popping its info pointer (and stack-
+</span><span class='line'>allocated free variables, if any) from the stack before returning.
+</span><span class='line'>
+</span><span class='line'>Arguments are passed on the stack, and are popped by the callee. Upon a
+</span><span class='line'>jump to the entry code for a function, there are always precisely as many
+</span><span class='line'>arguments on the stack as the (statically known) arity of that function,
+</span><span class='line'>and those arguments will be followed by the info pointer of a continuation.
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Moving on, this (<code>cf0_str</code>) is our output string, declared byte-by-byte.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nf">.section</span> <span class="nv">.rodata</span>
+</span><span class='line'>  <span class="nf">.align</span> <span class="mi">8</span>
+</span><span class='line'><span class="nf">.align</span> <span class="mi">1</span>
+</span><span class='line'><span class="nl">cfO_str:</span>
+</span><span class='line'>  <span class="nf">.byte</span>   <span class="mi">72</span>
+</span><span class='line'>  <span class="nf">.byte</span>   <span class="mi">101</span>
+</span><span class='line'>  <span class="nf">.byte</span>   <span class="mi">108</span>
+</span><span class='line'>  <span class="nf">.byte</span>   <span class="mi">108</span>
+</span><span class='line'>  <span class="nf">.byte</span>   <span class="mi">111</span>
+</span><span class='line'>  <span class="nf">.byte</span>   <span class="mi">32</span>
+</span><span class='line'>  <span class="nf">.byte</span>   <span class="mi">87</span>
+</span><span class='line'>  <span class="nf">.byte</span>   <span class="mi">111</span>
+</span><span class='line'>  <span class="nf">.byte</span>   <span class="mi">114</span>
+</span><span class='line'>  <span class="nf">.byte</span>   <span class="mi">108</span>
+</span><span class='line'>  <span class="nf">.byte</span>   <span class="mi">100</span>
+</span><span class='line'>  <span class="nf">.byte</span>   <span class="mi">0</span>
+</span><span class='line'><span class="nf">.text</span>
+</span><span class='line'>  <span class="nf">.align</span> <span class="mi">8</span>
+</span><span class='line'>  <span class="nf">.long</span>   <span class="nv">sfB_srt</span><span class="o">-</span><span class="p">(</span><span class="nv">sfB_info</span><span class="p">)</span><span class="o">+</span><span class="mi">0</span>
+</span><span class='line'>  <span class="nf">.long</span>   <span class="mi">0</span>
+</span><span class='line'>  <span class="nf">.quad</span>   <span class="mi">0</span>
+</span><span class='line'>  <span class="nf">.quad</span>   <span class="mi">4294967318</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I was totally stumped by <code>newCAF</code> and <code>CAF_BLACKHOLE_info</code> here, so I had to Google around to find <a href="http://mainisusuallyafunction.blogspot.com/2011/10/thunks-and-lazy-blackholes-introduction.html">some helpful info on it</a>.This in turn led me to the <a href="https://github.com/ghc/ghc/blob/master/rts/sm/Storage.c#L262">GHC runtime code</a> which says</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'>   <span class="nf">The</span> <span class="nv">entry</span> <span class="nv">code</span> <span class="nv">for</span> <span class="nv">every</span> <span class="nv">CAF</span> <span class="nv">does</span> <span class="nv">the</span> <span class="nv">following</span><span class="p">:</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="err">-</span> <span class="nf">builds</span> <span class="nv">a</span> <span class="nv">CAF_BLACKHOLE</span> <span class="nv">in</span> <span class="nv">the</span> <span class="nv">heap</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="err">-</span> <span class="nf">calls</span> <span class="nv">newCaf</span><span class="p">,</span> <span class="nv">which</span> <span class="nv">atomically</span> <span class="nv">updates</span> <span class="nv">the</span> <span class="nv">CAF</span> <span class="nv">with</span>
+</span><span class='line'>        <span class="nf">IND_STATIC</span> <span class="nv">pointing</span> <span class="nv">to</span> <span class="nv">the</span> <span class="nv">CAF_BLACKHOLE</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="err">-</span> <span class="nf">if</span> <span class="nv">newCaf</span> <span class="nv">returns</span> <span class="nv">zero</span><span class="p">,</span> <span class="nv">it</span> <span class="nv">re</span><span class="o">-</span><span class="nv">enters</span> <span class="nv">the</span> <span class="nv">CAF</span> <span class="p">(</span><span class="nv">see</span> <span class="nv">Note</span> <span class="p">[</span><span class="nv">atomic</span>
+</span><span class='line'>        <span class="nf">CAF</span> <span class="nv">entry</span><span class="p">])</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="err">-</span> <span class="nf">pushes</span> <span class="nv">an</span> <span class="nv">update</span> <span class="nv">frame</span> <span class="nv">pointing</span> <span class="nv">to</span> <span class="nv">the</span> <span class="nv">CAF_BLACKHOLE</span>
+</span><span class='line'>
+</span><span class='line'>   <span class="nf">Why</span> <span class="nv">do</span> <span class="nv">we</span> <span class="nv">build</span> <span class="nv">an</span> <span class="nb">BL</span><span class="nv">ACKHOLE</span> <span class="nv">in</span> <span class="nv">the</span> <span class="nv">heap</span> <span class="nv">rather</span> <span class="nv">than</span> <span class="nv">just</span> <span class="nv">updating</span>
+</span><span class='line'>   <span class="nf">the</span> <span class="nv">thunk</span> <span class="nb">di</span><span class="nv">rectly?</span>  <span class="nv">It</span><span class="err">&#39;</span><span class="nv">s</span> <span class="nv">so</span> <span class="nv">that</span> <span class="nv">we</span> <span class="nv">only</span> <span class="nv">need</span> <span class="nv">one</span> <span class="nv">kind</span> <span class="nv">of</span> <span class="nv">update</span>
+</span><span class='line'>   <span class="nf">frame</span> <span class="o">-</span> <span class="nv">otherwise</span> <span class="nv">we</span><span class="err">&#39;</span><span class="nv">d</span> <span class="nv">need</span> <span class="nv">a</span> <span class="nv">static</span> <span class="nv">version</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">update</span> <span class="nv">frame</span>
+</span><span class='line'>   <span class="nf">too</span><span class="p">,</span> <span class="nv">and</span> <span class="nv">various</span> <span class="nv">other</span> <span class="nv">parts</span> <span class="nv">of</span> <span class="nv">the</span> <span class="nv">RTS</span> <span class="nv">that</span> <span class="nv">deal</span> <span class="nv">with</span> <span class="nv">update</span>
+</span><span class='line'>   <span class="nf">frames</span> <span class="nv">would</span> <span class="nb">al</span><span class="nv">so</span> <span class="nv">need</span> <span class="nb">sp</span><span class="nv">ecial</span> <span class="nv">cases</span> <span class="nv">for</span> <span class="nv">static</span> <span class="nv">update</span> <span class="nv">frames.</span>
+</span><span class='line'>
+</span><span class='line'>   <span class="nf">newCaf</span><span class="p">()</span> <span class="nv">does</span> <span class="nv">the</span> <span class="nv">following</span><span class="p">:</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="err">-</span> <span class="nf">it</span> <span class="nv">updates</span> <span class="nv">the</span> <span class="nv">CAF</span> <span class="nv">with</span> <span class="nv">an</span> <span class="nv">IND_STATIC</span> <span class="nv">pointing</span> <span class="nv">to</span> <span class="nv">the</span>
+</span><span class='line'>        <span class="nf">CAF_BLACKHOLE</span><span class="p">,</span> <span class="nv">atomically.</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="err">-</span> <span class="nf">it</span> <span class="nv">puts</span> <span class="nv">the</span> <span class="nv">CAF</span> <span class="nv">on</span> <span class="nv">the</span> <span class="nv">oldest</span> <span class="nv">generation</span><span class="err">&#39;</span><span class="nv">s</span> <span class="nv">mutable</span> <span class="nv">list.</span>
+</span><span class='line'>        <span class="nf">This</span> <span class="nv">is</span> <span class="nv">so</span> <span class="nv">that</span> <span class="nv">we</span> <span class="nv">treat</span> <span class="nv">the</span> <span class="nv">CAF</span> <span class="nv">as</span> <span class="nv">a</span> <span class="nv">root</span> <span class="nv">when</span> <span class="nv">collecting</span>
+</span><span class='line'>        <span class="nf">younger</span> <span class="nv">generations.</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you want to know more about CAFs (Constant Applicative Forms), see <a href="http://www.haskell.org/haskellwiki/Constant_applicative_form">this wiki page</a></p>
+
+<p>So, moving on, what follows is book-keeping (ok, I just really want to skip over these 20 lines)</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="nf">sfB_info</span><span class="kt">:</span>
+</span><span class='line'><span class="o">.</span><span class="kt">LcfS:</span>
+</span><span class='line'>  <span class="n">leaq</span> <span class="o">-</span><span class="mi">16</span><span class="p">(</span><span class="o">%</span><span class="n">rbp</span><span class="p">),</span><span class="o">%</span><span class="n">rax</span>
+</span><span class='line'>  <span class="n">cmpq</span> <span class="o">%</span><span class="n">r15</span><span class="p">,</span><span class="o">%</span><span class="n">rax</span>
+</span><span class='line'>  <span class="n">jb</span> <span class="o">.</span><span class="kt">LcfU</span>
+</span><span class='line'>  <span class="n">addq</span> <span class="o">$</span><span class="mi">16</span><span class="p">,</span><span class="o">%</span><span class="n">r12</span>
+</span><span class='line'>  <span class="n">cmpq</span> <span class="mi">144</span><span class="p">(</span><span class="o">%</span><span class="n">r13</span><span class="p">),</span><span class="o">%</span><span class="n">r12</span>
+</span><span class='line'>  <span class="n">ja</span> <span class="o">.</span><span class="kt">LcfW</span>
+</span><span class='line'>  <span class="n">movq</span> <span class="o">$</span><span class="n">stg_CAF_BLACKHOLE_info</span><span class="p">,</span><span class="o">-</span><span class="mi">8</span><span class="p">(</span><span class="o">%</span><span class="n">r12</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">movq</span> <span class="mi">160</span><span class="p">(</span><span class="o">%</span><span class="n">r13</span><span class="p">),</span><span class="o">%</span><span class="n">rax</span>
+</span><span class='line'>  <span class="n">movq</span> <span class="o">%</span><span class="n">rax</span><span class="p">,</span><span class="mi">0</span><span class="p">(</span><span class="o">%</span><span class="n">r12</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">movq</span> <span class="o">%</span><span class="n">r13</span><span class="p">,</span><span class="o">%</span><span class="n">rdi</span>
+</span><span class='line'>  <span class="n">movq</span> <span class="o">%</span><span class="n">rbx</span><span class="p">,</span><span class="o">%</span><span class="n">rsi</span>
+</span><span class='line'>  <span class="n">leaq</span> <span class="o">-</span><span class="mi">8</span><span class="p">(</span><span class="o">%</span><span class="n">r12</span><span class="p">),</span><span class="o">%</span><span class="n">rdx</span>
+</span><span class='line'>  <span class="n">subq</span> <span class="o">$</span><span class="mi">8</span><span class="p">,</span><span class="o">%</span><span class="n">rsp</span>
+</span><span class='line'>  <span class="n">movl</span> <span class="o">$</span><span class="mi">0</span><span class="p">,</span><span class="o">%</span><span class="n">eax</span>
+</span><span class='line'>  <span class="n">call</span> <span class="n">newCAF</span>
+</span><span class='line'>  <span class="n">addq</span> <span class="o">$</span><span class="mi">8</span><span class="p">,</span><span class="o">%</span><span class="n">rsp</span>
+</span><span class='line'>  <span class="n">testq</span> <span class="o">%</span><span class="n">rax</span><span class="p">,</span><span class="o">%</span><span class="n">rax</span>
+</span><span class='line'>  <span class="n">je</span> <span class="o">.</span><span class="kt">LcfX</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Closures in action! Here we see the steps: Move the frame info into place, setup the function we want to call (here <code>GHC.String.unpackCString</code>) and its arguments (<code>cfo_str</code> from above) and then <code>jmp</code> to an evaluating function (here <code>stg_ap_n_fast</code>).</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="o">.</span><span class="kt">LcfY:</span>
+</span><span class='line'>  <span class="n">movq</span> <span class="o">$</span><span class="n">stg_bh_upd_frame_info</span><span class="p">,</span><span class="o">-</span><span class="mi">16</span><span class="p">(</span><span class="o">%</span><span class="n">rbp</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">leaq</span> <span class="o">-</span><span class="mi">8</span><span class="p">(</span><span class="o">%</span><span class="n">r12</span><span class="p">),</span><span class="o">%</span><span class="n">rax</span>
+</span><span class='line'>  <span class="n">movq</span> <span class="o">%</span><span class="n">rax</span><span class="p">,</span><span class="o">-</span><span class="mi">8</span><span class="p">(</span><span class="o">%</span><span class="n">rbp</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">movl</span> <span class="o">$</span><span class="n">ghczmprim_GHCziCString_unpackCStringzh_closure</span><span class="p">,</span><span class="o">%</span><span class="n">ebx</span>
+</span><span class='line'>  <span class="n">movl</span> <span class="o">$</span><span class="n">cfO_str</span><span class="p">,</span><span class="o">%</span><span class="n">r14d</span>
+</span><span class='line'>  <span class="n">addq</span> <span class="o">$-</span><span class="mi">16</span><span class="p">,</span><span class="o">%</span><span class="n">rbp</span>
+</span><span class='line'>  <span class="n">jmp</span> <span class="n">stg_ap_n_fast</span>
+</span><span class='line'><span class="o">.</span><span class="kt">LcfW:</span>
+</span><span class='line'>  <span class="n">movq</span> <span class="o">$</span><span class="mi">16</span><span class="p">,</span><span class="mi">192</span><span class="p">(</span><span class="o">%</span><span class="n">r13</span><span class="p">)</span>
+</span><span class='line'><span class="o">.</span><span class="kt">LcfU:</span>
+</span><span class='line'>  <span class="n">jmp</span> <span class="o">*-</span><span class="mi">16</span><span class="p">(</span><span class="o">%</span><span class="n">r13</span><span class="p">)</span>
+</span><span class='line'><span class="o">.</span><span class="kt">LcfX:</span>
+</span><span class='line'>  <span class="n">jmp</span> <span class="o">*</span><span class="p">(</span><span class="o">%</span><span class="n">rbx</span><span class="p">)</span>
+</span><span class='line'>  <span class="o">.</span><span class="n">size</span> <span class="n">sfB_info</span><span class="p">,</span> <span class="o">.-</span><span class="n">sfB_info</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Setting up the <code>Main_main_closure</code>, which combines <code>base.SystemIO.putStrLn</code> and <code>sfB_closure</code>(above).</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="o">.</span><span class="n">section</span> <span class="o">.</span><span class="kr">data</span>
+</span><span class='line'>  <span class="o">.</span><span class="n">align</span> <span class="mi">8</span>
+</span><span class='line'><span class="o">.</span><span class="n">align</span> <span class="mi">1</span>
+</span><span class='line'><span class="kt">Main_main_srt:</span>
+</span><span class='line'>  <span class="o">.</span><span class="n">quad</span> <span class="n">base_SystemziIO_putStrLn_closure</span>
+</span><span class='line'>  <span class="o">.</span><span class="n">quad</span> <span class="n">sfB_closure</span>
+</span><span class='line'><span class="o">.</span><span class="kr">data</span>
+</span><span class='line'>  <span class="o">.</span><span class="n">align</span> <span class="mi">8</span>
+</span><span class='line'><span class="o">.</span><span class="n">align</span> <span class="mi">1</span>
+</span><span class='line'><span class="o">.</span><span class="n">globl</span> <span class="kt">Main_main_closure</span>
+</span><span class='line'><span class="o">.</span><span class="kr">type</span> <span class="kt">Main_main_closure</span><span class="p">,</span> <span class="o">@</span><span class="n">object</span>
+</span><span class='line'><span class="kt">Main_main_closure:</span>
+</span><span class='line'>  <span class="o">.</span><span class="n">quad</span> <span class="kt">Main_main_info</span>
+</span><span class='line'>  <span class="o">.</span><span class="n">quad</span> <span class="mi">0</span>
+</span><span class='line'>  <span class="o">.</span><span class="n">quad</span> <span class="mi">0</span>
+</span><span class='line'>  <span class="o">.</span><span class="n">quad</span> <span class="mi">0</span>
+</span><span class='line'><span class="o">.</span><span class="n">text</span>
+</span><span class='line'>  <span class="o">.</span><span class="n">align</span> <span class="mi">8</span>
+</span><span class='line'>  <span class="o">.</span><span class="n">long</span> <span class="kt">Main_main_srt</span><span class="o">-</span><span class="p">(</span><span class="kt">Main_main_info</span><span class="p">)</span><span class="o">+</span><span class="mi">0</span>
+</span><span class='line'>  <span class="o">.</span><span class="n">long</span> <span class="mi">0</span>
+</span><span class='line'>  <span class="o">.</span><span class="n">quad</span> <span class="mi">0</span>
+</span><span class='line'>  <span class="o">.</span><span class="n">quad</span> <span class="mi">12884901910</span>
+</span><span class='line'><span class="o">.</span><span class="n">globl</span> <span class="kt">Main_main_info</span>
+</span><span class='line'><span class="o">.</span><span class="kr">type</span> <span class="kt">Main_main_info</span><span class="p">,</span> <span class="o">@</span><span class="n">object</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Moving on &hellip; bookkeeping for the main function similar for the functions above</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="kt">Main_main_info:</span>
+</span><span class='line'><span class="o">.</span><span class="kt">Lcgf:</span>
+</span><span class='line'>  <span class="n">leaq</span> <span class="o">-</span><span class="mi">16</span><span class="p">(</span><span class="o">%</span><span class="n">rbp</span><span class="p">),</span><span class="o">%</span><span class="n">rax</span>
+</span><span class='line'>  <span class="n">cmpq</span> <span class="o">%</span><span class="n">r15</span><span class="p">,</span><span class="o">%</span><span class="n">rax</span>
+</span><span class='line'>  <span class="n">jb</span> <span class="o">.</span><span class="kt">Lcgh</span>
+</span><span class='line'>  <span class="n">addq</span> <span class="o">$</span><span class="mi">16</span><span class="p">,</span><span class="o">%</span><span class="n">r12</span>
+</span><span class='line'>  <span class="n">cmpq</span> <span class="mi">144</span><span class="p">(</span><span class="o">%</span><span class="n">r13</span><span class="p">),</span><span class="o">%</span><span class="n">r12</span>
+</span><span class='line'>  <span class="n">ja</span> <span class="o">.</span><span class="kt">Lcgj</span>
+</span><span class='line'>  <span class="n">movq</span> <span class="o">$</span><span class="n">stg_CAF_BLACKHOLE_info</span><span class="p">,</span><span class="o">-</span><span class="mi">8</span><span class="p">(</span><span class="o">%</span><span class="n">r12</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">movq</span> <span class="mi">160</span><span class="p">(</span><span class="o">%</span><span class="n">r13</span><span class="p">),</span><span class="o">%</span><span class="n">rax</span>
+</span><span class='line'>  <span class="n">movq</span> <span class="o">%</span><span class="n">rax</span><span class="p">,</span><span class="mi">0</span><span class="p">(</span><span class="o">%</span><span class="n">r12</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">movq</span> <span class="o">%</span><span class="n">r13</span><span class="p">,</span><span class="o">%</span><span class="n">rdi</span>
+</span><span class='line'>  <span class="n">movq</span> <span class="o">%</span><span class="n">rbx</span><span class="p">,</span><span class="o">%</span><span class="n">rsi</span>
+</span><span class='line'>  <span class="n">leaq</span> <span class="o">-</span><span class="mi">8</span><span class="p">(</span><span class="o">%</span><span class="n">r12</span><span class="p">),</span><span class="o">%</span><span class="n">rdx</span>
+</span><span class='line'>  <span class="n">subq</span> <span class="o">$</span><span class="mi">8</span><span class="p">,</span><span class="o">%</span><span class="n">rsp</span>
+</span><span class='line'>  <span class="n">movl</span> <span class="o">$</span><span class="mi">0</span><span class="p">,</span><span class="o">%</span><span class="n">eax</span>
+</span><span class='line'>  <span class="n">call</span> <span class="n">newCAF</span>
+</span><span class='line'>  <span class="n">addq</span> <span class="o">$</span><span class="mi">8</span><span class="p">,</span><span class="o">%</span><span class="n">rsp</span>
+</span><span class='line'>  <span class="n">testq</span> <span class="o">%</span><span class="n">rax</span><span class="p">,</span><span class="o">%</span><span class="n">rax</span>
+</span><span class='line'>  <span class="n">je</span> <span class="o">.</span><span class="kt">Lcgk</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Running the <code>main</code> closure &hellip; this is also a demonstration of how functions are connected (one closure is an argument for the other closure)</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="o">.</span><span class="kt">Lcgl:</span>
+</span><span class='line'>  <span class="n">movq</span> <span class="o">$</span><span class="n">stg_bh_upd_frame_info</span><span class="p">,</span><span class="o">-</span><span class="mi">16</span><span class="p">(</span><span class="o">%</span><span class="n">rbp</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">leaq</span> <span class="o">-</span><span class="mi">8</span><span class="p">(</span><span class="o">%</span><span class="n">r12</span><span class="p">),</span><span class="o">%</span><span class="n">rax</span>
+</span><span class='line'>  <span class="n">movq</span> <span class="o">%</span><span class="n">rax</span><span class="p">,</span><span class="o">-</span><span class="mi">8</span><span class="p">(</span><span class="o">%</span><span class="n">rbp</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">movl</span> <span class="o">$</span><span class="n">base_SystemziIO_putStrLn_closure</span><span class="p">,</span><span class="o">%</span><span class="n">ebx</span>
+</span><span class='line'>  <span class="n">movl</span> <span class="o">$</span><span class="n">sfB_closure</span><span class="p">,</span><span class="o">%</span><span class="n">r14d</span>
+</span><span class='line'>  <span class="n">addq</span> <span class="o">$-</span><span class="mi">16</span><span class="p">,</span><span class="o">%</span><span class="n">rbp</span>
+</span><span class='line'>  <span class="n">jmp</span> <span class="n">stg_ap_p_fast</span>
+</span><span class='line'><span class="o">.</span><span class="kt">Lcgj:</span>
+</span><span class='line'>  <span class="n">movq</span> <span class="o">$</span><span class="mi">16</span><span class="p">,</span><span class="mi">192</span><span class="p">(</span><span class="o">%</span><span class="n">r13</span><span class="p">)</span>
+</span><span class='line'><span class="o">.</span><span class="kt">Lcgh:</span>
+</span><span class='line'>  <span class="n">jmp</span> <span class="o">*-</span><span class="mi">16</span><span class="p">(</span><span class="o">%</span><span class="n">r13</span><span class="p">)</span>
+</span><span class='line'><span class="o">.</span><span class="kt">Lcgk:</span>
+</span><span class='line'>  <span class="n">jmp</span> <span class="o">*</span><span class="p">(</span><span class="o">%</span><span class="n">rbx</span><span class="p">)</span>
+</span><span class='line'>  <span class="o">.</span><span class="n">size</span> <span class="kt">Main_main_info</span><span class="p">,</span> <span class="o">.-</span><span class="kt">Main_main_info</span>
+</span><span class='line'><span class="o">.</span><span class="n">section</span> <span class="o">.</span><span class="kr">data</span>
+</span><span class='line'>  <span class="o">.</span><span class="n">align</span> <span class="mi">8</span>
+</span><span class='line'><span class="o">.</span><span class="n">align</span> <span class="mi">1</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Ok, our last round of setting up the &lsquo;running main function&rsquo; and then its associated book-keeping</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="kt">ZCMain_main_srt:</span>
+</span><span class='line'>  <span class="o">.</span><span class="n">quad</span> <span class="n">base_GHCziTopHandler_runMainIO_closure</span>
+</span><span class='line'>  <span class="o">.</span><span class="n">quad</span> <span class="kt">Main_main_closure</span>
+</span><span class='line'><span class="o">.</span><span class="kr">data</span>
+</span><span class='line'>  <span class="o">.</span><span class="n">align</span> <span class="mi">8</span>
+</span><span class='line'><span class="o">.</span><span class="n">align</span> <span class="mi">1</span>
+</span><span class='line'><span class="o">.</span><span class="n">globl</span> <span class="kt">ZCMain_main_closure</span>
+</span><span class='line'><span class="o">.</span><span class="kr">type</span> <span class="kt">ZCMain_main_closure</span><span class="p">,</span> <span class="o">@</span><span class="n">object</span>
+</span><span class='line'><span class="kt">ZCMain_main_closure:</span>
+</span><span class='line'>  <span class="o">.</span><span class="n">quad</span> <span class="kt">ZCMain_main_info</span>
+</span><span class='line'>  <span class="o">.</span><span class="n">quad</span> <span class="mi">0</span>
+</span><span class='line'>  <span class="o">.</span><span class="n">quad</span> <span class="mi">0</span>
+</span><span class='line'>  <span class="o">.</span><span class="n">quad</span> <span class="mi">0</span>
+</span><span class='line'><span class="o">.</span><span class="n">text</span>
+</span><span class='line'>  <span class="o">.</span><span class="n">align</span> <span class="mi">8</span>
+</span><span class='line'>  <span class="o">.</span><span class="n">long</span> <span class="kt">ZCMain_main_srt</span><span class="o">-</span><span class="p">(</span><span class="kt">ZCMain_main_info</span><span class="p">)</span><span class="o">+</span><span class="mi">0</span>
+</span><span class='line'>  <span class="o">.</span><span class="n">long</span> <span class="mi">0</span>
+</span><span class='line'>  <span class="o">.</span><span class="n">quad</span> <span class="mi">0</span>
+</span><span class='line'>  <span class="o">.</span><span class="n">quad</span> <span class="mi">12884901910</span>
+</span><span class='line'><span class="o">.</span><span class="n">globl</span> <span class="kt">ZCMain_main_info</span>
+</span><span class='line'><span class="o">.</span><span class="kr">type</span> <span class="kt">ZCMain_main_info</span><span class="p">,</span> <span class="o">@</span><span class="n">object</span>
+</span><span class='line'><span class="kt">ZCMain_main_info:</span>
+</span><span class='line'><span class="o">.</span><span class="kt">LcgC:</span>
+</span><span class='line'>  <span class="n">leaq</span> <span class="o">-</span><span class="mi">16</span><span class="p">(</span><span class="o">%</span><span class="n">rbp</span><span class="p">),</span><span class="o">%</span><span class="n">rax</span>
+</span><span class='line'>  <span class="n">cmpq</span> <span class="o">%</span><span class="n">r15</span><span class="p">,</span><span class="o">%</span><span class="n">rax</span>
+</span><span class='line'>  <span class="n">jb</span> <span class="o">.</span><span class="kt">LcgE</span>
+</span><span class='line'>  <span class="n">addq</span> <span class="o">$</span><span class="mi">16</span><span class="p">,</span><span class="o">%</span><span class="n">r12</span>
+</span><span class='line'>  <span class="n">cmpq</span> <span class="mi">144</span><span class="p">(</span><span class="o">%</span><span class="n">r13</span><span class="p">),</span><span class="o">%</span><span class="n">r12</span>
+</span><span class='line'>  <span class="n">ja</span> <span class="o">.</span><span class="kt">LcgG</span>
+</span><span class='line'>  <span class="n">movq</span> <span class="o">$</span><span class="n">stg_CAF_BLACKHOLE_info</span><span class="p">,</span><span class="o">-</span><span class="mi">8</span><span class="p">(</span><span class="o">%</span><span class="n">r12</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">movq</span> <span class="mi">160</span><span class="p">(</span><span class="o">%</span><span class="n">r13</span><span class="p">),</span><span class="o">%</span><span class="n">rax</span>
+</span><span class='line'>  <span class="n">movq</span> <span class="o">%</span><span class="n">rax</span><span class="p">,</span><span class="mi">0</span><span class="p">(</span><span class="o">%</span><span class="n">r12</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">movq</span> <span class="o">%</span><span class="n">r13</span><span class="p">,</span><span class="o">%</span><span class="n">rdi</span>
+</span><span class='line'>  <span class="n">movq</span> <span class="o">%</span><span class="n">rbx</span><span class="p">,</span><span class="o">%</span><span class="n">rsi</span>
+</span><span class='line'>  <span class="n">leaq</span> <span class="o">-</span><span class="mi">8</span><span class="p">(</span><span class="o">%</span><span class="n">r12</span><span class="p">),</span><span class="o">%</span><span class="n">rdx</span>
+</span><span class='line'>  <span class="n">subq</span> <span class="o">$</span><span class="mi">8</span><span class="p">,</span><span class="o">%</span><span class="n">rsp</span>
+</span><span class='line'>  <span class="n">movl</span> <span class="o">$</span><span class="mi">0</span><span class="p">,</span><span class="o">%</span><span class="n">eax</span>
+</span><span class='line'>  <span class="n">call</span> <span class="n">newCAF</span>
+</span><span class='line'>  <span class="n">addq</span> <span class="o">$</span><span class="mi">8</span><span class="p">,</span><span class="o">%</span><span class="n">rsp</span>
+</span><span class='line'>  <span class="n">testq</span> <span class="o">%</span><span class="n">rax</span><span class="p">,</span><span class="o">%</span><span class="n">rax</span>
+</span><span class='line'>  <span class="n">je</span> <span class="o">.</span><span class="kt">LcgH</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And finally, this is the <code>GHC.TopHandler.runMainIO</code> closure being called (if you haven&rsquo;t noticed yet, there are no <code>call</code>s in this code at all (except for <code>newCAF</code>), and everything is done by <code>jmp</code> instructions!)</p>
+
+<p>The <code>Main_main_closure</code> above is an argument here to <code>runMainIO</code>.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nl">.LcgI:</span>
+</span><span class='line'>  <span class="nf">movq</span> <span class="kc">$</span><span class="nv">stg_bh_upd_frame_info</span><span class="p">,</span><span class="o">-</span><span class="mi">16</span><span class="p">(</span><span class="o">%</span><span class="nb">rbp</span><span class="p">)</span>
+</span><span class='line'>  <span class="nf">leaq</span> <span class="o">-</span><span class="mi">8</span><span class="p">(</span><span class="o">%</span><span class="nv">r12</span><span class="p">),</span><span class="o">%</span><span class="nb">rax</span>
+</span><span class='line'>  <span class="nf">movq</span> <span class="o">%</span><span class="nb">rax</span><span class="p">,</span><span class="o">-</span><span class="mi">8</span><span class="p">(</span><span class="o">%</span><span class="nb">rbp</span><span class="p">)</span>
+</span><span class='line'>  <span class="nf">movl</span> <span class="kc">$</span><span class="nv">base_GHCziTopHandler_runMainIO_closure</span><span class="p">,</span><span class="o">%</span><span class="nb">ebx</span>
+</span><span class='line'>  <span class="nf">movl</span> <span class="kc">$</span><span class="nv">Main_main_closure</span><span class="p">,</span><span class="o">%</span><span class="nb">r14d</span>
+</span><span class='line'>  <span class="nf">addq</span> <span class="kc">$</span><span class="o">-</span><span class="mi">16</span><span class="p">,</span><span class="o">%</span><span class="nb">rbp</span>
+</span><span class='line'>  <span class="nf">jmp</span> <span class="nv">stg_ap_p_fast</span>
+</span><span class='line'><span class="nl">.LcgG:</span>
+</span><span class='line'>  <span class="nf">movq</span> <span class="kc">$</span><span class="mi">16</span><span class="p">,</span><span class="mi">192</span><span class="p">(</span><span class="o">%</span><span class="nv">r13</span><span class="p">)</span>
+</span><span class='line'><span class="nl">.LcgE:</span>
+</span><span class='line'>  <span class="nf">jmp</span> <span class="o">*-</span><span class="mi">16</span><span class="p">(</span><span class="o">%</span><span class="nv">r13</span><span class="p">)</span>
+</span><span class='line'><span class="nl">.LcgH:</span>
+</span><span class='line'>  <span class="nf">jmp</span> <span class="o">*</span><span class="p">(</span><span class="o">%</span><span class="nb">rbx</span><span class="p">)</span>
+</span><span class='line'>  <span class="nf">.size</span> <span class="nv">ZCMain_main_info</span><span class="p">,</span> <span class="nv">.</span><span class="o">-</span><span class="nv">ZCMain_main_info</span>
+</span><span class='line'><span class="nf">.section</span> <span class="nv">.note.GNU</span><span class="o">-</span><span class="nv">stack</span><span class="p">,</span><span class="s">&quot;&quot;</span><span class="p">,</span><span class="err">@</span><span class="nv">progbits</span>
+</span><span class='line'><span class="nf">.ident</span> <span class="s">&quot;GHC 7.4.1&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And we&rsquo;re done!</p>
+
+<h2>Running time comparison</h2>
+
+<p>(only because I couldn&rsquo;t help myself, usual disclaimers about &lsquo;this-is-not-a-benchmark&rsquo; apply)</p>
+
+<p>C++:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">time</span> <span class="o">(</span><span class="k">while</span> <span class="o">((</span>n++ &lt; 100<span class="o">))</span>; <span class="k">do</span> ./cpphelloworld; <span class="k">done</span><span class="o">)</span>
+</span><span class='line'>real  0m0.250s
+</span><span class='line'>user  0m0.004s
+</span><span class='line'>sys   0m0.036s
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Haskell:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">time</span> <span class="o">(</span><span class="k">while</span> <span class="o">((</span>n++ &lt; 100<span class="o">))</span>; <span class="k">do</span> ./haskellhelloworld; <span class="k">done</span><span class="o">)</span>
+</span><span class='line'>real  0m0.366s
+</span><span class='line'>user  0m0.004s
+</span><span class='line'>sys   0m0.048s
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Gists</h2>
+
+<p><em>Update</em>: I&rsquo;ve made the complete assembly version of both &lsquo;Hello World&rsquo; programs available as gists.
+So you can look at <a href="https://gist.github.com/agam/5148416">The C++ version</a> or <a href="https://gist.github.com/agam/5148398">The Haskell version</a>.</p>
+
+      
+      
+    </div>
+  </div>
+
+
+
+    </article>
+    
+    <hr>
+    
+  
+  
+    <article>
+      
+
+  <div class="row-fluid">
+    <div class="span2 post-meta">
+	  <h5 class="date-time">
+
+
+
+
+
+
+
+
+  
+
+
+<i class="icon-calendar-empty"></i> <time datetime="2013-01-04T00:00:00-08:00" pubdate data-updated="true">Jan 4<sup>th</sup>, 2013</time></h5>
+          <div class="row-fluid">
+          
+          </div>
+          
+          <div class="row-fluid">
+          
+          <a href="/blog/categories/hakyll/"><span class="badge">hakyll</span></a>
+          
+          </div>
+          
+    </div>
+    <div class="span10 post-container">
+      <h1 class="link"><a href="/blog/2013/01/04/hakyll-multiple-posts-and-more/">Hakyll: multiple posts and more</a></h1>
+      <p>At the moment, my blog is basically a single page. This is boring, so let&rsquo;s expand it to handle multiple pages. Also, each page should be templatized in turn, so that we can add a footer to handle analytics, comments, etc.</p>
+
+<h2>Multiple posts</h2>
+
+<p>I&rsquo;ll do this step by step. First, I&rsquo;ll ignore the index page and just add support for the posts. So <code>blog.hs</code> gets a new &ldquo;match&rdquo; rule.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="nf">match</span> <span class="s">&quot;posts/*&quot;</span> <span class="o">$</span> <span class="kr">do</span>
+</span><span class='line'>    <span class="n">route</span>     <span class="o">$</span> <span class="n">setExtension</span> <span class="s">&quot;html&quot;</span>
+</span><span class='line'>    <span class="n">compile</span>   <span class="o">$</span> <span class="n">pageCompiler</span>
+</span><span class='line'>        <span class="o">&gt;&gt;&gt;</span> <span class="n">applyTemplateCompiler</span> <span class="s">&quot;templates/post.html&quot;</span>
+</span><span class='line'>        <span class="o">&gt;&gt;&gt;</span> <span class="n">relativizeUrlsCompiler</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I modified <code>index.markdown</code> to explicitly point to the two posts for now (i.e. this one and the previous one).</p>
+
+<p>Also, I created <code>templates/post.html</code>, which has some basic boilerplate difference from the template used to serve the index page :&ndash;</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'>    <span class="nt">&lt;h1&gt;</span>$$title$$<span class="nt">&lt;/h1&gt;</span>
+</span><span class='line'><span class="nt">&lt;br&gt;</span>
+</span><span class='line'><span class="nt">&lt;h2&gt;</span>$$date$$<span class="nt">&lt;/h2&gt;</span>
+</span><span class='line'><span class="nt">&lt;br&gt;</span>
+</span><span class='line'>
+</span><span class='line'>    $$body$$
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Ok, <code>ghc --make blog.hs &amp;&amp; ./blog preview</code> confirms that all is well.</p>
+
+<h2>Analytics and Comments</h2>
+
+<p>I&rsquo;ll be brief here, since you probably already know this, and this isn&rsquo;t relevant to hakyll in anyway. There are many commenting systems out there, I found <a href="http://www.disqus.com">Disqus</a> to be really quick to set up.</p>
+
+<p>Enter your username, password, site url, and you&rsquo;ll be shown a list of hosting platforms; just select <em>Universal Code</em> from the list, then copy-paste the javascript into the html footer of your post template. Done. Your posts now have comments!</p>
+
+<p>Similarly, if you want to track site visits, <a href="www.google.com/analytics/">Google Analytics</a> is a quick solution. Sign up for a new account, enter the website name, and then get your &ldquo;tracking code&rdquo;, which is a bit of javascript you (again) tack on to the end of each post&rsquo;s html.</p>
+
+<h2>Showing a list of posts</h2>
+
+<p>At a minimum, we&rsquo;d like to show the last few posts on the index page, and provide a link to the list of <em>all</em> posts.</p>
+
+<p>Let&rsquo;s do the second item first. To do this, we&rsquo;ll create a pseudo-page that will be defined based on the list of posts found in the <code>posts/</code> subdirectory.</p>
+
+<p>(BTW this is heavily <del>inspired by</del> copy-pasted from <a href="https://github.com/jaspervdj/hakyll-examples/blob/master/feedblog/hakyll.hs">this hakyll example</a>)</p>
+
+<p>Since we want to have a &lsquo;list of posts&rsquo; on the index page as well, this common functionality can be abstracted out.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="nf">addPostList</span> <span class="ow">::</span> <span class="kt">Compiler</span> <span class="p">(</span><span class="kt">Page</span> <span class="kt">String</span><span class="p">,</span> <span class="p">[</span><span class="kt">Page</span> <span class="kt">String</span><span class="p">])</span> <span class="p">(</span><span class="kt">Page</span> <span class="kt">String</span><span class="p">)</span>
+</span><span class='line'><span class="nf">addPostList</span> <span class="ow">=</span> <span class="n">setFieldA</span> <span class="s">&quot;posts&quot;</span> <span class="o">$</span>
+</span><span class='line'>    <span class="n">arr</span> <span class="p">(</span><span class="n">reverse</span> <span class="o">.</span> <span class="n">chronological</span><span class="p">)</span>
+</span><span class='line'>        <span class="o">&gt;&gt;&gt;</span> <span class="n">require</span> <span class="s">&quot;templates/postitem.html&quot;</span> <span class="p">(</span><span class="nf">\</span><span class="n">p</span> <span class="n">t</span> <span class="ow">-&gt;</span> <span class="n">map</span> <span class="p">(</span><span class="n">applyTemplate</span> <span class="n">t</span><span class="p">)</span> <span class="n">p</span><span class="p">)</span>
+</span><span class='line'>        <span class="o">&gt;&gt;&gt;</span> <span class="n">arr</span> <span class="n">mconcat</span>
+</span><span class='line'>        <span class="o">&gt;&gt;&gt;</span> <span class="n">arr</span> <span class="n">pageBody</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now create a rudimentary html fragment that will hold the &lsquo;post summary&rsquo;</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='html'><span class='line'><span class="nt">&lt;li&gt;</span>
+</span><span class='line'>   <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">&quot;$ url $&quot;</span><span class="nt">&gt;</span>$ title $<span class="nt">&lt;/a&gt;</span> - <span class="nt">&lt;em&gt;</span>$ date $<span class="nt">&lt;/em&gt;</span>
+</span><span class='line'><span class="nt">&lt;/li&gt;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Finally, to tie it together, add a match for <code>posts.html</code>, which will be the entry point to show the list of all posts.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="nf">match</span> <span class="s">&quot;posts.html&quot;</span> <span class="o">$</span> <span class="n">route</span> <span class="n">idRoute</span>
+</span><span class='line'><span class="nf">create</span> <span class="s">&quot;posts.html&quot;</span> <span class="o">$</span> <span class="n">constA</span> <span class="n">mempty</span>
+</span><span class='line'>    <span class="o">&gt;&gt;&gt;</span> <span class="n">arr</span> <span class="p">(</span><span class="n">setField</span> <span class="s">&quot;title&quot;</span> <span class="s">&quot;All posts&quot;</span><span class="p">)</span>
+</span><span class='line'>    <span class="o">&gt;&gt;&gt;</span> <span class="n">requireAllA</span> <span class="s">&quot;posts/*&quot;</span> <span class="n">addPostList</span>
+</span><span class='line'>    <span class="o">&gt;&gt;&gt;</span> <span class="n">applyTemplateCompiler</span> <span class="s">&quot;templates/posts.html&quot;</span>
+</span><span class='line'>    <span class="o">&gt;&gt;&gt;</span> <span class="n">applyTemplateCompiler</span> <span class="s">&quot;templates/default.html&quot;</span>
+</span><span class='line'>    <span class="o">&gt;&gt;&gt;</span> <span class="n">relativizeUrlsCompiler</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Showing a subset of all posts on the index page</h2>
+
+<p>Initially, I had some trouble getting this to work, for some reason the <code>match "posts/*"</code> wasn&rsquo;t working, and I commented out the <code>match "index.html"</code> and retained the <code>index.markdown</code> that I had.</p>
+
+<p>Turned out to be another ommission on my part, I had to replace</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="nf">match</span> <span class="s">&quot;index.html&quot;</span> <span class="o">$</span> <span class="kr">do</span>
+</span><span class='line'><span class="nf">create</span> <span class="s">&quot;index.html&quot;</span> <span class="o">$</span> <span class="n">constA</span> <span class="n">mempty</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>with</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="nf">match</span> <span class="s">&quot;index.html&quot;</span> <span class="o">$</span> <span class="n">route</span> <span class="n">idRoute</span>
+</span><span class='line'><span class="nf">create</span> <span class="s">&quot;index.html&quot;</span> <span class="o">$</span> <span class="n">constA</span> <span class="n">mempty</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&hellip; and then it works!</p>
+
+<p>Getting the list of the last (say) 3 posts is achieved by having a line similar to the one in the handler for <code>posts.html</code>, except instead of just</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="o">&gt;&gt;&gt;</span> <span class="n">requireAllA</span> <span class="s">&quot;posts/*&quot;</span> <span class="n">addPostList</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>we now have</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'>    <span class="o">&gt;&gt;&gt;</span> <span class="n">requireAllA</span> <span class="s">&quot;posts/*&quot;</span> <span class="p">(</span><span class="n">id</span> <span class="o">***</span> <span class="n">arr</span> <span class="p">(</span><span class="n">take</span> <span class="mi">3</span> <span class="o">.</span> <span class="n">reverse</span> <span class="o">.</span> <span class="n">chronological</span><span class="p">)</span> <span class="o">&gt;&gt;&gt;</span> <span class="n">addPostList</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>CSS-ifying</h2>
+
+<p>You probably know more about this than me, but if you don&rsquo;t want a black-and white, crammed together bunch of text, you probably want atleast a couple of css rules for your headers and the body text etc. I cobbled together mine based on some random examples I found online, pick yours as you see fit.</p>
+
+      
+      
+    </div>
+  </div>
+
+
+
+    </article>
+    
+    <hr>
+    
+  
+  
+    <article>
+      
+
+  <div class="row-fluid">
+    <div class="span2 post-meta">
+	  <h5 class="date-time">
+
+
+
+
+
+
+
+
+  
+
+
 <i class="icon-calendar-empty"></i> <time datetime="2012-12-22T00:00:00-08:00" pubdate data-updated="true">Dec 22<sup>nd</sup>, 2012</time></h5>
           <div class="row-fluid">
           
