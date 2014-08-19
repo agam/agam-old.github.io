@@ -4,7 +4,7 @@
   <title><![CDATA[Category: mathematica | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/mathematica/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2014-08-19T14:31:35-07:00</updated>
+  <updated>2014-08-19T15:02:21-07:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -61,7 +61,7 @@ Parallelize[
 
 <p>Anyway, so this whirs for a while. As this <code>htop</code> output shows, it really does use as many cores as possible.</p>
 
-<p>{% img center <a href="http://farm6.staticflickr.com/5504/12227941034_4ce9d69db4_z_d.jpg">http://farm6.staticflickr.com/5504/12227941034_4ce9d69db4_z_d.jpg</a> %}</p>
+<p><img class="center <a" src="href="http://farm6.staticflickr.com/5504/12227941034_4ce9d69db4_z_d.jpg">http://farm6.staticflickr.com/5504/12227941034_4ce9d69db4_z_d.jpg</a>"></p>
 
 <p>Eventually when it&rsquo;s done, we can <code>ListPlot</code> it.</p>
 
@@ -70,7 +70,7 @@ ListPlot[%118, Frame -&gt; True, FrameStyle -&gt; Black,
  PlotRange -&gt; { {1, 10000}, {-0.000105, -0.000095} }]
 </code></p>
 
-<p>{% img center <a href="http://farm6.staticflickr.com/5535/12227532975_ee70979b52_z_d.jpg">http://farm6.staticflickr.com/5535/12227532975_ee70979b52_z_d.jpg</a> %}</p>
+<p><img class="center <a" src="href="http://farm6.staticflickr.com/5535/12227532975_ee70979b52_z_d.jpg">http://farm6.staticflickr.com/5535/12227532975_ee70979b52_z_d.jpg</a>"></p>
 
 <p>As this graph shows, the result is remarkably close to a constant value of <code>-0.0001</code> !!</p>
 ]]></content>

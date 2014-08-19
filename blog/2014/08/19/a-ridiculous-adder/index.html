@@ -1,0 +1,472 @@
+
+<!DOCTYPE html>
+<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
+<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
+<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <title>A ridiculous adder - Agam's Mashed-Up Pome</title>
+  <meta name="author" content="Agam">
+
+   
+  <meta name="description" content="">
+  
+  <meta name="keywords" content="">
+
+  <!-- http://t.co/dKP3o1e -->
+  <meta name="HandheldFriendly" content="True">
+  <meta name="MobileOptimized" content="320">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  
+  <link rel="canonical" href="http://agam.github.io/blog/2014/08/19/a-ridiculous-adder">
+  <link href="/favicon.png" rel="icon">
+  <link href='http://fonts.googleapis.com/css?family=Quicksand:300,400' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+  <link href="/atom.xml" rel="alternate" title="Agam's Mashed-Up Pome" type="application/atom+xml">
+  <script src="/js/jquery.js"></script>
+  <script src="/js/bootstrap-collapse.js"></script>
+  <script src="/js/modernizr-2.0.js"></script>
+  <script src="/js/octopress.js" type="text/javascript"></script>
+  <script src="/js/application.js"></script>
+  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+
+  
+  <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-16612682-4']);
+    _gaq.push(['_trackPageview']);
+
+    (function() {
+      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+  </script>
+
+
+</head>
+
+<body   >
+  <div class="navbar navbar-inverse navbar-static-top">
+  	<div class="navbar-inner">
+  	  <div class="container">
+        <a class="btn btn-navbar" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+          <span class="fui-menu-24"></span>
+        </a>
+  	  	<div class="nav-collapse collapse navbar-responsive-collapse" style="height:0;">
+  	      <ul class="nav">
+    
+        <li ><a href="/index.html">Home</a></li>
+    
+</ul>
+
+<ul class="nav pull-right">
+    
+    
+    
+    
+    <li><a href="http://twitter.com/agambrahma" title="Twitter Profile"><i class="icon-twitter-sign social-navbar"></i></a></li>
+    
+    
+    <li><a href="http://plus.google.com/+AgamBrahma" title="Google+ Profile"><i class="icon-google-plus-sign social-navbar"></i></a></li>
+    
+    
+    
+
+    
+</ul>
+
+  	    </div>
+  	  </div>
+  	</div>
+  </div>
+  <div class="container" id="main">
+      <div class="row-fluid">
+        <div id="content">
+          <div>
+<article class="hentry" role="article">
+  
+
+  <header>
+  <div class="jumbotron">
+    A Ridiculous Adder
+	<h5>
+
+
+
+
+
+
+
+
+  
+
+
+<i class="icon-calendar-empty"></i> <time datetime="2014-08-19T14:32:09-07:00" pubdate data-updated="true">Aug 19<sup>th</sup>, 2014</time></h5>
+  </div>
+</header>
+  <div class="row-fluid">
+    <div class="span12">
+      <p>Alright, the first example of <em>&ldquo;Ridiculous Concurrency&rdquo;</em> ! Here is a terribly inefficient adder that performs arithmetic on arbitrarily large integers.</p>
+
+<p>See <a href="https://gist.github.com/agam/3d82745c84c8f44dd51c">this gist</a> for the complete source &hellip;</p>
+
+<p>In case no one gets the joke, I&rsquo;ll be explicit: this is <em>not really</em> a way to implement a &ldquo;BigNum&rdquo;, it&rsquo;s a terrible way to do it, but it&rsquo;s a fun way to do it that can only be done with Go.</p>
+
+<p>This is the <code>main</code> function:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='go'><span class='line'><span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>     <span class="nx">bignum</span> <span class="o">:=</span> <span class="nx">MakeBigNum</span><span class="p">([]</span><span class="kt">int</span><span class="p">{</span><span class="mi">9</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">})</span>
+</span><span class='line'>     <span class="nb">print</span><span class="p">(</span><span class="nx">bignum</span><span class="p">)</span>
+</span><span class='line'>     <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;\nAnd after adding ... \n&quot;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>     <span class="nx">add</span><span class="p">(</span><span class="mi">100000</span><span class="p">,</span> <span class="nx">bignum</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>     <span class="nb">print</span><span class="p">(</span><span class="nx">bignum</span><span class="p">)</span>
+</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">()</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Pretty straightforward &hellip; and this is how you make the big number:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+</pre></td><td class='code'><pre><code class='go'><span class='line'><span class="kd">func</span> <span class="nx">addDigit</span><span class="p">(</span><span class="nx">b</span> <span class="o">*</span><span class="nx">Bignum</span><span class="p">,</span> <span class="nx">num</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">in</span> <span class="o">&lt;-</span><span class="kd">chan</span> <span class="kt">bool</span><span class="p">)</span> <span class="kd">chan</span> <span class="kt">bool</span> <span class="p">{</span>
+</span><span class='line'>     <span class="nx">new_out</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">bool</span><span class="p">)</span>
+</span><span class='line'>     <span class="nx">d</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">Digit</span><span class="p">{</span><span class="nx">num</span><span class="p">,</span> <span class="nx">in</span><span class="p">,</span> <span class="nx">new_out</span><span class="p">}</span>
+</span><span class='line'>     <span class="nx">b</span><span class="p">.</span><span class="nx">digits</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">b</span><span class="p">.</span><span class="nx">digits</span><span class="p">,</span> <span class="nx">d</span><span class="p">)</span>
+</span><span class='line'>     <span class="k">go</span> <span class="nx">carry</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span>
+</span><span class='line'>     <span class="k">return</span> <span class="nx">new_out</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">func</span> <span class="nx">carry</span><span class="p">(</span><span class="nx">d</span> <span class="o">*</span><span class="nx">Digit</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>         <span class="k">for</span> <span class="nx">in_msg</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">d</span><span class="p">.</span><span class="nx">pull_carry</span> <span class="p">{</span>
+</span><span class='line'>               <span class="nx">out_msg</span> <span class="o">:=</span> <span class="kc">false</span>
+</span><span class='line'>       <span class="k">if</span> <span class="nx">in_msg</span> <span class="p">{</span>
+</span><span class='line'>               <span class="nx">sum</span> <span class="o">:=</span> <span class="nx">d</span><span class="p">.</span><span class="nx">value</span> <span class="o">+</span> <span class="mi">1</span>
+</span><span class='line'>           <span class="k">if</span> <span class="nx">sum</span> <span class="o">&gt;=</span> <span class="mi">10</span> <span class="p">{</span>
+</span><span class='line'>                       <span class="nx">d</span><span class="p">.</span><span class="nx">value</span> <span class="p">=</span> <span class="nx">sum</span> <span class="o">-</span> <span class="mi">10</span>
+</span><span class='line'>                   <span class="nx">out_msg</span> <span class="p">=</span> <span class="kc">true</span>
+</span><span class='line'>              <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>                   <span class="nx">d</span><span class="p">.</span><span class="nx">value</span> <span class="p">=</span> <span class="nx">sum</span>
+</span><span class='line'>              <span class="p">}</span>
+</span><span class='line'>       <span class="p">}</span>
+</span><span class='line'>       <span class="nx">d</span><span class="p">.</span><span class="nx">push_carry</span> <span class="o">&lt;-</span> <span class="nx">out_msg</span>
+</span><span class='line'>   <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">func</span> <span class="nx">sentinel</span><span class="p">(</span><span class="nx">b</span> <span class="o">*</span><span class="nx">Bignum</span><span class="p">,</span> <span class="nx">in</span> <span class="o">&lt;-</span><span class="kd">chan</span> <span class="kt">bool</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">for</span> <span class="p">{</span>
+</span><span class='line'>              <span class="kd">var</span> <span class="nx">msg</span> <span class="p">=</span> <span class="o">&lt;-</span><span class="nx">in</span>
+</span><span class='line'>          <span class="k">if</span> <span class="nx">msg</span> <span class="p">{</span>
+</span><span class='line'>                        <span class="nx">last_out</span> <span class="o">:=</span> <span class="nx">addDigit</span><span class="p">(</span><span class="nx">b</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">in</span><span class="p">)</span>
+</span><span class='line'>                        <span class="k">go</span> <span class="nx">sentinel</span><span class="p">(</span><span class="nx">b</span><span class="p">,</span> <span class="nx">last_out</span><span class="p">)</span>
+</span><span class='line'>                  <span class="nx">last_out</span> <span class="o">&lt;-</span> <span class="kc">false</span>
+</span><span class='line'>              <span class="k">break</span>
+</span><span class='line'>                 <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>                        <span class="nx">b</span><span class="p">.</span><span class="nx">stable</span> <span class="o">&lt;-</span> <span class="kc">true</span>
+</span><span class='line'>           <span class="p">}</span>
+</span><span class='line'>         <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">func</span> <span class="nx">MakeBigNum</span><span class="p">(</span><span class="nx">num_arr</span> <span class="p">[]</span><span class="kt">int</span><span class="p">)</span> <span class="o">*</span><span class="nx">Bignum</span> <span class="p">{</span>
+</span><span class='line'>         <span class="kd">var</span> <span class="nx">digits</span> <span class="p">[]</span><span class="o">*</span><span class="nx">Digit</span>
+</span><span class='line'>         <span class="nx">last_out</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">bool</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>         <span class="nx">stable</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">bool</span><span class="p">)</span>
+</span><span class='line'>         <span class="nx">b</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">Bignum</span><span class="p">{</span><span class="nx">digits</span><span class="p">,</span> <span class="nx">last_out</span><span class="p">,</span> <span class="nx">stable</span><span class="p">}</span>
+</span><span class='line'>         <span class="nx">l</span> <span class="o">:=</span> <span class="nb">len</span><span class="p">(</span><span class="nx">num_arr</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>         <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">l</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span><span class='line'>                 <span class="nx">last_out</span> <span class="p">=</span> <span class="nx">addDigit</span><span class="p">(</span><span class="nx">b</span><span class="p">,</span> <span class="nx">num_arr</span><span class="p">[</span><span class="nx">l</span><span class="o">-</span><span class="nx">i</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="nx">last_out</span><span class="p">)</span>
+</span><span class='line'>         <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>         <span class="k">go</span> <span class="nx">sentinel</span><span class="p">(</span><span class="nx">b</span><span class="p">,</span> <span class="nx">last_out</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>         <span class="k">return</span> <span class="nx">b</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Yup, <em>every digit</em> is a Goroutine here!</p>
+
+<p>Each digit is connected to the one on its left and the one on its right, and has channels open to each. It listens in on one (<code>pull_carry</code>) and increments itself if necessary. If it overflows, it lets the next one know.</p>
+
+<p>The last digit is always a &ldquo;sentinel&rdquo;, which on receiving a carry signal (i.e. when the overall big number grows in size), creates a new &ldquo;digit&rdquo; (spawning a goroutine for it) and makes <em>that</em> one the new sentinel.</p>
+
+<p>With this arrangement, the actual task of addition is boring:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='go'><span class='line'><span class="kd">func</span> <span class="nx">add</span><span class="p">(</span><span class="nx">n</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">b</span> <span class="o">*</span><span class="nx">Bignum</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">sent</span> <span class="o">:=</span> <span class="mi">0</span>
+</span><span class='line'>        <span class="nx">done</span> <span class="o">:=</span> <span class="mi">0</span>
+</span><span class='line'><span class="nx">done_sending</span><span class="p">:</span>
+</span><span class='line'>  <span class="k">for</span> <span class="p">{</span>
+</span><span class='line'>           <span class="k">select</span> <span class="p">{</span>
+</span><span class='line'>           <span class="k">case</span> <span class="nx">b</span><span class="p">.</span><span class="nx">add</span> <span class="o">&lt;-</span> <span class="kc">true</span><span class="p">:</span>
+</span><span class='line'>               <span class="nx">sent</span><span class="o">++</span>
+</span><span class='line'>           <span class="k">if</span> <span class="nx">sent</span> <span class="o">==</span> <span class="nx">n</span> <span class="p">{</span>
+</span><span class='line'>                   <span class="k">break</span> <span class="nx">done_sending</span>
+</span><span class='line'>           <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>           <span class="k">case</span> <span class="o">&lt;-</span><span class="nx">b</span><span class="p">.</span><span class="nx">stable</span><span class="p">:</span>
+</span><span class='line'>               <span class="nx">done</span><span class="o">++</span>
+</span><span class='line'>       <span class="p">}</span>
+</span><span class='line'>   <span class="p">}</span>
+</span><span class='line'>   <span class="k">for</span> <span class="p">;</span> <span class="nx">done</span> <span class="p">&lt;</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">done</span><span class="o">++</span> <span class="p">{</span>
+</span><span class='line'>           <span class="o">&lt;-</span> <span class="nx">b</span><span class="p">.</span><span class="nx">stable</span>
+</span><span class='line'>   <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Well, alright, not <em>that</em> boring. <code>b.add</code> is nothing other than the <code>pull_carry</code> channel of the <em>first</em> digit. We just pump that channel as many times as the size of the number we&rsquo;re adding, and wait for the number to &ldquo;stabilize&rdquo; at the end. <code>b.stable</code> is the flip side of <code>b.add</code>: it&rsquo;s the <code>push_carry</code> channel of the <em>last</em> digit.</p>
+
+<p>The small trick here is to start receiving the results in parallel, to avoid deadlock. Another option would be to provide buffered channels, but I prefer it this way so I don&rsquo;t have to think about how much buffer space to allocate. This is just as correct.</p>
+
+<p>That&rsquo;s pretty much it &hellip; here are the data types we used in our adder:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='go'><span class='line'><span class="kd">type</span> <span class="nx">Bignum</span> <span class="kd">struct</span> <span class="p">{</span>
+</span><span class='line'>         <span class="nx">digits</span>   <span class="p">[]</span><span class="o">*</span><span class="nx">Digit</span>
+</span><span class='line'>         <span class="nx">add</span>      <span class="kd">chan</span><span class="o">&lt;-</span> <span class="kt">bool</span>
+</span><span class='line'>         <span class="nx">stable</span>   <span class="kd">chan</span> <span class="kt">bool</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">type</span> <span class="nx">Digit</span> <span class="kd">struct</span> <span class="p">{</span>
+</span><span class='line'>         <span class="nx">value</span>      <span class="kt">int</span>
+</span><span class='line'>         <span class="nx">pull_carry</span> <span class="o">&lt;-</span><span class="kd">chan</span> <span class="kt">bool</span>
+</span><span class='line'>         <span class="nx">push_carry</span> <span class="kd">chan</span><span class="o">&lt;-</span> <span class="kt">bool</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This isn&rsquo;t really about adding numbers, creating a reasonably complex (statically typed!) asynchronous model like this would be hard in any other language (yes, I&rsquo;m aware of <code>core.async</code>, and it has <code>go</code>, <code>|&gt;</code>, <code>&lt;|</code> and so on, and using <code>alts!!</code> might result in something similar, but it feels a bit clunkier to play around with).</p>
+
+<p>Here&rsquo;s another great perk of #golang &hellip; you don&rsquo;t have to take my word for all this: try out this example live at <a href="http://play.golang.org/p/dOK16qov1e">the Go Playground</a>!</p>
+
+    </div>
+  </div>
+
+
+
+  <footer>
+    <hr>
+    
+    <div class="row-fluid">
+      
+      <div class="span6">
+        <p class="meta">
+        
+        
+
+
+
+  <a href="/blog/categories/golang/"><span class="badge">golang</span></a>
+
+
+
+
+        </p>
+      </div>
+      
+      <div class="span6 social-sharing">
+        <div class="sharing">
+  <div class="addthis_toolbox addthis_default_style ">
+  
+  
+  <a class="addthis_button_tweet"></a>
+  
+  
+  <a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+  
+  <a class="addthis_counter addthis_pill_style"></a>
+  </div>
+  <script type="text/javascript" src="http://s7.addthis.com/js/250/addthis_widget.js#pubid="></script>
+</div>
+
+      </div>
+      
+      
+    </div>
+    
+    <div class="row-fluid">
+      <div class="span12">
+        <p class="meta">
+          
+            <a class="basic-alignment left" href="/blog/2014/08/19/command-line-gists/" title="Previous Post: Command-line Gists">&laquo; Command-line Gists</a>
+          
+          
+        </p>
+      </div>
+    </div>
+  </footer>
+</article>
+
+  <section>
+    <h1>Comments</h1>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+  </section>
+
+</div>
+
+
+
+        </div>
+      </div>
+      <div class="row-fluid">
+        <footer class="footer-page" role="contentinfo">
+          <p>
+  Copyright &copy; 2014 - Agam -
+  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span> - Theme by <a href="http://alexgaribay.com">Alex Garibay</a>
+</p>
+
+
+        </footer>
+      </div>
+  </div>
+  
+
+<script type="text/javascript">
+      var disqus_shortname = 'agamamp';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://agam.github.io/blog/2014/08/19/a-ridiculous-adder/';
+        var disqus_url = 'http://agam.github.io/blog/2014/08/19/a-ridiculous-adder/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+
+
+  <script type="text/javascript">
+    (function() {
+      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
+      script.src = 'https://apis.google.com/js/plusone.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
+    })();
+  </script>
+
+
+
+  <script type="text/javascript">
+    (function(){
+      var twitterWidgets = document.createElement('script');
+      twitterWidgets.type = 'text/javascript';
+      twitterWidgets.async = true;
+      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
+      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
+    })();
+  </script>
+
+
+
+
+
+</body>
+</html>

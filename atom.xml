@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2014-08-19T14:31:23-07:00</updated>
+  <updated>2014-08-19T15:02:21-07:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,243 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[A ridiculous adder]]></title>
+    <link href="http://agam.github.io/blog/2014/08/19/a-ridiculous-adder/"/>
+    <updated>2014-08-19T14:32:09-07:00</updated>
+    <id>http://agam.github.io/blog/2014/08/19/a-ridiculous-adder</id>
+    <content type="html"><![CDATA[<p>Alright, the first example of <em>&ldquo;Ridiculous Concurrency&rdquo;</em> ! Here is a terribly inefficient adder that performs arithmetic on arbitrarily large integers.</p>
+
+<p>See <a href="https://gist.github.com/agam/3d82745c84c8f44dd51c">this gist</a> for the complete source &hellip;</p>
+
+<p>In case no one gets the joke, I&rsquo;ll be explicit: this is <em>not really</em> a way to implement a &ldquo;BigNum&rdquo;, it&rsquo;s a terrible way to do it, but it&rsquo;s a fun way to do it that can only be done with Go.</p>
+
+<p>This is the <code>main</code> function:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='go'><span class='line'><span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>     <span class="nx">bignum</span> <span class="o">:=</span> <span class="nx">MakeBigNum</span><span class="p">([]</span><span class="kt">int</span><span class="p">{</span><span class="mi">9</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">})</span>
+</span><span class='line'>     <span class="nb">print</span><span class="p">(</span><span class="nx">bignum</span><span class="p">)</span>
+</span><span class='line'>     <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;\nAnd after adding ... \n&quot;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>     <span class="nx">add</span><span class="p">(</span><span class="mi">100000</span><span class="p">,</span> <span class="nx">bignum</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>     <span class="nb">print</span><span class="p">(</span><span class="nx">bignum</span><span class="p">)</span>
+</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">()</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Pretty straightforward &hellip; and this is how you make the big number:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+</pre></td><td class='code'><pre><code class='go'><span class='line'><span class="kd">func</span> <span class="nx">addDigit</span><span class="p">(</span><span class="nx">b</span> <span class="o">*</span><span class="nx">Bignum</span><span class="p">,</span> <span class="nx">num</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">in</span> <span class="o">&lt;-</span><span class="kd">chan</span> <span class="kt">bool</span><span class="p">)</span> <span class="kd">chan</span> <span class="kt">bool</span> <span class="p">{</span>
+</span><span class='line'>     <span class="nx">new_out</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">bool</span><span class="p">)</span>
+</span><span class='line'>     <span class="nx">d</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">Digit</span><span class="p">{</span><span class="nx">num</span><span class="p">,</span> <span class="nx">in</span><span class="p">,</span> <span class="nx">new_out</span><span class="p">}</span>
+</span><span class='line'>     <span class="nx">b</span><span class="p">.</span><span class="nx">digits</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">b</span><span class="p">.</span><span class="nx">digits</span><span class="p">,</span> <span class="nx">d</span><span class="p">)</span>
+</span><span class='line'>     <span class="k">go</span> <span class="nx">carry</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span>
+</span><span class='line'>     <span class="k">return</span> <span class="nx">new_out</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">func</span> <span class="nx">carry</span><span class="p">(</span><span class="nx">d</span> <span class="o">*</span><span class="nx">Digit</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>         <span class="k">for</span> <span class="nx">in_msg</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">d</span><span class="p">.</span><span class="nx">pull_carry</span> <span class="p">{</span>
+</span><span class='line'>               <span class="nx">out_msg</span> <span class="o">:=</span> <span class="kc">false</span>
+</span><span class='line'>       <span class="k">if</span> <span class="nx">in_msg</span> <span class="p">{</span>
+</span><span class='line'>               <span class="nx">sum</span> <span class="o">:=</span> <span class="nx">d</span><span class="p">.</span><span class="nx">value</span> <span class="o">+</span> <span class="mi">1</span>
+</span><span class='line'>           <span class="k">if</span> <span class="nx">sum</span> <span class="o">&gt;=</span> <span class="mi">10</span> <span class="p">{</span>
+</span><span class='line'>                       <span class="nx">d</span><span class="p">.</span><span class="nx">value</span> <span class="p">=</span> <span class="nx">sum</span> <span class="o">-</span> <span class="mi">10</span>
+</span><span class='line'>                   <span class="nx">out_msg</span> <span class="p">=</span> <span class="kc">true</span>
+</span><span class='line'>              <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>                   <span class="nx">d</span><span class="p">.</span><span class="nx">value</span> <span class="p">=</span> <span class="nx">sum</span>
+</span><span class='line'>              <span class="p">}</span>
+</span><span class='line'>       <span class="p">}</span>
+</span><span class='line'>       <span class="nx">d</span><span class="p">.</span><span class="nx">push_carry</span> <span class="o">&lt;-</span> <span class="nx">out_msg</span>
+</span><span class='line'>   <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">func</span> <span class="nx">sentinel</span><span class="p">(</span><span class="nx">b</span> <span class="o">*</span><span class="nx">Bignum</span><span class="p">,</span> <span class="nx">in</span> <span class="o">&lt;-</span><span class="kd">chan</span> <span class="kt">bool</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">for</span> <span class="p">{</span>
+</span><span class='line'>              <span class="kd">var</span> <span class="nx">msg</span> <span class="p">=</span> <span class="o">&lt;-</span><span class="nx">in</span>
+</span><span class='line'>          <span class="k">if</span> <span class="nx">msg</span> <span class="p">{</span>
+</span><span class='line'>                        <span class="nx">last_out</span> <span class="o">:=</span> <span class="nx">addDigit</span><span class="p">(</span><span class="nx">b</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">in</span><span class="p">)</span>
+</span><span class='line'>                        <span class="k">go</span> <span class="nx">sentinel</span><span class="p">(</span><span class="nx">b</span><span class="p">,</span> <span class="nx">last_out</span><span class="p">)</span>
+</span><span class='line'>                  <span class="nx">last_out</span> <span class="o">&lt;-</span> <span class="kc">false</span>
+</span><span class='line'>              <span class="k">break</span>
+</span><span class='line'>                 <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>                        <span class="nx">b</span><span class="p">.</span><span class="nx">stable</span> <span class="o">&lt;-</span> <span class="kc">true</span>
+</span><span class='line'>           <span class="p">}</span>
+</span><span class='line'>         <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">func</span> <span class="nx">MakeBigNum</span><span class="p">(</span><span class="nx">num_arr</span> <span class="p">[]</span><span class="kt">int</span><span class="p">)</span> <span class="o">*</span><span class="nx">Bignum</span> <span class="p">{</span>
+</span><span class='line'>         <span class="kd">var</span> <span class="nx">digits</span> <span class="p">[]</span><span class="o">*</span><span class="nx">Digit</span>
+</span><span class='line'>         <span class="nx">last_out</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">bool</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>         <span class="nx">stable</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">bool</span><span class="p">)</span>
+</span><span class='line'>         <span class="nx">b</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">Bignum</span><span class="p">{</span><span class="nx">digits</span><span class="p">,</span> <span class="nx">last_out</span><span class="p">,</span> <span class="nx">stable</span><span class="p">}</span>
+</span><span class='line'>         <span class="nx">l</span> <span class="o">:=</span> <span class="nb">len</span><span class="p">(</span><span class="nx">num_arr</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>         <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">l</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span><span class='line'>                 <span class="nx">last_out</span> <span class="p">=</span> <span class="nx">addDigit</span><span class="p">(</span><span class="nx">b</span><span class="p">,</span> <span class="nx">num_arr</span><span class="p">[</span><span class="nx">l</span><span class="o">-</span><span class="nx">i</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="nx">last_out</span><span class="p">)</span>
+</span><span class='line'>         <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>         <span class="k">go</span> <span class="nx">sentinel</span><span class="p">(</span><span class="nx">b</span><span class="p">,</span> <span class="nx">last_out</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>         <span class="k">return</span> <span class="nx">b</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Yup, <em>every digit</em> is a Goroutine here!</p>
+
+<p>Each digit is connected to the one on its left and the one on its right, and has channels open to each. It listens in on one (<code>pull_carry</code>) and increments itself if necessary. If it overflows, it lets the next one know.</p>
+
+<p>The last digit is always a &ldquo;sentinel&rdquo;, which on receiving a carry signal (i.e. when the overall big number grows in size), creates a new &ldquo;digit&rdquo; (spawning a goroutine for it) and makes <em>that</em> one the new sentinel.</p>
+
+<p>With this arrangement, the actual task of addition is boring:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='go'><span class='line'><span class="kd">func</span> <span class="nx">add</span><span class="p">(</span><span class="nx">n</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">b</span> <span class="o">*</span><span class="nx">Bignum</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="nx">sent</span> <span class="o">:=</span> <span class="mi">0</span>
+</span><span class='line'>        <span class="nx">done</span> <span class="o">:=</span> <span class="mi">0</span>
+</span><span class='line'><span class="nx">done_sending</span><span class="p">:</span>
+</span><span class='line'>  <span class="k">for</span> <span class="p">{</span>
+</span><span class='line'>           <span class="k">select</span> <span class="p">{</span>
+</span><span class='line'>           <span class="k">case</span> <span class="nx">b</span><span class="p">.</span><span class="nx">add</span> <span class="o">&lt;-</span> <span class="kc">true</span><span class="p">:</span>
+</span><span class='line'>               <span class="nx">sent</span><span class="o">++</span>
+</span><span class='line'>           <span class="k">if</span> <span class="nx">sent</span> <span class="o">==</span> <span class="nx">n</span> <span class="p">{</span>
+</span><span class='line'>                   <span class="k">break</span> <span class="nx">done_sending</span>
+</span><span class='line'>           <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>           <span class="k">case</span> <span class="o">&lt;-</span><span class="nx">b</span><span class="p">.</span><span class="nx">stable</span><span class="p">:</span>
+</span><span class='line'>               <span class="nx">done</span><span class="o">++</span>
+</span><span class='line'>       <span class="p">}</span>
+</span><span class='line'>   <span class="p">}</span>
+</span><span class='line'>   <span class="k">for</span> <span class="p">;</span> <span class="nx">done</span> <span class="p">&lt;</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">done</span><span class="o">++</span> <span class="p">{</span>
+</span><span class='line'>           <span class="o">&lt;-</span> <span class="nx">b</span><span class="p">.</span><span class="nx">stable</span>
+</span><span class='line'>   <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Well, alright, not <em>that</em> boring. <code>b.add</code> is nothing other than the <code>pull_carry</code> channel of the <em>first</em> digit. We just pump that channel as many times as the size of the number we&rsquo;re adding, and wait for the number to &ldquo;stabilize&rdquo; at the end. <code>b.stable</code> is the flip side of <code>b.add</code>: it&rsquo;s the <code>push_carry</code> channel of the <em>last</em> digit.</p>
+
+<p>The small trick here is to start receiving the results in parallel, to avoid deadlock. Another option would be to provide buffered channels, but I prefer it this way so I don&rsquo;t have to think about how much buffer space to allocate. This is just as correct.</p>
+
+<p>That&rsquo;s pretty much it &hellip; here are the data types we used in our adder:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='go'><span class='line'><span class="kd">type</span> <span class="nx">Bignum</span> <span class="kd">struct</span> <span class="p">{</span>
+</span><span class='line'>         <span class="nx">digits</span>   <span class="p">[]</span><span class="o">*</span><span class="nx">Digit</span>
+</span><span class='line'>         <span class="nx">add</span>      <span class="kd">chan</span><span class="o">&lt;-</span> <span class="kt">bool</span>
+</span><span class='line'>         <span class="nx">stable</span>   <span class="kd">chan</span> <span class="kt">bool</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">type</span> <span class="nx">Digit</span> <span class="kd">struct</span> <span class="p">{</span>
+</span><span class='line'>         <span class="nx">value</span>      <span class="kt">int</span>
+</span><span class='line'>         <span class="nx">pull_carry</span> <span class="o">&lt;-</span><span class="kd">chan</span> <span class="kt">bool</span>
+</span><span class='line'>         <span class="nx">push_carry</span> <span class="kd">chan</span><span class="o">&lt;-</span> <span class="kt">bool</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This isn&rsquo;t really about adding numbers, creating a reasonably complex (statically typed!) asynchronous model like this would be hard in any other language (yes, I&rsquo;m aware of <code>core.async</code>, and it has <code>go</code>, <code>|&gt;</code>, <code>&lt;|</code> and so on, and using <code>alts!!</code> might result in something similar, but it feels a bit clunkier to play around with).</p>
+
+<p>Here&rsquo;s another great perk of #golang &hellip; you don&rsquo;t have to take my word for all this: try out this example live at <a href="http://play.golang.org/p/dOK16qov1e">the Go Playground</a>!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Command-line Gists]]></title>
@@ -1351,90 +1588,6 @@ int main(int argc, char* argv[]) {
 
 
 <p>[I&rsquo;m a little bored of these daily programmer questions now :( I&rsquo;ll do one more hard one and then find a new theme here.]</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Minsky Turing Lecture: Part 2]]></title>
-    <link href="http://agam.github.io/blog/2014/02/01/minsky-turing-lecture-part-2/"/>
-    <updated>2014-02-01T08:55:00-08:00</updated>
-    <id>http://agam.github.io/blog/2014/02/01/minsky-turing-lecture-part-2</id>
-    <content type="html"><![CDATA[<p>(This picks up where <a href="http://agam.github.io/blog/2014/01/26/minsky-turing-lecture-part-1/">Part 1</a> left off)</p>
-
-<p>If you thought Minsky cared a lot about how programming languages work, he cares even more about how education &ldquo;works&rdquo;. I recently picked up <a href="http://www.amazon.com/The-Society-Mind-Marvin-Minsky/dp/0671657135">The Society of the Mind</a> so it seems a little less surprising, but read on &hellip;</p>
-
-<h2>Computer Science and Educational models</h2>
-
-<blockquote><p>He [the computer scientist] perceives his principal function to provide programs and machines for use in old and new educational schemes. Well and good, but I believe he has a more complex responsibility &mdash; to work out and communicate models of the process of education itself.</p></blockquote>
-
-<p>And lest anyone doubt this &hellip;</p>
-
-<blockquote><p>We cannot digress here to answer skeptics who feel it too simpleminded (if not impious, or obscene) to compare minds with programs. We can refer many such critics to <a href="http://www.loebner.net/Prizef/TuringArticle.html">Turing&rsquo;s paper</a>. For those who feel that the answer cannot lie in any machine, digital or otherwise, one can argue that machines, when they become intelligent, very likely will feel the same way.</p></blockquote>
-
-<p>(If I might digress a bit, there is a very interesting footnote here by Minsky that might completely change the image in your head of <a href="http://en.wikipedia.org/wiki/Alan_Turing">Turing</a>: &ldquo; <strong>Turing was quite good at debugging hardware</strong>. He would leave the power on, so as not to lose the &lsquo;feel&rsquo; of the thing. Everyone does that today, but it is not the same thing now that the <em>circuits all work on three or five volts</em>.&rdquo;)</p>
-
-<blockquote><p>There is a fundamental pragmatic point in favor of our propositions. The child needs models &hellip;
-&hellip;
-But to model his own self he <em>cannot</em> use the engine or the organism or the city or the telephone switchboard; <em>nothing will serve at all but the computer with its programs and their bugs</em></p></blockquote>
-
-<h2>Children and Mathematics</h2>
-
-<blockquote><p>Imagine a small child &hellip;
-&hellip;
-If we extrapolate today&rsquo;s trend, his mathematical education will be conducted by poorly oriented teachers and, partly, <em>by poorly programmed machines</em>; neither will be able to respond to much beyond &ldquo;correct&rdquo; and &ldquo;wrong&rdquo; answers, let alone to make reasonable interpretations of what the child does or says, because neither will contain good models of the children, or good theories of children&rsquo;s intellectual development.</p></blockquote>
-
-<p>He goes on to give examples of how the child&rsquo;s geometric world is <em>so different</em> from ours, such as some numbers having a different <em>weight</em> or <em>depth</em> than others, or not knowing how squares and diamonds are the same shape, as shown below:</p>
-
-<p><img class="center" src="http://farm6.staticflickr.com/5529/12246677434_860cbfa222_z_d.jpg"></p>
-
-<p>This builds up to something I really like (if I may let my personal biases show, I like it because it validates some of my own beliefs): the idea that computational analogies can (and indeed <em>should!</em>) be more generally used to describe patterns of thought and behavior.</p>
-
-<blockquote><p>Before computation, the community of ideas about the nature of thought was too feeble to support an effective theory of learning and development. Neither the finite-state models of the Behaviorists, the hydraulic and economic analogies of the Freudians, nor the rabbit-in-the-hat insights of the Gestaltists supplied enough ingredients to understand so intricate a subject. It needs <em>a substrate of already debugged theories and solutions</em> of related but simpler problems. Now we have a flood of such ideas, <em>well defined and implemented</em>, for <strong>thinking about thinking</strong>; only a fraction are represented in traditional psychology:</p></blockquote>
-
-<p>Some of the ideas listed are</p>
-
-<ul>
-<li>microprogram</li>
-<li>interrupt</li>
-<li>garbage collection</li>
-<li>macro</li>
-<li>symbol table</li>
-</ul>
-
-
-<p>He goes on:</p>
-
-<blockquote><p>All these serve today as tools of a curious and intricate craft, <strong>programming</strong>. But just as astronomy succeeded astrology, following Kepler&rsquo;s regularities, the discovery of <em>principles in empirical explorations of intellectual process in machines</em> should lead to a science.</p></blockquote>
-
-<p>This finally brings him to a polemic against the nature of math education itself.</p>
-
-<h2>Against the &ldquo;New Mathematics&rdquo; curriculum</h2>
-
-<p>What Minsky seems to be railing here is the excessive formalism in Mathematics introduced early on, where abstract concepts like sets are introduced before trying to create a <em>familiarity</em> with numbers.</p>
-
-<blockquote><p>Because of the formalistic approach the teacher will not be able to help the child very much with problems of formulation. For she will feel insecure herself as she drills him on such matters as the <em>difference between the empty set and nothing</em>, or the distinction between the &ldquo;numeral&rdquo; 3+5 and the numeral 8 which is the &ldquo;common name&rdquo; of the number eight, hoping he will not ask what is the common name of the fraction 8/1, which is probably different from the rational 8/1 and different from the quotient 8/1 &hellip;</p></blockquote>
-
-<p>Here, the fractions, quotients and rationals obviously <em>should</em> be identified with each other, rather than siloed and separated by this &ldquo;maze of formalism&rdquo;. Also &hellip;</p>
-
-<blockquote><p>It is very bad to insist that the child keep his knowledge in a simple ordered hierarchy. In order to retrieve what he needs, he must have a multiply connected network, so that he can try several ways to do each thing &hellip; Emphasis on the &ldquo;formal proof&rdquo; is destructive at this stage, because the <strong>knowledge needed for finding proofs, and for understanding them, is far more complex (and less useful) than the knowledge mentioned <em>in</em> proofs.</strong></p></blockquote>
-
-<p>Minsky suggests that this might stem from a misconception of the form &ldquo;You can teach a child anything, if you just get the definitions precise enough&rdquo;.</p>
-
-<p>He doesn&rsquo;t care too much about overly focusing on set theory either:</p>
-
-<blockquote><p>Set theory is not, as the logicians and publishers would have it, <em>the</em> only and true foundation of mathematics; it is a viewpoint that is pretty good for investigating the transfinite, <em>but undistinguished for comprehending the real numbers, and quite substandard for learning about arithmetic, algebra, and geometry</em>.</p></blockquote>
-
-<p>If there is a way to sum up his argument with one line, it is probably this:</p>
-
-<blockquote><p>The child is expected to learn how to solve problems but we do not teach him what we know, either about the subject, or about problem-solving.</p></blockquote>
-
-<h2>Contradiction and Solution</h2>
-
-<blockquote><p>There is a real conflict between the logician&rsquo;s goal and the educator&rsquo;s. The logical wants to minimize the variety of ideas, and doesn&rsquo;t mind a long, thin path. The educator (rightly) wants to make the paths short and doesn&rsquo;t mind &mdash; in fact, prefers &mdash; connection to many other ideas. <em>And he cares almost not at all about the directions of the links.</em></p></blockquote>
-
-<p>So where does the computer scientist come in to this ? In a heroic way !</p>
-
-<blockquote><p>The computer scientist thus has a responsibility to education. Not as he thinks, <em>because he will have to program the teaching machines</em>. Certainly not because he is a skilled user of &ldquo;finite mathematics&rdquo;. <em>He knows how to debug programs</em>; he must tell the educators how to help the children to debug their own problem-solving processes. <em>He knows how procedures depend on their data structures</em>; he can tell educators how to prepare children for new ideas.</p></blockquote>
 ]]></content>
   </entry>
   
