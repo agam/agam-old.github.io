@@ -209,30 +209,30 @@
 </span><span class='line'><span class="kd">func</span> <span class="nx">carry</span><span class="p">(</span><span class="nx">d</span> <span class="o">*</span><span class="nx">Digit</span><span class="p">)</span> <span class="p">{</span>
 </span><span class='line'>         <span class="k">for</span> <span class="nx">in_msg</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">d</span><span class="p">.</span><span class="nx">pull_carry</span> <span class="p">{</span>
 </span><span class='line'>               <span class="nx">out_msg</span> <span class="o">:=</span> <span class="kc">false</span>
-</span><span class='line'>       <span class="k">if</span> <span class="nx">in_msg</span> <span class="p">{</span>
-</span><span class='line'>               <span class="nx">sum</span> <span class="o">:=</span> <span class="nx">d</span><span class="p">.</span><span class="nx">value</span> <span class="o">+</span> <span class="mi">1</span>
-</span><span class='line'>           <span class="k">if</span> <span class="nx">sum</span> <span class="o">&gt;=</span> <span class="mi">10</span> <span class="p">{</span>
-</span><span class='line'>                       <span class="nx">d</span><span class="p">.</span><span class="nx">value</span> <span class="p">=</span> <span class="nx">sum</span> <span class="o">-</span> <span class="mi">10</span>
-</span><span class='line'>                   <span class="nx">out_msg</span> <span class="p">=</span> <span class="kc">true</span>
-</span><span class='line'>              <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</span><span class='line'>                   <span class="nx">d</span><span class="p">.</span><span class="nx">value</span> <span class="p">=</span> <span class="nx">sum</span>
-</span><span class='line'>              <span class="p">}</span>
-</span><span class='line'>       <span class="p">}</span>
-</span><span class='line'>       <span class="nx">d</span><span class="p">.</span><span class="nx">push_carry</span> <span class="o">&lt;-</span> <span class="nx">out_msg</span>
-</span><span class='line'>   <span class="p">}</span>
+</span><span class='line'>                 <span class="k">if</span> <span class="nx">in_msg</span> <span class="p">{</span>
+</span><span class='line'>                         <span class="nx">sum</span> <span class="o">:=</span> <span class="nx">d</span><span class="p">.</span><span class="nx">value</span> <span class="o">+</span> <span class="mi">1</span>
+</span><span class='line'>                         <span class="k">if</span> <span class="nx">sum</span> <span class="o">&gt;=</span> <span class="mi">10</span> <span class="p">{</span>
+</span><span class='line'>                                 <span class="nx">d</span><span class="p">.</span><span class="nx">value</span> <span class="p">=</span> <span class="nx">sum</span> <span class="o">-</span> <span class="mi">10</span>
+</span><span class='line'>                                 <span class="nx">out_msg</span> <span class="p">=</span> <span class="kc">true</span>
+</span><span class='line'>                         <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>                                 <span class="nx">d</span><span class="p">.</span><span class="nx">value</span> <span class="p">=</span> <span class="nx">sum</span>
+</span><span class='line'>                         <span class="p">}</span>
+</span><span class='line'>                 <span class="p">}</span>
+</span><span class='line'>                 <span class="nx">d</span><span class="p">.</span><span class="nx">push_carry</span> <span class="o">&lt;-</span> <span class="nx">out_msg</span>
+</span><span class='line'>          <span class="p">}</span>
 </span><span class='line'><span class="p">}</span>
 </span><span class='line'>
 </span><span class='line'><span class="kd">func</span> <span class="nx">sentinel</span><span class="p">(</span><span class="nx">b</span> <span class="o">*</span><span class="nx">Bignum</span><span class="p">,</span> <span class="nx">in</span> <span class="o">&lt;-</span><span class="kd">chan</span> <span class="kt">bool</span><span class="p">)</span> <span class="p">{</span>
 </span><span class='line'>        <span class="k">for</span> <span class="p">{</span>
-</span><span class='line'>              <span class="kd">var</span> <span class="nx">msg</span> <span class="p">=</span> <span class="o">&lt;-</span><span class="nx">in</span>
-</span><span class='line'>          <span class="k">if</span> <span class="nx">msg</span> <span class="p">{</span>
+</span><span class='line'>                <span class="kd">var</span> <span class="nx">msg</span> <span class="p">=</span> <span class="o">&lt;-</span><span class="nx">in</span>
+</span><span class='line'>                <span class="k">if</span> <span class="nx">msg</span> <span class="p">{</span>
 </span><span class='line'>                        <span class="nx">last_out</span> <span class="o">:=</span> <span class="nx">addDigit</span><span class="p">(</span><span class="nx">b</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">in</span><span class="p">)</span>
 </span><span class='line'>                        <span class="k">go</span> <span class="nx">sentinel</span><span class="p">(</span><span class="nx">b</span><span class="p">,</span> <span class="nx">last_out</span><span class="p">)</span>
-</span><span class='line'>                  <span class="nx">last_out</span> <span class="o">&lt;-</span> <span class="kc">false</span>
-</span><span class='line'>              <span class="k">break</span>
+</span><span class='line'>                        <span class="nx">last_out</span> <span class="o">&lt;-</span> <span class="kc">false</span>
+</span><span class='line'>                        <span class="k">break</span>
 </span><span class='line'>                 <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
 </span><span class='line'>                        <span class="nx">b</span><span class="p">.</span><span class="nx">stable</span> <span class="o">&lt;-</span> <span class="kc">true</span>
-</span><span class='line'>           <span class="p">}</span>
+</span><span class='line'>                 <span class="p">}</span>
 </span><span class='line'>         <span class="p">}</span>
 </span><span class='line'><span class="p">}</span>
 </span><span class='line'>
