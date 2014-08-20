@@ -41,30 +41,30 @@ func addDigit(b *Bignum, num int, in <-chan bool) chan bool {
 func carry(d *Digit) {
          for in_msg := range d.pull_carry {
      	         out_msg := false
-	 	 if in_msg {
-		    	 sum := d.value + 1
-			 if sum >= 10 {
-		     	         d.value = sum - 10
-			         out_msg = true
-			    } else {
-			         d.value = sum
-			    }
-		 }
-		 d.push_carry <- out_msg
-	 }
+                 if in_msg {
+                         sum := d.value + 1
+                         if sum >= 10 {
+                                 d.value = sum - 10
+                                 out_msg = true
+                         } else {
+                                 d.value = sum
+                         }
+                 }
+                 d.push_carry <- out_msg
+          }
 }
 
 func sentinel(b *Bignum, in <-chan bool) {
         for {
-     	        var msg = <-in
-         	if msg {
+                var msg = <-in
+                if msg {
                         last_out := addDigit(b, 1, in)
                         go sentinel(b, last_out)
-         	        last_out <- false
-		        break
+                        last_out <- false
+                        break
                  } else {
                         b.stable <- true
-	         }
+                 }
          }
 }
  
