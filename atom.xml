@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2014-09-02T16:54:59-07:00</updated>
+  <updated>2014-11-05T15:06:27-08:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,26 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Moving to Ello]]></title>
+    <link href="http://agam.github.io/blog/2014/11/05/moving-to-ello/"/>
+    <updated>2014-11-05T14:57:30-08:00</updated>
+    <id>http://agam.github.io/blog/2014/11/05/moving-to-ello</id>
+    <content type="html"><![CDATA[<p>Yeah it&rsquo;s been pretty <em>dry</em> over here lately. Looks like the last post was on September 2, over <em>two months ago</em>. Many reasons, one of which is that I&rsquo;m too lazy <em>even for Github pages</em>. Yes, I frequently cannot even be bothered to do something as simple as <code>rake new_post["Why I procrastinate endlessly: 20 reasons"]</code>.</p>
+
+<p>Why, I ask myself, did I start using Jekyll/Octopress/GithubPages anyway?</p>
+
+<ol>
+<li><p>The &ldquo;cool factor&rdquo;. Don&rsquo;t care anymore.</p></li>
+<li><p>Ease of use and maintenance. True, it&rsquo;s better than Wordpress, but this is a low bar.</p></li>
+<li><p>Using markdown in posts. This was <em>the</em> big reason, in hindsight. Three years ago there was <em>no</em> other way to do this. Today, even Wordpress supports markdown out of the box.</p></li>
+</ol>
+
+
+<p>Given all this, I don&rsquo;t see a reason (other than good code formatting) why I shouldn&rsquo;t just stay in <a href="https://ello.co/agamb">Ello</a> instead &hellip;</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[A Ridiculous graph]]></title>
@@ -1611,33 +1631,6 @@ itself implicitly at (radius,radius) set to 0&quot;
 <p>If you want to try to find me you still can; but I&rsquo;m just not going to advertise it, that&rsquo;s all.</p>
 
 <p><strong>Edit</strong>: Ok, It doesn&rsquo;t <em>entirely</em> have to be limited to that, I can still share some additional stuff, perhaps just not the <em>interesting</em> stuff.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[How fast can you factor ?]]></title>
-    <link href="http://agam.github.io/blog/2014/02/04/how-fast-can-you-factor/"/>
-    <updated>2014-02-04T18:52:00-08:00</updated>
-    <id>http://agam.github.io/blog/2014/02/04/how-fast-can-you-factor</id>
-    <content type="html"><![CDATA[<p>For no other reason than <em>because it&rsquo;s there</em>, here is the result of asking Mathematica to factor <a href="http://en.wikipedia.org/wiki/RSA_numbers#RSA-100">RSA 100</a>.</p>
-
-<p>In 1991,</p>
-
-<blockquote><p>&hellip; the factorization took a few days using the multiple-polynomial quadratic sieve algorithm on a MasPar parallel computer.</p></blockquote>
-
-<p>and now,</p>
-
-<blockquote><p>It takes four hours to repeat this factorization using the program Msieve on a 2200 MHz Athlon 64 processor.</p></blockquote>
-
-<p>In comparison, Mathematica took little more than an hour. Unfortunately, it was not able to parallelize it (for a <em>real</em> comparison, the <a href="http://sourceforge.net/projects/msieve/files/msieve/Msieve%20v1.51/">Msieve code</a> would have to be ported over).</p>
-
-<p><img class="center" src="http://farm6.staticflickr.com/5510/12309071334_575cda01f9_z_d.jpg" title="" ></p>
-
-<p><strong>Update:</strong> This has been much better documented on <a href="http://mathematica.stackexchange.com/questions/14964/time-approximation-of-decrypting-rsa-algorithm">this StackExchange thread</a>, which also links to <a href="http://reference.wolfram.com/mathematica/tutorial/SomeNotesOnInternalImplementation.html#12915">notes on internal implementation</a>, in case you&rsquo;re interested:</p>
-
-<blockquote><p>FactorInteger switches between trial division, Pollard , Pollard rho, elliptic curve, and quadratic sieve algorithms.</p></blockquote>
-
-<p>Finally, more on RSA Numbers, as well as a Mathematica Notebook, <a href="http://mathworld.wolfram.com/RSANumber.html">here</a></p>
 ]]></content>
   </entry>
   
