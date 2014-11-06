@@ -16,4 +16,6 @@ Why, I ask myself, did I start using Jekyll/Octopress/GithubPages anyway?
 
 3. Using markdown in posts. This was _the_ big reason, in hindsight. Three years ago there was _no_ other way to do this. Today, even Wordpress supports markdown out of the box.
 
-Given all this, I don't see a reason (other than good code formatting) why I shouldn't just stay in [Ello](https://ello.co/agamb) instead ...
+Given all this, I don't see a reason (other than good code formatting) why I shouldn't just stay in [Ello](https://ello.co/agamb) instead.
+
+_Update_: Nah, I really want to be able to separate the "code-related" stuff from other stuff to talk about. So this blog stays ...
