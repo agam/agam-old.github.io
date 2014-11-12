@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2014-11-06T11:28:17-08:00</updated>
+  <updated>2014-11-11T18:14:31-08:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,34 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Haskell/Math]]></title>
+    <link href="http://agam.github.io/blog/2014/11/11/haskell-slash-math/"/>
+    <updated>2014-11-11T18:05:43-08:00</updated>
+    <id>http://agam.github.io/blog/2014/11/11/haskell-slash-math</id>
+    <content type="html"><![CDATA[<p>I don&rsquo;t recall the very first articles I might have read about Haskell, but the first non-short text was Real World Haskell, which I went through the year it came out. I didn&rsquo;t write any code at that time (a mistake!)</p>
+
+<p>Then, a coupffle of years later, I thought I&rsquo;d try my hand at <a href="https://projecteuler.net/">Project Euler</a> with Haskell. I did the first 10-15 and then got bored.</p>
+
+<p><em>Another</em> couple of years later, I decided to &ldquo;try it out&rdquo; again. This time, it was by starting a static blog (this one!) in <a href="http://jaspervdj.be/hakyll/">Hakyll</a>, and disassembling some trivial programs. This also didn&rsquo;t last, and after my initial brush with &ldquo;<a href="https://www.haskell.org/haskellwiki/Cabal/Survival">cabal</a> <a href="http://www.well-typed.com/blog/2014/09/how-we-might-abolish-cabal-hell-part-1/">hell</a>&rdquo;, I switched to <a href="http://jekyllrb.com/">Jekyll</a> instead.</p>
+
+<p>I poked around with <a href="http://www.yesodweb.com/">Yesod</a> and its various <a href="https://hackage.haskell.org/package/shakespeare">&ldquo;shakespearean&rdquo;</a> plugins, and gave that up too.</p>
+
+<p>At one point I found myself asking the question: &ldquo;Why am I doing this in Haskell at all?&rdquo; And the answer, obviously, was that (of course!) I <em>didn&rsquo;t need to</em>. So I lost interest altogether.</p>
+
+<p>Now I realize these were all misguided efforts. What I should have done was to approach the whole thing from a more <em>fundamental</em> plane, the way SICP introduces Scheme. So, I&rsquo;ve decided to make my way through <a href="http://www.amazon.com/Haskell-Programming-Second-Edition-Computing/dp/0954300696">The Haskell Road to Maths, Logic and Programming</a>, trying as hard as I can to <em>not</em> let preconceived notions filter through, and to take it all in with a &ldquo;beginner&rsquo;s mind&rdquo;.</p>
+
+<p>It&rsquo;s going to be a while :)</p>
+
+<br><br>
+
+
+<p><em>P.S. Emacs support for Haskell is pretty sweet. Here&rsquo;s a n00b-level screenshot showing a &ldquo;SLIME-style&rdquo; ghci session</em></p>
+
+<p><img class="center" src="http://agam.github.io/images/haskell-emacs-ghci.png"></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Moving to Ello]]></title>
@@ -1616,23 +1644,6 @@ itself implicitly at (radius,radius) set to 0&quot;
 </span><span class='line'>    <span class="p">(</span><span class="nv">max-min-helper</span> <span class="nv">lst</span> <span class="no">nil</span> <span class="no">nil</span><span class="p">)))</span>
 </span></code></pre></td></tr></table></div></figure>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Living Pseudonymously]]></title>
-    <link href="http://agam.github.io/blog/2014/02/19/living-pseudonymously/"/>
-    <updated>2014-02-19T01:29:00-08:00</updated>
-    <id>http://agam.github.io/blog/2014/02/19/living-pseudonymously</id>
-    <content type="html"><![CDATA[<p>For various reasons, this blog is going to be focussed just on C++ programming, as boring as that may sound.</p>
-
-<p>I&rsquo;ll try not to make it <em>too</em> boring, but we&rsquo;ll see.</p>
-
-<p>Meanwhile everything <em>else</em> will still exist, just not here. Starting with the last two posts.</p>
-
-<p>If you want to try to find me you still can; but I&rsquo;m just not going to advertise it, that&rsquo;s all.</p>
-
-<p><strong>Edit</strong>: Ok, It doesn&rsquo;t <em>entirely</em> have to be limited to that, I can still share some additional stuff, perhaps just not the <em>interesting</em> stuff.</p>
 ]]></content>
   </entry>
   

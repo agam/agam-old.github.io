@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: haskell, | Agam's Mashed-Up Pome]]></title>
-  <link href="http://agam.github.io/blog/categories/haskell/atom.xml" rel="self"/>
+  <title><![CDATA[Category: math | Agam's Mashed-Up Pome]]></title>
+  <link href="http://agam.github.io/blog/categories/math/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
   <updated>2014-11-11T18:14:31-08:00</updated>
   <id>http://agam.github.io/</id>
@@ -38,27 +38,6 @@
 <p><em>P.S. Emacs support for Haskell is pretty sweet. Here&rsquo;s a n00b-level screenshot showing a &ldquo;SLIME-style&rdquo; ghci session</em></p>
 
 <p><img class="center" src="/images/haskell-emacs-ghci.png"></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Scala/Haskell/Go]]></title>
-    <link href="http://agam.github.io/blog/2014/08/04/scala-slash-haskell-slash-go/"/>
-    <updated>2014-08-04T12:33:51-07:00</updated>
-    <id>http://agam.github.io/blog/2014/08/04/scala-slash-haskell-slash-go</id>
-    <content type="html"><![CDATA[<p>Ok, Scala is neat. It&rsquo;s certainly the <em>only</em> way I can bring myself to use the JVM. The idea of everything being an object is a good one. You can &lsquo;cheat&rsquo; a bit since you can use statements, mix in side effects, do whatever, but I understand the compromises for Java-interop, without which it would would have been just another unused academic language.</p>
-
-<p>It seems to be a <em>completely unopinionated</em> language, which IMO seems not so great since there are too many ways to do anything, so in practice you&rsquo;d have to pick some subset of features and stick with that, enforced as a style guide rather than by the compiler (much like all reasonable C++ programming is done today).</p>
-
-<p>Even if you never plan to use Scala, the two courses on Coursera are recommended viewing.</p>
-
-<p>Having done that, would I still use Scala? If I needed to use the JVM or existing Java libraries, this is a no-brainer. But without that constraint? Not quite sure. One of Haskell (for the type safety) or Go (for the reactive concurrency) might fit the bill just as well.</p>
-
-<p>Anyway, I&rsquo;m still working through these videos and I&rsquo;ve yet to build anything half-way complex with it, so take all this with a grain of salt.</p>
-
-<p>One open question I do have is whether Scala benefits from subtyping (which Haskell lacks). I&rsquo;ve heard/read many viewpoints on this but haven&rsquo;t come to a conclusion yet &hellip;</p>
-
-<p><strong>Update</strong>: I got some feedback to the effect of &ldquo;you&rsquo;re an idiot, you should just drop everything and use Go instead&rdquo;, so I&rsquo;m going to try that for a while and report back in &hellip; many months? Maybe.</p>
 ]]></content>
   </entry>
   
