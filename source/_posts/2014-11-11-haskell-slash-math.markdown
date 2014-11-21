@@ -25,3 +25,5 @@ It's going to be a while :)
 _P.S. Emacs support for Haskell is pretty sweet. Here's a n00b-level screenshot showing a "SLIME-style" ghci session_
 
 {% img center /images/haskell-emacs-ghci.png %}
+
+**Update:** Someone suggested I should read _a more recent_ book, [Programming in Haskell](http://www.cs.nott.ac.uk/~gmh/book.html) by Graham Hutton, so I guess I'll do that first.
