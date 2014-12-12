@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2014-11-20T16:46:33-08:00</updated>
+  <updated>2014-12-11T22:39:23-08:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,65 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Failure to ragequit]]></title>
+    <link href="http://agam.github.io/blog/2014/12/11/failure-to-ragequit/"/>
+    <updated>2014-12-11T22:07:14-08:00</updated>
+    <id>http://agam.github.io/blog/2014/12/11/failure-to-ragequit</id>
+    <content type="html"><![CDATA[<p>Migrating from my Github blog (in Octopress) was supposed to work pretty much as specified in <a href="http://www.stackednotion.com/blog/2014/02/26/migrating-from-octopress-to-wordpress/">this guide</a> <sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></p>
+
+<ul>
+<li>I used <a href="https://gist.github.com/lucaspiller/9229838#file-rss-xml">this gist</a> in <code>source/rss.xml</code> and then ran <code>rake generate</code></li>
+<li>I imported the generated file (in <code>public/rss.xml</code>) into my Wordpress blog, only to see this error
+
+<blockquote><p>This does not appear to be a WXR file, missing/invalid WXR version number.</p></blockquote></li>
+<li>A helpful post on <a href="https://wordpress.org/support/topic/xml-to-wxr-issue">the Wordpress Forums</a> suggested the following change</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;rss xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0"&gt;
+</span><span class='line'>  &lt;channel&gt;
+</span><span class='line'>    &lt;atom:link rel="hub" href="http://pubsubhubbub.appspot.com" xmlns:atom="http://www.w3.org/2005/Atom"/&gt;
+</span><span class='line'>    &lt;wp:wxr_version&gt;1.1&lt;/wp:wxr_version&gt;
+</span><span class='line'>    &lt;title&gt;Agam&#39;s Mashed-Up Pome&lt;/title&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>(i.e. adding the <code>wxr_version</code> marker line after the language specification)</p>
+
+<ul>
+<li>After this, I tried importing again, it gave some warnings about not recognizing the author (which was to be expected) &hellip; and then though it said &ldquo;import successful!&rdquo;, there were no posts to be seen!</li>
+</ul>
+
+
+<p><strong>WTF Aaaarrgh WTF</strong></p>
+
+<p><em>Update: An hour later, more sober &hellip;</em></p>
+
+<p>Yeah, I don&rsquo;t have the <em>$&amp;@%in</em> time to waste trying various other hacks. The big reasons I wanted to switch was that</p>
+
+<ol>
+<li>I don&rsquo;t want to muck around with Ruby <em>ever again</em>, and</li>
+<li>I want to be able to write posts <em>online</em> (i.e. through some sort of browser interface).</li>
+</ol>
+
+
+<p>Now (1) is not an immediate problem, so I suppose if it re-occurs, I&rsquo;ll put more time/effort into quitting Octopress, but meanwhile there are compromises possible for (2), such as the nice interface of <a href="http://draftin.com">draftin.com</a> that I <em>just</em> discovered. <em>So yeah, this blog lives on &hellip;</em></p>
+<div class="footnotes">
+<hr/>
+<ol>
+<li id="fn:1">
+<p>This is the <em>second</em> time I&rsquo;ve tried to jump from Octopress to Wordpress; Google suggests that most people seem to be <a href="https://www.google.com/search?q=migrate+%22from+wordpress+to+octopress%22&amp;oq=migrate+%22from+wordpress+to+octopress">going the opposite direction</a><a href="#fnref:1" rev="footnote">&#8617;</a></p></li>
+</ol>
+</div>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Haskell/Math]]></title>
@@ -1406,246 +1465,6 @@ itself implicitly at (radius,radius) set to 0&quot;
 <p><strong>Edit</strong>: The credit expires in July :(</p>
 
 <p><strong>Edit</strong>: Amazon actually has a <a href="http://aws.amazon.com/free">free tier</a> which effectively amounts to the same thing</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Some Lisp exercises]]></title>
-    <link href="http://agam.github.io/blog/2014/03/31/some-lisp-exercises/"/>
-    <updated>2014-03-31T10:25:00-07:00</updated>
-    <id>http://agam.github.io/blog/2014/03/31/some-lisp-exercises</id>
-    <content type="html"><![CDATA[<p>Reading through ANSI Common Lisp, and doing some of the exercises as I come across them. Here are a few from Ch 4 and 5:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-<span class='line-number'>72</span>
-<span class='line-number'>73</span>
-<span class='line-number'>74</span>
-<span class='line-number'>75</span>
-<span class='line-number'>76</span>
-<span class='line-number'>77</span>
-<span class='line-number'>78</span>
-<span class='line-number'>79</span>
-<span class='line-number'>80</span>
-<span class='line-number'>81</span>
-<span class='line-number'>82</span>
-<span class='line-number'>83</span>
-<span class='line-number'>84</span>
-<span class='line-number'>85</span>
-<span class='line-number'>86</span>
-<span class='line-number'>87</span>
-<span class='line-number'>88</span>
-<span class='line-number'>89</span>
-<span class='line-number'>90</span>
-<span class='line-number'>91</span>
-<span class='line-number'>92</span>
-<span class='line-number'>93</span>
-<span class='line-number'>94</span>
-<span class='line-number'>95</span>
-<span class='line-number'>96</span>
-<span class='line-number'>97</span>
-<span class='line-number'>98</span>
-<span class='line-number'>99</span>
-<span class='line-number'>100</span>
-<span class='line-number'>101</span>
-<span class='line-number'>102</span>
-<span class='line-number'>103</span>
-<span class='line-number'>104</span>
-<span class='line-number'>105</span>
-<span class='line-number'>106</span>
-<span class='line-number'>107</span>
-<span class='line-number'>108</span>
-<span class='line-number'>109</span>
-<span class='line-number'>110</span>
-<span class='line-number'>111</span>
-<span class='line-number'>112</span>
-<span class='line-number'>113</span>
-<span class='line-number'>114</span>
-</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">rotate-square-array</span> <span class="p">(</span><span class="nv">arr</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">let*</span> <span class="p">((</span><span class="nv">dim</span> <span class="p">(</span><span class="nb">car</span> <span class="p">(</span><span class="nb">array-dimensions</span> <span class="nv">arr</span><span class="p">)))</span>
-</span><span class='line'>  <span class="p">(</span><span class="nv">newarr</span> <span class="p">(</span><span class="nb">make-array</span> <span class="p">(</span><span class="nb">list</span> <span class="nv">dim</span> <span class="nv">dim</span><span class="p">))))</span>
-</span><span class='line'>    <span class="p">(</span><span class="nb">dotimes</span> <span class="p">(</span><span class="nv">i</span> <span class="nv">dim</span><span class="p">)</span>
-</span><span class='line'>      <span class="p">(</span><span class="nb">dotimes</span> <span class="p">(</span><span class="nv">j</span> <span class="nv">dim</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">setf</span> <span class="p">(</span><span class="nb">aref</span> <span class="nv">newarr</span> <span class="nv">j</span> <span class="p">(</span><span class="nb">-</span> <span class="nv">dim</span> <span class="p">(</span><span class="nb">1+</span> <span class="nv">i</span><span class="p">)))</span> <span class="p">(</span><span class="nb">aref</span> <span class="nv">arr</span> <span class="nv">i</span> <span class="nv">j</span><span class="p">))))</span>
-</span><span class='line'>    <span class="nv">newarr</span><span class="p">))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">rev-l</span> <span class="p">(</span><span class="nv">lst</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">reduce</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">elem</span> <span class="nv">acc</span><span class="p">)</span> <span class="p">(</span><span class="nb">cons</span> <span class="nv">acc</span> <span class="nv">elem</span><span class="p">))</span> <span class="nv">lst</span> <span class="ss">:initial-value</span> <span class="no">nil</span><span class="p">))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">copy-l</span> <span class="p">(</span><span class="nv">lst</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">reduce</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">elem</span> <span class="nv">acc</span><span class="p">)</span> <span class="p">(</span><span class="nb">cons</span> <span class="nv">elem</span> <span class="nv">acc</span><span class="p">))</span> <span class="nv">lst</span>
-</span><span class='line'>    <span class="ss">:initial-value</span> <span class="no">nil</span> <span class="ss">:from-end</span> <span class="no">t</span><span class="p">))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">alist-to-ht</span> <span class="p">(</span><span class="nv">alist</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">ht</span> <span class="p">(</span><span class="nb">make-hash-table</span><span class="p">)))</span>
-</span><span class='line'>    <span class="p">(</span><span class="nb">mapcar</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">kvpair</span><span class="p">)</span>
-</span><span class='line'>        <span class="p">(</span><span class="nb">setf</span> <span class="p">(</span><span class="nb">gethash</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">kvpair</span><span class="p">)</span> <span class="nv">ht</span><span class="p">)</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">kvpair</span><span class="p">)))</span>
-</span><span class='line'>      <span class="nv">alist</span><span class="p">)</span>
-</span><span class='line'>    <span class="nv">ht</span><span class="p">))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">ht-to-alist</span> <span class="p">(</span><span class="nv">ht</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">alist</span> <span class="o">&#39;</span><span class="p">()))</span>
-</span><span class='line'>    <span class="p">(</span><span class="nb">maphash</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">k</span> <span class="nv">v</span><span class="p">)</span>
-</span><span class='line'>         <span class="p">(</span><span class="nb">setf</span> <span class="nv">alist</span> <span class="p">(</span><span class="nb">acons</span> <span class="nv">k</span> <span class="nv">v</span> <span class="nv">alist</span><span class="p">)))</span>
-</span><span class='line'>       <span class="nv">ht</span><span class="p">)</span>
-</span><span class='line'>    <span class="nv">alist</span><span class="p">))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">precedes-iter</span> <span class="p">(</span><span class="nv">obj</span> <span class="nv">vec</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">pos-list</span> <span class="o">&#39;</span><span class="p">()))</span>
-</span><span class='line'>    <span class="p">(</span><span class="nb">do*</span> <span class="p">((</span><span class="nv">last-pos</span> <span class="p">(</span><span class="nb">position</span> <span class="nv">obj</span> <span class="nv">vec</span><span class="p">)</span>
-</span><span class='line'>          <span class="p">(</span><span class="nb">position</span> <span class="nv">obj</span> <span class="nv">vec</span> <span class="ss">:start</span> <span class="p">(</span><span class="nb">1+</span> <span class="nv">last-pos</span><span class="p">))))</span>
-</span><span class='line'>   <span class="p">((</span><span class="nb">eql</span> <span class="nv">last-pos</span> <span class="no">nil</span><span class="p">)</span> <span class="nv">pos-list</span><span class="p">)</span>
-</span><span class='line'>      <span class="p">(</span><span class="nb">and</span> <span class="p">(</span><span class="nb">&gt;</span> <span class="nv">last-pos</span> <span class="mi">0</span><span class="p">)</span>
-</span><span class='line'>     <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">elem</span> <span class="p">(</span><span class="nb">elt</span> <span class="nv">vec</span> <span class="p">(</span><span class="nb">-</span> <span class="nv">last-pos</span> <span class="mi">1</span><span class="p">))))</span>
-</span><span class='line'>       <span class="p">(</span><span class="nb">setf</span> <span class="nv">pos-list</span> <span class="p">(</span><span class="nb">adjoin</span> <span class="nv">elem</span> <span class="nv">pos-list</span><span class="p">)))))))</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">precedes-recur</span> <span class="p">(</span><span class="nv">obj</span> <span class="nv">vec</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">labels</span> <span class="p">((</span><span class="nv">precedes-helper</span> <span class="p">(</span><span class="nv">obj</span> <span class="nv">vec</span> <span class="nv">pos-list</span> <span class="nv">start-pos</span><span class="p">)</span>
-</span><span class='line'>       <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">next-pos</span> <span class="p">(</span><span class="nb">position</span> <span class="nv">obj</span> <span class="nv">vec</span> <span class="ss">:start</span> <span class="nv">start-pos</span><span class="p">)))</span>
-</span><span class='line'>         <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">null</span> <span class="nv">next-pos</span><span class="p">)</span>
-</span><span class='line'>         <span class="nv">pos-list</span>
-</span><span class='line'>         <span class="p">(</span><span class="nv">precedes-helper</span> <span class="nv">obj</span> <span class="nv">vec</span>
-</span><span class='line'>                  <span class="p">(</span><span class="nb">adjoin</span> <span class="p">(</span><span class="nb">elt</span> <span class="nv">vec</span> <span class="p">(</span><span class="nb">-</span> <span class="nv">next-pos</span> <span class="mi">1</span><span class="p">))</span>
-</span><span class='line'>                      <span class="nv">pos-list</span><span class="p">)</span>
-</span><span class='line'>                  <span class="p">(</span><span class="nb">1+</span> <span class="nv">next-pos</span><span class="p">))))))</span>
-</span><span class='line'>    <span class="p">(</span><span class="nv">precedes-helper</span> <span class="nv">obj</span> <span class="nv">vec</span> <span class="o">&#39;</span><span class="p">()</span> <span class="mi">1</span><span class="p">)))</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">intersperse-recur</span> <span class="p">(</span><span class="nv">obj</span> <span class="nv">lst</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">labels</span> <span class="p">((</span><span class="nv">intersperse-helper</span> <span class="p">(</span><span class="nv">obj</span> <span class="nv">lst</span><span class="p">)</span>
-</span><span class='line'>       <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">null</span> <span class="nv">lst</span><span class="p">)</span>
-</span><span class='line'>       <span class="no">nil</span>
-</span><span class='line'>       <span class="p">(</span><span class="nb">cons</span> <span class="nv">obj</span> <span class="p">(</span><span class="nb">cons</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">lst</span><span class="p">)</span>
-</span><span class='line'>               <span class="p">(</span><span class="nv">intersperse-helper</span> <span class="nv">obj</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">lst</span><span class="p">)))))))</span>
-</span><span class='line'>    <span class="p">(</span><span class="nb">cons</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">lst</span><span class="p">)</span> <span class="p">(</span><span class="nv">intersperse-helper</span> <span class="nv">obj</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">lst</span><span class="p">)))))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">intersperse-iter</span> <span class="p">(</span><span class="nv">obj</span> <span class="nv">lst</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">do</span> <span class="p">((</span><span class="nv">iter-lst</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">lst</span><span class="p">)</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">iter-lst</span><span class="p">))</span>
-</span><span class='line'>       <span class="p">(</span><span class="nv">result</span> <span class="p">(</span><span class="nb">list</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">lst</span><span class="p">))</span> <span class="p">(</span><span class="nb">cons</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">iter-lst</span><span class="p">)</span> <span class="p">(</span><span class="nb">cons</span> <span class="nv">obj</span> <span class="nv">result</span><span class="p">))))</span>
-</span><span class='line'>      <span class="p">((</span><span class="nb">null</span> <span class="nv">iter-lst</span><span class="p">)</span>
-</span><span class='line'>       <span class="p">(</span><span class="nb">reverse</span> <span class="nv">result</span><span class="p">))))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">within-one</span> <span class="p">(</span><span class="nv">x</span> <span class="nv">y</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">or</span> <span class="p">(</span><span class="nb">=</span> <span class="nv">x</span> <span class="p">(</span><span class="nb">1+</span> <span class="nv">y</span><span class="p">))</span>
-</span><span class='line'>      <span class="p">(</span><span class="nb">=</span> <span class="nv">y</span> <span class="p">(</span><span class="nb">1+</span> <span class="nv">x</span><span class="p">))))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">orderedlistp-recur</span> <span class="p">(</span><span class="nv">lst</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">labels</span> <span class="p">((</span><span class="nv">ordered-list-helper</span> <span class="p">(</span><span class="nv">elem</span> <span class="nv">lst</span><span class="p">)</span>
-</span><span class='line'>       <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">null</span> <span class="nv">lst</span><span class="p">)</span>
-</span><span class='line'>       <span class="no">t</span>
-</span><span class='line'>       <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">x</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">lst</span><span class="p">)))</span>
-</span><span class='line'>         <span class="p">(</span><span class="nb">and</span> <span class="p">(</span><span class="nv">within-one</span> <span class="nv">elem</span> <span class="nv">x</span><span class="p">)</span>
-</span><span class='line'>          <span class="p">(</span><span class="nv">ordered-list-helper</span> <span class="nv">x</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">lst</span><span class="p">)))))))</span>
-</span><span class='line'>    <span class="p">(</span><span class="nv">ordered-list-helper</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">lst</span><span class="p">)</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">lst</span><span class="p">))))</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">orderedlistp-iter</span> <span class="p">(</span><span class="nv">lst</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">do*</span> <span class="p">((</span><span class="nv">ordered</span> <span class="no">t</span>
-</span><span class='line'>       <span class="p">(</span><span class="nv">within-one</span> <span class="nv">first-elem</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">remaining</span><span class="p">)))</span>
-</span><span class='line'>  <span class="p">(</span><span class="nv">first-elem</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">lst</span><span class="p">)</span>
-</span><span class='line'>          <span class="p">(</span><span class="nb">car</span> <span class="nv">remaining</span><span class="p">))</span>
-</span><span class='line'>  <span class="p">(</span><span class="nv">remaining</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">lst</span><span class="p">)</span>
-</span><span class='line'>         <span class="p">(</span><span class="nb">cdr</span> <span class="nv">remaining</span><span class="p">)))</span>
-</span><span class='line'>       <span class="p">((</span><span class="nb">or</span> <span class="p">(</span><span class="nb">null</span> <span class="nv">remaining</span><span class="p">)</span>
-</span><span class='line'>      <span class="p">(</span><span class="nb">not</span> <span class="nv">ordered</span><span class="p">))</span>
-</span><span class='line'>  <span class="nv">ordered</span><span class="p">)))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">orderedlistp-map</span> <span class="p">(</span><span class="nv">lst</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">flet</span> <span class="p">((</span><span class="nv">ordered-list-mapper</span> <span class="p">(</span><span class="nv">elem1</span> <span class="nv">elem2</span><span class="p">)</span>
-</span><span class='line'>     <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">not</span> <span class="p">(</span><span class="nv">within-one</span> <span class="nv">elem1</span> <span class="nv">elem2</span><span class="p">))</span>
-</span><span class='line'>         <span class="p">(</span><span class="k">return-from</span> <span class="nv">orderedlistp-map</span> <span class="no">nil</span><span class="p">))))</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">mapc</span> <span class="nf">#&#39;</span><span class="nv">ordered-list-mapper</span> <span class="nv">lst</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">lst</span><span class="p">))</span>
-</span><span class='line'>  <span class="no">t</span><span class="p">))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">max-and-min</span> <span class="p">(</span><span class="nv">lst</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">labels</span> <span class="p">((</span><span class="nv">max-min-helper</span> <span class="p">(</span><span class="nv">lst</span> <span class="nv">curmin</span> <span class="nv">curmax</span><span class="p">)</span>
-</span><span class='line'>       <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">null</span> <span class="nv">lst</span><span class="p">)</span>
-</span><span class='line'>       <span class="p">(</span><span class="nb">values</span> <span class="nv">curmin</span> <span class="nv">curmax</span><span class="p">)</span>
-</span><span class='line'>       <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">elem</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">lst</span><span class="p">))</span>
-</span><span class='line'>             <span class="p">(</span><span class="nb">rest</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">lst</span><span class="p">)))</span>
-</span><span class='line'>         <span class="p">(</span><span class="nb">cond</span>
-</span><span class='line'>           <span class="p">((</span><span class="nb">and</span> <span class="p">(</span><span class="nb">eql</span> <span class="nv">curmin</span> <span class="no">nil</span><span class="p">)</span>
-</span><span class='line'>             <span class="p">(</span><span class="nb">eql</span> <span class="nv">curmax</span> <span class="no">nil</span><span class="p">))</span>
-</span><span class='line'>            <span class="p">(</span><span class="nv">max-min-helper</span> <span class="nb">rest</span> <span class="nv">elem</span> <span class="nv">elem</span><span class="p">))</span>
-</span><span class='line'>           <span class="p">((</span><span class="nb">&gt;</span> <span class="nv">elem</span> <span class="nv">curmax</span><span class="p">)</span>
-</span><span class='line'>            <span class="p">(</span><span class="nv">max-min-helper</span> <span class="nb">rest</span> <span class="nv">curmin</span> <span class="nv">elem</span><span class="p">))</span>
-</span><span class='line'>           <span class="p">((</span><span class="nb">&lt;</span> <span class="nv">elem</span> <span class="nv">curmin</span><span class="p">)</span>
-</span><span class='line'>            <span class="p">(</span><span class="nv">max-min-helper</span> <span class="nb">rest</span> <span class="nv">elem</span> <span class="nv">curmax</span><span class="p">))</span>
-</span><span class='line'>           <span class="p">(</span><span class="no">t</span>
-</span><span class='line'>            <span class="p">(</span><span class="nv">max-min-helper</span> <span class="nb">rest</span> <span class="nv">curmin</span> <span class="nv">curmax</span><span class="p">)))))))</span>
-</span><span class='line'>    <span class="p">(</span><span class="nv">max-min-helper</span> <span class="nv">lst</span> <span class="no">nil</span> <span class="no">nil</span><span class="p">)))</span>
-</span></code></pre></td></tr></table></div></figure>
-
 ]]></content>
   </entry>
   
