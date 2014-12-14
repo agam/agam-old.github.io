@@ -4,7 +4,7 @@
   <title><![CDATA[Category: freebsd, | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/freebsd/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2014-12-14T14:01:07-08:00</updated>
+  <updated>2014-12-14T15:49:27-08:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -24,11 +24,11 @@
 
 <h3><em>Step 1</em>: Install the emulator</h3>
 
-<blockquote><p><code>sudo apt-get install qemu</code></p></blockquote>
+<p><code>&gt; sudo apt-get install qemu</code></p>
 
 <h3><em>Step 2</em>: Get the FreeBSD version to install &mdash; in my case, I picked the &ldquo;disc1&rdquo; version corresponding to the &ldquo;RELEASE&rdquo; image<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup></h3>
 
-<blockquote><p><code>wget ftp://ftp.freebsd.org/pub/FreeBSD/releases/amd64/amd64/ISO-IMAGES/10.1/FreeBSD-10.1-RELEASE-amd64-disc1.iso</code></p></blockquote>
+<p><code>&gt; wget ftp://ftp.freebsd.org/pub/FreeBSD/releases/amd64/amd64/ISO-IMAGES/10.1/FreeBSD-10.1-RELEASE-amd64-disc1.iso</code></p>
 
 <h3><em>Step 3</em>: Create the disk image for the emulator</h3>
 
@@ -108,13 +108,14 @@ echo “server 169.254.169.254” >> /etc/ntp.conf</p>
 <li>Authenticate: Run <code>gcloud auth login</code> and follow the url to enter the code</li>
 <li>Prepare the image for upload: <code>tar -Szcf freebsd.tar.gz disk.raw</code></li>
 <li>Create a bucket<sup id="fnref:9"><a href="#fn:9" rel="footnote">9</a></sup> and upload<sup id="fnref:10"><a href="#fn:10" rel="footnote">10</a></sup> the image there (Note: I was shocked, <em>shocked</em>, by how <em>fast</em> this upload went!)</li>
-<li>Prepare the image for use in your VM and insert it
-<code>&gt; gcutil addimage freebsd gs://&lt;bucket&gt;/&lt;object&gt;</code>
-<code>&gt; gcutil --project &lt;project_id&gt; freebsd gs://&lt;bucket&gt;/&lt;object&gt;</code></li>
-<li>Add a VM and SSH to it (both these operations can be done either through the &ldquo;Google Cloud Console&rdquo; or the command-line client<sup id="fnref:11"><a href="#fn:11" rel="footnote">11</a></sup>). E.g. in my case the latter is
-<code>&gt; gcloud compute ssh myvm</code><sup id="fnref:12"><a href="#fn:12" rel="footnote">12</a></sup></li>
+<li>Prepare the image for use in your VM and insert it</li>
 </ul>
 
+
+<p><code>&gt; gcutil addimage freebsd gs://&lt;bucket&gt;/&lt;object&gt;</code>
+<code>&gt; gcutil --project &lt;project_id&gt; freebsd gs://&lt;bucket&gt;/&lt;object&gt;</code>
+&ndash; Add a VM and SSH to it (both these operations can be done either through the &ldquo;Google Cloud Console&rdquo; or the command-line client<sup id="fnref:11"><a href="#fn:11" rel="footnote">11</a></sup>). E.g. in my case the latter is
+<code>&gt; gcloud compute ssh myvm</code><sup id="fnref:12"><a href="#fn:12" rel="footnote">12</a></sup></p>
 
 <h3><em>Step 10</em>: Nope</h3>
 
@@ -182,9 +183,77 @@ KDB: stack backtrace:</p>
 
 <p>Looks like this may be a corrupt disk? Not sure. But pretty bummed :(</p>
 
-<p>I&rsquo;ll try again with a smaller disk size, or just do it (the easier way?) with Amazon, or else stop this pointless tinkering and &ldquo;get on with real work&rdquo; :)</p>
+<p><em><strong>Update</strong></em>: I see people having luck with either (1) building a &ldquo;rescue disk&rdquo; on a running FreeBSD machine (not an option for me), or (2) using the <code>mfsbsd</code><sup id="fnref:13"><a href="#fn:13" rel="footnote">13</a></sup> remote install. I think I&rsquo;ll try the latter when I get time.</p>
 
-<p><em>Update</em>: I see people having luck with either (1) building a &ldquo;rescue disk&rdquo; on a running FreeBSD machine (not an option for me), or (2) using the <code>mfsbsd</code><sup id="fnref:13"><a href="#fn:13" rel="footnote">13</a></sup> remote install. I think I&rsquo;ll try the latter when I get time.</p>
+<p><em><strong>Update</strong></em>: Here&rsquo;s how that went :&ndash;</p>
+
+<ul>
+<li>Get the <code>mfsbsd</code> image</li>
+</ul>
+
+
+<p><code>&gt; curl -o disk.raw http://mfsbsd.vx.sk/files/iso/10/amd64/mfsbsd-se-10.1-RELEASE-amd64.iso</code><sup id="fnref:14"><a href="#fn:14" rel="footnote">14</a></sup></p>
+
+<ul>
+<li>Tar it, upload it</li>
+</ul>
+
+
+<p><code>&gt; tar -Szcf mfs-freebsd.tar.gz disk.raw</code>
+<code>&gt; gsutil cp mfs-freebsd.tar.gz gs://&lt;bucket_name&gt;</code>
+<code>&gt; gcutil addimage mfs-freebsd gs://&lt;bucket_name&gt;/mfs-freebsd.tar.gz</code></p>
+
+<ul>
+<li>Create a VM with this instance</li>
+</ul>
+
+
+<p>Aaand &hellip; NOPE again; fails to even show the serial console this time :(
+Error: <code>The resource 'projects/algol-c/zones/us-central1-a/instances/myvm' is not ready</code></p>
+
+<ul>
+<li>Deleted the VM and created it again<sup id="fnref:15"><a href="#fn:15" rel="footnote">15</a></sup></li>
+</ul>
+
+
+<p>Failed again, but this time I grabbed the output before it vanished:</p>
+
+<p>```
+Unable to lock ram &ndash; bridge not found
+Changing serial settings was 3/2 now 3/0
+enter handle_19:
+  NULL
+Booting from Hard Disk&hellip;
+Boot failed: not a bootable disk</p>
+
+<p>enter handle_18:
+  NULL
+Booting from Floppy&hellip;
+Boot failed: could not read the boot disk</p>
+
+<p>enter handle_18:
+  NULL
+No bootable device.  Powering off VM.
+END OF LINE
+  Retrying in 60 seconds.
+```</p>
+
+<ul>
+<li><em>Of course!</em> I have to <em>make</em> a bootable image using this iso (!) But, But, But &hellip;. that needs a running FreeBSD system?!</li>
+</ul>
+
+
+<p><em><strong>Update</strong></em>: Damn, looks like GCE is behind both Amazon and (wtf!) Microsoft on this. From the release notes for v10.1:</p>
+
+<blockquote><p>FreeBSD 10.1-RELEASE is also available on these cloud hosting platforms:</p>
+
+<ul>
+<li>Amazon® EC2™ FreeBSD/amd64</li>
+<li>Microsoft® Azure™ FreeBSD/amd64,  FreeBSD/i386</li>
+</ul>
+</blockquote>
+
+<p><em><strong>Conclusion</strong></em>: The <code>qemu</code> path should have worked, I don&rsquo;t yet understand why not. Another option might be to try the <em>vhd</em> image and get that to work. Or try EC2/Azure. Or wait for someone to figure this out and publicly share a working image. Or give up on FreeBSD and get back &ldquo;to real work&rdquo; :)</p>
 <div class="footnotes">
 <hr/>
 <ol>
@@ -214,6 +283,10 @@ KDB: stack backtrace:</p>
 <p>You also need a <code>--project</code> flag, but you can set a global value for this by running <code>gcloud config set project &lt;project_id&gt;</code><a href="#fnref:12" rev="footnote">&#8617;</a></p></li>
 <li id="fn:13">
 <p>https://www.freebsd.org/doc/en_US.ISO8859-1/articles/remote-install/preparation.html<a href="#fnref:13" rev="footnote">&#8617;</a></p></li>
+<li id="fn:14">
+<p>In case you were wondering, the file name inside the uploaded image <em>has</em> to be <code>disk.raw</code><a href="#fnref:14" rev="footnote">&#8617;</a></p></li>
+<li id="fn:15">
+<p>&ldquo;Terminated&rdquo; VMs have to be dealt with this way, AFAICS<a href="#fnref:15" rev="footnote">&#8617;</a></p></li>
 </ol>
 </div>
 
