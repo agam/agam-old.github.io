@@ -122,6 +122,101 @@
   
 
 
+<i class="icon-calendar-empty"></i> <time datetime="2014-01-08T08:47:00-08:00" pubdate data-updated="true">Jan 8<sup>th</sup>, 2014</time></h5>
+          <div class="row-fluid">
+          
+          </div>
+          
+          <div class="row-fluid">
+          
+          <a href="/blog/categories/urbit/"><span class="badge">urbit</span></a>
+          
+          </div>
+          
+    </div>
+    <div class="span10 post-container">
+      <h1 class="link"><a href="/blog/2014/01/08/urbit-back-again/">Urbit: Back Again</a></h1>
+      <p>Turns out I was affected by the last &ldquo;continuity breach&rdquo;.</p>
+
+<p>So I had to delete everything and start over. In my case this meant</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span><span class="nb">cd </span>urbit
+</span><span class='line'><span class="nv">$ </span>git pull origin master
+</span><span class='line'><span class="nv">$ </span>make clean
+</span><span class='line'><span class="nv">$ </span>make
+</span><span class='line'><span class="nv">$ </span>rm -rf urb/*-*
+</span><span class='line'><span class="nv">$ </span>rm -rf frogstar
+</span><span class='line'><span class="nv">$ </span>vere -c frogstar
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This time when I ran <code>:begin</code> it succeeded</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>generating 2048-bit RSA key...
+</span><span class='line'><span class="p">;</span> ~doznec _Urban Republic_ is your neighbor
+</span><span class='line'><span class="p">;</span> ~doznec _Urban Republic_ is your neighbor
+</span><span class='line'>request approved
+</span><span class='line'><span class="p">;</span> ~zod <span class="p">|</span>Tianming<span class="p">|</span> is your neighbor
+</span><span class='line'><span class="p">;</span> ~zod <span class="p">|</span>Tianming<span class="p">|</span> is your neighbor
+</span><span class='line'><span class="p">;</span> ~doznec _Urban Republic_ is your neighbor
+</span><span class='line'><span class="p">;</span> ~doznec _Urban Republic_ is your neighbor
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&hellip; and then more hoon files were downloaded, after which I got my new prompt:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>~todbyt-nathes/try<span class="o">=</span>&gt;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Next time I&rsquo;ll start exploring <em>Nock</em> and <em>Hoon</em> some more &hellip;</p>
+
+      
+      
+    </div>
+  </div>
+
+
+
+    </article>
+    
+    <hr>
+    
+  
+  
+    <article>
+      
+
+  <div class="row-fluid">
+    <div class="span2 post-meta">
+	  <h5 class="date-time">
+
+
+
+
+
+
+
+
+  
+
+
 <i class="icon-calendar-empty"></i> <time datetime="2014-01-07T23:31:00-08:00" pubdate data-updated="true">Jan 7<sup>th</sup>, 2014</time></h5>
           <div class="row-fluid">
           
@@ -1662,54 +1757,6 @@ For each round of computation, print the percentage of votes for each candidate,
 <p>I&rsquo;m sure you know all about switching tabs, detaching and resuming sessions and all that. The only (in hindsight obvious) rule of thumb I&rsquo;ve learnt is to <em>always</em> launch a session with a name. Because you might just want to start two sessions. And then when it comes time to resume them, you won&rsquo;t know which is which. So make <code>screen -S &lt;sessionname&gt;</code> your friend.</p>
 
 <p>Anyway I have a github repo for my &ldquo;dotfiles&rdquo; and you can see my basic screenrc <a href="https://github.com/agam/dotfiles/blob/master/.screenrc">here</a></p>
-
-      
-      
-    </div>
-  </div>
-
-
-
-    </article>
-    
-    <hr>
-    
-  
-  
-    <article>
-      
-
-  <div class="row-fluid">
-    <div class="span2 post-meta">
-	  <h5 class="date-time">
-
-
-
-
-
-
-
-
-  
-
-
-<i class="icon-calendar-empty"></i> <time datetime="2013-12-16T03:41:00-08:00" pubdate data-updated="true">Dec 16<sup>th</sup>, 2013</time></h5>
-          <div class="row-fluid">
-          
-          </div>
-          
-          <div class="row-fluid">
-          
-          <a href="/blog/categories/vm/"><span class="badge">vm</span></a>
-          
-          </div>
-          
-    </div>
-    <div class="span10 post-container">
-      <h1 class="link"><a href="/blog/2013/12/16/starting-from-scratch-on-a-vm/">Starting from scratch on a VM</a></h1>
-      <p>I&rsquo;ve started from scratch many times on new linux installations. It gets old after a while though, so I prefer to do it as infrequently as possible.</p>
-
-<p>Getting started with a bare-bones VM is one of the occasions for this, so I&rsquo;ll take the time to record what I do so that I don&rsquo;t have to revisit this stuff the <em>next time</em>.</p>
 
       
       
