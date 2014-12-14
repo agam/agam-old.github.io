@@ -11,10 +11,10 @@ Wait, what? Why?! No reason, really. I saw the new FreeBSD book[^1] lying around
 So, this is an attempt to both (1) install it within a VM on the Google Compute Engine[^2], and (2) slowly learn more about it. Here follows a log of everything I did, based on the original instructions from the mailing list [^3]. (_Meta-note: if running remotely, be sensible; use `tmux` or `screen`_)
 
 ### _Step 1_: Install the emulator
-> `sudo apt-get install qemu`
+`> sudo apt-get install qemu`
 
 ### _Step 2_: Get the FreeBSD version to install -- in my case, I picked the "disc1" version corresponding to the "RELEASE" image[^4]
-> `wget ftp://ftp.freebsd.org/pub/FreeBSD/releases/amd64/amd64/ISO-IMAGES/10.1/FreeBSD-10.1-RELEASE-amd64-disc1.iso`
+`> wget ftp://ftp.freebsd.org/pub/FreeBSD/releases/amd64/amd64/ISO-IMAGES/10.1/FreeBSD-10.1-RELEASE-amd64-disc1.iso`
 
 ### _Step 3_: Create the disk image for the emulator
 ```
@@ -81,6 +81,7 @@ echo “169.254.169.254 metadata.google.internal metadata” >> /etc/hosts
 - Prepare the image for upload: `tar -Szcf freebsd.tar.gz disk.raw`
 - Create a bucket[^11] and upload[^12] the image there (Note: I was shocked, _shocked_, by how _fast_ this upload went!)
 - Prepare the image for use in your VM and insert it
+
 `> gcutil addimage freebsd gs://<bucket>/<object>`
 `> gcutil --project <project_id> freebsd gs://<bucket>/<object>`
 - Add a VM and SSH to it (both these operations can be done either through the "Google Cloud Console" or the command-line client[^13]). E.g. in my case the latter is
@@ -133,9 +134,59 @@ Uptime: 7s
 
 Looks like this may be a corrupt disk? Not sure. But pretty bummed :(
 
-I'll try again with a smaller disk size, or just do it (the easier way?) with Amazon, or else stop this pointless tinkering and "get on with real work" :)
+_**Update**_: I see people having luck with either (1) building a "rescue disk" on a running FreeBSD machine (not an option for me), or (2) using the `mfsbsd`[^15] remote install. I think I'll try the latter when I get time.
 
-_Update_: I see people having luck with either (1) building a "rescue disk" on a running FreeBSD machine (not an option for me), or (2) using the `mfsbsd`[^15] remote install. I think I'll try the latter when I get time.
+_**Update**_: Here's how that went :-
+
+- Get the `mfsbsd` image
+
+`> curl -o disk.raw http://mfsbsd.vx.sk/files/iso/10/amd64/mfsbsd-se-10.1-RELEASE-amd64.iso`[^16]
+
+- Tar it, upload it
+
+`> tar -Szcf mfs-freebsd.tar.gz disk.raw`
+`> gsutil cp mfs-freebsd.tar.gz gs://<bucket_name>`
+`> gcutil addimage mfs-freebsd gs://<bucket_name>/mfs-freebsd.tar.gz`
+
+- Create a VM with this instance
+
+Aaand ... NOPE again; fails to even show the serial console this time :(
+Error: `The resource 'projects/algol-c/zones/us-central1-a/instances/myvm' is not ready`
+
+- Deleted the VM and created it again[^17]
+
+Failed again, but this time I grabbed the output before it vanished:
+
+```
+Unable to lock ram - bridge not found
+Changing serial settings was 3/2 now 3/0
+enter handle_19:
+  NULL
+Booting from Hard Disk...
+Boot failed: not a bootable disk
+
+enter handle_18:
+  NULL
+Booting from Floppy...
+Boot failed: could not read the boot disk
+
+enter handle_18:
+  NULL
+No bootable device.  Powering off VM.
+END OF LINE
+  Retrying in 60 seconds.
+```
+
+- _Of course!_ I have to _make_ a bootable image using this iso (!) But, But, But .... that needs a running FreeBSD system?!
+
+_**Update**_: Damn, looks like GCE is behind both Amazon and (wtf!) Microsoft on this. From the release notes for v10.1:
+
+> FreeBSD 10.1-RELEASE is also available on these cloud hosting platforms:
+>
+> - Amazon® EC2™ FreeBSD/amd64
+> - Microsoft® Azure™ FreeBSD/amd64,  FreeBSD/i386
+
+_**Conclusion**_: The `qemu` path should have worked, I don't yet understand why not. Another option might be to try the _vhd_ image and get that to work. Or try EC2/Azure. Or wait for someone to figure this out and publicly share a working image. Or give up on FreeBSD and get back "to real work" :)
 
 [^1]: The [newer edition](http://www.amazon.com/gp/product/0321968972/ref=pd_lpo_sbs_dp_ss_1?pf_rd_p=1944687562&pf_rd_s=lpo-top-stripe-1&pf_rd_t=201&pf_rd_i=0201702452&pf_rd_m=ATVPDKIKX0DER&pf_rd_r=0QBY4BRZHVN8ZNNFWDMW) of "The Design and Implementation of the FreeBSD Operating System"
 [^2]: Yes, I've heard [the Amazon experience](http://www.daemonology.net/freebsd-on-ec2/) is easier, but that would be ... uh ... slightly disloyal right now :P
@@ -152,3 +203,5 @@ _Update_: I see people having luck with either (1) building a "rescue disk" on a
 [^13]: https://cloud.google.com/sdk/gcloud/reference/compute/instances/create
 [^14]: You also need a `--project` flag, but you can set a global value for this by running `gcloud config set project <project_id>`
 [^15]: https://www.freebsd.org/doc/en_US.ISO8859-1/articles/remote-install/preparation.html
+[^16]: In case you were wondering, the file name inside the uploaded image _has_ to be `disk.raw`
+[^17]: "Terminated" VMs have to be dealt with this way, AFAICS
