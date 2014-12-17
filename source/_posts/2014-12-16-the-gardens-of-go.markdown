@@ -27,4 +27,4 @@ _Statutory Warning: Heh, I'm just writing this in a burst of optimism (this migh
 [^5]: Such as [this one](http://www.amazon.com/BASIC-Computer-Games-Microcomputer-Edition/dp/0894800523), or [this one](http://www.amazon.com/More-Basic-Computer-Games-David/dp/0894801376/ref=pd_sim_b_1?ie=UTF8&refRID=1VG0C6RVPESH91TK90QJ)
 [^6]: In practice, my younger brother dictated them to me (which must've been a terrible ordeal, but I didn't realize it at the time!)
 [^7]: Easier said than done, I know, I know.
-[^8]: Title chosen in the style of ["The Realm of Racket"](http://www.realmofracket.com/) and ["The Land of Lisp"](http://landoflisp.com/)
+[^8]: The title of this post was chosen in the style of ["The Realm of Racket"](http://www.realmofracket.com/) and ["The Land of Lisp"](http://landoflisp.com/)

@@ -11,14 +11,18 @@ Wait, what? Why?! No reason, really. I saw the new FreeBSD book[^1] lying around
 So, this is an attempt to both (1) install it within a VM on the Google Compute Engine[^2], and (2) slowly learn more about it. Here follows a log of everything I did, based on the original instructions from the mailing list [^3]. (_Meta-note: if running remotely, be sensible; use `tmux` or `screen`_)
 
 ### _Step 1_: Install the emulator
-`> sudo apt-get install qemu`
+```sh
+$ sudo apt-get install qemu
+```
 
 ### _Step 2_: Get the FreeBSD version to install -- in my case, I picked the "disc1" version corresponding to the "RELEASE" image[^4]
-`> wget ftp://ftp.freebsd.org/pub/FreeBSD/releases/amd64/amd64/ISO-IMAGES/10.1/FreeBSD-10.1-RELEASE-amd64-disc1.iso`
+```sh
+$ wget ftp://ftp.freebsd.org/pub/FreeBSD/releases/amd64/amd64/ISO-IMAGES/10.1/FreeBSD-10.1-RELEASE-amd64-disc1.iso
+```
 
 ### _Step 3_: Create the disk image for the emulator
-```
-> qemu-img create disk.raw 100g
+```sh
+$ qemu-img create disk.raw 100g
 Formatting 'disk.raw', fmt=raw size=107374182400 
 ```
 
@@ -41,7 +45,7 @@ Notes:
 ### _Step 6_: Further configuration (as root)
 Once you hit _"Exit"_ at the end, choose the option to drop into a shell and then run the following:
 
-```
+```sh
 echo 'console="comconsole"' >>/etc/rc.conf
 echo ‘console=”comconsole”’ > /boot/loader.conf
 sed -I -e “/hostname/d” /etc/rc.conf
@@ -62,17 +66,25 @@ echo “169.254.169.254 metadata.google.internal metadata” >> /etc/hosts
 ### _Step 7_: Add yourself as a user
 - Run `adduser` and follow the prompts[^6]
 - Add yourself to the `wheel` group. E.g. in my case:
-`> pw user mod agam -G wheel`
+```sh
+$ pw user mod agam -G wheel
+```
 - Allow yourself to login via `ssh`:
-`> sed -I -e “s/#PasswordAuthentication no/PasswordAuthentication yes/” /etc/ssh/sshd_config`
+```sh
+$ sed -I -e “s/#PasswordAuthentication no/PasswordAuthentication yes/” /etc/ssh/sshd_config
+```
 
 ### _Step 8_: Setup GCE (within the image)
 - Enable either OpenDNS or Google Public DNS . E.g. for the latter:
-`> echo “nameserver 8.8.8.8” >> /etc/resolv.conf`
+```sh
+$ echo “nameserver 8.8.8.8” >> /etc/resolv.conf
+```
 - Install `sudo`, `python`[^7], and `wget`[^8]
 - Get `gcloud`[^9][^10]
 - Remove the DNS record added earlier:
-`> sed -I -e “/8.8.8.8/d” /etc/resolv.conf`
+```sh
+$ sed -I -e “/8.8.8.8/d” /etc/resolv.conf
+```
 - Turn off FreeBSD (run `poweroff`)
 
 ### _Step 9_: Setup GCE (on your workstation)
@@ -81,9 +93,11 @@ echo “169.254.169.254 metadata.google.internal metadata” >> /etc/hosts
 - Prepare the image for upload: `tar -Szcf freebsd.tar.gz disk.raw`
 - Create a bucket[^11] and upload[^12] the image there (Note: I was shocked, _shocked_, by how _fast_ this upload went!)
 - Prepare the image for use in your VM and insert it
+```sh
+$ gcutil addimage freebsd gs://<bucket>/<object>
+$ gcutil --project <project_id> freebsd gs://<bucket>/<object>
+```
 
-`> gcutil addimage freebsd gs://<bucket>/<object>`
-`> gcutil --project <project_id> freebsd gs://<bucket>/<object>`
 - Add a VM and SSH to it (both these operations can be done either through the "Google Cloud Console" or the command-line client[^13]). E.g. in my case the latter is
 `> gcloud compute ssh myvm`[^14]
 
@@ -138,15 +152,19 @@ _**Update**_: I see people having luck with either (1) building a "rescue disk" 
 
 _**Update**_: Here's how that went :-
 
-- Get the `mfsbsd` image
+- Get the `mfsbsd` image[^16]
 
-`> curl -o disk.raw http://mfsbsd.vx.sk/files/iso/10/amd64/mfsbsd-se-10.1-RELEASE-amd64.iso`[^16]
+```sh
+$curl -o disk.raw http://mfsbsd.vx.sk/files/iso/10/amd64/mfsbsd-se-10.1-RELEASE-amd64.iso`
+```
 
 - Tar it, upload it
 
-`> tar -Szcf mfs-freebsd.tar.gz disk.raw`
-`> gsutil cp mfs-freebsd.tar.gz gs://<bucket_name>`
-`> gcutil addimage mfs-freebsd gs://<bucket_name>/mfs-freebsd.tar.gz`
+```sh
+$ tar -Szcf mfs-freebsd.tar.gz disk.raw
+$ gsutil cp mfs-freebsd.tar.gz gs://<bucket_name>
+$ gcutil addimage mfs-freebsd gs://<bucket_name>/mfs-freebsd.tar.gz
+```
 
 - Create a VM with this instance
 
