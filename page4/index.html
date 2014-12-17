@@ -1,142 +1,102 @@
 
-<!DOCTYPE html>
-<!--[if IEMobile 7 ]><html class="no-js iem7"><![endif]-->
-<!--[if lt IE 9]><html class="no-js lte-ie8"><![endif]-->
-<!--[if (gt IE 8)|(gt IEMobile 7)|!(IEMobile)|!(IE)]><!--><html class="no-js" lang="en"><!--<![endif]-->
+<!DOCTYPE HTML>
+<html>
 <head>
-  <meta charset="utf-8">
-  <title>Agam's Mashed-Up Pome</title>
-  <meta name="author" content="Agam">
+	<meta charset="utf-8">
+	<title>Agam's Mashed-Up Pome</title>
+	<meta name="author" content="Agam">
 
-   
-  <meta name="description" content="">
-  
-  <meta name="keywords" content="">
+	
+	<meta name="description" content="I saw this piece about how 1/1998 was approximated by series of powers of 2, which raised the question, &ldquo;Can Mathematica help confirm this?& &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-  <!-- http://t.co/dKP3o1e -->
-  <meta name="HandheldFriendly" content="True">
-  <meta name="MobileOptimized" content="320">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-
-  
-  <link rel="canonical" href="http://agam.github.io/page4">
-  <link href="/favicon.png" rel="icon">
-  <link href='http://fonts.googleapis.com/css?family=Quicksand:300,400' rel='stylesheet' type='text/css'>
-  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
-  <link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
-  <link href="/atom.xml" rel="alternate" title="Agam's Mashed-Up Pome" type="application/atom+xml">
-  <script src="/js/jquery.js"></script>
-  <script src="/js/bootstrap-collapse.js"></script>
-  <script src="/js/modernizr-2.0.js"></script>
-  <script src="/js/octopress.js" type="text/javascript"></script>
-  <script src="/js/application.js"></script>
-  <!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+	<link href="/atom.xml" rel="alternate" title="Agam's Mashed-Up Pome" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script async="true" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
 <link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-<link href="http://fonts.googleapis.com/css?family=PT+Sans:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
-
-  
-  <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-16612682-4']);
-    _gaq.push(['_trackPageview']);
-
-    (function() {
-      var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-      ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
-  </script>
-
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
 
 </head>
 
-<body   >
-  <div class="navbar navbar-inverse navbar-static-top">
-  	<div class="navbar-inner">
-  	  <div class="container">
-        <a class="btn btn-navbar" data-toggle="collapse" data-target=".navbar-responsive-collapse">
-          <span class="fui-menu-24"></span>
-        </a>
-  	  	<div class="nav-collapse collapse navbar-responsive-collapse" style="height:0;">
-  	      <ul class="nav">
-    
-        <li ><a href="/index.html">Home</a></li>
-    
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">Agam's Mashed-Up Pome</a></h1>
+<!-- DebugAgam: Uncomment if necessary!
+<nav id="main-nav"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
 </ul>
-
-<ul class="nav pull-right">
-    
-    
-    
-    
-    <li><a href="http://twitter.com/agambrahma" title="Twitter Profile"><i class="icon-twitter-sign social-navbar"></i></a></li>
-    
-    
-    <li><a href="http://plus.google.com/+AgamBrahma" title="Google+ Profile"><i class="icon-google-plus-sign social-navbar"></i></a></li>
-    
-    
-    
-
-    
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
 </ul>
-
-  	    </div>
-  	  </div>
-  	</div>
-  </div>
-  <div class="container" id="main">
-      <div class="row-fluid">
-        <div id="content">
-          <div class="jumbotron">
-  <div class="container">
-    
-      Agam&#8217;s Mashed-Up Pome
-    
-    <h3 class="tagline">
-      
-        Thinking is hard; Let&#8217;s compute instead.
-      
-    </h3>
-  </div>
 </div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:agam.github.io">
+			</form>
+		</div>
+	</div>
+</nav>
+-->
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		<a class="google" href="https://plus.google.com/+AgamBrahma?rel=author" title="Google+">Google+</a>
+		
+		
+		<a class="twitter" href="http://twitter.com/agambrahma" title="Twitter">Twitter</a>
+		
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+    
+	</div>
+        <!-- DebugAgam: uncomment if necessary!
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:agam.github.io">
+	</form>
+        -->
+</nav>
+
+</header>
+	
+		
+	
+	<div id="content" class="inner">
 
 
-<div class="blog-index">
-  
-  
-  
-    <article>
-      
-
-  <div class="row-fluid">
-    <div class="span2 post-meta">
-	  <h5 class="date-time">
-
-
-
-
-
-
-
-
-  
-
-
-<i class="icon-calendar-empty"></i> <time datetime="2014-01-30T23:00:00-08:00" pubdate data-updated="true">Jan 30<sup>th</sup>, 2014</time></h5>
-          <div class="row-fluid">
-          
-          </div>
-          
-          <div class="row-fluid">
-          
-          <a href="/blog/categories/mathematica/"><span class="badge">mathematica</span></a>
-          
-          </div>
-          
-    </div>
-    <div class="span10 post-container">
-      <h1 class="link"><a href="/blog/2014/01/30/mathematica-1-slash-9998/">Mathematica: 1/9998</a></h1>
-      <p>I saw this piece about how <code>1/1998</code> was approximated by series of powers of <code>2</code>, which raised the question, &ldquo;Can Mathematica help confirm this?&rdquo; (<em>of course it can!</em>)</p>
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2014/01/30/mathematica-1-slash-9998/">
+		
+			Mathematica: 1/9998</a>
+	</h2>
+	<div class="entry-content">
+		<p>I saw this piece about how <code>1/1998</code> was approximated by series of powers of <code>2</code>, which raised the question, &ldquo;Can Mathematica help confirm this?&rdquo; (<em>of course it can!</em>)</p>
 
 <p>First, a gut check to see the decimal expansion</p>
 
@@ -202,25 +162,13 @@
 
 <p>As this graph shows, the result is remarkably close to a constant value of <code>-0.0001</code> !!</p>
 
-      
-      
-    </div>
-  </div>
+		
+		
+	</div>
 
 
-
-    </article>
-    
-    <hr>
-    
-  
-  
-    <article>
-      
-
-  <div class="row-fluid">
-    <div class="span2 post-meta">
-	  <h5 class="date-time">
+<div class="meta">
+	<div class="date">
 
 
 
@@ -232,25 +180,28 @@
   
 
 
-<i class="icon-calendar-empty"></i> <time datetime="2014-01-30T18:16:00-08:00" pubdate data-updated="true">Jan 30<sup>th</sup>, 2014</time></h5>
-          <div class="row-fluid">
-          
-          </div>
-          
-          <div class="row-fluid">
-          
-          <a href="/blog/categories/ant,/"><span class="badge">ant,</span></a>
-          
-          <a href="/blog/categories/mathematica,/"><span class="badge">mathematica,</span></a>
-          
-          <a href="/blog/categories/plot/"><span class="badge">plot</span></a>
-          
-          </div>
-          
-    </div>
-    <div class="span10 post-container">
-      <h1 class="link"><a href="/blog/2014/01/30/mathematica-a-simple-ant/">Mathematica: A simple ant</a></h1>
-      <p>Here&rsquo;s a simple, exploratory sketch: Imagine an ant which can either move left or right, or stay in its place.</p>
+<time datetime="2014-01-30T23:00:00-08:00" pubdate data-updated="true">Jan 30<sup>th</sup>, 2014</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/mathematica/'>mathematica</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2014/01/30/mathematica-a-simple-ant/">
+		
+			Mathematica: A Simple Ant</a>
+	</h2>
+	<div class="entry-content">
+		<p>Here&rsquo;s a simple, exploratory sketch: Imagine an ant which can either move left or right, or stay in its place.</p>
 
 <p>For simplicity, we&rsquo;ll imagine the ant starts at the center of a scale from <code>1</code> to <code>100</code>, and moves one unit at a time.</p>
 
@@ -272,25 +223,13 @@
 
 <p> <img class="center" src="http://farm8.staticflickr.com/7418/12224482144_6ef516fd03_z_d.jpg"></p>
 
-      
-      
-    </div>
-  </div>
+		
+		
+	</div>
 
 
-
-    </article>
-    
-    <hr>
-    
-  
-  
-    <article>
-      
-
-  <div class="row-fluid">
-    <div class="span2 post-meta">
-	  <h5 class="date-time">
+<div class="meta">
+	<div class="date">
 
 
 
@@ -302,23 +241,28 @@
   
 
 
-<i class="icon-calendar-empty"></i> <time datetime="2014-01-29T18:04:00-08:00" pubdate data-updated="true">Jan 29<sup>th</sup>, 2014</time></h5>
-          <div class="row-fluid">
-          
-          </div>
-          
-          <div class="row-fluid">
-          
-          <a href="/blog/categories/clojure,/"><span class="badge">clojure,</span></a>
-          
-          <a href="/blog/categories/gettingstarted/"><span class="badge">gettingstarted</span></a>
-          
-          </div>
-          
-    </div>
-    <div class="span10 post-container">
-      <h1 class="link"><a href="/blog/2014/01/29/getting-started-with-clojure-part-1/">Getting started with clojure: Part 1</a></h1>
-      <p>(Just a personal log so I don&rsquo;t forget some basic steps here. There may or may not be a Part 2)</p>
+<time datetime="2014-01-30T18:16:00-08:00" pubdate data-updated="true">Jan 30<sup>th</sup>, 2014</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/ant/'>ant,</a>, <a class='category' href='/blog/categories/mathematica/'>mathematica,</a>, <a class='category' href='/blog/categories/plot/'>plot</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2014/01/29/getting-started-with-clojure-part-1/">
+		
+			Getting Started With Clojure: Part 1</a>
+	</h2>
+	<div class="entry-content">
+		<p>(Just a personal log so I don&rsquo;t forget some basic steps here. There may or may not be a Part 2)</p>
 
 <h2>Setting up the REPL</h2>
 
@@ -520,25 +464,13 @@
 
 <p>&hellip; the rest in Part 2, if there is one.</p>
 
-      
-      
-    </div>
-  </div>
+		
+		
+	</div>
 
 
-
-    </article>
-    
-    <hr>
-    
-  
-  
-    <article>
-      
-
-  <div class="row-fluid">
-    <div class="span2 post-meta">
-	  <h5 class="date-time">
+<div class="meta">
+	<div class="date">
 
 
 
@@ -550,23 +482,28 @@
   
 
 
-<i class="icon-calendar-empty"></i> <time datetime="2014-01-29T02:11:00-08:00" pubdate data-updated="true">Jan 29<sup>th</sup>, 2014</time></h5>
-          <div class="row-fluid">
-          
-          </div>
-          
-          <div class="row-fluid">
-          
-          <a href="/blog/categories/alwaysbecoding,/"><span class="badge">alwaysbecoding,</span></a>
-          
-          <a href="/blog/categories/reddit/"><span class="badge">reddit</span></a>
-          
-          </div>
-          
-    </div>
-    <div class="span10 post-container">
-      <h1 class="link"><a href="/blog/2014/01/29/programming-fun-ascii-tree/">Programming Fun: Ascii Tree</a></h1>
-      <p>Another <a href="http://www.reddit.com/r/dailyprogrammer/comments/1t0r09/121613_challenge_145_easy_tree_generation/">easy problem</a> (I&rsquo;m not picking easy problems! I&rsquo;m just going in sequence!)</p>
+<time datetime="2014-01-29T18:04:00-08:00" pubdate data-updated="true">Jan 29<sup>th</sup>, 2014</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/clojure/'>clojure,</a>, <a class='category' href='/blog/categories/gettingstarted/'>gettingstarted</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2014/01/29/programming-fun-ascii-tree/">
+		
+			Programming Fun: Ascii Tree</a>
+	</h2>
+	<div class="entry-content">
+		<p>Another <a href="http://www.reddit.com/r/dailyprogrammer/comments/1t0r09/121613_challenge_145_easy_tree_generation/">easy problem</a> (I&rsquo;m not picking easy problems! I&rsquo;m just going in sequence!)</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -654,25 +591,13 @@ int main(int argc, char* argv[]) {
 
 <p>[Also, I realized I&rsquo;m wasting everyone&rsquo;s time by having all those redundant <code>#include</code> lines, so I got rid of them here]</p>
 
-      
-      
-    </div>
-  </div>
+		
+		
+	</div>
 
 
-
-    </article>
-    
-    <hr>
-    
-  
-  
-    <article>
-      
-
-  <div class="row-fluid">
-    <div class="span2 post-meta">
-	  <h5 class="date-time">
+<div class="meta">
+	<div class="date">
 
 
 
@@ -684,23 +609,28 @@ int main(int argc, char* argv[]) {
   
 
 
-<i class="icon-calendar-empty"></i> <time datetime="2014-01-27T03:55:00-08:00" pubdate data-updated="true">Jan 27<sup>th</sup>, 2014</time></h5>
-          <div class="row-fluid">
-          
-          </div>
-          
-          <div class="row-fluid">
-          
-          <a href="/blog/categories/alwaysbecoding,/"><span class="badge">alwaysbecoding,</span></a>
-          
-          <a href="/blog/categories/reddit/"><span class="badge">reddit</span></a>
-          
-          </div>
-          
-    </div>
-    <div class="span10 post-container">
-      <h1 class="link"><a href="/blog/2014/01/27/programming-fun-adjacency-matrix/">Programming Fun: Adjacency Matrix</a></h1>
-      <p>Another &ldquo;intermediate&rdquo; <a href="http://www.reddit.com/r/dailyprogrammer/comments/1t6dlf/121813_challenge_140_intermediate_adjacency_matrix/">problem</a> today.</p>
+<time datetime="2014-01-29T02:11:00-08:00" pubdate data-updated="true">Jan 29<sup>th</sup>, 2014</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/alwaysbecoding/'>alwaysbecoding,</a>, <a class='category' href='/blog/categories/reddit/'>reddit</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2014/01/27/programming-fun-adjacency-matrix/">
+		
+			Programming Fun: Adjacency Matrix</a>
+	</h2>
+	<div class="entry-content">
+		<p>Another &ldquo;intermediate&rdquo; <a href="http://www.reddit.com/r/dailyprogrammer/comments/1t6dlf/121813_challenge_140_intermediate_adjacency_matrix/">problem</a> today.</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -805,25 +735,13 @@ int main(int argc, char* argv[]) {
 
 
 
-      
-      
-    </div>
-  </div>
+		
+		
+	</div>
 
 
-
-    </article>
-    
-    <hr>
-    
-  
-  
-    <article>
-      
-
-  <div class="row-fluid">
-    <div class="span2 post-meta">
-	  <h5 class="date-time">
+<div class="meta">
+	<div class="date">
 
 
 
@@ -835,23 +753,28 @@ int main(int argc, char* argv[]) {
   
 
 
-<i class="icon-calendar-empty"></i> <time datetime="2014-01-27T00:11:00-08:00" pubdate data-updated="true">Jan 27<sup>th</sup>, 2014</time></h5>
-          <div class="row-fluid">
-          
-          </div>
-          
-          <div class="row-fluid">
-          
-          <a href="/blog/categories/ellipses/"><span class="badge">ellipses</span></a>
-          
-          <a href="/blog/categories/processing,/"><span class="badge">processing,</span></a>
-          
-          </div>
-          
-    </div>
-    <div class="span10 post-container">
-      <h1 class="link"><a href="/blog/2014/01/27/fun-with-processing-spinning-ellipses/">Fun with Processing: Spinning Ellipses</a></h1>
-      <p><a href="http://www.processing.org/">Processing</a> is intended to be a &ldquo;creative coding&rdquo; tool for non-programmers. It runs on top of Java, which is good enough to get started. The performance-anxious folks might eventually prefer something like <a href="http://libcinder.org/">Cinder</a>, which has C++ libraries instead.</p>
+<time datetime="2014-01-27T03:55:00-08:00" pubdate data-updated="true">Jan 27<sup>th</sup>, 2014</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/alwaysbecoding/'>alwaysbecoding,</a>, <a class='category' href='/blog/categories/reddit/'>reddit</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2014/01/27/fun-with-processing-spinning-ellipses/">
+		
+			Fun With Processing: Spinning Ellipses</a>
+	</h2>
+	<div class="entry-content">
+		<p><a href="http://www.processing.org/">Processing</a> is intended to be a &ldquo;creative coding&rdquo; tool for non-programmers. It runs on top of Java, which is good enough to get started. The performance-anxious folks might eventually prefer something like <a href="http://libcinder.org/">Cinder</a>, which has C++ libraries instead.</p>
 
 <p>I tweaked a simple snippet from a tutorial as a first step:</p>
 
@@ -916,25 +839,13 @@ int main(int argc, char* argv[]) {
 
 <p>Before you say <em>meh</em>, none of this is supposed to make you Michaelangelo. But it provides a kind of instant-gratification, since you can tweak your <em>sketch</em>, run it, tweak it again, run it again, and so on &hellip; which is rather hard to come by.</p>
 
-      
-      
-    </div>
-  </div>
+		
+		
+	</div>
 
 
-
-    </article>
-    
-    <hr>
-    
-  
-  
-    <article>
-      
-
-  <div class="row-fluid">
-    <div class="span2 post-meta">
-	  <h5 class="date-time">
+<div class="meta">
+	<div class="date">
 
 
 
@@ -946,29 +857,28 @@ int main(int argc, char* argv[]) {
   
 
 
-<i class="icon-calendar-empty"></i> <time datetime="2014-01-26T00:10:00-08:00" pubdate data-updated="true">Jan 26<sup>th</sup>, 2014</time></h5>
-          <div class="row-fluid">
-          
-          </div>
-          
-          <div class="row-fluid">
-          
-          <a href="/blog/categories/languages/"><span class="badge">languages</span></a>
-          
-          <a href="/blog/categories/lecture,/"><span class="badge">lecture,</span></a>
-          
-          <a href="/blog/categories/minsky,/"><span class="badge">minsky,</span></a>
-          
-          <a href="/blog/categories/programming/"><span class="badge">programming</span></a>
-          
-          <a href="/blog/categories/turing/"><span class="badge">turing</span></a>
-          
-          </div>
-          
-    </div>
-    <div class="span10 post-container">
-      <h1 class="link"><a href="/blog/2014/01/26/minsky-turing-lecture-part-1/">Minsky Turing Lecture: Part 1</a></h1>
-      <p>I came across a reference to Marvin Minsky&rsquo;s 1970 Turing Award Lecture. I&rsquo;ve barely read any of these lectures, always assuming they would be empty or pedantic or plain boring. Reading this changed that perception completely.</p>
+<time datetime="2014-01-27T00:11:00-08:00" pubdate data-updated="true">Jan 27<sup>th</sup>, 2014</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/ellipses/'>ellipses</a>, <a class='category' href='/blog/categories/processing/'>processing,</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2014/01/26/minsky-turing-lecture-part-1/">
+		
+			Minsky Turing Lecture: Part 1</a>
+	</h2>
+	<div class="entry-content">
+		<p>I came across a reference to Marvin Minsky&rsquo;s 1970 Turing Award Lecture. I&rsquo;ve barely read any of these lectures, always assuming they would be empty or pedantic or plain boring. Reading this changed that perception completely.</p>
 
 <h2>Science and Education</h2>
 
@@ -1028,25 +938,13 @@ It remains to be seen whether a syntax with explicit delimiters is reactionary, 
 
 <p>So much for Part 1. I&rsquo;ll pick up the rest of the extracts next time.</p>
 
-      
-      
-    </div>
-  </div>
+		
+		
+	</div>
 
 
-
-    </article>
-    
-    <hr>
-    
-  
-  
-    <article>
-      
-
-  <div class="row-fluid">
-    <div class="span2 post-meta">
-	  <h5 class="date-time">
+<div class="meta">
+	<div class="date">
 
 
 
@@ -1058,23 +956,28 @@ It remains to be seen whether a syntax with explicit delimiters is reactionary, 
   
 
 
-<i class="icon-calendar-empty"></i> <time datetime="2014-01-24T23:07:00-08:00" pubdate data-updated="true">Jan 24<sup>th</sup>, 2014</time></h5>
-          <div class="row-fluid">
-          
-          </div>
-          
-          <div class="row-fluid">
-          
-          <a href="/blog/categories/cloud,/"><span class="badge">cloud,</span></a>
-          
-          <a href="/blog/categories/vm/"><span class="badge">vm</span></a>
-          
-          </div>
-          
-    </div>
-    <div class="span10 post-container">
-      <h1 class="link"><a href="/blog/2014/01/24/cost-comparison-google-cloud-vs-digitalocean/">Cost comparison: Google Cloud vs DigitalOcean</a></h1>
-      <p>I&rsquo;ve been using a VM within the Google Compute Engine cloud, for the last two months (mostly from my chromebook, occasionally from a couple of other locations).</p>
+<time datetime="2014-01-26T00:10:00-08:00" pubdate data-updated="true">Jan 26<sup>th</sup>, 2014</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/languages/'>languages</a>, <a class='category' href='/blog/categories/lecture/'>lecture,</a>, <a class='category' href='/blog/categories/minsky/'>minsky,</a>, <a class='category' href='/blog/categories/programming/'>programming</a>, <a class='category' href='/blog/categories/turing/'>turing</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2014/01/24/cost-comparison-google-cloud-vs-digitalocean/">
+		
+			Cost Comparison: Google Cloud vs DigitalOcean</a>
+	</h2>
+	<div class="entry-content">
+		<p>I&rsquo;ve been using a VM within the Google Compute Engine cloud, for the last two months (mostly from my chromebook, occasionally from a couple of other locations).</p>
 
 <p>Specifically, this is a &ldquo;small&rdquo; (<code>g1-small</code>) VM, though there are <a href="https://developers.google.com/compute/docs/machine-types">many other options available</a>.</p>
 
@@ -1090,25 +993,13 @@ It remains to be seen whether a syntax with explicit delimiters is reactionary, 
 
 <p>So long as it&rsquo;s just little old me accessing my portable home in the cloud, the $10/mo for a 1G/30G SSD option looks just as good (or  $5/mo for 512M; also, DigitalOcean keeps running free trial offers, which are a good way to try out the service).</p>
 
-      
-      
-    </div>
-  </div>
+		
+		
+	</div>
 
 
-
-    </article>
-    
-    <hr>
-    
-  
-  
-    <article>
-      
-
-  <div class="row-fluid">
-    <div class="span2 post-meta">
-	  <h5 class="date-time">
+<div class="meta">
+	<div class="date">
 
 
 
@@ -1120,23 +1011,28 @@ It remains to be seen whether a syntax with explicit delimiters is reactionary, 
   
 
 
-<i class="icon-calendar-empty"></i> <time datetime="2014-01-19T00:39:00-08:00" pubdate data-updated="true">Jan 19<sup>th</sup>, 2014</time></h5>
-          <div class="row-fluid">
-          
-          </div>
-          
-          <div class="row-fluid">
-          
-          <a href="/blog/categories/alwaysbecoding,/"><span class="badge">alwaysbecoding,</span></a>
-          
-          <a href="/blog/categories/reddit/"><span class="badge">reddit</span></a>
-          
-          </div>
-          
-    </div>
-    <div class="span10 post-container">
-      <h1 class="link"><a href="/blog/2014/01/19/programming-fun-nuts-and-bolts/">Programming Fun: Nuts and Bolts</a></h1>
-      <p><a href="http://www.reddit.com/r/dailyprogrammer/comments/1sob1e/121113_challenge_144_easy_nuts_bolts/">This one</a> is <em>too easy</em> but included anyway for completeness (why not?)</p>
+<time datetime="2014-01-24T23:07:00-08:00" pubdate data-updated="true">Jan 24<sup>th</sup>, 2014</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/cloud/'>cloud,</a>, <a class='category' href='/blog/categories/vm/'>vm</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2014/01/19/programming-fun-nuts-and-bolts/">
+		
+			Programming Fun: Nuts and Bolts</a>
+	</h2>
+	<div class="entry-content">
+		<p><a href="http://www.reddit.com/r/dailyprogrammer/comments/1sob1e/121113_challenge_144_easy_nuts_bolts/">This one</a> is <em>too easy</em> but included anyway for completeness (why not?)</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -1231,25 +1127,13 @@ int main(int argc, char* argv[]) {
 
 
 
-      
-      
-    </div>
-  </div>
+		
+		
+	</div>
 
 
-
-    </article>
-    
-    <hr>
-    
-  
-  
-    <article>
-      
-
-  <div class="row-fluid">
-    <div class="span2 post-meta">
-	  <h5 class="date-time">
+<div class="meta">
+	<div class="date">
 
 
 
@@ -1261,23 +1145,28 @@ int main(int argc, char* argv[]) {
   
 
 
-<i class="icon-calendar-empty"></i> <time datetime="2014-01-18T02:21:00-08:00" pubdate data-updated="true">Jan 18<sup>th</sup>, 2014</time></h5>
-          <div class="row-fluid">
-          
-          </div>
-          
-          <div class="row-fluid">
-          
-          <a href="/blog/categories/alwaysbecoding,/"><span class="badge">alwaysbecoding,</span></a>
-          
-          <a href="/blog/categories/reddit/"><span class="badge">reddit</span></a>
-          
-          </div>
-          
-    </div>
-    <div class="span10 post-container">
-      <h1 class="link"><a href="/blog/2014/01/18/programming-fun-telephone-keypads/">Programming Fun: Telephone Keypads</a></h1>
-      <p><a href="http://www.reddit.com/r/dailyprogrammer/comments/1sody4/12113_challenge_139_intermediate_telephone_keypads/">This is a <em>medium</em> level problem</a>  with two levels of difficulty.</p>
+<time datetime="2014-01-19T00:39:00-08:00" pubdate data-updated="true">Jan 19<sup>th</sup>, 2014</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/alwaysbecoding/'>alwaysbecoding,</a>, <a class='category' href='/blog/categories/reddit/'>reddit</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2014/01/18/programming-fun-telephone-keypads/">
+		
+			Programming Fun: Telephone Keypads</a>
+	</h2>
+	<div class="entry-content">
+		<p><a href="http://www.reddit.com/r/dailyprogrammer/comments/1sody4/12113_challenge_139_intermediate_telephone_keypads/">This is a <em>medium</em> level problem</a>  with two levels of difficulty.</p>
 
 <figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -1699,42 +1588,61 @@ int main(int argc, char* argv[]) {
 
 
 
-      
-      
-    </div>
-  </div>
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
 
 
 
-    </article>
-    
+
+
+
+
+
   
-  <div class="pagination">
-    
-    <a class="prev" href="5">&larr; Older</a>
-    
 
-    
-    <a class="next" href="3">Newer &rarr;</a>
-    
-  </div>
+
+<time datetime="2014-01-18T02:21:00-08:00" pubdate data-updated="true">Jan 18<sup>th</sup>, 2014</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/alwaysbecoding/'>alwaysbecoding,</a>, <a class='category' href='/blog/categories/reddit/'>reddit</a>
+
+
 </div>
+	
+</div>
+</article>
 
+<nav id="pagenavi">
+    
+        
+            <a href="/posts/3" class="prev">Prev</a>
+        
+    
+    
+        <a href="/posts/5" class="next">Next</a>
+    
+    <div class="center"><a href="/blog/archives">Blog Archives</a></div>
+</nav>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2014
 
-        </div>
-      </div>
-      <div class="row-fluid">
-        <footer class="footer-page" role="contentinfo">
-          <p>
-  Copyright &copy; 2014 - Agam -
-  <span class="credit">Powered by <a href="http://octopress.org">Octopress</a></span> - Theme by <a href="http://alexgaribay.com">Alex Garibay</a>
-</p>
+    Agam
 
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
 
-        </footer>
-      </div>
-  </div>
-  
 
 <script type="text/javascript">
       var disqus_shortname = 'agamamp';
@@ -1744,36 +1652,24 @@ int main(int argc, char* argv[]) {
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
-      dsq.src = 'http://' + disqus_shortname + '.disqus.com/' + disqus_script;
+      dsq.src = '//go.disqus.com/' + disqus_script;
       (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
     }());
 </script>
 
 
 
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-16612682-4']);
+		_gaq.push(['_trackPageview']);
 
-
-  <script type="text/javascript">
-    (function() {
-      var script = document.createElement('script'); script.type = 'text/javascript'; script.async = true;
-      script.src = 'https://apis.google.com/js/plusone.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(script, s);
-    })();
-  </script>
-
-
-
-  <script type="text/javascript">
-    (function(){
-      var twitterWidgets = document.createElement('script');
-      twitterWidgets.type = 'text/javascript';
-      twitterWidgets.async = true;
-      twitterWidgets.src = 'http://platform.twitter.com/widgets.js';
-      document.getElementsByTagName('head')[0].appendChild(twitterWidgets);
-    })();
-  </script>
-
-
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
 
 
 

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: freebsd, | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/freebsd/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2014-12-16T21:58:29-08:00</updated>
+  <updated>2014-12-17T12:19:07-08:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -24,19 +24,22 @@
 
 <h3><em>Step 1</em>: Install the emulator</h3>
 
-<p><code>&gt; sudo apt-get install qemu</code></p>
+<p><code>sh
+$ sudo apt-get install qemu
+</code></p>
 
 <h3><em>Step 2</em>: Get the FreeBSD version to install &mdash; in my case, I picked the &ldquo;disc1&rdquo; version corresponding to the &ldquo;RELEASE&rdquo; image<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup></h3>
 
-<p><code>&gt; wget ftp://ftp.freebsd.org/pub/FreeBSD/releases/amd64/amd64/ISO-IMAGES/10.1/FreeBSD-10.1-RELEASE-amd64-disc1.iso</code></p>
+<p><code>sh
+$ wget ftp://ftp.freebsd.org/pub/FreeBSD/releases/amd64/amd64/ISO-IMAGES/10.1/FreeBSD-10.1-RELEASE-amd64-disc1.iso
+</code></p>
 
 <h3><em>Step 3</em>: Create the disk image for the emulator</h3>
 
-<p>```</p>
-
-<blockquote><p>qemu-img create disk.raw 100g
-Formatting &lsquo;disk.raw&rsquo;, fmt=raw size=107374182400
-```</p></blockquote>
+<p><code>sh
+$ qemu-img create disk.raw 100g
+Formatting 'disk.raw', fmt=raw size=107374182400
+</code></p>
 
 <h3><em>Step 4</em>: Boot from the ISO downloaded earlier</h3>
 
@@ -59,7 +62,7 @@ Formatting &lsquo;disk.raw&rsquo;, fmt=raw size=107374182400
 
 <p>Once you hit <em>&ldquo;Exit&rdquo;</em> at the end, choose the option to drop into a shell and then run the following:</p>
 
-<p>```
+<p>```sh
 echo &lsquo;console=&ldquo;comconsole&rdquo;&rsquo; >>/etc/rc.conf
 echo ‘console=”comconsole”’ > /boot/loader.conf
 sed -I -e “/hostname/d” /etc/rc.conf
@@ -82,9 +85,13 @@ echo “server 169.254.169.254” >> /etc/ntp.conf</p>
 <ul>
 <li>Run <code>adduser</code> and follow the prompts<sup id="fnref:6"><a href="#fn:6" rel="footnote">6</a></sup></li>
 <li>Add yourself to the <code>wheel</code> group. E.g. in my case:
-<code>&gt; pw user mod agam -G wheel</code></li>
+<code>sh
+$ pw user mod agam -G wheel
+</code></li>
 <li>Allow yourself to login via <code>ssh</code>:
-<code>&gt; sed -I -e “s/#PasswordAuthentication no/PasswordAuthentication yes/” /etc/ssh/sshd_config</code></li>
+<code>sh
+$ sed -I -e “s/#PasswordAuthentication no/PasswordAuthentication yes/” /etc/ssh/sshd_config
+</code></li>
 </ul>
 
 
@@ -92,11 +99,15 @@ echo “server 169.254.169.254” >> /etc/ntp.conf</p>
 
 <ul>
 <li>Enable either OpenDNS or Google Public DNS . E.g. for the latter:
-<code>&gt; echo “nameserver 8.8.8.8” &gt;&gt; /etc/resolv.conf</code></li>
+<code>sh
+$ echo “nameserver 8.8.8.8” &gt;&gt; /etc/resolv.conf
+</code></li>
 <li>Install <code>sudo</code>, <code>python</code><sup id="fnref:7"><a href="#fn:7" rel="footnote">7</a></sup>, and <code>wget</code><sup id="fnref:8"><a href="#fn:8" rel="footnote">8</a></sup></li>
 <li>Get <code>gcloud</code><a href="" title="More information [here](https://cloud.google.com/compute/docs/gcloud-compute/)">^9</a></li>
 <li>Remove the DNS record added earlier:
-<code>&gt; sed -I -e “/8.8.8.8/d” /etc/resolv.conf</code></li>
+<code>sh
+$ sed -I -e “/8.8.8.8/d” /etc/resolv.conf
+</code></li>
 <li>Turn off FreeBSD (run <code>poweroff</code>)</li>
 </ul>
 
@@ -108,14 +119,15 @@ echo “server 169.254.169.254” >> /etc/ntp.conf</p>
 <li>Authenticate: Run <code>gcloud auth login</code> and follow the url to enter the code</li>
 <li>Prepare the image for upload: <code>tar -Szcf freebsd.tar.gz disk.raw</code></li>
 <li>Create a bucket<sup id="fnref:9"><a href="#fn:9" rel="footnote">9</a></sup> and upload<sup id="fnref:10"><a href="#fn:10" rel="footnote">10</a></sup> the image there (Note: I was shocked, <em>shocked</em>, by how <em>fast</em> this upload went!)</li>
-<li>Prepare the image for use in your VM and insert it</li>
+<li><p>Prepare the image for use in your VM and insert it
+<code>sh
+$ gcutil addimage freebsd gs://&lt;bucket&gt;/&lt;object&gt;
+$ gcutil --project &lt;project_id&gt; freebsd gs://&lt;bucket&gt;/&lt;object&gt;
+</code></p></li>
+<li><p>Add a VM and SSH to it (both these operations can be done either through the &ldquo;Google Cloud Console&rdquo; or the command-line client<sup id="fnref:11"><a href="#fn:11" rel="footnote">11</a></sup>). E.g. in my case the latter is
+<code>&gt; gcloud compute ssh myvm</code><sup id="fnref:12"><a href="#fn:12" rel="footnote">12</a></sup></p></li>
 </ul>
 
-
-<p><code>&gt; gcutil addimage freebsd gs://&lt;bucket&gt;/&lt;object&gt;</code>
-<code>&gt; gcutil --project &lt;project_id&gt; freebsd gs://&lt;bucket&gt;/&lt;object&gt;</code>
-&ndash; Add a VM and SSH to it (both these operations can be done either through the &ldquo;Google Cloud Console&rdquo; or the command-line client<sup id="fnref:11"><a href="#fn:11" rel="footnote">11</a></sup>). E.g. in my case the latter is
-<code>&gt; gcloud compute ssh myvm</code><sup id="fnref:12"><a href="#fn:12" rel="footnote">12</a></sup></p>
 
 <h3><em>Step 10</em>: Nope</h3>
 
@@ -188,20 +200,24 @@ KDB: stack backtrace:</p>
 <p><em><strong>Update</strong></em>: Here&rsquo;s how that went :&ndash;</p>
 
 <ul>
-<li>Get the <code>mfsbsd</code> image</li>
+<li>Get the <code>mfsbsd</code> image<sup id="fnref:14"><a href="#fn:14" rel="footnote">14</a></sup></li>
 </ul>
 
 
-<p><code>&gt; curl -o disk.raw http://mfsbsd.vx.sk/files/iso/10/amd64/mfsbsd-se-10.1-RELEASE-amd64.iso</code><sup id="fnref:14"><a href="#fn:14" rel="footnote">14</a></sup></p>
+<p><code>sh
+$curl -o disk.raw http://mfsbsd.vx.sk/files/iso/10/amd64/mfsbsd-se-10.1-RELEASE-amd64.iso`
+</code></p>
 
 <ul>
 <li>Tar it, upload it</li>
 </ul>
 
 
-<p><code>&gt; tar -Szcf mfs-freebsd.tar.gz disk.raw</code>
-<code>&gt; gsutil cp mfs-freebsd.tar.gz gs://&lt;bucket_name&gt;</code>
-<code>&gt; gcutil addimage mfs-freebsd gs://&lt;bucket_name&gt;/mfs-freebsd.tar.gz</code></p>
+<p><code>sh
+$ tar -Szcf mfs-freebsd.tar.gz disk.raw
+$ gsutil cp mfs-freebsd.tar.gz gs://&lt;bucket_name&gt;
+$ gcutil addimage mfs-freebsd gs://&lt;bucket_name&gt;/mfs-freebsd.tar.gz
+</code></p>
 
 <ul>
 <li>Create a VM with this instance</li>
