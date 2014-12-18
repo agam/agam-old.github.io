@@ -3,7 +3,7 @@ layout: post
 title: "The Gardens of Go"
 date: 2014-12-16 21:54:20 -0800
 comments: true
-categories: golang, learning
+categories: golang learning
 ---
 
 There are many "teaching" languages, though a contender these days is harder to establish, given the amount of choice available. For very young kids, the Scratch[^1] framework is appropriate, while for slightly older kids, Python might be a better option.

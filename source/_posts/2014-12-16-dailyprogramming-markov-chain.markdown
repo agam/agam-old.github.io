@@ -3,7 +3,7 @@ layout: post
 title: "DailyProgramming: Markov chain"
 date: 2014-12-16 12:13:06 -0800
 comments: true
-categories: alwaysbecoding, golang
+categories: alwaysbecoding golang
 ---
 
 Been a long, _long_ time since I looked at [r/dailyprogrammer](http://www.reddit.com/r/dailyprogrammer/), so I picked [this _intermediate_ problem](http://www.reddit.com/r/dailyprogrammer/comments/2ovt2i/20141210_challenge_192_intermediate_markov_chain/) from 5 days ago. Basically, given a dictionary, judge the likelihood of a word being a "real word".
