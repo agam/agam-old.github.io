@@ -3,6 +3,18 @@
   
   
   <url>
+    <loc>http://agam.github.io/blog/2014/12/17/io-performance-is-that-really-an-ssd/</loc>
+    <lastmod>2014-12-17T20:25:20-08:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>http://agam.github.io/blog/2014/12/17/dailyprogrammer-textual-cycles/</loc>
+    <lastmod>2014-12-17T20:17:28-08:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
     <loc>http://agam.github.io/blog/2014/12/16/the-gardens-of-go/</loc>
     <lastmod>2014-12-16T21:54:20-08:00</lastmod>
     <priority>0.8</priority>
@@ -491,70 +503,14 @@
   
   <url>
     <loc>http://agam.github.io/</loc>
-    <lastmod>2014-12-17T12:19:07-08:00</lastmod>
+    <lastmod>2014-12-17T20:27:27-08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   
   <url>
     <loc>http://agam.github.io/blog/archives/</loc>
-    <lastmod>2014-12-17T12:19:07-08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <url>
-    <loc>http://agam.github.io/blog/page/2/</loc>
-    <lastmod>2014-12-17T12:19:07-08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <url>
-    <loc>http://agam.github.io/blog/page/3/</loc>
-    <lastmod>2014-12-17T12:19:07-08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <url>
-    <loc>http://agam.github.io/blog/page/4/</loc>
-    <lastmod>2014-12-17T12:19:07-08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <url>
-    <loc>http://agam.github.io/blog/page/5/</loc>
-    <lastmod>2014-12-17T12:19:07-08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <url>
-    <loc>http://agam.github.io/blog/page/6/</loc>
-    <lastmod>2014-12-17T12:19:07-08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <url>
-    <loc>http://agam.github.io/blog/page/7/</loc>
-    <lastmod>2014-12-17T12:19:07-08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <url>
-    <loc>http://agam.github.io/blog/page/8/</loc>
-    <lastmod>2014-12-17T12:19:07-08:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <url>
-    <loc>http://agam.github.io/blog/page/9/</loc>
-    <lastmod>2014-12-17T12:19:07-08:00</lastmod>
+    <lastmod>2014-12-17T20:27:27-08:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>

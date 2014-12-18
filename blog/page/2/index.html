@@ -7,7 +7,7 @@
 	<meta name="author" content="Agam">
 
 	
-	<meta name="description" content="Ok, so I went through the Go Tour, and it&rsquo;s pretty impressive; having this sort of super-fast edit-compile-run cycle is something usually &hellip;">
+	<meta name="description" content="Every once in a while I need to share some code snippets, and Gist has been the best way to do this so far. Using the browser wastes a few &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -86,6 +86,118 @@
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2014/08/19/command-line-gists/">
+		
+			Command-line Gists</a>
+	</h2>
+	<div class="entry-content">
+		<p>Every once in a while I need to share some code snippets, and <a href="https://gist.github.com/">Gist</a> has been the best way to do this so far. Using the browser wastes a few mouseclicks, especially if you already have the intended contents (either entirely or partially) in a text file, so here&rsquo;s a better way to do this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>sudo gem install gist
+</span><span class='line'>
+</span><span class='line'>gist --login
+</span><span class='line'>
+</span><span class='line'>gist myfile
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>A new gist containing the contents of <code>myfile</code> (along with the <em>appropriate source formatting</em>) will be created, and you should see something like</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>https://gist.github.com/3d82745c84c8f44dd51c
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>indicating success.</p>
+
+<p><strong>Note:</strong> If you want to upload anonymously, try <code>gist -a myfile</code> instead of the above.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-19T14:25:25-07:00" pubdate data-updated="true">Aug 19<sup>th</sup>, 2014</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/gist/'>gist</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2014/08/12/golang-setup/">
+		
+			Golang Setup</a>
+	</h2>
+	<div class="entry-content">
+		<p>Just some basic personal notes here.</p>
+
+<p>Obviously, get the <code>go-mode</code> for Emacs. It has useful shortcuts, like <code>C-c C-a</code> to import a package while you&rsquo;re editing some code and don&rsquo;t want to scroll up and add this, or <code>C-c C-d</code> to show the signature of the function at point. There are other useful functions (for which you can add your own shortcuts), such as <code>gofmt</code> which does what you&rsquo;d expect, and <code>go-play-region</code>, which is nifty (but perhaps not that useful): it sends the selected code to <a href="http://play.golang.org/">the Go Playground</a>, and displays the result.</p>
+
+<p>It&rsquo;ll also be useful to get <code>godef</code>. So, just <code>go get code.google.com/p/rog-go/exp/cmd/godef</code> (remember to set <code>$GOPATH</code> first &mdash; I use <code>~/Golang/Packages</code>).</p>
+
+<p>If you&rsquo;re enthusiastic about further Emacs-Go integration, you can try out <a href="http://github.com/dougm/goflymake"><code>goflymake</code></a> &mdash; I haven&rsquo;t used it myself (the compile step is nearly-instantaneous for me anyway), but I&rsquo;ve heard its good, so YMMV.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-08-12T15:21:15-07:00" pubdate data-updated="true">Aug 12<sup>th</sup>, 2014</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/golang/'>golang,</a>, <a class='category' href='/blog/categories/setup/'>setup</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -607,316 +719,6 @@
 
 
 <time datetime="2014-07-25T13:11:30-07:00" pubdate data-updated="true">Jul 25<sup>th</sup>, 2014</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/blogging/'>blogging</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2014/07/25/simple-game-of-life/">
-		
-			Simple Game of Life</a>
-	</h2>
-	<div class="entry-content">
-		<p>(Just for fun)</p>
-
-<div><script src='https://gist.github.com/a832613064f958641330.js'></script>
-<noscript><pre><code>(defpackage :game-of-life
-  (:use :cl))
-(in-package :game-of-life)
-
-(defparameter *board-size* 10)
-(defparameter *game-board* nil)
-
-(defparameter *space* #\ )
-(defparameter *life* #\#)
-
-(defun make-new-board ()
-  (make-array (list *board-size* *board-size*)
-          :element-type &#39;(mod 2)
-          :initial-element 0))
-
-(defun start-game ()
-  (setf *game-board* (make-new-board)))
-
-
-(defun print-board ()
-  (dotimes (i *board-size*)
-    (dotimes (j *board-size*)
-      (if (= 0 (aref *game-board* i j))
-      (princ *space*)
-      (princ *life*)))
-    (terpri)))
-
-(defun add-life (x y)
-  (setf (aref *game-board* x y) 1))
-
-(defparameter *environment-radius* 1)
-
-(defun get-environment (x y)
-  &quot;Create a matrix of size 2*radius + 1, with the element
-itself implicitly at (radius,radius) set to 0&quot;
-  (let* ((env-size (1+ (* 2 *environment-radius*)))
-     (env (make-array (list env-size env-size)
-             :element-type &#39;(mod 2)
-             :initial-element 0)))
-    (dotimes (i env-size)
-      (dotimes (j env-size)
-    (let ((x-offset (+ x (- i *environment-radius*)))
-          (y-offset (+ y (- j *environment-radius*))))
-      (if (and (&gt; x-offset 0) (&lt; x-offset *board-size*)
-           (&gt; y-offset 0) (&lt; y-offset *board-size*))
-          (setf (aref env i j) (aref *game-board* x-offset y-offset))
-          (setf (aref env i j) 0)))))
-    env))
-
-(defun count-living-neighbors (env)
-  (let* ((num 0)
-     (env-size (1+ (* 2 *environment-radius*))))
-    (dotimes (i env-size)
-      (dotimes (j env-size)
-    (when (and (= 1 (aref env i j))
-           (or (/= i *environment-radius*)
-               (/= j *environment-radius*)))
-      (incf num))))
-    num))
-
-(defparameter *birth-number* 3)
-(defparameter *lonely-number* 1)
-(defparameter *crowded-number* 4)
-
-(defun can-be-born (neighbors)
-  (= *birth-number* neighbors))
-
-(defun will-survive (neighbors)
-  (and (&gt; neighbors *lonely-number*)
-       (&lt; neighbors *crowded-number*)))
-
-(defun live-or-die (env)
-  (let ((current (aref env *environment-radius* *environment-radius*))
-    (living-neighbors (count-living-neighbors env)))
-    ;;(format t &quot;~%Debug: Current = ~S, num-neighbors = ~S&quot; current living-neighbors)
-    (if (= 0 current)
-    (can-be-born living-neighbors)
-    (will-survive living-neighbors))))
-
-(defun cell-representation (truth)
-  (if truth
-      1
-      0))
-
-(defun step-board ()
-  &quot;Iterate the board by one time step, growing or shrinking life as appropriate&quot;
-  (let ((next-board (make-new-board)))
-    (dotimes (i *board-size*)
-      (dotimes (j *board-size*)
-    (let* ((environment (get-environment i j))
-           (next (cell-representation (live-or-die environment))))
-      ;;(format t &quot;Debug: Cell: ~S, Environment: ~S, Next: ~S~%&quot; (aref *game-board* i j) environment next)
-      (setf (aref next-board i j) next))))
-    (setf *game-board* next-board)))</code></pre></noscript></div>
-
-
-<p>Maybe I&rsquo;ll add a GUI and some tools later, but for now you have to do something like:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>(start-game)
-</span><span class='line'>(add-life 4 5)
-</span><span class='line'>(add-life 5 5)
-</span><span class='line'>(add-life 6 5)
-</span><span class='line'>(print-board)
-</span><span class='line'>(step-board)
-</span><span class='line'>(print-board)</span></code></pre></td></tr></table></div></figure>
-
-
-<p>which should show</p>
-
-<pre>
-
-
-
-    #
-    #
-    #
-
-
-
-</pre>
-
-
-<p>followed by</p>
-
-<pre>
-
-
-
-    ###
-
-
-
-
-
-</pre>
-
-
-<p>and so on &hellip;</p>
-
-<p><em>Update:</em></p>
-
-<p>It&rsquo;s easy to try out patterns. Here are a few typical ones:</p>
-
-<div><script src='https://gist.github.com/527c5fa85b316c84e9ba.js'></script>
-<noscript><pre><code>
-;;; Useful helpers to add stuff to the board. Describe a pattern as a list.
-(defun add-life (x y)
-  (setf (aref *game-board* y x) 1))
-
-(defun draw-pattern (x y pattern)
-  &quot;Assuming &#39;pattern&#39; is specified as a row-major set of 1s and 0s, replicates that on the board&quot;
-  (mapindex #&#39;(lambda (row-num row)
-        (mapindex #&#39;(lambda (col-num entry)
-                  (let ((x-eff (+ x col-num))
-                    (y-eff (+ y row-num)))
-                (when (and (&lt; x-eff *board-size*)
-                       (&lt; y-eff *board-size*))
-                  (setf (aref *game-board* y-eff x-eff) entry))))
-              row))
-        pattern))
-    
-
-;; Sample oscillating patterns
-(defun draw-blinker (x y)
-  (draw-pattern x y
-        &#39;((1)
-          (1)
-          (1))))
-
-(defun draw-toad (x y)
-  (draw-pattern x y
-        &#39;((0 1 1 1)
-          (1 1 1 0))))
-
-(defun draw-beacon (x y)
-  (draw-pattern x y
-        &#39;((1 1 0 0)
-          (1 1 0 0)
-          (0 0 1 1)
-          (0 0 1 1))))
-
-;; Sample fixed patterns
-(defun draw-loaf (x y)
-  (draw-pattern x y
-        &#39;((0 1 1 0)
-          (1 0 0 1)
-          (0 1 0 1)
-          (0 0 1 0))))
-
-(defun draw-block (x y)
-  (draw-pattern x y
-        &#39;((1 1)
-          (1 1))))
-
-;; Sample moving pattern
-(defun draw-glider-moving-right (x y)
-  (draw-pattern x y
-        &#39;((0 1 0)
-          (0 0 1)
-          (1 1 1))))
-
-(defun draw-glider-moving-left (x y)
-  (draw-pattern x y
-        &#39;((0 1 0)
-          (1 0 0)
-          (1 1 1))))</code></pre></noscript></div>
-
-
-<p>Then you can do something like</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>(loop repeat 5 do (print-board) (step-board))</span></code></pre></td></tr></table></div></figure>
-
-
-<p>and watch a few iterations. Of course, this is probably better implemented as a mobile app, I suppose. But yeah, still fun. Try out a <a href="http://wwwhomes.uni-bielefeld.de/achim/moving.html">few other spaceships</a> if you like &hellip;</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-07-25T13:10:46-07:00" pubdate data-updated="true">Jul 25<sup>th</sup>, 2014</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/lisp/'>lisp,</a>, <a class='category' href='/blog/categories/simulation/'>simulation</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2014/07/25/back-to-github/">
-		
-			Back to Github</a>
-	</h2>
-	<div class="entry-content">
-		<p>Ok, I&rsquo;ve been talked back off the ledge. Perhaps I over-reacted a bit when I fled to <a href="http://agamposts.tumblr.com/">Tumblr</a> and then to Wordpress.</p>
-
-<p>I will undo some of that and continue living here for a while. Until the next catastrophe, I suppose. Or maybe I won&rsquo;t call it that.</p>
-
-<p>So I&rsquo;ll move a couple of the posts I created there back here and delete that blog.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-07-25T13:06:07-07:00" pubdate data-updated="true">Jul 25<sup>th</sup>, 2014</time></div>
 	<div class="tags">
 
 

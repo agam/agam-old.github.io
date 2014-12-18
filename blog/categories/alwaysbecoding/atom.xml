@@ -4,7 +4,7 @@
   <title><![CDATA[Category: alwaysbecoding, | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/alwaysbecoding/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2014-12-17T12:19:07-08:00</updated>
+  <updated>2014-12-17T20:27:27-08:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,119 +12,6 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
-  
-  <entry>
-    <title type="html"><![CDATA[DailyProgramming: Markov chain]]></title>
-    <link href="http://agam.github.io/blog/2014/12/16/dailyprogramming-markov-chain/"/>
-    <updated>2014-12-16T12:13:06-08:00</updated>
-    <id>http://agam.github.io/blog/2014/12/16/dailyprogramming-markov-chain</id>
-    <content type="html"><![CDATA[<p>Been a long, <em>long</em> time since I looked at <a href="http://www.reddit.com/r/dailyprogrammer/">r/dailyprogrammer</a>, so I picked <a href="http://www.reddit.com/r/dailyprogrammer/comments/2ovt2i/20141210_challenge_192_intermediate_markov_chain/">this <em>intermediate</em> problem</a> from 5 days ago. Basically, given a dictionary, judge the likelihood of a word being a &ldquo;real word&rdquo;.</p>
-
-<p>Here&rsquo;s my solution:</p>
-
-<p>```go
-package main</p>
-
-<p>import (</p>
-
-<pre><code>"bufio"
-"flag"
-"fmt"
-"log"
-"math"
-"os"
-</code></pre>
-
-<p>)</p>
-
-<p>type wordmap map[uint8]map[uint8]int</p>
-
-<p>func MakeWordMap(w string, wm wordmap) {</p>
-
-<pre><code>for i := range w {
-    if i == len(w)-1 {
-        break
-    }
-    c := w[i]
-    cnext := w[i+1]
-    if _, ok := wm[c]; !ok {
-        wm[c] = make(map[uint8]int)
-    }
-    wm[c][cnext] = wm[c][cnext] + 1
-}
-</code></pre>
-
-<p>}</p>
-
-<p>func ReadWords(dictfile string, wm wordmap) {</p>
-
-<pre><code>file, err := os.Open(dictfile)
-if err != nil {
-    log.Fatal(err)
-}
-defer file.Close()
-
-scanner := bufio.NewScanner(file)
-for scanner.Scan() {
-    MakeWordMap(scanner.Text(), wm)
-}
-</code></pre>
-
-<p>}</p>
-
-<p>func CheckValidity(w string, wm wordmap) float64 {</p>
-
-<pre><code>var c, cprev uint8
-var wordScore float64 = 1.0
-for i := range w {
-    if i == 0 {
-        cprev = w[i]
-        continue
-    }
-    c = w[i]
-    pairScore := wm[cprev][c]
-    rowTotal := 0
-    for _, count := range wm[cprev] {
-        rowTotal += count
-    }
-    wordScore = wordScore * float64(pairScore) / float64(rowTotal)
-    cprev = c
-}
-return wordScore
-</code></pre>
-
-<p>}</p>
-
-<p>func main() {</p>
-
-<pre><code>// Takes a dictionary and a single word, and returns the
-// probability of that word being "good"
-wm := make(wordmap)
-dictfile := flag.String("dictfile", "", "Path to word list")
-checkword := flag.String("checkword", "", "Word to spell-check")
-flag.Parse()
-ReadWords(*dictfile, wm)
-prob := CheckValidity(*checkword, wm)
-fmt.Printf("%s has a score of %.20f\n", *checkword, prob)
-if prob &lt; math.Pow10(-len(*checkword)) {
-    fmt.Println("It is probably not a word!")
-} else {
-    fmt.Println("It looks like a real word!")
-}
-</code></pre>
-
-<p>}
-```</p>
-
-<p>It runs as follows:</p>
-
-<p><code>sh
-$ go run markov.go -dictfile=/usr/share/dict/american-english  -checkword=go
-go has a score of 0.06318184860451107887
-It looks like a real word!
-</code></p>
-]]></content>
-  </entry>
   
   <entry>
     <title type="html"><![CDATA[Programming Fun: Graph distances]]></title>
@@ -472,6 +359,403 @@ int main(int argc, char* argv[]) {
   }
 }
 
+</code></pre></noscript></div>
+</p>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Programming Fun: Telephone Keypads]]></title>
+    <link href="http://agam.github.io/blog/2014/01/18/programming-fun-telephone-keypads/"/>
+    <updated>2014-01-18T02:21:00-08:00</updated>
+    <id>http://agam.github.io/blog/2014/01/18/programming-fun-telephone-keypads</id>
+    <content type="html"><![CDATA[<p><a href="http://www.reddit.com/r/dailyprogrammer/comments/1sody4/12113_challenge_139_intermediate_telephone_keypads/">This is a <em>medium</em> level problem</a>  with two levels of difficulty.</p>
+
+<p>```</p>
+
+<h2>Input Description</h2>
+
+<p>On standard console input, you will be given an array of digits (0 to 9) and
+spaces. All digits will be space-delimited, unless the digits represent
+multiple presses of the same button (for example pressing 2 twice gives you the
+letter &lsquo;B&rsquo;).  Use the modern Telephone Keypads digit-letter layout:
+0 = Not used
+1 = Not used
+2 = ABC
+3 = DEF
+4 = GHI
+5 = JKL
+6 = MNO
+7 = PQRS
+8 = TUV
+9 = WXYZ
+You may use any source for looking up English-language words, though this
+simple English-language dictionary is complete enough for the challenge.</p>
+
+<h2>Output Description</h2>
+
+<p>Print a list of all best-fitting words, meaning words that start with the word
+generated using the given input on a telephone keypad. You do not have to only
+print words of the same length as the input (e.g. even if the input is
+4-digits, it&rsquo;s possible there are many long words that start with those
+4-digits).
+```</p>
+
+<p>You could do this by reading the dictionary into a vector of strings, then figuring out the prefix determined by the input and matching it against each dictionary word. There is a better way to do this though, which makes more sense considering the second part of this question.</p>
+
+<p>Instead of using a vector, you could use a <a href="http://en.wikipedia.org/wiki/Trie">Trie</a> which in this case would look something like:</p>
+
+<p>(showing the words &lsquo;sailor&rsquo;, &lsquo;soldier&rsquo; and &lsquo;solder&rsquo;)</p>
+
+<p><img class="center <a" src="href="http://farm6.staticflickr.com/5534/12005243014_69145160ae_o_d.jpg">http://farm6.staticflickr.com/5534/12005243014_69145160ae_o_d.jpg</a>" width="400"></p>
+
+<p>This is a sort of naive implementation, you could compress this by storing strings and only expanding out to character chains if needed, but I skipped that optimization here.</p>
+
+<p><div><script src='https://gist.github.com/8422418.js'></script>
+<noscript><pre><code>#include &lt;cassert&gt;
+#include &lt;cmath&gt;
+#include &lt;cstdint&gt;
+#include &lt;cstdio&gt;
+#include &lt;cstdlib&gt;
+#include &lt;algorithm&gt;
+#include &lt;array&gt;
+#include &lt;fstream&gt;
+#include &lt;iomanip&gt;
+#include &lt;iostream&gt;
+#include &lt;limits&gt;
+#include &lt;map&gt;
+#include &lt;memory&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+#include &lt;unordered_map&gt;
+
+using namespace std;
+
+static const array&lt;string,10&gt; kKeypadLetters {
+  &quot;&quot;,
+  &quot;&quot;,
+  &quot;abc&quot;,
+  &quot;def&quot;,
+  &quot;ghi&quot;,
+  &quot;jkl&quot;,
+  &quot;mno&quot;,
+  &quot;pqrs&quot;,
+  &quot;tuv&quot;,
+  &quot;wxyz&quot;
+};
+
+// Naive trie implementation
+struct TrieNode {
+  map&lt;char, unique_ptr&lt;TrieNode&gt;&gt; children;
+  bool terminal_node = false;
+};
+
+class Trie {
+public:
+  Trie() {
+    head_.reset(new TrieNode());
+  }
+
+  void Insert(const string&amp; str) {
+    InsertHelper(str, head_.get());
+  }
+
+  bool Lookup(const string&amp; str) {
+    return (LookupHelper(str, head_.get()) != nullptr);
+  }
+
+  void FindAllWithPrefix(const string&amp; str, vector&lt;string&gt;* matches) {
+    const TrieNode* start_node = LookupHelper(str, head_.get());
+    if (start_node == nullptr) { return; }
+    FindAllHelper(str, start_node, matches);
+  }
+
+private:
+  void InsertHelper(const string&amp; str, TrieNode* node) {
+    if (str.empty()) {
+      node-&gt;terminal_node = true;
+      return;
+    }
+    assert(node != nullptr);
+    char c = str.front();
+    const auto&amp; it = node-&gt;children.find(c);
+    if (it == node-&gt;children.end()) {
+      node-&gt;children.insert(make_pair(c, unique_ptr&lt;TrieNode&gt;(new TrieNode)));
+    }
+    TrieNode* next_node = node-&gt;children.find(c)-&gt;second.get();
+    InsertHelper(str.substr(1), next_node);
+  }
+
+  const TrieNode* LookupHelper(const string&amp; str, const TrieNode* node) {
+    if (str.empty()) { return node; }
+    assert(node != nullptr);
+    const auto&amp; it = node-&gt;children.find(str.front());
+    if (it == node-&gt;children.end()) {
+      return nullptr;
+    } else {
+      return LookupHelper(str.substr(1), it-&gt;second.get());
+    }
+  }
+
+  void FindAllHelper(
+      const string&amp; current_str,
+      const TrieNode* current_node,
+      vector&lt;string&gt;* matches) {
+    if (current_node-&gt;terminal_node) {
+      matches-&gt;push_back(current_str);
+    }
+    for (const auto&amp; it : current_node-&gt;children) {
+      FindAllHelper(current_str + it.first, it.second.get(), matches);
+    }
+  }
+
+  unique_ptr&lt;TrieNode&gt; head_;
+};
+
+void PopulateTrie(const string&amp; fname, Trie* trie) {
+  ifstream ifs;
+  ifs.open(fname, ifstream::in);
+  while (!ifs.eof()) {
+    string word;
+    getline(ifs, word);
+    if (word.size()) {
+      trie-&gt;Insert(word);
+    }
+  }
+}
+
+int main(int argc, char* argv[]) {
+  // Read digiletters from stdin
+  vector&lt;int&gt; digiletters;
+  int digiletter;
+  while (cin &gt;&gt; digiletter) {
+    digiletters.push_back(digiletter);
+  }
+
+  // Read strings from file into Trie
+  assert(argc == 2);
+  Trie dict_trie;
+  PopulateTrie(argv[1], &amp;dict_trie);
+
+  // Get letter counts
+  string keypad_str;
+  for (int dl : digiletters) {
+    int count = 0;
+    const int letter = dl % 10;
+    while (dl &gt; 0) {
+      assert(dl % 10 == letter);
+      dl /= 10;
+      ++count;
+    }
+    const string&amp; keypad_letters = kKeypadLetters[letter];
+    assert(count &lt;= keypad_letters.size());
+    keypad_str.push_back(keypad_letters[count - 1]);
+  }
+
+  // Get matches
+  vector&lt;string&gt; possible_matches;
+  dict_trie.FindAllWithPrefix(keypad_str, &amp;possible_matches);
+
+  // Print matches
+  for (const string&amp; s : possible_matches) {
+    cout &lt;&lt; s &lt;&lt; endl;
+  }
+}
+</code></pre></noscript></div>
+</p>
+
+<p>There is a harder version of this problem:</p>
+
+<p>```</p>
+
+<h2>Challenge++</h2>
+
+<p>If you want an extra challenge, accomplish the same challenge but without
+knowing the number of times a digit is pressed. For example &ldquo;7653&rdquo; could mean
+sold, or poke, or even solenoid! You must do this efficiently with regards to
+Big-O complexity.
+```</p>
+
+<p>This would have been more inefficient with a vector of strings (you would sort the vector and then for each prefix, print out all subsequent ones until you encounter a string with a different prefix. So it&rsquo;s O(n log n) where n is the size of the dictionary).</p>
+
+<p>With our trie, we can (once we have a list of all combinatorially possible prefixes) look them up <em>quickly</em> (O(k + n), where k is the length of the prefix; O(k) time for each lookup and O(n) time for creating the trie (or O(mn) where m is the length of the largest word, though I would consider that a constant here)).</p>
+
+<p>(Note: there&rsquo;s some duplication of common code, especially in the <code>Trie</code> class; sorry about that!)</p>
+
+<p><div><script src='https://gist.github.com/8460783.js'></script>
+<noscript><pre><code>#include &lt;cassert&gt;
+#include &lt;cmath&gt;
+#include &lt;cstdint&gt;
+#include &lt;cstdio&gt;
+#include &lt;cstdlib&gt;
+#include &lt;algorithm&gt;
+#include &lt;array&gt;
+#include &lt;fstream&gt;
+#include &lt;iomanip&gt;
+#include &lt;iostream&gt;
+#include &lt;limits&gt;
+#include &lt;map&gt;
+#include &lt;memory&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+#include &lt;unordered_map&gt;
+
+using namespace std;
+
+static const array&lt;string,10&gt; kKeypadLetters {
+  &quot;&quot;,
+  &quot;&quot;,
+  &quot;abc&quot;,
+  &quot;def&quot;,
+  &quot;ghi&quot;,
+  &quot;jkl&quot;,
+  &quot;mno&quot;,
+  &quot;pqrs&quot;,
+  &quot;tuv&quot;,
+  &quot;wxyz&quot;
+};
+
+// Naive trie implementation
+struct TrieNode {
+  map&lt;char, unique_ptr&lt;TrieNode&gt;&gt; children;
+  bool terminal_node = false;
+};
+
+class Trie {
+public:
+  Trie() {
+    head_.reset(new TrieNode());
+  }
+
+  void Insert(const string&amp; str) {
+    InsertHelper(str, head_.get());
+  }
+
+  bool Lookup(const string&amp; str) {
+    return (LookupHelper(str, head_.get()) != nullptr);
+  }
+
+  void FindAllWithPrefix(const string&amp; str, vector&lt;string&gt;* matches) {
+    const TrieNode* start_node = LookupHelper(str, head_.get());
+    if (start_node == nullptr) { return; }
+    FindAllHelper(str, start_node, matches);
+  }
+
+private:
+  void InsertHelper(const string&amp; str, TrieNode* node) {
+    if (str.empty()) {
+      node-&gt;terminal_node = true;
+      return;
+    }
+    assert(node != nullptr);
+    char c = str.front();
+    const auto&amp; it = node-&gt;children.find(c);
+    if (it == node-&gt;children.end()) {
+      node-&gt;children.insert(make_pair(c, unique_ptr&lt;TrieNode&gt;(new TrieNode)));
+    }
+    TrieNode* next_node = node-&gt;children.find(c)-&gt;second.get();
+    InsertHelper(str.substr(1), next_node);
+  }
+
+  const TrieNode* LookupHelper(const string&amp; str, const TrieNode* node) {
+    if (str.empty()) { return node; }
+    assert(node != nullptr);
+    const auto&amp; it = node-&gt;children.find(str.front());
+    if (it == node-&gt;children.end()) {
+      return nullptr;
+    } else {
+      return LookupHelper(str.substr(1), it-&gt;second.get());
+    }
+  }
+
+  void FindAllHelper(
+      const string&amp; current_str,
+      const TrieNode* current_node,
+      vector&lt;string&gt;* matches) {
+    if (current_node-&gt;terminal_node) {
+      matches-&gt;push_back(current_str);
+    }
+    for (const auto&amp; it : current_node-&gt;children) {
+      FindAllHelper(current_str + it.first, it.second.get(), matches);
+    }
+  }
+
+  unique_ptr&lt;TrieNode&gt; head_;
+};
+
+void PopulateTrie(const string&amp; fname, Trie* trie) {
+  ifstream ifs;
+  ifs.open(fname, ifstream::in);
+  while (!ifs.eof()) {
+    string word;
+    getline(ifs, word);
+    if (word.size()) {
+      trie-&gt;Insert(word);
+    }
+  }
+}
+
+void GetPrefixesHelper(
+    const vector&lt;int&gt;&amp; digiletters,
+    int index,
+    const string current_prefix,
+    vector&lt;string&gt;* possible_prefixes) {
+  if (index == digiletters.size()) {
+    possible_prefixes-&gt;push_back(current_prefix);
+    return;
+  }
+  const string candidates = kKeypadLetters[digiletters.at(index)];
+  for (char c : candidates) {
+    GetPrefixesHelper(
+        digiletters,
+        index + 1,
+        current_prefix + c,
+        possible_prefixes);
+  }
+}
+
+void GetPrefixes(
+    const vector&lt;int&gt;&amp; digiletters, vector&lt;string&gt;* possible_prefixes) {
+  GetPrefixesHelper(digiletters, 0, &quot;&quot;, possible_prefixes);
+}
+
+int main(int argc, char* argv[]) {
+  // Read the keypad input
+  int keypad_input;
+  cin &gt;&gt; keypad_input;
+
+  // Read strings from file into Trie
+  assert(argc == 2);
+  Trie dict_trie;
+  PopulateTrie(argv[1], &amp;dict_trie);
+
+  // Get letter counts
+  vector&lt;int&gt; digiletters;
+  while (keypad_input) {
+    digiletters.push_back(keypad_input % 10);
+    keypad_input /= 10;
+  }
+  reverse(digiletters.begin(), digiletters.end());
+
+  // First get the combinatorially possible prefixes
+  vector&lt;string&gt; possible_prefixes;
+  GetPrefixes(digiletters, &amp;possible_prefixes);
+
+  // Use the prefixes to get complete matches.
+  vector&lt;string&gt; possible_matches;
+  for (const string&amp; prefix : possible_prefixes) {
+    if (dict_trie.Lookup(prefix)) {
+      dict_trie.FindAllWithPrefix(prefix, &amp;possible_matches);
+    }
+  }
+
+  // Print matches
+  for (const string&amp; s : possible_matches) {
+    cout &lt;&lt; s &lt;&lt; endl;
+  }
+}
 </code></pre></noscript></div>
 </p>
 ]]></content>
