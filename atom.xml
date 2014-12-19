@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2014-12-17T20:27:27-08:00</updated>
+  <updated>2014-12-18T17:45:57-08:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,35 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Logic through Haskell? Not necessarily ...]]></title>
+    <link href="http://agam.github.io/blog/2014/12/18/logic-through-haskell-not-necessarily-dot-dot-dot/"/>
+    <updated>2014-12-18T17:20:58-08:00</updated>
+    <id>http://agam.github.io/blog/2014/12/18/logic-through-haskell-not-necessarily-dot-dot-dot</id>
+    <content type="html"><![CDATA[<p>Finished reading (browsing, really, after the first few chapters) through The Haskell Road to Logic, Maths and Programming<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>, and I am &hellip; <em>underwhelmed</em>. I mean the book was great and all, but maybe I made the mistake of forming some unreasonable expectations.</p>
+
+<p>If you&rsquo;re already familiar with a bit of Haskell and basic logic/sets/numbers, you&rsquo;ll get the most <em>bang for your buck</em> from Chapter 10 on <em>Corecursion</em><sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>. This was &ldquo;brand new&rdquo; for me and I had multiple &ldquo;aha&rdquo; moments after seeing the mechanism used to reason about non-deterministic processes etc.</p>
+
+<p><strong>Conclusions</strong>:</p>
+
+<ul>
+<li>More than Haskell, this motivated me to learn more math (though I don&rsquo;t know <em>where to start</em>!)</li>
+<li>I feel like Mathematica could be used too, for everything in this book; for stuff like this it&rsquo;s like Haskell <em>plus lots of libraries and visualization</em></li>
+</ul>
+
+<div class="footnotes">
+<hr/>
+<ol>
+<li id="fn:1">
+<p><a href="http://www.amazon.com/Haskell-Programming-Second-Edition-Computing/dp/0954300696">via Amazon</a><a href="#fnref:1" rev="footnote">&#8617;</a></p></li>
+<li id="fn:2">
+<p><a href="http://en.wikipedia.org/wiki/Corecursion">via Wikipedia</a><a href="#fnref:2" rev="footnote">&#8617;</a></p></li>
+</ol>
+</div>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[IO Performance (is that really an SSD?)]]></title>
@@ -1926,21 +1955,6 @@ Error: <code>The resource 'projects/algol-c/zones/us-central1-a/instances/myvm' 
 
 
 <p>Now you can <em>make up your own damn mind</em>.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[On moving from development to writing]]></title>
-    <link href="http://agam.github.io/blog/2014/07/25/on-moving-from-development-to-writing/"/>
-    <updated>2014-07-25T13:11:30-07:00</updated>
-    <id>http://agam.github.io/blog/2014/07/25/on-moving-from-development-to-writing</id>
-    <content type="html"><![CDATA[<p>From <a href="http://mattgemmell.com/confessions-of-an-ex-developer/">Matt Gemmell</a>. I have to say I&rsquo;ve been feeling the same way for some time now!</p>
-
-<blockquote><p>We’ve had our (latest) software Renaissance in the form of the mobile platforms and their App Stores, and I think the software biz is now starting to slide back towards consolidation and mega-corps again. <em>It’s not a particularly great time to be an indie app developer anymore.</em></p>
-
-<p>Small shops are closing. Three-person companies are dropping back to sole proprietorships all over the place. Products are being acquired every week, usually just for their development teams, and then discarded.</p>
-
-<p><strong>The implacable, crushing wheels of industry, slow to move because of their size, have at last arrived on the frontier</strong>. Our frontier, or at least yours now. I’ve relinquished my claim.</p></blockquote>
 ]]></content>
   </entry>
   

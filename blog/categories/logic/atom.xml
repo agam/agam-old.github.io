@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: logic | Agam's Mashed-Up Pome]]></title>
+  <link href="http://agam.github.io/blog/categories/logic/atom.xml" rel="self"/>
+  <link href="http://agam.github.io/"/>
+  <updated>2014-12-18T17:45:57-08:00</updated>
+  <id>http://agam.github.io/</id>
+  <author>
+    <name><![CDATA[Agam]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Logic through Haskell? Not necessarily ...]]></title>
+    <link href="http://agam.github.io/blog/2014/12/18/logic-through-haskell-not-necessarily-dot-dot-dot/"/>
+    <updated>2014-12-18T17:20:58-08:00</updated>
+    <id>http://agam.github.io/blog/2014/12/18/logic-through-haskell-not-necessarily-dot-dot-dot</id>
+    <content type="html"><![CDATA[<p>Finished reading (browsing, really, after the first few chapters) through The Haskell Road to Logic, Maths and Programming<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>, and I am &hellip; <em>underwhelmed</em>. I mean the book was great and all, but maybe I made the mistake of forming some unreasonable expectations.</p>
+
+<p>If you&rsquo;re already familiar with a bit of Haskell and basic logic/sets/numbers, you&rsquo;ll get the most <em>bang for your buck</em> from Chapter 10 on <em>Corecursion</em><sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>. This was &ldquo;brand new&rdquo; for me and I had multiple &ldquo;aha&rdquo; moments after seeing the mechanism used to reason about non-deterministic processes etc.</p>
+
+<p><strong>Conclusions</strong>:</p>
+
+<ul>
+<li>More than Haskell, this motivated me to learn more math (though I don&rsquo;t know <em>where to start</em>!)</li>
+<li>I feel like Mathematica could be used too, for everything in this book; for stuff like this it&rsquo;s like Haskell <em>plus lots of libraries and visualization</em></li>
+</ul>
+
+<div class="footnotes">
+<hr/>
+<ol>
+<li id="fn:1">
+<p><a href="http://www.amazon.com/Haskell-Programming-Second-Edition-Computing/dp/0954300696">via Amazon</a><a href="#fnref:1" rev="footnote">&#8617;</a></p></li>
+<li id="fn:2">
+<p><a href="http://en.wikipedia.org/wiki/Corecursion">via Wikipedia</a><a href="#fnref:2" rev="footnote">&#8617;</a></p></li>
+</ol>
+</div>
+
+]]></content>
+  </entry>
+  
+</feed>
