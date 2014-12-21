@@ -7,7 +7,7 @@
 	<meta name="author" content="Agam">
 
 	
-	<meta name="description" content="Alright, the first example of &ldquo;Ridiculous Concurrency&rdquo; ! Here is a terribly inefficient adder that performs arithmetic on arbitrarily &hellip;">
+	<meta name="description" content="Following in the theme of the previous post, here (see linked Gist) is a concurrent graph. Again, this is not an efficient way to do something like &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -86,6 +86,190 @@
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2014/09/02/a-ridiculous-graph/">
+		
+			A Ridiculous Graph</a>
+	</h2>
+	<div class="entry-content">
+		<p>Following in the theme of the previous post, <a href="https://gist.github.com/agam/fe8983acccd455fd9510">here (see linked Gist)</a> is a concurrent graph. Again, this is not an efficient way to do something like this, it&rsquo;s just a fun example of showing something that&rsquo;s easy in Go but probably harder or more verbose in other languages.</p>
+
+<p>The basic idea here is that <em>every node is a goroutine</em>. So instead of using some structure like a matrix or an adjacency list to &ldquo;get a handle&rdquo; on all the nodes and their connections, you let the nodes take care of that themselves. Graph algorithms (trivial ones here are self-identification and depth calculation) are then constructed as interactions with the nodes, without an explicit traversal of vertices and edges.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+</pre></td><td class='code'><pre><code class='go'><span class='line'><span class="kd">func</span> <span class="nx">node_agent</span><span class="p">(</span><span class="nx">node</span> <span class="o">*</span><span class="nx">Node</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">for</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">cmd</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="nx">node</span><span class="p">.</span><span class="nx">comm</span>
+</span><span class='line'>      <span class="k">switch</span> <span class="nx">cmd</span><span class="p">.</span><span class="nx">cmdtype</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">case</span> <span class="nx">NameCmd</span><span class="p">:</span>
+</span><span class='line'>          <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;I am &quot;</span><span class="p">,</span> <span class="nx">node</span><span class="p">.</span><span class="nx">name</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">case</span> <span class="nx">PingCmd</span><span class="p">:</span>
+</span><span class='line'>          <span class="nx">cmd</span><span class="p">.</span><span class="nx">cmdchan</span> <span class="o">&lt;-</span> <span class="nx">PingCmd</span>
+</span><span class='line'>      <span class="k">case</span> <span class="nx">SetDepthCmd</span><span class="p">:</span>
+</span><span class='line'>          <span class="c1">// Ask all neighbors to modify depth, and pass</span>
+</span><span class='line'>          <span class="c1">// along the notification channel to them</span>
+</span><span class='line'>          <span class="nx">depth</span> <span class="o">:=</span> <span class="nx">cmd</span><span class="p">.</span><span class="nx">cmdarg</span>
+</span><span class='line'>          <span class="k">if</span> <span class="nx">node</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">depth</span> <span class="p">&gt;</span> <span class="mi">0</span> <span class="p">{</span>
+</span><span class='line'>              <span class="k">break</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>          <span class="nx">node</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">depth</span> <span class="p">=</span> <span class="nx">depth</span>
+</span><span class='line'>          <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">ch</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">node</span><span class="p">.</span><span class="nx">neighbors</span> <span class="p">{</span>
+</span><span class='line'>              <span class="nx">ch</span> <span class="o">&lt;-</span> <span class="nx">Command</span><span class="p">{</span><span class="nx">SetDepthCmd</span><span class="p">,</span> <span class="nx">cmd</span><span class="p">.</span><span class="nx">cmdchan</span><span class="p">,</span> <span class="nx">depth</span> <span class="o">+</span> <span class="mi">1</span><span class="p">}</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>          <span class="nx">cmd</span><span class="p">.</span><span class="nx">cmdchan</span> <span class="o">&lt;-</span> <span class="mi">1</span>
+</span><span class='line'>      <span class="k">case</span> <span class="nx">GetDepthCmd</span><span class="p">:</span>
+</span><span class='line'>          <span class="nx">cmd</span><span class="p">.</span><span class="nx">cmdchan</span> <span class="o">&lt;-</span> <span class="nx">node</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">depth</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The &ldquo;Hello world&rdquo; in this scenario is just finding out which nodes exist, which is something as follows:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='go'><span class='line'><span class="kd">func</span> <span class="nx">IsAlive</span><span class="p">(</span><span class="nx">node</span> <span class="o">*</span><span class="nx">Node</span><span class="p">)</span> <span class="kt">bool</span> <span class="p">{</span>
+</span><span class='line'>  <span class="c1">// Ping the node with a 10ms timeout</span>
+</span><span class='line'>  <span class="nx">pingchan</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">int</span><span class="p">)</span>
+</span><span class='line'>  <span class="nx">node</span><span class="p">.</span><span class="nx">comm</span> <span class="o">&lt;-</span> <span class="nx">Command</span><span class="p">{</span><span class="nx">PingCmd</span><span class="p">,</span> <span class="nx">pingchan</span><span class="p">,</span> <span class="mi">0</span><span class="p">}</span>
+</span><span class='line'>  <span class="k">select</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">case</span> <span class="o">&lt;-</span><span class="nx">pingchan</span><span class="p">:</span>
+</span><span class='line'>      <span class="k">return</span> <span class="kc">true</span>
+</span><span class='line'>  <span class="k">case</span> <span class="o">&lt;-</span><span class="nx">time</span><span class="p">.</span><span class="nx">After</span><span class="p">(</span><span class="mi">10</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Millisecond</span><span class="p">):</span>
+</span><span class='line'>      <span class="k">return</span> <span class="kc">false</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">func</span> <span class="nx">printGraph</span><span class="p">(</span><span class="nx">g</span> <span class="o">*</span><span class="nx">Graph</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Graph :&quot;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">node</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">g</span><span class="p">.</span><span class="nx">nodes</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">if</span> <span class="nx">IsAlive</span><span class="p">(</span><span class="nx">node</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nx">node</span><span class="p">.</span><span class="nx">comm</span> <span class="o">&lt;-</span> <span class="nx">Command</span><span class="p">{</span><span class="nx">NameCmd</span><span class="p">,</span> <span class="kc">nil</span><span class="p">,</span> <span class="mi">0</span><span class="p">}</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>A slightly more complicated operation is finding the depth of all nodes relative to the root node:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='go'><span class='line'><span class="kd">func</span> <span class="nx">calculateDepths</span><span class="p">(</span><span class="nx">g</span> <span class="o">*</span><span class="nx">Graph</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="c1">// Recursively trigger computation from root node</span>
+</span><span class='line'>  <span class="nx">notification</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">int</span><span class="p">)</span>
+</span><span class='line'>  <span class="nx">g</span><span class="p">.</span><span class="nx">nodes</span><span class="p">[</span><span class="s">&quot;root&quot;</span><span class="p">].</span><span class="nx">comm</span> <span class="o">&lt;-</span> <span class="nx">Command</span><span class="p">{</span><span class="nx">SetDepthCmd</span><span class="p">,</span> <span class="nx">notification</span><span class="p">,</span> <span class="mi">1</span><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">g</span><span class="p">.</span><span class="nx">nodes</span><span class="p">);</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span><span class='line'>      <span class="c1">// Wait for every node to receive this atleast once</span>
+</span><span class='line'>      <span class="o">&lt;-</span><span class="nx">notification</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// Now check all the depths</span>
+</span><span class='line'>  <span class="nx">depthchan</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">int</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">for</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">node</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">g</span><span class="p">.</span><span class="nx">nodes</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">node</span><span class="p">.</span><span class="nx">comm</span> <span class="o">&lt;-</span> <span class="nx">Command</span><span class="p">{</span><span class="nx">GetDepthCmd</span><span class="p">,</span> <span class="nx">depthchan</span><span class="p">,</span> <span class="mi">0</span><span class="p">}</span>
+</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="s">&quot; =&gt; &quot;</span><span class="p">,</span> <span class="o">&lt;-</span><span class="nx">depthchan</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This being Go, you can play around with the implementation <a href="http://play.golang.org/p/SBoF_FnsMu">in the playground</a>!</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-09-02T16:44:27-07:00" pubdate data-updated="true">Sep 2<sup>nd</sup>, 2014</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/concurrency/'>concurrency</a>, <a class='category' href='/blog/categories/golang/'>golang,</a>, <a class='category' href='/blog/categories/graph/'>graph,</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -892,59 +1076,6 @@
 
 
 	<a class='category' href='/blog/categories/clojure/'>clojure,</a>, <a class='category' href='/blog/categories/dart/'>dart</a>, <a class='category' href='/blog/categories/lisp/'>lisp,</a>, <a class='category' href='/blog/categories/scala/'>scala,</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2014/07/25/r-vs-python/">
-		
-			R vs Python</a>
-	</h2>
-	<div class="entry-content">
-		<p>A lot of virtual ink has been spilled on whether R or Python is better suited to the needs of <a href="http://www.analyticbridge.com/profiles/blogs/the-death-of-the-statistician">&ldquo;data scientists&rdquo;</a>.</p>
-
-<p>Numerous people (no, <em>evangelicals</em>) have weighed in <a href="http://inside-bigdata.com/2013/12/09/data-science-wars-python-vs-r/">with</a> <a href="http://readwrite.com/2013/11/25/python-displacing-r-as-the-programming-language-for-data-science">their</a> <a href="http://redmonk.com/sogrady/2013/11/26/python-r/">polemics</a> (summarized, briefly as &ldquo;R is not really a language!&rdquo;, &ldquo;Python is displacing R!&rdquo;, and &ldquo;Will Python kill R?&rdquo;).</p>
-
-<p>So, it&rsquo;s confusing (i.e., if you happen to care at all, though you don&rsquo;t have to; this is the internet, where the less people know or care about something, the stronger their opinions on it), but luckily someone did come up with a <em>data-driven approach</em> to solving this problem. Check it out:</p>
-
-<ul>
-<li><a href="http://www.theswarmlab.com/r-vs-python-round-1/">Round 1</a></li>
-<li>Round 2 (<a href="http://www.theswarmlab.com/r-vs-python-round-2/">part 1</a> and <a href="http://www.theswarmlab.com/r-vs-python-round-2-22/">part 2</a>)</li>
-</ul>
-
-
-<p>Now you can <em>make up your own damn mind</em>.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-07-25T16:22:39-07:00" pubdate data-updated="true">Jul 25<sup>th</sup>, 2014</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/stats/'>stats</a>
 
 
 </div>
