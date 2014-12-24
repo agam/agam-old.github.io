@@ -3,6 +3,12 @@
   
   
   <url>
+    <loc>http://agam.github.io/blog/2014/12/23/status-update/</loc>
+    <lastmod>2014-12-23T23:58:46+00:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
     <loc>http://agam.github.io/blog/2014/12/23/google-cloud-sharing-projects/</loc>
     <lastmod>2014-12-23T22:44:16+00:00</lastmod>
     <priority>0.8</priority>
@@ -521,14 +527,14 @@
   
   <url>
     <loc>http://agam.github.io/</loc>
-    <lastmod>2014-12-23T23:23:37+00:00</lastmod>
+    <lastmod>2014-12-24T00:29:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   
   <url>
     <loc>http://agam.github.io/blog/archives/</loc>
-    <lastmod>2014-12-23T23:23:37+00:00</lastmod>
+    <lastmod>2014-12-24T00:29:41+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>

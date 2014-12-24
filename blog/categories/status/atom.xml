@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: status | Agam's Mashed-Up Pome]]></title>
+  <link href="http://agam.github.io/blog/categories/status/atom.xml" rel="self"/>
+  <link href="http://agam.github.io/"/>
+  <updated>2014-12-24T00:29:41+00:00</updated>
+  <id>http://agam.github.io/</id>
+  <author>
+    <name><![CDATA[Agam]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Status Update, just before Christmas]]></title>
+    <link href="http://agam.github.io/blog/2014/12/23/status-update/"/>
+    <updated>2014-12-23T23:58:46+00:00</updated>
+    <id>http://agam.github.io/blog/2014/12/23/status-update</id>
+    <content type="html"><![CDATA[<p>Since the FreeBSD experiment didn&rsquo;t work out<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>, I picked a different one: &ldquo;plain old&rdquo; Debian<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>! (should be <em>acronymized</em> to POD).</p>
+
+<p>I read an old piece of evangelism<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup> which gave me the idea to version-control <code>/etc</code>, though I have sinced found <code>etckeeper</code> to do the same<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup></p>
+
+<p>```sh
+$ sudo apt-get install etckeeper</p>
+
+<h1>Modify VCS to <code>git</code> (not necessary on Debian, AFAICS)</h1>
+
+<p>$ sudo vi /etc/etckeeper/etckeeper.conf</p>
+
+<p>$ cd /etc
+$ sudo git log</p>
+
+<h1>Should show &ldquo;&hellip;blah blah blah &hellip; Initial Commit&rdquo;</h1>
+
+<h1>On Ubuntu, might need to explicitly run <code>sudo git commit -a -m 'Initial commit</code></h1>
+
+<h1>Fully integrated with APT</h1>
+
+<p>$ sudo git log</p>
+
+<h1>will show something like &ldquo;&hellip; committing changes in /etc after apt run &hellip;&rdquo;</h1>
+
+<p>```</p>
+
+<p>Other than that, not much else. Busy with a new baby daughter (!)<sup id="fnref:5"><a href="#fn:5" rel="footnote">5</a></sup>, trying to read less &ldquo;news and blogs&rdquo;<sup id="fnref:6"><a href="#fn:6" rel="footnote">6</a></sup>, pretending to read a book on NLP<sup id="fnref:7"><a href="#fn:7" rel="footnote">7</a></sup>, and having a &ldquo;brand new linux box&rdquo; experience with a VM in Google Cloud.</p>
+
+<p>Have a happy new year, everyone.</p>
+<div class="footnotes">
+<hr/>
+<ol>
+<li id="fn:1">
+<p><a href="http://agam.github.io/blog/2014/12/14/trying-out-freebsd-and-failing-at-it/">http://agam.github.io/blog/2014/12/14/trying-out-freebsd-and-failing-at-it/</a><a href="#fnref:1" rev="footnote">&#8617;</a></p></li>
+<li id="fn:2">
+<p><a href="https://www.debian.org/">https://www.debian.org/</a><a href="#fnref:2" rev="footnote">&#8617;</a></p></li>
+<li id="fn:3">
+<p><a href="https://wiki.debian.org/WhyDebian">https://wiki.debian.org/WhyDebian</a><a href="#fnref:3" rev="footnote">&#8617;</a></p></li>
+<li id="fn:4">
+<p><a href="https://gist.github.com/agam/2cda8597966f49a04e07">https://gist.github.com/agam/2cda8597966f49a04e07</a><a href="#fnref:4" rev="footnote">&#8617;</a></p></li>
+<li id="fn:5">
+<p><a href="https://plus.google.com/108609219349604504501/posts/1CVG1iFTtXe">https://plus.google.com/108609219349604504501/posts/1CVG1iFTtXe</a><a href="#fnref:5" rev="footnote">&#8617;</a></p></li>
+<li id="fn:6">
+<p><a href="http://www.theguardian.com/media/2013/apr/12/news-is-bad-rolf-dobelli">http://www.theguardian.com/media/2013/apr/12/news-is-bad-rolf-dobelli</a><a href="#fnref:6" rev="footnote">&#8617;</a></p></li>
+<li id="fn:7">
+<p><a href="http://nlp.stanford.edu/fsnlp/">http://nlp.stanford.edu/fsnlp/</a><a href="#fnref:7" rev="footnote">&#8617;</a></p></li>
+</ol>
+</div>
+
+]]></content>
+  </entry>
+  
+</feed>
