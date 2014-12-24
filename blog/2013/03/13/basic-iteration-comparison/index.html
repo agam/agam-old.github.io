@@ -117,7 +117,7 @@
 </span><span class='line'>
 </span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">**</span><span class="n">argv</span><span class="p">)</span> <span class="p">{</span>
 </span><span class='line'>  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">v</span> <span class="p">{</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">34</span> <span class="p">,</span><span class="mi">45</span> <span class="p">,</span><span class="mi">56</span> <span class="p">,</span><span class="mi">67</span> <span class="p">,</span><span class="mi">78</span><span class="p">,</span> <span class="mi">89</span> <span class="p">};</span>
-</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="n">i</span> <span class="o">:</span> <span class="n">v</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="nl">i</span> <span class="p">:</span> <span class="n">v</span><span class="p">)</span> <span class="p">{</span>
 </span><span class='line'>    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">i</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
 </span><span class='line'>  <span class="p">}</span>
 </span><span class='line'><span class="p">}</span>
@@ -259,7 +259,7 @@ passed to the vector (the actual function signature for the constructor is</p>
 <span class='line-number'>8</span>
 <span class='line-number'>9</span>
 </pre></td><td class='code'><pre><code class='c'><span class='line'><span class="err">```</span><span class="n">nasm</span>
-</span><span class='line'><span class="p">.</span><span class="n">LEHE0</span><span class="o">:</span>
+</span><span class='line'><span class="p">.</span><span class="nl">LEHE0</span><span class="p">:</span>
 </span><span class='line'>  <span class="n">leaq</span> <span class="o">-</span><span class="mi">17</span><span class="p">(</span><span class="o">%</span><span class="n">rbp</span><span class="p">),</span> <span class="o">%</span><span class="n">rax</span>
 </span><span class='line'>  <span class="n">movq</span> <span class="o">%</span><span class="n">rax</span><span class="p">,</span> <span class="o">%</span><span class="n">rdi</span>
 </span><span class='line'>  <span class="n">call</span> <span class="n">_ZNSaIiED1Ev</span>
@@ -351,9 +351,9 @@ unmangled symbols is <code>c++filt</code>, use it as</p>
 <span class='line-number'>5</span>
 </pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>c++filt _ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_
 </span><span class='line'>
-</span><span class='line'>std::basic_ostream&lt;char, std::char_traits&lt;char&gt; &gt;&amp; std::endl&lt;char,
+</span><span class='line'>std::basic_ostream&lt;char, std::char_traits&lt;char&gt; &gt;<span class="p">&amp;</span> std::endl&lt;char,
 </span><span class='line'>std::char_traits&lt;char&gt; &gt;<span class="o">(</span>std::basic_ostream&lt;char, std::char_traits&lt;char&gt;
-</span><span class='line'>&gt;&amp;<span class="o">)</span>
+</span><span class='line'>&gt;<span class="p">&amp;</span><span class="o">)</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -1039,13 +1039,13 @@ poor benchmark, but still) it seems close enough:</p>
 <span class='line-number'>9</span>
 <span class='line-number'>10</span>
 <span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span><span class="nb">time</span> <span class="o">(</span><span class="k">while</span> <span class="o">((</span>n++ &lt; 100<span class="o">))</span>; <span class="k">do</span> ./simpleloopcpp; <span class="k">done</span><span class="o">)</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span><span class="nb">time</span> <span class="o">(</span><span class="k">while</span> <span class="o">((</span>n++ &lt; 100<span class="o">))</span><span class="p">;</span> <span class="k">do</span> ./simpleloopcpp<span class="p">;</span> <span class="k">done</span><span class="o">)</span>
 </span><span class='line'>
 </span><span class='line'>real  0m0.312s
 </span><span class='line'>user  0m0.016s
 </span><span class='line'>sys   0m0.044s
 </span><span class='line'>
-</span><span class='line'><span class="nv">$ </span><span class="nb">time</span> <span class="o">(</span><span class="k">while</span> <span class="o">((</span>n++ &lt; 100<span class="o">))</span>; <span class="k">do</span> ./simpleloophaskell; <span class="k">done</span><span class="o">)</span>
+</span><span class='line'><span class="nv">$ </span><span class="nb">time</span> <span class="o">(</span><span class="k">while</span> <span class="o">((</span>n++ &lt; 100<span class="o">))</span><span class="p">;</span> <span class="k">do</span> ./simpleloophaskell<span class="p">;</span> <span class="k">done</span><span class="o">)</span>
 </span><span class='line'>
 </span><span class='line'>real  0m0.355s
 </span><span class='line'>user  0m0.024s
@@ -1070,7 +1070,7 @@ poor benchmark, but still) it seems close enough:</p>
   
 
 
-<time datetime="2013-03-13T00:00:00-07:00" pubdate data-updated="true">Mar 13<sup>th</sup>, 2013</time></div>
+<time datetime="2013-03-13T00:00:00+00:00" pubdate data-updated="true">Mar 13<sup>th</sup>, 2013</time></div>
 	<div class="tags">
 
 

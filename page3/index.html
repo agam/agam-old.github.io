@@ -7,7 +7,7 @@
 	<meta name="author" content="Agam">
 
 	
-	<meta name="description" content="A lot of virtual ink has been spilled on whether R or Python is better suited to the needs of &ldquo;data scientists&rdquo;. Numerous people (no, &hellip;">
+	<meta name="description" content="I spent some time learning a decent amount of Common Lisp last year. Nothing fancy, but I&rsquo;m comfortable using quicklisp, playing around with &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -91,6 +91,55 @@
     <article class="post">
 	<h2 class="title">
 		
+		<a href="/blog/2014/07/30/learning-other-languages/">
+		
+			Learning Other Languages</a>
+	</h2>
+	<div class="entry-content">
+		<p>I spent some time learning a decent amount of Common Lisp last year. Nothing fancy, but I&rsquo;m comfortable using quicklisp, playing around with libraries, modelling stuff, etc. I&rsquo;ve read through <a href="http://www.gigamonkeys.com/book/">PCL</a> and <a href="http://www.cs.cmu.edu/Groups/AI/html/cltl/clm/node1.html">ClTl2</a> (though unfortunately, not <a href="http://norvig.com/paip.html">PAIP</a> (not yet!)).</p>
+
+<p>They&rsquo;ve been a bunch of other new (as in, the last 7 years ?) languages that I&rsquo;ve looked at off and on. Gone through a few tutorials, read (no, lightly skimmed) some suggested material (learn you a X, learn Y in Z minutes, etc). I <em>love</em> Common Lisp (enough to simply call it &ldquo;Lisp&rdquo; to the exclusion of the gazillion varieties of scheme (and yes, Clojure too (!))), but yeah, the lack of libraries does get to be a pain point.</p>
+
+<p>So someone suggested I try Clojure, but I&rsquo;ll pass. I don&rsquo;t want to look at stuff ending with &ldquo;))]))})]})&rdquo;. If I need reader macros for hash-tables, <a href="http://cl21.org/">cl21</a> has it, though I think <a href="https://github.com/vseloved/rutils/blob/master/docs/ann-rutils.md">rutils</a> should suffice for a nice superset of useful library add-ons (OTOH the Overtone/Quil/ShaderTone combo does make me salivate, and I definitely <em>will</em> check try them out at some point).</p>
+
+<p>If I <em>have</em> to work with the JVM, I figure I might as well learn something new/different that isn&rsquo;t trying too hard to be <em>Lisp</em>. Hence, <a href="http://www.scala-lang.org/">Scala</a>. I may regret this later (but how bad can it be). I hear people loved the <a href="https://www.coursera.org/course/progfun">MOOC</a> on it last year, and looks like I <em>just</em> missed the one this year, but this being Coursera (yay) I can still do the videos and the assignments.</p>
+
+<p>Also <a href="https://www.dartlang.org/">Dart</a> because it&rsquo;s nice to get basic web UI stuff going when needed (and no, I don&rsquo;t want to know Javascript). So we&rsquo;ll see how that goes.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-30T19:23:33+00:00" pubdate data-updated="true">Jul 30<sup>th</sup>, 2014</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/clojure/'>clojure,</a>, <a class='category' href='/blog/categories/dart/'>dart</a>, <a class='category' href='/blog/categories/lisp/'>lisp,</a>, <a class='category' href='/blog/categories/scala/'>scala,</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
 		<a href="/blog/2014/07/25/r-vs-python/">
 		
 			R vs Python</a>
@@ -128,7 +177,7 @@
   
 
 
-<time datetime="2014-07-25T16:22:39-07:00" pubdate data-updated="true">Jul 25<sup>th</sup>, 2014</time></div>
+<time datetime="2014-07-25T23:22:39+00:00" pubdate data-updated="true">Jul 25<sup>th</sup>, 2014</time></div>
 	<div class="tags">
 
 
@@ -175,7 +224,7 @@
   
 
 
-<time datetime="2014-07-25T13:11:30-07:00" pubdate data-updated="true">Jul 25<sup>th</sup>, 2014</time></div>
+<time datetime="2014-07-25T20:11:30+00:00" pubdate data-updated="true">Jul 25<sup>th</sup>, 2014</time></div>
 	<div class="tags">
 
 
@@ -211,7 +260,7 @@
 
 (defun make-new-board ()
   (make-array (list *board-size* *board-size*)
-          :element-type &#39;(mod 2)
+          :element-type '(mod 2)
           :initial-element 0))
 
 (defun start-game ()
@@ -236,7 +285,7 @@
 itself implicitly at (radius,radius) set to 0&quot;
   (let* ((env-size (1+ (* 2 *environment-radius*)))
      (env (make-array (list env-size env-size)
-             :element-type &#39;(mod 2)
+             :element-type '(mod 2)
              :initial-element 0)))
     (dotimes (i env-size)
       (dotimes (j env-size)
@@ -356,9 +405,9 @@ itself implicitly at (radius,radius) set to 0&quot;
   (setf (aref *game-board* y x) 1))
 
 (defun draw-pattern (x y pattern)
-  &quot;Assuming &#39;pattern&#39; is specified as a row-major set of 1s and 0s, replicates that on the board&quot;
-  (mapindex #&#39;(lambda (row-num row)
-        (mapindex #&#39;(lambda (col-num entry)
+  &quot;Assuming 'pattern' is specified as a row-major set of 1s and 0s, replicates that on the board&quot;
+  (mapindex #'(lambda (row-num row)
+        (mapindex #'(lambda (col-num entry)
                   (let ((x-eff (+ x col-num))
                     (y-eff (+ y row-num)))
                 (when (and (&lt; x-eff *board-size*)
@@ -371,18 +420,18 @@ itself implicitly at (radius,radius) set to 0&quot;
 ;; Sample oscillating patterns
 (defun draw-blinker (x y)
   (draw-pattern x y
-        &#39;((1)
+        '((1)
           (1)
           (1))))
 
 (defun draw-toad (x y)
   (draw-pattern x y
-        &#39;((0 1 1 1)
+        '((0 1 1 1)
           (1 1 1 0))))
 
 (defun draw-beacon (x y)
   (draw-pattern x y
-        &#39;((1 1 0 0)
+        '((1 1 0 0)
           (1 1 0 0)
           (0 0 1 1)
           (0 0 1 1))))
@@ -390,26 +439,26 @@ itself implicitly at (radius,radius) set to 0&quot;
 ;; Sample fixed patterns
 (defun draw-loaf (x y)
   (draw-pattern x y
-        &#39;((0 1 1 0)
+        '((0 1 1 0)
           (1 0 0 1)
           (0 1 0 1)
           (0 0 1 0))))
 
 (defun draw-block (x y)
   (draw-pattern x y
-        &#39;((1 1)
+        '((1 1)
           (1 1))))
 
 ;; Sample moving pattern
 (defun draw-glider-moving-right (x y)
   (draw-pattern x y
-        &#39;((0 1 0)
+        '((0 1 0)
           (0 0 1)
           (1 1 1))))
 
 (defun draw-glider-moving-left (x y)
   (draw-pattern x y
-        &#39;((0 1 0)
+        '((0 1 0)
           (1 0 0)
           (1 1 1))))</code></pre></noscript></div>
 
@@ -440,7 +489,7 @@ itself implicitly at (radius,radius) set to 0&quot;
   
 
 
-<time datetime="2014-07-25T13:10:46-07:00" pubdate data-updated="true">Jul 25<sup>th</sup>, 2014</time></div>
+<time datetime="2014-07-25T20:10:46+00:00" pubdate data-updated="true">Jul 25<sup>th</sup>, 2014</time></div>
 	<div class="tags">
 
 
@@ -485,7 +534,7 @@ itself implicitly at (radius,radius) set to 0&quot;
   
 
 
-<time datetime="2014-07-25T13:06:07-07:00" pubdate data-updated="true">Jul 25<sup>th</sup>, 2014</time></div>
+<time datetime="2014-07-25T20:06:07+00:00" pubdate data-updated="true">Jul 25<sup>th</sup>, 2014</time></div>
 	<div class="tags">
 
 
@@ -873,7 +922,7 @@ itself implicitly at (radius,radius) set to 0&quot;
   
 
 
-<time datetime="2014-07-14T12:48:00-07:00" pubdate data-updated="true">Jul 14<sup>th</sup>, 2014</time></div>
+<time datetime="2014-07-14T12:48:00+00:00" pubdate data-updated="true">Jul 14<sup>th</sup>, 2014</time></div>
 	<div class="tags">
 
 
@@ -918,7 +967,7 @@ itself implicitly at (radius,radius) set to 0&quot;
   
 
 
-<time datetime="2014-05-07T00:00:00-07:00" pubdate data-updated="true"></time></div>
+<time datetime="2014-05-07T00:00:00+00:00" pubdate data-updated="true"></time></div>
 	<div class="tags">
 
 </div>
@@ -963,7 +1012,7 @@ itself implicitly at (radius,radius) set to 0&quot;
   
 
 
-<time datetime="2014-04-02T14:06:00-07:00" pubdate data-updated="true">Apr 2<sup>nd</sup>, 2014</time></div>
+<time datetime="2014-04-02T14:06:00+00:00" pubdate data-updated="true">Apr 2<sup>nd</sup>, 2014</time></div>
 	<div class="tags">
 
 </div>
@@ -1231,7 +1280,7 @@ itself implicitly at (radius,radius) set to 0&quot;
   
 
 
-<time datetime="2014-03-31T10:25:00-07:00" pubdate data-updated="true">Mar 31<sup>st</sup>, 2014</time></div>
+<time datetime="2014-03-31T10:25:00+00:00" pubdate data-updated="true">Mar 31<sup>st</sup>, 2014</time></div>
 	<div class="tags">
 
 </div>
@@ -1276,70 +1325,11 @@ itself implicitly at (radius,radius) set to 0&quot;
   
 
 
-<time datetime="2014-02-19T01:29:00-08:00" pubdate data-updated="true">Feb 19<sup>th</sup>, 2014</time></div>
+<time datetime="2014-02-19T01:29:00+00:00" pubdate data-updated="true">Feb 19<sup>th</sup>, 2014</time></div>
 	<div class="tags">
 
 
 	<a class='category' href='/blog/categories/blogging/'>blogging</a>, <a class='category' href='/blog/categories/pseudonymous/'>pseudonymous,</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2014/02/04/how-fast-can-you-factor/">
-		
-			How Fast Can You Factor ?</a>
-	</h2>
-	<div class="entry-content">
-		<p>For no other reason than <em>because it&rsquo;s there</em>, here is the result of asking Mathematica to factor <a href="http://en.wikipedia.org/wiki/RSA_numbers#RSA-100">RSA 100</a>.</p>
-
-<p>In 1991,</p>
-
-<blockquote><p>&hellip; the factorization took a few days using the multiple-polynomial quadratic sieve algorithm on a MasPar parallel computer.</p></blockquote>
-
-<p>and now,</p>
-
-<blockquote><p>It takes four hours to repeat this factorization using the program Msieve on a 2200 MHz Athlon 64 processor.</p></blockquote>
-
-<p>In comparison, Mathematica took little more than an hour. Unfortunately, it was not able to parallelize it (for a <em>real</em> comparison, the <a href="http://sourceforge.net/projects/msieve/files/msieve/Msieve%20v1.51/">Msieve code</a> would have to be ported over).</p>
-
-<p><img class="center" src="http://farm6.staticflickr.com/5510/12309071334_575cda01f9_z_d.jpg" title="" ></p>
-
-<p><strong>Update:</strong> This has been much better documented on <a href="http://mathematica.stackexchange.com/questions/14964/time-approximation-of-decrypting-rsa-algorithm">this StackExchange thread</a>, which also links to <a href="http://reference.wolfram.com/mathematica/tutorial/SomeNotesOnInternalImplementation.html#12915">notes on internal implementation</a>, in case you&rsquo;re interested:</p>
-
-<blockquote><p>FactorInteger switches between trial division, Pollard , Pollard rho, elliptic curve, and quadratic sieve algorithms.</p></blockquote>
-
-<p>Finally, more on RSA Numbers, as well as a Mathematica Notebook, <a href="http://mathworld.wolfram.com/RSANumber.html">here</a></p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-02-04T18:52:00-08:00" pubdate data-updated="true">Feb 4<sup>th</sup>, 2014</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/factoring/'>factoring</a>, <a class='category' href='/blog/categories/mathematica/'>mathematica,</a>
 
 
 </div>

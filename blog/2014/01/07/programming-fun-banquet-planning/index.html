@@ -217,15 +217,15 @@ void FindFoodItems(
   for (auto&amp; food_node : food_nodes) {
     // The only cases supported are:
     //   (1) Exact match
-    //   (2) &#39;*&#39; at the beginning
-    //   (3) &#39;*&#39; at the end
-    if (food_glob.find_first_of(&#39;*&#39;) == string::npos) {
+    //   (2) '*' at the beginning
+    //   (3) '*' at the end
+    if (food_glob.find_first_of('*') == string::npos) {
       if (food_glob == food_node-&gt;label) {
         results-&gt;push_back(food_node);
         continue;
       }
     }
-    if (food_glob.front() == &#39;*&#39;) {
+    if (food_glob.front() == '*') {
       const string matcher = food_glob.substr(1);
       if (food_node-&gt;label.substr(
             food_node-&gt;label.length() - matcher.length()) ==
@@ -234,7 +234,7 @@ void FindFoodItems(
         continue;
       }
     }
-    if (food_glob.back() == &#39;*&#39;) {
+    if (food_glob.back() == '*') {
       const string matcher = food_glob.substr(0, food_glob.length() - 1);
       if (food_node-&gt;label.substr(0, matcher.length()) == matcher) {
         results-&gt;push_back(food_node);
@@ -258,7 +258,7 @@ int main() {
   for (int i = 0; i &lt; num_food_relationships; ++i) {
     string food_item_1, food_item_2;
     cin &gt;&gt; food_item_1 &gt;&gt; food_item_2;
-    // We are going to use regex matching whereas the input is in &#39;glob&#39; format,
+    // We are going to use regex matching whereas the input is in 'glob' format,
     // so make a small adjustment.
     food_relationships.push_back(make_pair(food_item_1, food_item_2));
   }
@@ -278,12 +278,12 @@ int main() {
   // 2. For every relationship, expand the regex to determine the nodes involved, and
   // then create a dependency link.
   // 3. Go through the dependency links and number the nodes
-  //    - Increment the number of each of a node&#39;s dependencies
+  //    - Increment the number of each of a node's dependencies
   //    - Repeat for each of the dependent nodes
   //    - Add the nodes into a numbered list.
   //    - Note: this will require adding and removing nodes from the list
   // 4. Once no more dependencies have to be processed, print out numbered list
-  // 5. Go through graph and print out &#39;isolated&#39; nodes
+  // 5. Go through graph and print out 'isolated' nodes
   //
   // Edge cases: Multiple origins, multiple nodes of the same number, isolated nodes
 
@@ -293,9 +293,9 @@ int main() {
   for (const auto&amp; food_relationship : food_relationships) {
     vector&lt;GraphNode*&gt; dependents, dependees;
     // Each relationship can potentially be many-&gt;many
-    // Note: the c++ regex implementation isn&#39;t available in my standard library
-    // right now, so I&#39;m going to support a limited range of globs:
-    //   only those where the &#39;*&#39; is either right at the beginning or at the end
+    // Note: the c++ regex implementation isn't available in my standard library
+    // right now, so I'm going to support a limited range of globs:
+    //   only those where the '*' is either right at the beginning or at the end
     FindFoodItems(food_relationship.first, food_nodes, &amp;dependents);
     FindFoodItems(food_relationship.second, food_nodes, &amp;dependees);
 
@@ -323,7 +323,7 @@ int main() {
   }
 
   // Step 3
-  // Process all the nodes in the current &#39;frontier&#39; until there are non left.
+  // Process all the nodes in the current 'frontier' until there are non left.
   // The first frontier is the set of root nodes
   queue&lt;GraphNode*&gt; frontier;
   for (auto&amp; node : root_nodes) {
@@ -386,7 +386,7 @@ int main() {
   
 
 
-<time datetime="2014-01-07T02:27:00-08:00" pubdate data-updated="true">Jan 7<sup>th</sup>, 2014</time></div>
+<time datetime="2014-01-07T02:27:00+00:00" pubdate data-updated="true">Jan 7<sup>th</sup>, 2014</time></div>
 	<div class="tags">
 
 

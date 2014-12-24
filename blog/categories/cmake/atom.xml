@@ -4,7 +4,7 @@
   <title><![CDATA[Category: cmake | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/cmake/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2014-12-21T12:26:20-08:00</updated>
+  <updated>2014-12-23T23:23:37+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Learning how to build (part 2)]]></title>
     <link href="http://agam.github.io/blog/2013/09/09/building-stuff-part-2/"/>
-    <updated>2013-09-09T00:00:00-07:00</updated>
+    <updated>2013-09-09T00:00:00+00:00</updated>
     <id>http://agam.github.io/blog/2013/09/09/building-stuff-part-2</id>
     <content type="html"><![CDATA[<p>I wanted to get an idea of the state of open source C++ tools and idioms, so I decided to pick something small to start with.</p>
 

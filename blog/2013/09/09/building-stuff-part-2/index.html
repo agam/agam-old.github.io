@@ -177,8 +177,8 @@ and it very explicitly disabled the copy constructor that the linker was complai
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="sb">`</span><span class="k">for </span>f in <span class="sb">`</span>find /home/agam/Documents/Code/AmpWorld/cpp-netlib/ | grep <span class="s1">&#39;lib.*a$&#39;</span><span class="sb">`</span>; <span class="se">\</span>
-</span><span class='line'> <span class="k">do </span>sudo cp <span class="nv">$f</span> /opt/cpp-static-libs/; <span class="k">done</span><span class="sb">`</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="sb">`</span><span class="k">for</span> f in <span class="sb">`</span>find /home/agam/Documents/Code/AmpWorld/cpp-netlib/ <span class="p">|</span> grep <span class="s1">&#39;lib.*a$&#39;</span><span class="sb">`</span><span class="p">;</span> <span class="se">\</span>
+</span><span class='line'> <span class="k">do</span> sudo cp <span class="nv">$f</span> /opt/cpp-static-libs/<span class="p">;</span> <span class="k">done</span><span class="sb">`</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -408,11 +408,11 @@ and it very explicitly disabled the copy constructor that the linker was complai
 </span><span class='line'>Scanning dependencies of target hello-world
 </span><span class='line'><span class="o">[</span>100%<span class="o">]</span> Building CXX object CMakeFiles/hello-world.dir/hello-world.cpp.o
 </span><span class='line'>Linking CXX executable hello-world
-</span><span class='line'>CMakeFiles/hello-world.dir/hello-world.cpp.o: In <span class="k">function</span> <span class="sb">`</span><span class="o">(</span>anonymous namespace<span class="o">)</span>::get_filename<span class="o">(</span>network::uri const&amp;<span class="o">)</span><span class="s1">&#39;:</span>
+</span><span class='line'>CMakeFiles/hello-world.dir/hello-world.cpp.o: In <span class="k">function</span> <span class="sb">`</span><span class="o">(</span>anonymous namespace<span class="o">)</span>::get_filename<span class="o">(</span>network::uri const<span class="p">&amp;</span><span class="o">)</span><span class="s1">&#39;:</span>
 </span><span class='line'><span class="s1">hello-world.cpp:(.text+0x22): undefined reference to `network::uri::path() const&#39;</span>
 </span><span class='line'>CMakeFiles/hello-world.dir/hello-world.cpp.o: In <span class="k">function</span> <span class="sb">`</span>main<span class="s1">&#39;:</span>
 </span><span class='line'><span class="s1">hello-world.cpp:(.text+0x1ee): undefined reference to `network::http::client::client()&#39;</span>
-</span><span class='line'>hello-world.cpp:<span class="o">(</span>.text+0x231<span class="o">)</span>: undefined reference to <span class="sb">`</span>network::http::request::request<span class="o">(</span>std::string const&amp;<span class="o">)</span><span class="err">&#39;</span>
+</span><span class='line'>hello-world.cpp:<span class="o">(</span>.text+0x231<span class="o">)</span>: undefined reference to <span class="sb">`</span>network::http::request::request<span class="o">(</span>std::string const<span class="p">&amp;</span><span class="o">)</span><span class="err">&#39;</span>
 </span><span class='line'>...
 </span><span class='line'>&lt;more undefined reference errors&gt;
 </span></code></pre></td></tr></table></div></figure>
@@ -564,16 +564,16 @@ Linking CXX executable hello-world
 <span class='line-number'>23</span>
 <span class='line-number'>24</span>
 </pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>./hello-world foo
-</span><span class='line'><span class="o">[</span>network http/client/base.ipp:78<span class="o">]</span> client_base_pimpl::client_base_pimpl<span class="o">(</span>client_options const &amp;<span class="o">)</span>
+</span><span class='line'><span class="o">[</span>network http/client/base.ipp:78<span class="o">]</span> client_base_pimpl::client_base_pimpl<span class="o">(</span>client_options const <span class="p">&amp;</span><span class="o">)</span>
 </span><span class='line'><span class="o">[</span>network http/client/base.ipp:80<span class="o">]</span> creating owned io_service.
 </span><span class='line'><span class="o">[</span>network http/client/base.ipp:85<span class="o">]</span> creating owned simple_connection_manager
-</span><span class='line'><span class="o">[</span>network http/client/simple_connection_manager.ipp:24<span class="o">]</span> simple_connection_manager_pimpl::simple_connection_manager_pimpl<span class="o">(</span>client_options const &amp;<span class="o">)</span>
+</span><span class='line'><span class="o">[</span>network http/client/simple_connection_manager.ipp:24<span class="o">]</span> simple_connection_manager_pimpl::simple_connection_manager_pimpl<span class="o">(</span>client_options const <span class="p">&amp;</span><span class="o">)</span>
 </span><span class='line'><span class="o">[</span>network http/client/simple_connection_manager.ipp:26<span class="o">]</span> creating simple connection factory
 </span><span class='line'><span class="o">[</span>network http/client/connection/simple_connection_factory.ipp:57<span class="o">]</span> simple_connection_factory::simple_connection_factory<span class="o">()</span>
 </span><span class='line'><span class="o">[</span>network http/client/connection/connection_delegate_factory.ipp:22<span class="o">]</span> connection_delegate_factory::connection_delegate_factory<span class="o">()</span>
 </span><span class='line'><span class="o">[</span>network http/client/connection/resolver_delegate_factory.ipp:18<span class="o">]</span> resolver_delegate_factory::resolver_delegate_factory<span class="o">()</span>
 </span><span class='line'><span class="o">[</span>network http/client/connection/simple_connection_factory.ipp:33<span class="o">]</span> simple_connection_factory_pimpl::simple_connection_factory_pimpl<span class="o">(</span>...<span class="o">)</span>
-</span><span class='line'><span class="o">[</span>network http/client/simple_connection_manager.ipp:61<span class="o">]</span> simple_connection_manager::simple_connection_manager<span class="o">(</span>client_options const &amp;<span class="o">)</span>
+</span><span class='line'><span class="o">[</span>network http/client/simple_connection_manager.ipp:61<span class="o">]</span> simple_connection_manager::simple_connection_manager<span class="o">(</span>client_options const <span class="p">&amp;</span><span class="o">)</span>
 </span><span class='line'><span class="o">[</span>network http/client/base.ipp:46<span class="o">]</span> client_base::client_base<span class="o">()</span>
 </span><span class='line'><span class="o">[</span>network http/client/facade.ipp:19<span class="o">]</span> basic_client_facade::basic_client_facade<span class="o">()</span>
 </span><span class='line'><span class="o">[</span>network http/client.ipp:18<span class="o">]</span> client::client<span class="o">()</span>
@@ -668,7 +668,7 @@ Linking CXX executable hello-world
   
 
 
-<time datetime="2013-09-09T00:00:00-07:00" pubdate data-updated="true">Sep 9<sup>th</sup>, 2013</time></div>
+<time datetime="2013-09-09T00:00:00+00:00" pubdate data-updated="true">Sep 9<sup>th</sup>, 2013</time></div>
 	<div class="tags">
 
 

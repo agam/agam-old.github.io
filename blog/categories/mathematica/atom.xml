@@ -4,7 +4,7 @@
   <title><![CDATA[Category: mathematica | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/mathematica/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2014-12-21T12:26:20-08:00</updated>
+  <updated>2014-12-23T23:23:37+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Mathematica: 1/9998]]></title>
     <link href="http://agam.github.io/blog/2014/01/30/mathematica-1-slash-9998/"/>
-    <updated>2014-01-30T23:00:00-08:00</updated>
+    <updated>2014-01-30T23:00:00+00:00</updated>
     <id>http://agam.github.io/blog/2014/01/30/mathematica-1-slash-9998</id>
     <content type="html"><![CDATA[<p>I saw this piece about how <code>1/1998</code> was approximated by series of powers of <code>2</code>, which raised the question, &ldquo;Can Mathematica help confirm this?&rdquo; (<em>of course it can!</em>)</p>
 

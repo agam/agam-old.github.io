@@ -4,7 +4,7 @@
   <title><![CDATA[Category: math | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/math/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2014-12-21T12:26:20-08:00</updated>
+  <updated>2014-12-23T23:23:37+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Haskell/Math]]></title>
-    <link href="http://agam.github.io/blog/2014/11/11/haskell-slash-math/"/>
-    <updated>2014-11-11T18:05:43-08:00</updated>
-    <id>http://agam.github.io/blog/2014/11/11/haskell-slash-math</id>
+    <link href="http://agam.github.io/blog/2014/11/12/haskell-slash-math/"/>
+    <updated>2014-11-12T02:05:43+00:00</updated>
+    <id>http://agam.github.io/blog/2014/11/12/haskell-slash-math</id>
     <content type="html"><![CDATA[<p>I don&rsquo;t recall the very first articles I might have read about Haskell, but the first non-short text was Real World Haskell, which I went through the year it came out. I didn&rsquo;t write any code at that time (a mistake!)</p>
 
 <p>Then, a coupffle of years later, I thought I&rsquo;d try my hand at <a href="https://projecteuler.net/">Project Euler</a> with Haskell. I did the first 10-15 and then got bored.</p>

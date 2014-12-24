@@ -118,10 +118,10 @@
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>ls -lh | grep <span class="s1">&#39;\-x\-&#39;</span>
-</span><span class='line'>-rwxr-x--- 1 agam eng 1.1M Mar 10 17:27 haskellhelloworld
-</span><span class='line'>-rwxr-x--- 1 agam eng 8.8K Dec 14 16:10 helloworldcpp
-</span><span class='line'>-rwxr-x--- 1 agam eng 1.3M Mar 12 18:07 helloworldgo
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>ls -lh <span class="p">|</span> grep <span class="s1">&#39;\-x\-&#39;</span>
+</span><span class='line'>-rwxr-x--- <span class="m">1</span> agam eng 1.1M Mar <span class="m">10</span> 17:27 haskellhelloworld
+</span><span class='line'>-rwxr-x--- <span class="m">1</span> agam eng 8.8K Dec <span class="m">14</span> 16:10 helloworldcpp
+</span><span class='line'>-rwxr-x--- <span class="m">1</span> agam eng 1.3M Mar <span class="m">12</span> 18:07 helloworldgo
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -129,7 +129,7 @@
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>nm helloworldgo | wc -l
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>nm helloworldgo <span class="p">|</span> wc -l
 </span><span class='line'>1748
 </span></code></pre></td></tr></table></div></figure>
 
@@ -141,7 +141,7 @@
 <p>To see the generated assembly, run the following (the <code>sed</code> here is to get rid of the filename + linenumber that shows up on every line).</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>go build -gcflags<span class="o">=</span>-S helloworld.go  | sed <span class="s1">&#39;s/([^ ]*)//&#39;</span> &gt; helloworldgo.s
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>go build -gcflags<span class="o">=</span>-S helloworld.go  <span class="p">|</span> sed <span class="s1">&#39;s/([^ ]*)//&#39;</span> &gt; helloworldgo.s
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -331,7 +331,7 @@
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span><span class="nb">time</span> <span class="o">(</span><span class="k">while</span> <span class="o">((</span>n++ &lt; 100<span class="o">))</span>; <span class="k">do</span> ./helloworldgo; <span class="k">done</span><span class="o">)</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span><span class="nb">time</span> <span class="o">(</span><span class="k">while</span> <span class="o">((</span>n++ &lt; 100<span class="o">))</span><span class="p">;</span> <span class="k">do</span> ./helloworldgo<span class="p">;</span> <span class="k">done</span><span class="o">)</span>
 </span><span class='line'>
 </span><span class='line'>real  0m0.567s
 </span><span class='line'>user  0m0.196s
@@ -356,7 +356,7 @@
   
 
 
-<time datetime="2013-03-12T00:00:00-07:00" pubdate data-updated="true">Mar 12<sup>th</sup>, 2013</time></div>
+<time datetime="2013-03-12T00:00:00+00:00" pubdate data-updated="true">Mar 12<sup>th</sup>, 2013</time></div>
 	<div class="tags">
 
 

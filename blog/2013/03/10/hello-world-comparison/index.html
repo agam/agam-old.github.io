@@ -123,8 +123,8 @@
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 </pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>ls -l
-</span><span class='line'>-rwxr-x--- 1 agam eng 8.8K Dec 14 16:10 cpphelloworld
-</span><span class='line'>-rwxr-x--- 1 agam eng 1.1M Dec 14 16:16 haskellhelloworld
+</span><span class='line'>-rwxr-x--- <span class="m">1</span> agam eng 8.8K Dec <span class="m">14</span> 16:10 cpphelloworld
+</span><span class='line'>-rwxr-x--- <span class="m">1</span> agam eng 1.1M Dec <span class="m">14</span> 16:16 haskellhelloworld
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -134,9 +134,9 @@
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>nm cpphelloworld | wc -l
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>nm cpphelloworld <span class="p">|</span> wc -l
 </span><span class='line'>41
-</span><span class='line'><span class="nv">$ </span>nm haskellhelloworld | wc -l
+</span><span class='line'><span class="nv">$ </span>nm haskellhelloworld <span class="p">|</span> wc -l
 </span><span class='line'>6578
 </span></code></pre></td></tr></table></div></figure>
 
@@ -1123,7 +1123,7 @@ Call the std::basic_ostream&lt;std::char_traits> operator&lt;&lt;()</p>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">time</span> <span class="o">(</span><span class="k">while</span> <span class="o">((</span>n++ &lt; 100<span class="o">))</span>; <span class="k">do</span> ./cpphelloworld; <span class="k">done</span><span class="o">)</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">time</span> <span class="o">(</span><span class="k">while</span> <span class="o">((</span>n++ &lt; 100<span class="o">))</span><span class="p">;</span> <span class="k">do</span> ./cpphelloworld<span class="p">;</span> <span class="k">done</span><span class="o">)</span>
 </span><span class='line'>real  0m0.250s
 </span><span class='line'>user  0m0.004s
 </span><span class='line'>sys   0m0.036s
@@ -1136,7 +1136,7 @@ Call the std::basic_ostream&lt;std::char_traits> operator&lt;&lt;()</p>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">time</span> <span class="o">(</span><span class="k">while</span> <span class="o">((</span>n++ &lt; 100<span class="o">))</span>; <span class="k">do</span> ./haskellhelloworld; <span class="k">done</span><span class="o">)</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">time</span> <span class="o">(</span><span class="k">while</span> <span class="o">((</span>n++ &lt; 100<span class="o">))</span><span class="p">;</span> <span class="k">do</span> ./haskellhelloworld<span class="p">;</span> <span class="k">done</span><span class="o">)</span>
 </span><span class='line'>real  0m0.366s
 </span><span class='line'>user  0m0.004s
 </span><span class='line'>sys   0m0.048s
@@ -1163,7 +1163,7 @@ So you can look at <a href="https://gist.github.com/agam/5148416">The C++ versio
   
 
 
-<time datetime="2013-03-10T00:00:00-08:00" pubdate data-updated="true">Mar 10<sup>th</sup>, 2013</time></div>
+<time datetime="2013-03-10T00:00:00+00:00" pubdate data-updated="true">Mar 10<sup>th</sup>, 2013</time></div>
 	<div class="tags">
 
 

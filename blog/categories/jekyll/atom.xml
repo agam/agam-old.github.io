@@ -4,7 +4,7 @@
   <title><![CDATA[Category: jekyll | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/jekyll/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2014-12-21T12:26:20-08:00</updated>
+  <updated>2014-12-23T23:23:37+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Grumbling about Jekyll]]></title>
     <link href="http://agam.github.io/blog/2014/07/14/grumbling-about-jekyll/"/>
-    <updated>2014-07-14T12:48:00-07:00</updated>
+    <updated>2014-07-14T12:48:00+00:00</updated>
     <id>http://agam.github.io/blog/2014/07/14/grumbling-about-jekyll</id>
     <content type="html"><![CDATA[<p>Yeah, not happy about how these dependencies keep breaking. It&rsquo;s a reminder about how fragile these scripting ecosystems are.</p>
 
@@ -277,7 +277,7 @@ Liquid Exception: undefined method `deep_merge' for #&lt;Hash:0x0000000277cb38&g
   <entry>
     <title type="html"><![CDATA[The Octopress Revolution]]></title>
     <link href="http://agam.github.io/blog/2013/11/15/the-octopress-revolution/"/>
-    <updated>2013-11-15T17:06:00-08:00</updated>
+    <updated>2013-11-15T17:06:00+00:00</updated>
     <id>http://agam.github.io/blog/2013/11/15/the-octopress-revolution</id>
     <content type="html"><![CDATA[<p>Stumbled across Octopress and realized I could get a &ldquo;better minimalism&rdquo; with
 it.</p>
@@ -600,7 +600,7 @@ as you can see, it&rsquo;s not too bad to look at either!</p>
   <entry>
     <title type="html"><![CDATA[Moving to Jekyll]]></title>
     <link href="http://agam.github.io/blog/2013/11/15/moving-to-jekyll/"/>
-    <updated>2013-11-15T00:00:00-08:00</updated>
+    <updated>2013-11-15T00:00:00+00:00</updated>
     <id>http://agam.github.io/blog/2013/11/15/moving-to-jekyll</id>
     <content type="html"><![CDATA[<p>Wait, what ? Seriously ? Yes, seriously.</p>
 

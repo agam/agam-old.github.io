@@ -4,7 +4,7 @@
   <title><![CDATA[Category: learning | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/learning/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2014-12-21T12:26:20-08:00</updated>
+  <updated>2014-12-23T23:23:37+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[The Gardens of Go]]></title>
-    <link href="http://agam.github.io/blog/2014/12/16/the-gardens-of-go/"/>
-    <updated>2014-12-16T21:54:20-08:00</updated>
-    <id>http://agam.github.io/blog/2014/12/16/the-gardens-of-go</id>
+    <link href="http://agam.github.io/blog/2014/12/17/the-gardens-of-go/"/>
+    <updated>2014-12-17T05:54:20+00:00</updated>
+    <id>http://agam.github.io/blog/2014/12/17/the-gardens-of-go</id>
     <content type="html"><![CDATA[<p>There are many &ldquo;teaching&rdquo; languages, though a contender these days is harder to establish, given the amount of choice available. For very young kids, the Scratch<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> framework is appropriate, while for slightly older kids, Python might be a better option.</p>
 
 <p>I&rsquo;d like to suggest another option (for slightly older kids), that might seem atypical at first: Go! Yes, I do believe the &ldquo;Gopher language&rdquo;, used in many real production servers today, can realistically do double duty as a beginner language for kids.</p>

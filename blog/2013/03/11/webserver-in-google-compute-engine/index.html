@@ -133,25 +133,25 @@
 <span class='line-number'>22</span>
 </pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>gcutil getproject --project<span class="o">=</span>agam-personal-project --cache_flag_values
 </span><span class='line'>+--------------------------+-------------------------------+
-</span><span class='line'>|         property         |             value             |
+</span><span class='line'><span class="p">|</span>         property         <span class="p">|</span>             value             <span class="p">|</span>
 </span><span class='line'>+--------------------------+-------------------------------+
-</span><span class='line'>| name                     | agam-personal-project                     |
-</span><span class='line'>| description              |                               |
-</span><span class='line'>| creation-time            | 2012-10-30T13:52:46.571-07:00 |
-</span><span class='line'>| ips                      | 108.59.85.232,173.255.125.245 |
-</span><span class='line'>|                          |                               |
-</span><span class='line'>| usage                    |                               |
-</span><span class='line'>|   instances              | 0.0/4.0                       |
-</span><span class='line'>|   cpus                   | 0.0/4.0                       |
-</span><span class='line'>|   ephemeral-addresses    | 0.0/4.0                       |
-</span><span class='line'>|   disks                  | 0.0/4.0                       |
-</span><span class='line'>|   disks-total-gb         | 0.0/250.0                     |
-</span><span class='line'>|   snapshots              | 0.0/20.0                      |
-</span><span class='line'>|   networks               | 1.0/1.0                       |
-</span><span class='line'>|   firewalls              | 2.0/10.0                      |
-</span><span class='line'>|   images                 | 0.0/4.0                       |
-</span><span class='line'>|                          |                               |
-</span><span class='line'>| common-instance-metadata |                               |
+</span><span class='line'><span class="p">|</span> name                     <span class="p">|</span> agam-personal-project                     <span class="p">|</span>
+</span><span class='line'><span class="p">|</span> description              <span class="p">|</span>                               <span class="p">|</span>
+</span><span class='line'><span class="p">|</span> creation-time            <span class="p">|</span> 2012-10-30T13:52:46.571-07:00 <span class="p">|</span>
+</span><span class='line'><span class="p">|</span> ips                      <span class="p">|</span> 108.59.85.232,173.255.125.245 <span class="p">|</span>
+</span><span class='line'><span class="p">|</span>                          <span class="p">|</span>                               <span class="p">|</span>
+</span><span class='line'><span class="p">|</span> usage                    <span class="p">|</span>                               <span class="p">|</span>
+</span><span class='line'><span class="p">|</span>   instances              <span class="p">|</span> 0.0/4.0                       <span class="p">|</span>
+</span><span class='line'><span class="p">|</span>   cpus                   <span class="p">|</span> 0.0/4.0                       <span class="p">|</span>
+</span><span class='line'><span class="p">|</span>   ephemeral-addresses    <span class="p">|</span> 0.0/4.0                       <span class="p">|</span>
+</span><span class='line'><span class="p">|</span>   disks                  <span class="p">|</span> 0.0/4.0                       <span class="p">|</span>
+</span><span class='line'><span class="p">|</span>   disks-total-gb         <span class="p">|</span> 0.0/250.0                     <span class="p">|</span>
+</span><span class='line'><span class="p">|</span>   snapshots              <span class="p">|</span> 0.0/20.0                      <span class="p">|</span>
+</span><span class='line'><span class="p">|</span>   networks               <span class="p">|</span> 1.0/1.0                       <span class="p">|</span>
+</span><span class='line'><span class="p">|</span>   firewalls              <span class="p">|</span> 2.0/10.0                      <span class="p">|</span>
+</span><span class='line'><span class="p">|</span>   images                 <span class="p">|</span> 0.0/4.0                       <span class="p">|</span>
+</span><span class='line'><span class="p">|</span>                          <span class="p">|</span>                               <span class="p">|</span>
+</span><span class='line'><span class="p">|</span> common-instance-metadata <span class="p">|</span>                               <span class="p">|</span>
 </span><span class='line'>+--------------------------+-------------------------------+
 </span></code></pre></td></tr></table></div></figure>
 
@@ -178,23 +178,23 @@
 <span class='line-number'>18</span>
 <span class='line-number'>19</span>
 </pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>gcutil addfirewall http2 --description<span class="o">=</span><span class="s2">&quot;Allow incoming http&quot;</span> --allowed<span class="o">=</span><span class="s2">&quot;tcp:http&quot;</span>
-</span><span class='line'>INFO: Waiting <span class="k">for </span>insert of firewall http2. Sleeping <span class="k">for </span>3s.
-</span><span class='line'>INFO: Waiting <span class="k">for </span>insert of firewall http2. Sleeping <span class="k">for </span>3s.
+</span><span class='line'>INFO: Waiting <span class="k">for</span> insert of firewall http2. Sleeping <span class="k">for</span> 3s.
+</span><span class='line'>INFO: Waiting <span class="k">for</span> insert of firewall http2. Sleeping <span class="k">for</span> 3s.
 </span><span class='line'>
 </span><span class='line'>Table of resources:
 </span><span class='line'>
 </span><span class='line'>+-------+---------------------+------------------+------------+-------------+-------------+
-</span><span class='line'>| name  |     description     |     network      | <span class="nb">source</span>-ips | <span class="nb">source</span>-tags | target-tags |
+</span><span class='line'><span class="p">|</span> name  <span class="p">|</span>     description     <span class="p">|</span>     network      <span class="p">|</span> <span class="nb">source</span>-ips <span class="p">|</span> <span class="nb">source</span>-tags <span class="p">|</span> target-tags <span class="p">|</span>
 </span><span class='line'>+-------+---------------------+------------------+------------+-------------+-------------+
-</span><span class='line'>| http2 | Allow incoming http | networks/default | 0.0.0.0/0  |             |             |
+</span><span class='line'><span class="p">|</span> http2 <span class="p">|</span> Allow incoming http <span class="p">|</span> networks/default <span class="p">|</span> 0.0.0.0/0  <span class="p">|</span>             <span class="p">|</span>             <span class="p">|</span>
 </span><span class='line'>+-------+---------------------+------------------+------------+-------------+-------------+
 </span><span class='line'>
 </span><span class='line'>Table of operations:
 </span><span class='line'>
 </span><span class='line'>+------------------------------------------------+------+--------+----------------+-----------------+-------------------------------+----------------+-------+---------+
-</span><span class='line'>|                      name                      | zone | status | status-message |     target      |          insert-time          | operation-type | error | warning |
+</span><span class='line'><span class="p">|</span>                      name                      <span class="p">|</span> zone <span class="p">|</span> status <span class="p">|</span> status-message <span class="p">|</span>     target      <span class="p">|</span>          insert-time          <span class="p">|</span> operation-type <span class="p">|</span> error <span class="p">|</span> warning <span class="p">|</span>
 </span><span class='line'>+------------------------------------------------+------+--------+----------------+-----------------+-------------------------------+----------------+-------+---------+
-</span><span class='line'>| operation-1362984707558-4d7a09b531841-ea2eb01d |      | DONE   |                | firewalls/http2 | 2013-03-10T23:51:47.558-07:00 | insert         |       |         |
+</span><span class='line'><span class="p">|</span> operation-1362984707558-4d7a09b531841-ea2eb01d <span class="p">|</span>      <span class="p">|</span> DONE   <span class="p">|</span>                <span class="p">|</span> firewalls/http2 <span class="p">|</span> 2013-03-10T23:51:47.558-07:00 <span class="p">|</span> insert         <span class="p">|</span>       <span class="p">|</span>         <span class="p">|</span>
 </span><span class='line'>+------------------------------------------------+------+--------+----------------+-----------------+-------------------------------+----------------+-------+---------+
 </span></code></pre></td></tr></table></div></figure>
 
@@ -321,32 +321,32 @@
 <span class='line-number'>25</span>
 <span class='line-number'>26</span>
 <span class='line-number'>27</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>INFO: Waiting <span class="k">for </span>insert of instance basic-webserver-instance. Sleeping <span class="k">for </span>3s.
-</span><span class='line'>INFO: Waiting <span class="k">for </span>insert of instance basic-webserver-instance. Sleeping <span class="k">for </span>3s.
-</span><span class='line'>INFO: Waiting <span class="k">for </span>insert of instance basic-webserver-instance. Sleeping <span class="k">for </span>3s.
-</span><span class='line'>INFO: Waiting <span class="k">for </span>insert of instance basic-webserver-instance. Sleeping <span class="k">for </span>3s.
-</span><span class='line'>INFO: Waiting <span class="k">for </span>insert of instance basic-webserver-instance. Sleeping <span class="k">for </span>3s.
-</span><span class='line'>INFO: Waiting <span class="k">for </span>insert of instance basic-webserver-instance. Sleeping <span class="k">for </span>3s.
-</span><span class='line'>INFO: Waiting <span class="k">for </span>insert of instance basic-webserver-instance. Sleeping <span class="k">for </span>3s.
-</span><span class='line'>INFO: Waiting <span class="k">for </span>insert of instance basic-webserver-instance. Sleeping <span class="k">for </span>3s.
-</span><span class='line'>INFO: Waiting <span class="k">for </span>insert of instance basic-webserver-instance. Sleeping <span class="k">for </span>3s.
-</span><span class='line'>INFO: Waiting <span class="k">for </span>insert of instance basic-webserver-instance. Sleeping <span class="k">for </span>3s.
-</span><span class='line'>INFO: Waiting <span class="k">for </span>insert of instance basic-webserver-instance. Sleeping <span class="k">for </span>3s.
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>INFO: Waiting <span class="k">for</span> insert of instance basic-webserver-instance. Sleeping <span class="k">for</span> 3s.
+</span><span class='line'>INFO: Waiting <span class="k">for</span> insert of instance basic-webserver-instance. Sleeping <span class="k">for</span> 3s.
+</span><span class='line'>INFO: Waiting <span class="k">for</span> insert of instance basic-webserver-instance. Sleeping <span class="k">for</span> 3s.
+</span><span class='line'>INFO: Waiting <span class="k">for</span> insert of instance basic-webserver-instance. Sleeping <span class="k">for</span> 3s.
+</span><span class='line'>INFO: Waiting <span class="k">for</span> insert of instance basic-webserver-instance. Sleeping <span class="k">for</span> 3s.
+</span><span class='line'>INFO: Waiting <span class="k">for</span> insert of instance basic-webserver-instance. Sleeping <span class="k">for</span> 3s.
+</span><span class='line'>INFO: Waiting <span class="k">for</span> insert of instance basic-webserver-instance. Sleeping <span class="k">for</span> 3s.
+</span><span class='line'>INFO: Waiting <span class="k">for</span> insert of instance basic-webserver-instance. Sleeping <span class="k">for</span> 3s.
+</span><span class='line'>INFO: Waiting <span class="k">for</span> insert of instance basic-webserver-instance. Sleeping <span class="k">for</span> 3s.
+</span><span class='line'>INFO: Waiting <span class="k">for</span> insert of instance basic-webserver-instance. Sleeping <span class="k">for</span> 3s.
+</span><span class='line'>INFO: Waiting <span class="k">for</span> insert of instance basic-webserver-instance. Sleeping <span class="k">for</span> 3s.
 </span><span class='line'>
 </span><span class='line'>Table of resources:
 </span><span class='line'>
 </span><span class='line'>+--------------------------+------------------------------+----------------------------------------------------+------------------+---------------+---------------+-------+---------------+---------+----------------+
-</span><span class='line'>|           name           |         machine-type         |                       image                        |     network      |  network-ip   |  external-ip  | disks |     zone      | status  | status-message |
+</span><span class='line'><span class="p">|</span>           name           <span class="p">|</span>         machine-type         <span class="p">|</span>                       image                        <span class="p">|</span>     network      <span class="p">|</span>  network-ip   <span class="p">|</span>  external-ip  <span class="p">|</span> disks <span class="p">|</span>     zone      <span class="p">|</span> status  <span class="p">|</span> status-message <span class="p">|</span>
 </span><span class='line'>+--------------------------+------------------------------+----------------------------------------------------+------------------+---------------+---------------+-------+---------------+---------+----------------+
-</span><span class='line'>| basic-webserver-instance | machineTypes/n1-standard-1-d | projects/google/global/images/gcel-12-04-v20130225 | networks/default | 10.240.31.254 | 108.59.80.144 |       | us-central1-a | RUNNING |                |
+</span><span class='line'><span class="p">|</span> basic-webserver-instance <span class="p">|</span> machineTypes/n1-standard-1-d <span class="p">|</span> projects/google/global/images/gcel-12-04-v20130225 <span class="p">|</span> networks/default <span class="p">|</span> 10.240.31.254 <span class="p">|</span> 108.59.80.144 <span class="p">|</span>       <span class="p">|</span> us-central1-a <span class="p">|</span> RUNNING <span class="p">|</span>                <span class="p">|</span>
 </span><span class='line'>+--------------------------+------------------------------+----------------------------------------------------+------------------+---------------+---------------+-------+---------------+---------+----------------+
 </span><span class='line'>
 </span><span class='line'>Table of operations:
 </span><span class='line'>
 </span><span class='line'>+------------------------------------------------+---------------+--------+----------------+--------------------------------------------------+-------------------------------+----------------+-------+---------+
-</span><span class='line'>|                      name                      |     zone      | status | status-message |                      target                      |          insert-time          | operation-type | error | warning |
+</span><span class='line'><span class="p">|</span>                      name                      <span class="p">|</span>     zone      <span class="p">|</span> status <span class="p">|</span> status-message <span class="p">|</span>                      target                      <span class="p">|</span>          insert-time          <span class="p">|</span> operation-type <span class="p">|</span> error <span class="p">|</span> warning <span class="p">|</span>
 </span><span class='line'>+------------------------------------------------+---------------+--------+----------------+--------------------------------------------------+-------------------------------+----------------+-------+---------+
-</span><span class='line'>| operation-1362986355529-4d7a0fd8d07a1-a21d7f92 | us-central1-a | DONE   |                | us-central1-a/instances/basic-webserver-instance | 2013-03-11T00:19:15.529-07:00 | insert         |       |         |
+</span><span class='line'><span class="p">|</span> operation-1362986355529-4d7a0fd8d07a1-a21d7f92 <span class="p">|</span> us-central1-a <span class="p">|</span> DONE   <span class="p">|</span>                <span class="p">|</span> us-central1-a/instances/basic-webserver-instance <span class="p">|</span> 2013-03-11T00:19:15.529-07:00 <span class="p">|</span> insert         <span class="p">|</span>       <span class="p">|</span>         <span class="p">|</span>
 </span><span class='line'>+------------------------------------------------+---------------+--------+----------------+--------------------------------------------------+-------------------------------+----------------+-------+---------+
 </span></code></pre></td></tr></table></div></figure>
 
@@ -392,8 +392,8 @@
 </span><span class='line'>/dev/sda1       9.6G 1019M  8.1G  12% /
 </span><span class='line'>none            1.9G  4.0K  1.9G   1% /dev
 </span><span class='line'>none            377M  140K  377M   1% /run
-</span><span class='line'>none            5.0M     0  5.0M   0% /run/lock
-</span><span class='line'>none            1.9G     0  1.9G   0% /run/shm
+</span><span class='line'>none            5.0M     <span class="m">0</span>  5.0M   0% /run/lock
+</span><span class='line'>none            1.9G     <span class="m">0</span>  1.9G   0% /run/shm
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -457,11 +457,11 @@
 </span><span class='line'>Welcome to the Yesod scaffolder.
 </span><span class='line'>I<span class="s1">&#39;m going to be creating a skeleton Yesod project for you.</span>
 </span><span class='line'>
-</span><span class='line'><span class="s1">What do you want to call your project? We&#39;</span>ll use this <span class="k">for </span>the cabal name.
+</span><span class='line'><span class="s1">What do you want to call your project? We&#39;</span>ll use this <span class="k">for</span> the cabal name.
 </span><span class='line'>
 </span><span class='line'>Project name: AgamsWeb
-</span><span class='line'>Yesod uses Persistent <span class="k">for </span>its <span class="o">(</span>you guessed it<span class="o">)</span> persistence layer.
-</span><span class='line'>This tool will build in either SQLite or PostgreSQL or MongoDB support <span class="k">for </span>you.
+</span><span class='line'>Yesod uses Persistent <span class="k">for</span> its <span class="o">(</span>you guessed it<span class="o">)</span> persistence layer.
+</span><span class='line'>This tool will build in either SQLite or PostgreSQL or MongoDB support <span class="k">for</span> you.
 </span><span class='line'>We recommend starting with SQLite: it has no dependencies.
 </span><span class='line'>
 </span><span class='line'>    <span class="nv">s</span>      <span class="o">=</span> sqlite
@@ -498,22 +498,22 @@
 <span class='line-number'>18</span>
 </pre></td><td class='code'><pre><code class='sh'><span class='line'>agam@basic-webserver-instance:~/AgamsWeb<span class="nv">$ </span>ls -l
 </span><span class='line'>total 68
-</span><span class='line'>-rw-rw-r-- 1 agam agam 3907 Mar 11 08:18 AgamsWeb.cabal
-</span><span class='line'>-rw-rw-r-- 1 agam agam 2723 Mar 11 08:18 Application.hs
-</span><span class='line'>-rw-rw-r-- 1 agam agam 6583 Mar 11 08:18 Foundation.hs
-</span><span class='line'>drwxrwxr-x 2 agam agam 4096 Mar 11 08:18 Handler
-</span><span class='line'>-rw-rw-r-- 1 agam agam 1057 Mar 11 08:18 Import.hs
-</span><span class='line'>-rw-rw-r-- 1 agam agam  415 Mar 11 08:18 Model.hs
-</span><span class='line'>drwxrwxr-x 2 agam agam 4096 Mar 11 08:18 Settings
-</span><span class='line'>-rw-rw-r-- 1 agam agam 2736 Mar 11 08:18 Settings.hs
-</span><span class='line'>drwxrwxr-x 2 agam agam 4096 Mar 11 08:18 app
-</span><span class='line'>drwxrwxr-x 2 agam agam 4096 Mar 11 08:18 config
-</span><span class='line'>drwxrwxr-x 2 agam agam 4096 Mar 11 08:18 deploy
-</span><span class='line'>-rw-rw-r-- 1 agam agam  709 Mar 11 08:18 devel.hs
-</span><span class='line'>drwxrwxr-x 2 agam agam 4096 Mar 11 08:18 messages
-</span><span class='line'>drwxrwxr-x 4 agam agam 4096 Mar 11 08:18 static
-</span><span class='line'>drwxrwxr-x 2 agam agam 4096 Mar 11 08:18 templates
-</span><span class='line'>drwxrwxr-x 2 agam agam 4096 Mar 11 08:18 tests
+</span><span class='line'>-rw-rw-r-- <span class="m">1</span> agam agam <span class="m">3907</span> Mar <span class="m">11</span> 08:18 AgamsWeb.cabal
+</span><span class='line'>-rw-rw-r-- <span class="m">1</span> agam agam <span class="m">2723</span> Mar <span class="m">11</span> 08:18 Application.hs
+</span><span class='line'>-rw-rw-r-- <span class="m">1</span> agam agam <span class="m">6583</span> Mar <span class="m">11</span> 08:18 Foundation.hs
+</span><span class='line'>drwxrwxr-x <span class="m">2</span> agam agam <span class="m">4096</span> Mar <span class="m">11</span> 08:18 Handler
+</span><span class='line'>-rw-rw-r-- <span class="m">1</span> agam agam <span class="m">1057</span> Mar <span class="m">11</span> 08:18 Import.hs
+</span><span class='line'>-rw-rw-r-- <span class="m">1</span> agam agam  <span class="m">415</span> Mar <span class="m">11</span> 08:18 Model.hs
+</span><span class='line'>drwxrwxr-x <span class="m">2</span> agam agam <span class="m">4096</span> Mar <span class="m">11</span> 08:18 Settings
+</span><span class='line'>-rw-rw-r-- <span class="m">1</span> agam agam <span class="m">2736</span> Mar <span class="m">11</span> 08:18 Settings.hs
+</span><span class='line'>drwxrwxr-x <span class="m">2</span> agam agam <span class="m">4096</span> Mar <span class="m">11</span> 08:18 app
+</span><span class='line'>drwxrwxr-x <span class="m">2</span> agam agam <span class="m">4096</span> Mar <span class="m">11</span> 08:18 config
+</span><span class='line'>drwxrwxr-x <span class="m">2</span> agam agam <span class="m">4096</span> Mar <span class="m">11</span> 08:18 deploy
+</span><span class='line'>-rw-rw-r-- <span class="m">1</span> agam agam  <span class="m">709</span> Mar <span class="m">11</span> 08:18 devel.hs
+</span><span class='line'>drwxrwxr-x <span class="m">2</span> agam agam <span class="m">4096</span> Mar <span class="m">11</span> 08:18 messages
+</span><span class='line'>drwxrwxr-x <span class="m">4</span> agam agam <span class="m">4096</span> Mar <span class="m">11</span> 08:18 static
+</span><span class='line'>drwxrwxr-x <span class="m">2</span> agam agam <span class="m">4096</span> Mar <span class="m">11</span> 08:18 templates
+</span><span class='line'>drwxrwxr-x <span class="m">2</span> agam agam <span class="m">4096</span> Mar <span class="m">11</span> 08:18 tests
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -593,7 +593,7 @@
   
 
 
-<time datetime="2013-03-11T00:00:00-07:00" pubdate data-updated="true">Mar 11<sup>th</sup>, 2013</time></div>
+<time datetime="2013-03-11T00:00:00+00:00" pubdate data-updated="true">Mar 11<sup>th</sup>, 2013</time></div>
 	<div class="tags">
 
 

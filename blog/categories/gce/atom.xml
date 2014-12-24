@@ -4,7 +4,7 @@
   <title><![CDATA[Category: gce | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/gce/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2014-12-21T12:26:20-08:00</updated>
+  <updated>2014-12-23T23:23:37+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -14,10 +14,65 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Google cloud: sharing projects]]></title>
+    <link href="http://agam.github.io/blog/2014/12/23/google-cloud-sharing-projects/"/>
+    <updated>2014-12-23T22:44:16+00:00</updated>
+    <id>http://agam.github.io/blog/2014/12/23/google-cloud-sharing-projects</id>
+    <content type="html"><![CDATA[<p>In the past (and yes, for some things, in the present too<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>) a few Google products have had UI with ambiguous workflows, or where it wasn&rsquo;t clear if or how to accomplish something.</p>
+
+<p>So check this out; I found it <em>magical</em><sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>, you can easily try this with multiple Google accounts. In the cloud console<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>, click on your project, then &ldquo;Permissions&rdquo; in the top left, and &ldquo;Add Member&rdquo;.</p>
+
+<p>Enter the account, and then select the &ldquo;sharing level&rdquo; of the new account (with the <em>same</em> semantics as, say, Google Docs &mdash; you either <em>own</em>, <em>edit</em>, or <em>view</em>) and confirm.</p>
+
+<p>Log in from the other account, go to the project, view a VM, click &ldquo;SSH&rdquo; and <em>Boom</em>, just like that, <strong>everything works</strong>!</p>
+
+<p>This gist<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup> shows all the steps that were needed!</p>
+
+<p>```sh</p>
+
+<h1>Download the command-line utilities</h1>
+
+<p>$ curl <a href="https://sdk.cloud.google.com">https://sdk.cloud.google.com</a> | bash</p>
+
+<h2>Authenticate</h2>
+
+<p>$ gcloud auth login</p>
+
+<h2>Sanity check</h2>
+
+<p>$ gcloud info</p>
+
+<h2>One-time configuration to avoid specifying command-line flags</h2>
+
+<p>$ gcloud config set project &ldquo;&lt;project_name>&rdquo;
+$ gcloud config set compute/zone us-central1-a</p>
+
+<h2>Login!</h2>
+
+<p>$ gcloud compute ssh agam@myvm
+```</p>
+<div class="footnotes">
+<hr/>
+<ol>
+<li id="fn:1">
+<p>No comment<a href="#fnref:1" rev="footnote">&#8617;</a></p></li>
+<li id="fn:2">
+<p>Ok, maybe everyone expects this and everything else works this well too, but it&rsquo;s still <em>wow</em><a href="#fnref:2" rev="footnote">&#8617;</a></p></li>
+<li id="fn:3">
+<p><a href="https://console.developers.google.com/">https://console.developers.google.com/</a><a href="#fnref:3" rev="footnote">&#8617;</a></p></li>
+<li id="fn:4">
+<p><a href="https://gist.github.com/agam/9f3207a7cdcd72745748">https://gist.github.com/agam/9f3207a7cdcd72745748</a><a href="#fnref:4" rev="footnote">&#8617;</a></p></li>
+</ol>
+</div>
+
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[IO Performance (is that really an SSD?)]]></title>
-    <link href="http://agam.github.io/blog/2014/12/17/io-performance-is-that-really-an-ssd/"/>
-    <updated>2014-12-17T20:25:20-08:00</updated>
-    <id>http://agam.github.io/blog/2014/12/17/io-performance-is-that-really-an-ssd</id>
+    <link href="http://agam.github.io/blog/2014/12/18/io-performance-is-that-really-an-ssd/"/>
+    <updated>2014-12-18T04:25:20+00:00</updated>
+    <id>http://agam.github.io/blog/2014/12/18/io-performance-is-that-really-an-ssd</id>
     <content type="html"><![CDATA[<p>I created a new VM in Google Compute Engine a few days ago, and assigned it an SSD disk, and then began wondering <em>if it was really an SSD disk</em>.</p>
 
 <p>(<em>Digression</em>: I never appreciated the difference an SSD makes until the first time a Macbook Air awoke from sleep <em>instantly</em>. From that moment onwards, the time taken for my desktop at home to show its login screen has <em>always</em> felt irritatingly long)</p>
@@ -95,7 +150,7 @@ min/avg/max/mdev = 0.2/2.3/8.2/0.6 ms
   <entry>
     <title type="html"><![CDATA[Trying out FreeBSD (and failing at it)]]></title>
     <link href="http://agam.github.io/blog/2014/12/14/trying-out-freebsd-and-failing-at-it/"/>
-    <updated>2014-12-14T14:00:13-08:00</updated>
+    <updated>2014-12-14T22:00:13+00:00</updated>
     <id>http://agam.github.io/blog/2014/12/14/trying-out-freebsd-and-failing-at-it</id>
     <content type="html"><![CDATA[<p>Wait, what? Why?! No reason, really. I saw the new FreeBSD book<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> lying around in someone&rsquo;s office, and separately I was reminded of the week I spent getting Gentoo up and running a decade ago, and decided I missed all that and wanted to repeat a similar experience.</p>
 
@@ -391,7 +446,7 @@ END OF LINE
   <entry>
     <title type="html"><![CDATA[Setting up a Haskell webserver to run in Google Compute Engine]]></title>
     <link href="http://agam.github.io/blog/2013/03/11/webserver-in-google-compute-engine/"/>
-    <updated>2013-03-11T00:00:00-07:00</updated>
+    <updated>2013-03-11T00:00:00+00:00</updated>
     <id>http://agam.github.io/blog/2013/03/11/webserver-in-google-compute-engine</id>
     <content type="html"><![CDATA[<p>I signed up for a project at the <a href="https://cloud.google.com/console#c=l">Google Cloud Console</a>, and decided to try running a webserver on it, as a prerequisite to other future toy projects I might link to it.</p>
 

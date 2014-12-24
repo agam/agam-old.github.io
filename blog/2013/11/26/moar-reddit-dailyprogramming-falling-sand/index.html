@@ -131,10 +131,10 @@ bool GridFall(vector&lt;vector&lt;char&gt;&gt;* grid) {
     auto&amp; current_row = grid-&gt;at(i);
     auto&amp; next_row = grid-&gt;at(i + 1);
     for (int j = 0; j &lt; grid-&gt;size(); ++j) {
-      if (current_row[j] == &#39;.&#39; &amp;&amp; next_row[j] == &#39; &#39;) {
+      if (current_row[j] == '.' &amp;&amp; next_row[j] == ' ') {
         changed = true;
-        current_row[j] = &#39; &#39;;
-        next_row[j] = &#39;.&#39;;
+        current_row[j] = ' ';
+        next_row[j] = '.';
       }
     }
   }
@@ -174,8 +174,8 @@ int main() {
  * On standard console input, you will be given an integer N which represents
  * the N x N grid of ASCII characters. This means there will be N-lines of
  * N-characters long. This is the starting grid of your simulated world: the
- * character &#39; &#39; (space) means an empty space, while &#39;.&#39; (dot) means sand, and
- * &#39;#&#39; (hash or pound) means stone. Once you parse this input, simulate the
+ * character ' ' (space) means an empty space, while '.' (dot) means sand, and
+ * '#' (hash or pound) means stone. Once you parse this input, simulate the
  * world until all particles are settled (e.g. the sand has fallen and either
  * settled on the ground or on stone). &quot;Ground&quot; is defined as the solid surface
  * right below the last row.
@@ -217,7 +217,7 @@ int main() {
   
 
 
-<time datetime="2013-11-26T17:33:00-08:00" pubdate data-updated="true">Nov 26<sup>th</sup>, 2013</time></div>
+<time datetime="2013-11-26T17:33:00+00:00" pubdate data-updated="true">Nov 26<sup>th</sup>, 2013</time></div>
 	<div class="tags">
 
 

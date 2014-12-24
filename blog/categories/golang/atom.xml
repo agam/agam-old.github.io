@@ -4,7 +4,7 @@
   <title><![CDATA[Category: golang, | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/golang/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2014-12-21T12:26:20-08:00</updated>
+  <updated>2014-12-23T23:23:37+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[A Ridiculous graph]]></title>
     <link href="http://agam.github.io/blog/2014/09/02/a-ridiculous-graph/"/>
-    <updated>2014-09-02T16:44:27-07:00</updated>
+    <updated>2014-09-02T23:44:27+00:00</updated>
     <id>http://agam.github.io/blog/2014/09/02/a-ridiculous-graph</id>
     <content type="html"><![CDATA[<p>Following in the theme of the previous post, <a href="https://gist.github.com/agam/fe8983acccd455fd9510">here (see linked Gist)</a> is a concurrent graph. Again, this is not an efficient way to do something like this, it&rsquo;s just a fun example of showing something that&rsquo;s easy in Go but probably harder or more verbose in other languages.</p>
 
@@ -118,7 +118,7 @@ for name, node := range g.nodes {
   <entry>
     <title type="html"><![CDATA[Golang setup]]></title>
     <link href="http://agam.github.io/blog/2014/08/12/golang-setup/"/>
-    <updated>2014-08-12T15:21:15-07:00</updated>
+    <updated>2014-08-12T22:21:15+00:00</updated>
     <id>http://agam.github.io/blog/2014/08/12/golang-setup</id>
     <content type="html"><![CDATA[<p>Just some basic personal notes here.</p>
 
@@ -133,7 +133,7 @@ for name, node := range g.nodes {
   <entry>
     <title type="html"><![CDATA[Ridiculous Concurrency]]></title>
     <link href="http://agam.github.io/blog/2014/08/12/ridiculous-concurrency/"/>
-    <updated>2014-08-12T15:09:01-07:00</updated>
+    <updated>2014-08-12T22:09:01+00:00</updated>
     <id>http://agam.github.io/blog/2014/08/12/ridiculous-concurrency</id>
     <content type="html"><![CDATA[<p>Ok, so I went through the <a href="http://tour.golang.org/">Go Tour</a>, and it&rsquo;s pretty impressive; having this sort of super-fast edit-compile-run cycle is something usually associated with Javascript-ish languages, certainly not a statically compiled systems language.</p>
 

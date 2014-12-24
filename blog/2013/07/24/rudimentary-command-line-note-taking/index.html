@@ -109,15 +109,15 @@
 <span class='line-number'>10</span>
 <span class='line-number'>11</span>
 </pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="c"># Bring up the day&#39;s notes</span>
-</span><span class='line'><span class="k">function </span>diary<span class="o">()</span> <span class="o">{</span>
+</span><span class='line'><span class="k">function</span> diary<span class="o">()</span> <span class="o">{</span>
 </span><span class='line'>  <span class="nv">year</span><span class="o">=</span><span class="sb">`</span>date <span class="s2">&quot;+%Y&quot;</span><span class="sb">`</span>
 </span><span class='line'>  <span class="nv">month</span><span class="o">=</span><span class="sb">`</span>date <span class="s2">&quot;+%m&quot;</span><span class="sb">`</span>
 </span><span class='line'>  <span class="nv">day</span><span class="o">=</span><span class="sb">`</span>date <span class="s2">&quot;+%d&quot;</span><span class="sb">`</span>
 </span><span class='line'>  <span class="nv">diarydir</span><span class="o">=</span>~/Dropbox/personalnotes/<span class="nv">$year</span>/<span class="nv">$month</span>
-</span><span class='line'>  <span class="k">if</span> <span class="o">[[</span> ! -d <span class="s2">&quot;$diarydir&quot;</span> <span class="o">]]</span>; <span class="k">then</span>
-</span><span class='line'><span class="k">    </span>mkdir -p <span class="s2">&quot;$diarydir&quot;</span>
+</span><span class='line'>  <span class="k">if</span> <span class="o">[[</span> ! -d <span class="s2">&quot;$diarydir&quot;</span> <span class="o">]]</span><span class="p">;</span> <span class="k">then</span>
+</span><span class='line'>    mkdir -p <span class="s2">&quot;$diarydir&quot;</span>
 </span><span class='line'>  <span class="k">fi</span>
-</span><span class='line'><span class="k">  </span>vi <span class="nv">$diarydir</span>/<span class="nv">$day</span>
+</span><span class='line'>  vi <span class="nv">$diarydir</span>/<span class="nv">$day</span>
 </span><span class='line'><span class="o">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
@@ -148,7 +148,7 @@
   
 
 
-<time datetime="2013-07-24T00:00:00-07:00" pubdate data-updated="true">Jul 24<sup>th</sup>, 2013</time></div>
+<time datetime="2013-07-24T00:00:00+00:00" pubdate data-updated="true">Jul 24<sup>th</sup>, 2013</time></div>
 	<div class="tags">
 
 

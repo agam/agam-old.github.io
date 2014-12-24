@@ -148,7 +148,7 @@ doesn&rsquo;t build.</p>
 <span class='line-number'>33</span>
 <span class='line-number'>34</span>
 </pre></td><td class='code'><pre><code class='sh'><span class='line'>ghc --make blog.hs
-</span><span class='line'><span class="o">[</span>1 of 1<span class="o">]</span> Compiling Main             <span class="o">(</span> blog.hs, blog.o <span class="o">)</span>
+</span><span class='line'><span class="o">[</span><span class="m">1</span> of 1<span class="o">]</span> Compiling Main             <span class="o">(</span> blog.hs, blog.o <span class="o">)</span>
 </span><span class='line'>
 </span><span class='line'>blog.hs:27:12:
 </span><span class='line'>    Not in scope: <span class="sb">`</span>list<span class="s1">&#39;</span>
@@ -211,7 +211,7 @@ point and stared at a <code>parse error on input `='</code> error message for
 </span><span class='line'><span class="s1">    Expected type: [Item String] -&gt; [Item String]</span>
 </span><span class='line'><span class="s1">      Actual type: [Item String] -&gt; [[Item String]]</span>
 </span><span class='line'><span class="s1">    In the second argument of `(.)&#39;</span>, namely <span class="sb">`</span>recentFirst<span class="s1">&#39;</span>
-</span><span class='line'><span class="s1">    In the second argument of `($)&#39;</span>, namely <span class="sb">`</span>take 3 . recentFirst<span class="err">&#39;</span>
+</span><span class='line'><span class="s1">    In the second argument of `($)&#39;</span>, namely <span class="sb">`</span>take <span class="m">3</span> . recentFirst<span class="err">&#39;</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -252,7 +252,7 @@ Had to change <code>prep &lt;$&gt; loadAll pattern</code> to <code>prep =&lt;&lt
 </span><span class='line'><span class="nv">$ </span>git rm -r _site
 </span><span class='line'>rm <span class="s1">&#39;_site&#39;</span>
 </span><span class='line'><span class="nv">$ </span>git submodule add --force git@github.com:agam/agam.github.com.git _site
-</span><span class='line'>Reactivating <span class="nb">local </span>git directory <span class="k">for </span>submodule <span class="s1">&#39;_site&#39;</span>.
+</span><span class='line'>Reactivating <span class="nb">local </span>git directory <span class="k">for</span> submodule <span class="s1">&#39;_site&#39;</span>.
 </span><span class='line'><span class="nv">$ </span><span class="nb">cd </span>_site
 </span><span class='line'><span class="nv">$ </span>git checkout master
 </span><span class='line'><span class="nv">$ </span><span class="nb">cd</span> ..
@@ -288,7 +288,7 @@ obsolete.</p>
   
 
 
-<time datetime="2013-03-20T00:00:00-07:00" pubdate data-updated="true">Mar 20<sup>th</sup>, 2013</time></div>
+<time datetime="2013-03-20T00:00:00+00:00" pubdate data-updated="true">Mar 20<sup>th</sup>, 2013</time></div>
 	<div class="tags">
 
 

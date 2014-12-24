@@ -4,7 +4,7 @@
   <title><![CDATA[Category: simulation | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/simulation/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2014-12-21T12:26:20-08:00</updated>
+  <updated>2014-12-23T23:23:37+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Simple game of life]]></title>
     <link href="http://agam.github.io/blog/2014/07/25/simple-game-of-life/"/>
-    <updated>2014-07-25T13:10:46-07:00</updated>
+    <updated>2014-07-25T20:10:46+00:00</updated>
     <id>http://agam.github.io/blog/2014/07/25/simple-game-of-life</id>
     <content type="html"><![CDATA[<p>(Just for fun)</p>
 
@@ -33,7 +33,7 @@
 
 (defun make-new-board ()
   (make-array (list *board-size* *board-size*)
-	      :element-type &#39;(mod 2)
+	      :element-type '(mod 2)
 	      :initial-element 0))
 
 (defun start-game ()
@@ -58,7 +58,7 @@
 itself implicitly at (radius,radius) set to 0&quot;
   (let* ((env-size (1+ (* 2 *environment-radius*)))
 	 (env (make-array (list env-size env-size)
-			 :element-type &#39;(mod 2)
+			 :element-type '(mod 2)
 			 :initial-element 0)))
     (dotimes (i env-size)
       (dotimes (j env-size)
@@ -172,9 +172,9 @@ itself implicitly at (radius,radius) set to 0&quot;
   (setf (aref *game-board* y x) 1))
 
 (defun draw-pattern (x y pattern)
-  &quot;Assuming &#39;pattern&#39; is specified as a row-major set of 1s and 0s, replicates that on the board&quot;
-  (mapindex #&#39;(lambda (row-num row)
-		(mapindex #&#39;(lambda (col-num entry)
+  &quot;Assuming 'pattern' is specified as a row-major set of 1s and 0s, replicates that on the board&quot;
+  (mapindex #'(lambda (row-num row)
+		(mapindex #'(lambda (col-num entry)
 			      (let ((x-eff (+ x col-num))
 				    (y-eff (+ y row-num)))
 				(when (and (&lt; x-eff *board-size*)
@@ -187,18 +187,18 @@ itself implicitly at (radius,radius) set to 0&quot;
 ;; Sample oscillating patterns
 (defun draw-blinker (x y)
   (draw-pattern x y
-		&#39;((1)
+		'((1)
 		  (1)
 		  (1))))
 
 (defun draw-toad (x y)
   (draw-pattern x y
-		&#39;((0 1 1 1)
+		'((0 1 1 1)
 		  (1 1 1 0))))
 
 (defun draw-beacon (x y)
   (draw-pattern x y
-		&#39;((1 1 0 0)
+		'((1 1 0 0)
 		  (1 1 0 0)
 		  (0 0 1 1)
 		  (0 0 1 1))))
@@ -206,26 +206,26 @@ itself implicitly at (radius,radius) set to 0&quot;
 ;; Sample fixed patterns
 (defun draw-loaf (x y)
   (draw-pattern x y
-		&#39;((0 1 1 0)
+		'((0 1 1 0)
 		  (1 0 0 1)
 		  (0 1 0 1)
 		  (0 0 1 0))))
 
 (defun draw-block (x y)
   (draw-pattern x y
-		&#39;((1 1)
+		'((1 1)
 		  (1 1))))
 
 ;; Sample moving pattern
 (defun draw-glider-moving-right (x y)
   (draw-pattern x y
-		&#39;((0 1 0)
+		'((0 1 0)
 		  (0 0 1)
 		  (1 1 1))))
 
 (defun draw-glider-moving-left (x y)
   (draw-pattern x y
-		&#39;((0 1 0)
+		'((0 1 0)
 		  (1 0 0)
 		  (1 1 1))))</code></pre></noscript></div>
 </p>

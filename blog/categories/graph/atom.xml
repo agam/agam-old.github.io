@@ -4,7 +4,7 @@
   <title><![CDATA[Category: graph, | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/graph/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2014-12-21T12:26:20-08:00</updated>
+  <updated>2014-12-23T23:23:37+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[A Ridiculous graph]]></title>
     <link href="http://agam.github.io/blog/2014/09/02/a-ridiculous-graph/"/>
-    <updated>2014-09-02T16:44:27-07:00</updated>
+    <updated>2014-09-02T23:44:27+00:00</updated>
     <id>http://agam.github.io/blog/2014/09/02/a-ridiculous-graph</id>
     <content type="html"><![CDATA[<p>Following in the theme of the previous post, <a href="https://gist.github.com/agam/fe8983acccd455fd9510">here (see linked Gist)</a> is a concurrent graph. Again, this is not an efficient way to do something like this, it&rsquo;s just a fun example of showing something that&rsquo;s easy in Go but probably harder or more verbose in other languages.</p>
 

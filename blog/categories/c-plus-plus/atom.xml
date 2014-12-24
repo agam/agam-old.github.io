@@ -4,7 +4,7 @@
   <title><![CDATA[Category: c++ | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/c-plus-plus/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2014-12-21T12:26:20-08:00</updated>
+  <updated>2014-12-23T23:23:37+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Basic HTTP Client with Poco]]></title>
     <link href="http://agam.github.io/blog/2013/09/29/http-client-with-poco/"/>
-    <updated>2013-09-29T00:00:00-07:00</updated>
+    <updated>2013-09-29T00:00:00+00:00</updated>
     <id>http://agam.github.io/blog/2013/09/29/http-client-with-poco</id>
     <content type="html"><![CDATA[<p>After my previous terrible experience with <code>cpp-netlib</code>, I was very very pleasantly surprised by how well this went.</p>
 
@@ -155,7 +155,7 @@ sys     0m0.012s
   <entry>
     <title type="html"><![CDATA[In which I recall how to build stuff]]></title>
     <link href="http://agam.github.io/blog/2013/08/26/building-boost-clang-gcc/"/>
-    <updated>2013-08-26T00:00:00-07:00</updated>
+    <updated>2013-08-26T00:00:00+00:00</updated>
     <id>http://agam.github.io/blog/2013/08/26/building-boost-clang-gcc</id>
     <content type="html"><![CDATA[<p>It all started when I wanted to &ldquo;relearn&rdquo; C++. I use it everyday, but it&rsquo;s been so long since I first came across it 15 years ago that I&rsquo;ve accumulated tons of bad habits and thought patterns etc, so I wanted to get a &ldquo;beginner&rsquo;s mind&rdquo; feel of it again.</p>
 
@@ -314,7 +314,7 @@ sys     0m0.044s
   <entry>
     <title type="html"><![CDATA[Comparison of data structures in C++ and Haskell]]></title>
     <link href="http://agam.github.io/blog/2013/06/26/data-structures-haskell-vs-cpp/"/>
-    <updated>2013-06-26T00:00:00-07:00</updated>
+    <updated>2013-06-26T00:00:00+00:00</updated>
     <id>http://agam.github.io/blog/2013/06/26/data-structures-haskell-vs-cpp</id>
     <content type="html"><![CDATA[<p>Once again, just to satisfy my curiosity, I want to do a tiny comparison of a basic feature in both languages, trying to see how data structures are implemented. Ok, I&rsquo;m fairly certain how it works for in C++, I&rsquo;m really just curious about Haskell.</p>
 
@@ -554,7 +554,7 @@ sys 0m0.000s
   <entry>
     <title type="html"><![CDATA[Comparing basic iteration in C++ and Haskell: Part 1]]></title>
     <link href="http://agam.github.io/blog/2013/03/13/basic-iteration-comparison/"/>
-    <updated>2013-03-13T00:00:00-07:00</updated>
+    <updated>2013-03-13T00:00:00+00:00</updated>
     <id>http://agam.github.io/blog/2013/03/13/basic-iteration-comparison</id>
     <content type="html"><![CDATA[<h2><code>For loop</code> iteration: C</h2>
 
@@ -1298,7 +1298,7 @@ sys 0m0.060s
   <entry>
     <title type="html"><![CDATA[Comparing "Hello World" in C++ and Haskell]]></title>
     <link href="http://agam.github.io/blog/2013/03/10/hello-world-comparison/"/>
-    <updated>2013-03-10T00:00:00-08:00</updated>
+    <updated>2013-03-10T00:00:00+00:00</updated>
     <id>http://agam.github.io/blog/2013/03/10/hello-world-comparison</id>
     <content type="html"><![CDATA[<p>I feel I&rsquo;ve totally forgotten all about assembly, and I was curious anyway about how Haskell differed fundamentally in its basic code generation, so I decided to contrast a basic example against C++.</p>
 

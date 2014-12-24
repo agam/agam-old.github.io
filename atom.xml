@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2014-12-21T12:26:20-08:00</updated>
+  <updated>2014-12-23T23:23:37+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -14,9 +14,75 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Google cloud: sharing projects]]></title>
+    <link href="http://agam.github.io/blog/2014/12/23/google-cloud-sharing-projects/"/>
+    <updated>2014-12-23T22:44:16+00:00</updated>
+    <id>http://agam.github.io/blog/2014/12/23/google-cloud-sharing-projects</id>
+    <content type="html"><![CDATA[<p>In the past (and yes, for some things, in the present too<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>) a few Google products have had UI with ambiguous workflows, or where it wasn&rsquo;t clear if or how to accomplish something.</p>
+
+<p>So check this out; I found it <em>magical</em><sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>, you can easily try this with multiple Google accounts. In the cloud console<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>, click on your project, then &ldquo;Permissions&rdquo; in the top left, and &ldquo;Add Member&rdquo;.</p>
+
+<p>Enter the account, and then select the &ldquo;sharing level&rdquo; of the new account (with the <em>same</em> semantics as, say, Google Docs &mdash; you either <em>own</em>, <em>edit</em>, or <em>view</em>) and confirm.</p>
+
+<p>Log in from the other account, go to the project, view a VM, click &ldquo;SSH&rdquo; and <em>Boom</em>, just like that, <strong>everything works</strong>!</p>
+
+<p>This gist<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup> shows all the steps that were needed!</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="c"># Download the command-line utilities</span>
+</span><span class='line'><span class="nv">$ </span>curl https://sdk.cloud.google.com <span class="p">|</span> bash
+</span><span class='line'>
+</span><span class='line'><span class="c">## Authenticate</span>
+</span><span class='line'><span class="nv">$ </span>gcloud auth login
+</span><span class='line'>
+</span><span class='line'><span class="c">## Sanity check</span>
+</span><span class='line'><span class="nv">$ </span>gcloud info
+</span><span class='line'>
+</span><span class='line'><span class="c">## One-time configuration to avoid specifying command-line flags</span>
+</span><span class='line'><span class="nv">$ </span>gcloud config <span class="nb">set </span>project <span class="s2">&quot;&lt;project_name&gt;&quot;</span>
+</span><span class='line'><span class="nv">$ </span>gcloud config <span class="nb">set </span>compute/zone us-central1-a
+</span><span class='line'>
+</span><span class='line'><span class="c">## Login!</span>
+</span><span class='line'><span class="nv">$ </span>gcloud compute ssh agam@myvm
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+<div class="footnotes">
+<hr/>
+<ol>
+<li id="fn:1">
+<p>No comment<a href="#fnref:1" rev="footnote">&#8617;</a></p></li>
+<li id="fn:2">
+<p>Ok, maybe everyone expects this and everything else works this well too, but it&rsquo;s still <em>wow</em><a href="#fnref:2" rev="footnote">&#8617;</a></p></li>
+<li id="fn:3">
+<p><a href="https://console.developers.google.com/">https://console.developers.google.com/</a><a href="#fnref:3" rev="footnote">&#8617;</a></p></li>
+<li id="fn:4">
+<p><a href="https://gist.github.com/agam/9f3207a7cdcd72745748">https://gist.github.com/agam/9f3207a7cdcd72745748</a><a href="#fnref:4" rev="footnote">&#8617;</a></p></li>
+</ol>
+</div>
+
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[DailyProgrammer: Stacking Sticks]]></title>
     <link href="http://agam.github.io/blog/2014/12/21/dailyprogrammer-stacking-sticks/"/>
-    <updated>2014-12-21T12:15:51-08:00</updated>
+    <updated>2014-12-21T20:15:51+00:00</updated>
     <id>http://agam.github.io/blog/2014/12/21/dailyprogrammer-stacking-sticks</id>
     <content type="html"><![CDATA[<p>Some of the most interesting (and frustrating!) problems are the ones which are <em>obvious</em> to you as a human being but quite <em>unobvious</em> how to put into code.</p>
 
@@ -358,9 +424,9 @@
   
   <entry>
     <title type="html"><![CDATA[Logic through Haskell? Not necessarily ...]]></title>
-    <link href="http://agam.github.io/blog/2014/12/18/logic-through-haskell-not-necessarily-dot-dot-dot/"/>
-    <updated>2014-12-18T17:20:58-08:00</updated>
-    <id>http://agam.github.io/blog/2014/12/18/logic-through-haskell-not-necessarily-dot-dot-dot</id>
+    <link href="http://agam.github.io/blog/2014/12/19/logic-through-haskell-not-necessarily-dot-dot-dot/"/>
+    <updated>2014-12-19T01:20:58+00:00</updated>
+    <id>http://agam.github.io/blog/2014/12/19/logic-through-haskell-not-necessarily-dot-dot-dot</id>
     <content type="html"><![CDATA[<p>Finished reading (browsing, really, after the first few chapters) through The Haskell Road to Logic, Maths and Programming<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>, and I am &hellip; <em>underwhelmed</em>. I mean the book was great and all, but maybe I made the mistake of forming some unreasonable expectations.</p>
 
 <p>If you&rsquo;re already familiar with a bit of Haskell and basic logic/sets/numbers, you&rsquo;ll get the most <em>bang for your buck</em> from Chapter 10 on <em>Corecursion</em><sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>. This was &ldquo;brand new&rdquo; for me and I had multiple &ldquo;aha&rdquo; moments after seeing the mechanism used to reason about non-deterministic processes etc.</p>
@@ -387,9 +453,9 @@
   
   <entry>
     <title type="html"><![CDATA[IO Performance (is that really an SSD?)]]></title>
-    <link href="http://agam.github.io/blog/2014/12/17/io-performance-is-that-really-an-ssd/"/>
-    <updated>2014-12-17T20:25:20-08:00</updated>
-    <id>http://agam.github.io/blog/2014/12/17/io-performance-is-that-really-an-ssd</id>
+    <link href="http://agam.github.io/blog/2014/12/18/io-performance-is-that-really-an-ssd/"/>
+    <updated>2014-12-18T04:25:20+00:00</updated>
+    <id>http://agam.github.io/blog/2014/12/18/io-performance-is-that-really-an-ssd</id>
     <content type="html"><![CDATA[<p>I created a new VM in Google Compute Engine a few days ago, and assigned it an SSD disk, and then began wondering <em>if it was really an SSD disk</em>.</p>
 
 <p>(<em>Digression</em>: I never appreciated the difference an SSD makes until the first time a Macbook Air awoke from sleep <em>instantly</em>. From that moment onwards, the time taken for my desktop at home to show its login screen has <em>always</em> felt irritatingly long)</p>
@@ -503,9 +569,9 @@
   
   <entry>
     <title type="html"><![CDATA[DailyProgrammer: Textual Cycles]]></title>
-    <link href="http://agam.github.io/blog/2014/12/17/dailyprogrammer-textual-cycles/"/>
-    <updated>2014-12-17T20:17:28-08:00</updated>
-    <id>http://agam.github.io/blog/2014/12/17/dailyprogrammer-textual-cycles</id>
+    <link href="http://agam.github.io/blog/2014/12/18/dailyprogrammer-textual-cycles/"/>
+    <updated>2014-12-18T04:17:28+00:00</updated>
+    <id>http://agam.github.io/blog/2014/12/18/dailyprogrammer-textual-cycles</id>
     <content type="html"><![CDATA[<p><a href="http://www.reddit.com/r/dailyprogrammer/comments/2m82yz/20141114_challenge_188_hard_arrows_and_arrows/">Another one</a> from <a href="http://www.reddit.com/r/dailyprogrammer">r/dailyprogrammer</a>. This one involves text with &ldquo;arrows&rdquo;, but as the &ldquo;hint&rdquo; at the end says, it&rsquo;s really equivalent to finding cycles in a directed graph (it would be harder if there were multiple edges going out of each node, but that isn&rsquo;t the case here!)</p>
 
 <p>Here&rsquo;s my code:</p>
@@ -891,9 +957,9 @@
   
   <entry>
     <title type="html"><![CDATA[The Gardens of Go]]></title>
-    <link href="http://agam.github.io/blog/2014/12/16/the-gardens-of-go/"/>
-    <updated>2014-12-16T21:54:20-08:00</updated>
-    <id>http://agam.github.io/blog/2014/12/16/the-gardens-of-go</id>
+    <link href="http://agam.github.io/blog/2014/12/17/the-gardens-of-go/"/>
+    <updated>2014-12-17T05:54:20+00:00</updated>
+    <id>http://agam.github.io/blog/2014/12/17/the-gardens-of-go</id>
     <content type="html"><![CDATA[<p>There are many &ldquo;teaching&rdquo; languages, though a contender these days is harder to establish, given the amount of choice available. For very young kids, the Scratch<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> framework is appropriate, while for slightly older kids, Python might be a better option.</p>
 
 <p>I&rsquo;d like to suggest another option (for slightly older kids), that might seem atypical at first: Go! Yes, I do believe the &ldquo;Gopher language&rdquo;, used in many real production servers today, can realistically do double duty as a beginner language for kids.</p>
@@ -935,7 +1001,7 @@
   <entry>
     <title type="html"><![CDATA[DailyProgramming: Markov chain]]></title>
     <link href="http://agam.github.io/blog/2014/12/16/dailyprogramming-markov-chain/"/>
-    <updated>2014-12-16T12:13:06-08:00</updated>
+    <updated>2014-12-16T20:13:06+00:00</updated>
     <id>http://agam.github.io/blog/2014/12/16/dailyprogramming-markov-chain</id>
     <content type="html"><![CDATA[<p>Been a long, <em>long</em> time since I looked at <a href="http://www.reddit.com/r/dailyprogrammer/">r/dailyprogrammer</a>, so I picked <a href="http://www.reddit.com/r/dailyprogrammer/comments/2ovt2i/20141210_challenge_192_intermediate_markov_chain/">this <em>intermediate</em> problem</a> from 5 days ago. Basically, given a dictionary, judge the likelihood of a word being a &ldquo;real word&rdquo;.</p>
 
@@ -1112,7 +1178,7 @@
   <entry>
     <title type="html"><![CDATA[Trying out FreeBSD (and failing at it)]]></title>
     <link href="http://agam.github.io/blog/2014/12/14/trying-out-freebsd-and-failing-at-it/"/>
-    <updated>2014-12-14T14:00:13-08:00</updated>
+    <updated>2014-12-14T22:00:13+00:00</updated>
     <id>http://agam.github.io/blog/2014/12/14/trying-out-freebsd-and-failing-at-it</id>
     <content type="html"><![CDATA[<p>Wait, what? Why?! No reason, really. I saw the new FreeBSD book<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> lying around in someone&rsquo;s office, and separately I was reminded of the week I spent getting Gentoo up and running a decade ago, and decided I missed all that and wanted to repeat a similar experience.</p>
 
@@ -1495,9 +1561,9 @@ Error: <code>The resource 'projects/algol-c/zones/us-central1-a/instances/myvm' 
   
   <entry>
     <title type="html"><![CDATA[Failure to ragequit]]></title>
-    <link href="http://agam.github.io/blog/2014/12/11/failure-to-ragequit/"/>
-    <updated>2014-12-11T22:07:14-08:00</updated>
-    <id>http://agam.github.io/blog/2014/12/11/failure-to-ragequit</id>
+    <link href="http://agam.github.io/blog/2014/12/12/failure-to-ragequit/"/>
+    <updated>2014-12-12T06:07:14+00:00</updated>
+    <id>http://agam.github.io/blog/2014/12/12/failure-to-ragequit</id>
     <content type="html"><![CDATA[<p>Migrating from my Github blog (in Octopress) was supposed to work pretty much as specified in <a href="http://www.stackednotion.com/blog/2014/02/26/migrating-from-octopress-to-wordpress/">this guide</a> <sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></p>
 
 <ul>
@@ -1554,9 +1620,9 @@ Error: <code>The resource 'projects/algol-c/zones/us-central1-a/instances/myvm' 
   
   <entry>
     <title type="html"><![CDATA[Haskell/Math]]></title>
-    <link href="http://agam.github.io/blog/2014/11/11/haskell-slash-math/"/>
-    <updated>2014-11-11T18:05:43-08:00</updated>
-    <id>http://agam.github.io/blog/2014/11/11/haskell-slash-math</id>
+    <link href="http://agam.github.io/blog/2014/11/12/haskell-slash-math/"/>
+    <updated>2014-11-12T02:05:43+00:00</updated>
+    <id>http://agam.github.io/blog/2014/11/12/haskell-slash-math</id>
     <content type="html"><![CDATA[<p>I don&rsquo;t recall the very first articles I might have read about Haskell, but the first non-short text was Real World Haskell, which I went through the year it came out. I didn&rsquo;t write any code at that time (a mistake!)</p>
 
 <p>Then, a coupffle of years later, I thought I&rsquo;d try my hand at <a href="https://projecteuler.net/">Project Euler</a> with Haskell. I did the first 10-15 and then got bored.</p>
@@ -1585,7 +1651,7 @@ Error: <code>The resource 'projects/algol-c/zones/us-central1-a/instances/myvm' 
   <entry>
     <title type="html"><![CDATA[Moving to Ello]]></title>
     <link href="http://agam.github.io/blog/2014/11/05/moving-to-ello/"/>
-    <updated>2014-11-05T14:57:30-08:00</updated>
+    <updated>2014-11-05T22:57:30+00:00</updated>
     <id>http://agam.github.io/blog/2014/11/05/moving-to-ello</id>
     <content type="html"><![CDATA[<p>Yeah it&rsquo;s been pretty <em>dry</em> over here lately. Looks like the last post was on September 2, over <em>two months ago</em>. Many reasons, one of which is that I&rsquo;m too lazy <em>even for Github pages</em>. Yes, I frequently cannot even be bothered to do something as simple as <code>rake new_post["Why I procrastinate endlessly: 20 reasons"]</code>.</p>
 
@@ -1607,7 +1673,7 @@ Error: <code>The resource 'projects/algol-c/zones/us-central1-a/instances/myvm' 
   <entry>
     <title type="html"><![CDATA[A Ridiculous graph]]></title>
     <link href="http://agam.github.io/blog/2014/09/02/a-ridiculous-graph/"/>
-    <updated>2014-09-02T16:44:27-07:00</updated>
+    <updated>2014-09-02T23:44:27+00:00</updated>
     <id>http://agam.github.io/blog/2014/09/02/a-ridiculous-graph</id>
     <content type="html"><![CDATA[<p>Following in the theme of the previous post, <a href="https://gist.github.com/agam/fe8983acccd455fd9510">here (see linked Gist)</a> is a concurrent graph. Again, this is not an efficient way to do something like this, it&rsquo;s just a fun example of showing something that&rsquo;s easy in Go but probably harder or more verbose in other languages.</p>
 
@@ -1759,7 +1825,7 @@ Error: <code>The resource 'projects/algol-c/zones/us-central1-a/instances/myvm' 
   <entry>
     <title type="html"><![CDATA[A ridiculous adder]]></title>
     <link href="http://agam.github.io/blog/2014/08/19/a-ridiculous-adder/"/>
-    <updated>2014-08-19T14:32:09-07:00</updated>
+    <updated>2014-08-19T21:32:09+00:00</updated>
     <id>http://agam.github.io/blog/2014/08/19/a-ridiculous-adder</id>
     <content type="html"><![CDATA[<p>Alright, the first example of <em>&ldquo;Ridiculous Concurrency&rdquo;</em> ! Here is a terribly inefficient adder that performs arithmetic on arbitrarily large integers.</p>
 
@@ -1996,7 +2062,7 @@ Error: <code>The resource 'projects/algol-c/zones/us-central1-a/instances/myvm' 
   <entry>
     <title type="html"><![CDATA[Command-line Gists]]></title>
     <link href="http://agam.github.io/blog/2014/08/19/command-line-gists/"/>
-    <updated>2014-08-19T14:25:25-07:00</updated>
+    <updated>2014-08-19T21:25:25+00:00</updated>
     <id>http://agam.github.io/blog/2014/08/19/command-line-gists</id>
     <content type="html"><![CDATA[<p>Every once in a while I need to share some code snippets, and <a href="https://gist.github.com/">Gist</a> has been the best way to do this so far. Using the browser wastes a few mouseclicks, especially if you already have the intended contents (either entirely or partially) in a text file, so here&rsquo;s a better way to do this:</p>
 
@@ -2029,7 +2095,7 @@ Error: <code>The resource 'projects/algol-c/zones/us-central1-a/instances/myvm' 
   <entry>
     <title type="html"><![CDATA[Golang setup]]></title>
     <link href="http://agam.github.io/blog/2014/08/12/golang-setup/"/>
-    <updated>2014-08-12T15:21:15-07:00</updated>
+    <updated>2014-08-12T22:21:15+00:00</updated>
     <id>http://agam.github.io/blog/2014/08/12/golang-setup</id>
     <content type="html"><![CDATA[<p>Just some basic personal notes here.</p>
 
@@ -2044,7 +2110,7 @@ Error: <code>The resource 'projects/algol-c/zones/us-central1-a/instances/myvm' 
   <entry>
     <title type="html"><![CDATA[Ridiculous Concurrency]]></title>
     <link href="http://agam.github.io/blog/2014/08/12/ridiculous-concurrency/"/>
-    <updated>2014-08-12T15:09:01-07:00</updated>
+    <updated>2014-08-12T22:09:01+00:00</updated>
     <id>http://agam.github.io/blog/2014/08/12/ridiculous-concurrency</id>
     <content type="html"><![CDATA[<p>Ok, so I went through the <a href="http://tour.golang.org/">Go Tour</a>, and it&rsquo;s pretty impressive; having this sort of super-fast edit-compile-run cycle is something usually associated with Javascript-ish languages, certainly not a statically compiled systems language.</p>
 
@@ -2059,7 +2125,7 @@ Error: <code>The resource 'projects/algol-c/zones/us-central1-a/instances/myvm' 
   <entry>
     <title type="html"><![CDATA[Scala/Haskell/Go]]></title>
     <link href="http://agam.github.io/blog/2014/08/04/scala-slash-haskell-slash-go/"/>
-    <updated>2014-08-04T12:33:51-07:00</updated>
+    <updated>2014-08-04T19:33:51+00:00</updated>
     <id>http://agam.github.io/blog/2014/08/04/scala-slash-haskell-slash-go</id>
     <content type="html"><![CDATA[<p>Ok, Scala is neat. It&rsquo;s certainly the <em>only</em> way I can bring myself to use the JVM. The idea of everything being an object is a good one. You can &lsquo;cheat&rsquo; a bit since you can use statements, mix in side effects, do whatever, but I understand the compromises for Java-interop, without which it would would have been just another unused academic language.</p>
 
@@ -2080,7 +2146,7 @@ Error: <code>The resource 'projects/algol-c/zones/us-central1-a/instances/myvm' 
   <entry>
     <title type="html"><![CDATA[Possibly unevaluated variables]]></title>
     <link href="http://agam.github.io/blog/2014/07/31/possibly-unevaluated-variables/"/>
-    <updated>2014-07-31T16:11:40-07:00</updated>
+    <updated>2014-07-31T23:11:40+00:00</updated>
     <id>http://agam.github.io/blog/2014/07/31/possibly-unevaluated-variables</id>
     <content type="html"><![CDATA[<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -2116,7 +2182,7 @@ Error: <code>The resource 'projects/algol-c/zones/us-central1-a/instances/myvm' 
   <entry>
     <title type="html"><![CDATA[Scala: var, val, def]]></title>
     <link href="http://agam.github.io/blog/2014/07/31/scala-var/"/>
-    <updated>2014-07-31T13:04:30-07:00</updated>
+    <updated>2014-07-31T20:04:30+00:00</updated>
     <id>http://agam.github.io/blog/2014/07/31/scala-var</id>
     <content type="html"><![CDATA[<p>Using all three (<code>val</code>, <code>var</code>, `d</p>
 
@@ -2174,7 +2240,7 @@ Error: <code>The resource 'projects/algol-c/zones/us-central1-a/instances/myvm' 
   <entry>
     <title type="html"><![CDATA[Up and Running: Scala, Sbt, Ensime]]></title>
     <link href="http://agam.github.io/blog/2014/07/30/up-and-running-with-scala/"/>
-    <updated>2014-07-30T12:31:30-07:00</updated>
+    <updated>2014-07-30T19:31:30+00:00</updated>
     <id>http://agam.github.io/blog/2014/07/30/up-and-running-with-scala</id>
     <content type="html"><![CDATA[<p>The &ldquo;Getting started&rdquo; section of the &ldquo;Functional Programming with Scala&rdquo; course mentions using Eclipse to build the first &lsquo;hello world&rsquo; kind of project, but if you&rsquo;d rather not get out of your Emacs comfort zone, there is a different way to do the same (credits to numerous online sources).</p>
 
@@ -2260,23 +2326,6 @@ Error: <code>The resource 'projects/algol-c/zones/us-central1-a/instances/myvm' 
 
 
 <p>&hellip; and that&rsquo;s it!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Learning Other Languages]]></title>
-    <link href="http://agam.github.io/blog/2014/07/30/learning-other-languages/"/>
-    <updated>2014-07-30T12:23:33-07:00</updated>
-    <id>http://agam.github.io/blog/2014/07/30/learning-other-languages</id>
-    <content type="html"><![CDATA[<p>I spent some time learning a decent amount of Common Lisp last year. Nothing fancy, but I&rsquo;m comfortable using quicklisp, playing around with libraries, modelling stuff, etc. I&rsquo;ve read through <a href="http://www.gigamonkeys.com/book/">PCL</a> and <a href="http://www.cs.cmu.edu/Groups/AI/html/cltl/clm/node1.html">ClTl2</a> (though unfortunately, not <a href="http://norvig.com/paip.html">PAIP</a> (not yet!)).</p>
-
-<p>They&rsquo;ve been a bunch of other new (as in, the last 7 years ?) languages that I&rsquo;ve looked at off and on. Gone through a few tutorials, read (no, lightly skimmed) some suggested material (learn you a X, learn Y in Z minutes, etc). I <em>love</em> Common Lisp (enough to simply call it &ldquo;Lisp&rdquo; to the exclusion of the gazillion varieties of scheme (and yes, Clojure too (!))), but yeah, the lack of libraries does get to be a pain point.</p>
-
-<p>So someone suggested I try Clojure, but I&rsquo;ll pass. I don&rsquo;t want to look at stuff ending with &ldquo;))]))})]})&rdquo;. If I need reader macros for hash-tables, <a href="http://cl21.org/">cl21</a> has it, though I think <a href="https://github.com/vseloved/rutils/blob/master/docs/ann-rutils.md">rutils</a> should suffice for a nice superset of useful library add-ons (OTOH the Overtone/Quil/ShaderTone combo does make me salivate, and I definitely <em>will</em> check try them out at some point).</p>
-
-<p>If I <em>have</em> to work with the JVM, I figure I might as well learn something new/different that isn&rsquo;t trying too hard to be <em>Lisp</em>. Hence, <a href="http://www.scala-lang.org/">Scala</a>. I may regret this later (but how bad can it be). I hear people loved the <a href="https://www.coursera.org/course/progfun">MOOC</a> on it last year, and looks like I <em>just</em> missed the one this year, but this being Coursera (yay) I can still do the videos and the assignments.</p>
-
-<p>Also <a href="https://www.dartlang.org/">Dart</a> because it&rsquo;s nice to get basic web UI stuff going when needed (and no, I don&rsquo;t want to know Javascript). So we&rsquo;ll see how that goes.</p>
 ]]></content>
   </entry>
   

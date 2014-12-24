@@ -113,9 +113,9 @@
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>...failed updating 4 targets...
-</span><span class='line'>...skipped 6 targets...
-</span><span class='line'>...updated 1073 targets...
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>...failed updating <span class="m">4</span> targets...
+</span><span class='line'>...skipped <span class="m">6</span> targets...
+</span><span class='line'>...updated <span class="m">1073</span> targets...
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -203,7 +203,7 @@
 <span class='line-number'>80</span>
 <span class='line-number'>81</span>
 <span class='line-number'>82</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>clang: /home/agam/Documents/Code/Building/Clang/llvm/lib/IR/Instructions.cpp:2929: llvm::BitCastInst::BitCastInst<span class="o">(</span>llvm::Value*, llvm::Type*, const llvm::Twine&amp;, llvm::Instruction*<span class="o">)</span>: Assertion <span class="sb">`</span>castIsValid<span class="o">(</span>getOpcode<span class="o">()</span>, S, Ty<span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="s2">&quot;Illegal BitCast&quot;</span><span class="s1">&#39; failed.</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>clang: /home/agam/Documents/Code/Building/Clang/llvm/lib/IR/Instructions.cpp:2929: llvm::BitCastInst::BitCastInst<span class="o">(</span>llvm::Value*, llvm::Type*, const llvm::Twine<span class="p">&amp;</span>, llvm::Instruction*<span class="o">)</span>: Assertion <span class="sb">`</span>castIsValid<span class="o">(</span>getOpcode<span class="o">()</span>, S, Ty<span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="s2">&quot;Illegal BitCast&quot;</span><span class="s1">&#39; failed.</span>
 </span><span class='line'><span class="s1">0  clang           0x0000000002569c72 llvm::sys::PrintStackTrace(_IO_FILE*) + 34</span>
 </span><span class='line'><span class="s1">1  clang           0x0000000002569059</span>
 </span><span class='line'><span class="s1">2  libpthread.so.0 0x00007f13948eecb0</span>
@@ -335,7 +335,7 @@
 <span class='line-number'>3</span>
 </pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>/usr/clang_3_3/bin/clang++ -std<span class="o">=</span>c++11 -stdlib<span class="o">=</span>libc++ -L/usr/lib -I/opt/boost/boost_1_54_0 hello-world.cpp -o hello-world -lc++abi
 </span><span class='line'>/usr/bin/ld: cannot find -lc++abi
-</span><span class='line'>clang: error: linker <span class="nb">command </span>failed with <span class="nb">exit </span>code 1 <span class="o">(</span>use -v to see invocation<span class="o">)</span>
+</span><span class='line'>clang: error: linker <span class="nb">command </span>failed with <span class="nb">exit </span>code <span class="m">1</span> <span class="o">(</span>use -v to see invocation<span class="o">)</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -375,12 +375,12 @@
 </pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ CC</span><span class="o">=</span>clang <span class="nv">CXX</span><span class="o">=</span>clang++ cmake -G <span class="s2">&quot;Unix Makefiles&quot;</span> -DLIBCXX_CXX_ABI<span class="o">=</span>libcxxabi -DLIBCXX_LIBCXXABI_INCLUDE_PATHS<span class="o">=</span><span class="s2">&quot;/home/agam/Documents/Code/Building/libcxxabi/include&quot;</span> -DCMAKE_BUILD_TYPE<span class="o">=</span>Release -DCMAKE_INSTALL_PREFIX<span class="o">=</span>/usr ../libcxx
 </span><span class='line'>-- The CXX compiler identification is Clang 3.4.0
 </span><span class='line'>-- The C compiler identification is Clang 3.4.0
-</span><span class='line'>-- Check <span class="k">for </span>working CXX compiler: /usr/clang_3_3/bin/clang++
-</span><span class='line'>-- Check <span class="k">for </span>working CXX compiler: /usr/clang_3_3/bin/clang++ -- works
+</span><span class='line'>-- Check <span class="k">for</span> working CXX compiler: /usr/clang_3_3/bin/clang++
+</span><span class='line'>-- Check <span class="k">for</span> working CXX compiler: /usr/clang_3_3/bin/clang++ -- works
 </span><span class='line'>-- Detecting CXX compiler ABI info
 </span><span class='line'>-- Detecting CXX compiler ABI info - <span class="k">done</span>
-</span><span class='line'>-- Check <span class="k">for </span>working C compiler: /usr/clang_3_3/bin/clang
-</span><span class='line'>-- Check <span class="k">for </span>working C compiler: /usr/clang_3_3/bin/clang -- works
+</span><span class='line'>-- Check <span class="k">for</span> working C compiler: /usr/clang_3_3/bin/clang
+</span><span class='line'>-- Check <span class="k">for</span> working C compiler: /usr/clang_3_3/bin/clang -- works
 </span><span class='line'>-- Detecting C compiler ABI info
 </span><span class='line'>-- Detecting C compiler ABI info - <span class="k">done</span>
 </span><span class='line'>-- Host triple: x86_64-pc-linux
@@ -413,7 +413,7 @@
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 </pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>sudo ldconfig -f /etc/ld.so.conf.d/libc.conf
-</span><span class='line'><span class="nv">$ </span>ldconfig -p | grep c++abi
+</span><span class='line'><span class="nv">$ </span>ldconfig -p <span class="p">|</span> grep c++abi
 </span><span class='line'>...
 </span><span class='line'>        libc++abi.so.1 <span class="o">(</span>libc6,x86-64<span class="o">)</span> <span class="o">=</span>&gt; /usr/local/lib/libc++abi.so.1
 </span></code></pre></td></tr></table></div></figure>
@@ -447,7 +447,7 @@
   
 
 
-<time datetime="2013-09-30T00:00:00-07:00" pubdate data-updated="true">Sep 30<sup>th</sup>, 2013</time></div>
+<time datetime="2013-09-30T00:00:00+00:00" pubdate data-updated="true">Sep 30<sup>th</sup>, 2013</time></div>
 	<div class="tags">
 
 

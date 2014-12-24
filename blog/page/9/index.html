@@ -7,7 +7,17 @@
 	<meta name="author" content="Agam">
 
 	
-	<meta name="description" content="Since I looked at printing &ldquo;Hello World&rdquo; in C and Haskell earlier, I thought I would look at what Go does diferently. Source program So &hellip;">
+	<meta name="description" content="For loop iteration: C First, basic iteration over an array. C++ Source : 1
+2
+3
+4
+5
+6
+7
+8
+9
+#include &lt;iostream&gt;
+#include &lt;vector&gt; int &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -91,6 +101,1003 @@
     <article class="post">
 	<h2 class="title">
 		
+		<a href="/blog/2013/03/13/basic-iteration-comparison/">
+		
+			Comparing Basic Iteration in C++ and Haskell: Part 1</a>
+	</h2>
+	<div class="entry-content">
+		<h2><code>For loop</code> iteration: C</h2>
+
+<p>First, basic iteration over an array.</p>
+
+<p>C++ Source :</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#include &lt;iostream&gt;</span>
+</span><span class='line'><span class="cp">#include &lt;vector&gt;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">**</span><span class="n">argv</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">v</span> <span class="p">{</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">34</span> <span class="p">,</span><span class="mi">45</span> <span class="p">,</span><span class="mi">56</span> <span class="p">,</span><span class="mi">67</span> <span class="p">,</span><span class="mi">78</span><span class="p">,</span> <span class="mi">89</span> <span class="p">};</span>
+</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="nl">i</span> <span class="p">:</span> <span class="n">v</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">i</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Compile/Assemble:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>g++ -std<span class="o">=</span>c++0x -S -o simpleloopcpp simpleloop.cpp
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I&rsquo;ve stored the result in <a href="https://gist.github.com/agam/5194257">this
+gist</a>. As you can see, this is
+<em>enormous</em> !! And all because we introduced <code>STL</code> into the picture !!!</p>
+
+<p>So I obviously won&rsquo;t include all 1742 lines here, but let&rsquo;s see if we can
+scan some high level features and go a bit deeper into the parts of the
+code we&rsquo;ll compare with the haskell version of this.</p>
+
+<p>(Skipping some boiler plate and the initializer list creater )</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nf">.text</span>
+</span><span class='line'><span class="nf">.globl</span>    <span class="nv">main</span>
+</span><span class='line'><span class="nf">.type</span> <span class="nv">main</span><span class="p">,</span> <span class="err">@</span><span class="nv">function</span>
+</span><span class='line'><span class="nl">main:</span>
+</span><span class='line'><span class="nl">.LFB1490:</span>
+</span><span class='line'><span class="nf">.cfi_startproc</span>
+</span><span class='line'><span class="nf">.cfi_personality</span> <span class="mh">0x3</span><span class="p">,</span><span class="nv">__gxx_personality_v0</span>
+</span><span class='line'><span class="nf">.cfi_lsda</span> <span class="mh">0x3</span><span class="p">,</span><span class="nv">.LLSDA1490</span>
+</span><span class='line'><span class="nf">pushq</span> <span class="o">%</span><span class="nb">rbp</span>
+</span><span class='line'><span class="nf">.cfi_def_cfa_offset</span> <span class="mi">16</span>
+</span><span class='line'><span class="nf">.cfi_offset</span> <span class="mi">6</span><span class="p">,</span> <span class="o">-</span><span class="mi">16</span>
+</span><span class='line'><span class="nf">movq</span>  <span class="o">%</span><span class="nb">rsp</span><span class="p">,</span> <span class="o">%</span><span class="nb">rbp</span>
+</span><span class='line'><span class="nf">.cfi_def_cfa_register</span> <span class="mi">6</span>
+</span><span class='line'><span class="nf">pushq</span> <span class="o">%</span><span class="nb">rbx</span>
+</span><span class='line'><span class="nf">subq</span>  <span class="kc">$</span><span class="mi">120</span><span class="p">,</span> <span class="o">%</span><span class="nb">rsp</span>
+</span><span class='line'><span class="nf">movl</span>  <span class="o">%</span><span class="nb">edi</span><span class="p">,</span> <span class="o">-</span><span class="mi">116</span><span class="p">(</span><span class="o">%</span><span class="nb">rbp</span><span class="p">)</span>
+</span><span class='line'><span class="nf">movq</span>  <span class="o">%</span><span class="nb">rsi</span><span class="p">,</span> <span class="o">-</span><span class="mi">128</span><span class="p">(</span><span class="o">%</span><span class="nb">rbp</span><span class="p">)</span>
+</span><span class='line'><span class="nf">leaq</span>  <span class="o">-</span><span class="mi">17</span><span class="p">(</span><span class="o">%</span><span class="nb">rbp</span><span class="p">),</span> <span class="o">%</span><span class="nb">rax</span>
+</span><span class='line'><span class="nf">movq</span>  <span class="o">%</span><span class="nb">rax</span><span class="p">,</span> <span class="o">%</span><span class="nb">rdi</span>
+</span><span class='line'><span class="nf">.cfi_offset</span> <span class="mi">3</span><span class="p">,</span> <span class="o">-</span><span class="mi">24</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Here is the
+<a href="http://en.cppreference.com/w/cpp/utility/initializer_list"><code>std::initializer_list</code></a> being initialized</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nf">call</span> <span class="nv">_ZNSaIiEC1Ev</span>
+</span><span class='line'><span class="nf">leaq</span>  <span class="o">-</span><span class="mi">80</span><span class="p">(</span><span class="o">%</span><span class="nb">rbp</span><span class="p">),</span> <span class="o">%</span><span class="nb">rax</span>
+</span><span class='line'><span class="nf">movl</span>  <span class="kc">$</span><span class="mi">8</span><span class="p">,</span> <span class="o">%</span><span class="nb">edx</span>
+</span><span class='line'><span class="nf">movl</span>  <span class="kc">$</span><span class="nv">._89</span><span class="p">,</span> <span class="o">%</span><span class="nb">esi</span>
+</span><span class='line'><span class="nf">movq</span>  <span class="o">%</span><span class="nb">rax</span><span class="p">,</span> <span class="o">%</span><span class="nb">rdi</span>
+</span><span class='line'><span class="nf">call</span>  <span class="nv">_ZNSt16initializer_listIiEC1EPKim</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>(It is declared elsewhere)</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nf">.size</span>    <span class="nv">._89</span><span class="p">,</span> <span class="mi">32</span>
+</span><span class='line'><span class="nl">._89:</span>
+</span><span class='line'><span class="nf">.long</span> <span class="mi">12</span>
+</span><span class='line'><span class="nf">.long</span> <span class="mi">23</span>
+</span><span class='line'><span class="nf">.long</span> <span class="mi">34</span>
+</span><span class='line'><span class="nf">.long</span> <span class="mi">45</span>
+</span><span class='line'><span class="nf">.long</span> <span class="mi">56</span>
+</span><span class='line'><span class="nf">.long</span> <span class="mi">67</span>
+</span><span class='line'><span class="nf">.long</span> <span class="mi">78</span>
+</span><span class='line'><span class="nf">.long</span> <span class="mi">89</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&hellip; and then the <code>vector</code> initialized from it &hellip;`</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nf">leaq</span> <span class="o">-</span><span class="mi">17</span><span class="p">(</span><span class="o">%</span><span class="nb">rbp</span><span class="p">),</span> <span class="o">%</span><span class="nb">rcx</span>
+</span><span class='line'><span class="nf">movq</span>  <span class="o">-</span><span class="mi">80</span><span class="p">(</span><span class="o">%</span><span class="nb">rbp</span><span class="p">),</span> <span class="o">%</span><span class="nb">rsi</span>
+</span><span class='line'><span class="nf">movq</span>  <span class="o">-</span><span class="mi">72</span><span class="p">(</span><span class="o">%</span><span class="nb">rbp</span><span class="p">),</span> <span class="o">%</span><span class="nb">rdx</span>
+</span><span class='line'><span class="nf">leaq</span>  <span class="o">-</span><span class="mi">112</span><span class="p">(</span><span class="o">%</span><span class="nb">rbp</span><span class="p">),</span> <span class="o">%</span><span class="nb">rax</span>
+</span><span class='line'><span class="nf">movq</span>  <span class="o">%</span><span class="nb">rax</span><span class="p">,</span> <span class="o">%</span><span class="nb">rdi</span>
+</span><span class='line'><span class="nl">.LEHB0:</span>
+</span><span class='line'><span class="nf">call</span>  <span class="nv">_ZNSt6vectorIiSaIiEEC1ESt16initializer_listIiERKS0_</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Ignore this, it&rsquo;s just freeing up the <code>std::allocator</code> object that is
+passed to the vector (the actual function signature for the constructor is</p>
+
+<figure class='code'><figcaption><span>std::vector(std::initializer_list, std::allocator const&)&#8220;`)</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="err">```</span><span class="n">nasm</span>
+</span><span class='line'><span class="p">.</span><span class="nl">LEHE0</span><span class="p">:</span>
+</span><span class='line'>  <span class="n">leaq</span> <span class="o">-</span><span class="mi">17</span><span class="p">(</span><span class="o">%</span><span class="n">rbp</span><span class="p">),</span> <span class="o">%</span><span class="n">rax</span>
+</span><span class='line'>  <span class="n">movq</span> <span class="o">%</span><span class="n">rax</span><span class="p">,</span> <span class="o">%</span><span class="n">rdi</span>
+</span><span class='line'>  <span class="n">call</span> <span class="n">_ZNSaIiED1Ev</span>
+</span><span class='line'>  <span class="n">leaq</span> <span class="o">-</span><span class="mi">112</span><span class="p">(</span><span class="o">%</span><span class="n">rbp</span><span class="p">),</span> <span class="o">%</span><span class="n">rax</span>
+</span><span class='line'>  <span class="n">movq</span> <span class="o">%</span><span class="n">rax</span><span class="p">,</span> <span class="o">-</span><span class="mi">32</span><span class="p">(</span><span class="o">%</span><span class="n">rbp</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">movq</span> <span class="o">-</span><span class="mi">32</span><span class="p">(</span><span class="o">%</span><span class="n">rbp</span><span class="p">),</span> <span class="o">%</span><span class="n">rax</span>
+</span><span class='line'>  <span class="n">movq</span> <span class="o">%</span><span class="n">rax</span><span class="p">,</span> <span class="o">%</span><span class="n">rdi</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Aha &hellip; finally, the iteration, from beginning</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nl">.LEHB1:</span>
+</span><span class='line'>  <span class="nf">call</span>    <span class="nv">_ZSt5beginISt6vectorIiSaIiEEEDTcldtfp_5beginEERT_</span>
+</span><span class='line'>  <span class="nf">movq</span>    <span class="o">%</span><span class="nb">rax</span><span class="p">,</span> <span class="o">-</span><span class="mi">64</span><span class="p">(</span><span class="o">%</span><span class="nb">rbp</span><span class="p">)</span>
+</span><span class='line'>  <span class="nf">movq</span>    <span class="o">-</span><span class="mi">32</span><span class="p">(</span><span class="o">%</span><span class="nb">rbp</span><span class="p">),</span> <span class="o">%</span><span class="nb">rax</span>
+</span><span class='line'>  <span class="nf">movq</span>    <span class="o">%</span><span class="nb">rax</span><span class="p">,</span> <span class="o">%</span><span class="nb">rdi</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&hellip; to end</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nf">call</span> <span class="nv">_ZSt3endISt6vectorIiSaIiEEEDTcldtfp_3endEERT_</span>
+</span><span class='line'><span class="nf">movq</span>  <span class="o">%</span><span class="nb">rax</span><span class="p">,</span> <span class="o">-</span><span class="mi">48</span><span class="p">(</span><span class="o">%</span><span class="nb">rbp</span><span class="p">)</span>
+</span><span class='line'><span class="nf">jmp</span>   <span class="nv">.L3</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Beginning of the loop: we take the value of the iterator &hellip;</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nl">.L4:</span>
+</span><span class='line'>  <span class="nf">leaq</span>    <span class="o">-</span><span class="mi">64</span><span class="p">(</span><span class="o">%</span><span class="nb">rbp</span><span class="p">),</span> <span class="o">%</span><span class="nb">rax</span>
+</span><span class='line'>  <span class="nf">movq</span>    <span class="o">%</span><span class="nb">rax</span><span class="p">,</span> <span class="o">%</span><span class="nb">rdi</span>
+</span><span class='line'>  <span class="nf">call</span>    <span class="nv">_ZNK9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEdeEv</span>
+</span><span class='line'>  <span class="nf">movl</span>    <span class="p">(</span><span class="o">%</span><span class="nb">rax</span><span class="p">),</span> <span class="o">%</span><span class="nb">eax</span>
+</span><span class='line'>  <span class="nf">movl</span>    <span class="o">%</span><span class="nb">eax</span><span class="p">,</span> <span class="o">-</span><span class="mi">24</span><span class="p">(</span><span class="o">%</span><span class="nb">rbp</span><span class="p">)</span>
+</span><span class='line'>  <span class="nf">movl</span>    <span class="o">-</span><span class="mi">24</span><span class="p">(</span><span class="o">%</span><span class="nb">rbp</span><span class="p">),</span> <span class="o">%</span><span class="nb">eax</span>
+</span><span class='line'>  <span class="nf">movl</span>    <span class="o">%</span><span class="nb">eax</span><span class="p">,</span> <span class="o">%</span><span class="nb">esi</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&hellip; and print it out.
+(This is the <code>operator &lt;&lt;</code>, being called on the contents of <code>edi</code>,
+which is <code>std::cout</code>)</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nf">movl</span> <span class="kc">$</span><span class="nv">_ZSt4cout</span><span class="p">,</span> <span class="o">%</span><span class="nb">edi</span>
+</span><span class='line'><span class="nf">call</span>  <span class="nv">_ZNSolsEi</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And this big mangled symbol is <code>std::endl</code>.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nf">movl</span>
+</span><span class='line'><span class="nf">$_ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_</span><span class="p">,</span> <span class="o">%</span><span class="nb">esi</span>
+</span><span class='line'><span class="nf">movq</span>  <span class="o">%</span><span class="nb">rax</span><span class="p">,</span> <span class="o">%</span><span class="nb">rdi</span>
+</span><span class='line'><span class="nf">call</span>  <span class="nv">_ZNSolsEPFRSoS_E</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>BTW a useful tool to find
+unmangled symbols is <code>c++filt</code>, use it as</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>c++filt _ZSt4endlIcSt11char_traitsIcEERSt13basic_ostreamIT_T0_ES6_
+</span><span class='line'>
+</span><span class='line'>std::basic_ostream&lt;char, std::char_traits&lt;char&gt; &gt;<span class="p">&amp;</span> std::endl&lt;char,
+</span><span class='line'>std::char_traits&lt;char&gt; &gt;<span class="o">(</span>std::basic_ostream&lt;char, std::char_traits&lt;char&gt;
+</span><span class='line'>&gt;<span class="p">&amp;</span><span class="o">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I googled and found an <a href="http://slush.warosu.org/c++filtjs/">online version of the
+same</a> but it wasn&rsquo;t always accurate, so
+YMMV.</p>
+
+<p>Moving on &hellip; then the iterator advances along the vector &hellip;</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nf">leaq</span> <span class="o">-</span><span class="mi">64</span><span class="p">(</span><span class="o">%</span><span class="nb">rbp</span><span class="p">),</span> <span class="o">%</span><span class="nb">rax</span>
+</span><span class='line'><span class="nf">movq</span>  <span class="o">%</span><span class="nb">rax</span><span class="p">,</span> <span class="o">%</span><span class="nb">rdi</span>
+</span><span class='line'><span class="nf">call</span>  <span class="nv">_ZN9__gnu_cxx17__normal_iteratorIPiSt6vectorIiSaIiEEEppEv</span>
+</span><span class='line'><span class="nl">.L3:</span>
+</span><span class='line'><span class="nf">leaq</span>  <span class="o">-</span><span class="mi">48</span><span class="p">(</span><span class="o">%</span><span class="nb">rbp</span><span class="p">),</span> <span class="o">%</span><span class="nb">rdx</span>
+</span><span class='line'><span class="nf">leaq</span>  <span class="o">-</span><span class="mi">64</span><span class="p">(</span><span class="o">%</span><span class="nb">rbp</span><span class="p">),</span> <span class="o">%</span><span class="nb">rax</span>
+</span><span class='line'><span class="nf">movq</span>  <span class="o">%</span><span class="nb">rdx</span><span class="p">,</span> <span class="o">%</span><span class="nb">rsi</span>
+</span><span class='line'><span class="nf">movq</span>  <span class="o">%</span><span class="nb">rax</span><span class="p">,</span> <span class="o">%</span><span class="nb">rdi</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&hellip; and if we haven&rsquo;t reached the end yet, jump back to the beginning of
+the loop (the <code>.L4</code> label above)</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nf">call</span>
+</span><span class='line'><span class="nf">_ZN9__gnu_cxxneIPiSt6vectorIiSaIiEEEEbRKNS_17__normal_iteratorIT_T0_EESA_</span>
+</span><span class='line'><span class="nl">.LEHE1:</span>
+</span><span class='line'><span class="nf">testb</span> <span class="o">%</span><span class="nb">al</span><span class="p">,</span> <span class="o">%</span><span class="nb">al</span>
+</span><span class='line'><span class="nf">jne</span>   <span class="nv">.L4</span>
+</span><span class='line'><span class="nf">leaq</span>  <span class="o">-</span><span class="mi">112</span><span class="p">(</span><span class="o">%</span><span class="nb">rbp</span><span class="p">),</span> <span class="o">%</span><span class="nb">rax</span>
+</span><span class='line'><span class="nf">movq</span>  <span class="o">%</span><span class="nb">rax</span><span class="p">,</span> <span class="o">%</span><span class="nb">rdi</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>When done, destroy the vector (with some error handling, so</p>
+
+<figure class='code'><figcaption><span>_Unwind_Resume&#8220;`)</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="err">```</span><span class="nf">nasm</span>
+</span><span class='line'><span class="nl">.LEHB2:</span>
+</span><span class='line'>  <span class="nf">call</span>    <span class="nv">_ZNSt6vectorIiSaIiEED1Ev</span>
+</span><span class='line'>  <span class="nf">movl</span>    <span class="kc">$</span><span class="mi">0</span><span class="p">,</span> <span class="o">%</span><span class="nb">eax</span>
+</span><span class='line'>  <span class="nf">addq</span>    <span class="kc">$</span><span class="mi">120</span><span class="p">,</span> <span class="o">%</span><span class="nb">rsp</span>
+</span><span class='line'>  <span class="nf">popq</span>    <span class="o">%</span><span class="nb">rbx</span>
+</span><span class='line'>  <span class="nf">popq</span>    <span class="o">%</span><span class="nb">rbp</span>
+</span><span class='line'>  <span class="nf">.cfi_remember_state</span>
+</span><span class='line'>  <span class="nf">.cfi_def_cfa</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span>
+</span><span class='line'>  <span class="nf">ret</span>
+</span><span class='line'><span class="nl">.L7:</span>
+</span><span class='line'>  <span class="nf">.cfi_restore_state</span>
+</span><span class='line'>  <span class="nf">movq</span>    <span class="o">%</span><span class="nb">rax</span><span class="p">,</span> <span class="o">%</span><span class="nb">rbx</span>
+</span><span class='line'>  <span class="nf">leaq</span>    <span class="o">-</span><span class="mi">17</span><span class="p">(</span><span class="o">%</span><span class="nb">rbp</span><span class="p">),</span> <span class="o">%</span><span class="nb">rax</span>
+</span><span class='line'>  <span class="nf">movq</span>    <span class="o">%</span><span class="nb">rax</span><span class="p">,</span> <span class="o">%</span><span class="nb">rdi</span>
+</span><span class='line'>  <span class="nf">call</span>    <span class="nv">_ZNSaIiED1Ev</span>
+</span><span class='line'>  <span class="nf">movq</span>    <span class="o">%</span><span class="nb">rbx</span><span class="p">,</span> <span class="o">%</span><span class="nb">rax</span>
+</span><span class='line'>  <span class="nf">movq</span>    <span class="o">%</span><span class="nb">rax</span><span class="p">,</span> <span class="o">%</span><span class="nb">rdi</span>
+</span><span class='line'>  <span class="nf">call</span>    <span class="nv">_Unwind_Resume</span>
+</span><span class='line'><span class="nl">.LEHE2:</span>
+</span><span class='line'><span class="nl">.L8:</span>
+</span><span class='line'>  <span class="nf">movq</span>    <span class="o">%</span><span class="nb">rax</span><span class="p">,</span> <span class="o">%</span><span class="nb">rbx</span>
+</span><span class='line'>  <span class="nf">leaq</span>    <span class="o">-</span><span class="mi">112</span><span class="p">(</span><span class="o">%</span><span class="nb">rbp</span><span class="p">),</span> <span class="o">%</span><span class="nb">rax</span>
+</span><span class='line'>  <span class="nf">movq</span>    <span class="o">%</span><span class="nb">rax</span><span class="p">,</span> <span class="o">%</span><span class="nb">rdi</span>
+</span><span class='line'>  <span class="nf">call</span>    <span class="nv">_ZNSt6vectorIiSaIiEED1Ev</span>
+</span><span class='line'>  <span class="nf">movq</span>    <span class="o">%</span><span class="nb">rbx</span><span class="p">,</span> <span class="o">%</span><span class="nb">rax</span>
+</span><span class='line'>  <span class="nf">movq</span>    <span class="o">%</span><span class="nb">rax</span><span class="p">,</span> <span class="o">%</span><span class="nb">rdi</span>
+</span><span class='line'><span class="nl">.LEHB3:</span>
+</span><span class='line'>  <span class="nf">call</span>    <span class="nv">_Unwind_Resume</span>
+</span><span class='line'><span class="nl">.LEHE3:</span>
+</span><span class='line'>  <span class="nf">.cfi_endproc</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now I&rsquo;ve skipped <em>quite</em> a lot of the generated assembly, and you should
+look at the gist I mentioned above for the code for each of the function
+calls mentioned above, e.g. the code for
+the &lsquo;beginning&rsquo; of the iterator:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nl">_ZSt5beginISt6vectorIiSaIiEEEDTcldtfp_5beginEERT_:</span>
+</span><span class='line'><span class="nl">.LFB1564:</span>
+</span><span class='line'>  <span class="nf">.cfi_startproc</span>
+</span><span class='line'>  <span class="nf">pushq</span>   <span class="o">%</span><span class="nb">rbp</span>
+</span><span class='line'>  <span class="nf">.cfi_def_cfa_offset</span> <span class="mi">16</span>
+</span><span class='line'>  <span class="nf">.cfi_offset</span> <span class="mi">6</span><span class="p">,</span> <span class="o">-</span><span class="mi">16</span>
+</span><span class='line'>  <span class="nf">movq</span>    <span class="o">%</span><span class="nb">rsp</span><span class="p">,</span> <span class="o">%</span><span class="nb">rbp</span>
+</span><span class='line'>  <span class="nf">.cfi_def_cfa_register</span> <span class="mi">6</span>
+</span><span class='line'>  <span class="nf">subq</span>    <span class="kc">$</span><span class="mi">16</span><span class="p">,</span> <span class="o">%</span><span class="nb">rsp</span>
+</span><span class='line'>  <span class="nf">movq</span>    <span class="o">%</span><span class="nb">rdi</span><span class="p">,</span> <span class="o">-</span><span class="mi">8</span><span class="p">(</span><span class="o">%</span><span class="nb">rbp</span><span class="p">)</span>
+</span><span class='line'>  <span class="nf">movq</span>    <span class="o">-</span><span class="mi">8</span><span class="p">(</span><span class="o">%</span><span class="nb">rbp</span><span class="p">),</span> <span class="o">%</span><span class="nb">rax</span>
+</span><span class='line'>  <span class="nf">movq</span>    <span class="o">%</span><span class="nb">rax</span><span class="p">,</span> <span class="o">%</span><span class="nb">rdi</span>
+</span><span class='line'>  <span class="nf">call</span>    <span class="nv">_ZNSt6vectorIiSaIiEE5beginEv</span>
+</span><span class='line'>  <span class="nf">leave</span>
+</span><span class='line'>  <span class="nf">.cfi_def_cfa</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span>
+</span><span class='line'>  <span class="nf">ret</span>
+</span><span class='line'>  <span class="nf">.cfi_endproc</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>(which wraps around a call to <code>std::vector::begin()</code>)</p>
+
+<h2><code>For loop</code> iteration: Haskell (Basic lists)</h2>
+
+<p>Here&rsquo;s a simple program that uses the standard <code>Prelude</code> list type.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="nf">x</span> <span class="ow">=</span> <span class="p">[</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">34</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">56</span><span class="p">,</span> <span class="mi">67</span><span class="p">,</span> <span class="mi">78</span> <span class="p">,</span><span class="mi">89</span> <span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">main</span> <span class="ow">=</span> <span class="n">mapM_</span> <span class="n">print</span> <span class="n">x</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Full assembly is <a href="https://gist.github.com/agam/5194680">here</a> &hellip; and would
+you believe it, it&rsquo;s one-fifth the size of the C++ assembly.</p>
+
+<p>Based on our experience in the <a href="/posts/hello-world-comparison.html">Hello World
+example</a>, the Haskell assembly won&rsquo;t
+have a linear one-to-one mapping with the source, so let&rsquo;s start with the</p>
+
+<figure class='code'><figcaption><span>main&#8220;` function.</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="p">```</span><span class="n">nasm</span>
+</span><span class='line'><span class="o">.</span><span class="n">globl</span> <span class="kt">Main_main_info</span>
+</span><span class='line'><span class="o">.</span><span class="kr">type</span> <span class="kt">Main_main_info</span><span class="p">,</span> <span class="o">@</span><span class="n">object</span>
+</span><span class='line'><span class="kt">Main_main_info:</span>
+</span><span class='line'><span class="o">.</span><span class="kt">Lcuj:</span>
+</span><span class='line'>  <span class="n">leaq</span> <span class="o">-</span><span class="mi">16</span><span class="p">(</span><span class="o">%</span><span class="n">rbp</span><span class="p">),</span><span class="o">%</span><span class="n">rax</span>
+</span><span class='line'>  <span class="n">cmpq</span> <span class="o">%</span><span class="n">r15</span><span class="p">,</span><span class="o">%</span><span class="n">rax</span>
+</span><span class='line'>  <span class="n">jb</span> <span class="o">.</span><span class="kt">Lcul</span>
+</span><span class='line'>  <span class="n">addq</span> <span class="o">$</span><span class="mi">16</span><span class="p">,</span><span class="o">%</span><span class="n">r12</span>
+</span><span class='line'>  <span class="n">cmpq</span> <span class="mi">144</span><span class="p">(</span><span class="o">%</span><span class="n">r13</span><span class="p">),</span><span class="o">%</span><span class="n">r12</span>
+</span><span class='line'>  <span class="n">ja</span> <span class="o">.</span><span class="kt">Lcun</span>
+</span><span class='line'>  <span class="n">movq</span> <span class="o">$</span><span class="n">stg_CAF_BLACKHOLE_info</span><span class="p">,</span><span class="o">-</span><span class="mi">8</span><span class="p">(</span><span class="o">%</span><span class="n">r12</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">movq</span> <span class="mi">160</span><span class="p">(</span><span class="o">%</span><span class="n">r13</span><span class="p">),</span><span class="o">%</span><span class="n">rax</span>
+</span><span class='line'>  <span class="n">movq</span> <span class="o">%</span><span class="n">rax</span><span class="p">,</span><span class="mi">0</span><span class="p">(</span><span class="o">%</span><span class="n">r12</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">movq</span> <span class="o">%</span><span class="n">r13</span><span class="p">,</span><span class="o">%</span><span class="n">rdi</span>
+</span><span class='line'>  <span class="n">movq</span> <span class="o">%</span><span class="n">rbx</span><span class="p">,</span><span class="o">%</span><span class="n">rsi</span>
+</span><span class='line'>  <span class="n">leaq</span> <span class="o">-</span><span class="mi">8</span><span class="p">(</span><span class="o">%</span><span class="n">r12</span><span class="p">),</span><span class="o">%</span><span class="n">rdx</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Once again, we see the <code>CAF</code> allocation</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nf">subq</span> <span class="kc">$</span><span class="mi">8</span><span class="p">,</span><span class="o">%</span><span class="nb">rsp</span>
+</span><span class='line'><span class="nf">movl</span> <span class="kc">$</span><span class="mi">0</span><span class="p">,</span><span class="o">%</span><span class="nb">eax</span>
+</span><span class='line'><span class="nf">call</span> <span class="nv">newCAF</span>
+</span><span class='line'><span class="nf">addq</span> <span class="kc">$</span><span class="mi">8</span><span class="p">,</span><span class="o">%</span><span class="nb">rsp</span>
+</span><span class='line'><span class="nf">testq</span> <span class="o">%</span><span class="nb">rax</span><span class="p">,</span><span class="o">%</span><span class="nb">rax</span>
+</span><span class='line'><span class="nf">je</span> <span class="nv">.Lcuo</span>
+</span><span class='line'><span class="nl">.Lcup:</span>
+</span><span class='line'><span class="nf">movq</span> <span class="kc">$</span><span class="nv">stg_bh_upd_frame_info</span><span class="p">,</span><span class="o">-</span><span class="mi">16</span><span class="p">(</span><span class="o">%</span><span class="nb">rbp</span><span class="p">)</span>
+</span><span class='line'><span class="nf">leaq</span> <span class="o">-</span><span class="mi">8</span><span class="p">(</span><span class="o">%</span><span class="nv">r12</span><span class="p">),</span><span class="o">%</span><span class="nb">rax</span>
+</span><span class='line'><span class="nf">movq</span> <span class="o">%</span><span class="nb">rax</span><span class="p">,</span><span class="o">-</span><span class="mi">8</span><span class="p">(</span><span class="o">%</span><span class="nb">rbp</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Somewhat boring &hellip; it uses <code>Control::MapM</code> and <code>
+GHC::Base::IO</code></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nf">movl</span> <span class="kc">$</span><span class="nv">base_ControlziMonad_mapMzu_closure</span><span class="p">,</span><span class="o">%</span><span class="nb">ebx</span>
+</span><span class='line'><span class="nf">movl</span> <span class="kc">$</span><span class="nv">base_GHCziBase_zdfMonadIO_closure</span><span class="p">,</span><span class="o">%</span><span class="nb">r14d</span>
+</span><span class='line'><span class="nf">movl</span> <span class="kc">$</span><span class="nv">stc_closure</span><span class="p">,</span><span class="o">%</span><span class="nb">esi</span>
+</span><span class='line'><span class="nf">movl</span> <span class="kc">$</span><span class="nv">stb_closure</span><span class="o">+</span><span class="mi">2</span><span class="p">,</span><span class="o">%</span><span class="nb">edi</span>
+</span><span class='line'><span class="nf">addq</span> <span class="kc">$</span><span class="o">-</span><span class="mi">16</span><span class="p">,</span><span class="o">%</span><span class="nb">rbp</span>
+</span><span class='line'><span class="nf">jmp</span> <span class="nv">stg_ap_ppp_fast</span>
+</span><span class='line'><span class="nl">.Lcun:</span>
+</span><span class='line'><span class="nf">movq</span> <span class="kc">$</span><span class="mi">16</span><span class="p">,</span><span class="mi">192</span><span class="p">(</span><span class="o">%</span><span class="nv">r13</span><span class="p">)</span>
+</span><span class='line'><span class="nl">.Lcul:</span>
+</span><span class='line'><span class="nf">jmp</span> <span class="o">*-</span><span class="mi">16</span><span class="p">(</span><span class="o">%</span><span class="nv">r13</span><span class="p">)</span>
+</span><span class='line'><span class="nl">.Lcuo:</span>
+</span><span class='line'><span class="nf">jmp</span> <span class="o">*</span><span class="p">(</span><span class="o">%</span><span class="nb">rbx</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&hellip; which in turn is defined as (skipping the usual paperwork of</p>
+
+<figure class='code'><figcaption><span>newCAF&#8220;` and &#8220;`stg_CAF_BLACKHOLE_info&#8220;`)</span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="p">```</span><span class="n">nasm</span>
+</span><span class='line'><span class="o">.</span><span class="kt">Lcu2:</span>
+</span><span class='line'>  <span class="n">movq</span> <span class="o">$</span><span class="n">stg_bh_upd_frame_info</span><span class="p">,</span><span class="o">-</span><span class="mi">16</span><span class="p">(</span><span class="o">%</span><span class="n">rbp</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">leaq</span> <span class="o">-</span><span class="mi">8</span><span class="p">(</span><span class="o">%</span><span class="n">r12</span><span class="p">),</span><span class="o">%</span><span class="n">rax</span>
+</span><span class='line'>  <span class="n">movq</span> <span class="o">%</span><span class="n">rax</span><span class="p">,</span><span class="o">-</span><span class="mi">8</span><span class="p">(</span><span class="o">%</span><span class="n">rbp</span><span class="p">)</span>
+</span><span class='line'>  <span class="n">movl</span> <span class="o">$</span><span class="n">base_SystemziIO_print_closure</span><span class="p">,</span><span class="o">%</span><span class="n">ebx</span>
+</span><span class='line'>  <span class="n">movl</span> <span class="o">$</span><span class="n">base_GHCziShow_zdfShowInteger_closure</span><span class="p">,</span><span class="o">%</span><span class="n">r14d</span>
+</span><span class='line'>  <span class="n">addq</span> <span class="o">$-</span><span class="mi">16</span><span class="p">,</span><span class="o">%</span><span class="n">rbp</span>
+</span><span class='line'>  <span class="n">jmp</span> <span class="n">stg_ap_p_fast</span>
+</span><span class='line'><span class="o">.</span><span class="kt">Lcu0:</span>
+</span><span class='line'>  <span class="n">movq</span> <span class="o">$</span><span class="mi">16</span><span class="p">,</span><span class="mi">192</span><span class="p">(</span><span class="o">%</span><span class="n">r13</span><span class="p">)</span>
+</span><span class='line'><span class="o">.</span><span class="kt">LctY:</span>
+</span><span class='line'>  <span class="n">jmp</span> <span class="o">*-</span><span class="mi">16</span><span class="p">(</span><span class="o">%</span><span class="n">r13</span><span class="p">)</span>
+</span><span class='line'><span class="o">.</span><span class="kt">Lcu1:</span>
+</span><span class='line'>  <span class="n">jmp</span> <span class="o">*</span><span class="p">(</span><span class="o">%</span><span class="n">rbx</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>(using <code>System::IO::print</code> and <code>GHC::Show::ShowInteger</code>)</p>
+
+<p>So nothing much to directly glean here &mdash; iteration isn&rsquo;t anything special
+in haskell, it&rsquo;s another function call.</p>
+
+<p>The assembly for the data is incredibly verbose, on the lines of</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nf">.data</span>
+</span><span class='line'>  <span class="nf">.align</span> <span class="mi">8</span>
+</span><span class='line'><span class="nf">.align</span> <span class="mi">1</span>
+</span><span class='line'><span class="nl">ssX_closure:</span>
+</span><span class='line'>  <span class="nf">.quad</span>   <span class="nv">integerzmgmp_GHCziIntegerziType_Szh_static_info</span>
+</span><span class='line'>  <span class="nf">.quad</span>   <span class="mi">56</span>
+</span><span class='line'><span class="nf">.data</span>
+</span><span class='line'>  <span class="nf">.align</span> <span class="mi">8</span>
+</span><span class='line'><span class="nf">.align</span> <span class="mi">1</span>
+</span><span class='line'><span class="nl">ssZ_closure:</span>
+</span><span class='line'>  <span class="nf">.quad</span>   <span class="nv">ghczmprim_GHCziTypes_ZC_static_info</span>
+</span><span class='line'>  <span class="nf">.quad</span>   <span class="nb">ss</span><span class="nv">X_closure</span><span class="o">+</span><span class="mi">1</span>
+</span><span class='line'>  <span class="nf">.quad</span>   <span class="nb">ss</span><span class="nv">W_closure</span><span class="o">+</span><span class="mi">2</span>
+</span><span class='line'>  <span class="nf">.quad</span>   <span class="mi">0</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">...</span>
+</span><span class='line'><span class="nf">...</span>
+</span><span class='line'><span class="nf">...</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">.data</span>
+</span><span class='line'>  <span class="nf">.align</span> <span class="mi">8</span>
+</span><span class='line'><span class="nf">.align</span> <span class="mi">1</span>
+</span><span class='line'><span class="nl">st6_closure:</span>
+</span><span class='line'>  <span class="nf">.quad</span>   <span class="nv">integerzmgmp_GHCziIntegerziType_Szh_static_info</span>
+</span><span class='line'>  <span class="nf">.quad</span>   <span class="mi">23</span>
+</span><span class='line'><span class="nf">.data</span>
+</span><span class='line'>  <span class="nf">.align</span> <span class="mi">8</span>
+</span><span class='line'><span class="nf">.align</span> <span class="mi">1</span>
+</span><span class='line'><span class="nl">st8_closure:</span>
+</span><span class='line'>  <span class="nf">.quad</span>   <span class="nv">ghczmprim_GHCziTypes_ZC_static_info</span>
+</span><span class='line'>  <span class="nf">.quad</span>   <span class="nb">st6</span><span class="nv">_closure</span><span class="o">+</span><span class="mi">1</span>
+</span><span class='line'>  <span class="nf">.quad</span>   <span class="nb">st5</span><span class="nv">_closure</span><span class="o">+</span><span class="mi">2</span>
+</span><span class='line'>  <span class="nf">.quad</span>   <span class="mi">0</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2><code>For loop</code> iteration: Haskell (Other list structures)</h2>
+
+<p>Let&rsquo;s look at a different kind of list in haskell</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="kr">import</span> <span class="nn">Prelude</span> <span class="k">hiding</span> <span class="p">(</span><span class="nf">mapM_</span><span class="p">);</span>
+</span><span class='line'><span class="kr">import</span> <span class="nn">Data.Sequence</span><span class="p">;</span>
+</span><span class='line'><span class="kr">import</span> <span class="nn">Data.Foldable</span> <span class="p">(</span><span class="nf">mapM_</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">x</span> <span class="ow">=</span> <span class="kt">Data</span><span class="o">.</span><span class="kt">Sequence</span><span class="o">.</span><span class="n">singleton</span> <span class="mi">12</span> <span class="o">|&gt;</span> <span class="mi">23</span> <span class="o">|&gt;</span> <span class="mi">34</span> <span class="o">|&gt;</span> <span class="mi">45</span> <span class="o">|&gt;</span> <span class="mi">56</span> <span class="o">|&gt;</span> <span class="mi">67</span> <span class="o">|&gt;</span> <span class="mi">78</span>  <span class="o">|&gt;</span> <span class="mi">89</span>
+</span><span class='line'><span class="nf">main</span> <span class="ow">=</span> <span class="n">mapM_</span>  <span class="n">print</span>  <span class="n">x</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>(Assembly <a href="https://gist.github.com/agam/5202781">here</a>)</p>
+
+<p>The cells of this sequence are still constructed in what seems to me a bit
+heavyweight manner:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nl">sEH_info:</span>
+</span><span class='line'><span class="nl">.LcGi:</span>
+</span><span class='line'>  <span class="nf">leaq</span> <span class="o">-</span><span class="mi">16</span><span class="p">(</span><span class="o">%</span><span class="nb">rbp</span><span class="p">),</span><span class="o">%</span><span class="nb">rax</span>
+</span><span class='line'>  <span class="nf">cmpq</span> <span class="o">%</span><span class="nv">r15</span><span class="p">,</span><span class="o">%</span><span class="nb">rax</span>
+</span><span class='line'>  <span class="nf">jb</span> <span class="nv">.LcGk</span>
+</span><span class='line'>  <span class="nf">addq</span> <span class="kc">$</span><span class="mi">32</span><span class="p">,</span><span class="o">%</span><span class="nv">r12</span>
+</span><span class='line'>  <span class="nf">cmpq</span> <span class="mi">144</span><span class="p">(</span><span class="o">%</span><span class="nv">r13</span><span class="p">),</span><span class="o">%</span><span class="nv">r12</span>
+</span><span class='line'>  <span class="nf">ja</span> <span class="nv">.LcGm</span>
+</span><span class='line'>  <span class="nf">movq</span> <span class="kc">$</span><span class="nv">stg_upd_frame_info</span><span class="p">,</span><span class="o">-</span><span class="mi">16</span><span class="p">(</span><span class="o">%</span><span class="nb">rbp</span><span class="p">)</span>
+</span><span class='line'>  <span class="nf">movq</span> <span class="o">%</span><span class="nb">rbx</span><span class="p">,</span><span class="o">-</span><span class="mi">8</span><span class="p">(</span><span class="o">%</span><span class="nb">rbp</span><span class="p">)</span>
+</span><span class='line'>  <span class="nf">movq</span> <span class="kc">$</span><span class="nv">integerzmgmp_GHCziIntegerziType_Szh_con_info</span><span class="p">,</span><span class="o">-</span><span class="mi">24</span><span class="p">(</span><span class="o">%</span><span class="nv">r12</span><span class="p">)</span>
+</span><span class='line'>  <span class="nf">movq</span> <span class="kc">$</span><span class="mi">67</span><span class="p">,</span><span class="o">-</span><span class="mi">16</span><span class="p">(</span><span class="o">%</span><span class="nv">r12</span><span class="p">)</span>
+</span><span class='line'>  <span class="nf">movq</span> <span class="kc">$</span><span class="nv">sED_info</span><span class="p">,</span><span class="o">-</span><span class="mi">8</span><span class="p">(</span><span class="o">%</span><span class="nv">r12</span><span class="p">)</span>
+</span><span class='line'>  <span class="nf">movl</span> <span class="kc">$</span><span class="nv">containerszm0zi4zi2zi1_DataziSequence_zbzg_closure</span><span class="p">,</span><span class="o">%</span><span class="nb">ebx</span>
+</span><span class='line'>  <span class="nf">leaq</span> <span class="o">-</span><span class="mi">8</span><span class="p">(</span><span class="o">%</span><span class="nv">r12</span><span class="p">),</span><span class="o">%</span><span class="nv">r14</span>
+</span><span class='line'>  <span class="nf">leaq</span> <span class="o">-</span><span class="mi">23</span><span class="p">(</span><span class="o">%</span><span class="nv">r12</span><span class="p">),</span><span class="o">%</span><span class="nb">rsi</span>
+</span><span class='line'>  <span class="nf">addq</span> <span class="kc">$</span><span class="o">-</span><span class="mi">16</span><span class="p">,</span><span class="o">%</span><span class="nb">rbp</span>
+</span><span class='line'>  <span class="nf">jmp</span> <span class="nv">stg_ap_pp_fast</span>
+</span><span class='line'><span class="nl">.LcGm:</span>
+</span><span class='line'>  <span class="nf">movq</span> <span class="kc">$</span><span class="mi">32</span><span class="p">,</span><span class="mi">192</span><span class="p">(</span><span class="o">%</span><span class="nv">r13</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>(This extract shows the closure that adds <code>67</code> in the list)</p>
+
+<p>It&rsquo;s possible to construct this directly from a finite list, and the same
+can be done for the <code>Data.Vector</code> type too :</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="kr">import</span> <span class="nn">Prelude</span> <span class="k">hiding</span> <span class="p">(</span><span class="nf">mapM_</span><span class="p">);</span>
+</span><span class='line'><span class="kr">import</span> <span class="nn">Data.Vector</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">x</span> <span class="ow">=</span> <span class="kt">Data</span><span class="o">.</span><span class="kt">Vector</span><span class="o">.</span><span class="n">fromList</span> <span class="p">[</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">34</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">56</span><span class="p">,</span> <span class="mi">67</span><span class="p">,</span> <span class="mi">78</span><span class="p">,</span> <span class="mi">89</span> <span class="p">]</span>
+</span><span class='line'><span class="nf">main</span> <span class="ow">=</span> <span class="n">mapM_</span>  <span class="n">print</span>  <span class="n">x</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>(Assembly <a href="https://gist.github.com/agam/5202839">here</a>)</p>
+
+<p>The vector is still constructed piece by piece though:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nf">movq</span> <span class="kc">$</span><span class="mi">23</span><span class="p">,</span><span class="o">-</span><span class="mi">64</span><span class="p">(</span><span class="o">%</span><span class="nv">r12</span><span class="p">)</span>
+</span><span class='line'><span class="nf">movq</span> <span class="kc">$</span><span class="nv">ghczmprim_GHCziTypes_ZC_con_info</span><span class="p">,</span><span class="o">-</span><span class="mi">56</span><span class="p">(</span><span class="o">%</span><span class="nv">r12</span><span class="p">)</span>
+</span><span class='line'><span class="nf">leaq</span> <span class="o">-</span><span class="mi">71</span><span class="p">(</span><span class="o">%</span><span class="nv">r12</span><span class="p">),</span><span class="o">%</span><span class="nb">rax</span>
+</span><span class='line'><span class="nf">movq</span> <span class="o">%</span><span class="nb">rax</span><span class="p">,</span><span class="o">-</span><span class="mi">48</span><span class="p">(</span><span class="o">%</span><span class="nv">r12</span><span class="p">)</span>
+</span><span class='line'><span class="nf">leaq</span> <span class="o">-</span><span class="mi">94</span><span class="p">(</span><span class="o">%</span><span class="nv">r12</span><span class="p">),</span><span class="o">%</span><span class="nb">rax</span>
+</span><span class='line'><span class="nf">movq</span> <span class="o">%</span><span class="nb">rax</span><span class="p">,</span><span class="o">-</span><span class="mi">40</span><span class="p">(</span><span class="o">%</span><span class="nv">r12</span><span class="p">)</span>
+</span><span class='line'><span class="nf">movq</span> <span class="kc">$</span><span class="nv">integerzmgmp_GHCziIntegerziType_Szh_con_info</span><span class="p">,</span><span class="o">-</span><span class="mi">32</span><span class="p">(</span><span class="o">%</span><span class="nv">r12</span><span class="p">)</span>
+</span><span class='line'><span class="nf">movq</span> <span class="kc">$</span><span class="mi">12</span><span class="p">,</span><span class="o">-</span><span class="mi">24</span><span class="p">(</span><span class="o">%</span><span class="nv">r12</span><span class="p">)</span>
+</span><span class='line'><span class="nf">movq</span> <span class="kc">$</span><span class="nv">ghczmprim_GHCziTypes_ZC_con_info</span><span class="p">,</span><span class="o">-</span><span class="mi">16</span><span class="p">(</span><span class="o">%</span><span class="nv">r12</span><span class="p">)</span>
+</span><span class='line'><span class="nf">leaq</span> <span class="o">-</span><span class="mi">31</span><span class="p">(</span><span class="o">%</span><span class="nv">r12</span><span class="p">),</span><span class="o">%</span><span class="nb">rax</span>
+</span><span class='line'><span class="nf">movq</span> <span class="o">%</span><span class="nb">rax</span><span class="p">,</span><span class="o">-</span><span class="mi">8</span><span class="p">(</span><span class="o">%</span><span class="nv">r12</span><span class="p">)</span>
+</span><span class='line'><span class="nf">leaq</span> <span class="o">-</span><span class="mi">54</span><span class="p">(</span><span class="o">%</span><span class="nv">r12</span><span class="p">),</span><span class="o">%</span><span class="nb">rax</span>
+</span><span class='line'><span class="nf">movq</span> <span class="o">%</span><span class="nb">rax</span><span class="p">,</span><span class="mi">0</span><span class="p">(</span><span class="o">%</span><span class="nv">r12</span><span class="p">)</span>
+</span><span class='line'><span class="nf">movl</span> <span class="kc">$</span><span class="nv">vectorzm0zi9zi1_DataziVector_fromList_closure</span><span class="p">,</span><span class="o">%</span><span class="nb">ebx</span>
+</span><span class='line'><span class="nf">leaq</span> <span class="o">-</span><span class="mi">14</span><span class="p">(</span><span class="o">%</span><span class="nv">r12</span><span class="p">),</span><span class="o">%</span><span class="nv">r14</span>
+</span><span class='line'><span class="nf">addq</span> <span class="kc">$</span><span class="o">-</span><span class="mi">16</span><span class="p">,</span><span class="o">%</span><span class="nb">rbp</span>
+</span><span class='line'><span class="nf">jmp</span> <span class="nv">stg_ap_p_fast</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>(This extract shows the steps for picking up 23 and 12 (skipping similar
+steps for the other numbers)</p>
+
+<p>I was curious if there was a way to avoid constructing the list</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="kr">import</span> <span class="nn">Data.Vector.Unboxed</span> <span class="k">as</span> <span class="n">U</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">x</span> <span class="ow">::</span> <span class="kt">U</span><span class="o">.</span><span class="kt">Vector</span> <span class="kt">Double</span>
+</span><span class='line'><span class="nf">x</span> <span class="ow">=</span> <span class="kt">U</span><span class="o">.</span><span class="n">fromList</span> <span class="p">[</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">23</span><span class="p">,</span> <span class="mi">34</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">56</span><span class="p">,</span> <span class="mi">67</span><span class="p">,</span> <span class="mi">78</span><span class="p">,</span> <span class="mi">89</span> <span class="p">]</span>
+</span><span class='line'><span class="nf">main</span> <span class="ow">=</span> <span class="kt">U</span><span class="o">.</span><span class="n">foldr</span> <span class="p">((</span><span class="o">&gt;&gt;</span><span class="p">)</span> <span class="o">.</span> <span class="n">print</span><span class="p">)</span> <span class="p">(</span><span class="n">return</span> <span class="nb">()</span><span class="p">)</span>  <span class="n">x</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>(Assembly <a href="https://gist.github.com/agam/5203008">here</a>)</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nf">...</span>
+</span><span class='line'><span class="nf">...</span> <span class="p">(</span><span class="nv">skipping</span> <span class="nv">numbers</span> <span class="nv">after</span> <span class="mi">23</span><span class="p">)</span>
+</span><span class='line'><span class="nf">...</span>
+</span><span class='line'>  <span class="nf">movq</span> <span class="kc">$</span><span class="mi">23</span><span class="p">,</span><span class="o">-</span><span class="mi">48</span><span class="p">(</span><span class="o">%</span><span class="nv">r12</span><span class="p">)</span>
+</span><span class='line'>  <span class="nf">movq</span> <span class="kc">$</span><span class="nv">ghczmprim_GHCziTypes_ZC_con_info</span><span class="p">,</span><span class="o">-</span><span class="mi">40</span><span class="p">(</span><span class="o">%</span><span class="nv">r12</span><span class="p">)</span>
+</span><span class='line'>  <span class="nf">leaq</span> <span class="o">-</span><span class="mi">55</span><span class="p">(</span><span class="o">%</span><span class="nv">r12</span><span class="p">),</span><span class="o">%</span><span class="nb">rax</span>
+</span><span class='line'>  <span class="nf">movq</span> <span class="o">%</span><span class="nb">rax</span><span class="p">,</span><span class="o">-</span><span class="mi">32</span><span class="p">(</span><span class="o">%</span><span class="nv">r12</span><span class="p">)</span>
+</span><span class='line'>  <span class="nf">leaq</span> <span class="o">-</span><span class="mi">78</span><span class="p">(</span><span class="o">%</span><span class="nv">r12</span><span class="p">),</span><span class="o">%</span><span class="nb">rax</span>
+</span><span class='line'>  <span class="nf">movq</span> <span class="o">%</span><span class="nb">rax</span><span class="p">,</span><span class="o">-</span><span class="mi">24</span><span class="p">(</span><span class="o">%</span><span class="nv">r12</span><span class="p">)</span>
+</span><span class='line'>  <span class="nf">movq</span> <span class="kc">$</span><span class="nv">ghczmprim_GHCziTypes_ZC_con_info</span><span class="p">,</span><span class="o">-</span><span class="mi">16</span><span class="p">(</span><span class="o">%</span><span class="nv">r12</span><span class="p">)</span>
+</span><span class='line'>  <span class="nf">movq</span> <span class="kc">$</span><span class="nv">stg_INTLIKE_closure</span><span class="o">+</span><span class="mi">449</span><span class="p">,</span><span class="o">-</span><span class="mi">8</span><span class="p">(</span><span class="o">%</span><span class="nv">r12</span><span class="p">)</span>
+</span><span class='line'>  <span class="nf">leaq</span> <span class="o">-</span><span class="mi">38</span><span class="p">(</span><span class="o">%</span><span class="nv">r12</span><span class="p">),</span><span class="o">%</span><span class="nb">rax</span>
+</span><span class='line'>  <span class="nf">movq</span> <span class="o">%</span><span class="nb">rax</span><span class="p">,</span><span class="mi">0</span><span class="p">(</span><span class="o">%</span><span class="nv">r12</span><span class="p">)</span>
+</span><span class='line'>  <span class="nf">movl</span> <span class="kc">$</span><span class="nv">vectorzm0zi9zi1_DataziVectorziUnboxed_fromList_closure</span><span class="p">,</span><span class="o">%</span><span class="nb">ebx</span>
+</span><span class='line'>  <span class="nf">movl</span>
+</span><span class='line'><span class="nf">$vectorzm0zi9zi1_DataziVectorziUnboxedziBase_zdfUnboxInt_closure</span><span class="p">,</span><span class="o">%</span><span class="nb">r14d</span>
+</span><span class='line'>  <span class="nf">leaq</span> <span class="o">-</span><span class="mi">14</span><span class="p">(</span><span class="o">%</span><span class="nv">r12</span><span class="p">),</span><span class="o">%</span><span class="nb">rsi</span>
+</span><span class='line'>  <span class="nf">addq</span> <span class="kc">$</span><span class="o">-</span><span class="mi">16</span><span class="p">,</span><span class="o">%</span><span class="nb">rbp</span>
+</span><span class='line'>  <span class="nf">jmp</span> <span class="nv">stg_ap_pp_fast</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>In this case, looking at <code>Core</code> might help.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="kt">Main</span><span class="o">.</span><span class="n">main</span> <span class="ow">::</span> <span class="kt">GHC</span><span class="o">.</span><span class="kt">Types</span><span class="o">.</span><span class="kt">IO</span> <span class="nb">()</span>
+</span><span class='line'><span class="p">[</span><span class="kt">LclIdX</span><span class="p">]</span>
+</span><span class='line'><span class="kt">Main</span><span class="o">.</span><span class="n">main</span> <span class="ow">=</span>
+</span><span class='line'>  <span class="kt">Data</span><span class="o">.</span><span class="kt">Vector</span><span class="o">.</span><span class="kt">Unboxed</span><span class="o">.</span><span class="n">foldr</span>
+</span><span class='line'>    <span class="o">@</span> <span class="kt">GHC</span><span class="o">.</span><span class="kt">Types</span><span class="o">.</span><span class="kt">Int</span>
+</span><span class='line'>    <span class="o">@</span> <span class="p">(</span><span class="kt">GHC</span><span class="o">.</span><span class="kt">Types</span><span class="o">.</span><span class="kt">IO</span> <span class="nb">()</span><span class="p">)</span>
+</span><span class='line'>    <span class="kt">Data</span><span class="o">.</span><span class="kt">Vector</span><span class="o">.</span><span class="kt">Unboxed</span><span class="o">.</span><span class="kt">Base</span><span class="o">.$</span><span class="n">fUnboxInt</span>
+</span><span class='line'>    <span class="p">(</span><span class="kt">GHC</span><span class="o">.</span><span class="kt">Base</span><span class="o">..</span>
+</span><span class='line'>       <span class="o">@</span> <span class="p">(</span><span class="kt">GHC</span><span class="o">.</span><span class="kt">Types</span><span class="o">.</span><span class="kt">IO</span> <span class="nb">()</span><span class="p">)</span>
+</span><span class='line'>       <span class="o">@</span> <span class="p">(</span><span class="kt">GHC</span><span class="o">.</span><span class="kt">Types</span><span class="o">.</span><span class="kt">IO</span> <span class="nb">()</span> <span class="ow">-&gt;</span> <span class="kt">GHC</span><span class="o">.</span><span class="kt">Types</span><span class="o">.</span><span class="kt">IO</span> <span class="nb">()</span><span class="p">)</span>
+</span><span class='line'>       <span class="o">@</span> <span class="kt">GHC</span><span class="o">.</span><span class="kt">Types</span><span class="o">.</span><span class="kt">Int</span>
+</span><span class='line'>       <span class="p">(</span><span class="kt">GHC</span><span class="o">.</span><span class="kt">Base</span><span class="o">.&gt;&gt;</span> <span class="o">@</span> <span class="kt">GHC</span><span class="o">.</span><span class="kt">Types</span><span class="o">.</span><span class="kt">IO</span> <span class="kt">GHC</span><span class="o">.</span><span class="kt">Base</span><span class="o">.$</span><span class="n">fMonadIO</span> <span class="o">@</span> <span class="nb">()</span> <span class="o">@</span> <span class="nb">()</span><span class="p">)</span>
+</span><span class='line'>       <span class="p">(</span><span class="kt">System</span><span class="o">.</span><span class="kt">IO</span><span class="o">.</span><span class="n">print</span> <span class="o">@</span> <span class="kt">GHC</span><span class="o">.</span><span class="kt">Types</span><span class="o">.</span><span class="kt">Int</span> <span class="kt">GHC</span><span class="o">.</span><span class="kt">Show</span><span class="o">.$</span><span class="n">fShowInt</span><span class="p">))</span>
+</span><span class='line'>    <span class="p">(</span><span class="kt">GHC</span><span class="o">.</span><span class="kt">Base</span><span class="o">.</span><span class="n">return</span>
+</span><span class='line'>       <span class="o">@</span> <span class="kt">GHC</span><span class="o">.</span><span class="kt">Types</span><span class="o">.</span><span class="kt">IO</span> <span class="kt">GHC</span><span class="o">.</span><span class="kt">Base</span><span class="o">.$</span><span class="n">fMonadIO</span> <span class="o">@</span> <span class="nb">()</span> <span class="kt">GHC</span><span class="o">.</span><span class="kt">Tuple</span><span class="o">.</span><span class="nb">()</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">(</span><span class="kt">Data</span><span class="o">.</span><span class="kt">Vector</span><span class="o">.</span><span class="kt">Unboxed</span><span class="o">.</span><span class="n">fromList</span>
+</span><span class='line'>       <span class="o">@</span> <span class="kt">GHC</span><span class="o">.</span><span class="kt">Types</span><span class="o">.</span><span class="kt">Int</span>
+</span><span class='line'>       <span class="kt">Data</span><span class="o">.</span><span class="kt">Vector</span><span class="o">.</span><span class="kt">Unboxed</span><span class="o">.</span><span class="kt">Base</span><span class="o">.$</span><span class="n">fUnboxInt</span>
+</span><span class='line'>       <span class="p">(</span><span class="kt">GHC</span><span class="o">.</span><span class="kt">Types</span><span class="o">.:</span>
+</span><span class='line'>          <span class="o">@</span> <span class="kt">GHC</span><span class="o">.</span><span class="kt">Types</span><span class="o">.</span><span class="kt">Int</span>
+</span><span class='line'>          <span class="p">(</span><span class="kt">GHC</span><span class="o">.</span><span class="kt">Types</span><span class="o">.</span><span class="kt">I</span><span class="o">#</span> <span class="mi">12</span><span class="p">)</span>
+</span><span class='line'>          <span class="p">(</span><span class="kt">GHC</span><span class="o">.</span><span class="kt">Types</span><span class="o">.:</span>
+</span><span class='line'>             <span class="o">@</span> <span class="kt">GHC</span><span class="o">.</span><span class="kt">Types</span><span class="o">.</span><span class="kt">Int</span>
+</span><span class='line'>             <span class="p">(</span><span class="kt">GHC</span><span class="o">.</span><span class="kt">Types</span><span class="o">.</span><span class="kt">I</span><span class="o">#</span> <span class="mi">23</span><span class="p">)</span>
+</span><span class='line'>             <span class="p">(</span><span class="kt">GHC</span><span class="o">.</span><span class="kt">Types</span><span class="o">.:</span>
+</span><span class='line'>                <span class="o">@</span> <span class="kt">GHC</span><span class="o">.</span><span class="kt">Types</span><span class="o">.</span><span class="kt">Int</span>
+</span><span class='line'>                <span class="p">(</span><span class="kt">GHC</span><span class="o">.</span><span class="kt">Types</span><span class="o">.</span><span class="kt">I</span><span class="o">#</span> <span class="mi">34</span><span class="p">)</span>
+</span><span class='line'>                <span class="p">(</span><span class="kt">GHC</span><span class="o">.</span><span class="kt">Types</span><span class="o">.:</span>
+</span><span class='line'>                   <span class="o">@</span> <span class="kt">GHC</span><span class="o">.</span><span class="kt">Types</span><span class="o">.</span><span class="kt">Int</span>
+</span><span class='line'>                   <span class="p">(</span><span class="kt">GHC</span><span class="o">.</span><span class="kt">Types</span><span class="o">.</span><span class="kt">I</span><span class="o">#</span> <span class="mi">45</span><span class="p">)</span>
+</span><span class='line'>                   <span class="p">(</span><span class="kt">GHC</span><span class="o">.</span><span class="kt">Types</span><span class="o">.:</span>
+</span><span class='line'>                      <span class="o">@</span> <span class="kt">GHC</span><span class="o">.</span><span class="kt">Types</span><span class="o">.</span><span class="kt">Int</span>
+</span><span class='line'>                      <span class="p">(</span><span class="kt">GHC</span><span class="o">.</span><span class="kt">Types</span><span class="o">.</span><span class="kt">I</span><span class="o">#</span> <span class="mi">56</span><span class="p">)</span>
+</span><span class='line'>                      <span class="p">(</span><span class="kt">GHC</span><span class="o">.</span><span class="kt">Types</span><span class="o">.:</span>
+</span><span class='line'>                         <span class="o">@</span> <span class="kt">GHC</span><span class="o">.</span><span class="kt">Types</span><span class="o">.</span><span class="kt">Int</span>
+</span><span class='line'>                         <span class="p">(</span><span class="kt">GHC</span><span class="o">.</span><span class="kt">Types</span><span class="o">.</span><span class="kt">I</span><span class="o">#</span> <span class="mi">67</span><span class="p">)</span>
+</span><span class='line'>                         <span class="p">(</span><span class="kt">GHC</span><span class="o">.</span><span class="kt">Types</span><span class="o">.:</span>
+</span><span class='line'>                            <span class="o">@</span> <span class="kt">GHC</span><span class="o">.</span><span class="kt">Types</span><span class="o">.</span><span class="kt">Int</span>
+</span><span class='line'>                            <span class="p">(</span><span class="kt">GHC</span><span class="o">.</span><span class="kt">Types</span><span class="o">.</span><span class="kt">I</span><span class="o">#</span> <span class="mi">78</span><span class="p">)</span>
+</span><span class='line'>                            <span class="p">(</span><span class="kt">GHC</span><span class="o">.</span><span class="kt">Types</span><span class="o">.:</span>
+</span><span class='line'>                               <span class="o">@</span> <span class="kt">GHC</span><span class="o">.</span><span class="kt">Types</span><span class="o">.</span><span class="kt">Int</span>
+</span><span class='line'>                               <span class="p">(</span><span class="kt">GHC</span><span class="o">.</span><span class="kt">Types</span><span class="o">.</span><span class="kt">I</span><span class="o">#</span> <span class="mi">89</span><span class="p">)</span>
+</span><span class='line'>                               <span class="p">(</span><span class="kt">GHC</span><span class="o">.</span><span class="kt">Types</span><span class="o">.</span><span class="kt">[]</span> <span class="o">@</span> <span class="kt">GHC</span><span class="o">.</span><span class="kt">Types</span><span class="o">.</span><span class="kt">Int</span><span class="p">))))))))))</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">:Main</span><span class="o">.</span><span class="n">main</span> <span class="ow">::</span> <span class="kt">GHC</span><span class="o">.</span><span class="kt">Types</span><span class="o">.</span><span class="kt">IO</span> <span class="nb">()</span>
+</span><span class='line'><span class="p">[</span><span class="kt">LclIdX</span><span class="p">]</span>
+</span><span class='line'><span class="kt">:Main</span><span class="o">.</span><span class="n">main</span> <span class="ow">=</span> <span class="kt">GHC</span><span class="o">.</span><span class="kt">TopHandler</span><span class="o">.</span><span class="n">runMainIO</span> <span class="o">@</span> <span class="nb">()</span> <span class="kt">Main</span><span class="o">.</span><span class="n">main</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>But no, even in the case of a <code>Data.Vector.Unboxed</code>, the representation
+for the array data is never as compact as the C++ version.</p>
+
+<p>In terms of running speed though (again, printing out tiny lists is a poor,
+poor benchmark, but still) it seems close enough:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span><span class="nb">time</span> <span class="o">(</span><span class="k">while</span> <span class="o">((</span>n++ &lt; 100<span class="o">))</span><span class="p">;</span> <span class="k">do</span> ./simpleloopcpp<span class="p">;</span> <span class="k">done</span><span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'>real  0m0.312s
+</span><span class='line'>user  0m0.016s
+</span><span class='line'>sys   0m0.044s
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span><span class="nb">time</span> <span class="o">(</span><span class="k">while</span> <span class="o">((</span>n++ &lt; 100<span class="o">))</span><span class="p">;</span> <span class="k">do</span> ./simpleloophaskell<span class="p">;</span> <span class="k">done</span><span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'>real  0m0.355s
+</span><span class='line'>user  0m0.024s
+</span><span class='line'>sys   0m0.060s
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-03-13T00:00:00+00:00" pubdate data-updated="true">Mar 13<sup>th</sup>, 2013</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/assembly/'>assembly</a>, <a class='category' href='/blog/categories/c-plus-plus/'>c++</a>, <a class='category' href='/blog/categories/haskell/'>haskell</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
 		<a href="/blog/2013/03/12/hello-world-in-go-compared/">
 		
 			Comparing &#8216;Hello World&#8217; in Go</a>
@@ -127,10 +1134,10 @@
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>ls -lh | grep <span class="s1">&#39;\-x\-&#39;</span>
-</span><span class='line'>-rwxr-x--- 1 agam eng 1.1M Mar 10 17:27 haskellhelloworld
-</span><span class='line'>-rwxr-x--- 1 agam eng 8.8K Dec 14 16:10 helloworldcpp
-</span><span class='line'>-rwxr-x--- 1 agam eng 1.3M Mar 12 18:07 helloworldgo
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>ls -lh <span class="p">|</span> grep <span class="s1">&#39;\-x\-&#39;</span>
+</span><span class='line'>-rwxr-x--- <span class="m">1</span> agam eng 1.1M Mar <span class="m">10</span> 17:27 haskellhelloworld
+</span><span class='line'>-rwxr-x--- <span class="m">1</span> agam eng 8.8K Dec <span class="m">14</span> 16:10 helloworldcpp
+</span><span class='line'>-rwxr-x--- <span class="m">1</span> agam eng 1.3M Mar <span class="m">12</span> 18:07 helloworldgo
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -138,7 +1145,7 @@
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>nm helloworldgo | wc -l
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>nm helloworldgo <span class="p">|</span> wc -l
 </span><span class='line'>1748
 </span></code></pre></td></tr></table></div></figure>
 
@@ -150,7 +1157,7 @@
 <p>To see the generated assembly, run the following (the <code>sed</code> here is to get rid of the filename + linenumber that shows up on every line).</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>go build -gcflags<span class="o">=</span>-S helloworld.go  | sed <span class="s1">&#39;s/([^ ]*)//&#39;</span> &gt; helloworldgo.s
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>go build -gcflags<span class="o">=</span>-S helloworld.go  <span class="p">|</span> sed <span class="s1">&#39;s/([^ ]*)//&#39;</span> &gt; helloworldgo.s
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -340,7 +1347,7 @@
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 <span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span><span class="nb">time</span> <span class="o">(</span><span class="k">while</span> <span class="o">((</span>n++ &lt; 100<span class="o">))</span>; <span class="k">do</span> ./helloworldgo; <span class="k">done</span><span class="o">)</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span><span class="nb">time</span> <span class="o">(</span><span class="k">while</span> <span class="o">((</span>n++ &lt; 100<span class="o">))</span><span class="p">;</span> <span class="k">do</span> ./helloworldgo<span class="p">;</span> <span class="k">done</span><span class="o">)</span>
 </span><span class='line'>
 </span><span class='line'>real  0m0.567s
 </span><span class='line'>user  0m0.196s
@@ -368,7 +1375,7 @@
   
 
 
-<time datetime="2013-03-12T00:00:00-07:00" pubdate data-updated="true">Mar 12<sup>th</sup>, 2013</time></div>
+<time datetime="2013-03-12T00:00:00+00:00" pubdate data-updated="true">Mar 12<sup>th</sup>, 2013</time></div>
 	<div class="tags">
 
 
@@ -435,25 +1442,25 @@
 <span class='line-number'>22</span>
 </pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>gcutil getproject --project<span class="o">=</span>agam-personal-project --cache_flag_values
 </span><span class='line'>+--------------------------+-------------------------------+
-</span><span class='line'>|         property         |             value             |
+</span><span class='line'><span class="p">|</span>         property         <span class="p">|</span>             value             <span class="p">|</span>
 </span><span class='line'>+--------------------------+-------------------------------+
-</span><span class='line'>| name                     | agam-personal-project                     |
-</span><span class='line'>| description              |                               |
-</span><span class='line'>| creation-time            | 2012-10-30T13:52:46.571-07:00 |
-</span><span class='line'>| ips                      | 108.59.85.232,173.255.125.245 |
-</span><span class='line'>|                          |                               |
-</span><span class='line'>| usage                    |                               |
-</span><span class='line'>|   instances              | 0.0/4.0                       |
-</span><span class='line'>|   cpus                   | 0.0/4.0                       |
-</span><span class='line'>|   ephemeral-addresses    | 0.0/4.0                       |
-</span><span class='line'>|   disks                  | 0.0/4.0                       |
-</span><span class='line'>|   disks-total-gb         | 0.0/250.0                     |
-</span><span class='line'>|   snapshots              | 0.0/20.0                      |
-</span><span class='line'>|   networks               | 1.0/1.0                       |
-</span><span class='line'>|   firewalls              | 2.0/10.0                      |
-</span><span class='line'>|   images                 | 0.0/4.0                       |
-</span><span class='line'>|                          |                               |
-</span><span class='line'>| common-instance-metadata |                               |
+</span><span class='line'><span class="p">|</span> name                     <span class="p">|</span> agam-personal-project                     <span class="p">|</span>
+</span><span class='line'><span class="p">|</span> description              <span class="p">|</span>                               <span class="p">|</span>
+</span><span class='line'><span class="p">|</span> creation-time            <span class="p">|</span> 2012-10-30T13:52:46.571-07:00 <span class="p">|</span>
+</span><span class='line'><span class="p">|</span> ips                      <span class="p">|</span> 108.59.85.232,173.255.125.245 <span class="p">|</span>
+</span><span class='line'><span class="p">|</span>                          <span class="p">|</span>                               <span class="p">|</span>
+</span><span class='line'><span class="p">|</span> usage                    <span class="p">|</span>                               <span class="p">|</span>
+</span><span class='line'><span class="p">|</span>   instances              <span class="p">|</span> 0.0/4.0                       <span class="p">|</span>
+</span><span class='line'><span class="p">|</span>   cpus                   <span class="p">|</span> 0.0/4.0                       <span class="p">|</span>
+</span><span class='line'><span class="p">|</span>   ephemeral-addresses    <span class="p">|</span> 0.0/4.0                       <span class="p">|</span>
+</span><span class='line'><span class="p">|</span>   disks                  <span class="p">|</span> 0.0/4.0                       <span class="p">|</span>
+</span><span class='line'><span class="p">|</span>   disks-total-gb         <span class="p">|</span> 0.0/250.0                     <span class="p">|</span>
+</span><span class='line'><span class="p">|</span>   snapshots              <span class="p">|</span> 0.0/20.0                      <span class="p">|</span>
+</span><span class='line'><span class="p">|</span>   networks               <span class="p">|</span> 1.0/1.0                       <span class="p">|</span>
+</span><span class='line'><span class="p">|</span>   firewalls              <span class="p">|</span> 2.0/10.0                      <span class="p">|</span>
+</span><span class='line'><span class="p">|</span>   images                 <span class="p">|</span> 0.0/4.0                       <span class="p">|</span>
+</span><span class='line'><span class="p">|</span>                          <span class="p">|</span>                               <span class="p">|</span>
+</span><span class='line'><span class="p">|</span> common-instance-metadata <span class="p">|</span>                               <span class="p">|</span>
 </span><span class='line'>+--------------------------+-------------------------------+
 </span></code></pre></td></tr></table></div></figure>
 
@@ -480,23 +1487,23 @@
 <span class='line-number'>18</span>
 <span class='line-number'>19</span>
 </pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>gcutil addfirewall http2 --description<span class="o">=</span><span class="s2">&quot;Allow incoming http&quot;</span> --allowed<span class="o">=</span><span class="s2">&quot;tcp:http&quot;</span>
-</span><span class='line'>INFO: Waiting <span class="k">for </span>insert of firewall http2. Sleeping <span class="k">for </span>3s.
-</span><span class='line'>INFO: Waiting <span class="k">for </span>insert of firewall http2. Sleeping <span class="k">for </span>3s.
+</span><span class='line'>INFO: Waiting <span class="k">for</span> insert of firewall http2. Sleeping <span class="k">for</span> 3s.
+</span><span class='line'>INFO: Waiting <span class="k">for</span> insert of firewall http2. Sleeping <span class="k">for</span> 3s.
 </span><span class='line'>
 </span><span class='line'>Table of resources:
 </span><span class='line'>
 </span><span class='line'>+-------+---------------------+------------------+------------+-------------+-------------+
-</span><span class='line'>| name  |     description     |     network      | <span class="nb">source</span>-ips | <span class="nb">source</span>-tags | target-tags |
+</span><span class='line'><span class="p">|</span> name  <span class="p">|</span>     description     <span class="p">|</span>     network      <span class="p">|</span> <span class="nb">source</span>-ips <span class="p">|</span> <span class="nb">source</span>-tags <span class="p">|</span> target-tags <span class="p">|</span>
 </span><span class='line'>+-------+---------------------+------------------+------------+-------------+-------------+
-</span><span class='line'>| http2 | Allow incoming http | networks/default | 0.0.0.0/0  |             |             |
+</span><span class='line'><span class="p">|</span> http2 <span class="p">|</span> Allow incoming http <span class="p">|</span> networks/default <span class="p">|</span> 0.0.0.0/0  <span class="p">|</span>             <span class="p">|</span>             <span class="p">|</span>
 </span><span class='line'>+-------+---------------------+------------------+------------+-------------+-------------+
 </span><span class='line'>
 </span><span class='line'>Table of operations:
 </span><span class='line'>
 </span><span class='line'>+------------------------------------------------+------+--------+----------------+-----------------+-------------------------------+----------------+-------+---------+
-</span><span class='line'>|                      name                      | zone | status | status-message |     target      |          insert-time          | operation-type | error | warning |
+</span><span class='line'><span class="p">|</span>                      name                      <span class="p">|</span> zone <span class="p">|</span> status <span class="p">|</span> status-message <span class="p">|</span>     target      <span class="p">|</span>          insert-time          <span class="p">|</span> operation-type <span class="p">|</span> error <span class="p">|</span> warning <span class="p">|</span>
 </span><span class='line'>+------------------------------------------------+------+--------+----------------+-----------------+-------------------------------+----------------+-------+---------+
-</span><span class='line'>| operation-1362984707558-4d7a09b531841-ea2eb01d |      | DONE   |                | firewalls/http2 | 2013-03-10T23:51:47.558-07:00 | insert         |       |         |
+</span><span class='line'><span class="p">|</span> operation-1362984707558-4d7a09b531841-ea2eb01d <span class="p">|</span>      <span class="p">|</span> DONE   <span class="p">|</span>                <span class="p">|</span> firewalls/http2 <span class="p">|</span> 2013-03-10T23:51:47.558-07:00 <span class="p">|</span> insert         <span class="p">|</span>       <span class="p">|</span>         <span class="p">|</span>
 </span><span class='line'>+------------------------------------------------+------+--------+----------------+-----------------+-------------------------------+----------------+-------+---------+
 </span></code></pre></td></tr></table></div></figure>
 
@@ -623,32 +1630,32 @@
 <span class='line-number'>25</span>
 <span class='line-number'>26</span>
 <span class='line-number'>27</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>INFO: Waiting <span class="k">for </span>insert of instance basic-webserver-instance. Sleeping <span class="k">for </span>3s.
-</span><span class='line'>INFO: Waiting <span class="k">for </span>insert of instance basic-webserver-instance. Sleeping <span class="k">for </span>3s.
-</span><span class='line'>INFO: Waiting <span class="k">for </span>insert of instance basic-webserver-instance. Sleeping <span class="k">for </span>3s.
-</span><span class='line'>INFO: Waiting <span class="k">for </span>insert of instance basic-webserver-instance. Sleeping <span class="k">for </span>3s.
-</span><span class='line'>INFO: Waiting <span class="k">for </span>insert of instance basic-webserver-instance. Sleeping <span class="k">for </span>3s.
-</span><span class='line'>INFO: Waiting <span class="k">for </span>insert of instance basic-webserver-instance. Sleeping <span class="k">for </span>3s.
-</span><span class='line'>INFO: Waiting <span class="k">for </span>insert of instance basic-webserver-instance. Sleeping <span class="k">for </span>3s.
-</span><span class='line'>INFO: Waiting <span class="k">for </span>insert of instance basic-webserver-instance. Sleeping <span class="k">for </span>3s.
-</span><span class='line'>INFO: Waiting <span class="k">for </span>insert of instance basic-webserver-instance. Sleeping <span class="k">for </span>3s.
-</span><span class='line'>INFO: Waiting <span class="k">for </span>insert of instance basic-webserver-instance. Sleeping <span class="k">for </span>3s.
-</span><span class='line'>INFO: Waiting <span class="k">for </span>insert of instance basic-webserver-instance. Sleeping <span class="k">for </span>3s.
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>INFO: Waiting <span class="k">for</span> insert of instance basic-webserver-instance. Sleeping <span class="k">for</span> 3s.
+</span><span class='line'>INFO: Waiting <span class="k">for</span> insert of instance basic-webserver-instance. Sleeping <span class="k">for</span> 3s.
+</span><span class='line'>INFO: Waiting <span class="k">for</span> insert of instance basic-webserver-instance. Sleeping <span class="k">for</span> 3s.
+</span><span class='line'>INFO: Waiting <span class="k">for</span> insert of instance basic-webserver-instance. Sleeping <span class="k">for</span> 3s.
+</span><span class='line'>INFO: Waiting <span class="k">for</span> insert of instance basic-webserver-instance. Sleeping <span class="k">for</span> 3s.
+</span><span class='line'>INFO: Waiting <span class="k">for</span> insert of instance basic-webserver-instance. Sleeping <span class="k">for</span> 3s.
+</span><span class='line'>INFO: Waiting <span class="k">for</span> insert of instance basic-webserver-instance. Sleeping <span class="k">for</span> 3s.
+</span><span class='line'>INFO: Waiting <span class="k">for</span> insert of instance basic-webserver-instance. Sleeping <span class="k">for</span> 3s.
+</span><span class='line'>INFO: Waiting <span class="k">for</span> insert of instance basic-webserver-instance. Sleeping <span class="k">for</span> 3s.
+</span><span class='line'>INFO: Waiting <span class="k">for</span> insert of instance basic-webserver-instance. Sleeping <span class="k">for</span> 3s.
+</span><span class='line'>INFO: Waiting <span class="k">for</span> insert of instance basic-webserver-instance. Sleeping <span class="k">for</span> 3s.
 </span><span class='line'>
 </span><span class='line'>Table of resources:
 </span><span class='line'>
 </span><span class='line'>+--------------------------+------------------------------+----------------------------------------------------+------------------+---------------+---------------+-------+---------------+---------+----------------+
-</span><span class='line'>|           name           |         machine-type         |                       image                        |     network      |  network-ip   |  external-ip  | disks |     zone      | status  | status-message |
+</span><span class='line'><span class="p">|</span>           name           <span class="p">|</span>         machine-type         <span class="p">|</span>                       image                        <span class="p">|</span>     network      <span class="p">|</span>  network-ip   <span class="p">|</span>  external-ip  <span class="p">|</span> disks <span class="p">|</span>     zone      <span class="p">|</span> status  <span class="p">|</span> status-message <span class="p">|</span>
 </span><span class='line'>+--------------------------+------------------------------+----------------------------------------------------+------------------+---------------+---------------+-------+---------------+---------+----------------+
-</span><span class='line'>| basic-webserver-instance | machineTypes/n1-standard-1-d | projects/google/global/images/gcel-12-04-v20130225 | networks/default | 10.240.31.254 | 108.59.80.144 |       | us-central1-a | RUNNING |                |
+</span><span class='line'><span class="p">|</span> basic-webserver-instance <span class="p">|</span> machineTypes/n1-standard-1-d <span class="p">|</span> projects/google/global/images/gcel-12-04-v20130225 <span class="p">|</span> networks/default <span class="p">|</span> 10.240.31.254 <span class="p">|</span> 108.59.80.144 <span class="p">|</span>       <span class="p">|</span> us-central1-a <span class="p">|</span> RUNNING <span class="p">|</span>                <span class="p">|</span>
 </span><span class='line'>+--------------------------+------------------------------+----------------------------------------------------+------------------+---------------+---------------+-------+---------------+---------+----------------+
 </span><span class='line'>
 </span><span class='line'>Table of operations:
 </span><span class='line'>
 </span><span class='line'>+------------------------------------------------+---------------+--------+----------------+--------------------------------------------------+-------------------------------+----------------+-------+---------+
-</span><span class='line'>|                      name                      |     zone      | status | status-message |                      target                      |          insert-time          | operation-type | error | warning |
+</span><span class='line'><span class="p">|</span>                      name                      <span class="p">|</span>     zone      <span class="p">|</span> status <span class="p">|</span> status-message <span class="p">|</span>                      target                      <span class="p">|</span>          insert-time          <span class="p">|</span> operation-type <span class="p">|</span> error <span class="p">|</span> warning <span class="p">|</span>
 </span><span class='line'>+------------------------------------------------+---------------+--------+----------------+--------------------------------------------------+-------------------------------+----------------+-------+---------+
-</span><span class='line'>| operation-1362986355529-4d7a0fd8d07a1-a21d7f92 | us-central1-a | DONE   |                | us-central1-a/instances/basic-webserver-instance | 2013-03-11T00:19:15.529-07:00 | insert         |       |         |
+</span><span class='line'><span class="p">|</span> operation-1362986355529-4d7a0fd8d07a1-a21d7f92 <span class="p">|</span> us-central1-a <span class="p">|</span> DONE   <span class="p">|</span>                <span class="p">|</span> us-central1-a/instances/basic-webserver-instance <span class="p">|</span> 2013-03-11T00:19:15.529-07:00 <span class="p">|</span> insert         <span class="p">|</span>       <span class="p">|</span>         <span class="p">|</span>
 </span><span class='line'>+------------------------------------------------+---------------+--------+----------------+--------------------------------------------------+-------------------------------+----------------+-------+---------+
 </span></code></pre></td></tr></table></div></figure>
 
@@ -694,8 +1701,8 @@
 </span><span class='line'>/dev/sda1       9.6G 1019M  8.1G  12% /
 </span><span class='line'>none            1.9G  4.0K  1.9G   1% /dev
 </span><span class='line'>none            377M  140K  377M   1% /run
-</span><span class='line'>none            5.0M     0  5.0M   0% /run/lock
-</span><span class='line'>none            1.9G     0  1.9G   0% /run/shm
+</span><span class='line'>none            5.0M     <span class="m">0</span>  5.0M   0% /run/lock
+</span><span class='line'>none            1.9G     <span class="m">0</span>  1.9G   0% /run/shm
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -759,11 +1766,11 @@
 </span><span class='line'>Welcome to the Yesod scaffolder.
 </span><span class='line'>I<span class="s1">&#39;m going to be creating a skeleton Yesod project for you.</span>
 </span><span class='line'>
-</span><span class='line'><span class="s1">What do you want to call your project? We&#39;</span>ll use this <span class="k">for </span>the cabal name.
+</span><span class='line'><span class="s1">What do you want to call your project? We&#39;</span>ll use this <span class="k">for</span> the cabal name.
 </span><span class='line'>
 </span><span class='line'>Project name: AgamsWeb
-</span><span class='line'>Yesod uses Persistent <span class="k">for </span>its <span class="o">(</span>you guessed it<span class="o">)</span> persistence layer.
-</span><span class='line'>This tool will build in either SQLite or PostgreSQL or MongoDB support <span class="k">for </span>you.
+</span><span class='line'>Yesod uses Persistent <span class="k">for</span> its <span class="o">(</span>you guessed it<span class="o">)</span> persistence layer.
+</span><span class='line'>This tool will build in either SQLite or PostgreSQL or MongoDB support <span class="k">for</span> you.
 </span><span class='line'>We recommend starting with SQLite: it has no dependencies.
 </span><span class='line'>
 </span><span class='line'>    <span class="nv">s</span>      <span class="o">=</span> sqlite
@@ -800,22 +1807,22 @@
 <span class='line-number'>18</span>
 </pre></td><td class='code'><pre><code class='sh'><span class='line'>agam@basic-webserver-instance:~/AgamsWeb<span class="nv">$ </span>ls -l
 </span><span class='line'>total 68
-</span><span class='line'>-rw-rw-r-- 1 agam agam 3907 Mar 11 08:18 AgamsWeb.cabal
-</span><span class='line'>-rw-rw-r-- 1 agam agam 2723 Mar 11 08:18 Application.hs
-</span><span class='line'>-rw-rw-r-- 1 agam agam 6583 Mar 11 08:18 Foundation.hs
-</span><span class='line'>drwxrwxr-x 2 agam agam 4096 Mar 11 08:18 Handler
-</span><span class='line'>-rw-rw-r-- 1 agam agam 1057 Mar 11 08:18 Import.hs
-</span><span class='line'>-rw-rw-r-- 1 agam agam  415 Mar 11 08:18 Model.hs
-</span><span class='line'>drwxrwxr-x 2 agam agam 4096 Mar 11 08:18 Settings
-</span><span class='line'>-rw-rw-r-- 1 agam agam 2736 Mar 11 08:18 Settings.hs
-</span><span class='line'>drwxrwxr-x 2 agam agam 4096 Mar 11 08:18 app
-</span><span class='line'>drwxrwxr-x 2 agam agam 4096 Mar 11 08:18 config
-</span><span class='line'>drwxrwxr-x 2 agam agam 4096 Mar 11 08:18 deploy
-</span><span class='line'>-rw-rw-r-- 1 agam agam  709 Mar 11 08:18 devel.hs
-</span><span class='line'>drwxrwxr-x 2 agam agam 4096 Mar 11 08:18 messages
-</span><span class='line'>drwxrwxr-x 4 agam agam 4096 Mar 11 08:18 static
-</span><span class='line'>drwxrwxr-x 2 agam agam 4096 Mar 11 08:18 templates
-</span><span class='line'>drwxrwxr-x 2 agam agam 4096 Mar 11 08:18 tests
+</span><span class='line'>-rw-rw-r-- <span class="m">1</span> agam agam <span class="m">3907</span> Mar <span class="m">11</span> 08:18 AgamsWeb.cabal
+</span><span class='line'>-rw-rw-r-- <span class="m">1</span> agam agam <span class="m">2723</span> Mar <span class="m">11</span> 08:18 Application.hs
+</span><span class='line'>-rw-rw-r-- <span class="m">1</span> agam agam <span class="m">6583</span> Mar <span class="m">11</span> 08:18 Foundation.hs
+</span><span class='line'>drwxrwxr-x <span class="m">2</span> agam agam <span class="m">4096</span> Mar <span class="m">11</span> 08:18 Handler
+</span><span class='line'>-rw-rw-r-- <span class="m">1</span> agam agam <span class="m">1057</span> Mar <span class="m">11</span> 08:18 Import.hs
+</span><span class='line'>-rw-rw-r-- <span class="m">1</span> agam agam  <span class="m">415</span> Mar <span class="m">11</span> 08:18 Model.hs
+</span><span class='line'>drwxrwxr-x <span class="m">2</span> agam agam <span class="m">4096</span> Mar <span class="m">11</span> 08:18 Settings
+</span><span class='line'>-rw-rw-r-- <span class="m">1</span> agam agam <span class="m">2736</span> Mar <span class="m">11</span> 08:18 Settings.hs
+</span><span class='line'>drwxrwxr-x <span class="m">2</span> agam agam <span class="m">4096</span> Mar <span class="m">11</span> 08:18 app
+</span><span class='line'>drwxrwxr-x <span class="m">2</span> agam agam <span class="m">4096</span> Mar <span class="m">11</span> 08:18 config
+</span><span class='line'>drwxrwxr-x <span class="m">2</span> agam agam <span class="m">4096</span> Mar <span class="m">11</span> 08:18 deploy
+</span><span class='line'>-rw-rw-r-- <span class="m">1</span> agam agam  <span class="m">709</span> Mar <span class="m">11</span> 08:18 devel.hs
+</span><span class='line'>drwxrwxr-x <span class="m">2</span> agam agam <span class="m">4096</span> Mar <span class="m">11</span> 08:18 messages
+</span><span class='line'>drwxrwxr-x <span class="m">4</span> agam agam <span class="m">4096</span> Mar <span class="m">11</span> 08:18 static
+</span><span class='line'>drwxrwxr-x <span class="m">2</span> agam agam <span class="m">4096</span> Mar <span class="m">11</span> 08:18 templates
+</span><span class='line'>drwxrwxr-x <span class="m">2</span> agam agam <span class="m">4096</span> Mar <span class="m">11</span> 08:18 tests
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -898,7 +1905,7 @@
   
 
 
-<time datetime="2013-03-11T00:00:00-07:00" pubdate data-updated="true">Mar 11<sup>th</sup>, 2013</time></div>
+<time datetime="2013-03-11T00:00:00+00:00" pubdate data-updated="true">Mar 11<sup>th</sup>, 2013</time></div>
 	<div class="tags">
 
 
@@ -955,8 +1962,8 @@
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 </pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>ls -l
-</span><span class='line'>-rwxr-x--- 1 agam eng 8.8K Dec 14 16:10 cpphelloworld
-</span><span class='line'>-rwxr-x--- 1 agam eng 1.1M Dec 14 16:16 haskellhelloworld
+</span><span class='line'>-rwxr-x--- <span class="m">1</span> agam eng 8.8K Dec <span class="m">14</span> 16:10 cpphelloworld
+</span><span class='line'>-rwxr-x--- <span class="m">1</span> agam eng 1.1M Dec <span class="m">14</span> 16:16 haskellhelloworld
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -966,9 +1973,9 @@
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>nm cpphelloworld | wc -l
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>nm cpphelloworld <span class="p">|</span> wc -l
 </span><span class='line'>41
-</span><span class='line'><span class="nv">$ </span>nm haskellhelloworld | wc -l
+</span><span class='line'><span class="nv">$ </span>nm haskellhelloworld <span class="p">|</span> wc -l
 </span><span class='line'>6578
 </span></code></pre></td></tr></table></div></figure>
 
@@ -1955,7 +2962,7 @@ Call the std::basic_ostream&lt;std::char_traits> operator&lt;&lt;()</p>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">time</span> <span class="o">(</span><span class="k">while</span> <span class="o">((</span>n++ &lt; 100<span class="o">))</span>; <span class="k">do</span> ./cpphelloworld; <span class="k">done</span><span class="o">)</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">time</span> <span class="o">(</span><span class="k">while</span> <span class="o">((</span>n++ &lt; 100<span class="o">))</span><span class="p">;</span> <span class="k">do</span> ./cpphelloworld<span class="p">;</span> <span class="k">done</span><span class="o">)</span>
 </span><span class='line'>real  0m0.250s
 </span><span class='line'>user  0m0.004s
 </span><span class='line'>sys   0m0.036s
@@ -1968,7 +2975,7 @@ Call the std::basic_ostream&lt;std::char_traits> operator&lt;&lt;()</p>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">time</span> <span class="o">(</span><span class="k">while</span> <span class="o">((</span>n++ &lt; 100<span class="o">))</span>; <span class="k">do</span> ./haskellhelloworld; <span class="k">done</span><span class="o">)</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nb">time</span> <span class="o">(</span><span class="k">while</span> <span class="o">((</span>n++ &lt; 100<span class="o">))</span><span class="p">;</span> <span class="k">do</span> ./haskellhelloworld<span class="p">;</span> <span class="k">done</span><span class="o">)</span>
 </span><span class='line'>real  0m0.366s
 </span><span class='line'>user  0m0.004s
 </span><span class='line'>sys   0m0.048s
@@ -1998,7 +3005,7 @@ So you can look at <a href="https://gist.github.com/agam/5148416">The C++ versio
   
 
 
-<time datetime="2013-03-10T00:00:00-08:00" pubdate data-updated="true">Mar 10<sup>th</sup>, 2013</time></div>
+<time datetime="2013-03-10T00:00:00+00:00" pubdate data-updated="true">Mar 10<sup>th</sup>, 2013</time></div>
 	<div class="tags">
 
 
@@ -2182,7 +3189,7 @@ So you can look at <a href="https://gist.github.com/agam/5148416">The C++ versio
   
 
 
-<time datetime="2013-01-04T00:00:00-08:00" pubdate data-updated="true">Jan 4<sup>th</sup>, 2013</time></div>
+<time datetime="2013-01-04T00:00:00+00:00" pubdate data-updated="true">Jan 4<sup>th</sup>, 2013</time></div>
 	<div class="tags">
 
 
@@ -2370,7 +3377,7 @@ The code for the site will live in a different repo (yeah, this part is a drag c
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span>1 of 1<span class="o">]</span> Compiling Main             <span class="o">(</span> blog.hs, blog.o <span class="o">)</span>
+</pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="o">[</span><span class="m">1</span> of 1<span class="o">]</span> Compiling Main             <span class="o">(</span> blog.hs, blog.o <span class="o">)</span>
 </span><span class='line'>Linking blog ...
 </span></code></pre></td></tr></table></div></figure>
 
@@ -2482,7 +3489,7 @@ The code for the site will live in a different repo (yeah, this part is a drag c
   
 
 
-<time datetime="2012-12-22T00:00:00-08:00" pubdate data-updated="true">Dec 22<sup>nd</sup>, 2012</time></div>
+<time datetime="2012-12-22T00:00:00+00:00" pubdate data-updated="true">Dec 22<sup>nd</sup>, 2012</time></div>
 	<div class="tags">
 
 

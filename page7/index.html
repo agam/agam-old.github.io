@@ -7,8 +7,7 @@
 	<meta name="author" content="Agam">
 
 	
-	<meta name="description" content="Another easy challenge. One thing I learnt while doing this: I had to test the program with standard
-input and had created a couple of files with &hellip;">
+	<meta name="description" content="My git-n00bness obviously inhibited me a bit here, but I was today in the situation of creating a new location from which to blog (a hosted VM, more &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -92,6 +91,78 @@ input and had created a couple of files with &hellip;">
     <article class="post">
 	<h2 class="title">
 		
+		<a href="/blog/2013/12/14/problems-with-octopress-in-a-new-location/">
+		
+			Problems With Octopress in a New Location</a>
+	</h2>
+	<div class="entry-content">
+		<p>My git-n00bness obviously inhibited me a bit here, but I was today in the situation of creating a new location from which to blog (a hosted VM, more about which in a separate post).</p>
+
+<p>So I ran <code>git clone https://github.com/agam/agam.github.io.git</code>, which gave me the <code>master</code> branch.</p>
+
+<p>But I also needed the <code>source</code> branch. So I naively ran <code>git pull origin source</code>, which resulted in &hellip; a merge conflict on <code>index.html</code>?! WTF?</p>
+
+<p>I &lsquo;fixed&rsquo; that by making <code>index.html</code> empty. But <code>rake generate</code> failed with weird errors and <code>git branch</code> still shows only <code>source</code>. So what was wrong?</p>
+
+<p><a href="http://stackoverflow.com/questions/67699/how-do-i-clone-all-remote-branches-with-git">This stackoverflow post</a> had a possible answer on how to proceed.</p>
+
+<p>I tried running <code>git checkout origin/source</code> but that brought on the dreaded <code>experimental HEAD</code> error message.</p>
+
+<p>No luck. Then I came across <a href="http://blog.zerosharp.com/clone-your-octopress-to-blog-from-two-places/">this post</a> which seemed to describe a similar situation (I crossed my fingers that I hadn&rsquo;t already screwed up my repo).</p>
+
+<p>Aha! (I won&rsquo;t forget it now). You&rsquo;re supposed to specify the branch name when you check out!</p>
+
+<p>So I <code>rm -rf</code>ed my setup, then ran the following:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>git clone -b <span class="nb">source </span>https://github.com/agam/agam.github.io.git
+</span><span class='line'><span class="nb">cd </span>agam.github.io
+</span><span class='line'>git clone https://github.com/agam/agam.github.io.git _deploy
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>After this, <code>rake new_post</code> worked as expected, but <code>rake generate</code> still failed on some plugin error about an &ldquo;invalid byte sequence&rdquo;.</p>
+
+<p>That led me to <a href="https://gist.github.com/arnab/4584901">this gist</a>. <code>export LANG=en_US.utf-8</code> fixed the generate problem.</p>
+
+<p>And then <code>rake deploy</code> worked as expected, so yay!</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-12-14T05:43:00+00:00" pubdate data-updated="true">Dec 14<sup>th</sup>, 2013</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/octopress/'>octopress</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
 		<a href="/blog/2013/11/26/moar-reddit-dailyprogramming-falling-sand/">
 		
 			Moar Reddit DailyProgramming: Falling Sand</a>
@@ -140,10 +211,10 @@ bool GridFall(vector&lt;vector&lt;char&gt;&gt;* grid) {
     auto&amp; current_row = grid-&gt;at(i);
     auto&amp; next_row = grid-&gt;at(i + 1);
     for (int j = 0; j &lt; grid-&gt;size(); ++j) {
-      if (current_row[j] == &#39;.&#39; &amp;&amp; next_row[j] == &#39; &#39;) {
+      if (current_row[j] == '.' &amp;&amp; next_row[j] == ' ') {
         changed = true;
-        current_row[j] = &#39; &#39;;
-        next_row[j] = &#39;.&#39;;
+        current_row[j] = ' ';
+        next_row[j] = '.';
       }
     }
   }
@@ -183,8 +254,8 @@ int main() {
  * On standard console input, you will be given an integer N which represents
  * the N x N grid of ASCII characters. This means there will be N-lines of
  * N-characters long. This is the starting grid of your simulated world: the
- * character &#39; &#39; (space) means an empty space, while &#39;.&#39; (dot) means sand, and
- * &#39;#&#39; (hash or pound) means stone. Once you parse this input, simulate the
+ * character ' ' (space) means an empty space, while '.' (dot) means sand, and
+ * '#' (hash or pound) means stone. Once you parse this input, simulate the
  * world until all particles are settled (e.g. the sand has fallen and either
  * settled on the ground or on stone). &quot;Ground&quot; is defined as the solid surface
  * right below the last row.
@@ -229,7 +300,7 @@ int main() {
   
 
 
-<time datetime="2013-11-26T17:33:00-08:00" pubdate data-updated="true">Nov 26<sup>th</sup>, 2013</time></div>
+<time datetime="2013-11-26T17:33:00+00:00" pubdate data-updated="true">Nov 26<sup>th</sup>, 2013</time></div>
 	<div class="tags">
 
 
@@ -295,8 +366,8 @@ int main() {
   Poco::Net::ServerSocket srv(9090);
   cout &lt;&lt; &quot;Waiting for clients ...&quot; &lt;&lt; endl;
 
-  // Arbitrary number of clients are supported. Each client is given the &#39;next&#39;
-  // digit once it&#39;s done.
+  // Arbitrary number of clients are supported. Each client is given the 'next'
+  // digit once it's done.
 
   double mysum = 3.0;  // used to sanity check
   static const float kComparisonMultiplier = 10000.0;
@@ -404,7 +475,7 @@ double ComputePiDigit(unsigned int digit) {
 }
 
 // Special case for very first client connection: digitNum == -1
-// Value has valid hex range, or else &#39;1000&#39;
+// Value has valid hex range, or else '1000'
 
 struct PiState {
   int digitNum;
@@ -586,7 +657,7 @@ int main(int argc, char **argv) {
   
 
 
-<time datetime="2013-11-26T14:50:00-08:00" pubdate data-updated="true">Nov 26<sup>th</sup>, 2013</time></div>
+<time datetime="2013-11-26T14:50:00+00:00" pubdate data-updated="true">Nov 26<sup>th</sup>, 2013</time></div>
 	<div class="tags">
 
 
@@ -625,7 +696,7 @@ top</a></p>
 using namespace std;
         
 void cin_discard_newline() {
-  cin.ignore(numeric_limits&lt;streamsize&gt;::max(), &#39;\n&#39;);
+  cin.ignore(numeric_limits&lt;streamsize&gt;::max(), '\n');
 }       
         
 uint16_t fletcher_checksum(const string&amp; word) {
@@ -667,13 +738,13 @@ int main() {
  * be on a single line of input.
  * Output Description
  * For each line of input, print the index (starting from 1) and the 16-bit
- * Fletcher&#39;s checksum as a 4-digit hexadecimal number.
+ * Fletcher's checksum as a 4-digit hexadecimal number.
  * Sample Inputs &amp; Outputs
  * Sample Input
  * 3    
  * Fletcher
  * Sally sells seashells by the seashore.
- * Les chaussettes de l&#39;archi-duchesse, sont-elles seches ou archi-seches ?
+ * Les chaussettes de l'archi-duchesse, sont-elles seches ou archi-seches ?
  * Sample Output
  * 1 D330
  * 2 D23E
@@ -701,7 +772,7 @@ int main() {
   
 
 
-<time datetime="2013-11-19T18:57:00-08:00" pubdate data-updated="true">Nov 19<sup>th</sup>, 2013</time></div>
+<time datetime="2013-11-19T18:57:00+00:00" pubdate data-updated="true">Nov 19<sup>th</sup>, 2013</time></div>
 	<div class="tags">
 
 
@@ -762,12 +833,12 @@ it.</p>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'><span class="nv">$ </span>ruby --version
 </span><span class='line'>ruby 1.8.7 <span class="o">(</span>2011-06-30 patchlevel 352<span class="o">)</span> <span class="o">[</span>x86_64-linux<span class="o">]</span>
 </span><span class='line'>
-</span><span class='line'><span class="nv">$ </span>curl -L https://get.rvm.io | bash -s stable --ruby
+</span><span class='line'><span class="nv">$ </span>curl -L https://get.rvm.io <span class="p">|</span> bash -s stable --ruby
 </span><span class='line'>  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
 </span><span class='line'>  Dload  Upload   Total   Spent    Left  Speed
-</span><span class='line'>  100   184  100   184    0     0    468      0
+</span><span class='line'>  <span class="m">100</span>   <span class="m">184</span>  <span class="m">100</span>   <span class="m">184</span>    <span class="m">0</span>     <span class="m">0</span>    <span class="m">468</span>      0
 </span><span class='line'>  --:--:-- --:--:-- --:--:--  1688
-</span><span class='line'>  100 19527  100 19527    0     0  37740      0
+</span><span class='line'>  <span class="m">100</span> <span class="m">19527</span>  <span class="m">100</span> <span class="m">19527</span>    <span class="m">0</span>     <span class="m">0</span>  <span class="m">37740</span>      0
 </span><span class='line'>  --:--:-- --:--:-- --:--:-- 37740
 </span><span class='line'>  Please <span class="nb">read </span>and follow further instructions.
 </span><span class='line'>  Downloading RVM branch stable
@@ -836,8 +907,8 @@ it.</p>
 </span><span class='line'>  <span class="nv">$ </span>gem install bundler
 </span><span class='line'>Fetching: bundler-1.3.5.gem <span class="o">(</span>100%<span class="o">)</span>
 </span><span class='line'>  Successfully installed bundler-1.3.5
-</span><span class='line'>  Installing ri documentation <span class="k">for </span>bundler-1.3.5
-</span><span class='line'>  1 gem installed
+</span><span class='line'>  Installing ri documentation <span class="k">for</span> bundler-1.3.5
+</span><span class='line'>  <span class="m">1</span> gem installed
 </span><span class='line'>
 </span><span class='line'>  <span class="nv">$ </span>bundle install
 </span><span class='line'>  Fetching gem metadata from
@@ -931,7 +1002,7 @@ plain rsync) too.</p>
 <span class='line-number'>25</span>
 <span class='line-number'>26</span>
 </pre></td><td class='code'><pre><code class='bash'><span class='line'>  <span class="nv">$ </span>rake setup_github_pages
-</span><span class='line'>  Enter the <span class="nb">read</span>/write url <span class="k">for </span>your repository
+</span><span class='line'>  Enter the <span class="nb">read</span>/write url <span class="k">for</span> your repository
 </span><span class='line'>  <span class="o">(</span>For example,
 </span><span class='line'>   <span class="s1">&#39;git@github.com:your_username/your_username.github.io.git)</span>
 </span><span class='line'><span class="s1">  or</span>
@@ -943,7 +1014,7 @@ plain rsync) too.</p>
 </span><span class='line'><span class="s1">  as origin</span>
 </span><span class='line'><span class="s1">  Set origin as default remote</span>
 </span><span class='line'><span class="s1">  Master branch renamed to &#39;</span><span class="nb">source</span><span class="err">&#39;</span>
-</span><span class='line'>  <span class="k">for </span>committing your blog <span class="nb">source</span>
+</span><span class='line'>  <span class="k">for</span> committing your blog <span class="nb">source</span>
 </span><span class='line'><span class="nb">  </span>files
 </span><span class='line'>  rm -rf _deploy
 </span><span class='line'>  mkdir _deploy
@@ -953,8 +1024,8 @@ plain rsync) too.</p>
 </span><span class='line'>  /home/agam/Documents/octopress/_deploy/.git/
 </span><span class='line'>  <span class="o">[</span>master <span class="o">(</span>root-commit<span class="o">)</span> 5a90a3a<span class="o">]</span>
 </span><span class='line'>  Octopress init
-</span><span class='line'>1 file changed, 1 insertion<span class="o">(</span>+<span class="o">)</span>
-</span><span class='line'>  create mode 100644 index.html
+</span><span class='line'><span class="m">1</span> file changed, <span class="m">1</span> insertion<span class="o">(</span>+<span class="o">)</span>
+</span><span class='line'>  create mode <span class="m">100644</span> index.html
 </span><span class='line'>  <span class="nb">cd</span> -
 </span></code></pre></td></tr></table></div></figure>
 
@@ -1166,7 +1237,7 @@ box:</p>
 </span><span class='line'> hint: Updates were rejected because the tip of your current branch is behind
 </span><span class='line'> hint: its remote counterpart. Integrate the remote changes <span class="o">(</span>e.g.
 </span><span class='line'> hint: <span class="s1">&#39;git pull ...&#39;</span><span class="o">)</span> before pushing again.
-</span><span class='line'> hint: See the <span class="s1">&#39;Note about fast-forwards&#39;</span> in <span class="s1">&#39;git push --help&#39;</span> <span class="k">for </span>details.
+</span><span class='line'> hint: See the <span class="s1">&#39;Note about fast-forwards&#39;</span> in <span class="s1">&#39;git push --help&#39;</span> <span class="k">for</span> details.
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -1191,10 +1262,10 @@ worked flawlessly.</p>
 </span><span class='line'>Username <span class="k">for</span> <span class="s1">&#39;https://github.com&#39;</span>: agam
 </span><span class='line'>Password <span class="k">for</span> <span class="s1">&#39;https://agam@github.com&#39;</span>:
 </span><span class='line'>Counting objects: 262, <span class="k">done</span>.
-</span><span class='line'>Delta compression using up to 8 threads.
+</span><span class='line'>Delta compression using up to <span class="m">8</span> threads.
 </span><span class='line'>Compressing objects: 100% <span class="o">(</span>217/217<span class="o">)</span>, <span class="k">done</span>.
-</span><span class='line'>Writing objects: 100% <span class="o">(</span>262/262<span class="o">)</span>, 677.07 KiB | 0 bytes/s, <span class="k">done</span>.
-</span><span class='line'>Total 262 <span class="o">(</span>delta 59<span class="o">)</span>, reused 0 <span class="o">(</span>delta 0<span class="o">)</span>
+</span><span class='line'>Writing objects: 100% <span class="o">(</span>262/262<span class="o">)</span>, 677.07 KiB <span class="p">|</span> <span class="m">0</span> bytes/s, <span class="k">done</span>.
+</span><span class='line'>Total <span class="m">262</span> <span class="o">(</span>delta 59<span class="o">)</span>, reused <span class="m">0</span> <span class="o">(</span>delta 0<span class="o">)</span>
 </span><span class='line'>To https://github.com/agam/agam.github.io.git
 </span><span class='line'> * <span class="o">[</span>new branch<span class="o">]</span>      master -&gt; master
 </span><span class='line'>
@@ -1224,10 +1295,10 @@ e.g. in my case</p>
 </span><span class='line'>Username <span class="k">for</span> <span class="s1">&#39;https://github.com&#39;</span>: agam
 </span><span class='line'>Password <span class="k">for</span> <span class="s1">&#39;https://agam@github.com&#39;</span>:
 </span><span class='line'>Counting objects: 4975, <span class="k">done</span>.
-</span><span class='line'>Delta compression using up to 8 threads.
+</span><span class='line'>Delta compression using up to <span class="m">8</span> threads.
 </span><span class='line'>Compressing objects: 100% <span class="o">(</span>2173/2173<span class="o">)</span>, <span class="k">done</span>.
-</span><span class='line'>Writing objects: 100% <span class="o">(</span>4975/4975<span class="o">)</span>, 1.56 MiB | 816.00 KiB/s, <span class="k">done</span>.
-</span><span class='line'>Total 4975 <span class="o">(</span>delta 2611<span class="o">)</span>, reused 4694 <span class="o">(</span>delta 2428<span class="o">)</span>
+</span><span class='line'>Writing objects: 100% <span class="o">(</span>4975/4975<span class="o">)</span>, 1.56 MiB <span class="p">|</span> 816.00 KiB/s, <span class="k">done</span>.
+</span><span class='line'>Total <span class="m">4975</span> <span class="o">(</span>delta 2611<span class="o">)</span>, reused <span class="m">4694</span> <span class="o">(</span>delta 2428<span class="o">)</span>
 </span><span class='line'>To https://github.com/agam/agam.github.io.git
 </span><span class='line'> * <span class="o">[</span>new branch<span class="o">]</span>      <span class="nb">source</span> -&gt; <span class="nb">source</span>
 </span></code></pre></td></tr></table></div></figure>
@@ -1267,7 +1338,7 @@ as you can see, it&rsquo;s not too bad to look at either!</p>
   
 
 
-<time datetime="2013-11-15T17:06:00-08:00" pubdate data-updated="true">Nov 15<sup>th</sup>, 2013</time></div>
+<time datetime="2013-11-15T17:06:00+00:00" pubdate data-updated="true">Nov 15<sup>th</sup>, 2013</time></div>
 	<div class="tags">
 
 
@@ -1316,7 +1387,7 @@ that this post and the ones before it were generated by <a href="http://jaspervd
   
 
 
-<time datetime="2013-11-15T00:00:00-08:00" pubdate data-updated="true">Nov 15<sup>th</sup>, 2013</time></div>
+<time datetime="2013-11-15T00:00:00+00:00" pubdate data-updated="true">Nov 15<sup>th</sup>, 2013</time></div>
 	<div class="tags">
 
 
@@ -1403,7 +1474,7 @@ Editor</a>, try typing <code>:help scrolloff</code> right now; you should see th
   
 
 
-<time datetime="2013-11-06T00:00:00-08:00" pubdate data-updated="true">Nov 6<sup>th</sup>, 2013</time></div>
+<time datetime="2013-11-06T00:00:00+00:00" pubdate data-updated="true">Nov 6<sup>th</sup>, 2013</time></div>
 	<div class="tags">
 
 
@@ -1454,7 +1525,7 @@ Editor</a>, try typing <code>:help scrolloff</code> right now; you should see th
   
 
 
-<time datetime="2013-10-01T00:00:00-07:00" pubdate data-updated="true">Oct 1<sup>st</sup>, 2013</time></div>
+<time datetime="2013-10-01T00:00:00+00:00" pubdate data-updated="true">Oct 1<sup>st</sup>, 2013</time></div>
 	<div class="tags">
 
 
@@ -1496,7 +1567,7 @@ t).</p>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
 </pre></td><td class='code'><pre><code class='sh'><span class='line'>sudo mkdir /media/MTPDevice
-</span><span class='line'>sudo chmod 775 /media/MTPDevice
+</span><span class='line'>sudo chmod <span class="m">775</span> /media/MTPDevice
 </span><span class='line'>sudo mtpfs -o allow_other /media/MTPDevice/
 </span></code></pre></td></tr></table></div></figure>
 
@@ -1527,9 +1598,9 @@ t).</p>
 </span><span class='line'>libmtp version: 1.1.3
 </span><span class='line'>
 </span><span class='line'>Listing raw device<span class="o">(</span>s<span class="o">)</span>
-</span><span class='line'>Device 0 <span class="o">(</span><span class="nv">VID</span><span class="o">=</span>22b8 and <span class="nv">PID</span><span class="o">=</span>2e51<span class="o">)</span> is UNKNOWN.
+</span><span class='line'>Device <span class="m">0</span> <span class="o">(</span><span class="nv">VID</span><span class="o">=</span>22b8 and <span class="nv">PID</span><span class="o">=</span>2e51<span class="o">)</span> is UNKNOWN.
 </span><span class='line'>Please report this VID/PID and the device model to the libmtp development team
-</span><span class='line'>   Found 1 device<span class="o">(</span>s<span class="o">)</span>:
+</span><span class='line'>   Found <span class="m">1</span> device<span class="o">(</span>s<span class="o">)</span>:
 </span><span class='line'>   22b8:2e51 @ bus 2, dev 9
 </span><span class='line'>Attempting to connect device<span class="o">(</span>s<span class="o">)</span>
 </span><span class='line'>PTP_ERROR_IO: failed to open session, trying again after resetting USB interface
@@ -1582,9 +1653,9 @@ t).</p>
 </span><span class='line'>libmtp version: 1.1.3
 </span><span class='line'>
 </span><span class='line'>Listing raw device<span class="o">(</span>s<span class="o">)</span>
-</span><span class='line'>Device 0 <span class="o">(</span><span class="nv">VID</span><span class="o">=</span>22b8 and <span class="nv">PID</span><span class="o">=</span>2e51<span class="o">)</span> is UNKNOWN.
+</span><span class='line'>Device <span class="m">0</span> <span class="o">(</span><span class="nv">VID</span><span class="o">=</span>22b8 and <span class="nv">PID</span><span class="o">=</span>2e51<span class="o">)</span> is UNKNOWN.
 </span><span class='line'>Please report this VID/PID and the device model to the libmtp development team
-</span><span class='line'>   Found 1 device<span class="o">(</span>s<span class="o">)</span>:
+</span><span class='line'>   Found <span class="m">1</span> device<span class="o">(</span>s<span class="o">)</span>:
 </span><span class='line'>   22b8:2e51 @ bus 2, dev 11
 </span><span class='line'>Attempting to connect device<span class="o">(</span>s<span class="o">)</span>
 </span><span class='line'>Android device detected, assigning default bug flags
@@ -1596,8 +1667,8 @@ t).</p>
 </span><span class='line'>   bDeviceProtocol: 0
 </span><span class='line'>   idVendor: 22b8
 </span><span class='line'>   idProduct: 2e51
-</span><span class='line'>   IN endpoint maxpacket: 512 bytes
-</span><span class='line'>   OUT endpoint maxpacket: 512 bytes
+</span><span class='line'>   IN endpoint maxpacket: <span class="m">512</span> bytes
+</span><span class='line'>   OUT endpoint maxpacket: <span class="m">512</span> bytes
 </span><span class='line'>
 </span><span class='line'>&lt; ... and many more pages ... &gt;
 </span></code></pre></td></tr></table></div></figure>
@@ -1702,7 +1773,7 @@ It worked this way. <em>I connect the mobile and them immediately (under 1s afte
 </span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/15 - Love The Way You Lie <span class="o">[</span>Explicit<span class="o">]</span>.mp3 -&gt; /sdcard/Music/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/15 - Love The Way You Lie <span class="o">[</span>Explicit<span class="o">]</span>.mp3
 </span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/14 - Almost Famous <span class="o">[</span>Explicit<span class="o">]</span>.mp3 -&gt; /sdcard/Music/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/14 - Almost Famous <span class="o">[</span>Explicit<span class="o">]</span>.mp3
 </span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/13 - So Bad <span class="o">[</span>Explicit<span class="o">]</span>.mp3 -&gt; /sdcard/Music/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/13 - So Bad <span class="o">[</span>Explicit<span class="o">]</span>.mp3
-</span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/12 - 25 To Life <span class="o">[</span>Explicit<span class="o">]</span>.mp3 -&gt; /sdcard/Music/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/12 - 25 To Life <span class="o">[</span>Explicit<span class="o">]</span>.mp3
+</span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/12 - <span class="m">25</span> To Life <span class="o">[</span>Explicit<span class="o">]</span>.mp3 -&gt; /sdcard/Music/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/12 - <span class="m">25</span> To Life <span class="o">[</span>Explicit<span class="o">]</span>.mp3
 </span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/11 - Cinderella Man <span class="o">[</span>Explicit<span class="o">]</span>.mp3 -&gt; /sdcard/Music/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/11 - Cinderella Man <span class="o">[</span>Explicit<span class="o">]</span>.mp3
 </span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/10 - Space Bound <span class="o">[</span>Explicit<span class="o">]</span>.mp3 -&gt; /sdcard/Music/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/10 - Space Bound <span class="o">[</span>Explicit<span class="o">]</span>.mp3
 </span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/09 - No Love <span class="o">[</span>Explicit<span class="o">]</span>.mp3 -&gt; /sdcard/Music/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/09 - No Love <span class="o">[</span>Explicit<span class="o">]</span>.mp3
@@ -1712,10 +1783,10 @@ It worked this way. <em>I connect the mobile and them immediately (under 1s afte
 </span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/05 - W.T.P. <span class="o">[</span>Explicit<span class="o">]</span>.mp3 -&gt; /sdcard/Music/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/05 - W.T.P. <span class="o">[</span>Explicit<span class="o">]</span>.mp3
 </span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/04 - Won<span class="s1">&#39;t Back Down [Explicit].mp3 -&gt; /sdcard/Music/Recovery [Explicit]/04 - Won&#39;</span>t Back Down <span class="o">[</span>Explicit<span class="o">]</span>.mp3
 </span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/03 - On Fire <span class="o">[</span>Explicit<span class="o">]</span>.mp3 -&gt; /sdcard/Music/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/03 - On Fire <span class="o">[</span>Explicit<span class="o">]</span>.mp3
-</span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/02 - Talkin<span class="s1">&#39; 2 Myself [Explicit].mp3 -&gt; /sdcard/Music/Recovery [Explicit]/02 - Talkin&#39;</span> 2 Myself <span class="o">[</span>Explicit<span class="o">]</span>.mp3
+</span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/02 - Talkin<span class="s1">&#39; 2 Myself [Explicit].mp3 -&gt; /sdcard/Music/Recovery [Explicit]/02 - Talkin&#39;</span> <span class="m">2</span> Myself <span class="o">[</span>Explicit<span class="o">]</span>.mp3
 </span><span class='line'>push: /media/My Book/Music/Amazon MP3/Eminem/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/01 - Cold Wind Blows <span class="o">[</span>Explicit<span class="o">]</span>.mp3 -&gt; /sdcard/Music/Recovery <span class="o">[</span>Explicit<span class="o">]</span>/01 - Cold Wind Blows <span class="o">[</span>Explicit<span class="o">]</span>.mp3
-</span><span class='line'>17 files pushed. 0 files skipped.
-</span><span class='line'>3624 KB/s <span class="o">(</span>150604367 bytes in 40.580s<span class="o">)</span>
+</span><span class='line'><span class="m">17</span> files pushed. <span class="m">0</span> files skipped.
+</span><span class='line'><span class="m">3624</span> KB/s <span class="o">(</span><span class="m">150604367</span> bytes in 40.580s<span class="o">)</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -1759,7 +1830,7 @@ to navigate to the external sd card and play music from there, so that works &he
   
 
 
-<time datetime="2013-09-30T00:00:00-07:00" pubdate data-updated="true">Sep 30<sup>th</sup>, 2013</time></div>
+<time datetime="2013-09-30T00:00:00+00:00" pubdate data-updated="true">Sep 30<sup>th</sup>, 2013</time></div>
 	<div class="tags">
 
 
@@ -1806,9 +1877,9 @@ to navigate to the external sd card and play music from there, so that works &he
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
 <span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>...failed updating 4 targets...
-</span><span class='line'>...skipped 6 targets...
-</span><span class='line'>...updated 1073 targets...
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>...failed updating <span class="m">4</span> targets...
+</span><span class='line'>...skipped <span class="m">6</span> targets...
+</span><span class='line'>...updated <span class="m">1073</span> targets...
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -1896,7 +1967,7 @@ to navigate to the external sd card and play music from there, so that works &he
 <span class='line-number'>80</span>
 <span class='line-number'>81</span>
 <span class='line-number'>82</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>clang: /home/agam/Documents/Code/Building/Clang/llvm/lib/IR/Instructions.cpp:2929: llvm::BitCastInst::BitCastInst<span class="o">(</span>llvm::Value*, llvm::Type*, const llvm::Twine&amp;, llvm::Instruction*<span class="o">)</span>: Assertion <span class="sb">`</span>castIsValid<span class="o">(</span>getOpcode<span class="o">()</span>, S, Ty<span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="s2">&quot;Illegal BitCast&quot;</span><span class="s1">&#39; failed.</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>clang: /home/agam/Documents/Code/Building/Clang/llvm/lib/IR/Instructions.cpp:2929: llvm::BitCastInst::BitCastInst<span class="o">(</span>llvm::Value*, llvm::Type*, const llvm::Twine<span class="p">&amp;</span>, llvm::Instruction*<span class="o">)</span>: Assertion <span class="sb">`</span>castIsValid<span class="o">(</span>getOpcode<span class="o">()</span>, S, Ty<span class="o">)</span> <span class="o">&amp;&amp;</span> <span class="s2">&quot;Illegal BitCast&quot;</span><span class="s1">&#39; failed.</span>
 </span><span class='line'><span class="s1">0  clang           0x0000000002569c72 llvm::sys::PrintStackTrace(_IO_FILE*) + 34</span>
 </span><span class='line'><span class="s1">1  clang           0x0000000002569059</span>
 </span><span class='line'><span class="s1">2  libpthread.so.0 0x00007f13948eecb0</span>
@@ -2028,7 +2099,7 @@ to navigate to the external sd card and play music from there, so that works &he
 <span class='line-number'>3</span>
 </pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>/usr/clang_3_3/bin/clang++ -std<span class="o">=</span>c++11 -stdlib<span class="o">=</span>libc++ -L/usr/lib -I/opt/boost/boost_1_54_0 hello-world.cpp -o hello-world -lc++abi
 </span><span class='line'>/usr/bin/ld: cannot find -lc++abi
-</span><span class='line'>clang: error: linker <span class="nb">command </span>failed with <span class="nb">exit </span>code 1 <span class="o">(</span>use -v to see invocation<span class="o">)</span>
+</span><span class='line'>clang: error: linker <span class="nb">command </span>failed with <span class="nb">exit </span>code <span class="m">1</span> <span class="o">(</span>use -v to see invocation<span class="o">)</span>
 </span></code></pre></td></tr></table></div></figure>
 
 
@@ -2068,12 +2139,12 @@ to navigate to the external sd card and play music from there, so that works &he
 </pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ CC</span><span class="o">=</span>clang <span class="nv">CXX</span><span class="o">=</span>clang++ cmake -G <span class="s2">&quot;Unix Makefiles&quot;</span> -DLIBCXX_CXX_ABI<span class="o">=</span>libcxxabi -DLIBCXX_LIBCXXABI_INCLUDE_PATHS<span class="o">=</span><span class="s2">&quot;/home/agam/Documents/Code/Building/libcxxabi/include&quot;</span> -DCMAKE_BUILD_TYPE<span class="o">=</span>Release -DCMAKE_INSTALL_PREFIX<span class="o">=</span>/usr ../libcxx
 </span><span class='line'>-- The CXX compiler identification is Clang 3.4.0
 </span><span class='line'>-- The C compiler identification is Clang 3.4.0
-</span><span class='line'>-- Check <span class="k">for </span>working CXX compiler: /usr/clang_3_3/bin/clang++
-</span><span class='line'>-- Check <span class="k">for </span>working CXX compiler: /usr/clang_3_3/bin/clang++ -- works
+</span><span class='line'>-- Check <span class="k">for</span> working CXX compiler: /usr/clang_3_3/bin/clang++
+</span><span class='line'>-- Check <span class="k">for</span> working CXX compiler: /usr/clang_3_3/bin/clang++ -- works
 </span><span class='line'>-- Detecting CXX compiler ABI info
 </span><span class='line'>-- Detecting CXX compiler ABI info - <span class="k">done</span>
-</span><span class='line'>-- Check <span class="k">for </span>working C compiler: /usr/clang_3_3/bin/clang
-</span><span class='line'>-- Check <span class="k">for </span>working C compiler: /usr/clang_3_3/bin/clang -- works
+</span><span class='line'>-- Check <span class="k">for</span> working C compiler: /usr/clang_3_3/bin/clang
+</span><span class='line'>-- Check <span class="k">for</span> working C compiler: /usr/clang_3_3/bin/clang -- works
 </span><span class='line'>-- Detecting C compiler ABI info
 </span><span class='line'>-- Detecting C compiler ABI info - <span class="k">done</span>
 </span><span class='line'>-- Host triple: x86_64-pc-linux
@@ -2106,7 +2177,7 @@ to navigate to the external sd card and play music from there, so that works &he
 <span class='line-number'>3</span>
 <span class='line-number'>4</span>
 </pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>sudo ldconfig -f /etc/ld.so.conf.d/libc.conf
-</span><span class='line'><span class="nv">$ </span>ldconfig -p | grep c++abi
+</span><span class='line'><span class="nv">$ </span>ldconfig -p <span class="p">|</span> grep c++abi
 </span><span class='line'>...
 </span><span class='line'>        libc++abi.so.1 <span class="o">(</span>libc6,x86-64<span class="o">)</span> <span class="o">=</span>&gt; /usr/local/lib/libc++abi.so.1
 </span></code></pre></td></tr></table></div></figure>
@@ -2143,249 +2214,11 @@ to navigate to the external sd card and play music from there, so that works &he
   
 
 
-<time datetime="2013-09-30T00:00:00-07:00" pubdate data-updated="true">Sep 30<sup>th</sup>, 2013</time></div>
+<time datetime="2013-09-30T00:00:00+00:00" pubdate data-updated="true">Sep 30<sup>th</sup>, 2013</time></div>
 	<div class="tags">
 
 
 	<a class='category' href='/blog/categories/boost/'>boost</a>, <a class='category' href='/blog/categories/clang/'>clang</a>, <a class='category' href='/blog/categories/gcc/'>gcc</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2013/09/29/http-client-with-poco/">
-		
-			Basic HTTP Client With Poco</a>
-	</h2>
-	<div class="entry-content">
-		<p>After my previous terrible experience with <code>cpp-netlib</code>, I was very very pleasantly surprised by how well this went.</p>
-
-<p>You can get the Poco C++ libraries <a href="http://pocoproject.org/">here</a></p>
-
-<p>This is the short <code>wget</code> equivalent &hellip;</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#include &lt;algorithm&gt;  </span><span class="c1">// for copy</span>
-</span><span class='line'><span class="cp">#include &lt;iterator&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;string&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;iostream&gt;   </span><span class="c1">// for cout, istream</span>
-</span><span class='line'>
-</span><span class='line'><span class="cp">#include &lt;Poco/Exception.h&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;Poco/Net/HTTPClientSession.h&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;Poco/Net/HTTPRequest.h&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;Poco/Net/HTTPResponse.h&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;Poco/Path.h&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;Poco/URI.h&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">using</span> <span class="n">string</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span><span class="o">*</span><span class="n">argv</span><span class="p">[])</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="n">argc</span> <span class="o">!=</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">std</span><span class="o">::</span><span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Usage: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">argv</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; &lt;url&gt;&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">try</span> <span class="p">{</span>
-</span><span class='line'>    <span class="c1">// Initialize session</span>
-</span><span class='line'>    <span class="n">Poco</span><span class="o">::</span><span class="n">URI</span> <span class="n">uri</span><span class="p">(</span><span class="n">argv</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
-</span><span class='line'>    <span class="n">Poco</span><span class="o">::</span><span class="n">Net</span><span class="o">::</span><span class="n">HTTPClientSession</span> <span class="n">client_session</span><span class="p">(</span><span class="n">uri</span><span class="p">.</span><span class="n">getHost</span><span class="p">(),</span> <span class="n">uri</span><span class="p">.</span><span class="n">getPort</span><span class="p">());</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="c1">// Prepare and send request</span>
-</span><span class='line'>    <span class="n">string</span> <span class="n">path</span><span class="p">(</span><span class="n">uri</span><span class="p">.</span><span class="n">getPathAndQuery</span><span class="p">());</span>
-</span><span class='line'>    <span class="n">Poco</span><span class="o">::</span><span class="n">Net</span><span class="o">::</span><span class="n">HTTPRequest</span> <span class="n">req</span><span class="p">(</span><span class="n">Poco</span><span class="o">::</span><span class="n">Net</span><span class="o">::</span><span class="n">HTTPRequest</span><span class="o">::</span><span class="n">HTTP_GET</span><span class="p">,</span>
-</span><span class='line'>        <span class="n">path</span><span class="p">,</span> <span class="n">Poco</span><span class="o">::</span><span class="n">Net</span><span class="o">::</span><span class="n">HTTPMessage</span><span class="o">::</span><span class="n">HTTP_1_1</span><span class="p">);</span>
-</span><span class='line'>    <span class="n">client_session</span><span class="p">.</span><span class="n">sendRequest</span><span class="p">(</span><span class="n">req</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="c1">// Get response</span>
-</span><span class='line'>    <span class="n">Poco</span><span class="o">::</span><span class="n">Net</span><span class="o">::</span><span class="n">HTTPResponse</span> <span class="n">res</span><span class="p">;</span>
-</span><span class='line'>    <span class="n">std</span><span class="o">::</span><span class="n">istream</span><span class="o">&amp;</span> <span class="n">is</span> <span class="o">=</span> <span class="n">client_session</span><span class="p">.</span><span class="n">receiveResponse</span><span class="p">(</span><span class="n">res</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="c1">// Print to standard output</span>
-</span><span class='line'>    <span class="n">std</span><span class="o">::</span><span class="n">copy</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">istream_iterator</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span><span class="p">(</span><span class="n">is</span><span class="p">),</span>
-</span><span class='line'>        <span class="n">std</span><span class="o">::</span><span class="n">istream_iterator</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span><span class="p">(),</span>
-</span><span class='line'>        <span class="n">std</span><span class="o">::</span><span class="n">ostream_iterator</span><span class="o">&lt;</span><span class="kt">char</span><span class="o">&gt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="p">));</span>
-</span><span class='line'>  <span class="p">}</span> <span class="n">catch</span> <span class="p">(</span><span class="n">Poco</span><span class="o">::</span><span class="n">Exception</span><span class="o">&amp;</span> <span class="n">e</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">std</span><span class="o">::</span><span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Exception: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">e</span><span class="p">.</span><span class="n">what</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">return</span> <span class="mi">1</span><span class="p">;</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Completed communication&quot;</span><span class="p">;</span>
-</span><span class='line'>  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Thanks to my struggles getting the previous <code>cpp-netlib</code> example to build, I at least got very familiar with <code>cmake</code>. As a result, getting this example to build was a breeze:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-</pre></td><td class='code'><pre><code class='cmake'><span class='line'><span class="nb">cmake_minimum_required</span><span class="p">(</span><span class="s">VERSION</span> <span class="s">2.8</span><span class="p">)</span>
-</span><span class='line'><span class="nb">project</span><span class="p">(</span><span class="s">hello-world</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="nb">add_definitions</span><span class="p">(</span><span class="s">-std=c++11</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="c"># Search paths</span>
-</span><span class='line'><span class="nb">include_directories</span><span class="p">(</span>
-</span><span class='line'>  <span class="s">/opt/boost/boost_1_54_0</span>
-</span><span class='line'>  <span class="s">/usr/local/include</span><span class="p">)</span>
-</span><span class='line'><span class="nb">link_directories</span><span class="p">(</span>
-</span><span class='line'>  <span class="s">/opt/boost/boost_1_54_0/stage/lib</span>
-</span><span class='line'>  <span class="s">/usr/local/lib</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="c"># Boost dependencies</span>
-</span><span class='line'><span class="nb">find_package</span><span class="p">(</span><span class="s">Boost</span> <span class="s">1.51</span> <span class="s">REQUIRED</span> <span class="s">system</span> <span class="s">regex</span><span class="p">)</span>
-</span><span class='line'><span class="nb">set</span><span class="p">(</span><span class="s">BOOST_LIBS</span>
-</span><span class='line'>  <span class="o">${</span><span class="nv">Boost_SYSTEM_LIBRARY</span><span class="o">}</span>
-</span><span class='line'>  <span class="o">${</span><span class="nv">Boost_REGEX_LIBRARY</span><span class="o">}</span>
-</span><span class='line'>  <span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="c"># Other external libraries</span>
-</span><span class='line'><span class="nb">find_package</span><span class="p">(</span><span class="s">OpenSSL</span><span class="p">)</span>
-</span><span class='line'><span class="nb">find_library</span><span class="p">(</span><span class="s">LIBCRYPTO</span> <span class="s">crypto</span><span class="p">)</span>
-</span><span class='line'><span class="nb">find_library</span><span class="p">(</span><span class="s">POCO_FOUNDATION</span> <span class="s">PocoFoundation</span><span class="p">)</span>
-</span><span class='line'><span class="nb">find_library</span><span class="p">(</span><span class="s">POCO_NET</span> <span class="s">PocoNet</span><span class="p">)</span>
-</span><span class='line'><span class="nb">set</span><span class="p">(</span><span class="s">EXTERNAL_LIBS</span>
-</span><span class='line'>  <span class="o">${</span><span class="nv">OPENSSL_LIBRARIES</span><span class="o">}</span>
-</span><span class='line'>  <span class="o">${</span><span class="nv">LIBCRYPTO</span><span class="o">}</span>
-</span><span class='line'>  <span class="o">${</span><span class="nv">POCO_FOUNDATION</span><span class="o">}</span>
-</span><span class='line'>  <span class="o">${</span><span class="nv">POCO_NET</span><span class="o">}</span>
-</span><span class='line'>  <span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="c"># Our final output</span>
-</span><span class='line'><span class="nb">add_executable</span><span class="p">(</span><span class="s">hello-world</span> <span class="s">hello-world.cpp</span><span class="p">)</span>
-</span><span class='line'><span class="nb">target_link_libraries</span><span class="p">(</span><span class="s">hello-world</span>
-</span><span class='line'>  <span class="o">${</span><span class="nv">BOOST_LIBS</span><span class="o">}</span>
-</span><span class='line'>  <span class="o">${</span><span class="nv">EXTERNAL_LIBS</span><span class="o">}</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>And it worked fine too:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nb">time</span> ./hello-world http://www.google.com
-</span><span class='line'>&lt;html&gt;&lt;head&gt;&lt;metahttp-equiv<span class="o">=</span><span class="s2">&quot;content-type&quot;</span><span class="nv">content</span><span class="o">=</span><span class="err">&quot;</span>text/html;charset<span class="o">=</span> ...<span class="o">(</span>skipped rest<span class="o">)</span>
-</span><span class='line'>real    0m0.424s
-</span><span class='line'>user    0m0.004s
-</span><span class='line'>sys     0m0.012s
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>I&rsquo;m sure I&rsquo;ll be using more of POCO in the future!</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-09-29T00:00:00-07:00" pubdate data-updated="true">Sep 29<sup>th</sup>, 2013</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/c-plus-plus/'>c++</a>, <a class='category' href='/blog/categories/http/'>http</a>, <a class='category' href='/blog/categories/poco/'>poco</a>
 
 
 </div>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: clojure, | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/clojure/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2014-12-21T12:26:20-08:00</updated>
+  <updated>2014-12-23T23:23:37+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Learning Other Languages]]></title>
     <link href="http://agam.github.io/blog/2014/07/30/learning-other-languages/"/>
-    <updated>2014-07-30T12:23:33-07:00</updated>
+    <updated>2014-07-30T19:23:33+00:00</updated>
     <id>http://agam.github.io/blog/2014/07/30/learning-other-languages</id>
     <content type="html"><![CDATA[<p>I spent some time learning a decent amount of Common Lisp last year. Nothing fancy, but I&rsquo;m comfortable using quicklisp, playing around with libraries, modelling stuff, etc. I&rsquo;ve read through <a href="http://www.gigamonkeys.com/book/">PCL</a> and <a href="http://www.cs.cmu.edu/Groups/AI/html/cltl/clm/node1.html">ClTl2</a> (though unfortunately, not <a href="http://norvig.com/paip.html">PAIP</a> (not yet!)).</p>
 
@@ -33,7 +33,7 @@
   <entry>
     <title type="html"><![CDATA[Getting started with clojure: Part 1]]></title>
     <link href="http://agam.github.io/blog/2014/01/29/getting-started-with-clojure-part-1/"/>
-    <updated>2014-01-29T18:04:00-08:00</updated>
+    <updated>2014-01-29T18:04:00+00:00</updated>
     <id>http://agam.github.io/blog/2014/01/29/getting-started-with-clojure-part-1</id>
     <content type="html"><![CDATA[<p>(Just a personal log so I don&rsquo;t forget some basic steps here. There may or may not be a Part 2)</p>
 

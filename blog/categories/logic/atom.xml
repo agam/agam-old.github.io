@@ -4,7 +4,7 @@
   <title><![CDATA[Category: logic | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/logic/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2014-12-21T12:26:20-08:00</updated>
+  <updated>2014-12-23T23:23:37+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Logic through Haskell? Not necessarily ...]]></title>
-    <link href="http://agam.github.io/blog/2014/12/18/logic-through-haskell-not-necessarily-dot-dot-dot/"/>
-    <updated>2014-12-18T17:20:58-08:00</updated>
-    <id>http://agam.github.io/blog/2014/12/18/logic-through-haskell-not-necessarily-dot-dot-dot</id>
+    <link href="http://agam.github.io/blog/2014/12/19/logic-through-haskell-not-necessarily-dot-dot-dot/"/>
+    <updated>2014-12-19T01:20:58+00:00</updated>
+    <id>http://agam.github.io/blog/2014/12/19/logic-through-haskell-not-necessarily-dot-dot-dot</id>
     <content type="html"><![CDATA[<p>Finished reading (browsing, really, after the first few chapters) through The Haskell Road to Logic, Maths and Programming<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>, and I am &hellip; <em>underwhelmed</em>. I mean the book was great and all, but maybe I made the mistake of forming some unreasonable expectations.</p>
 
 <p>If you&rsquo;re already familiar with a bit of Haskell and basic logic/sets/numbers, you&rsquo;ll get the most <em>bang for your buck</em> from Chapter 10 on <em>Corecursion</em><sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>. This was &ldquo;brand new&rdquo; for me and I had multiple &ldquo;aha&rdquo; moments after seeing the mechanism used to reason about non-deterministic processes etc.</p>

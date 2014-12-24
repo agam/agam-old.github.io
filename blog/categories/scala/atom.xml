@@ -4,7 +4,7 @@
   <title><![CDATA[Category: scala | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/scala/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2014-12-21T12:26:20-08:00</updated>
+  <updated>2014-12-23T23:23:37+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Possibly unevaluated variables]]></title>
     <link href="http://agam.github.io/blog/2014/07/31/possibly-unevaluated-variables/"/>
-    <updated>2014-07-31T16:11:40-07:00</updated>
+    <updated>2014-07-31T23:11:40+00:00</updated>
     <id>http://agam.github.io/blog/2014/07/31/possibly-unevaluated-variables</id>
     <content type="html"><![CDATA[<p>```scala
 scala> def loop: Boolean = loop

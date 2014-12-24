@@ -4,7 +4,7 @@
   <title><![CDATA[Category: github | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/github/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2014-12-21T12:26:20-08:00</updated>
+  <updated>2014-12-23T23:23:37+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Moving to Ello]]></title>
     <link href="http://agam.github.io/blog/2014/11/05/moving-to-ello/"/>
-    <updated>2014-11-05T14:57:30-08:00</updated>
+    <updated>2014-11-05T22:57:30+00:00</updated>
     <id>http://agam.github.io/blog/2014/11/05/moving-to-ello</id>
     <content type="html"><![CDATA[<p>Yeah it&rsquo;s been pretty <em>dry</em> over here lately. Looks like the last post was on September 2, over <em>two months ago</em>. Many reasons, one of which is that I&rsquo;m too lazy <em>even for Github pages</em>. Yes, I frequently cannot even be bothered to do something as simple as <code>rake new_post["Why I procrastinate endlessly: 20 reasons"]</code>.</p>
 
@@ -38,7 +38,7 @@
   <entry>
     <title type="html"><![CDATA[Getting up and running with Hakyll]]></title>
     <link href="http://agam.github.io/blog/2012/12/22/beginning-with-hakyll/"/>
-    <updated>2012-12-22T00:00:00-08:00</updated>
+    <updated>2012-12-22T00:00:00+00:00</updated>
     <id>http://agam.github.io/blog/2012/12/22/beginning-with-hakyll</id>
     <content type="html"><![CDATA[<p>I looked around at the usual suspects (wordpress, blogspot, etc) but then stumbled across the recent static website idea when I read &ldquo;powerd by Jekyll&rdquo; in a blog footer. Soon enough I came across Hakyll, and decided to give it a go, if only to learn Haskell a bit better.</p>
 

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: haskell, | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/haskell/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2014-12-21T12:26:20-08:00</updated>
+  <updated>2014-12-23T23:23:37+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Haskell/Math]]></title>
-    <link href="http://agam.github.io/blog/2014/11/11/haskell-slash-math/"/>
-    <updated>2014-11-11T18:05:43-08:00</updated>
-    <id>http://agam.github.io/blog/2014/11/11/haskell-slash-math</id>
+    <link href="http://agam.github.io/blog/2014/11/12/haskell-slash-math/"/>
+    <updated>2014-11-12T02:05:43+00:00</updated>
+    <id>http://agam.github.io/blog/2014/11/12/haskell-slash-math</id>
     <content type="html"><![CDATA[<p>I don&rsquo;t recall the very first articles I might have read about Haskell, but the first non-short text was Real World Haskell, which I went through the year it came out. I didn&rsquo;t write any code at that time (a mistake!)</p>
 
 <p>Then, a coupffle of years later, I thought I&rsquo;d try my hand at <a href="https://projecteuler.net/">Project Euler</a> with Haskell. I did the first 10-15 and then got bored.</p>
@@ -46,7 +46,7 @@
   <entry>
     <title type="html"><![CDATA[Scala/Haskell/Go]]></title>
     <link href="http://agam.github.io/blog/2014/08/04/scala-slash-haskell-slash-go/"/>
-    <updated>2014-08-04T12:33:51-07:00</updated>
+    <updated>2014-08-04T19:33:51+00:00</updated>
     <id>http://agam.github.io/blog/2014/08/04/scala-slash-haskell-slash-go</id>
     <content type="html"><![CDATA[<p>Ok, Scala is neat. It&rsquo;s certainly the <em>only</em> way I can bring myself to use the JVM. The idea of everything being an object is a good one. You can &lsquo;cheat&rsquo; a bit since you can use statements, mix in side effects, do whatever, but I understand the compromises for Java-interop, without which it would would have been just another unused academic language.</p>
 
