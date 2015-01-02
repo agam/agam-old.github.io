@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-01-01T02:10:28+00:00</updated>
+  <updated>2015-01-02T23:24:39+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,71 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Getting into programming, for _real_ and for _free_]]></title>
+    <link href="http://agam.github.io/blog/2015/01/02/getting-into-programming/"/>
+    <updated>2015-01-02T23:17:08+00:00</updated>
+    <id>http://agam.github.io/blog/2015/01/02/getting-into-programming</id>
+    <content type="html"><![CDATA[<p>I saw an ad for Codecademy<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> in the footer of some web page, and immediately had mixed reactions. I&rsquo;m all for making programming a basic skill alongside reading and writing, but the focus of these &ldquo;bootcamps&rdquo;<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup> seems to be <em>vocational web development</em><sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>.</p>
+
+<p>This is <del>fine</del>great for people who really want to do that and until now lacked a way to acquire these skills in a focussed manner. But I&rsquo;m worried that this will replace what <em>computer science</em> or <em>programming</em> mean to a whole generation of kids<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup>.</p>
+
+<p>(Note: to be fair, there are bootcamps which are exceptions to the rule<sup id="fnref:5"><a href="#fn:5" rel="footnote">5</a></sup>, that focus on a wider array of skills)</p>
+
+<p>While tweaking web pages might offer an instant gratification that can be sufficient for most people, I hope there are lots of kids who&rsquo;d like a bit more &ldquo;hard core&rdquo; approach. In the past, I have always believed this path to best consist of <em>C</em> followed by <em>Python</em> followed by <em>Scheme</em>.</p>
+
+<p>This is still a great way to proceed, but I now think I have a better prescription: replace <em>Scheme</em> with one of <em>Racket</em><sup id="fnref:6"><a href="#fn:6" rel="footnote">6</a></sup>/<em>Common Lisp</em>/<em>Clojure</em>/<em>Haskell</em><sup id="fnref:7"><a href="#fn:7" rel="footnote">7</a></sup>, and replace <em>C</em> and <em>Python</em> by a single language: <em>Go</em>.</p>
+
+<p>The more I think about it, the more I am convinced that Go is an <em>excellent</em> way to learn programming. It fulfills the requirement of &ldquo;learning about the machine&rdquo; (since it&rsquo;s syntactically similar to C, but <em>safer</em>) and being quick to develop and iterate (as in Python, it&rsquo;s very easy to install external libraries, build, run, fix, run again, etc)</p>
+
+<p>I&rsquo;m thinking here of a 10-year old kid (ok, a 10-year old kid <em>who wants to learn</em>). There&rsquo;s stuff like Scratch<sup id="fnref:8"><a href="#fn:8" rel="footnote">8</a></sup> and Logo<sup id="fnref:9"><a href="#fn:9" rel="footnote">9</a></sup> for younger kids, and various programming tutorials aimed at slightly older kids, but what&rsquo;s the best way to target this kid? <strong>I think it&rsquo;s by getting him/her to play around with (1) some flavor of unix, and (2) learn Go. Both are free.<sup id="fnref:10"><a href="#fn:10" rel="footnote">10</a></sup></strong></p>
+
+<p>There&rsquo;s never been a better time to get acquainted with the nuts and bolts of computers &mdash; you don&rsquo;t even need to get a real one! These days major &ldquo;cloud providers&rdquo;<sup id="fnref:11"><a href="#fn:11" rel="footnote">11</a></sup> have some &ldquo;free usage&rdquo; tier, and an easy way to register for a single VM<sup id="fnref:12"><a href="#fn:12" rel="footnote">12</a></sup>.</p>
+
+<p>The best part about using a VM instead of a &ldquo;real computer&rdquo; is that you don&rsquo;t have to worry about crashing it, or otherwise doing anything irreversible. Reached a dead end? No problem, delete the VM and re-provision it.</p>
+
+<p>Which brings me to the second part, using Go. The Go playground<sup id="fnref:13"><a href="#fn:13" rel="footnote">13</a></sup> makes an initial introduction dead simple, but getting up and running locally is just as straightforward. The syntax is very simple and it&rsquo;s easy to bang out lots of code and immediately see it working. (also, one of things a kid <em>won&rsquo;t</em> have to learn with Go? <em>makefiles</em>!)</p>
+
+<p>A question that remains is &ldquo;what exactly to do with Go?&rdquo;, to which my answer is <em>&ldquo;simple text-based games&rdquo;</em>.</p>
+
+<p>So yeah &hellip; this is the train of thought I&rsquo;ve been carrying about for the past few days. BTW &hellip; it&rsquo;s New Year&rsquo;s Eve, so <strong>happy new year!</strong><sup id="fnref:14"><a href="#fn:14" rel="footnote">14</a></sup></p>
+<div class="footnotes">
+<hr/>
+<ol>
+<li id="fn:1">
+<p><a href="http://www.codecademy.com/">http://www.codecademy.com/</a><a href="#fnref:1" rev="footnote">&#8617;</a></p></li>
+<li id="fn:2">
+<p>See this <a href="http://www.skilledup.com/articles/the-ultimate-guide-to-coding-bootcamps-the-exhaustive-list/">exhaustive list</a> for a &ldquo;30,000 feet&rdquo; overview)<a href="#fnref:2" rev="footnote">&#8617;</a></p></li>
+<li id="fn:3">
+<p>E.g. &ldquo;Deep Dive Coders&rdquo; features <em>HTML5, CSS3, Github, javaScript, jQuery, Apache, MySQL, php</em>, while &ldquo;Makers Academy&rdquo; features <em>Ruby on Rails, HTML5, CSS3, Javascript, jQuery, Git, Agile and Lean</em> (whatever &ldquo;lean&rdquo; means)<a href="#fnref:3" rev="footnote">&#8617;</a></p></li>
+<li id="fn:4">
+<p>By which I mean ages 9 to 90 (!!)<a href="#fnref:4" rev="footnote">&#8617;</a></p></li>
+<li id="fn:5">
+<p>E.g. &ldquo;Fullstack Academy&rdquo; &mdash; though I&rsquo;m not sure if the name necessarily means what it does, since &ldquo;Refactor U&rdquo; promises <em>Full-stack JavaScript, Node.JS, HTML/CSS</em><a href="#fnref:5" rev="footnote">&#8617;</a></p></li>
+<li id="fn:6">
+<p>Which I think of as &ldquo;Scheme + useful libraries&rdquo;<a href="#fnref:6" rev="footnote">&#8617;</a></p></li>
+<li id="fn:7">
+<p>A contentious choice indeed; <em>more on this later(!)</em><a href="#fnref:7" rev="footnote">&#8617;</a></p></li>
+<li id="fn:8">
+<p><a href="http://scratch.mit.edu/">http://scratch.mit.edu/</a><a href="#fnref:8" rev="footnote">&#8617;</a></p></li>
+<li id="fn:9">
+<p><a href="http://el.media.mit.edu/logo-foundation/logo/turtle.html">http://el.media.mit.edu/logo-foundation/logo/turtle.html</a><a href="#fnref:9" rev="footnote">&#8617;</a></p></li>
+<li id="fn:10">
+<p>as in speech, and as in beer<a href="#fnref:10" rev="footnote">&#8617;</a></p></li>
+<li id="fn:11">
+<p>hate that term, but I don&rsquo;t know what else to use<a href="#fnref:11" rev="footnote">&#8617;</a></p></li>
+<li id="fn:12">
+<p>and even the smallest droplet on DigitalOcean, which is more than enough for this purpose, has a monthly price that&rsquo;s about the cost of a Venti Frappucino<a href="#fnref:12" rev="footnote">&#8617;</a></p></li>
+<li id="fn:13">
+<p><a href="https://play.golang.org/">https://play.golang.org/</a><a href="#fnref:13" rev="footnote">&#8617;</a></p></li>
+<li id="fn:14">
+<p>Although &mdash; thoughts like these are similar to <em>New Year&rsquo;s resolutions</em>, which means you need to consider the possibility that this entire post was conceived in a spirit of naive optimism.¯<a href="#fnref:14" rev="footnote">&#8617;</a></p></li>
+</ol>
+</div>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Zipf on Alice]]></title>
@@ -2913,27 +2978,6 @@ Error: <code>The resource 'projects/algol-c/zones/us-central1-a/instances/myvm' 
 <p>Except its not really that normal, is it? But it <em>should</em> be. So I thought, why not try out something that I called &ldquo;ridiculous concurrency&rdquo;, a sort of roundabout way of doing normal stuff, while <em>overusing</em> concurrency.</p>
 
 <p>This isn&rsquo;t meant to be a good way of showing how to do anything, but rather <strong>making it easy to <em>abuse</em> concurrency, so that you can later <em>use</em> it</strong>.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Scala/Haskell/Go]]></title>
-    <link href="http://agam.github.io/blog/2014/08/04/scala-slash-haskell-slash-go/"/>
-    <updated>2014-08-04T19:33:51+00:00</updated>
-    <id>http://agam.github.io/blog/2014/08/04/scala-slash-haskell-slash-go</id>
-    <content type="html"><![CDATA[<p>Ok, Scala is neat. It&rsquo;s certainly the <em>only</em> way I can bring myself to use the JVM. The idea of everything being an object is a good one. You can &lsquo;cheat&rsquo; a bit since you can use statements, mix in side effects, do whatever, but I understand the compromises for Java-interop, without which it would would have been just another unused academic language.</p>
-
-<p>It seems to be a <em>completely unopinionated</em> language, which IMO seems not so great since there are too many ways to do anything, so in practice you&rsquo;d have to pick some subset of features and stick with that, enforced as a style guide rather than by the compiler (much like all reasonable C++ programming is done today).</p>
-
-<p>Even if you never plan to use Scala, the two courses on Coursera are recommended viewing.</p>
-
-<p>Having done that, would I still use Scala? If I needed to use the JVM or existing Java libraries, this is a no-brainer. But without that constraint? Not quite sure. One of Haskell (for the type safety) or Go (for the reactive concurrency) might fit the bill just as well.</p>
-
-<p>Anyway, I&rsquo;m still working through these videos and I&rsquo;ve yet to build anything half-way complex with it, so take all this with a grain of salt.</p>
-
-<p>One open question I do have is whether Scala benefits from subtyping (which Haskell lacks). I&rsquo;ve heard/read many viewpoints on this but haven&rsquo;t come to a conclusion yet &hellip;</p>
-
-<p><strong>Update</strong>: I got some feedback to the effect of &ldquo;you&rsquo;re an idiot, you should just drop everything and use Go instead&rdquo;, so I&rsquo;m going to try that for a while and report back in &hellip; many months? Maybe.</p>
 ]]></content>
   </entry>
   
