@@ -27,7 +27,7 @@ $ gcloud auth login
 $ gcloud info
  
 ## One-time configuration to avoid specifying command-line flags
-$ gcloud config set project "<project_name>"
+$ gcloud config set project "<project_id>"
 $ gcloud config set compute/zone us-central1-a
  
 ## Login!
