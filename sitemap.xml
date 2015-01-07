@@ -3,6 +3,12 @@
   
   
   <url>
+    <loc>http://agam.github.io/blog/2015/01/07/lisp-performance-check-up/</loc>
+    <lastmod>2015-01-07T06:22:09+00:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
     <loc>http://agam.github.io/blog/2015/01/02/getting-into-programming/</loc>
     <lastmod>2015-01-02T23:17:08+00:00</lastmod>
     <priority>0.8</priority>
@@ -545,14 +551,14 @@
   
   <url>
     <loc>http://agam.github.io/</loc>
-    <lastmod>2015-01-03T00:51:13+00:00</lastmod>
+    <lastmod>2015-01-07T06:24:32+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   
   <url>
     <loc>http://agam.github.io/blog/archives/</loc>
-    <lastmod>2015-01-03T00:51:13+00:00</lastmod>
+    <lastmod>2015-01-07T06:24:32+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>

@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-01-03T00:51:13+00:00</updated>
+  <updated>2015-01-07T06:24:32+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,121 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Lisp performance check-up]]></title>
+    <link href="http://agam.github.io/blog/2015/01/07/lisp-performance-check-up/"/>
+    <updated>2015-01-07T06:22:09+00:00</updated>
+    <id>http://agam.github.io/blog/2015/01/07/lisp-performance-check-up</id>
+    <content type="html"><![CDATA[<p>Came across <a href="https://github.com/pixie-lang/pixie">pixie-lang</a>, and it had this bit about &ldquo;<em>the loop compiles down to six instructions!</em>&rdquo;</p>
+
+<p>So I decided to go and satisfy my curiosity about just how many instructions a loop like this <em>should</em> be expected to compile down to.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="nv">CL-USER&gt;</span> <span class="p">(</span><span class="nb">defun</span> <span class="nv">add-fn</span> <span class="p">(</span><span class="nv">args</span><span class="p">)</span>
+</span><span class='line'>           <span class="p">(</span><span class="nb">reduce</span> <span class="nf">#&#39;</span><span class="nb">+</span> <span class="nv">args</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>which obviously runs as</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="nv">CL-USER&gt;</span> <span class="p">(</span><span class="nv">add-fn</span> <span class="o">&#39;</span><span class="p">(</span><span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span><span class="p">))</span>
+</span><span class='line'><span class="mi">12</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Now, a look at what&rsquo;s going on &ldquo;under the hood&rdquo;</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="nv">CL-USER&gt;</span> <span class="p">(</span><span class="nb">disassemble</span> <span class="nf">#&#39;</span><span class="nv">add-fn</span><span class="p">)</span>
+</span><span class='line'><span class="c1">; disassembly for ADD-FN</span>
+</span><span class='line'><span class="c1">; Size: 42 bytes. Origin: #x1004FBC3F8</span>
+</span><span class='line'><span class="c1">; 3F8:       498B4C2460       MOV RCX, [R12+96]               ; thread.binding-stack-pointer</span>
+</span><span class='line'>                                                              <span class="c1">; no-arg-parsing entry point</span>
+</span><span class='line'><span class="c1">; 3FD:       48894DF8         MOV [RBP-8], RCX</span>
+</span><span class='line'><span class="c1">; 401:       488B1598FFFFFF   MOV RDX, [RIP-104]              ; #&lt;FUNCTION +&gt;</span>
+</span><span class='line'><span class="c1">; 408:       488BFE           MOV RDI, RSI</span>
+</span><span class='line'><span class="c1">; 40B:       488B0596FFFFFF   MOV RAX, [RIP-106]              ; #&lt;FDEFINITION for REDUCE&gt;</span>
+</span><span class='line'><span class="c1">; 412:       B904000000       MOV ECX, 4</span>
+</span><span class='line'><span class="c1">; 417:       FF7508           PUSH QWORD PTR [RBP+8]</span>
+</span><span class='line'><span class="c1">; 41A:       FF6009           JMP QWORD PTR [RAX+9]</span>
+</span><span class='line'><span class="c1">; 41D:       CC0A             BREAK 10                        ; error trap</span>
+</span><span class='line'><span class="c1">; 41F:       02               BYTE #X02</span>
+</span><span class='line'><span class="c1">; 420:       19               BYTE #X19                       ; INVALID-ARG-COUNT-ERROR</span>
+</span><span class='line'><span class="c1">; 421:       9A               BYTE #X9A                       ; RCX</span>
+</span><span class='line'><span class="no">NIL</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Ok, let&rsquo;s see if we can slightly improve that</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="nv">CL-USER&gt;</span> <span class="p">(</span><span class="nb">defun</span> <span class="nv">add-fn</span> <span class="p">(</span><span class="nv">args</span><span class="p">)</span>
+</span><span class='line'>           <span class="p">(</span><span class="k">declare</span> <span class="p">(</span><span class="k">optimize</span> <span class="p">(</span><span class="nv">speed</span> <span class="mi">3</span><span class="p">)</span> <span class="p">(</span><span class="nv">safety</span> <span class="mi">0</span><span class="p">)))</span>
+</span><span class='line'>           <span class="p">(</span><span class="nb">reduce</span> <span class="nf">#&#39;</span><span class="nb">+</span> <span class="nv">args</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="nv">CL-USER&gt;</span> <span class="p">(</span><span class="nb">disassemble</span> <span class="nf">#&#39;</span><span class="nv">add-fn</span><span class="p">)</span>
+</span><span class='line'><span class="c1">; disassembly for ADD-FN</span>
+</span><span class='line'><span class="c1">; Size: 25 bytes. Origin: #x10051BDB12</span>
+</span><span class='line'><span class="c1">; 12:       488B15A7FFFFFF   MOV RDX, [RIP-89]                ; #&lt;FUNCTION +&gt;</span>
+</span><span class='line'>                                                              <span class="c1">; no-arg-parsing entry point</span>
+</span><span class='line'><span class="c1">; 19:       488B05A8FFFFFF   MOV RAX, [RIP-88]                ; #&lt;FDEFINITION for REDUCE&gt;</span>
+</span><span class='line'><span class="c1">; 20:       B904000000       MOV ECX, 4</span>
+</span><span class='line'><span class="c1">; 25:       FF7508           PUSH QWORD PTR [RBP+8]</span>
+</span><span class='line'><span class="c1">; 28:       FF6009           JMP QWORD PTR [RAX+9]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Pretty sweet, eh? <em>You don&rsquo;t get that kind of feedback every day</em>.</p>
+
+<p>This was all run on 64-bit SBCL:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="nv">CL-USER&gt;</span> <span class="p">(</span><span class="nb">lisp-implementation-type</span><span class="p">)</span>
+</span><span class='line'><span class="s">&quot;SBCL&quot;</span>
+</span><span class='line'><span class="nv">CL-USER&gt;</span> <span class="p">(</span><span class="nb">lisp-implementation-version</span><span class="p">)</span>
+</span><span class='line'><span class="s">&quot;1.2.7&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Getting into programming, for _real_ and for _free_]]></title>
@@ -2963,21 +3078,6 @@ Error: <code>The resource 'projects/algol-c/zones/us-central1-a/instances/myvm' 
 <p>It&rsquo;ll also be useful to get <code>godef</code>. So, just <code>go get code.google.com/p/rog-go/exp/cmd/godef</code> (remember to set <code>$GOPATH</code> first &mdash; I use <code>~/Golang/Packages</code>).</p>
 
 <p>If you&rsquo;re enthusiastic about further Emacs-Go integration, you can try out <a href="http://github.com/dougm/goflymake"><code>goflymake</code></a> &mdash; I haven&rsquo;t used it myself (the compile step is nearly-instantaneous for me anyway), but I&rsquo;ve heard its good, so YMMV.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Ridiculous Concurrency]]></title>
-    <link href="http://agam.github.io/blog/2014/08/12/ridiculous-concurrency/"/>
-    <updated>2014-08-12T22:09:01+00:00</updated>
-    <id>http://agam.github.io/blog/2014/08/12/ridiculous-concurrency</id>
-    <content type="html"><![CDATA[<p>Ok, so I went through the <a href="http://tour.golang.org/">Go Tour</a>, and it&rsquo;s pretty impressive; having this sort of super-fast edit-compile-run cycle is something usually associated with Javascript-ish languages, certainly not a statically compiled systems language.</p>
-
-<p>One of the big selling points of Go (apart from its &ldquo;familiar&rdquo; yet clean syntax) is the ubiquitous concurrency primitives available. Yes, you could obviously do the same in other languages (see a good <a href="http://blog.drewolson.org/blog/2013/07/04/clojure-core-dot-async-and-go-a-code-comparison/">Clojure translation here</a>), but channels and goroutines being first-class objects in Go, passing them is as normal as ints and strings.</p>
-
-<p>Except its not really that normal, is it? But it <em>should</em> be. So I thought, why not try out something that I called &ldquo;ridiculous concurrency&rdquo;, a sort of roundabout way of doing normal stuff, while <em>overusing</em> concurrency.</p>
-
-<p>This isn&rsquo;t meant to be a good way of showing how to do anything, but rather <strong>making it easy to <em>abuse</em> concurrency, so that you can later <em>use</em> it</strong>.</p>
 ]]></content>
   </entry>
   

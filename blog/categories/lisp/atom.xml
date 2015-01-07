@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
 
-  <title><![CDATA[Category: lisp, | Agam's Mashed-Up Pome]]></title>
+  <title><![CDATA[Category: lisp | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/lisp/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-01-03T00:51:13+00:00</updated>
+  <updated>2015-01-07T06:24:32+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -14,246 +14,90 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Learning Other Languages]]></title>
-    <link href="http://agam.github.io/blog/2014/07/30/learning-other-languages/"/>
-    <updated>2014-07-30T19:23:33+00:00</updated>
-    <id>http://agam.github.io/blog/2014/07/30/learning-other-languages</id>
-    <content type="html"><![CDATA[<p>I spent some time learning a decent amount of Common Lisp last year. Nothing fancy, but I&rsquo;m comfortable using quicklisp, playing around with libraries, modelling stuff, etc. I&rsquo;ve read through <a href="http://www.gigamonkeys.com/book/">PCL</a> and <a href="http://www.cs.cmu.edu/Groups/AI/html/cltl/clm/node1.html">ClTl2</a> (though unfortunately, not <a href="http://norvig.com/paip.html">PAIP</a> (not yet!)).</p>
+    <title type="html"><![CDATA[Lisp performance check-up]]></title>
+    <link href="http://agam.github.io/blog/2015/01/07/lisp-performance-check-up/"/>
+    <updated>2015-01-07T06:22:09+00:00</updated>
+    <id>http://agam.github.io/blog/2015/01/07/lisp-performance-check-up</id>
+    <content type="html"><![CDATA[<p>Came across <a href="https://github.com/pixie-lang/pixie">pixie-lang</a>, and it had this bit about &ldquo;<em>the loop compiles down to six instructions!</em>&rdquo;</p>
 
-<p>They&rsquo;ve been a bunch of other new (as in, the last 7 years ?) languages that I&rsquo;ve looked at off and on. Gone through a few tutorials, read (no, lightly skimmed) some suggested material (learn you a X, learn Y in Z minutes, etc). I <em>love</em> Common Lisp (enough to simply call it &ldquo;Lisp&rdquo; to the exclusion of the gazillion varieties of scheme (and yes, Clojure too (!))), but yeah, the lack of libraries does get to be a pain point.</p>
+<p>So I decided to go and satisfy my curiosity about just how many instructions a loop like this <em>should</em> be expected to compile down to.</p>
 
-<p>So someone suggested I try Clojure, but I&rsquo;ll pass. I don&rsquo;t want to look at stuff ending with &ldquo;))]))})]})&rdquo;. If I need reader macros for hash-tables, <a href="http://cl21.org/">cl21</a> has it, though I think <a href="https://github.com/vseloved/rutils/blob/master/docs/ann-rutils.md">rutils</a> should suffice for a nice superset of useful library add-ons (OTOH the Overtone/Quil/ShaderTone combo does make me salivate, and I definitely <em>will</em> check try them out at some point).</p>
+<p>```lisp
+CL-USER> (defun add-fn (args)</p>
 
-<p>If I <em>have</em> to work with the JVM, I figure I might as well learn something new/different that isn&rsquo;t trying too hard to be <em>Lisp</em>. Hence, <a href="http://www.scala-lang.org/">Scala</a>. I may regret this later (but how bad can it be). I hear people loved the <a href="https://www.coursera.org/course/progfun">MOOC</a> on it last year, and looks like I <em>just</em> missed the one this year, but this being Coursera (yay) I can still do the videos and the assignments.</p>
+<pre><code>       (reduce #'+ args))
+</code></pre>
 
-<p>Also <a href="https://www.dartlang.org/">Dart</a> because it&rsquo;s nice to get basic web UI stuff going when needed (and no, I don&rsquo;t want to know Javascript). So we&rsquo;ll see how that goes.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Simple game of life]]></title>
-    <link href="http://agam.github.io/blog/2014/07/25/simple-game-of-life/"/>
-    <updated>2014-07-25T20:10:46+00:00</updated>
-    <id>http://agam.github.io/blog/2014/07/25/simple-game-of-life</id>
-    <content type="html"><![CDATA[<p>(Just for fun)</p>
+<p>```</p>
 
-<p><div><script src='https://gist.github.com/a832613064f958641330.js'></script>
-<noscript><pre><code>(defpackage :game-of-life
-  (:use :cl))
-(in-package :game-of-life)
+<p>which obviously runs as</p>
 
-(defparameter *board-size* 10)
-(defparameter *game-board* nil)
-
-(defparameter *space* #\ )
-(defparameter *life* #\#)
-
-(defun make-new-board ()
-  (make-array (list *board-size* *board-size*)
-	      :element-type '(mod 2)
-	      :initial-element 0))
-
-(defun start-game ()
-  (setf *game-board* (make-new-board)))
-
-
-(defun print-board ()
-  (dotimes (i *board-size*)
-    (dotimes (j *board-size*)
-      (if (= 0 (aref *game-board* i j))
-	  (princ *space*)
-	  (princ *life*)))
-    (terpri)))
-
-(defun add-life (x y)
-  (setf (aref *game-board* x y) 1))
-
-(defparameter *environment-radius* 1)
-
-(defun get-environment (x y)
-  &quot;Create a matrix of size 2*radius + 1, with the element
-itself implicitly at (radius,radius) set to 0&quot;
-  (let* ((env-size (1+ (* 2 *environment-radius*)))
-	 (env (make-array (list env-size env-size)
-			 :element-type '(mod 2)
-			 :initial-element 0)))
-    (dotimes (i env-size)
-      (dotimes (j env-size)
-	(let ((x-offset (+ x (- i *environment-radius*)))
-	      (y-offset (+ y (- j *environment-radius*))))
-	  (if (and (&gt; x-offset 0) (&lt; x-offset *board-size*)
-		   (&gt; y-offset 0) (&lt; y-offset *board-size*))
-	      (setf (aref env i j) (aref *game-board* x-offset y-offset))
-	      (setf (aref env i j) 0)))))
-    env))
-
-(defun count-living-neighbors (env)
-  (let* ((num 0)
-	 (env-size (1+ (* 2 *environment-radius*))))
-    (dotimes (i env-size)
-      (dotimes (j env-size)
-	(when (and (= 1 (aref env i j))
-		   (or (/= i *environment-radius*)
-		       (/= j *environment-radius*)))
-	  (incf num))))
-    num))
-
-(defparameter *birth-number* 3)
-(defparameter *lonely-number* 1)
-(defparameter *crowded-number* 4)
-
-(defun can-be-born (neighbors)
-  (= *birth-number* neighbors))
-
-(defun will-survive (neighbors)
-  (and (&gt; neighbors *lonely-number*)
-       (&lt; neighbors *crowded-number*)))
-
-(defun live-or-die (env)
-  (let ((current (aref env *environment-radius* *environment-radius*))
-	(living-neighbors (count-living-neighbors env)))
-    ;;(format t &quot;~%Debug: Current = ~S, num-neighbors = ~S&quot; current living-neighbors)
-    (if (= 0 current)
-	(can-be-born living-neighbors)
-	(will-survive living-neighbors))))
-
-(defun cell-representation (truth)
-  (if truth
-      1
-      0))
-
-(defun step-board ()
-  &quot;Iterate the board by one time step, growing or shrinking life as appropriate&quot;
-  (let ((next-board (make-new-board)))
-    (dotimes (i *board-size*)
-      (dotimes (j *board-size*)
-	(let* ((environment (get-environment i j))
-	       (next (cell-representation (live-or-die environment))))
-	  ;;(format t &quot;Debug: Cell: ~S, Environment: ~S, Next: ~S~%&quot; (aref *game-board* i j) environment next)
-	  (setf (aref next-board i j) next))))
-    (setf *game-board* next-board)))</code></pre></noscript></div>
-</p>
-
-<p>Maybe I&rsquo;ll add a GUI and some tools later, but for now you have to do something like:</p>
-
-<p><code>
-(start-game)
-(add-life 4 5)
-(add-life 5 5)
-(add-life 6 5)
-(print-board)
-(step-board)
-(print-board)
+<p><code>lisp
+CL-USER&gt; (add-fn '(3 4 5))
+12
 </code></p>
 
-<p>which should show</p>
+<p>Now, a look at what&rsquo;s going on &ldquo;under the hood&rdquo;</p>
 
-<pre>
+<p>```lisp
+CL-USER> (disassemble #&lsquo;add-fn)
+; disassembly for ADD-FN
+; Size: 42 bytes. Origin: #x1004FBC3F8
+; 3F8:       498B4C2460       MOV RCX, [R12+96]               ; thread.binding-stack-pointer</p>
 
+<pre><code>                                                          ; no-arg-parsing entry point
+</code></pre>
 
+<p>; 3FD:       48894DF8         MOV [RBP-8], RCX
+; 401:       488B1598FFFFFF   MOV RDX, [RIP-104]              ; #<FUNCTION +>
+; 408:       488BFE           MOV RDI, RSI
+; 40B:       488B0596FFFFFF   MOV RAX, [RIP-106]              ; #<FDEFINITION for REDUCE>
+; 412:       B904000000       MOV ECX, 4
+; 417:       FF7508           PUSH QWORD PTR [RBP+8]
+; 41A:       FF6009           JMP QWORD PTR [RAX+9]
+; 41D:       CC0A             BREAK 10                        ; error trap
+; 41F:       02               BYTE #X02
+; 420:       19               BYTE #X19                       ; INVALID-ARG-COUNT-ERROR
+; 421:       9A               BYTE #X9A                       ; RCX
+NIL
+```</p>
 
-    #
-    #
-    #
+<p>Ok, let&rsquo;s see if we can slightly improve that</p>
 
+<p>```lisp
+CL-USER> (defun add-fn (args)</p>
 
+<pre><code>       (declare (optimize (speed 3) (safety 0)))
+       (reduce #'+ args))
+</code></pre>
 
-</pre>
+<p>```</p>
 
+<p>```lisp
+CL-USER> (disassemble #&lsquo;add-fn)
+; disassembly for ADD-FN
+; Size: 25 bytes. Origin: #x10051BDB12
+; 12:       488B15A7FFFFFF   MOV RDX, [RIP-89]                ; #<FUNCTION +></p>
 
-<p>followed by</p>
+<pre><code>                                                          ; no-arg-parsing entry point
+</code></pre>
 
-<pre>
+<p>; 19:       488B05A8FFFFFF   MOV RAX, [RIP-88]                ; #<FDEFINITION for REDUCE>
+; 20:       B904000000       MOV ECX, 4
+; 25:       FF7508           PUSH QWORD PTR [RBP+8]
+; 28:       FF6009           JMP QWORD PTR [RAX+9]
+```</p>
 
+<p>Pretty sweet, eh? <em>You don&rsquo;t get that kind of feedback every day</em>.</p>
 
+<p>This was all run on 64-bit SBCL:</p>
 
-    ###
-
-
-
-
-
-</pre>
-
-
-<p>and so on &hellip;</p>
-
-<p><em>Update:</em></p>
-
-<p>It&rsquo;s easy to try out patterns. Here are a few typical ones:</p>
-
-<p><div><script src='https://gist.github.com/527c5fa85b316c84e9ba.js'></script>
-<noscript><pre><code>
-;;; Useful helpers to add stuff to the board. Describe a pattern as a list.
-(defun add-life (x y)
-  (setf (aref *game-board* y x) 1))
-
-(defun draw-pattern (x y pattern)
-  &quot;Assuming 'pattern' is specified as a row-major set of 1s and 0s, replicates that on the board&quot;
-  (mapindex #'(lambda (row-num row)
-		(mapindex #'(lambda (col-num entry)
-			      (let ((x-eff (+ x col-num))
-				    (y-eff (+ y row-num)))
-				(when (and (&lt; x-eff *board-size*)
-					   (&lt; y-eff *board-size*))
-				  (setf (aref *game-board* y-eff x-eff) entry))))
-			  row))
-	    pattern))
-    
-
-;; Sample oscillating patterns
-(defun draw-blinker (x y)
-  (draw-pattern x y
-		'((1)
-		  (1)
-		  (1))))
-
-(defun draw-toad (x y)
-  (draw-pattern x y
-		'((0 1 1 1)
-		  (1 1 1 0))))
-
-(defun draw-beacon (x y)
-  (draw-pattern x y
-		'((1 1 0 0)
-		  (1 1 0 0)
-		  (0 0 1 1)
-		  (0 0 1 1))))
-
-;; Sample fixed patterns
-(defun draw-loaf (x y)
-  (draw-pattern x y
-		'((0 1 1 0)
-		  (1 0 0 1)
-		  (0 1 0 1)
-		  (0 0 1 0))))
-
-(defun draw-block (x y)
-  (draw-pattern x y
-		'((1 1)
-		  (1 1))))
-
-;; Sample moving pattern
-(defun draw-glider-moving-right (x y)
-  (draw-pattern x y
-		'((0 1 0)
-		  (0 0 1)
-		  (1 1 1))))
-
-(defun draw-glider-moving-left (x y)
-  (draw-pattern x y
-		'((0 1 0)
-		  (1 0 0)
-		  (1 1 1))))</code></pre></noscript></div>
-</p>
-
-<p>Then you can do something like</p>
-
-<p><code>
-(loop repeat 5 do (print-board) (step-board))
+<p><code>lisp
+CL-USER&gt; (lisp-implementation-type)
+"SBCL"
+CL-USER&gt; (lisp-implementation-version)
+"1.2.7"
 </code></p>
-
-<p>and watch a few iterations. Of course, this is probably better implemented as a mobile app, I suppose. But yeah, still fun. Try out a <a href="http://wwwhomes.uni-bielefeld.de/achim/moving.html">few other spaceships</a> if you like &hellip;</p>
 ]]></content>
   </entry>
   
