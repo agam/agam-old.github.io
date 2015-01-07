@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-01-07T06:24:32+00:00</updated>
+  <updated>2015-01-07T06:49:47+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,37 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Stuff I'd like to learn in 2015]]></title>
+    <link href="http://agam.github.io/blog/2015/01/07/stuff-id-like-to-learn-in-2015/"/>
+    <updated>2015-01-07T06:49:00+00:00</updated>
+    <id>http://agam.github.io/blog/2015/01/07/stuff-id-like-to-learn-in-2015</id>
+    <content type="html"><![CDATA[<p>Ah yes, the time of New Year&rsquo;s Resolutions. It never ends. Many weeks pass by in a haze of &ldquo;<em>shoulds</em>&rdquo;. So here&rsquo;s something more to add on.</p>
+
+<ul>
+<li><p>Keep playing with Go. It&rsquo;s a great, simple language. In particular, I want to try out a whole bunch of crazy experiments.</p></li>
+<li><p>Think about the &ldquo;simple text games&rdquo; book. Or bury the idea as soon as possible.</p></li>
+<li><p>Learn a bit more about the JVM (perhaps through Clojure?)</p></li>
+<li><p>Stem the atrophy in algorithmic skills</p></li>
+</ul>
+
+
+<p>&hellip; and there&rsquo;s more I can&rsquo;t remember right now. The first two seem self-evident, so a bit more about the third and fourth. I&rsquo;ve had a deep dislike for all things <em>Microsoft and Java</em> for over ten years now, and I think it&rsquo;s all mostly FUD.</p>
+
+<p>In the case of Microsoft, it was because everything I tried to learn became deprecated as fast as I learnt it, and I quit in disgust (I&rsquo;m told I quit before giving the CLR and C# a fair chance). I was quite naive fifteen years ago and thought that <em>everything</em> that was current <em>then</em> was going to last forever. This extended to such stuff as Frontpage, DDE, COM, RDO &hellip; you get the idea.</p>
+
+<p>For Java it&rsquo;s more vague. I think I never got the <em>hang</em> of it, and then I had a lot of &ldquo;<em>design pattern crap</em>&rdquo; thrown in my face, and my long-last impression was one of incredible, pointless verbosity. Last year though we had someone join our team who had done <em>RealWorkInJava &trade;</em>, and after talking to him it didn&rsquo;t seem all that bad. In particular, the JVM seemed like something worth knowing.</p>
+
+<p>I have pretty much <em>zero</em> experience with hosted languages. One of the reasons for this might be that I always want to know what&rsquo;s &ldquo;really happening underneath&rdquo;, and am deeply suspicious of situations when I <em>cannot</em> know (this is also why I prefer Ocaml/F# over Haskell, but  that&rsquo;s a whole other blog post).</p>
+
+<p>Add to this the fact that I&rsquo;ve always been curious about Clojure, to discover all its differences from Common Lisp on my own (there are several rants for and against it online, but there&rsquo;s only one way to find out for sure), and it&rsquo;s a natural outlet for exploration.</p>
+
+<p>Which brings me to the fourth point &hellip; I feel I&rsquo;ve seriously forgotten <em>a lot</em> of theory, both in Math and CS, and it&rsquo;s <em>frightening</em>. So I&rsquo;m hoping to weave that (<em>somehow</em>) into my Clojure exploration and kill many birds with one stone.</p>
+
+<p>So yeah, we&rsquo;ll find out how this all worked out, same time next year :)</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Lisp performance check-up]]></title>
@@ -3063,21 +3094,6 @@ Error: <code>The resource 'projects/algol-c/zones/us-central1-a/instances/myvm' 
 <p>indicating success.</p>
 
 <p><strong>Note:</strong> If you want to upload anonymously, try <code>gist -a myfile</code> instead of the above.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Golang setup]]></title>
-    <link href="http://agam.github.io/blog/2014/08/12/golang-setup/"/>
-    <updated>2014-08-12T22:21:15+00:00</updated>
-    <id>http://agam.github.io/blog/2014/08/12/golang-setup</id>
-    <content type="html"><![CDATA[<p>Just some basic personal notes here.</p>
-
-<p>Obviously, get the <code>go-mode</code> for Emacs. It has useful shortcuts, like <code>C-c C-a</code> to import a package while you&rsquo;re editing some code and don&rsquo;t want to scroll up and add this, or <code>C-c C-d</code> to show the signature of the function at point. There are other useful functions (for which you can add your own shortcuts), such as <code>gofmt</code> which does what you&rsquo;d expect, and <code>go-play-region</code>, which is nifty (but perhaps not that useful): it sends the selected code to <a href="http://play.golang.org/">the Go Playground</a>, and displays the result.</p>
-
-<p>It&rsquo;ll also be useful to get <code>godef</code>. So, just <code>go get code.google.com/p/rog-go/exp/cmd/godef</code> (remember to set <code>$GOPATH</code> first &mdash; I use <code>~/Golang/Packages</code>).</p>
-
-<p>If you&rsquo;re enthusiastic about further Emacs-Go integration, you can try out <a href="http://github.com/dougm/goflymake"><code>goflymake</code></a> &mdash; I haven&rsquo;t used it myself (the compile step is nearly-instantaneous for me anyway), but I&rsquo;ve heard its good, so YMMV.</p>
 ]]></content>
   </entry>
   
