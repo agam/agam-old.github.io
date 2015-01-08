@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: basic | Agam's Mashed-Up Pome]]></title>
+  <link href="http://agam.github.io/blog/categories/basic/atom.xml" rel="self"/>
+  <link href="http://agam.github.io/"/>
+  <updated>2015-01-08T04:05:48+00:00</updated>
+  <id>http://agam.github.io/</id>
+  <author>
+    <name><![CDATA[Agam]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Beginning 'basic' text games in Go: Rock, Paper, Scissors, Lizard, Spock]]></title>
+    <link href="http://agam.github.io/blog/2015/01/08/rock/"/>
+    <updated>2015-01-08T04:00:53+00:00</updated>
+    <id>http://agam.github.io/blog/2015/01/08/rock</id>
+    <content type="html"><![CDATA[<p>I&rsquo;ve been having some fun with the idea of simple text-based games in Go<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>. The original BASIC games book<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup> was not hard to find, and it was interesting to revisit it again.</p>
+
+<p>The first thing that stared me in the face was just how <em>bad</em> (and by &ldquo;bad&rdquo; I mean <em>incomprehensible</em>) most of the code was. In my nostalgia I had completely lost sight of this.</p>
+
+<p>The second thing was how nicely self-contained each game was, focussed on one simple idea, and implicitly pedagogical. Indeed, the games can be divided into a few distinct families<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>.</p>
+
+<p>So I came up with a hypothetical organization for my hypothetical book &mdash; it would need some simple stuff to start out with (with for loops, conditionals, functions, and so on), and slowly introduce more stuff. <em>An explicit non-goal</em> would be teaching the language in its complete form (a link to <em>Effective Go</em><sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup> should suffice for the motivated reader).</p>
+
+<p>In terms of Games, the rough plan I came up with was: start with some simple guessing game, then maybe a slightly more involved version, then a card game, then the classic <em>Battleship</em> around the mid-point, followed by a sort of <em>&ldquo;dungeon RPG&rdquo;</em> with some optional discussion at each point (e.g. should the computer in &ldquo;Battleship&rdquo; be dumb and random, or <em>learn</em>?)</p>
+
+<p>To get an idea of what this might look like, I wrote the first four of these. Here is what might pass for the very first one, a modified version of <em>&ldquo;Rock, Paper, Scissors&rdquo;</em>.</p>
+
+<p>```go
+package main</p>
+
+<p>import (</p>
+
+<pre><code>"fmt"
+"math/rand"
+"strings"
+"time"
+</code></pre>
+
+<p>)</p>
+
+<p>const (</p>
+
+<pre><code>rock = iota
+paper
+scissors
+lizard
+spock
+maxOptions
+</code></pre>
+
+<p>)</p>
+
+<p>var handOptions = []string{&ldquo;rock&rdquo;, &ldquo;paper&rdquo;, &ldquo;scissors&rdquo;, &ldquo;lizard&rdquo;, &ldquo;spock&rdquo;}</p>
+
+<p>type precedence struct {</p>
+
+<pre><code>hand1  int
+reason string
+hand2  int
+</code></pre>
+
+<p>}</p>
+
+<p>var precedences = []precedence{</p>
+
+<pre><code>{spock, "smashes", scissors},
+{spock, "vaporises", rock},
+{lizard, "posions", spock},
+{lizard, "eats", paper},
+{rock, "crushes", lizard},
+{rock, "cruses", scissors},
+{paper, "covers", rock},
+{paper, "disproves", spock},
+{scissors, "cuts", paper},
+{scissors, "decapitates", lizard},
+</code></pre>
+
+<p>}</p>
+
+<p>func showUsage() {</p>
+
+<pre><code>fmt.Println("\n     Welcome to ROCK - PAPER - SCISSORS - LIZARD - SPOCK  ")
+fmt.Println("----------------------------------------------------------\n")
+fmt.Println("We each pick one of the following : \n")
+for i := 0; i &lt; maxOptions; i++ {
+    fmt.Printf("--&gt;  %s  &lt;--\n", handOptions[i])
+}
+fmt.Println()
+</code></pre>
+
+<p>}</p>
+
+<p>func getPlayerChoice() int {</p>
+
+<pre><code>for {
+    fmt.Printf("\nEnter your choice : ")
+    var choice string
+    fmt.Scan(&amp;choice)
+
+    choice = strings.ToLower(choice)
+
+    for i := 0; i &lt; maxOptions; i++ {
+        if handOptions[i] == choice {
+            return i
+        }
+    }
+}
+</code></pre>
+
+<p>}</p>
+
+<p>func getComputerChoice() (choice int) {</p>
+
+<pre><code>choice = rand.Intn(maxOptions)
+fmt.Printf("I chose ")
+for i := 0; i &lt; 3; i++ {
+    fmt.Printf(".")
+    time.Sleep(200 * time.Millisecond)
+}
+fmt.Printf(" %s\n\n", handOptions[choice])
+return
+</code></pre>
+
+<p>}</p>
+
+<p>func main() {</p>
+
+<pre><code>showUsage()
+
+rand.Seed(time.Now().Unix())
+var playerWins, computerWins int
+
+for {
+    fmt.Printf("\nThe score is: Me %d, You %d\n", computerWins, playerWins)
+    playerChoice := getPlayerChoice()
+    computerChoice := getComputerChoice()
+
+    playerWon := false
+    computerWon := false
+    for _, p := range precedences {
+        if p.hand1 == playerChoice &amp;&amp; p.hand2 == computerChoice {
+            fmt.Printf("Alas! %s %s %s! You Win! :(\n",
+                handOptions[p.hand1], p.reason, handOptions[p.hand2])
+            playerWon = true
+        }
+        if p.hand1 == computerChoice &amp;&amp; p.hand2 == playerChoice {
+            fmt.Printf("Aha! %s %s %s! I win! :)\n",
+                handOptions[p.hand1], p.reason, handOptions[p.hand2])
+            computerWon = true
+        }
+    }
+
+    if playerWon {
+        playerWins++
+    } else if computerWon {
+        computerWins++
+    } else {
+        fmt.Println("Hey, look, it was a draw!\n\n")
+    }
+
+    fmt.Printf("\nPlay another round ?  (enter 'y' or 'n') : ")
+    var another string
+    fmt.Scan(&amp;another)
+    if strings.ToLower(another) == "y" {
+        continue
+    } else {
+        break
+    }
+}
+fmt.Println("\nOh well, until next time then ... \n")
+</code></pre>
+
+<p>}
+```</p>
+
+<p>Try it out! It&rsquo;s meant to be simple and straightforward &mdash; but wait! Before you pass judgement, I present to you the <em>original</em> version:</p>
+
+<p><code>basic
+10 PRINT TAB(21);"GAME OF ROCK, SCISSORS, PAPER"
+20 PRINT TAB(15);"CREATIVE COMPUTING  MORRISTOWN, NEW JERSEY"
+25 PRINT:PRINT:PRINT
+30 INPUT "HOW MANY GAMES";Q
+40 IF Q&lt;11 THEN 60
+50 PRINT "SORRY, BUT WE AREN'T ALLOWED TO PLAY THAT MANY.": GOTO 30
+60 FOR G=1 TO Q
+70 PRINT: PRINT "GAME NUMBER";G
+80 X=INT(RND(1)*3+1)
+90 PRINT "3=ROCK...2=SCISSORS...1=PAPER"
+100 INPUT "1...2...3...WHAT'S YOUR CHOICE";K
+110 IF (K-1)*(K-2)*(K-3)&lt;&gt;0 THEN PRINT "INVALID.": GOTO 90
+120 PRINT "THIS IS MY CHOICE..."
+130 ON X GOTO 140,150,160
+140 PRINT "...PAPER": GOTO 170
+150 PRINT "...SCISSORS": GOTO 170
+160 PRINT "...ROCK"
+170 IF X=K THEN 250
+180 IF X&gt;K THEN 230
+190 IF X=1 THEN 210
+200 PRINT "YOU WIN!!!":H=H+1: GOTO 260
+210 IF K&lt;&gt;3 THEN 200
+220 PRINT "WOW!  I WIN!!!":C=C+1:GOTO 260
+230 IF K&lt;&gt;1 OR X&lt;&gt;3 THEN 220
+240 GOTO 200
+250 PRINT "TIE GAME.  NO WINNER."
+260 NEXT G
+270 PRINT: PRINT "HERE IS THE FINAL GAME SCORE:"
+280 PRINT "I HAVE WON";C;"GAME(S)."
+290 PRINT "YOU HAVE WON";H;"GAME(S)."
+300 PRINT "AND";Q-(C+H);"GAME(S) ENDED IN A TIE."
+310 PRINT: PRINT "THANKS FOR PLAYING!!"
+320 END
+</code></p>
+
+<p>Yes, folks, that is the kind of stuff I <em>cannot</em> believe I squinted over and read again and again :(</p>
+<div class="footnotes">
+<hr/>
+<ol>
+<li id="fn:1">
+<p>First mentioned <a href="http://agam.github.io/blog/2014/12/17/the-gardens-of-go/">here</a> a month ago<a href="#fnref:1" rev="footnote">&#8617;</a></p></li>
+<li id="fn:2">
+<p><a href="http://www.atariarchives.org/basicgames/">&ldquo;Basic Computer Games&rdquo;</a>, originally for the Atari<a href="#fnref:2" rev="footnote">&#8617;</a></p></li>
+<li id="fn:3">
+<p>As in <a href="http://bitsavers.trailing-edge.com/pdf/dec/_Books/101_BASIC_Computer_Games_Mar75.pdf">this version with commentary</a>; see <em>Appendix A (pg 247)</em><a href="#fnref:3" rev="footnote">&#8617;</a></p></li>
+<li id="fn:4">
+<p><a href="https://golang.org/doc/effective_go.html">&ldquo;Effective Go&rdquo;</a><a href="#fnref:4" rev="footnote">&#8617;</a></p></li>
+</ol>
+</div>
+
+]]></content>
+  </entry>
+  
+</feed>

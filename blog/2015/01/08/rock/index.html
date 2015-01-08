@@ -1,0 +1,530 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Beginning 'basic' text games in Go: Rock, Paper, Scissors, Lizard, Spock - Agam's Mashed-Up Pome</title>
+	<meta name="author" content="Agam">
+
+	
+	<meta name="description" content="I&rsquo;ve been having some fun with the idea of simple text-based games in Go1. The original BASIC games book2 was not hard to find, and it was &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Agam's Mashed-Up Pome" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script async="true" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+
+</head>
+
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">Agam's Mashed-Up Pome</a></h1>
+<!-- DebugAgam: Uncomment if necessary!
+<nav id="main-nav"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:agam.github.io">
+			</form>
+		</div>
+	</div>
+</nav>
+-->
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		<a class="google" href="https://plus.google.com/+AgamBrahma?rel=author" title="Google+">Google+</a>
+		
+		
+		<a class="twitter" href="http://twitter.com/agambrahma" title="Twitter">Twitter</a>
+		
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+    
+	</div>
+        <!-- DebugAgam: uncomment if necessary!
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:agam.github.io">
+	</form>
+        -->
+</nav>
+
+</header>
+	
+		
+	
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">Beginning 'Basic' Text Games in Go: Rock, Paper, Scissors, Lizard, Spock</h2>
+	<div class="entry-content"><p>I&rsquo;ve been having some fun with the idea of simple text-based games in Go<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>. The original BASIC games book<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup> was not hard to find, and it was interesting to revisit it again.</p>
+
+<p>The first thing that stared me in the face was just how <em>bad</em> (and by &ldquo;bad&rdquo; I mean <em>incomprehensible</em>) most of the code was. In my nostalgia I had completely lost sight of this.</p>
+
+<p>The second thing was how nicely self-contained each game was, focussed on one simple idea, and implicitly pedagogical. Indeed, the games can be divided into a few distinct families<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>.</p>
+
+<p>So I came up with a hypothetical organization for my hypothetical book &mdash; it would need some simple stuff to start out with (with for loops, conditionals, functions, and so on), and slowly introduce more stuff. <em>An explicit non-goal</em> would be teaching the language in its complete form (a link to <em>Effective Go</em><sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup> should suffice for the motivated reader).</p>
+
+<p>In terms of Games, the rough plan I came up with was: start with some simple guessing game, then maybe a slightly more involved version, then a card game, then the classic <em>Battleship</em> around the mid-point, followed by a sort of <em>&ldquo;dungeon RPG&rdquo;</em> with some optional discussion at each point (e.g. should the computer in &ldquo;Battleship&rdquo; be dumb and random, or <em>learn</em>?)</p>
+
+<p>To get an idea of what this might look like, I wrote the first four of these. Here is what might pass for the very first one, a modified version of <em>&ldquo;Rock, Paper, Scissors&rdquo;</em>.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+<span class='line-number'>114</span>
+<span class='line-number'>115</span>
+<span class='line-number'>116</span>
+<span class='line-number'>117</span>
+<span class='line-number'>118</span>
+<span class='line-number'>119</span>
+<span class='line-number'>120</span>
+<span class='line-number'>121</span>
+</pre></td><td class='code'><pre><code class='go'><span class='line'><span class="kn">package</span> <span class="nx">main</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="p">(</span>
+</span><span class='line'>  <span class="s">&quot;fmt&quot;</span>
+</span><span class='line'>  <span class="s">&quot;math/rand&quot;</span>
+</span><span class='line'>  <span class="s">&quot;strings&quot;</span>
+</span><span class='line'>  <span class="s">&quot;time&quot;</span>
+</span><span class='line'><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">const</span> <span class="p">(</span>
+</span><span class='line'>  <span class="nx">rock</span> <span class="p">=</span> <span class="kc">iota</span>
+</span><span class='line'>  <span class="nx">paper</span>
+</span><span class='line'>  <span class="nx">scissors</span>
+</span><span class='line'>  <span class="nx">lizard</span>
+</span><span class='line'>  <span class="nx">spock</span>
+</span><span class='line'>  <span class="nx">maxOptions</span>
+</span><span class='line'><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">handOptions</span> <span class="p">=</span> <span class="p">[]</span><span class="kt">string</span><span class="p">{</span><span class="s">&quot;rock&quot;</span><span class="p">,</span> <span class="s">&quot;paper&quot;</span><span class="p">,</span> <span class="s">&quot;scissors&quot;</span><span class="p">,</span> <span class="s">&quot;lizard&quot;</span><span class="p">,</span> <span class="s">&quot;spock&quot;</span><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">type</span> <span class="nx">precedence</span> <span class="kd">struct</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">hand1</span>  <span class="kt">int</span>
+</span><span class='line'>  <span class="nx">reason</span> <span class="kt">string</span>
+</span><span class='line'>  <span class="nx">hand2</span>  <span class="kt">int</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">precedences</span> <span class="p">=</span> <span class="p">[]</span><span class="nx">precedence</span><span class="p">{</span>
+</span><span class='line'>  <span class="p">{</span><span class="nx">spock</span><span class="p">,</span> <span class="s">&quot;smashes&quot;</span><span class="p">,</span> <span class="nx">scissors</span><span class="p">},</span>
+</span><span class='line'>  <span class="p">{</span><span class="nx">spock</span><span class="p">,</span> <span class="s">&quot;vaporises&quot;</span><span class="p">,</span> <span class="nx">rock</span><span class="p">},</span>
+</span><span class='line'>  <span class="p">{</span><span class="nx">lizard</span><span class="p">,</span> <span class="s">&quot;posions&quot;</span><span class="p">,</span> <span class="nx">spock</span><span class="p">},</span>
+</span><span class='line'>  <span class="p">{</span><span class="nx">lizard</span><span class="p">,</span> <span class="s">&quot;eats&quot;</span><span class="p">,</span> <span class="nx">paper</span><span class="p">},</span>
+</span><span class='line'>  <span class="p">{</span><span class="nx">rock</span><span class="p">,</span> <span class="s">&quot;crushes&quot;</span><span class="p">,</span> <span class="nx">lizard</span><span class="p">},</span>
+</span><span class='line'>  <span class="p">{</span><span class="nx">rock</span><span class="p">,</span> <span class="s">&quot;cruses&quot;</span><span class="p">,</span> <span class="nx">scissors</span><span class="p">},</span>
+</span><span class='line'>  <span class="p">{</span><span class="nx">paper</span><span class="p">,</span> <span class="s">&quot;covers&quot;</span><span class="p">,</span> <span class="nx">rock</span><span class="p">},</span>
+</span><span class='line'>  <span class="p">{</span><span class="nx">paper</span><span class="p">,</span> <span class="s">&quot;disproves&quot;</span><span class="p">,</span> <span class="nx">spock</span><span class="p">},</span>
+</span><span class='line'>  <span class="p">{</span><span class="nx">scissors</span><span class="p">,</span> <span class="s">&quot;cuts&quot;</span><span class="p">,</span> <span class="nx">paper</span><span class="p">},</span>
+</span><span class='line'>  <span class="p">{</span><span class="nx">scissors</span><span class="p">,</span> <span class="s">&quot;decapitates&quot;</span><span class="p">,</span> <span class="nx">lizard</span><span class="p">},</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">func</span> <span class="nx">showUsage</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;\n     Welcome to ROCK - PAPER - SCISSORS - LIZARD - SPOCK  &quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;----------------------------------------------------------\n&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;We each pick one of the following : \n&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">maxOptions</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;--&gt;  %s  &lt;--\n&quot;</span><span class="p">,</span> <span class="nx">handOptions</span><span class="p">[</span><span class="nx">i</span><span class="p">])</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">()</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">func</span> <span class="nx">getPlayerChoice</span><span class="p">()</span> <span class="kt">int</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">for</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;\nEnter your choice : &quot;</span><span class="p">)</span>
+</span><span class='line'>      <span class="kd">var</span> <span class="nx">choice</span> <span class="kt">string</span>
+</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Scan</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">choice</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="nx">choice</span> <span class="p">=</span> <span class="nx">strings</span><span class="p">.</span><span class="nx">ToLower</span><span class="p">(</span><span class="nx">choice</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">maxOptions</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">if</span> <span class="nx">handOptions</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">==</span> <span class="nx">choice</span> <span class="p">{</span>
+</span><span class='line'>              <span class="k">return</span> <span class="nx">i</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">func</span> <span class="nx">getComputerChoice</span><span class="p">()</span> <span class="p">(</span><span class="nx">choice</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">choice</span> <span class="p">=</span> <span class="nx">rand</span><span class="p">.</span><span class="nx">Intn</span><span class="p">(</span><span class="nx">maxOptions</span><span class="p">)</span>
+</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;I chose &quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">3</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;.&quot;</span><span class="p">)</span>
+</span><span class='line'>      <span class="nx">time</span><span class="p">.</span><span class="nx">Sleep</span><span class="p">(</span><span class="mi">200</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Millisecond</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot; %s\n\n&quot;</span><span class="p">,</span> <span class="nx">handOptions</span><span class="p">[</span><span class="nx">choice</span><span class="p">])</span>
+</span><span class='line'>  <span class="k">return</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">showUsage</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">rand</span><span class="p">.</span><span class="nx">Seed</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Now</span><span class="p">().</span><span class="nx">Unix</span><span class="p">())</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">playerWins</span><span class="p">,</span> <span class="nx">computerWins</span> <span class="kt">int</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">for</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;\nThe score is: Me %d, You %d\n&quot;</span><span class="p">,</span> <span class="nx">computerWins</span><span class="p">,</span> <span class="nx">playerWins</span><span class="p">)</span>
+</span><span class='line'>      <span class="nx">playerChoice</span> <span class="o">:=</span> <span class="nx">getPlayerChoice</span><span class="p">()</span>
+</span><span class='line'>      <span class="nx">computerChoice</span> <span class="o">:=</span> <span class="nx">getComputerChoice</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="nx">playerWon</span> <span class="o">:=</span> <span class="kc">false</span>
+</span><span class='line'>      <span class="nx">computerWon</span> <span class="o">:=</span> <span class="kc">false</span>
+</span><span class='line'>      <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">p</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">precedences</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">if</span> <span class="nx">p</span><span class="p">.</span><span class="nx">hand1</span> <span class="o">==</span> <span class="nx">playerChoice</span> <span class="o">&amp;&amp;</span> <span class="nx">p</span><span class="p">.</span><span class="nx">hand2</span> <span class="o">==</span> <span class="nx">computerChoice</span> <span class="p">{</span>
+</span><span class='line'>              <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;Alas! %s %s %s! You Win! :(\n&quot;</span><span class="p">,</span>
+</span><span class='line'>                  <span class="nx">handOptions</span><span class="p">[</span><span class="nx">p</span><span class="p">.</span><span class="nx">hand1</span><span class="p">],</span> <span class="nx">p</span><span class="p">.</span><span class="nx">reason</span><span class="p">,</span> <span class="nx">handOptions</span><span class="p">[</span><span class="nx">p</span><span class="p">.</span><span class="nx">hand2</span><span class="p">])</span>
+</span><span class='line'>              <span class="nx">playerWon</span> <span class="p">=</span> <span class="kc">true</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>          <span class="k">if</span> <span class="nx">p</span><span class="p">.</span><span class="nx">hand1</span> <span class="o">==</span> <span class="nx">computerChoice</span> <span class="o">&amp;&amp;</span> <span class="nx">p</span><span class="p">.</span><span class="nx">hand2</span> <span class="o">==</span> <span class="nx">playerChoice</span> <span class="p">{</span>
+</span><span class='line'>              <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;Aha! %s %s %s! I win! :)\n&quot;</span><span class="p">,</span>
+</span><span class='line'>                  <span class="nx">handOptions</span><span class="p">[</span><span class="nx">p</span><span class="p">.</span><span class="nx">hand1</span><span class="p">],</span> <span class="nx">p</span><span class="p">.</span><span class="nx">reason</span><span class="p">,</span> <span class="nx">handOptions</span><span class="p">[</span><span class="nx">p</span><span class="p">.</span><span class="nx">hand2</span><span class="p">])</span>
+</span><span class='line'>              <span class="nx">computerWon</span> <span class="p">=</span> <span class="kc">true</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="k">if</span> <span class="nx">playerWon</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nx">playerWins</span><span class="o">++</span>
+</span><span class='line'>      <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="nx">computerWon</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nx">computerWins</span><span class="o">++</span>
+</span><span class='line'>      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Hey, look, it was a draw!\n\n&quot;</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;\nPlay another round ?  (enter &#39;y&#39; or &#39;n&#39;) : &quot;</span><span class="p">)</span>
+</span><span class='line'>      <span class="kd">var</span> <span class="nx">another</span> <span class="kt">string</span>
+</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Scan</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">another</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">if</span> <span class="nx">strings</span><span class="p">.</span><span class="nx">ToLower</span><span class="p">(</span><span class="nx">another</span><span class="p">)</span> <span class="o">==</span> <span class="s">&quot;y&quot;</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">continue</span>
+</span><span class='line'>      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">break</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;\nOh well, until next time then ... \n&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Try it out! It&rsquo;s meant to be simple and straightforward &mdash; but wait! Before you pass judgement, I present to you the <em>original</em> version:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+</pre></td><td class='code'><pre><code class='basic'><span class='line'><span class="nl">10</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="kr">TAB</span><span class="p">(</span><span class="il">21</span><span class="p">);</span><span class="s2">&quot;GAME OF ROCK, SCISSORS, PAPER&quot;</span>
+</span><span class='line'><span class="nl">20</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="kr">TAB</span><span class="p">(</span><span class="il">15</span><span class="p">);</span><span class="s2">&quot;CREATIVE COMPUTING  MORRISTOWN, NEW JERSEY&quot;</span>
+</span><span class='line'><span class="nl">25</span><span class="w"> </span><span class="kr">PRINT</span><span class="o">:</span><span class="kr">PRINT</span><span class="o">:</span><span class="kr">PRINT</span>
+</span><span class='line'><span class="nl">30</span><span class="w"> </span><span class="kr">INPUT</span><span class="w"> </span><span class="s2">&quot;HOW MANY GAMES&quot;</span><span class="p">;</span><span class="vg">Q</span>
+</span><span class='line'><span class="nl">40</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">Q</span><span class="o">&lt;</span><span class="il">11</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">60</span>
+</span><span class='line'><span class="nl">50</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;SORRY, BUT WE AREN&#39;T ALLOWED TO PLAY THAT MANY.&quot;</span><span class="o">:</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">30</span>
+</span><span class='line'><span class="nl">60</span><span class="w"> </span><span class="kr">FOR</span><span class="w"> </span><span class="vg">G</span><span class="o">=</span><span class="il">1</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="vg">Q</span>
+</span><span class='line'><span class="nl">70</span><span class="w"> </span><span class="kr">PRINT</span><span class="o">:</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;GAME NUMBER&quot;</span><span class="p">;</span><span class="vg">G</span>
+</span><span class='line'><span class="nl">80</span><span class="w"> </span><span class="vg">X</span><span class="o">=</span><span class="kr">INT</span><span class="p">(</span><span class="kr">RND</span><span class="p">(</span><span class="il">1</span><span class="p">)</span><span class="o">*</span><span class="il">3</span><span class="o">+</span><span class="il">1</span><span class="p">)</span>
+</span><span class='line'><span class="nl">90</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;3=ROCK...2=SCISSORS...1=PAPER&quot;</span>
+</span><span class='line'><span class="nl">100</span><span class="w"> </span><span class="kr">INPUT</span><span class="w"> </span><span class="s2">&quot;1...2...3...WHAT&#39;S YOUR CHOICE&quot;</span><span class="p">;</span><span class="vg">K</span>
+</span><span class='line'><span class="nl">110</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="p">(</span><span class="vg">K</span><span class="il">-1</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="vg">K</span><span class="il">-2</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="vg">K</span><span class="il">-3</span><span class="p">)</span><span class="o">&lt;&gt;</span><span class="il">0</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;INVALID.&quot;</span><span class="o">:</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">90</span>
+</span><span class='line'><span class="nl">120</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;THIS IS MY CHOICE...&quot;</span>
+</span><span class='line'><span class="nl">130</span><span class="w"> </span><span class="kr">ON</span><span class="w"> </span><span class="vg">X</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">140</span><span class="p">,</span><span class="il">150</span><span class="p">,</span><span class="il">160</span>
+</span><span class='line'><span class="nl">140</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;...PAPER&quot;</span><span class="o">:</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">170</span>
+</span><span class='line'><span class="nl">150</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;...SCISSORS&quot;</span><span class="o">:</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">170</span>
+</span><span class='line'><span class="nl">160</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;...ROCK&quot;</span>
+</span><span class='line'><span class="nl">170</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">X</span><span class="o">=</span><span class="vg">K</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">250</span>
+</span><span class='line'><span class="nl">180</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">X</span><span class="o">&gt;</span><span class="vg">K</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">230</span>
+</span><span class='line'><span class="nl">190</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">X</span><span class="o">=</span><span class="il">1</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">210</span>
+</span><span class='line'><span class="nl">200</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;YOU WIN!!!&quot;</span><span class="o">:</span><span class="vg">H</span><span class="o">=</span><span class="vg">H</span><span class="o">+</span><span class="il">1</span><span class="o">:</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">260</span>
+</span><span class='line'><span class="nl">210</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">K</span><span class="o">&lt;&gt;</span><span class="il">3</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">200</span>
+</span><span class='line'><span class="nl">220</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;WOW!  I WIN!!!&quot;</span><span class="o">:</span><span class="vg">C</span><span class="o">=</span><span class="vg">C</span><span class="o">+</span><span class="il">1</span><span class="o">:</span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">260</span>
+</span><span class='line'><span class="nl">230</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">K</span><span class="o">&lt;&gt;</span><span class="il">1</span><span class="w"> </span><span class="ow">OR</span><span class="w"> </span><span class="vg">X</span><span class="o">&lt;&gt;</span><span class="il">3</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">220</span>
+</span><span class='line'><span class="nl">240</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">200</span>
+</span><span class='line'><span class="nl">250</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;TIE GAME.  NO WINNER.&quot;</span>
+</span><span class='line'><span class="nl">260</span><span class="w"> </span><span class="kr">NEXT</span><span class="w"> </span><span class="vg">G</span>
+</span><span class='line'><span class="nl">270</span><span class="w"> </span><span class="kr">PRINT</span><span class="o">:</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;HERE IS THE FINAL GAME SCORE:&quot;</span>
+</span><span class='line'><span class="nl">280</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;I HAVE WON&quot;</span><span class="p">;</span><span class="vg">C</span><span class="p">;</span><span class="s2">&quot;GAME(S).&quot;</span>
+</span><span class='line'><span class="nl">290</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;YOU HAVE WON&quot;</span><span class="p">;</span><span class="vg">H</span><span class="p">;</span><span class="s2">&quot;GAME(S).&quot;</span>
+</span><span class='line'><span class="nl">300</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;AND&quot;</span><span class="p">;</span><span class="vg">Q</span><span class="o">-</span><span class="p">(</span><span class="vg">C</span><span class="o">+</span><span class="vg">H</span><span class="p">);</span><span class="s2">&quot;GAME(S) ENDED IN A TIE.&quot;</span>
+</span><span class='line'><span class="nl">310</span><span class="w"> </span><span class="kr">PRINT</span><span class="o">:</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;THANKS FOR PLAYING!!&quot;</span>
+</span><span class='line'><span class="nl">320</span><span class="w"> </span><span class="kr">END</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Yes, folks, that is the kind of stuff I <em>cannot</em> believe I squinted over and read again and again :(</p>
+<div class="footnotes">
+<hr/>
+<ol>
+<li id="fn:1">
+<p>First mentioned <a href="http://agam.github.io/blog/2014/12/17/the-gardens-of-go/">here</a> a month ago<a href="#fnref:1" rev="footnote">&#8617;</a></p></li>
+<li id="fn:2">
+<p><a href="http://www.atariarchives.org/basicgames/">&ldquo;Basic Computer Games&rdquo;</a>, originally for the Atari<a href="#fnref:2" rev="footnote">&#8617;</a></p></li>
+<li id="fn:3">
+<p>As in <a href="http://bitsavers.trailing-edge.com/pdf/dec/_Books/101_BASIC_Computer_Games_Mar75.pdf">this version with commentary</a>; see <em>Appendix A (pg 247)</em><a href="#fnref:3" rev="footnote">&#8617;</a></p></li>
+<li id="fn:4">
+<p><a href="https://golang.org/doc/effective_go.html">&ldquo;Effective Go&rdquo;</a><a href="#fnref:4" rev="footnote">&#8617;</a></p></li>
+</ol>
+</div>
+
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-01-08T04:00:53+00:00" pubdate data-updated="true">Jan 8<sup>th</sup>, 2015</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/basic/'>basic</a>, <a class='category' href='/blog/categories/game/'>game</a>, <a class='category' href='/blog/categories/golang/'>golang</a>
+
+
+</div>
+	
+</div>
+</article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+		
+		
+		<a class="addthis_button_tweet"></a>
+		
+		
+		<a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+		
+		
+	</div>
+	
+</div>
+
+
+
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2015
+
+    Agam
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'agamamp';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://agam.github.io/blog/2015/01/08/rock/';
+        var disqus_url = 'http://agam.github.io/blog/2015/01/08/rock/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//go.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-16612682-4']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>
