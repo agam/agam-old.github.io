@@ -4,7 +4,7 @@
   <title><![CDATA[Category: game | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/game/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-01-08T04:05:48+00:00</updated>
+  <updated>2015-01-10T07:37:05+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,273 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[These pretzels are making me thirsty!]]></title>
+    <link href="http://agam.github.io/blog/2015/01/10/these-pretzels-are-making-me-thirsty/"/>
+    <updated>2015-01-10T07:29:26+00:00</updated>
+    <id>http://agam.github.io/blog/2015/01/10/these-pretzels-are-making-me-thirsty</id>
+    <content type="html"><![CDATA[<p>All right, here&rsquo;s <em>another</em> one of the series of hypothetically pedagogical text games in Go. This one is based on the original <em>Bagels</em>, which I then appropriated as <em>Pretzels</em>.</p>
+
+<p>Here&rsquo;s the code:</p>
+
+<p>```go
+package main</p>
+
+<p>import (</p>
+
+<pre><code>"fmt"
+"math/rand"
+"time"
+</code></pre>
+
+<p>)</p>
+
+<p>const (</p>
+
+<pre><code>minRange  = 100
+maxRange  = 999
+numDigits = 3
+maxTries  = 20
+</code></pre>
+
+<p>)</p>
+
+<p>const (</p>
+
+<pre><code>picoStr    = " -- PICO -- "
+fermiStr   = " -- FERMI -- "
+pretzelStr = " -- PRETZEL -- "
+</code></pre>
+
+<p>)</p>
+
+<p>func showIntro() {</p>
+
+<pre><code>fmt.Println("\nWelcome to 'PRETZELS' !!")
+fmt.Println("------------------------")
+fmt.Println(
+    "\nHere are the rules. I'm going to guess a THREE-DIGIT number, and then " +
+        "you have to guess it. I will give you clues as follows: \n" +
+        "   PICO -- you got one digit correct, BUT in the wrong position\n" +
+        "  FERMI -- you got on digit correct, AND in the right position\n" +
+        "PRETZEL -- you got NO digits correct.\n")
+fmt.Printf("You get %d chances to guess it!\n\n", maxTries)
+</code></pre>
+
+<p>}</p>
+
+<p>func getDigits(num int, digits []int) {</p>
+
+<pre><code>var i int
+for {
+    digits[i] = num % 10
+    i++
+    num /= 10
+    if num == 0 {
+        break
+    }
+}
+</code></pre>
+
+<p>}</p>
+
+<p>func showFeedback(targetDigits []int, guess int) {</p>
+
+<pre><code>guessDigits := make([]int, numDigits)
+getDigits(guess, guessDigits)
+somethingMatched := false
+for i := 0; i &lt; len(guessDigits); i++ {
+    if guessDigits[i] == targetDigits[i] {
+        fmt.Printf(fermiStr)
+        somethingMatched = true
+        continue
+    }
+    for j := 0; j &lt; len(targetDigits); j++ {
+        if guessDigits[i] == targetDigits[j] {
+            fmt.Printf(picoStr)
+            somethingMatched = true
+            break
+        }
+    }
+}
+if !somethingMatched {
+    fmt.Printf(pretzelStr)
+}
+fmt.Println()
+</code></pre>
+
+<p>}</p>
+
+<p>func main() {</p>
+
+<pre><code>showIntro()
+
+rand.Seed(time.Now().Unix())
+target := minRange + rand.Intn(maxRange-minRange)
+targetDigits := make([]int, numDigits)
+getDigits(target, targetDigits)
+
+var numTries int
+for {
+    fmt.Printf("\nWhat is Guess #%d ? ", numTries+1)
+    var guess int
+    fmt.Scan(&amp;guess)
+
+    if guess &lt; minRange || guess &gt; maxRange {
+        fmt.Printf("You MUST choose a number between %d and %d, try again ...\n\n", minRange, maxRange)
+        continue
+    }
+    showFeedback(targetDigits, guess)
+    if guess == target {
+        fmt.Println("\nYou got it!!\n")
+        break
+    }
+    if numTries &gt; maxTries {
+        fmt.Println("\nOOPS ... you ran out of chances! :(\n")
+        fmt.Printf("(The number I thought of was %d)\n\n", target)
+        break
+    }
+    numTries++
+}
+fmt.Println("\n\n     ... these pretzels are making me thirsty! ...\n")
+</code></pre>
+
+<p>}
+```</p>
+
+<p>and here&rsquo;s the eye-watering original:</p>
+
+<p><code>basic
+5 PRINT TAB(33);"BAGELS"
+10 PRINT TAB(15);"CREATIVE COMPUTING  MORRISTOWN, NEW JERSEY":PRINT:PRINT
+15 REM *** BAGLES NUMBER GUESSING GAME
+20 REM *** ORIGINAL SOURCE UNKNOWN BUT SUSPECTED TO BE
+25 REM *** LAWRENCE HALL OF SCIENCE, U.C. BERKELY
+30 DIM A1(6),A(3),B(3)
+40 Y=0:T=255
+50 PRINT:PRINT:PRINT
+70 INPUT "WOULD YOU LIKE THE RULES (YES OR NO)";A$
+90 IF LEFT$(A$,1)="N" THEN 150
+100 PRINT:PRINT "I AM THINKING OF A THREE-DIGIT NUMBER.  TRY TO GUESS"
+110 PRINT "MY NUMBER AND I WILL GIVE YOU CLUES AS FOLLOWS:"
+120 PRINT "   PICO   - ONE DIGIT CORRECT BUT IN THE WRONG POSITION"
+130 PRINT "   FERMI  - ONE DIGIT CORRECT AND IN THE RIGHT POSITION"
+140 PRINT "   BAGELS - NO DIGITS CORRECT"
+150 FOR I=1 TO 3
+160 A(I)=INT(10*RND(1))
+165 IF I-1=0 THEN 200
+170 FOR J=1 TO I-1
+180 IF A(I)=A(J) THEN 160
+190 NEXT J
+200 NEXT I
+210 PRINT:PRINT "O.K.  I HAVE A NUMBER IN MIND."
+220 FOR I=1 TO 20
+230 PRINT "GUESS #";I,
+240 INPUT A$
+245 IF LEN(A$)&lt;&gt;3 THEN 630
+250 FOR Z=1 TO 3:A1(Z)=ASC(MID$(A$,Z,1)):NEXT Z
+260 FOR J=1 TO 3
+270 IF A1(J)&lt;48 THEN 300
+280 IF A1(J)&gt;57 THEN 300
+285 B(J)=A1(J)-48
+290 NEXT J
+295 GOTO 320
+300 PRINT "WHAT?"
+310 GOTO 230
+320 IF B(1)=B(2) THEN 650
+330 IF B(2)=B(3) THEN 650
+340 IF B(3)=B(1) THEN 650
+350 C=0:D=0
+360 FOR J=1 TO 2
+370 IF A(J)&lt;&gt;B(J+1) THEN 390
+380 C=C+1
+390 IF A(J+1)&lt;&gt;B(J) THEN 410
+400 C=C+1
+410 NEXT J
+420 IF A(1)&lt;&gt;B(3) THEN 440
+430 C=C+1
+440 IF A(3)&lt;&gt;B(1) THEN 460
+450 C=C+1
+460 FOR J=1 TO 3
+470 IF A(J)&lt;&gt;B(J) THEN 490
+480 D=D+1
+490 NEXT J
+500 IF D=3 THEN 680
+505 IF C=0 THEN 545
+520 FOR J=1 TO C
+530 PRINT "PICO ";
+540 NEXT J
+545 IF D=0 THEN 580
+550 FOR J=1 TO D
+560 PRINT "FERMI ";
+570 NEXT J
+580 IF C+D&lt;&gt;0 THEN 600
+590 PRINT "BAGELS";
+600 PRINT
+605 NEXT I
+610 PRINT "OH WELL."
+615 PRINT "THAT'S TWNETY GUESSES.  MY NUMBER WAS";100*A(1)+10*A(2)+A(3)
+620 GOTO 700
+630 PRINT "TRY GUESSING A THREE-DIGIT NUMBER.":GOTO 230
+650 PRINT "OH, I FORGOT TO TELL YOU THAT THE NUMBER I HAVE IN MIND"
+660 PRINT "HAS NO TWO DIGITS THE SAME.":GOTO 230
+680 PRINT "YOU GOT IT!!!":PRINT
+690 Y=Y+1
+700 INPUT "PLAY AGAIN (YES OR NO)";A$
+720 IF LEFT$(A$,1)="YES" THEN 150
+730 IF Y=0 THEN 750
+740 PRINT:PRINT "A";Y;"POINT BAGELS BUFF!!"
+750 PRINT "HOPE YOU HAD FUN.  BYE."
+999 END
+</code></p>
+
+<p>And just to show how much fun this is (copy-paste and try it!), here&rsquo;s a sample run:</p>
+
+<p>```sh
+$ go run pretzels.go</p>
+
+<h2>Welcome to &lsquo;PRETZELS&rsquo; !!</h2>
+
+<p>Here are the rules. I&rsquo;m going to guess a THREE-DIGIT number, and then you have to guess it. I will give you clues as follows:
+   PICO &mdash; you got one digit correct, BUT in the wrong position
+  FERMI &mdash; you got on digit correct, AND in the right position
+PRETZEL &mdash; you got NO digits correct.</p>
+
+<p>You get 20 chances to guess it!</p>
+
+<p>What is Guess #1 ? 123
+ &mdash; PRETZEL &mdash;</p>
+
+<p>What is Guess #2 ? 456
+ &mdash; PICO &mdash;</p>
+
+<p>What is Guess #3 ? 789
+ &mdash; PICO &mdash;  &mdash; PICO &mdash;</p>
+
+<p>What is Guess #4 ? 100
+ &mdash; PRETZEL &mdash;</p>
+
+<p>What is Guess #5 ? 987
+ &mdash; PICO &mdash;  &mdash; PICO &mdash;</p>
+
+<p>What is Guess #6 ? 8797
+You MUST choose a number between 100 and 999, try again &hellip;</p>
+
+<p>What is Guess #6 ? 897
+ &mdash; FERMI &mdash;  &mdash; FERMI &mdash;</p>
+
+<p>What is Guess #7 ? 894
+ &mdash; FERMI &mdash;  &mdash; FERMI &mdash;  &mdash; FERMI &mdash;</p>
+
+<p>You got it!!</p>
+
+<pre><code> ... these pretzels are making me thirsty! ...
+</code></pre>
+
+<p>```</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Beginning 'basic' text games in Go: Rock, Paper, Scissors, Lizard, Spock]]></title>
