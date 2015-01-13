@@ -7,7 +7,7 @@
 	<meta name="author" content="Agam">
 
 	
-	<meta name="description" content="Continuing on the theme of the last two posts, here are two more examples, here are two more. The first is a simple change-counting program, which &hellip;">
+	<meta name="description" content="As promised, the next installment in the line of text-based games written in Go. This one is a simplified form of Blackjack (no splitting, insurance &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -86,6 +86,1312 @@
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2015/01/13/blackjack/">
+		
+			BlackJack!</a>
+	</h2>
+	<div class="entry-content">
+		<p>As promised, the next installment in the line of text-based games written in Go. This one is a simplified form of Blackjack (no splitting, insurance bets, etc)</p>
+
+<p>First, <strong>the Go code</strong></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+<span class='line-number'>114</span>
+<span class='line-number'>115</span>
+<span class='line-number'>116</span>
+<span class='line-number'>117</span>
+<span class='line-number'>118</span>
+<span class='line-number'>119</span>
+<span class='line-number'>120</span>
+<span class='line-number'>121</span>
+<span class='line-number'>122</span>
+<span class='line-number'>123</span>
+<span class='line-number'>124</span>
+<span class='line-number'>125</span>
+<span class='line-number'>126</span>
+<span class='line-number'>127</span>
+<span class='line-number'>128</span>
+<span class='line-number'>129</span>
+<span class='line-number'>130</span>
+<span class='line-number'>131</span>
+<span class='line-number'>132</span>
+<span class='line-number'>133</span>
+<span class='line-number'>134</span>
+<span class='line-number'>135</span>
+<span class='line-number'>136</span>
+<span class='line-number'>137</span>
+<span class='line-number'>138</span>
+<span class='line-number'>139</span>
+<span class='line-number'>140</span>
+<span class='line-number'>141</span>
+<span class='line-number'>142</span>
+<span class='line-number'>143</span>
+<span class='line-number'>144</span>
+<span class='line-number'>145</span>
+<span class='line-number'>146</span>
+<span class='line-number'>147</span>
+<span class='line-number'>148</span>
+<span class='line-number'>149</span>
+<span class='line-number'>150</span>
+<span class='line-number'>151</span>
+<span class='line-number'>152</span>
+<span class='line-number'>153</span>
+<span class='line-number'>154</span>
+<span class='line-number'>155</span>
+<span class='line-number'>156</span>
+<span class='line-number'>157</span>
+<span class='line-number'>158</span>
+<span class='line-number'>159</span>
+<span class='line-number'>160</span>
+<span class='line-number'>161</span>
+<span class='line-number'>162</span>
+<span class='line-number'>163</span>
+<span class='line-number'>164</span>
+<span class='line-number'>165</span>
+<span class='line-number'>166</span>
+<span class='line-number'>167</span>
+<span class='line-number'>168</span>
+<span class='line-number'>169</span>
+<span class='line-number'>170</span>
+<span class='line-number'>171</span>
+<span class='line-number'>172</span>
+<span class='line-number'>173</span>
+<span class='line-number'>174</span>
+<span class='line-number'>175</span>
+<span class='line-number'>176</span>
+<span class='line-number'>177</span>
+<span class='line-number'>178</span>
+<span class='line-number'>179</span>
+<span class='line-number'>180</span>
+<span class='line-number'>181</span>
+<span class='line-number'>182</span>
+<span class='line-number'>183</span>
+<span class='line-number'>184</span>
+<span class='line-number'>185</span>
+<span class='line-number'>186</span>
+<span class='line-number'>187</span>
+<span class='line-number'>188</span>
+<span class='line-number'>189</span>
+<span class='line-number'>190</span>
+<span class='line-number'>191</span>
+<span class='line-number'>192</span>
+<span class='line-number'>193</span>
+<span class='line-number'>194</span>
+<span class='line-number'>195</span>
+<span class='line-number'>196</span>
+<span class='line-number'>197</span>
+<span class='line-number'>198</span>
+<span class='line-number'>199</span>
+<span class='line-number'>200</span>
+<span class='line-number'>201</span>
+<span class='line-number'>202</span>
+<span class='line-number'>203</span>
+<span class='line-number'>204</span>
+<span class='line-number'>205</span>
+<span class='line-number'>206</span>
+<span class='line-number'>207</span>
+<span class='line-number'>208</span>
+<span class='line-number'>209</span>
+<span class='line-number'>210</span>
+<span class='line-number'>211</span>
+<span class='line-number'>212</span>
+<span class='line-number'>213</span>
+<span class='line-number'>214</span>
+<span class='line-number'>215</span>
+<span class='line-number'>216</span>
+<span class='line-number'>217</span>
+<span class='line-number'>218</span>
+<span class='line-number'>219</span>
+<span class='line-number'>220</span>
+<span class='line-number'>221</span>
+<span class='line-number'>222</span>
+<span class='line-number'>223</span>
+<span class='line-number'>224</span>
+<span class='line-number'>225</span>
+</pre></td><td class='code'><pre><code class='go'><span class='line'><span class="kn">package</span> <span class="nx">main</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="p">(</span>
+</span><span class='line'>  <span class="s">&quot;fmt&quot;</span>
+</span><span class='line'>  <span class="s">&quot;math/rand&quot;</span>
+</span><span class='line'>  <span class="s">&quot;strings&quot;</span>
+</span><span class='line'>  <span class="s">&quot;time&quot;</span>
+</span><span class='line'><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">const</span> <span class="nx">deckSize</span> <span class="p">=</span> <span class="mi">52</span>
+</span><span class='line'><span class="kd">const</span> <span class="nx">maxHandValue</span> <span class="p">=</span> <span class="mi">21</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">houseLimits</span> <span class="p">=</span> <span class="p">[]</span><span class="kt">int</span><span class="p">{</span><span class="mi">100</span><span class="p">,</span> <span class="mi">500</span><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">suits</span> <span class="p">=</span> <span class="p">[]</span><span class="kt">string</span><span class="p">{</span><span class="s">&quot;Hearts&quot;</span><span class="p">,</span> <span class="s">&quot;Clubs&quot;</span><span class="p">,</span> <span class="s">&quot;Diamonds&quot;</span><span class="p">,</span> <span class="s">&quot;Spades&quot;</span><span class="p">}</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">cards</span> <span class="p">=</span> <span class="p">[]</span><span class="kt">string</span><span class="p">{</span><span class="s">&quot;Ace&quot;</span><span class="p">,</span> <span class="s">&quot;Two&quot;</span><span class="p">,</span> <span class="s">&quot;Three&quot;</span><span class="p">,</span> <span class="s">&quot;Four&quot;</span><span class="p">,</span> <span class="s">&quot;Five&quot;</span><span class="p">,</span> <span class="s">&quot;Six&quot;</span><span class="p">,</span> <span class="s">&quot;Seven&quot;</span><span class="p">,</span> <span class="s">&quot;Eight&quot;</span><span class="p">,</span> <span class="s">&quot;Nine&quot;</span><span class="p">,</span> <span class="s">&quot;Ten&quot;</span><span class="p">,</span> <span class="s">&quot;Jack&quot;</span><span class="p">,</span> <span class="s">&quot;Queen&quot;</span><span class="p">,</span> <span class="s">&quot;King&quot;</span><span class="p">}</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">cardCosts</span> <span class="p">=</span> <span class="p">[]</span><span class="kt">int</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">type</span> <span class="nx">card</span> <span class="kt">int</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">type</span> <span class="nx">hand</span> <span class="p">[]</span><span class="nx">card</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="nx">card</span><span class="p">)</span> <span class="nx">getDeckIndex</span><span class="p">()</span> <span class="p">(</span><span class="nx">suit</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">rank</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="c1">// Assume the deck is ordered from 1 to 52, with the suits</span>
+</span><span class='line'>  <span class="c1">// being Hearts, Clubs, Diamonds, Spades, and the cards</span>
+</span><span class='line'>  <span class="c1">// ranging from Ace (1) to King (13)</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">cardValue</span> <span class="o">:=</span> <span class="nb">int</span><span class="p">(</span><span class="nx">c</span><span class="p">)</span>
+</span><span class='line'>  <span class="nx">suit</span> <span class="p">=</span> <span class="nx">cardValue</span> <span class="o">/</span> <span class="mi">13</span>
+</span><span class='line'>  <span class="nx">rank</span> <span class="p">=</span> <span class="nx">cardValue</span> <span class="o">-</span> <span class="nx">suit</span><span class="o">*</span><span class="mi">13</span>
+</span><span class='line'>  <span class="k">return</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="nx">card</span><span class="p">)</span> <span class="nx">show</span><span class="p">()</span> <span class="kt">string</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">suit</span><span class="p">,</span> <span class="nx">rank</span> <span class="o">:=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">getDeckIndex</span><span class="p">()</span>
+</span><span class='line'>  <span class="k">return</span> <span class="nx">fmt</span><span class="p">.</span><span class="nx">Sprintf</span><span class="p">(</span><span class="s">&quot;%s of %s&quot;</span><span class="p">,</span> <span class="nx">cards</span><span class="p">[</span><span class="nx">rank</span><span class="p">],</span> <span class="nx">suits</span><span class="p">[</span><span class="nx">suit</span><span class="p">])</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">func</span> <span class="p">(</span><span class="nx">h</span> <span class="nx">hand</span><span class="p">)</span> <span class="nx">score</span><span class="p">()</span> <span class="kt">int</span> <span class="p">{</span>
+</span><span class='line'>  <span class="c1">// Sum up all cards, add aces in later</span>
+</span><span class='line'>  <span class="nx">numAces</span> <span class="o">:=</span> <span class="mi">0</span>
+</span><span class='line'>  <span class="nx">handValue</span> <span class="o">:=</span> <span class="mi">0</span>
+</span><span class='line'>  <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">c</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">h</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">_</span><span class="p">,</span> <span class="nx">rank</span> <span class="o">:=</span> <span class="nx">c</span><span class="p">.</span><span class="nx">getDeckIndex</span><span class="p">()</span>
+</span><span class='line'>      <span class="k">if</span> <span class="nx">rank</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nx">numAces</span><span class="o">++</span>
+</span><span class='line'>      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nx">handValue</span> <span class="o">+=</span> <span class="nx">cardCosts</span><span class="p">[</span><span class="nx">rank</span><span class="p">]</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// TODO: Aces can be valued at 1 or 10</span>
+</span><span class='line'>  <span class="nx">aceValue</span> <span class="o">:=</span> <span class="nx">numAces</span> <span class="o">*</span> <span class="mi">10</span>
+</span><span class='line'>  <span class="k">return</span> <span class="nx">handValue</span> <span class="o">+</span> <span class="nx">aceValue</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">func</span> <span class="nx">showUsage</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;\n    Welcome to BlackJack!&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;------------------------------------\n&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Here are the (simple!) rules: \n&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;1. We begin by dealing out one card for me and two cards for you&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;2. The dealer (that&#39;s me!) must hit on 16 or less, &quot;</span> <span class="o">+</span>
+</span><span class='line'>      <span class="s">&quot;and will stay on 17 or more.&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;3. Whoever has a hand that totals more than %d, loses.\n&quot;</span><span class="p">,</span> <span class="nx">maxHandValue</span><span class="p">)</span>
+</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;4. I will deal from &#39;infinite decks&#39;.&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;5. The house limit is $%d.00.\n\n&quot;</span><span class="p">,</span> <span class="nx">houseLimits</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;\n\nOk, let&#39;s begin!\n\n&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">func</span> <span class="nx">getYesNo</span><span class="p">(</span><span class="nx">prompt</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">bool</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">for</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;\n%s (enter &#39;yes&#39; or &#39;no&#39;) &quot;</span><span class="p">,</span> <span class="nx">prompt</span><span class="p">)</span>
+</span><span class='line'>      <span class="kd">var</span> <span class="nx">choice</span> <span class="kt">string</span>
+</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Scan</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">choice</span><span class="p">)</span>
+</span><span class='line'>      <span class="nx">choice</span> <span class="p">=</span> <span class="nx">strings</span><span class="p">.</span><span class="nx">ToLower</span><span class="p">(</span><span class="nx">choice</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">if</span> <span class="nx">choice</span> <span class="o">==</span> <span class="s">&quot;yes&quot;</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">return</span> <span class="kc">true</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      <span class="k">if</span> <span class="nx">choice</span> <span class="o">==</span> <span class="s">&quot;no&quot;</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">return</span> <span class="kc">false</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">func</span> <span class="nx">getPlayerMoney</span><span class="p">()</span> <span class="kt">int</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">for</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;\nHow much money would you like to start with (enter a number between %d and %d) ? &quot;</span><span class="p">,</span> <span class="nx">houseLimits</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nx">houseLimits</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</span><span class='line'>      <span class="kd">var</span> <span class="nx">money</span> <span class="kt">int</span>
+</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Scan</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">money</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">if</span> <span class="nx">money</span> <span class="o">&gt;=</span> <span class="nx">houseLimits</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&amp;&amp;</span> <span class="nx">money</span> <span class="o">&lt;=</span> <span class="nx">houseLimits</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">return</span> <span class="nx">money</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">func</span> <span class="nx">getWager</span><span class="p">(</span><span class="nx">total</span> <span class="kt">int</span><span class="p">)</span> <span class="p">(</span><span class="nx">wager</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">for</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;\nWhat is your wager ? &quot;</span><span class="p">)</span>
+</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Scan</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">wager</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">if</span> <span class="nx">wager</span> <span class="p">&gt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="nx">wager</span> <span class="o">&lt;=</span> <span class="nx">total</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">return</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;You must enter a number between 0 and %d !&quot;</span><span class="p">,</span> <span class="nx">total</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">func</span> <span class="nx">getNewCard</span><span class="p">()</span> <span class="nx">card</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">return</span> <span class="nx">card</span><span class="p">(</span><span class="nx">rand</span><span class="p">.</span><span class="nx">Intn</span><span class="p">(</span><span class="nx">deckSize</span><span class="p">))</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">rand</span><span class="p">.</span><span class="nx">Seed</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Now</span><span class="p">().</span><span class="nx">Unix</span><span class="p">())</span>
+</span><span class='line'>  <span class="k">if</span> <span class="nx">getYesNo</span><span class="p">(</span><span class="s">&quot;Do you want to see instructions?&quot;</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">showUsage</span><span class="p">()</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">playerMoney</span> <span class="o">:=</span> <span class="nx">getPlayerMoney</span><span class="p">()</span>
+</span><span class='line'>  <span class="nx">playerStartingMoney</span> <span class="o">:=</span> <span class="nx">playerMoney</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">for</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;\nYou have $%d\n&quot;</span><span class="p">,</span> <span class="nx">playerMoney</span><span class="p">)</span>
+</span><span class='line'>      <span class="nx">wager</span> <span class="o">:=</span> <span class="nx">getWager</span><span class="p">(</span><span class="nx">playerMoney</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="kd">var</span> <span class="nx">dealerHand</span><span class="p">,</span> <span class="nx">playerHand</span> <span class="nx">hand</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="c1">// Draw one card for dealer, two for player</span>
+</span><span class='line'>      <span class="nx">dealerCard</span> <span class="o">:=</span> <span class="nx">getNewCard</span><span class="p">()</span>
+</span><span class='line'>      <span class="nx">playerCard1</span> <span class="o">:=</span> <span class="nx">getNewCard</span><span class="p">()</span>
+</span><span class='line'>      <span class="nx">playerCard2</span> <span class="o">:=</span> <span class="nx">getNewCard</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;\nYour first card is a %s\n&quot;</span><span class="p">,</span> <span class="nx">playerCard1</span><span class="p">.</span><span class="nx">show</span><span class="p">())</span>
+</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;Your second card is a %s\n&quot;</span><span class="p">,</span> <span class="nx">playerCard2</span><span class="p">.</span><span class="nx">show</span><span class="p">())</span>
+</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;\nDealer shows a %s\n&quot;</span><span class="p">,</span> <span class="nx">dealerCard</span><span class="p">.</span><span class="nx">show</span><span class="p">())</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="nx">dealerHand</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">dealerHand</span><span class="p">,</span> <span class="nx">dealerCard</span><span class="p">)</span>
+</span><span class='line'>      <span class="nx">playerHand</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">playerHand</span><span class="p">,</span> <span class="nx">playerCard1</span><span class="p">,</span> <span class="nx">playerCard2</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="nx">playerWon</span> <span class="o">:=</span> <span class="kc">false</span>
+</span><span class='line'>      <span class="nx">playerLost</span> <span class="o">:=</span> <span class="kc">false</span>
+</span><span class='line'>      <span class="nx">playerScore</span> <span class="o">:=</span> <span class="nx">playerHand</span><span class="p">.</span><span class="nx">score</span><span class="p">()</span>
+</span><span class='line'>      <span class="k">for</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;\nYou have %d showing.\n&quot;</span><span class="p">,</span> <span class="nx">playerScore</span><span class="p">)</span>
+</span><span class='line'>          <span class="k">if</span> <span class="p">!</span><span class="nx">getYesNo</span><span class="p">(</span><span class="s">&quot;Do you want a hit ?&quot;</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>              <span class="k">break</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>          <span class="nx">playerCard</span> <span class="o">:=</span> <span class="nx">getNewCard</span><span class="p">()</span>
+</span><span class='line'>          <span class="nx">playerHand</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">playerHand</span><span class="p">,</span> <span class="nx">playerCard</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>          <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;\nYou got a %s.\n\n&quot;</span><span class="p">,</span> <span class="nx">playerCard</span><span class="p">.</span><span class="nx">show</span><span class="p">())</span>
+</span><span class='line'>
+</span><span class='line'>          <span class="nx">playerScore</span> <span class="p">=</span> <span class="nx">playerHand</span><span class="p">.</span><span class="nx">score</span><span class="p">()</span>
+</span><span class='line'>          <span class="k">if</span> <span class="nx">playerScore</span> <span class="p">&gt;</span> <span class="nx">maxHandValue</span> <span class="p">{</span>
+</span><span class='line'>              <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;You LOSE!&quot;</span><span class="p">)</span>
+</span><span class='line'>              <span class="nx">playerLost</span> <span class="p">=</span> <span class="kc">true</span>
+</span><span class='line'>              <span class="k">break</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="k">for</span> <span class="p">!</span><span class="nx">playerLost</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nx">dealerCard</span> <span class="o">:=</span> <span class="nx">getNewCard</span><span class="p">()</span>
+</span><span class='line'>          <span class="nx">dealerHand</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">dealerHand</span><span class="p">,</span> <span class="nx">dealerCard</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>          <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;Dealer got a %s.\n&quot;</span><span class="p">,</span> <span class="nx">dealerCard</span><span class="p">.</span><span class="nx">show</span><span class="p">())</span>
+</span><span class='line'>
+</span><span class='line'>          <span class="nx">dealerScore</span> <span class="o">:=</span> <span class="nx">dealerHand</span><span class="p">.</span><span class="nx">score</span><span class="p">()</span>
+</span><span class='line'>          <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;Dealer has %d\n\n&quot;</span><span class="p">,</span> <span class="nx">dealerScore</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>          <span class="k">if</span> <span class="nx">dealerScore</span> <span class="p">&gt;</span> <span class="nx">playerScore</span> <span class="o">&amp;&amp;</span> <span class="nx">dealerScore</span> <span class="o">&lt;=</span> <span class="nx">maxHandValue</span> <span class="p">{</span>
+</span><span class='line'>              <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;You LOSE!\n&quot;</span><span class="p">)</span>
+</span><span class='line'>              <span class="nx">playerLost</span> <span class="p">=</span> <span class="kc">true</span>
+</span><span class='line'>              <span class="k">break</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>          <span class="k">if</span> <span class="nx">dealerScore</span> <span class="o">&lt;=</span> <span class="mi">16</span> <span class="p">{</span>
+</span><span class='line'>              <span class="k">continue</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>          <span class="k">if</span> <span class="nx">dealerScore</span> <span class="p">&gt;</span> <span class="nx">maxHandValue</span> <span class="p">{</span>
+</span><span class='line'>              <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Dealer busted. You WIN!\n&quot;</span><span class="p">)</span>
+</span><span class='line'>              <span class="nx">playerWon</span> <span class="p">=</span> <span class="kc">true</span>
+</span><span class='line'>              <span class="k">break</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>          <span class="c1">// Coin toss to decide whether to draw over 17</span>
+</span><span class='line'>          <span class="nx">coin</span> <span class="o">:=</span> <span class="nx">rand</span><span class="p">.</span><span class="nx">Intn</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+</span><span class='line'>          <span class="k">if</span> <span class="nx">coin</span> <span class="p">&gt;</span> <span class="mi">50</span> <span class="p">{</span>
+</span><span class='line'>              <span class="k">continue</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>          <span class="c1">// Dealer is done</span>
+</span><span class='line'>          <span class="k">if</span> <span class="nx">dealerScore</span> <span class="p">&lt;</span> <span class="nx">playerScore</span> <span class="p">{</span>
+</span><span class='line'>              <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;\nYou WIN!\n&quot;</span><span class="p">)</span>
+</span><span class='line'>              <span class="nx">playerWon</span> <span class="p">=</span> <span class="kc">true</span>
+</span><span class='line'>          <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>              <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;\nIt&#39;s a DRAW (you get your money back ... this time)\n&quot;</span><span class="p">)</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="k">if</span> <span class="nx">playerWon</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nx">playerMoney</span> <span class="o">+=</span> <span class="nx">wager</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="k">if</span> <span class="nx">playerLost</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nx">playerMoney</span> <span class="o">-=</span> <span class="nx">wager</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="k">if</span> <span class="nx">playerMoney</span> <span class="o">&lt;=</span> <span class="mi">0</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Sorry, but it appears you have run out of money.\n&quot;</span><span class="p">)</span>
+</span><span class='line'>          <span class="k">break</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="k">if</span> <span class="p">!</span><span class="nx">getYesNo</span><span class="p">(</span><span class="s">&quot;Play another hand?&quot;</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">break</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">playerDiff</span> <span class="o">:=</span> <span class="nx">playerMoney</span> <span class="o">-</span> <span class="nx">playerStartingMoney</span>
+</span><span class='line'>  <span class="k">if</span> <span class="nx">playerDiff</span> <span class="p">&gt;</span> <span class="mi">0</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;You won $%d today!\n\n&quot;</span><span class="p">,</span> <span class="nx">playerDiff</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="nx">playerDiff</span> <span class="p">&lt;</span> <span class="mi">0</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;You lost $%d today!\n\n&quot;</span><span class="p">,</span> <span class="o">-</span><span class="nx">playerDiff</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;You broke even!\n\n&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Come back next time with more money!&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And then, for comparison, the <strong>original BASIC version</strong> (ok, this one is not a fair comparison since it <em>does</em> allow splitting and insurance, but still).</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+<span class='line-number'>114</span>
+<span class='line-number'>115</span>
+<span class='line-number'>116</span>
+<span class='line-number'>117</span>
+<span class='line-number'>118</span>
+<span class='line-number'>119</span>
+<span class='line-number'>120</span>
+<span class='line-number'>121</span>
+<span class='line-number'>122</span>
+<span class='line-number'>123</span>
+<span class='line-number'>124</span>
+<span class='line-number'>125</span>
+<span class='line-number'>126</span>
+<span class='line-number'>127</span>
+<span class='line-number'>128</span>
+<span class='line-number'>129</span>
+<span class='line-number'>130</span>
+<span class='line-number'>131</span>
+<span class='line-number'>132</span>
+<span class='line-number'>133</span>
+<span class='line-number'>134</span>
+<span class='line-number'>135</span>
+<span class='line-number'>136</span>
+<span class='line-number'>137</span>
+<span class='line-number'>138</span>
+<span class='line-number'>139</span>
+<span class='line-number'>140</span>
+<span class='line-number'>141</span>
+<span class='line-number'>142</span>
+<span class='line-number'>143</span>
+<span class='line-number'>144</span>
+<span class='line-number'>145</span>
+<span class='line-number'>146</span>
+<span class='line-number'>147</span>
+<span class='line-number'>148</span>
+<span class='line-number'>149</span>
+<span class='line-number'>150</span>
+<span class='line-number'>151</span>
+<span class='line-number'>152</span>
+<span class='line-number'>153</span>
+<span class='line-number'>154</span>
+<span class='line-number'>155</span>
+<span class='line-number'>156</span>
+<span class='line-number'>157</span>
+<span class='line-number'>158</span>
+<span class='line-number'>159</span>
+<span class='line-number'>160</span>
+<span class='line-number'>161</span>
+<span class='line-number'>162</span>
+<span class='line-number'>163</span>
+<span class='line-number'>164</span>
+<span class='line-number'>165</span>
+<span class='line-number'>166</span>
+<span class='line-number'>167</span>
+<span class='line-number'>168</span>
+<span class='line-number'>169</span>
+<span class='line-number'>170</span>
+<span class='line-number'>171</span>
+<span class='line-number'>172</span>
+<span class='line-number'>173</span>
+<span class='line-number'>174</span>
+<span class='line-number'>175</span>
+<span class='line-number'>176</span>
+<span class='line-number'>177</span>
+<span class='line-number'>178</span>
+<span class='line-number'>179</span>
+<span class='line-number'>180</span>
+<span class='line-number'>181</span>
+<span class='line-number'>182</span>
+<span class='line-number'>183</span>
+<span class='line-number'>184</span>
+<span class='line-number'>185</span>
+<span class='line-number'>186</span>
+<span class='line-number'>187</span>
+<span class='line-number'>188</span>
+<span class='line-number'>189</span>
+<span class='line-number'>190</span>
+<span class='line-number'>191</span>
+<span class='line-number'>192</span>
+<span class='line-number'>193</span>
+<span class='line-number'>194</span>
+<span class='line-number'>195</span>
+<span class='line-number'>196</span>
+<span class='line-number'>197</span>
+<span class='line-number'>198</span>
+<span class='line-number'>199</span>
+<span class='line-number'>200</span>
+<span class='line-number'>201</span>
+<span class='line-number'>202</span>
+<span class='line-number'>203</span>
+<span class='line-number'>204</span>
+<span class='line-number'>205</span>
+<span class='line-number'>206</span>
+<span class='line-number'>207</span>
+<span class='line-number'>208</span>
+<span class='line-number'>209</span>
+<span class='line-number'>210</span>
+<span class='line-number'>211</span>
+<span class='line-number'>212</span>
+<span class='line-number'>213</span>
+<span class='line-number'>214</span>
+<span class='line-number'>215</span>
+<span class='line-number'>216</span>
+<span class='line-number'>217</span>
+<span class='line-number'>218</span>
+<span class='line-number'>219</span>
+<span class='line-number'>220</span>
+<span class='line-number'>221</span>
+<span class='line-number'>222</span>
+<span class='line-number'>223</span>
+<span class='line-number'>224</span>
+<span class='line-number'>225</span>
+<span class='line-number'>226</span>
+<span class='line-number'>227</span>
+<span class='line-number'>228</span>
+<span class='line-number'>229</span>
+<span class='line-number'>230</span>
+<span class='line-number'>231</span>
+<span class='line-number'>232</span>
+<span class='line-number'>233</span>
+<span class='line-number'>234</span>
+<span class='line-number'>235</span>
+<span class='line-number'>236</span>
+<span class='line-number'>237</span>
+<span class='line-number'>238</span>
+<span class='line-number'>239</span>
+<span class='line-number'>240</span>
+<span class='line-number'>241</span>
+<span class='line-number'>242</span>
+<span class='line-number'>243</span>
+<span class='line-number'>244</span>
+<span class='line-number'>245</span>
+<span class='line-number'>246</span>
+<span class='line-number'>247</span>
+<span class='line-number'>248</span>
+<span class='line-number'>249</span>
+<span class='line-number'>250</span>
+<span class='line-number'>251</span>
+<span class='line-number'>252</span>
+<span class='line-number'>253</span>
+<span class='line-number'>254</span>
+<span class='line-number'>255</span>
+<span class='line-number'>256</span>
+<span class='line-number'>257</span>
+<span class='line-number'>258</span>
+<span class='line-number'>259</span>
+<span class='line-number'>260</span>
+<span class='line-number'>261</span>
+<span class='line-number'>262</span>
+<span class='line-number'>263</span>
+<span class='line-number'>264</span>
+<span class='line-number'>265</span>
+<span class='line-number'>266</span>
+<span class='line-number'>267</span>
+<span class='line-number'>268</span>
+<span class='line-number'>269</span>
+<span class='line-number'>270</span>
+<span class='line-number'>271</span>
+<span class='line-number'>272</span>
+<span class='line-number'>273</span>
+<span class='line-number'>274</span>
+<span class='line-number'>275</span>
+<span class='line-number'>276</span>
+<span class='line-number'>277</span>
+<span class='line-number'>278</span>
+<span class='line-number'>279</span>
+<span class='line-number'>280</span>
+<span class='line-number'>281</span>
+<span class='line-number'>282</span>
+<span class='line-number'>283</span>
+<span class='line-number'>284</span>
+<span class='line-number'>285</span>
+<span class='line-number'>286</span>
+<span class='line-number'>287</span>
+<span class='line-number'>288</span>
+<span class='line-number'>289</span>
+<span class='line-number'>290</span>
+<span class='line-number'>291</span>
+<span class='line-number'>292</span>
+<span class='line-number'>293</span>
+<span class='line-number'>294</span>
+<span class='line-number'>295</span>
+<span class='line-number'>296</span>
+<span class='line-number'>297</span>
+<span class='line-number'>298</span>
+<span class='line-number'>299</span>
+<span class='line-number'>300</span>
+<span class='line-number'>301</span>
+<span class='line-number'>302</span>
+<span class='line-number'>303</span>
+<span class='line-number'>304</span>
+<span class='line-number'>305</span>
+<span class='line-number'>306</span>
+<span class='line-number'>307</span>
+<span class='line-number'>308</span>
+<span class='line-number'>309</span>
+<span class='line-number'>310</span>
+<span class='line-number'>311</span>
+<span class='line-number'>312</span>
+<span class='line-number'>313</span>
+<span class='line-number'>314</span>
+<span class='line-number'>315</span>
+<span class='line-number'>316</span>
+<span class='line-number'>317</span>
+<span class='line-number'>318</span>
+<span class='line-number'>319</span>
+<span class='line-number'>320</span>
+<span class='line-number'>321</span>
+</pre></td><td class='code'><pre><code class='basic'><span class='line'><span class="nl">2</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="kr">TAB</span><span class="p">(</span><span class="il">31</span><span class="p">);</span><span class="s2">&quot;BLACK JACK&quot;</span>
+</span><span class='line'><span class="nl">4</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="kr">TAB</span><span class="p">(</span><span class="il">15</span><span class="p">);</span><span class="s2">&quot;CREATIVE COMPUTING  MORRISTOWN, NEW JERSEY&quot;</span>
+</span><span class='line'><span class="nl">6</span><span class="w"> </span><span class="kr">PRINT</span><span class="o">:</span><span class="kr">PRINT</span><span class="o">:</span><span class="kr">PRINT</span>
+</span><span class='line'><span class="nl">10</span><span class="w"> </span><span class="kr">DEF</span><span class="w"> </span><span class="vg">FNA</span><span class="p">(</span><span class="vg">Q</span><span class="p">)</span><span class="o">=</span><span class="vg">Q</span><span class="o">+</span><span class="il">11</span><span class="o">*</span><span class="p">(</span><span class="vg">Q</span><span class="o">&gt;=</span><span class="il">22</span><span class="p">)</span>
+</span><span class='line'><span class="nl">20</span><span class="w"> </span><span class="kd">DIM</span><span class="w"> </span><span class="vg">P</span><span class="p">(</span><span class="il">15</span><span class="p">,</span><span class="il">12</span><span class="p">),</span><span class="vg">Q</span><span class="p">(</span><span class="il">15</span><span class="p">),</span><span class="vg">C</span><span class="p">(</span><span class="il">52</span><span class="p">),</span><span class="vg">D</span><span class="p">(</span><span class="il">52</span><span class="p">),</span><span class="vg">T</span><span class="p">(</span><span class="il">8</span><span class="p">),</span><span class="vg">S</span><span class="p">(</span><span class="il">7</span><span class="p">),</span><span class="vg">B</span><span class="p">(</span><span class="il">15</span><span class="p">)</span>
+</span><span class='line'><span class="nl">30</span><span class="w"> </span><span class="kd">DIM</span><span class="w"> </span><span class="vg">R</span><span class="p">(</span><span class="il">15</span><span class="p">)</span>
+</span><span class='line'><span class="nl">40</span><span class="w"> </span><span class="kr">REM</span><span class="o">--</span><span class="vg">P</span><span class="p">(</span><span class="vg">I</span><span class="p">,</span><span class="vg">J</span><span class="p">)</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="vg">THE</span><span class="w"> </span><span class="vg">JTH</span><span class="w"> </span><span class="vg">CARD</span><span class="w"> </span><span class="vg">IN</span><span class="w"> </span><span class="vg">HAND</span><span class="w"> </span><span class="vg">I</span><span class="p">,</span><span class="w"> </span><span class="vg">Q</span><span class="p">(</span><span class="vg">I</span><span class="p">)</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="vg">TOTAL</span><span class="w"> </span><span class="vg">OF</span><span class="w"> </span><span class="vg">HAND</span><span class="w"> </span><span class="vg">I</span>
+</span><span class='line'><span class="nl">50</span><span class="w"> </span><span class="kr">REM</span><span class="o">--</span><span class="vg">C</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="vg">THE</span><span class="w"> </span><span class="vg">DECK</span><span class="w"> </span><span class="vg">BEING</span><span class="w"> </span><span class="vg">DEALT</span><span class="w"> </span><span class="vg">FROM</span><span class="p">,</span><span class="w"> </span><span class="vg">D</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="vg">THE</span><span class="w"> </span><span class="vg">DISCARD</span><span class="w"> </span><span class="vg">PILE</span><span class="p">,</span>
+</span><span class='line'><span class="nl">60</span><span class="w"> </span><span class="kr">REM</span><span class="o">--</span><span class="vg">T</span><span class="p">(</span><span class="vg">I</span><span class="p">)</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="vg">THE</span><span class="w"> </span><span class="vg">TOTAL</span><span class="w"> </span><span class="kr">FOR</span><span class="w"> </span><span class="vg">PLAYER</span><span class="w"> </span><span class="vg">I</span><span class="p">,</span><span class="w"> </span><span class="vg">S</span><span class="p">(</span><span class="vg">I</span><span class="p">)</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="vg">THE</span><span class="w"> </span><span class="vg">TOTAL</span><span class="w"> </span><span class="vg">THIS</span><span class="w"> </span><span class="vg">HAND</span><span class="w"> </span><span class="kr">FOR</span>
+</span><span class='line'><span class="nl">70</span><span class="w"> </span><span class="kr">REM</span><span class="o">--</span><span class="vg">PLAYER</span><span class="w"> </span><span class="vg">I</span><span class="p">,</span><span class="w"> </span><span class="vg">B</span><span class="p">(</span><span class="vg">I</span><span class="p">)</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="vg">TH</span><span class="w"> </span><span class="vg">BET</span><span class="w"> </span><span class="kr">FOR</span><span class="w"> </span><span class="vg">HAND</span><span class="w"> </span><span class="vg">I</span>
+</span><span class='line'><span class="nl">80</span><span class="w"> </span><span class="kr">REM</span><span class="o">--</span><span class="vg">R</span><span class="p">(</span><span class="vg">I</span><span class="p">)</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="vg">THE</span><span class="w"> </span><span class="vg">LENGTH</span><span class="w"> </span><span class="vg">OF</span><span class="w"> </span><span class="vg">P</span><span class="p">(</span><span class="vg">I</span><span class="p">,</span><span class="o">*</span><span class="p">)</span>
+</span><span class='line'><span class="nl">90</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">1500</span>
+</span><span class='line'><span class="nl">100</span><span class="w"> </span><span class="kr">REM</span><span class="o">--</span><span class="vg">SUBROUTINE</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="kr">GET</span><span class="w"> </span><span class="vg">A</span><span class="w"> </span><span class="vg">CARD</span><span class="o">.</span><span class="w">  </span><span class="vg">RESULT</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="kr">PUT</span><span class="w"> </span><span class="vg">IN</span><span class="w"> </span><span class="vg">X</span><span class="o">.</span>
+</span><span class='line'><span class="nl">110</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">C</span><span class="o">&lt;</span><span class="il">51</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">230</span>
+</span><span class='line'><span class="nl">120</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;RESHUFFLING&quot;</span>
+</span><span class='line'><span class="nl">130</span><span class="w"> </span><span class="kr">FOR</span><span class="w"> </span><span class="vg">D</span><span class="o">=</span><span class="vg">D</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="il">1</span><span class="w"> </span><span class="k">STEP</span><span class="w"> </span><span class="il">-1</span>
+</span><span class='line'><span class="nl">140</span><span class="w"> </span><span class="vg">C</span><span class="o">=</span><span class="vg">C</span><span class="il">-1</span>
+</span><span class='line'><span class="nl">150</span><span class="w"> </span><span class="vg">C</span><span class="p">(</span><span class="vg">C</span><span class="p">)</span><span class="o">=</span><span class="vg">D</span><span class="p">(</span><span class="vg">D</span><span class="p">)</span>
+</span><span class='line'><span class="nl">160</span><span class="w"> </span><span class="kr">NEXT</span><span class="w"> </span><span class="vg">D</span>
+</span><span class='line'><span class="nl">170</span><span class="w"> </span><span class="kr">FOR</span><span class="w"> </span><span class="vg">C1</span><span class="o">=</span><span class="il">52</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="vg">C</span><span class="w"> </span><span class="k">STEP</span><span class="w"> </span><span class="il">-1</span>
+</span><span class='line'><span class="nl">180</span><span class="w"> </span><span class="vg">C2</span><span class="o">=</span><span class="kr">INT</span><span class="p">(</span><span class="kr">RND</span><span class="p">(</span><span class="il">1</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="vg">C1</span><span class="o">-</span><span class="vg">C</span><span class="o">+</span><span class="il">1</span><span class="p">))</span><span class="o">+</span><span class="vg">C</span>
+</span><span class='line'><span class="nl">190</span><span class="w"> </span><span class="vg">C3</span><span class="o">=</span><span class="vg">C</span><span class="p">(</span><span class="vg">C2</span><span class="p">)</span>
+</span><span class='line'><span class="nl">200</span><span class="w"> </span><span class="vg">C</span><span class="p">(</span><span class="vg">C2</span><span class="p">)</span><span class="o">=</span><span class="vg">C</span><span class="p">(</span><span class="vg">C1</span><span class="p">)</span>
+</span><span class='line'><span class="nl">210</span><span class="w"> </span><span class="vg">C</span><span class="p">(</span><span class="vg">C1</span><span class="p">)</span><span class="o">=</span><span class="vg">C3</span>
+</span><span class='line'><span class="nl">220</span><span class="w"> </span><span class="kr">NEXT</span><span class="w"> </span><span class="vg">C1</span>
+</span><span class='line'><span class="nl">230</span><span class="w"> </span><span class="vg">X</span><span class="o">=</span><span class="vg">C</span><span class="p">(</span><span class="vg">C</span><span class="p">)</span>
+</span><span class='line'><span class="nl">240</span><span class="w"> </span><span class="vg">C</span><span class="o">=</span><span class="vg">C</span><span class="o">+</span><span class="il">1</span>
+</span><span class='line'><span class="nl">250</span><span class="w"> </span><span class="kr">RETURN</span>
+</span><span class='line'><span class="nl">300</span><span class="w"> </span><span class="kr">REM</span><span class="o">--</span><span class="vg">SUBROUTINE</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="vg">EVALUATE</span><span class="w"> </span><span class="vg">HAND</span><span class="w"> </span><span class="vg">I</span><span class="o">.</span><span class="w">  </span><span class="vg">TOTAL</span><span class="w"> </span><span class="k">IS</span><span class="w"> </span><span class="kr">PUT</span><span class="w"> </span><span class="vg">INTO</span>
+</span><span class='line'><span class="nl">310</span><span class="w"> </span><span class="kr">REM</span><span class="o">--</span><span class="vg">Q</span><span class="p">(</span><span class="vg">I</span><span class="p">)</span><span class="o">.</span><span class="w"> </span><span class="vg">TOTALS</span><span class="w"> </span><span class="vg">HAVE</span><span class="w"> </span><span class="vg">THE</span><span class="w"> </span><span class="vg">FOLLOWING</span><span class="w"> </span><span class="nl">MEANING:</span>
+</span><span class='line'><span class="nl">320</span><span class="w"> </span><span class="kr">REM</span><span class="o">--</span><span class="w">  </span><span class="il">2-10</span><span class="o">...</span><span class="vg">HARD</span><span class="w"> </span><span class="il">2-10</span>
+</span><span class='line'><span class="nl">330</span><span class="w"> </span><span class="kr">REM</span><span class="o">--</span><span class="w"> </span><span class="il">11-21</span><span class="o">...</span><span class="vg">SOFT</span><span class="w"> </span><span class="il">11-21</span>
+</span><span class='line'><span class="nl">340</span><span class="w"> </span><span class="kr">REM</span><span class="o">--</span><span class="w"> </span><span class="il">22-32</span><span class="o">...</span><span class="vg">HARD</span><span class="w"> </span><span class="il">11-21</span>
+</span><span class='line'><span class="nl">350</span><span class="w"> </span><span class="kr">REM</span><span class="o">--</span><span class="w">  </span><span class="il">33</span><span class="o">+....</span><span class="vg">BUSTED</span>
+</span><span class='line'><span class="nl">360</span><span class="w"> </span><span class="vg">Q</span><span class="o">=</span><span class="il">0</span>
+</span><span class='line'><span class="nl">370</span><span class="w"> </span><span class="kr">FOR</span><span class="w"> </span><span class="vg">Q2</span><span class="o">=</span><span class="il">1</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="vg">R</span><span class="p">(</span><span class="vg">I</span><span class="p">)</span>
+</span><span class='line'><span class="nl">380</span><span class="w"> </span><span class="vg">X</span><span class="o">=</span><span class="vg">P</span><span class="p">(</span><span class="vg">I</span><span class="p">,</span><span class="vg">Q2</span><span class="p">)</span>
+</span><span class='line'><span class="nl">390</span><span class="w"> </span><span class="kr">GOSUB</span><span class="w"> </span><span class="nl">500</span>
+</span><span class='line'><span class="nl">400</span><span class="w"> </span><span class="kr">NEXT</span><span class="w"> </span><span class="vg">Q2</span>
+</span><span class='line'><span class="nl">410</span><span class="w"> </span><span class="vg">Q</span><span class="p">(</span><span class="vg">I</span><span class="p">)</span><span class="o">=</span><span class="vg">Q</span>
+</span><span class='line'><span class="nl">420</span><span class="w"> </span><span class="kr">RETURN</span>
+</span><span class='line'><span class="nl">500</span><span class="w"> </span><span class="kr">REM</span><span class="o">--</span><span class="vg">SUBROUTINE</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="vg">ADD</span><span class="w"> </span><span class="vg">CARD</span><span class="w"> </span><span class="vg">X</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="vg">TOTAL</span><span class="w"> </span><span class="vg">Q</span><span class="o">.</span>
+</span><span class='line'><span class="nl">510</span><span class="w"> </span><span class="vg">X1</span><span class="o">=</span><span class="nl">X:</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">X1</span><span class="o">&gt;</span><span class="il">10</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="vg">X1</span><span class="o">=</span><span class="il">10</span><span class="o">:</span><span class="w">  </span><span class="kr">REM</span><span class="w">  </span><span class="vg">SAME</span><span class="w"> </span><span class="k">AS</span><span class="w"> </span><span class="vg">X1</span><span class="o">=</span><span class="il">10</span><span class="w"> </span><span class="vg">MIN</span><span class="w"> </span><span class="vg">X</span>
+</span><span class='line'><span class="nl">520</span><span class="w"> </span><span class="vg">Q1</span><span class="o">=</span><span class="vg">Q</span><span class="o">+</span><span class="vg">X1</span>
+</span><span class='line'><span class="nl">530</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">Q</span><span class="o">&gt;=</span><span class="il">11</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">590</span>
+</span><span class='line'><span class="nl">540</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">X</span><span class="o">&gt;</span><span class="il">1</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">570</span>
+</span><span class='line'><span class="nl">550</span><span class="w"> </span><span class="vg">Q</span><span class="o">=</span><span class="vg">Q</span><span class="o">+</span><span class="il">11</span>
+</span><span class='line'><span class="nl">560</span><span class="w"> </span><span class="kr">RETURN</span>
+</span><span class='line'><span class="nl">570</span><span class="w"> </span><span class="vg">Q</span><span class="o">=</span><span class="vg">Q1</span><span class="il">-11</span><span class="o">*</span><span class="p">(</span><span class="vg">Q1</span><span class="o">&gt;=</span><span class="il">11</span><span class="p">)</span>
+</span><span class='line'><span class="nl">580</span><span class="w"> </span><span class="kr">RETURN</span>
+</span><span class='line'><span class="nl">590</span><span class="w"> </span><span class="vg">Q</span><span class="o">=</span><span class="vg">Q1</span><span class="o">-</span><span class="p">(</span><span class="vg">Q</span><span class="o">&lt;=</span><span class="il">21</span><span class="w"> </span><span class="ow">AND</span><span class="w"> </span><span class="vg">Q1</span><span class="o">&gt;</span><span class="il">21</span><span class="p">)</span>
+</span><span class='line'><span class="nl">600</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">Q</span><span class="o">&lt;</span><span class="il">33</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">620</span>
+</span><span class='line'><span class="nl">610</span><span class="w"> </span><span class="vg">Q</span><span class="o">=</span><span class="il">-1</span>
+</span><span class='line'><span class="nl">620</span><span class="w"> </span><span class="kr">RETURN</span>
+</span><span class='line'><span class="nl">700</span><span class="w"> </span><span class="kr">REM</span><span class="o">--</span><span class="vg">CARD</span><span class="w"> </span><span class="vg">PRINTING</span><span class="w"> </span><span class="vg">SUBROUTINE</span>
+</span><span class='line'><span class="nl">710</span><span class="w"> </span><span class="c1">REM  D$ DEFINED ELSEWHERE</span>
+</span><span class='line'><span class="nl">720</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="kr">MID$</span><span class="p">(</span><span class="vg">D$</span><span class="p">,</span><span class="il">3</span><span class="o">*</span><span class="vg">X</span><span class="il">-2</span><span class="p">,</span><span class="il">3</span><span class="p">);</span>
+</span><span class='line'><span class="nl">730</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;  &quot;</span><span class="p">;</span>
+</span><span class='line'><span class="nl">740</span><span class="w"> </span><span class="kr">RETURN</span>
+</span><span class='line'><span class="nl">750</span><span class="w"> </span><span class="kr">REM</span><span class="o">--</span><span class="vg">ALTERNATIVE</span><span class="w"> </span><span class="vg">PRINTING</span><span class="w"> </span><span class="vg">ROUTINE</span>
+</span><span class='line'><span class="nl">760</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot; &quot;</span><span class="p">;</span><span class="kr">MID$</span><span class="p">(</span><span class="vg">D$</span><span class="p">,</span><span class="il">3</span><span class="o">*</span><span class="vg">X</span><span class="il">-1</span><span class="p">,</span><span class="il">2</span><span class="p">);</span>
+</span><span class='line'><span class="nl">770</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;   &quot;</span><span class="p">;</span>
+</span><span class='line'><span class="nl">780</span><span class="w"> </span><span class="kr">RETURN</span>
+</span><span class='line'><span class="nl">800</span><span class="w"> </span><span class="kr">REM</span><span class="o">--</span><span class="vg">SUBROUTINE</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="kr">PLAY</span><span class="w"> </span><span class="kr">OUT</span><span class="w"> </span><span class="vg">A</span><span class="w"> </span><span class="vg">HAND</span><span class="o">.</span>
+</span><span class='line'><span class="nl">810</span><span class="w"> </span><span class="kr">REM</span><span class="o">--</span><span class="vg">NO</span><span class="w"> </span><span class="vg">SPLITTING</span><span class="w"> </span><span class="ow">OR</span><span class="w"> </span><span class="vg">BLACKJACKS</span><span class="w"> </span><span class="vg">ALLOWED</span>
+</span><span class='line'><span class="nl">820</span><span class="w"> </span><span class="vg">H1</span><span class="o">=</span><span class="il">5</span>
+</span><span class='line'><span class="nl">830</span><span class="w"> </span><span class="kr">GOSUB</span><span class="w"> </span><span class="nl">1410</span>
+</span><span class='line'><span class="nl">840</span><span class="w"> </span><span class="vg">H1</span><span class="o">=</span><span class="il">3</span>
+</span><span class='line'><span class="nl">850</span><span class="w"> </span><span class="kr">ON</span><span class="w"> </span><span class="vg">H</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">950</span><span class="p">,</span><span class="il">930</span>
+</span><span class='line'><span class="nl">860</span><span class="w"> </span><span class="kr">GOSUB</span><span class="w"> </span><span class="nl">100</span>
+</span><span class='line'><span class="nl">870</span><span class="w"> </span><span class="vg">B</span><span class="p">(</span><span class="vg">I</span><span class="p">)</span><span class="o">=</span><span class="vg">B</span><span class="p">(</span><span class="vg">I</span><span class="p">)</span><span class="o">*</span><span class="il">2</span>
+</span><span class='line'><span class="nl">880</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;RECEIVED A&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="nl">890</span><span class="w"> </span><span class="kr">GOSUB</span><span class="w"> </span><span class="nl">700</span>
+</span><span class='line'><span class="nl">900</span><span class="w"> </span><span class="kr">GOSUB</span><span class="w"> </span><span class="nl">1100</span>
+</span><span class='line'><span class="nl">910</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">Q</span><span class="o">&gt;</span><span class="il">0</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="kr">GOSUB</span><span class="w"> </span><span class="nl">1300</span>
+</span><span class='line'><span class="nl">920</span><span class="w"> </span><span class="kr">RETURN</span>
+</span><span class='line'><span class="nl">930</span><span class="w"> </span><span class="kr">GOSUB</span><span class="w"> </span><span class="nl">1320</span>
+</span><span class='line'><span class="nl">940</span><span class="w"> </span><span class="kr">RETURN</span>
+</span><span class='line'><span class="nl">950</span><span class="w"> </span><span class="kr">GOSUB</span><span class="w"> </span><span class="nl">100</span>
+</span><span class='line'><span class="nl">960</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;RECEIVED A&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="nl">970</span><span class="w"> </span><span class="kr">GOSUB</span><span class="w"> </span><span class="nl">700</span>
+</span><span class='line'><span class="nl">980</span><span class="w"> </span><span class="kr">GOSUB</span><span class="w"> </span><span class="nl">1100</span>
+</span><span class='line'><span class="nl">990</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">Q</span><span class="o">&lt;</span><span class="il">0</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">940</span>
+</span><span class='line'><span class="nl">1000</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;HIT&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="nl">1010</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">830</span>
+</span><span class='line'><span class="nl">1100</span><span class="w"> </span><span class="kr">REM</span><span class="o">--</span><span class="vg">SUBROUTINE</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="vg">ADD</span><span class="w"> </span><span class="vg">A</span><span class="w"> </span><span class="vg">CARD</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="vg">ROW</span><span class="w"> </span><span class="vg">I</span>
+</span><span class='line'><span class="nl">1110</span><span class="w"> </span><span class="vg">R</span><span class="p">(</span><span class="vg">I</span><span class="p">)</span><span class="o">=</span><span class="vg">R</span><span class="p">(</span><span class="vg">I</span><span class="p">)</span><span class="o">+</span><span class="il">1</span>
+</span><span class='line'><span class="nl">1120</span><span class="w"> </span><span class="vg">P</span><span class="p">(</span><span class="vg">I</span><span class="p">,</span><span class="vg">R</span><span class="p">(</span><span class="vg">I</span><span class="p">))</span><span class="o">=</span><span class="vg">X</span>
+</span><span class='line'><span class="nl">1130</span><span class="w"> </span><span class="vg">Q</span><span class="o">=</span><span class="vg">Q</span><span class="p">(</span><span class="vg">I</span><span class="p">)</span>
+</span><span class='line'><span class="nl">1140</span><span class="w"> </span><span class="kr">GOSUB</span><span class="w"> </span><span class="nl">500</span>
+</span><span class='line'><span class="nl">1150</span><span class="w"> </span><span class="vg">Q</span><span class="p">(</span><span class="vg">I</span><span class="p">)</span><span class="o">=</span><span class="vg">Q</span>
+</span><span class='line'><span class="nl">1160</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">Q</span><span class="o">&gt;=</span><span class="il">0</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">1190</span>
+</span><span class='line'><span class="nl">1170</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;...BUSTED&quot;</span>
+</span><span class='line'><span class="nl">1180</span><span class="w"> </span><span class="kr">GOSUB</span><span class="w"> </span><span class="nl">1200</span>
+</span><span class='line'><span class="nl">1190</span><span class="w"> </span><span class="kr">RETURN</span>
+</span><span class='line'><span class="nl">1200</span><span class="w"> </span><span class="kr">REM</span><span class="o">--</span><span class="vg">SUBROUTINE</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="vg">DISCARD</span><span class="w"> </span><span class="vg">ROW</span><span class="w"> </span><span class="vg">I</span>
+</span><span class='line'><span class="nl">1210</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">R</span><span class="p">(</span><span class="vg">I</span><span class="p">)</span><span class="o">&lt;&gt;</span><span class="il">0</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">1230</span>
+</span><span class='line'><span class="nl">1220</span><span class="w"> </span><span class="kr">RETURN</span>
+</span><span class='line'><span class="nl">1230</span><span class="w"> </span><span class="vg">D</span><span class="o">=</span><span class="vg">D</span><span class="o">+</span><span class="il">1</span>
+</span><span class='line'><span class="nl">1240</span><span class="w"> </span><span class="vg">D</span><span class="p">(</span><span class="vg">D</span><span class="p">)</span><span class="o">=</span><span class="vg">P</span><span class="p">(</span><span class="vg">I</span><span class="p">,</span><span class="vg">R</span><span class="p">(</span><span class="vg">I</span><span class="p">))</span>
+</span><span class='line'><span class="nl">1250</span><span class="w"> </span><span class="vg">R</span><span class="p">(</span><span class="vg">I</span><span class="p">)</span><span class="o">=</span><span class="vg">R</span><span class="p">(</span><span class="vg">I</span><span class="p">)</span><span class="il">-1</span>
+</span><span class='line'><span class="nl">1260</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">1210</span>
+</span><span class='line'><span class="nl">1300</span><span class="w"> </span><span class="kr">REM</span><span class="o">--</span><span class="vg">PRINTS</span><span class="w"> </span><span class="vg">TOTAL</span><span class="w"> </span><span class="vg">OF</span><span class="w"> </span><span class="vg">HAND</span><span class="w"> </span><span class="vg">I</span>
+</span><span class='line'><span class="nl">1310</span><span class="w"> </span><span class="kr">PRINT</span>
+</span><span class='line'><span class="nl">1320</span><span class="w"> </span><span class="vg">AA</span><span class="o">=</span><span class="vg">Q</span><span class="p">(</span><span class="vg">I</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="kr">GOSUB</span><span class="w"> </span><span class="nl">3400</span>
+</span><span class='line'><span class="nl">1325</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;TOTAL IS&quot;</span><span class="p">;</span><span class="vg">AA</span>
+</span><span class='line'><span class="nl">1330</span><span class="w"> </span><span class="kr">RETURN</span>
+</span><span class='line'><span class="nl">1400</span><span class="w"> </span><span class="kr">REM</span><span class="o">--</span><span class="vg">SUBROUTINE</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="kr">READ</span><span class="w"> </span><span class="vg">REPLY</span>
+</span><span class='line'><span class="nl">1410</span><span class="w"> </span><span class="c1">REM  I$ DEFINED ELSEWHERE</span>
+</span><span class='line'><span class="nl">1420</span><span class="w"> </span><span class="kr">INPUT</span><span class="w"> </span><span class="vg">H$</span><span class="o">:</span><span class="w"> </span><span class="vg">H$</span><span class="o">=</span><span class="kr">LEFT$</span><span class="p">(</span><span class="vg">H$</span><span class="p">,</span><span class="il">1</span><span class="p">)</span>
+</span><span class='line'><span class="nl">1430</span><span class="w"> </span><span class="kr">FOR</span><span class="w"> </span><span class="vg">H</span><span class="o">=</span><span class="il">1</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="vg">H1</span><span class="w"> </span><span class="k">STEP</span><span class="w"> </span><span class="il">2</span>
+</span><span class='line'><span class="nl">1440</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">H$</span><span class="o">=</span><span class="kr">MID$</span><span class="p">(</span><span class="vg">I$</span><span class="p">,</span><span class="vg">H</span><span class="p">,</span><span class="il">1</span><span class="p">)</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">1480</span>
+</span><span class='line'><span class="nl">1450</span><span class="w"> </span><span class="kr">NEXT</span><span class="w"> </span><span class="vg">H</span>
+</span><span class='line'><span class="nl">1460</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;TYPE &quot;</span><span class="p">;</span><span class="kr">MID$</span><span class="p">(</span><span class="vg">I$</span><span class="p">,</span><span class="il">1</span><span class="p">,</span><span class="vg">H1</span><span class="il">-1</span><span class="p">);</span><span class="s2">&quot; OR &quot;</span><span class="p">;</span><span class="kr">MID$</span><span class="p">(</span><span class="vg">I$</span><span class="p">,</span><span class="vg">H1</span><span class="p">,</span><span class="il">2</span><span class="p">);</span><span class="s2">&quot; PLEASE&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="nl">1470</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">1420</span>
+</span><span class='line'><span class="nl">1480</span><span class="w"> </span><span class="vg">H</span><span class="o">=</span><span class="p">(</span><span class="vg">H</span><span class="o">+</span><span class="il">1</span><span class="p">)</span><span class="o">/</span><span class="il">2</span>
+</span><span class='line'><span class="nl">1490</span><span class="w"> </span><span class="kr">RETURN</span>
+</span><span class='line'><span class="nl">1500</span><span class="w"> </span><span class="kr">REM</span><span class="o">--</span><span class="vg">PROGRAM</span><span class="w"> </span><span class="vg">STARTS</span><span class="w"> </span><span class="vg">HERE</span>
+</span><span class='line'><span class="nl">1510</span><span class="w"> </span><span class="kr">REM</span><span class="o">--</span><span class="vg">INITIALIZE</span>
+</span><span class='line'><span class="nl">1520</span><span class="w"> </span><span class="vg">D$</span><span class="o">=</span><span class="s2">&quot;N A  2  3  4  5  6  7N 8  9 10  J  Q  K&quot;</span>
+</span><span class='line'><span class="nl">1530</span><span class="w"> </span><span class="vg">I$</span><span class="o">=</span><span class="s2">&quot;H,S,D,/,&quot;</span>
+</span><span class='line'><span class="nl">1540</span><span class="w"> </span><span class="kr">FOR</span><span class="w"> </span><span class="vg">I</span><span class="o">=</span><span class="il">1</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="il">13</span>
+</span><span class='line'><span class="nl">1550</span><span class="w"> </span><span class="kr">FOR</span><span class="w"> </span><span class="vg">J</span><span class="o">=</span><span class="il">4</span><span class="o">*</span><span class="vg">I</span><span class="il">-3</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="il">4</span><span class="o">*</span><span class="vg">I</span>
+</span><span class='line'><span class="nl">1560</span><span class="w"> </span><span class="vg">D</span><span class="p">(</span><span class="vg">J</span><span class="p">)</span><span class="o">=</span><span class="vg">I</span>
+</span><span class='line'><span class="nl">1570</span><span class="w"> </span><span class="kr">NEXT</span><span class="w"> </span><span class="vg">J</span>
+</span><span class='line'><span class="nl">1580</span><span class="w"> </span><span class="kr">NEXT</span><span class="w"> </span><span class="vg">I</span>
+</span><span class='line'><span class="nl">1590</span><span class="w"> </span><span class="vg">D</span><span class="o">=</span><span class="il">52</span>
+</span><span class='line'><span class="nl">1600</span><span class="w"> </span><span class="vg">C</span><span class="o">=</span><span class="il">53</span>
+</span><span class='line'><span class="nl">1610</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;DO YOU WANT INSTRUCTIONS&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="nl">1620</span><span class="w"> </span><span class="kr">INPUT</span><span class="w"> </span><span class="vg">H$</span>
+</span><span class='line'><span class="nl">1630</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="kr">LEFT$</span><span class="p">(</span><span class="vg">H$</span><span class="p">,</span><span class="il">1</span><span class="p">)</span><span class="o">=</span><span class="s2">&quot;N&quot;</span><span class="w"> </span><span class="ow">OR</span><span class="w"> </span><span class="kr">LEFT$</span><span class="p">(</span><span class="vg">H$</span><span class="p">,</span><span class="il">1</span><span class="p">)</span><span class="o">=</span><span class="s2">&quot;n&quot;</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">1760</span>
+</span><span class='line'><span class="nl">1640</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;THIS IS THE GAME OF 21. AS MANY AS 7 PLAYERS MAY PLAY THE&quot;</span>
+</span><span class='line'><span class="nl">1650</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;GAME. ON EACH DEAL, BETS WILL BE ASKED FOR, AND THE&quot;</span>
+</span><span class='line'><span class="nl">1660</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;PLAYERS&#39; BETS SHOULD BE TYPED IN. THE CARDS WILL THEN BE&quot;</span>
+</span><span class='line'><span class="nl">1670</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;DEALT, AND EACH PLAYER IN TURN PLAYS HIS HAND. THE&quot;</span>
+</span><span class='line'><span class="nl">1680</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;FIRST RESPONSE SHOULD BE EITHER &#39;D&#39;, INDICATING THAT THE&quot;</span>
+</span><span class='line'><span class="nl">1690</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;PLAYER IS DOUBLING DOWN, &#39;S&#39;, INDICATING THAT HE IS&quot;</span>
+</span><span class='line'><span class="nl">1700</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;STANDING, &#39;H&#39;, INDICATING HE WANTS ANOTHER CARD, OR &#39;/&#39;,&quot;</span>
+</span><span class='line'><span class="nl">1710</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;INDICATING THAT HE WANTS TO SPLIT HIS CARDS. AFTER THE&quot;</span>
+</span><span class='line'><span class="nl">1720</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;INITIAL RESPONSE, ALL FURTHER RESPONSES SHOULD BE &#39;S&#39; OR&quot;</span>
+</span><span class='line'><span class="nl">1730</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;&#39;H&#39;, UNLESS THE CARDS WERE SPLIT, IN WHICH CASE DOUBLING&quot;</span>
+</span><span class='line'><span class="nl">1740</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;DOWN IS AGAIN PERMITTED. IN ORDER TO COLLECT FOR&quot;</span>
+</span><span class='line'><span class="nl">1750</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;BLACKJACK, THE INITIAL RESPONSE SHOULD BE &#39;S&#39;.&quot;</span>
+</span><span class='line'><span class="nl">1760</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;NUMBER OF PLAYERS&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="nl">1770</span><span class="w"> </span><span class="kr">INPUT</span><span class="w"> </span><span class="vg">N</span>
+</span><span class='line'><span class="nl">1775</span><span class="w"> </span><span class="kr">PRINT</span>
+</span><span class='line'><span class="nl">1780</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">N</span><span class="o">&lt;</span><span class="il">1</span><span class="w"> </span><span class="ow">OR</span><span class="w"> </span><span class="vg">N</span><span class="o">&gt;</span><span class="il">7</span><span class="w"> </span><span class="ow">OR</span><span class="w"> </span><span class="vg">N</span><span class="o">&gt;</span><span class="kr">INT</span><span class="p">(</span><span class="vg">N</span><span class="p">)</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">1760</span>
+</span><span class='line'><span class="nl">1790</span><span class="w"> </span><span class="kr">FOR</span><span class="w"> </span><span class="vg">I</span><span class="o">=</span><span class="il">1</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="il">8</span><span class="o">:</span><span class="w"> </span><span class="vg">T</span><span class="p">(</span><span class="vg">I</span><span class="p">)</span><span class="o">=</span><span class="il">0</span><span class="o">:</span><span class="w"> </span><span class="kr">NEXT</span><span class="w"> </span><span class="vg">I</span>
+</span><span class='line'><span class="nl">1800</span><span class="w"> </span><span class="vg">D1</span><span class="o">=</span><span class="vg">N</span><span class="o">+</span><span class="il">1</span>
+</span><span class='line'><span class="nl">1810</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="il">2</span><span class="o">*</span><span class="vg">D1</span><span class="o">+</span><span class="vg">C</span><span class="o">&gt;=</span><span class="il">52</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="kr">GOSUB</span><span class="w"> </span><span class="nl">120</span>
+</span><span class='line'><span class="nl">1820</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">C</span><span class="o">=</span><span class="il">2</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="vg">C</span><span class="o">=</span><span class="vg">C</span><span class="il">-1</span>
+</span><span class='line'><span class="nl">1830</span><span class="w"> </span><span class="kr">FOR</span><span class="w"> </span><span class="vg">I</span><span class="o">=</span><span class="il">1</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="nl">N:</span><span class="w"> </span><span class="vg">Z</span><span class="p">(</span><span class="vg">I</span><span class="p">)</span><span class="o">=</span><span class="il">0</span><span class="o">:</span><span class="w"> </span><span class="kr">NEXT</span><span class="w"> </span><span class="vg">I</span>
+</span><span class='line'><span class="nl">1840</span><span class="w"> </span><span class="kr">FOR</span><span class="w"> </span><span class="vg">I</span><span class="o">=</span><span class="il">1</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="il">15</span><span class="o">:</span><span class="w"> </span><span class="vg">B</span><span class="p">(</span><span class="vg">I</span><span class="p">)</span><span class="o">=</span><span class="il">0</span><span class="o">:</span><span class="w"> </span><span class="kr">NEXT</span><span class="w"> </span><span class="vg">I</span>
+</span><span class='line'><span class="nl">1850</span><span class="w"> </span><span class="kr">FOR</span><span class="w"> </span><span class="vg">I</span><span class="o">=</span><span class="il">1</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="il">15</span><span class="o">:</span><span class="w"> </span><span class="vg">Q</span><span class="p">(</span><span class="vg">I</span><span class="p">)</span><span class="o">=</span><span class="il">0</span><span class="o">:</span><span class="w"> </span><span class="kr">NEXT</span><span class="w"> </span><span class="vg">I</span>
+</span><span class='line'><span class="nl">1860</span><span class="w"> </span><span class="kr">FOR</span><span class="w"> </span><span class="vg">I</span><span class="o">=</span><span class="il">1</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="il">7</span><span class="o">:</span><span class="w"> </span><span class="vg">S</span><span class="p">(</span><span class="vg">I</span><span class="p">)</span><span class="o">=</span><span class="il">0</span><span class="o">:</span><span class="w"> </span><span class="kr">NEXT</span><span class="w"> </span><span class="vg">I</span>
+</span><span class='line'><span class="nl">1870</span><span class="w"> </span><span class="kr">FOR</span><span class="w"> </span><span class="vg">I</span><span class="o">=</span><span class="il">1</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="il">15</span><span class="o">:</span><span class="w"> </span><span class="vg">R</span><span class="p">(</span><span class="vg">I</span><span class="p">)</span><span class="o">=</span><span class="il">0</span><span class="o">:</span><span class="w"> </span><span class="kr">NEXT</span><span class="w"> </span><span class="vg">I</span>
+</span><span class='line'><span class="nl">1880</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;BETS:&quot;</span>
+</span><span class='line'><span class="nl">1890</span><span class="w"> </span><span class="kr">FOR</span><span class="w"> </span><span class="vg">I</span><span class="o">=</span><span class="il">1</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="nl">N:</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;#&quot;</span><span class="p">;</span><span class="vg">I</span><span class="p">;</span><span class="o">:</span><span class="w"> </span><span class="kr">INPUT</span><span class="w"> </span><span class="vg">Z</span><span class="p">(</span><span class="vg">I</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="kr">NEXT</span><span class="w"> </span><span class="vg">I</span>
+</span><span class='line'><span class="nl">1900</span><span class="w"> </span><span class="kr">FOR</span><span class="w"> </span><span class="vg">I</span><span class="o">=</span><span class="il">1</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="vg">N</span>
+</span><span class='line'><span class="nl">1910</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">Z</span><span class="p">(</span><span class="vg">I</span><span class="p">)</span><span class="o">&lt;=</span><span class="il">0</span><span class="w"> </span><span class="ow">OR</span><span class="w"> </span><span class="vg">Z</span><span class="p">(</span><span class="vg">I</span><span class="p">)</span><span class="o">&gt;</span><span class="il">500</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">1880</span>
+</span><span class='line'><span class="nl">1920</span><span class="w"> </span><span class="vg">B</span><span class="p">(</span><span class="vg">I</span><span class="p">)</span><span class="o">=</span><span class="vg">Z</span><span class="p">(</span><span class="vg">I</span><span class="p">)</span>
+</span><span class='line'><span class="nl">1930</span><span class="w"> </span><span class="kr">NEXT</span><span class="w"> </span><span class="vg">I</span>
+</span><span class='line'><span class="nl">1940</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;PLAYER&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="nl">1950</span><span class="w"> </span><span class="kr">FOR</span><span class="w"> </span><span class="vg">I</span><span class="o">=</span><span class="il">1</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="vg">N</span>
+</span><span class='line'><span class="nl">1960</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="vg">I</span><span class="p">;</span><span class="s2">&quot;   &quot;</span><span class="p">;</span>
+</span><span class='line'><span class="nl">1970</span><span class="w"> </span><span class="kr">NEXT</span><span class="w"> </span><span class="vg">I</span>
+</span><span class='line'><span class="nl">1980</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;DEALER&quot;</span>
+</span><span class='line'><span class="nl">1990</span><span class="w"> </span><span class="kr">FOR</span><span class="w"> </span><span class="vg">J</span><span class="o">=</span><span class="il">1</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="il">2</span>
+</span><span class='line'><span class="nl">2000</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="kr">TAB</span><span class="p">(</span><span class="il">5</span><span class="p">);</span>
+</span><span class='line'><span class="nl">2010</span><span class="w"> </span><span class="kr">FOR</span><span class="w"> </span><span class="vg">I</span><span class="o">=</span><span class="il">1</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="vg">D1</span>
+</span><span class='line'><span class="nl">2020</span><span class="w"> </span><span class="kr">GOSUB</span><span class="w"> </span><span class="nl">100</span>
+</span><span class='line'><span class="nl">2030</span><span class="w"> </span><span class="vg">P</span><span class="p">(</span><span class="vg">I</span><span class="p">,</span><span class="vg">J</span><span class="p">)</span><span class="o">=</span><span class="vg">X</span>
+</span><span class='line'><span class="nl">2040</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">J</span><span class="o">=</span><span class="il">1</span><span class="w"> </span><span class="ow">OR</span><span class="w"> </span><span class="vg">I</span><span class="o">&lt;=</span><span class="vg">N</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="kr">GOSUB</span><span class="w"> </span><span class="nl">750</span>
+</span><span class='line'><span class="nl">2050</span><span class="w"> </span><span class="kr">NEXT</span><span class="w"> </span><span class="vg">I</span>
+</span><span class='line'><span class="nl">2060</span><span class="w"> </span><span class="kr">PRINT</span>
+</span><span class='line'><span class="nl">2070</span><span class="w"> </span><span class="kr">NEXT</span><span class="w"> </span><span class="vg">J</span>
+</span><span class='line'><span class="nl">2080</span><span class="w"> </span><span class="kr">FOR</span><span class="w"> </span><span class="vg">I</span><span class="o">=</span><span class="il">1</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="vg">D1</span>
+</span><span class='line'><span class="nl">2090</span><span class="w"> </span><span class="vg">R</span><span class="p">(</span><span class="vg">I</span><span class="p">)</span><span class="o">=</span><span class="il">2</span>
+</span><span class='line'><span class="nl">2100</span><span class="w"> </span><span class="kr">NEXT</span><span class="w"> </span><span class="vg">I</span>
+</span><span class='line'><span class="nl">2110</span><span class="w"> </span><span class="kr">REM</span><span class="o">--</span><span class="vg">TEST</span><span class="w"> </span><span class="kr">FOR</span><span class="w"> </span><span class="vg">INSURANCE</span>
+</span><span class='line'><span class="nl">2120</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">P</span><span class="p">(</span><span class="vg">D1</span><span class="p">,</span><span class="il">1</span><span class="p">)</span><span class="o">&gt;</span><span class="il">1</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">2240</span>
+</span><span class='line'><span class="nl">2130</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;ANY INSURANCE&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="nl">2140</span><span class="w"> </span><span class="kr">INPUT</span><span class="w"> </span><span class="vg">H$</span>
+</span><span class='line'><span class="nl">2150</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="kr">LEFT$</span><span class="p">(</span><span class="vg">H$</span><span class="p">,</span><span class="il">1</span><span class="p">)</span><span class="o">&lt;&gt;</span><span class="s2">&quot;Y&quot;</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">2240</span>
+</span><span class='line'><span class="nl">2160</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;INSURANCE BETS&quot;</span>
+</span><span class='line'><span class="nl">2170</span><span class="w"> </span><span class="kr">FOR</span><span class="w"> </span><span class="vg">I</span><span class="o">=</span><span class="il">1</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="nl">N:</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;#&quot;</span><span class="p">;</span><span class="vg">I</span><span class="p">;</span><span class="o">:</span><span class="w"> </span><span class="kr">INPUT</span><span class="w"> </span><span class="vg">Z</span><span class="p">(</span><span class="vg">I</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="kr">NEXT</span><span class="w"> </span><span class="vg">I</span>
+</span><span class='line'><span class="nl">2180</span><span class="w"> </span><span class="kr">FOR</span><span class="w"> </span><span class="vg">I</span><span class="o">=</span><span class="il">1</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="vg">N</span>
+</span><span class='line'><span class="nl">2190</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">Z</span><span class="p">(</span><span class="vg">I</span><span class="p">)</span><span class="o">&lt;</span><span class="il">0</span><span class="w"> </span><span class="ow">OR</span><span class="w"> </span><span class="vg">Z</span><span class="p">(</span><span class="vg">I</span><span class="p">)</span><span class="o">&gt;</span><span class="vg">B</span><span class="p">(</span><span class="vg">I</span><span class="p">)</span><span class="o">/</span><span class="il">2</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">2160</span>
+</span><span class='line'><span class="nl">2200</span><span class="w"> </span><span class="kr">NEXT</span><span class="w"> </span><span class="vg">I</span>
+</span><span class='line'><span class="nl">2210</span><span class="w"> </span><span class="kr">FOR</span><span class="w"> </span><span class="vg">I</span><span class="o">=</span><span class="il">1</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="vg">N</span>
+</span><span class='line'><span class="nl">2220</span><span class="w"> </span><span class="vg">S</span><span class="p">(</span><span class="vg">I</span><span class="p">)</span><span class="o">=</span><span class="vg">Z</span><span class="p">(</span><span class="vg">I</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="il">3</span><span class="o">*</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="vg">P</span><span class="p">(</span><span class="vg">D1</span><span class="p">,</span><span class="il">2</span><span class="p">)</span><span class="o">&gt;=</span><span class="il">10</span><span class="p">))</span><span class="il">-1</span><span class="p">)</span>
+</span><span class='line'><span class="nl">2230</span><span class="w"> </span><span class="kr">NEXT</span><span class="w"> </span><span class="vg">I</span>
+</span><span class='line'><span class="nl">2240</span><span class="w"> </span><span class="kr">REM</span><span class="o">--</span><span class="vg">TEST</span><span class="w"> </span><span class="kr">FOR</span><span class="w"> </span><span class="vg">DEALER</span><span class="w"> </span><span class="vg">BLACKJACK</span>
+</span><span class='line'><span class="nl">2250</span><span class="w"> </span><span class="vg">L1</span><span class="o">=</span><span class="il">1</span><span class="o">:</span><span class="w"> </span><span class="vg">L2</span><span class="o">=</span><span class="il">1</span>
+</span><span class='line'><span class="nl">2252</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">P</span><span class="p">(</span><span class="vg">D1</span><span class="p">,</span><span class="il">1</span><span class="p">)</span><span class="o">=</span><span class="il">1</span><span class="w"> </span><span class="ow">AND</span><span class="w"> </span><span class="vg">P</span><span class="p">(</span><span class="vg">D1</span><span class="p">,</span><span class="il">2</span><span class="p">)</span><span class="o">&gt;</span><span class="il">9</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="vg">L1</span><span class="o">=</span><span class="il">0</span><span class="o">:</span><span class="w"> </span><span class="vg">L2</span><span class="o">=</span><span class="il">0</span>
+</span><span class='line'><span class="nl">2253</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">P</span><span class="p">(</span><span class="vg">D1</span><span class="p">,</span><span class="il">2</span><span class="p">)</span><span class="o">=</span><span class="il">1</span><span class="w"> </span><span class="ow">AND</span><span class="w"> </span><span class="vg">P</span><span class="p">(</span><span class="vg">D1</span><span class="p">,</span><span class="il">1</span><span class="p">)</span><span class="o">&gt;</span><span class="il">9</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="vg">L1</span><span class="o">=</span><span class="il">0</span><span class="o">:</span><span class="w"> </span><span class="vg">L2</span><span class="o">=</span><span class="il">0</span>
+</span><span class='line'><span class="nl">2254</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">L1</span><span class="o">&lt;&gt;</span><span class="il">0</span><span class="w"> </span><span class="ow">OR</span><span class="w"> </span><span class="vg">L2</span><span class="o">&lt;&gt;</span><span class="il">0</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">2320</span>
+</span><span class='line'><span class="nl">2260</span><span class="w"> </span><span class="kr">PRINT</span><span class="o">:</span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;DEALER HAS A&quot;</span><span class="p">;</span><span class="kr">MID$</span><span class="p">(</span><span class="vg">D$</span><span class="p">,</span><span class="il">3</span><span class="o">*</span><span class="vg">P</span><span class="p">(</span><span class="vg">D1</span><span class="p">,</span><span class="il">2</span><span class="p">)</span><span class="il">-2</span><span class="p">,</span><span class="il">3</span><span class="p">);</span><span class="s2">&quot; IN THE HOLE &quot;</span><span class="p">;</span>
+</span><span class='line'><span class="nl">2270</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;FOR BLACKJACK&quot;</span>
+</span><span class='line'><span class="nl">2280</span><span class="w"> </span><span class="kr">FOR</span><span class="w"> </span><span class="vg">I</span><span class="o">=</span><span class="il">1</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="vg">D1</span>
+</span><span class='line'><span class="nl">2290</span><span class="w"> </span><span class="kr">GOSUB</span><span class="w"> </span><span class="nl">300</span>
+</span><span class='line'><span class="nl">2300</span><span class="w"> </span><span class="kr">NEXT</span><span class="w"> </span><span class="vg">I</span>
+</span><span class='line'><span class="nl">2310</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">3140</span>
+</span><span class='line'><span class="nl">2320</span><span class="w"> </span><span class="kr">REM</span><span class="o">--</span><span class="vg">NO</span><span class="w"> </span><span class="vg">DEALER</span><span class="w"> </span><span class="vg">BLACKJACK</span>
+</span><span class='line'><span class="nl">2330</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">P</span><span class="p">(</span><span class="vg">D1</span><span class="p">,</span><span class="il">1</span><span class="p">)</span><span class="o">&gt;</span><span class="il">1</span><span class="w"> </span><span class="ow">AND</span><span class="w"> </span><span class="vg">P</span><span class="p">(</span><span class="vg">D1</span><span class="p">,</span><span class="il">1</span><span class="p">)</span><span class="o">&lt;</span><span class="il">10</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">2350</span>
+</span><span class='line'><span class="nl">2340</span><span class="w"> </span><span class="kr">PRINT</span><span class="o">:</span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;NO DEALER BLACKJACK.&quot;</span>
+</span><span class='line'><span class="nl">2350</span><span class="w"> </span><span class="kr">REM</span><span class="o">--</span><span class="vg">NOW</span><span class="w"> </span><span class="kr">PLAY</span><span class="w"> </span><span class="vg">THE</span><span class="w"> </span><span class="vg">HANDS</span>
+</span><span class='line'><span class="nl">2360</span><span class="w"> </span><span class="kr">FOR</span><span class="w"> </span><span class="vg">I</span><span class="o">=</span><span class="il">1</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="vg">N</span>
+</span><span class='line'><span class="nl">2370</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;PLAYER&quot;</span><span class="p">;</span><span class="vg">I</span><span class="p">;</span>
+</span><span class='line'><span class="nl">2380</span><span class="w"> </span><span class="vg">H1</span><span class="o">=</span><span class="il">7</span>
+</span><span class='line'><span class="nl">2390</span><span class="w"> </span><span class="kr">GOSUB</span><span class="w"> </span><span class="nl">1410</span>
+</span><span class='line'><span class="nl">2400</span><span class="w"> </span><span class="kr">ON</span><span class="w"> </span><span class="vg">H</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">2550</span><span class="p">,</span><span class="il">2410</span><span class="p">,</span><span class="il">2510</span><span class="p">,</span><span class="il">2600</span>
+</span><span class='line'><span class="nl">2410</span><span class="w"> </span><span class="kr">REM</span><span class="o">--</span><span class="vg">PLAYER</span><span class="w"> </span><span class="vg">WANTS</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="vg">STAND</span>
+</span><span class='line'><span class="nl">2420</span><span class="w"> </span><span class="kr">GOSUB</span><span class="w"> </span><span class="nl">300</span>
+</span><span class='line'><span class="nl">2430</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">Q</span><span class="p">(</span><span class="vg">I</span><span class="p">)</span><span class="o">&lt;&gt;</span><span class="il">21</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">2490</span>
+</span><span class='line'><span class="nl">2440</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;BLACKJACK&quot;</span>
+</span><span class='line'><span class="nl">2450</span><span class="w"> </span><span class="vg">S</span><span class="p">(</span><span class="vg">I</span><span class="p">)</span><span class="o">=</span><span class="vg">S</span><span class="p">(</span><span class="vg">I</span><span class="p">)</span><span class="o">+</span><span class="mf">1.5</span><span class="o">*</span><span class="vg">B</span><span class="p">(</span><span class="vg">I</span><span class="p">)</span>
+</span><span class='line'><span class="nl">2460</span><span class="w"> </span><span class="vg">B</span><span class="p">(</span><span class="vg">I</span><span class="p">)</span><span class="o">=</span><span class="il">0</span>
+</span><span class='line'><span class="nl">2470</span><span class="w"> </span><span class="kr">GOSUB</span><span class="w"> </span><span class="nl">1200</span>
+</span><span class='line'><span class="nl">2480</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">2900</span>
+</span><span class='line'><span class="nl">2490</span><span class="w"> </span><span class="kr">GOSUB</span><span class="w"> </span><span class="nl">1320</span>
+</span><span class='line'><span class="nl">2500</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">2900</span>
+</span><span class='line'><span class="nl">2510</span><span class="w"> </span><span class="kr">REM</span><span class="o">--</span><span class="vg">PLAYER</span><span class="w"> </span><span class="vg">WANTS</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="k">DOUBLE</span><span class="w"> </span><span class="vg">DOWN</span>
+</span><span class='line'><span class="nl">2520</span><span class="w"> </span><span class="kr">GOSUB</span><span class="w"> </span><span class="nl">300</span>
+</span><span class='line'><span class="nl">2530</span><span class="w"> </span><span class="kr">GOSUB</span><span class="w"> </span><span class="nl">860</span>
+</span><span class='line'><span class="nl">2540</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">2900</span>
+</span><span class='line'><span class="nl">2550</span><span class="w"> </span><span class="kr">REM</span><span class="o">--</span><span class="vg">PLAYER</span><span class="w"> </span><span class="vg">WANTS</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="vg">BE</span><span class="w"> </span><span class="vg">HIT</span>
+</span><span class='line'><span class="nl">2560</span><span class="w"> </span><span class="kr">GOSUB</span><span class="w"> </span><span class="nl">300</span>
+</span><span class='line'><span class="nl">2570</span><span class="w"> </span><span class="vg">H1</span><span class="o">=</span><span class="il">3</span>
+</span><span class='line'><span class="nl">2580</span><span class="w"> </span><span class="kr">GOSUB</span><span class="w"> </span><span class="nl">950</span>
+</span><span class='line'><span class="nl">2590</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">2900</span>
+</span><span class='line'><span class="nl">2600</span><span class="w"> </span><span class="kr">REM</span><span class="o">--</span><span class="vg">PLAYER</span><span class="w"> </span><span class="vg">WANTS</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="vg">SPLIT</span>
+</span><span class='line'><span class="nl">2610</span><span class="w"> </span><span class="vg">L1</span><span class="o">=</span><span class="vg">P</span><span class="p">(</span><span class="vg">I</span><span class="p">,</span><span class="il">1</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">P</span><span class="p">(</span><span class="vg">I</span><span class="p">,</span><span class="il">1</span><span class="p">)</span><span class="o">&gt;</span><span class="il">10</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="vg">L1</span><span class="o">=</span><span class="il">10</span>
+</span><span class='line'><span class="nl">2612</span><span class="w"> </span><span class="vg">L2</span><span class="o">=</span><span class="vg">P</span><span class="p">(</span><span class="vg">I</span><span class="p">,</span><span class="il">2</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">P</span><span class="p">(</span><span class="vg">I</span><span class="p">,</span><span class="il">2</span><span class="p">)</span><span class="o">&gt;</span><span class="il">10</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="vg">L2</span><span class="o">=</span><span class="il">10</span>
+</span><span class='line'><span class="nl">2614</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">L1</span><span class="o">=</span><span class="vg">L2</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">2640</span>
+</span><span class='line'><span class="nl">2620</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;SPLITTING NOT ALLOWED.&quot;</span>
+</span><span class='line'><span class="nl">2630</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">2370</span>
+</span><span class='line'><span class="nl">2640</span><span class="w"> </span><span class="kr">REM</span><span class="o">--</span><span class="kr">PLAY</span><span class="w"> </span><span class="kr">OUT</span><span class="w"> </span><span class="vg">SPLIT</span>
+</span><span class='line'><span class="nl">2650</span><span class="w"> </span><span class="vg">I1</span><span class="o">=</span><span class="vg">I</span><span class="o">+</span><span class="vg">D1</span>
+</span><span class='line'><span class="nl">2660</span><span class="w"> </span><span class="vg">R</span><span class="p">(</span><span class="vg">I1</span><span class="p">)</span><span class="o">=</span><span class="il">2</span>
+</span><span class='line'><span class="nl">2670</span><span class="w"> </span><span class="vg">P</span><span class="p">(</span><span class="vg">I1</span><span class="p">,</span><span class="il">1</span><span class="p">)</span><span class="o">=</span><span class="vg">P</span><span class="p">(</span><span class="vg">I</span><span class="p">,</span><span class="il">2</span><span class="p">)</span>
+</span><span class='line'><span class="nl">2680</span><span class="w"> </span><span class="vg">B</span><span class="p">(</span><span class="vg">I</span><span class="o">+</span><span class="vg">D1</span><span class="p">)</span><span class="o">=</span><span class="vg">B</span><span class="p">(</span><span class="vg">I</span><span class="p">)</span>
+</span><span class='line'><span class="nl">2690</span><span class="w"> </span><span class="kr">GOSUB</span><span class="w"> </span><span class="nl">100</span>
+</span><span class='line'><span class="nl">2700</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;FIRST HAND RECEIVES A&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="nl">2710</span><span class="w"> </span><span class="kr">GOSUB</span><span class="w"> </span><span class="nl">700</span>
+</span><span class='line'><span class="nl">2720</span><span class="w"> </span><span class="vg">P</span><span class="p">(</span><span class="vg">I</span><span class="p">,</span><span class="il">2</span><span class="p">)</span><span class="o">=</span><span class="vg">X</span>
+</span><span class='line'><span class="nl">2730</span><span class="w"> </span><span class="kr">GOSUB</span><span class="w"> </span><span class="nl">300</span>
+</span><span class='line'><span class="nl">2740</span><span class="w"> </span><span class="kr">PRINT</span>
+</span><span class='line'><span class="nl">2750</span><span class="w"> </span><span class="kr">GOSUB</span><span class="w"> </span><span class="nl">100</span>
+</span><span class='line'><span class="nl">2760</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;SECOND HAND RECEIVES A&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="nl">2770</span><span class="w"> </span><span class="vg">I</span><span class="o">=</span><span class="vg">I1</span>
+</span><span class='line'><span class="nl">2780</span><span class="w"> </span><span class="kr">GOSUB</span><span class="w"> </span><span class="nl">700</span>
+</span><span class='line'><span class="nl">2790</span><span class="w"> </span><span class="vg">P</span><span class="p">(</span><span class="vg">I</span><span class="p">,</span><span class="il">2</span><span class="p">)</span><span class="o">=</span><span class="vg">X</span>
+</span><span class='line'><span class="nl">2800</span><span class="w"> </span><span class="kr">GOSUB</span><span class="w"> </span><span class="nl">300</span>
+</span><span class='line'><span class="nl">2810</span><span class="w"> </span><span class="kr">PRINT</span>
+</span><span class='line'><span class="nl">2820</span><span class="w"> </span><span class="vg">I</span><span class="o">=</span><span class="vg">I1</span><span class="o">-</span><span class="vg">D1</span>
+</span><span class='line'><span class="nl">2830</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">P</span><span class="p">(</span><span class="vg">I</span><span class="p">,</span><span class="il">1</span><span class="p">)</span><span class="o">=</span><span class="il">1</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">2900</span>
+</span><span class='line'><span class="nl">2840</span><span class="w"> </span><span class="kr">REM</span><span class="o">--</span><span class="vg">NOW</span><span class="w"> </span><span class="kr">PLAY</span><span class="w"> </span><span class="vg">THE</span><span class="w"> </span><span class="vg">TWO</span><span class="w"> </span><span class="vg">HANDS</span>
+</span><span class='line'><span class="nl">2850</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;HAND&quot;</span><span class="p">;</span><span class="il">1</span><span class="o">-</span><span class="p">(</span><span class="vg">I</span><span class="o">&gt;</span><span class="vg">D1</span><span class="p">);</span>
+</span><span class='line'><span class="nl">2860</span><span class="w"> </span><span class="kr">GOSUB</span><span class="w"> </span><span class="nl">800</span>
+</span><span class='line'><span class="nl">2870</span><span class="w"> </span><span class="vg">I</span><span class="o">=</span><span class="vg">I</span><span class="o">+</span><span class="vg">D1</span>
+</span><span class='line'><span class="nl">2880</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">I</span><span class="o">=</span><span class="vg">I1</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">2850</span>
+</span><span class='line'><span class="nl">2890</span><span class="w"> </span><span class="vg">I</span><span class="o">=</span><span class="vg">I1</span><span class="o">-</span><span class="vg">D1</span>
+</span><span class='line'><span class="nl">2900</span><span class="w"> </span><span class="kr">NEXT</span><span class="w"> </span><span class="vg">I</span>
+</span><span class='line'><span class="nl">2910</span><span class="w"> </span><span class="kr">GOSUB</span><span class="w"> </span><span class="nl">300</span>
+</span><span class='line'><span class="nl">2920</span><span class="w"> </span><span class="kr">REM</span><span class="o">--</span><span class="vg">TEST</span><span class="w"> </span><span class="kr">FOR</span><span class="w"> </span><span class="vg">PLAYING</span><span class="w"> </span><span class="vg">DEALER</span><span class="c1">&#39;S HAND</span>
+</span><span class='line'><span class="nl">2930</span><span class="w"> </span><span class="kr">FOR</span><span class="w"> </span><span class="vg">I</span><span class="o">=</span><span class="il">1</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="vg">N</span>
+</span><span class='line'><span class="nl">2940</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">R</span><span class="p">(</span><span class="vg">I</span><span class="p">)</span><span class="o">&gt;</span><span class="il">0</span><span class="w"> </span><span class="ow">OR</span><span class="w"> </span><span class="vg">R</span><span class="p">(</span><span class="vg">I</span><span class="o">+</span><span class="vg">D1</span><span class="p">)</span><span class="o">&gt;</span><span class="il">0</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">3010</span>
+</span><span class='line'><span class="nl">2950</span><span class="w"> </span><span class="kr">NEXT</span><span class="w"> </span><span class="vg">I</span>
+</span><span class='line'><span class="nl">2960</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;DEALER HAD A&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="nl">2970</span><span class="w"> </span><span class="vg">X</span><span class="o">=</span><span class="vg">P</span><span class="p">(</span><span class="vg">D1</span><span class="p">,</span><span class="il">2</span><span class="p">)</span>
+</span><span class='line'><span class="nl">2980</span><span class="w"> </span><span class="kr">GOSUB</span><span class="w"> </span><span class="nl">700</span>
+</span><span class='line'><span class="nl">2990</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot; CONCEALED.&quot;</span>
+</span><span class='line'><span class="nl">3000</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">3140</span>
+</span><span class='line'><span class="nl">3010</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;DEALER HAS A&quot;</span><span class="p">;</span><span class="kr">MID$</span><span class="p">(</span><span class="vg">D$</span><span class="p">,</span><span class="il">3</span><span class="o">*</span><span class="vg">P</span><span class="p">(</span><span class="vg">D1</span><span class="p">,</span><span class="il">2</span><span class="p">)</span><span class="il">-2</span><span class="p">,</span><span class="il">3</span><span class="p">);</span><span class="s2">&quot; CONCEALED &quot;</span><span class="p">;</span>
+</span><span class='line'><span class="nl">3020</span><span class="w"> </span><span class="vg">I</span><span class="o">=</span><span class="vg">D1</span>
+</span><span class='line'><span class="nl">3030</span><span class="w"> </span><span class="vg">AA</span><span class="o">=</span><span class="vg">Q</span><span class="p">(</span><span class="vg">I</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="kr">GOSUB</span><span class="w"> </span><span class="nl">3400</span>
+</span><span class='line'><span class="nl">3035</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;FOR A TOTAL OF&quot;</span><span class="p">;</span><span class="vg">AA</span>
+</span><span class='line'><span class="nl">3040</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">AA</span><span class="o">&gt;</span><span class="il">16</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">3130</span>
+</span><span class='line'><span class="nl">3050</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;DRAWS&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="nl">3060</span><span class="w"> </span><span class="kr">GOSUB</span><span class="w"> </span><span class="nl">100</span>
+</span><span class='line'><span class="nl">3070</span><span class="w"> </span><span class="kr">GOSUB</span><span class="w"> </span><span class="nl">750</span>
+</span><span class='line'><span class="nl">3080</span><span class="w"> </span><span class="kr">GOSUB</span><span class="w"> </span><span class="nl">1100</span>
+</span><span class='line'><span class="nl">3090</span><span class="w"> </span><span class="vg">AA</span><span class="o">=</span><span class="nl">Q:</span><span class="w"> </span><span class="kr">GOSUB</span><span class="w"> </span><span class="nl">3400</span>
+</span><span class='line'><span class="nl">3095</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">Q</span><span class="o">&gt;</span><span class="il">0</span><span class="w"> </span><span class="ow">AND</span><span class="w"> </span><span class="vg">AA</span><span class="o">&lt;</span><span class="il">17</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">3060</span>
+</span><span class='line'><span class="nl">3100</span><span class="w"> </span><span class="vg">Q</span><span class="p">(</span><span class="vg">I</span><span class="p">)</span><span class="o">=</span><span class="vg">Q</span><span class="o">-</span><span class="p">(</span><span class="vg">Q</span><span class="o">&lt;</span><span class="il">0</span><span class="p">)</span><span class="o">/</span><span class="il">2</span>
+</span><span class='line'><span class="nl">3110</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">Q</span><span class="o">&lt;</span><span class="il">0</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">3140</span>
+</span><span class='line'><span class="nl">3120</span><span class="w"> </span><span class="vg">AA</span><span class="o">=</span><span class="nl">Q:</span><span class="w"> </span><span class="kr">GOSUB</span><span class="w"> </span><span class="nl">3400</span>
+</span><span class='line'><span class="nl">3125</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;---TOTAL IS&quot;</span><span class="p">;</span><span class="vg">AA</span>
+</span><span class='line'><span class="nl">3130</span><span class="w"> </span><span class="kr">PRINT</span>
+</span><span class='line'><span class="nl">3140</span><span class="w"> </span><span class="kr">REM</span><span class="o">--</span><span class="vg">TALLY</span><span class="w"> </span><span class="vg">THE</span><span class="w"> </span><span class="vg">RESULT</span>
+</span><span class='line'><span class="nl">3150</span><span class="w"> </span><span class="kr">REM</span>
+</span><span class='line'><span class="nl">3160</span><span class="w"> </span><span class="vg">Z$</span><span class="o">=</span><span class="s2">&quot;LOSES PUSHES WINS &quot;</span>
+</span><span class='line'><span class="nl">3165</span><span class="w"> </span><span class="kr">PRINT</span>
+</span><span class='line'><span class="nl">3170</span><span class="w"> </span><span class="kr">FOR</span><span class="w"> </span><span class="vg">I</span><span class="o">=</span><span class="il">1</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="vg">N</span>
+</span><span class='line'><span class="nl">3180</span><span class="w"> </span><span class="vg">AA</span><span class="o">=</span><span class="vg">Q</span><span class="p">(</span><span class="vg">I</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="kr">GOSUB</span><span class="w"> </span><span class="nl">3400</span>
+</span><span class='line'><span class="nl">3182</span><span class="w"> </span><span class="vg">AB</span><span class="o">=</span><span class="vg">Q</span><span class="p">(</span><span class="vg">I</span><span class="o">+</span><span class="vg">D1</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="kr">GOSUB</span><span class="w"> </span><span class="nl">3410</span>
+</span><span class='line'><span class="nl">3184</span><span class="w"> </span><span class="vg">AC</span><span class="o">=</span><span class="vg">Q</span><span class="p">(</span><span class="vg">D1</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="kr">GOSUB</span><span class="w"> </span><span class="nl">3420</span>
+</span><span class='line'><span class="nl">3186</span><span class="w"> </span><span class="vg">S</span><span class="p">(</span><span class="vg">I</span><span class="p">)</span><span class="o">=</span><span class="vg">S</span><span class="p">(</span><span class="vg">I</span><span class="p">)</span><span class="o">+</span><span class="vg">B</span><span class="p">(</span><span class="vg">I</span><span class="p">)</span><span class="o">*</span><span class="kr">SGN</span><span class="p">(</span><span class="vg">AA</span><span class="o">-</span><span class="vg">AC</span><span class="p">)</span><span class="o">+</span><span class="vg">B</span><span class="p">(</span><span class="vg">I</span><span class="o">+</span><span class="vg">D1</span><span class="p">)</span><span class="o">*</span><span class="kr">SGN</span><span class="p">(</span><span class="vg">AB</span><span class="o">-</span><span class="vg">AC</span><span class="p">)</span>
+</span><span class='line'><span class="nl">3188</span><span class="w"> </span><span class="vg">B</span><span class="p">(</span><span class="vg">I</span><span class="o">+</span><span class="vg">D1</span><span class="p">)</span><span class="o">=</span><span class="il">0</span>
+</span><span class='line'><span class="nl">3200</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;PLAYER&quot;</span><span class="p">;</span><span class="vg">I</span><span class="p">;</span>
+</span><span class='line'><span class="nl">3210</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="kr">MID$</span><span class="p">(</span><span class="vg">Z$</span><span class="p">,</span><span class="kr">SGN</span><span class="p">(</span><span class="vg">S</span><span class="p">(</span><span class="vg">I</span><span class="p">))</span><span class="o">*</span><span class="il">6</span><span class="o">+</span><span class="il">7</span><span class="p">,</span><span class="il">6</span><span class="p">);</span><span class="s2">&quot; &quot;</span><span class="p">;</span>
+</span><span class='line'><span class="nl">3220</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">S</span><span class="p">(</span><span class="vg">I</span><span class="p">)</span><span class="o">&lt;&gt;</span><span class="il">0</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">3250</span>
+</span><span class='line'><span class="nl">3230</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;      &quot;</span><span class="p">;</span>
+</span><span class='line'><span class="nl">3240</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">3260</span>
+</span><span class='line'><span class="nl">3250</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="kr">ABS</span><span class="p">(</span><span class="vg">S</span><span class="p">(</span><span class="vg">I</span><span class="p">));</span>
+</span><span class='line'><span class="nl">3260</span><span class="w"> </span><span class="vg">T</span><span class="p">(</span><span class="vg">I</span><span class="p">)</span><span class="o">=</span><span class="vg">T</span><span class="p">(</span><span class="vg">I</span><span class="p">)</span><span class="o">+</span><span class="vg">S</span><span class="p">(</span><span class="vg">I</span><span class="p">)</span>
+</span><span class='line'><span class="nl">3270</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;TOTAL=&quot;</span><span class="p">;</span><span class="vg">T</span><span class="p">(</span><span class="vg">I</span><span class="p">)</span>
+</span><span class='line'><span class="nl">3280</span><span class="w"> </span><span class="kr">GOSUB</span><span class="w"> </span><span class="nl">1200</span>
+</span><span class='line'><span class="nl">3290</span><span class="w"> </span><span class="vg">T</span><span class="p">(</span><span class="vg">D1</span><span class="p">)</span><span class="o">=</span><span class="vg">T</span><span class="p">(</span><span class="vg">D1</span><span class="p">)</span><span class="o">-</span><span class="vg">S</span><span class="p">(</span><span class="vg">I</span><span class="p">)</span>
+</span><span class='line'><span class="nl">3300</span><span class="w"> </span><span class="vg">I</span><span class="o">=</span><span class="vg">I</span><span class="o">+</span><span class="vg">D1</span>
+</span><span class='line'><span class="nl">3310</span><span class="w"> </span><span class="kr">GOSUB</span><span class="w"> </span><span class="nl">1200</span>
+</span><span class='line'><span class="nl">3320</span><span class="w"> </span><span class="vg">I</span><span class="o">=</span><span class="vg">I</span><span class="o">-</span><span class="vg">D1</span>
+</span><span class='line'><span class="nl">3330</span><span class="w"> </span><span class="kr">NEXT</span><span class="w"> </span><span class="vg">I</span>
+</span><span class='line'><span class="nl">3340</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;DEALER&#39;S TOTAL=&quot;</span><span class="p">;</span><span class="vg">T</span><span class="p">(</span><span class="vg">D1</span><span class="p">)</span>
+</span><span class='line'><span class="nl">3345</span><span class="w"> </span><span class="kr">PRINT</span>
+</span><span class='line'><span class="nl">3350</span><span class="w"> </span><span class="kr">GOSUB</span><span class="w"> </span><span class="nl">1200</span>
+</span><span class='line'><span class="nl">3360</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">1810</span>
+</span><span class='line'><span class="nl">3400</span><span class="w"> </span><span class="vg">AA</span><span class="o">=</span><span class="vg">AA</span><span class="o">+</span><span class="il">11</span><span class="o">*</span><span class="p">(</span><span class="vg">AA</span><span class="o">&gt;=</span><span class="il">22</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="kr">RETURN</span>
+</span><span class='line'><span class="nl">3410</span><span class="w"> </span><span class="vg">AB</span><span class="o">=</span><span class="vg">AB</span><span class="o">+</span><span class="il">11</span><span class="o">*</span><span class="p">(</span><span class="vg">AB</span><span class="o">&gt;=</span><span class="il">22</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="kr">RETURN</span>
+</span><span class='line'><span class="nl">3420</span><span class="w"> </span><span class="vg">AC</span><span class="o">=</span><span class="vg">AC</span><span class="o">+</span><span class="il">11</span><span class="o">*</span><span class="p">(</span><span class="vg">AC</span><span class="o">&gt;=</span><span class="il">22</span><span class="p">)</span><span class="o">:</span><span class="w"> </span><span class="kr">RETURN</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Yup, that is <em>long</em>. If you scrolled all the way down here, a bit of gameplay:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>go run blackjack.go
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>Do you want to see instructions? <span class="o">(</span>enter <span class="s1">&#39;yes&#39;</span> or <span class="s1">&#39;no&#39;</span><span class="o">)</span> yes
+</span><span class='line'>
+</span><span class='line'>    Welcome to BlackJack!
+</span><span class='line'>  ------------------------------------
+</span><span class='line'>
+</span><span class='line'>Here are the <span class="o">(</span>simple!<span class="o">)</span> rules:
+</span><span class='line'>
+</span><span class='line'>1. We begin by dealing out one card <span class="k">for</span> me and two cards <span class="k">for</span> you
+</span><span class='line'>2. The dealer <span class="o">(</span>that<span class="s1">&#39;s me!) must hit on 16 or less, and will stay on 17 or more.</span>
+</span><span class='line'><span class="s1">3. Whoever has a hand that totals more than 21, loses.</span>
+</span><span class='line'><span class="s1">4. I will deal from &#39;</span>infinite decks<span class="s1">&#39;.</span>
+</span><span class='line'><span class="s1">5. The house limit is $500.00.</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="s1">Ok, let&#39;</span>s begin!
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>How much money would you like to start with <span class="o">(</span>enter a number between <span class="m">100</span> and 500<span class="o">)</span> ? 200
+</span><span class='line'>
+</span><span class='line'>You have <span class="nv">$200</span>
+</span><span class='line'>
+</span><span class='line'>What is your wager ? 20
+</span><span class='line'>
+</span><span class='line'>Your first card is a Eight of Spades
+</span><span class='line'>Your second card is a Queen of Hearts
+</span><span class='line'>
+</span><span class='line'>Dealer shows a King of Hearts
+</span><span class='line'>
+</span><span class='line'>You have <span class="m">18</span> showing.
+</span><span class='line'>
+</span><span class='line'>Do you want a hit ? <span class="o">(</span>enter <span class="s1">&#39;yes&#39;</span> or <span class="s1">&#39;no&#39;</span><span class="o">)</span> no
+</span><span class='line'>Dealer got a Jack of Diamonds.
+</span><span class='line'>Dealer has 20
+</span><span class='line'>
+</span><span class='line'>You LOSE!
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>Play another hand? <span class="o">(</span>enter <span class="s1">&#39;yes&#39;</span> or <span class="s1">&#39;no&#39;</span><span class="o">)</span> yes
+</span><span class='line'>
+</span><span class='line'>You have <span class="nv">$180</span>
+</span><span class='line'>
+</span><span class='line'>What is your wager ? 10
+</span><span class='line'>
+</span><span class='line'>Your first card is a Three of Hearts
+</span><span class='line'>Your second card is a Ten of Clubs
+</span><span class='line'>
+</span><span class='line'>Dealer shows a Three of Diamonds
+</span><span class='line'>
+</span><span class='line'>You have <span class="m">13</span> showing.
+</span><span class='line'>
+</span><span class='line'>Do you want a hit ? <span class="o">(</span>enter <span class="s1">&#39;yes&#39;</span> or <span class="s1">&#39;no&#39;</span><span class="o">)</span> yes
+</span><span class='line'>
+</span><span class='line'>You got a Eight of Hearts.
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'>You have <span class="m">21</span> showing.
+</span><span class='line'>
+</span><span class='line'>Do you want a hit ? <span class="o">(</span>enter <span class="s1">&#39;yes&#39;</span> or <span class="s1">&#39;no&#39;</span><span class="o">)</span> no
+</span><span class='line'>Dealer got a Four of Clubs.
+</span><span class='line'>Dealer has 7
+</span><span class='line'>
+</span><span class='line'>Dealer got a Ace of Diamonds.
+</span><span class='line'>Dealer has 17
+</span><span class='line'>
+</span><span class='line'>Dealer got a Three of Clubs.
+</span><span class='line'>Dealer has 20
+</span><span class='line'>
+</span><span class='line'>Dealer got a Three of Diamonds.
+</span><span class='line'>Dealer has 23
+</span><span class='line'>
+</span><span class='line'>Dealer busted. You WIN!
+</span><span class='line'>
+</span><span class='line'>&lt;... and so on ...&gt;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The only one left now is a game of Battleships. Stay tuned &hellip;</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-01-13T22:33:18+00:00" pubdate data-updated="true">Jan 13<sup>th</sup>, 2015</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/games/'>games</a>, <a class='category' href='/blog/categories/golang/'>golang</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -2009,8 +3315,13 @@
 <ul>
 <li><p>Keep playing with Go. It&rsquo;s a great, simple language. In particular, I want to try out a whole bunch of crazy experiments.</p></li>
 <li><p>Think about the &ldquo;simple text games&rdquo; book. Or bury the idea as soon as possible.</p></li>
-<li><p>Learn a bit more about the JVM (perhaps through Clojure?)</p></li>
-<li><p>Stem the atrophy in algorithmic skills</p></li>
+</ul>
+
+
+<p><del>&ndash; Learn a bit more about the JVM (perhaps through Clojure?)</del></p>
+
+<ul>
+<li>Stem the atrophy in algorithmic skills</li>
 </ul>
 
 
@@ -2022,11 +3333,13 @@
 
 <p>I have pretty much <em>zero</em> experience with hosted languages. One of the reasons for this might be that I always want to know what&rsquo;s &ldquo;really happening underneath&rdquo;, and am deeply suspicious of situations when I <em>cannot</em> know (this is also why I prefer Ocaml/F# over Haskell, but  that&rsquo;s a whole other blog post).</p>
 
-<p>Add to this the fact that I&rsquo;ve always been curious about Clojure, to discover all its differences from Common Lisp on my own (there are several rants for and against it online, but there&rsquo;s only one way to find out for sure), and it&rsquo;s a natural outlet for exploration.</p>
+<p><del>Add to this the fact that I&rsquo;ve always been curious about Clojure, to discover all its differences from Common Lisp on my own (there are several rants for and against it online, but there&rsquo;s only one way to find out for sure), and it&rsquo;s a natural outlet for exploration.</del></p>
 
 <p>Which brings me to the fourth point &hellip; I feel I&rsquo;ve seriously forgotten <em>a lot</em> of theory, both in Math and CS, and it&rsquo;s <em>frightening</em>. So I&rsquo;m hoping to weave that (<em>somehow</em>) into my Clojure exploration and kill many birds with one stone.</p>
 
 <p>So yeah, we&rsquo;ll find out how this all worked out, same time next year :)</p>
+
+<p><strong>Update (1/13): This is a bunch of crap</strong> I just realized I wrote a <a href="http://agam.github.io/blog/2014/01/05/resolutions/">similar post</a> last year and did <em>nothing</em> about it (well, ok, I <em>did</em> do the <em>r/dailyprogrammer</em> stuff, more or less), so scratch all of the above. I&rsquo;ll leave it up to remind myself of how foolish this is. I&rsquo;m guessing this will reoccur the same time next year :P. Perhaps the best way out is to make <em>no resolutions</em>.</p>
 
 		
 		
@@ -3185,104 +4498,6 @@
 
 
 	<a class='category' href='/blog/categories/status/'>status</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2014/12/23/google-cloud-sharing-projects/">
-		
-			Google Cloud: Sharing Projects</a>
-	</h2>
-	<div class="entry-content">
-		<p>In the past (and yes, for some things, in the present too<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>) a few Google products have had UI with ambiguous workflows, or where it wasn&rsquo;t clear if or how to accomplish something.</p>
-
-<p>So check this out; I found it <em>magical</em><sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>, you can easily try this with multiple Google accounts. In the cloud console<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>, click on your project, then &ldquo;Permissions&rdquo; in the top left, and &ldquo;Add Member&rdquo;.</p>
-
-<p>Enter the account, and then select the &ldquo;sharing level&rdquo; of the new account (with the <em>same</em> semantics as, say, Google Docs &mdash; you either <em>own</em>, <em>edit</em>, or <em>view</em>) and confirm.</p>
-
-<p>Log in from the other account, go to the project, view a VM, click &ldquo;SSH&rdquo; and <em>Boom</em>, just like that, <strong>everything works</strong>!</p>
-
-<p>This gist<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup> shows all the steps that were needed!</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="c"># Download the command-line utilities</span>
-</span><span class='line'><span class="nv">$ </span>curl https://sdk.cloud.google.com <span class="p">|</span> bash
-</span><span class='line'>
-</span><span class='line'><span class="c">## Authenticate</span>
-</span><span class='line'><span class="nv">$ </span>gcloud auth login
-</span><span class='line'>
-</span><span class='line'><span class="c">## Sanity check</span>
-</span><span class='line'><span class="nv">$ </span>gcloud info
-</span><span class='line'>
-</span><span class='line'><span class="c">## One-time configuration to avoid specifying command-line flags</span>
-</span><span class='line'><span class="nv">$ </span>gcloud config <span class="nb">set </span>project <span class="s2">&quot;&lt;project_id&gt;&quot;</span>
-</span><span class='line'><span class="nv">$ </span>gcloud config <span class="nb">set </span>compute/zone us-central1-a
-</span><span class='line'>
-</span><span class='line'><span class="c">## Login!</span>
-</span><span class='line'><span class="nv">$ </span>gcloud compute ssh agam@myvm
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-<div class="footnotes">
-<hr/>
-<ol>
-<li id="fn:1">
-<p>No comment<a href="#fnref:1" rev="footnote">&#8617;</a></p></li>
-<li id="fn:2">
-<p>Ok, maybe everyone expects this and everything else works this well too, but it&rsquo;s still <em>wow</em><a href="#fnref:2" rev="footnote">&#8617;</a></p></li>
-<li id="fn:3">
-<p><a href="https://console.developers.google.com/">https://console.developers.google.com/</a><a href="#fnref:3" rev="footnote">&#8617;</a></p></li>
-<li id="fn:4">
-<p><a href="https://gist.github.com/agam/9f3207a7cdcd72745748">https://gist.github.com/agam/9f3207a7cdcd72745748</a><a href="#fnref:4" rev="footnote">&#8617;</a></p></li>
-</ol>
-</div>
-
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-12-23T22:44:16+00:00" pubdate data-updated="true">Dec 23<sup>rd</sup>, 2014</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/gce/'>gce</a>
 
 
 </div>

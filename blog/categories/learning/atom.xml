@@ -4,7 +4,7 @@
   <title><![CDATA[Category: learning | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/learning/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-01-12T00:05:58+00:00</updated>
+  <updated>2015-01-13T22:42:50+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -23,8 +23,13 @@
 <ul>
 <li><p>Keep playing with Go. It&rsquo;s a great, simple language. In particular, I want to try out a whole bunch of crazy experiments.</p></li>
 <li><p>Think about the &ldquo;simple text games&rdquo; book. Or bury the idea as soon as possible.</p></li>
-<li><p>Learn a bit more about the JVM (perhaps through Clojure?)</p></li>
-<li><p>Stem the atrophy in algorithmic skills</p></li>
+</ul>
+
+
+<p><del>&ndash; Learn a bit more about the JVM (perhaps through Clojure?)</del></p>
+
+<ul>
+<li>Stem the atrophy in algorithmic skills</li>
 </ul>
 
 
@@ -36,11 +41,13 @@
 
 <p>I have pretty much <em>zero</em> experience with hosted languages. One of the reasons for this might be that I always want to know what&rsquo;s &ldquo;really happening underneath&rdquo;, and am deeply suspicious of situations when I <em>cannot</em> know (this is also why I prefer Ocaml/F# over Haskell, but  that&rsquo;s a whole other blog post).</p>
 
-<p>Add to this the fact that I&rsquo;ve always been curious about Clojure, to discover all its differences from Common Lisp on my own (there are several rants for and against it online, but there&rsquo;s only one way to find out for sure), and it&rsquo;s a natural outlet for exploration.</p>
+<p><del>Add to this the fact that I&rsquo;ve always been curious about Clojure, to discover all its differences from Common Lisp on my own (there are several rants for and against it online, but there&rsquo;s only one way to find out for sure), and it&rsquo;s a natural outlet for exploration.</del></p>
 
 <p>Which brings me to the fourth point &hellip; I feel I&rsquo;ve seriously forgotten <em>a lot</em> of theory, both in Math and CS, and it&rsquo;s <em>frightening</em>. So I&rsquo;m hoping to weave that (<em>somehow</em>) into my Clojure exploration and kill many birds with one stone.</p>
 
 <p>So yeah, we&rsquo;ll find out how this all worked out, same time next year :)</p>
+
+<p><strong>Update (1/13): This is a bunch of crap</strong> I just realized I wrote a <a href="http://agam.github.io/blog/2014/01/05/resolutions/">similar post</a> last year and did <em>nothing</em> about it (well, ok, I <em>did</em> do the <em>r/dailyprogrammer</em> stuff, more or less), so scratch all of the above. I&rsquo;ll leave it up to remind myself of how foolish this is. I&rsquo;m guessing this will reoccur the same time next year :P. Perhaps the best way out is to make <em>no resolutions</em>.</p>
 ]]></content>
   </entry>
   
