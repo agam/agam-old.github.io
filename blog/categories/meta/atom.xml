@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: meta | Agam's Mashed-Up Pome]]></title>
+  <link href="http://agam.github.io/blog/categories/meta/atom.xml" rel="self"/>
+  <link href="http://agam.github.io/"/>
+  <updated>2015-01-27T08:04:29+00:00</updated>
+  <id>http://agam.github.io/</id>
+  <author>
+    <name><![CDATA[Agam]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Languages/ecosystems to explore in 2015]]></title>
+    <link href="http://agam.github.io/blog/2015/01/27/languages-slash-ecosystems-to-explore-in-2015/"/>
+    <updated>2015-01-27T07:46:25+00:00</updated>
+    <id>http://agam.github.io/blog/2015/01/27/languages-slash-ecosystems-to-explore-in-2015</id>
+    <content type="html"><![CDATA[<p>Yeah, why not make lists. This is a short one, so don&rsquo;t worry. In fact, it&rsquo;s a replacement for earlier lists, so it&rsquo;s not really that important; more of a note to my future self on current &ldquo;oscillations&rdquo;. There are three nice corners I&rsquo;d like to explore, in no particular order:</p>
+
+<h4>Go</h4>
+
+<p>It&rsquo;s really the <em>best</em> operational-semantics out there that has a great story on concurrency. I can never get tired of saying this: Go should be your first programming language.</p>
+
+<h4>Haskell</h4>
+
+<p>Yeah, tough one here. <em>Ocaml</em> is so good too, and F# has all those juicy libraries to be exploited, but I&rsquo;ve gone too far away from declarative problem solving over the years and need a real habit-changing kick. <em>Hence haskell</em>. I know I&rsquo;m reversing my position on this, but I&rsquo;ll write about it in a separate post.</p>
+
+<h4>R</h4>
+
+<p>Why is this here? More out of curiosity than anything else. I&rsquo;ve <em>dabbled</em> in the past. I got <em>R in a nutshell</em> a few years ago and then threw it away without reading much of it, but I think I judged too soon. All of &ldquo;statistics&rdquo; has become somewhat fuzzy for me over the years, so this is more of a way to get a refresher there. I&rsquo;ve heard good things about <a href="http://www-bcf.usc.edu/~gareth/ISL/">Introduction to Statistical Learning (with applications in R)</a>.</p>
+
+<h4>Conclusion</h4>
+
+<p>One common factor to all of these is they&rsquo;re <strong>free</strong> to explore, <em>and</em> they have a great <strong>community</strong> of helpful people who&rsquo;re good at answering questions, whether on mailing lists or IRC.</p>
+]]></content>
+  </entry>
+  
+</feed>
