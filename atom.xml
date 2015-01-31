@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-01-27T08:04:29+00:00</updated>
+  <updated>2015-01-31T07:39:06+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,233 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Euler 21: Amicable numbers (in unamicable languages)]]></title>
+    <link href="http://agam.github.io/blog/2015/01/31/euler-21-amicable-numbers/"/>
+    <updated>2015-01-31T04:01:08+00:00</updated>
+    <id>http://agam.github.io/blog/2015/01/31/euler-21-amicable-numbers</id>
+    <content type="html"><![CDATA[<p><em>Picking up where I left off, apparently 2 years ago !! :(</em></p>
+
+<p>To avoid a procrastination excuse, I decided to skip the step of adding it to the github repo I had started earlier. Here is the raw, unedited form of the attempt at the next problem in my sequence, #21.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="nf">isDiv</span> <span class="n">a</span> <span class="n">b</span> <span class="ow">=</span> <span class="n">a</span> <span class="p">`</span><span class="n">mod</span><span class="p">`</span> <span class="n">b</span> <span class="o">==</span> <span class="mi">0</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">divisors</span> <span class="n">n</span> <span class="ow">=</span> <span class="p">[</span><span class="n">x</span> <span class="o">|</span> <span class="n">x</span> <span class="ow">&lt;-</span> <span class="p">[</span><span class="mi">1</span> <span class="o">..</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">isDiv</span> <span class="n">n</span> <span class="n">x</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">-- d(n) = sum of divisors of n</span>
+</span><span class='line'><span class="nf">sumDiv</span> <span class="n">n</span> <span class="ow">=</span> <span class="n">sum</span> <span class="o">$</span> <span class="n">divisors</span> <span class="n">n</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">-- a and b are &#39;amicable&#39; if d(a) = b, and d(b) = a</span>
+</span><span class='line'><span class="nf">amicable</span> <span class="n">a</span> <span class="n">b</span> <span class="ow">=</span> <span class="p">(</span><span class="n">a</span> <span class="o">/=</span> <span class="n">b</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">sumDiv</span> <span class="n">a</span> <span class="o">==</span> <span class="n">b</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">sumDiv</span> <span class="n">b</span> <span class="o">==</span> <span class="n">a</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">-- evaluate all pairs under 1000</span>
+</span><span class='line'><span class="c1">-- amicableUnder1000 = [(x,y) | x &lt;- [1 .. 999], y &lt;- [1 .. 999], amicable x y]</span>
+</span><span class='line'><span class="c1">-- euler21 = foldr (\(x,y) -&gt; x + y) 0  amicableUnder1000</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This naive version was predictably going to take forever, so interrupted Ghci and decided to try a slightly different approach (to explicitly pre-evaluate the sums of divisors).</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="nf">sumDivNumbersUnder10000</span> <span class="ow">=</span> <span class="p">[</span><span class="n">sumDiv</span> <span class="n">n</span> <span class="o">|</span> <span class="n">n</span> <span class="ow">&lt;-</span> <span class="p">[</span><span class="mi">1</span> <span class="o">..</span> <span class="mi">9999</span><span class="p">]]</span>
+</span><span class='line'><span class="nf">sumDiv&#39;</span> <span class="n">n</span> <span class="ow">=</span> <span class="n">sumDivNumbersUnder10000</span> <span class="o">!!</span> <span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">amicable&#39;</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">sa</span><span class="p">)</span> <span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="n">sb</span><span class="p">)</span> <span class="ow">=</span> <span class="p">(</span><span class="n">a</span> <span class="o">/=</span> <span class="n">b</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">sa</span> <span class="o">==</span> <span class="n">b</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">sb</span> <span class="o">==</span> <span class="n">a</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">amicableUnder10000</span> <span class="ow">=</span> <span class="p">[(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="o">|</span> <span class="n">x</span> <span class="ow">&lt;-</span> <span class="p">[</span><span class="mi">1</span> <span class="o">..</span> <span class="mi">9999</span><span class="p">],</span> <span class="n">y</span> <span class="ow">&lt;-</span> <span class="p">[</span><span class="mi">1</span> <span class="o">..</span> <span class="mi">9999</span><span class="p">],</span> <span class="n">amicable&#39;</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">sumDiv&#39;</span> <span class="n">x</span><span class="p">)</span> <span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">sumDiv&#39;</span> <span class="n">y</span><span class="p">)]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This version took <code>4.64</code> seconds in Ghci for the numbers less than 1000, at which point I realized the problem had actually called for the numbers less than <em>10000</em> instead. I left it running, out of curiosity, and it took <code>1758.96</code> seconds (not to mention a <em>prodigious</em> amount of memory: <code>97202052160</code> bytes!)</p>
+
+<p>This done, the final answer was easy:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="nf">sum</span> <span class="o">$</span> <span class="n">map</span> <span class="n">fst</span> <span class="n">amicableUnder10000</span>
+</span><span class='line'><span class="mi">31626</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>But this sort of gets to my problem with Haskell; I&rsquo;m never sure what&rsquo;s <em>really</em> going on, and how to make it do <em>what I want it to do</em>. On the other hand, I can feel an excess of &ldquo;imperative thinking&rdquo; is getting in the way (why isn&rsquo;t this as fast as a nested for loop?) Obviously, I need more time at this :)</p>
+
+<p>Anyway, I tried yet another way towards this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="nf">partialAmicable</span> <span class="n">x</span> <span class="n">n</span> <span class="ow">=</span> <span class="p">[(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="o">|</span> <span class="n">y</span> <span class="ow">&lt;-</span> <span class="p">[</span><span class="mi">1</span> <span class="o">..</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">amicable&#39;</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">sumDiv&#39;</span> <span class="n">x</span><span class="p">)</span> <span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">sumDiv&#39;</span> <span class="n">y</span><span class="p">)]</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">fullAmicable</span> <span class="n">n</span> <span class="ow">=</span> <span class="n">filter</span> <span class="p">(</span><span class="n">not</span> <span class="o">.</span> <span class="n">null</span><span class="p">)</span> <span class="p">(</span><span class="n">map</span> <span class="n">f</span> <span class="o">$</span> <span class="n">take</span> <span class="n">n</span> <span class="p">[</span><span class="mi">1</span> <span class="o">..</span><span class="p">])</span>
+</span><span class='line'>             <span class="kr">where</span> <span class="n">f</span> <span class="n">x</span> <span class="ow">=</span> <span class="n">partialAmicable</span> <span class="n">x</span> <span class="n">n</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&hellip; which ran into <code>*** Exception: Prelude.(!!): index too large</code></p>
+
+<p>At this point I realized that:
+&ndash; I had no idea how to &lsquo;debug&rsquo; this (lacking a &lsquo;stack trace&rsquo;), but also
+&ndash; I was still dealing with <strong>lists</strong>, when I really wanted <strong>vectors</strong>.</p>
+
+<p>So I gave it one <em>final</em> shot:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="kr">import</span> <span class="nn">Data.Vector</span> <span class="k">as</span> <span class="n">V</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">divSums</span> <span class="n">n</span> <span class="ow">=</span> <span class="kt">V</span><span class="o">.</span><span class="n">fromList</span> <span class="p">[</span><span class="n">sumDiv</span> <span class="n">x</span> <span class="o">|</span> <span class="n">x</span> <span class="ow">&lt;-</span> <span class="p">[</span><span class="mi">1</span> <span class="o">..</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">amicables</span> <span class="n">n</span> <span class="ow">=</span> <span class="kr">let</span> <span class="n">ds</span> <span class="ow">=</span> <span class="n">divSums</span> <span class="n">n</span> <span class="kr">in</span>
+</span><span class='line'>                  <span class="kt">V</span><span class="o">.</span><span class="n">fromList</span> <span class="p">[(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="o">|</span> <span class="n">x</span> <span class="ow">&lt;-</span> <span class="p">[</span><span class="mi">1</span> <span class="o">..</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">y</span> <span class="ow">&lt;-</span> <span class="p">[</span><span class="mi">1</span> <span class="o">..</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">amicable&#39;</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">ds</span> <span class="o">!</span> <span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">ds</span> <span class="o">!</span> <span class="p">(</span><span class="n">y</span><span class="o">-</span><span class="mi">1</span><span class="p">))]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&hellip; and this time, I got</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="nf">λ</span><span class="o">&gt;</span> <span class="n">amicables</span> <span class="mi">10000</span>
+</span><span class='line'><span class="nf">fromList</span> <span class="p">[(</span><span class="mi">220</span><span class="p">,</span><span class="mi">284</span><span class="p">),(</span><span class="mi">284</span><span class="p">,</span><span class="mi">220</span><span class="p">),(</span><span class="mi">1184</span><span class="p">,</span><span class="mi">1210</span><span class="p">),(</span><span class="mi">1210</span><span class="p">,</span><span class="mi">1184</span><span class="p">),(</span><span class="mi">2620</span><span class="p">,</span><span class="mi">2924</span><span class="p">),(</span><span class="mi">2924</span><span class="p">,</span><span class="mi">2620</span><span class="p">),(</span><span class="mi">5020</span><span class="p">,</span><span class="mi">5564</span><span class="p">),(</span><span class="mi">5564</span><span class="p">,</span><span class="mi">5020</span><span class="p">),(</span><span class="mi">6232</span><span class="p">,</span><span class="mi">6368</span><span class="p">),(</span><span class="mi">6368</span><span class="p">,</span><span class="mi">6232</span><span class="p">)]</span>
+</span><span class='line'><span class="p">(</span><span class="mf">204.01</span> <span class="n">secs</span><span class="p">,</span> <span class="mi">97203591888</span> <span class="n">bytes</span><span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Ok, I can stop here; perhaps <code>204</code> seconds of brute-forcing isn&rsquo;t all that bad?</p>
+
+<p>Unfortunately, my &ldquo;comfort zone&rdquo; yielded this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">div</span> <span class="p">(</span><span class="nv">x</span> <span class="nv">y</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">=</span> <span class="p">(</span><span class="nb">mod</span> <span class="nv">x</span> <span class="nv">y</span><span class="p">)</span> <span class="mi">0</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">divisors</span> <span class="p">(</span><span class="nv">x</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">i</span> <span class="nv">from</span> <span class="mi">1</span> <span class="nv">below</span> <span class="nv">x</span>
+</span><span class='line'>     <span class="nb">when</span> <span class="p">(</span><span class="nv">div</span> <span class="nv">x</span> <span class="nv">i</span><span class="p">)</span>
+</span><span class='line'>       <span class="nv">collect</span> <span class="nv">i</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">sum-divs</span> <span class="p">(</span><span class="nv">x</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">reduce</span> <span class="nf">#&#39;</span><span class="nb">+</span> <span class="p">(</span><span class="nv">divisors</span> <span class="nv">x</span><span class="p">)))</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">pre-sum-divs</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">myarr</span> <span class="p">(</span><span class="nb">make-array</span> <span class="nv">n</span> <span class="ss">:element-type</span> <span class="ss">&#39;fixnum</span><span class="p">)))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">i</span> <span class="nv">from</span> <span class="mi">1</span> <span class="nv">below</span> <span class="nv">n</span>
+</span><span class='line'>   <span class="nb">do</span> <span class="p">(</span><span class="nb">setf</span> <span class="p">(</span><span class="nb">aref</span> <span class="nv">myarr</span> <span class="nv">i</span><span class="p">)</span> <span class="p">(</span><span class="nv">sum-divs</span> <span class="nv">i</span><span class="p">)))</span>
+</span><span class='line'>    <span class="nv">myarr</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">amicablep</span> <span class="p">(</span><span class="nv">x</span> <span class="nv">sx</span> <span class="nv">y</span> <span class="nv">sy</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">and</span> <span class="p">(</span><span class="nb">not</span> <span class="p">(</span><span class="nb">=</span> <span class="nv">x</span> <span class="nv">y</span><span class="p">))</span>
+</span><span class='line'>       <span class="p">(</span><span class="nb">=</span> <span class="nv">sx</span> <span class="nv">y</span><span class="p">)</span>
+</span><span class='line'>       <span class="p">(</span><span class="nb">=</span> <span class="nv">sy</span> <span class="nv">x</span><span class="p">)))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">amicables</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">ds</span> <span class="p">(</span><span class="nv">pre-sum-divs</span> <span class="nv">n</span><span class="p">)))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">i</span> <span class="nv">from</span> <span class="mi">1</span> <span class="nv">below</span> <span class="nv">n</span> <span class="nb">do</span>
+</span><span class='line'>   <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">j</span> <span class="nv">from</span> <span class="mi">1</span> <span class="nv">below</span> <span class="nv">n</span>
+</span><span class='line'>      <span class="nb">when</span> <span class="p">(</span><span class="nv">amicablep</span> <span class="nv">i</span> <span class="p">(</span><span class="nb">aref</span> <span class="nv">ds</span> <span class="nv">i</span><span class="p">)</span> <span class="nv">j</span> <span class="p">(</span><span class="nb">aref</span> <span class="nv">ds</span> <span class="nv">j</span><span class="p">))</span>
+</span><span class='line'>      <span class="nb">do</span> <span class="p">(</span><span class="nb">print</span> <span class="nv">j</span><span class="p">)))))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>which runs <em>just a little bit faster</em> (!!)</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="nv">CL-USER&gt;</span> <span class="p">(</span><span class="nb">time</span> <span class="p">(</span><span class="nv">amicables</span> <span class="mi">10000</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="mi">284</span>
+</span><span class='line'><span class="mi">220</span>
+</span><span class='line'><span class="mi">1210</span>
+</span><span class='line'><span class="mi">1184</span>
+</span><span class='line'><span class="mi">2924</span>
+</span><span class='line'><span class="mi">2620</span>
+</span><span class='line'><span class="mi">5564</span>
+</span><span class='line'><span class="mi">5020</span>
+</span><span class='line'><span class="mi">6368</span>
+</span><span class='line'><span class="mi">6232</span>
+</span><span class='line'><span class="nv">Evaluation</span> <span class="nv">took:</span>
+</span><span class='line'><span class="mf">2.815</span> <span class="nv">seconds</span> <span class="nv">of</span> <span class="nc">real</span> <span class="nb">time</span>
+</span><span class='line'><span class="mf">2.820000</span> <span class="nv">seconds</span> <span class="nv">of</span> <span class="nv">total</span> <span class="nv">run</span> <span class="nb">time</span> <span class="p">(</span><span class="mf">2.820000</span> <span class="nv">user,</span> <span class="mf">0.000000</span> <span class="nv">system</span><span class="p">)</span>
+</span><span class='line'><span class="nv">100.18%</span> <span class="nv">CPU</span>
+</span><span class='line'><span class="mi">7</span><span class="o">,</span><span class="mi">318</span><span class="o">,</span><span class="mi">463</span><span class="o">,</span><span class="mi">192</span> <span class="nv">processor</span> <span class="nv">cycles</span>
+</span><span class='line'><span class="mi">3</span><span class="o">,</span><span class="mi">939</span><span class="o">,</span><span class="mi">984</span> <span class="nv">bytes</span> <span class="nv">consed</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So this is my problem: I need to find a way to get my mental model of Haskell to perform at this speed (and clearly, it&rsquo;s two orders of magnitude off). It isn&rsquo;t going to be easy &hellip;</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Languages/ecosystems to explore in 2015]]></title>
@@ -8629,183 +8856,6 @@
 <p>The title of this post was chosen in the style of <a href="http://www.realmofracket.com/">&ldquo;The Realm of Racket&rdquo;</a> and <a href="http://landoflisp.com/">&ldquo;The Land of Lisp&rdquo;</a><a href="#fnref:8" rev="footnote">&#8617;</a></p></li>
 </ol>
 </div>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[DailyProgramming: Markov chain]]></title>
-    <link href="http://agam.github.io/blog/2014/12/16/dailyprogramming-markov-chain/"/>
-    <updated>2014-12-16T20:13:06+00:00</updated>
-    <id>http://agam.github.io/blog/2014/12/16/dailyprogramming-markov-chain</id>
-    <content type="html"><![CDATA[<p>Been a long, <em>long</em> time since I looked at <a href="http://www.reddit.com/r/dailyprogrammer/">r/dailyprogrammer</a>, so I picked <a href="http://www.reddit.com/r/dailyprogrammer/comments/2ovt2i/20141210_challenge_192_intermediate_markov_chain/">this <em>intermediate</em> problem</a> from 5 days ago. Basically, given a dictionary, judge the likelihood of a word being a &ldquo;real word&rdquo;.</p>
-
-<p>Here&rsquo;s my solution:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-<span class='line-number'>72</span>
-<span class='line-number'>73</span>
-<span class='line-number'>74</span>
-<span class='line-number'>75</span>
-<span class='line-number'>76</span>
-</pre></td><td class='code'><pre><code class='go'><span class='line'><span class="kn">package</span> <span class="nx">main</span>
-</span><span class='line'>
-</span><span class='line'><span class="kn">import</span> <span class="p">(</span>
-</span><span class='line'>  <span class="s">&quot;bufio&quot;</span>
-</span><span class='line'>  <span class="s">&quot;flag&quot;</span>
-</span><span class='line'>  <span class="s">&quot;fmt&quot;</span>
-</span><span class='line'>  <span class="s">&quot;log&quot;</span>
-</span><span class='line'>  <span class="s">&quot;math&quot;</span>
-</span><span class='line'>  <span class="s">&quot;os&quot;</span>
-</span><span class='line'><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">type</span> <span class="nx">wordmap</span> <span class="kd">map</span><span class="p">[</span><span class="kt">uint8</span><span class="p">]</span><span class="kd">map</span><span class="p">[</span><span class="kt">uint8</span><span class="p">]</span><span class="kt">int</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">func</span> <span class="nx">MakeWordMap</span><span class="p">(</span><span class="nx">w</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">wm</span> <span class="nx">wordmap</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">w</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">if</span> <span class="nx">i</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="nx">w</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span> <span class="p">{</span>
-</span><span class='line'>          <span class="k">break</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>      <span class="nx">c</span> <span class="o">:=</span> <span class="nx">w</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span>
-</span><span class='line'>      <span class="nx">cnext</span> <span class="o">:=</span> <span class="nx">w</span><span class="p">[</span><span class="nx">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
-</span><span class='line'>      <span class="k">if</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">wm</span><span class="p">[</span><span class="nx">c</span><span class="p">];</span> <span class="p">!</span><span class="nx">ok</span> <span class="p">{</span>
-</span><span class='line'>          <span class="nx">wm</span><span class="p">[</span><span class="nx">c</span><span class="p">]</span> <span class="p">=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">uint8</span><span class="p">]</span><span class="kt">int</span><span class="p">)</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>      <span class="nx">wm</span><span class="p">[</span><span class="nx">c</span><span class="p">][</span><span class="nx">cnext</span><span class="p">]</span> <span class="p">=</span> <span class="nx">wm</span><span class="p">[</span><span class="nx">c</span><span class="p">][</span><span class="nx">cnext</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">func</span> <span class="nx">ReadWords</span><span class="p">(</span><span class="nx">dictfile</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">wm</span> <span class="nx">wordmap</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="nx">file</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">Open</span><span class="p">(</span><span class="nx">dictfile</span><span class="p">)</span>
-</span><span class='line'>  <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-</span><span class='line'>      <span class="nx">log</span><span class="p">.</span><span class="nx">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="k">defer</span> <span class="nx">file</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nx">scanner</span> <span class="o">:=</span> <span class="nx">bufio</span><span class="p">.</span><span class="nx">NewScanner</span><span class="p">(</span><span class="nx">file</span><span class="p">)</span>
-</span><span class='line'>  <span class="k">for</span> <span class="nx">scanner</span><span class="p">.</span><span class="nx">Scan</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>      <span class="nx">MakeWordMap</span><span class="p">(</span><span class="nx">scanner</span><span class="p">.</span><span class="nx">Text</span><span class="p">(),</span> <span class="nx">wm</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">func</span> <span class="nx">CheckValidity</span><span class="p">(</span><span class="nx">w</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">wm</span> <span class="nx">wordmap</span><span class="p">)</span> <span class="kt">float64</span> <span class="p">{</span>
-</span><span class='line'>  <span class="kd">var</span> <span class="nx">c</span><span class="p">,</span> <span class="nx">cprev</span> <span class="kt">uint8</span>
-</span><span class='line'>  <span class="kd">var</span> <span class="nx">wordScore</span> <span class="kt">float64</span> <span class="p">=</span> <span class="mf">1.0</span>
-</span><span class='line'>  <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">w</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">if</span> <span class="nx">i</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
-</span><span class='line'>          <span class="nx">cprev</span> <span class="p">=</span> <span class="nx">w</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span>
-</span><span class='line'>          <span class="k">continue</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>      <span class="nx">c</span> <span class="p">=</span> <span class="nx">w</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span>
-</span><span class='line'>      <span class="nx">pairScore</span> <span class="o">:=</span> <span class="nx">wm</span><span class="p">[</span><span class="nx">cprev</span><span class="p">][</span><span class="nx">c</span><span class="p">]</span>
-</span><span class='line'>      <span class="nx">rowTotal</span> <span class="o">:=</span> <span class="mi">0</span>
-</span><span class='line'>      <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">count</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">wm</span><span class="p">[</span><span class="nx">cprev</span><span class="p">]</span> <span class="p">{</span>
-</span><span class='line'>          <span class="nx">rowTotal</span> <span class="o">+=</span> <span class="nx">count</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>      <span class="nx">wordScore</span> <span class="p">=</span> <span class="nx">wordScore</span> <span class="o">*</span> <span class="nb">float64</span><span class="p">(</span><span class="nx">pairScore</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float64</span><span class="p">(</span><span class="nx">rowTotal</span><span class="p">)</span>
-</span><span class='line'>      <span class="nx">cprev</span> <span class="p">=</span> <span class="nx">c</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="k">return</span> <span class="nx">wordScore</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>  <span class="c1">// Takes a dictionary and a single word, and returns the</span>
-</span><span class='line'>  <span class="c1">// probability of that word being &quot;good&quot;</span>
-</span><span class='line'>  <span class="nx">wm</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="nx">wordmap</span><span class="p">)</span>
-</span><span class='line'>  <span class="nx">dictfile</span> <span class="o">:=</span> <span class="nx">flag</span><span class="p">.</span><span class="nx">String</span><span class="p">(</span><span class="s">&quot;dictfile&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="s">&quot;Path to word list&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="nx">checkword</span> <span class="o">:=</span> <span class="nx">flag</span><span class="p">.</span><span class="nx">String</span><span class="p">(</span><span class="s">&quot;checkword&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="s">&quot;Word to spell-check&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="nx">flag</span><span class="p">.</span><span class="nx">Parse</span><span class="p">()</span>
-</span><span class='line'>  <span class="nx">ReadWords</span><span class="p">(</span><span class="o">*</span><span class="nx">dictfile</span><span class="p">,</span> <span class="nx">wm</span><span class="p">)</span>
-</span><span class='line'>  <span class="nx">prob</span> <span class="o">:=</span> <span class="nx">CheckValidity</span><span class="p">(</span><span class="o">*</span><span class="nx">checkword</span><span class="p">,</span> <span class="nx">wm</span><span class="p">)</span>
-</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;%s has a score of %.20f\n&quot;</span><span class="p">,</span> <span class="o">*</span><span class="nx">checkword</span><span class="p">,</span> <span class="nx">prob</span><span class="p">)</span>
-</span><span class='line'>  <span class="k">if</span> <span class="nx">prob</span> <span class="p">&lt;</span> <span class="nx">math</span><span class="p">.</span><span class="nx">Pow10</span><span class="p">(</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="o">*</span><span class="nx">checkword</span><span class="p">))</span> <span class="p">{</span>
-</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;It is probably not a word!&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;It looks like a real word!&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>It runs as follows:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>go run markov.go -dictfile<span class="o">=</span>/usr/share/dict/american-english  -checkword<span class="o">=</span>go
-</span><span class='line'>go has a score of 0.06318184860451107887
-</span><span class='line'>It looks like a real word!
-</span></code></pre></td></tr></table></div></figure>
 
 ]]></content>
   </entry>

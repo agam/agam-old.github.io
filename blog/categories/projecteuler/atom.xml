@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: projecteuler | Agam's Mashed-Up Pome]]></title>
+  <link href="http://agam.github.io/blog/categories/projecteuler/atom.xml" rel="self"/>
+  <link href="http://agam.github.io/"/>
+  <updated>2015-01-31T07:39:06+00:00</updated>
+  <id>http://agam.github.io/</id>
+  <author>
+    <name><![CDATA[Agam]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Euler 21: Amicable numbers (in unamicable languages)]]></title>
+    <link href="http://agam.github.io/blog/2015/01/31/euler-21-amicable-numbers/"/>
+    <updated>2015-01-31T04:01:08+00:00</updated>
+    <id>http://agam.github.io/blog/2015/01/31/euler-21-amicable-numbers</id>
+    <content type="html"><![CDATA[<p><em>Picking up where I left off, apparently 2 years ago !! :(</em></p>
+
+<p>To avoid a procrastination excuse, I decided to skip the step of adding it to the github repo I had started earlier. Here is the raw, unedited form of the attempt at the next problem in my sequence, #21.</p>
+
+<p><code>``haskell
+isDiv a b = a</code>mod` b == 0</p>
+
+<p>divisors n = [x | x &lt;&ndash; [1 .. n-1], isDiv n x]</p>
+
+<p>&mdash; d(n) = sum of divisors of n
+sumDiv n = sum $ divisors n</p>
+
+<p>&mdash; a and b are &lsquo;amicable&rsquo; if d(a) = b, and d(b) = a
+amicable a b = (a /= b) &amp;&amp; (sumDiv a == b) &amp;&amp; (sumDiv b == a)</p>
+
+<p>&mdash; evaluate all pairs under 1000
+&mdash; amicableUnder1000 = [(x,y) | x &lt;&ndash; [1 .. 999], y &lt;&ndash; [1 .. 999], amicable x y]
+&mdash; euler21 = foldr ((x,y) &ndash;> x + y) 0  amicableUnder1000
+```</p>
+
+<p>This naive version was predictably going to take forever, so interrupted Ghci and decided to try a slightly different approach (to explicitly pre-evaluate the sums of divisors).</p>
+
+<p>```haskell
+sumDivNumbersUnder10000 = [sumDiv n | n &lt;&ndash; [1 .. 9999]]
+sumDiv' n = sumDivNumbersUnder10000 !! (n-1)</p>
+
+<p>amicable' (a,sa) (b,sb) = (a /= b) &amp;&amp; (sa == b) &amp;&amp; (sb == a)</p>
+
+<p>amicableUnder10000 = [(x,y) | x &lt;&ndash; [1 .. 9999], y &lt;&ndash; [1 .. 9999], amicable' (x,sumDiv' x) (y, sumDiv' y)]
+```</p>
+
+<p>This version took <code>4.64</code> seconds in Ghci for the numbers less than 1000, at which point I realized the problem had actually called for the numbers less than <em>10000</em> instead. I left it running, out of curiosity, and it took <code>1758.96</code> seconds (not to mention a <em>prodigious</em> amount of memory: <code>97202052160</code> bytes!)</p>
+
+<p>This done, the final answer was easy:</p>
+
+<p><code>haskell
+sum $ map fst amicableUnder10000
+31626
+</code></p>
+
+<p>But this sort of gets to my problem with Haskell; I&rsquo;m never sure what&rsquo;s <em>really</em> going on, and how to make it do <em>what I want it to do</em>. On the other hand, I can feel an excess of &ldquo;imperative thinking&rdquo; is getting in the way (why isn&rsquo;t this as fast as a nested for loop?) Obviously, I need more time at this :)</p>
+
+<p>Anyway, I tried yet another way towards this:</p>
+
+<p>```haskell
+partialAmicable x n = [(x,y) | y &lt;&ndash; [1 .. n-1], amicable' (x, sumDiv' x) (y, sumDiv' y)]</p>
+
+<p>fullAmicable n = filter (not . null) (map f $ take n [1 ..])</p>
+
+<pre><code>         where f x = partialAmicable x n
+</code></pre>
+
+<p>```</p>
+
+<p>&hellip; which ran into <code>*** Exception: Prelude.(!!): index too large</code></p>
+
+<p>At this point I realized that:
+&ndash; I had no idea how to &lsquo;debug&rsquo; this (lacking a &lsquo;stack trace&rsquo;), but also
+&ndash; I was still dealing with <strong>lists</strong>, when I really wanted <strong>vectors</strong>.</p>
+
+<p>So I gave it one <em>final</em> shot:</p>
+
+<p>```haskell
+import Data.Vector as V</p>
+
+<p>divSums n = V.fromList [sumDiv x | x &lt;&ndash; [1 .. n-1]]</p>
+
+<p>amicables n = let ds = divSums n in</p>
+
+<pre><code>              V.fromList [(x,y) | x &lt;- [1 .. n-1], y &lt;- [1 .. n-1], amicable' (x, ds ! (x-1)) (y, ds ! (y-1))]
+</code></pre>
+
+<p>```</p>
+
+<p>&hellip; and this time, I got</p>
+
+<p><code>haskell
+λ&gt; amicables 10000
+fromList [(220,284),(284,220),(1184,1210),(1210,1184),(2620,2924),(2924,2620),(5020,5564),(5564,5020),(6232,6368),(6368,6232)]
+(204.01 secs, 97203591888 bytes)
+</code></p>
+
+<p>Ok, I can stop here; perhaps <code>204</code> seconds of brute-forcing isn&rsquo;t all that bad?</p>
+
+<p>Unfortunately, my &ldquo;comfort zone&rdquo; yielded this:</p>
+
+<p>```lisp
+(defun div (x y)
+  (= (mod x y) 0))</p>
+
+<p>(defun divisors (x)
+  (loop for i from 1 below x</p>
+
+<pre><code> when (div x i)
+   collect i))
+</code></pre>
+
+<p>(defun sum-divs (x)
+  (reduce #&lsquo;+ (divisors x)))</p>
+
+<p>(defun pre-sum-divs (n)
+  (let ((myarr (make-array n :element-type &lsquo;fixnum)))</p>
+
+<pre><code>(loop for i from 1 below n
+ do (setf (aref myarr i) (sum-divs i)))
+myarr))
+</code></pre>
+
+<p>(defun amicablep (x sx y sy)
+  (and (not (= x y))</p>
+
+<pre><code>   (= sx y)
+   (= sy x)))
+</code></pre>
+
+<p>(defun amicables (n)
+  (let ((ds (pre-sum-divs n)))</p>
+
+<pre><code>(loop for i from 1 below n do
+ (loop for j from 1 below n
+    when (amicablep i (aref ds i) j (aref ds j))
+    do (print j)))))
+</code></pre>
+
+<p>```</p>
+
+<p>which runs <em>just a little bit faster</em> (!!)</p>
+
+<p>```lisp
+CL-USER> (time (amicables 10000))</p>
+
+<p>284
+220
+1210
+1184
+2924
+2620
+5564
+5020
+6368
+6232
+Evaluation took:
+2.815 seconds of real time
+2.820000 seconds of total run time (2.820000 user, 0.000000 system)
+100.18% CPU
+7,318,463,192 processor cycles
+3,939,984 bytes consed
+```</p>
+
+<p>So this is my problem: I need to find a way to get my mental model of Haskell to perform at this speed (and clearly, it&rsquo;s two orders of magnitude off). It isn&rsquo;t going to be easy &hellip;</p>
+]]></content>
+  </entry>
+  
+</feed>
