@@ -60,6 +60,7 @@ fullAmicable n = filter (not . null) (map f $ take n [1 ..])
 ... which ran into `*** Exception: Prelude.(!!): index too large`
 
 At this point I realized that:
+
 - I had no idea how to 'debug' this (lacking a 'stack trace'), but also
 - I was still dealing with **lists**, when I really wanted **vectors**.
 
