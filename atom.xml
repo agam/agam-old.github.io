@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-01-31T07:39:06+00:00</updated>
+  <updated>2015-01-31T07:41:44+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -96,9 +96,13 @@
 
 <p>&hellip; which ran into <code>*** Exception: Prelude.(!!): index too large</code></p>
 
-<p>At this point I realized that:
-&ndash; I had no idea how to &lsquo;debug&rsquo; this (lacking a &lsquo;stack trace&rsquo;), but also
-&ndash; I was still dealing with <strong>lists</strong>, when I really wanted <strong>vectors</strong>.</p>
+<p>At this point I realized that:</p>
+
+<ul>
+<li>I had no idea how to &lsquo;debug&rsquo; this (lacking a &lsquo;stack trace&rsquo;), but also</li>
+<li>I was still dealing with <strong>lists</strong>, when I really wanted <strong>vectors</strong>.</li>
+</ul>
+
 
 <p>So I gave it one <em>final</em> shot:</p>
 
