@@ -4,7 +4,7 @@
   <title><![CDATA[Category: projecteuler | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/projecteuler/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-01-31T07:42:02+00:00</updated>
+  <updated>2015-01-31T07:52:17+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -172,6 +172,10 @@ Evaluation took:
 ```</p>
 
 <p>So this is my problem: I need to find a way to get my mental model of Haskell to perform at this speed (and clearly, it&rsquo;s two orders of magnitude off). It isn&rsquo;t going to be easy &hellip;</p>
+
+<p><strong>EDIT</strong>: Make that just <em>one</em> order of magnitude.
+It&rsquo;s possible for Ghci to use compiled object code instead of byte code, by entering <code>:set -fobject-code</code>.
+After this, evaluating <code>amicables 10000</code> took <code>23.71</code> seconds.</p>
 ]]></content>
   </entry>
   

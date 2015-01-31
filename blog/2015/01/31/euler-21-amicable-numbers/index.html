@@ -310,6 +310,10 @@
 
 
 <p>So this is my problem: I need to find a way to get my mental model of Haskell to perform at this speed (and clearly, it&rsquo;s two orders of magnitude off). It isn&rsquo;t going to be easy &hellip;</p>
+
+<p><strong>EDIT</strong>: Make that just <em>one</em> order of magnitude.
+It&rsquo;s possible for Ghci to use compiled object code instead of byte code, by entering <code>:set -fobject-code</code>.
+After this, evaluating <code>amicables 10000</code> took <code>23.71</code> seconds.</p>
 </div>
 
 
