@@ -145,3 +145,7 @@ Evaluation took:
 ```
 
 So this is my problem: I need to find a way to get my mental model of Haskell to perform at this speed (and clearly, it's two orders of magnitude off). It isn't going to be easy ...
+
+**EDIT**: Make that just _one_ order of magnitude.
+It's possible for Ghci to use compiled object code instead of byte code, by entering `:set -fobject-code`.
+After this, evaluating `amicables 10000` took `23.71` seconds.
