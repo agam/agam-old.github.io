@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-02-01T08:07:53+00:00</updated>
+  <updated>2015-02-02T03:13:24+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,142 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Euler 23: Non-abundant sums]]></title>
+    <link href="http://agam.github.io/blog/2015/02/01/euler-23-non-abundant-sums/"/>
+    <updated>2015-02-01T19:01:00+00:00</updated>
+    <id>http://agam.github.io/blog/2015/02/01/euler-23-non-abundant-sums</id>
+    <content type="html"><![CDATA[<p>Had a slice of free time, so decided to look at the next problem. Here&rsquo;s the initial naive solution:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="nf">divisors</span> <span class="n">n</span> <span class="ow">=</span> <span class="p">[</span><span class="n">x</span> <span class="o">|</span> <span class="n">x</span> <span class="ow">&lt;-</span> <span class="p">[</span><span class="mi">1</span> <span class="o">..</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">n</span> <span class="p">`</span><span class="n">mod</span><span class="p">`</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">isAbundant</span> <span class="n">n</span> <span class="ow">=</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="p">(</span><span class="n">sum</span> <span class="o">$</span> <span class="n">divisors</span> <span class="n">n</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">abundants</span> <span class="n">n</span> <span class="ow">=</span> <span class="n">filter</span> <span class="n">isAbundant</span> <span class="o">$</span> <span class="p">[</span><span class="mi">1</span> <span class="o">..</span> <span class="n">n</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">expressSum</span> <span class="n">z</span> <span class="n">nums</span> <span class="ow">=</span> <span class="n">not</span> <span class="o">$</span> <span class="n">null</span> <span class="p">[(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="o">|</span> <span class="n">x</span> <span class="ow">&lt;-</span> <span class="n">nums</span><span class="p">,</span> <span class="n">y</span> <span class="ow">&lt;-</span> <span class="n">nums</span><span class="p">,</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">==</span> <span class="n">z</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">sumAbundants</span> <span class="n">n</span> <span class="ow">=</span>
+</span><span class='line'>  <span class="kr">let</span> <span class="n">a</span> <span class="ow">=</span> <span class="n">abundants</span> <span class="n">n</span> <span class="kr">in</span>
+</span><span class='line'>          <span class="n">sum</span> <span class="o">$</span> <span class="n">filter</span> <span class="p">(</span><span class="nf">\</span><span class="n">x</span> <span class="ow">-&gt;</span> <span class="n">not</span> <span class="o">$</span> <span class="n">expressSum</span> <span class="n">x</span> <span class="n">a</span><span class="p">)</span> <span class="p">[</span><span class="mi">1</span> <span class="o">..</span> <span class="n">n</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>While it gave the correct answer, it did so in <code>3133.33</code> seconds, which is &hellip; embarrassing.</p>
+
+<p>This is just <em>too</em> inefficient, even the following &hellip;</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">divisors</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">i</span> <span class="nv">from</span> <span class="mi">1</span> <span class="nv">below</span> <span class="nv">n</span>
+</span><span class='line'>     <span class="nb">when</span> <span class="p">(</span><span class="nb">=</span> <span class="mi">0</span> <span class="p">(</span><span class="nb">mod</span> <span class="nv">n</span> <span class="nv">i</span><span class="p">))</span>
+</span><span class='line'>       <span class="nv">collect</span> <span class="nv">i</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">abundantp</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">&lt;</span> <span class="nv">n</span>
+</span><span class='line'>     <span class="p">(</span><span class="nb">reduce</span> <span class="nf">#&#39;</span><span class="nb">+</span> <span class="p">(</span><span class="nv">divisors</span> <span class="nv">n</span><span class="p">))))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">abundants</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">i</span> <span class="nv">from</span> <span class="mi">1</span> <span class="nv">below</span> <span class="nv">n</span>
+</span><span class='line'>     <span class="nb">when</span> <span class="p">(</span><span class="nv">abundantp</span> <span class="nv">i</span><span class="p">)</span>
+</span><span class='line'>       <span class="nv">collect</span> <span class="nv">i</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">possible-summands</span> <span class="p">(</span><span class="nv">z</span> <span class="nv">nums</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">x</span> <span class="nv">in</span> <span class="nv">nums</span> <span class="nb">do</span>
+</span><span class='line'>       <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">y</span> <span class="nv">in</span> <span class="nv">nums</span>
+</span><span class='line'>    <span class="nb">when</span> <span class="p">(</span><span class="nb">=</span> <span class="nv">z</span> <span class="p">(</span><span class="nb">+</span> <span class="nv">x</span> <span class="nv">y</span><span class="p">))</span> <span class="nb">do</span>
+</span><span class='line'>      <span class="p">(</span><span class="k">return-from</span> <span class="nv">possible-summands</span> <span class="p">(</span><span class="nb">cons</span> <span class="nv">x</span> <span class="nv">y</span><span class="p">)))))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">sum-abundants</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">let*</span> <span class="p">((</span><span class="nv">ab</span> <span class="p">(</span><span class="nv">abundants</span> <span class="nv">n</span><span class="p">))</span>
+</span><span class='line'>   <span class="p">(</span><span class="nv">summands</span>
+</span><span class='line'>    <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">i</span> <span class="nv">from</span> <span class="mi">1</span> <span class="nv">to</span> <span class="nv">n</span>
+</span><span class='line'>       <span class="nb">when</span> <span class="p">(</span><span class="nb">null</span> <span class="p">(</span><span class="nv">possible-summands</span> <span class="nv">i</span> <span class="nv">ab</span><span class="p">))</span>
+</span><span class='line'>       <span class="nv">collect</span> <span class="nv">i</span><span class="p">)))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nb">reduce</span> <span class="nf">#&#39;</span><span class="nb">+</span> <span class="nv">summands</span><span class="p">)))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&hellip; takes no less than half as long, at <code>1329.168</code> seconds.</p>
+
+<p>BTW why is <code>28123</code> the upper limit for this sequence? I had no idea, and found <a href="http://mathschallenge.net/full/sum_of_two_abundant_numbers">this explanation</a> (and tangentially, <a href="http://mathschallenge.net/view/even_sum_of_two_abundant_numbers">this one</a> too).</p>
+
+<p>Anyway, I&rsquo;m ashamed to say I didn&rsquo;t put in the effort to learn how to profile Haskell programs (<em>next time ?</em>) and profiled the Lisp version instead, which showed that (<strong>duh</strong>) all the time was going in finding divisors. Obviously, we can just loop till the <em>square root of N</em> instead of looping <em>all the way to N</em>. After this change:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">divisors</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="k">declare</span> <span class="p">(</span><span class="k">type</span> <span class="kt">fixnum</span> <span class="nv">n</span><span class="p">))</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">i</span> <span class="nv">from</span> <span class="mi">1</span> <span class="nv">below</span> <span class="p">(</span><span class="nb">floor</span> <span class="p">(</span><span class="nb">sqrt</span> <span class="nv">n</span><span class="p">))</span>
+</span><span class='line'>     <span class="nb">when</span> <span class="p">(</span><span class="nb">=</span> <span class="mi">0</span> <span class="p">(</span><span class="nb">mod</span> <span class="nv">n</span> <span class="nv">i</span><span class="p">))</span>
+</span><span class='line'>       <span class="nv">collect</span> <span class="nv">i</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&hellip; it runs in <code>38 milliseconds</code> !!</p>
+
+<p>And a similar change to the Haskell version:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="nf">divisors</span> <span class="ow">::</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="kt">Int</span><span class="p">]</span>
+</span><span class='line'><span class="nf">divisors</span> <span class="n">n</span> <span class="ow">=</span> <span class="p">[</span><span class="n">x</span> <span class="o">|</span> <span class="n">x</span> <span class="ow">&lt;-</span> <span class="p">[</span><span class="mi">1</span> <span class="o">..</span> <span class="n">round</span> <span class="o">$</span> <span class="n">sqrt</span> <span class="o">$</span> <span class="n">fromIntegral</span> <span class="n">n</span><span class="p">],</span> <span class="n">n</span> <span class="p">`</span><span class="n">mod</span><span class="p">`</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>gave the expected answer in <code>180 milliseconds</code>. Not bad (though it should be noted we&rsquo;re still an order of magnitude away in efficiency).</p>
+
+<p><strong>Notes:</strong></p>
+
+<ul>
+<li><p>Haskell makes it very easy to quickly arrive at a <em>correct</em> solution, but the road from there to an <em>efficient</em> solution is less clear.</p></li>
+<li><p>The brevity of the notation helps, but I get a feeling it&rsquo;s also due to the single-letter variable names &mdash; which is all right (and indeed well-suited) for a tiny math problem, but unclear whether it&rsquo;ll hold up for code in a large-scale project.</p></li>
+<li><p>People usually jump to the <a href="">&ldquo;Programming Language shootout&rdquo;</a>, but if the code <em>there</em> is any indication, writing performant Haskell code is a dark art, and <em>the three-line quicksort is a devilish honeytrap</em>.</p></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Euler 22: Scoring names ?]]></title>
@@ -8572,394 +8708,6 @@ After this, evaluating <code>amicables 10000</code> took <code>23.71</code> seco
 <p><em>Here</em> is where you see a big difference &hellip; a smaller one for the sequential case, but a huge one for the random case (at least an order of magnitude more).</p>
 
 <p>So yeah, the SSD is legit.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[DailyProgrammer: Textual Cycles]]></title>
-    <link href="http://agam.github.io/blog/2014/12/18/dailyprogrammer-textual-cycles/"/>
-    <updated>2014-12-18T04:17:28+00:00</updated>
-    <id>http://agam.github.io/blog/2014/12/18/dailyprogrammer-textual-cycles</id>
-    <content type="html"><![CDATA[<p><a href="http://www.reddit.com/r/dailyprogrammer/comments/2m82yz/20141114_challenge_188_hard_arrows_and_arrows/">Another one</a> from <a href="http://www.reddit.com/r/dailyprogrammer">r/dailyprogrammer</a>. This one involves text with &ldquo;arrows&rdquo;, but as the &ldquo;hint&rdquo; at the end says, it&rsquo;s really equivalent to finding cycles in a directed graph (it would be harder if there were multiple edges going out of each node, but that isn&rsquo;t the case here!)</p>
-
-<p>Here&rsquo;s my code:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-<span class='line-number'>72</span>
-<span class='line-number'>73</span>
-<span class='line-number'>74</span>
-<span class='line-number'>75</span>
-<span class='line-number'>76</span>
-<span class='line-number'>77</span>
-<span class='line-number'>78</span>
-<span class='line-number'>79</span>
-<span class='line-number'>80</span>
-<span class='line-number'>81</span>
-<span class='line-number'>82</span>
-<span class='line-number'>83</span>
-<span class='line-number'>84</span>
-<span class='line-number'>85</span>
-<span class='line-number'>86</span>
-<span class='line-number'>87</span>
-<span class='line-number'>88</span>
-<span class='line-number'>89</span>
-<span class='line-number'>90</span>
-<span class='line-number'>91</span>
-<span class='line-number'>92</span>
-<span class='line-number'>93</span>
-<span class='line-number'>94</span>
-<span class='line-number'>95</span>
-<span class='line-number'>96</span>
-<span class='line-number'>97</span>
-<span class='line-number'>98</span>
-<span class='line-number'>99</span>
-<span class='line-number'>100</span>
-<span class='line-number'>101</span>
-<span class='line-number'>102</span>
-<span class='line-number'>103</span>
-<span class='line-number'>104</span>
-<span class='line-number'>105</span>
-<span class='line-number'>106</span>
-<span class='line-number'>107</span>
-<span class='line-number'>108</span>
-<span class='line-number'>109</span>
-<span class='line-number'>110</span>
-<span class='line-number'>111</span>
-</pre></td><td class='code'><pre><code class='go'><span class='line'><span class="kn">package</span> <span class="nx">main</span>
-</span><span class='line'>
-</span><span class='line'><span class="kn">import</span> <span class="s">&quot;fmt&quot;</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">type</span> <span class="nx">Node</span> <span class="kd">struct</span> <span class="p">{</span>
-</span><span class='line'>  <span class="nx">val</span>     <span class="kt">uint8</span>
-</span><span class='line'>  <span class="nx">next</span>    <span class="o">*</span><span class="nx">Node</span>
-</span><span class='line'>  <span class="nx">visited</span> <span class="kt">bool</span>
-</span><span class='line'>  <span class="nx">cycle</span>   <span class="kt">int</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>  <span class="kd">var</span> <span class="nx">height</span><span class="p">,</span> <span class="nx">width</span> <span class="kt">int</span>
-</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Scanln</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">width</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">height</span><span class="p">)</span>
-</span><span class='line'>  <span class="nx">grid</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="nx">Node</span><span class="p">,</span> <span class="nx">height</span><span class="o">*</span><span class="nx">width</span><span class="p">)</span>
-</span><span class='line'>  <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">height</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
-</span><span class='line'>      <span class="kd">var</span> <span class="nx">str</span> <span class="kt">string</span>
-</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Scanln</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">str</span><span class="p">)</span>
-</span><span class='line'>      <span class="k">for</span> <span class="nx">j</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">str</span> <span class="p">{</span>
-</span><span class='line'>          <span class="nx">grid</span><span class="p">[</span><span class="nx">i</span><span class="o">*</span><span class="nx">width</span><span class="o">+</span><span class="nx">j</span><span class="p">]</span> <span class="p">=</span> <span class="nx">Node</span><span class="p">{</span><span class="nx">str</span><span class="p">[</span><span class="nx">j</span><span class="p">],</span> <span class="kc">nil</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="mi">1</span><span class="p">}</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nx">CreateLinks</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">grid</span><span class="p">,</span> <span class="nx">height</span><span class="p">,</span> <span class="nx">width</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="c1">// Traverse graph; each node is visited at most once,</span>
-</span><span class='line'>  <span class="c1">// so the algorithm is O(n^2)</span>
-</span><span class='line'>  <span class="nx">longestCycle</span> <span class="o">:=</span> <span class="mi">0</span>
-</span><span class='line'>  <span class="kd">var</span> <span class="nx">rootx</span><span class="p">,</span> <span class="nx">rooty</span> <span class="kt">int</span>
-</span><span class='line'>  <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">height</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">for</span> <span class="nx">j</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">j</span> <span class="p">&lt;</span> <span class="nx">width</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span> <span class="p">{</span>
-</span><span class='line'>          <span class="nx">curNode</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">grid</span><span class="p">[</span><span class="nx">i</span><span class="o">*</span><span class="nx">width</span><span class="o">+</span><span class="nx">j</span><span class="p">]</span>
-</span><span class='line'>          <span class="k">if</span> <span class="nx">curNode</span><span class="p">.</span><span class="nx">visited</span> <span class="p">{</span>
-</span><span class='line'>              <span class="k">continue</span>
-</span><span class='line'>          <span class="p">}</span>
-</span><span class='line'>          <span class="nx">curCycleLength</span> <span class="o">:=</span> <span class="nx">TraverseNode</span><span class="p">(</span><span class="nx">curNode</span><span class="p">)</span>
-</span><span class='line'>          <span class="k">if</span> <span class="nx">curCycleLength</span> <span class="p">&gt;</span> <span class="nx">longestCycle</span> <span class="p">{</span>
-</span><span class='line'>              <span class="nx">rooty</span><span class="p">,</span> <span class="nx">rootx</span> <span class="p">=</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">j</span>
-</span><span class='line'>              <span class="nx">longestCycle</span> <span class="p">=</span> <span class="nx">curCycleLength</span>
-</span><span class='line'>          <span class="p">}</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;The largest cycle was found at (%d, %d) with a length of %d\n&quot;</span><span class="p">,</span> <span class="nx">rooty</span><span class="p">,</span> <span class="nx">rootx</span><span class="p">,</span> <span class="nx">grid</span><span class="p">[</span><span class="nx">rooty</span><span class="o">*</span><span class="nx">width</span><span class="o">+</span><span class="nx">rootx</span><span class="p">].</span><span class="nx">cycle</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-</span><span class='line'>  <span class="nx">TraceCycle</span><span class="p">(</span><span class="nx">grid</span><span class="p">,</span> <span class="nx">height</span><span class="p">,</span> <span class="nx">width</span><span class="p">,</span> <span class="nx">rooty</span><span class="p">,</span> <span class="nx">rootx</span><span class="p">)</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">func</span> <span class="nx">TraverseNode</span><span class="p">(</span><span class="nx">node</span> <span class="o">*</span><span class="nx">Node</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
-</span><span class='line'>  <span class="c1">// Recursively returns the length of the cycle found starting</span>
-</span><span class='line'>  <span class="c1">// at the current node</span>
-</span><span class='line'>  <span class="k">if</span> <span class="nx">node</span><span class="p">.</span><span class="nx">visited</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">return</span> <span class="nx">node</span><span class="p">.</span><span class="nx">cycle</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="nx">node</span><span class="p">.</span><span class="nx">visited</span> <span class="p">=</span> <span class="kc">true</span>
-</span><span class='line'>  <span class="nx">cycleLength</span> <span class="o">:=</span> <span class="mi">1</span> <span class="o">+</span> <span class="nx">TraverseNode</span><span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">next</span><span class="p">)</span>
-</span><span class='line'>  <span class="nx">node</span><span class="p">.</span><span class="nx">cycle</span> <span class="p">=</span> <span class="nx">cycleLength</span>
-</span><span class='line'>  <span class="k">return</span> <span class="nx">cycleLength</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">func</span> <span class="nx">GetNextNode</span><span class="p">(</span><span class="nx">val</span> <span class="kt">uint8</span><span class="p">,</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">j</span><span class="p">,</span> <span class="nx">h</span><span class="p">,</span> <span class="nx">w</span> <span class="kt">int</span><span class="p">)</span> <span class="p">(</span><span class="kt">int</span><span class="p">,</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">switch</span> <span class="nx">val</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">case</span> <span class="sc">&#39;&lt;&#39;</span><span class="p">:</span>
-</span><span class='line'>      <span class="k">return</span> <span class="nx">i</span><span class="p">,</span> <span class="p">(</span><span class="nx">j</span> <span class="o">+</span> <span class="nx">w</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="nx">w</span>
-</span><span class='line'>  <span class="k">case</span> <span class="sc">&#39;&gt;&#39;</span><span class="p">:</span>
-</span><span class='line'>      <span class="k">return</span> <span class="nx">i</span><span class="p">,</span> <span class="p">(</span><span class="nx">j</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="nx">w</span>
-</span><span class='line'>  <span class="k">case</span> <span class="sc">&#39;^&#39;</span><span class="p">:</span>
-</span><span class='line'>      <span class="k">return</span> <span class="p">(</span><span class="nx">i</span> <span class="o">+</span> <span class="nx">h</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="nx">h</span><span class="p">,</span> <span class="nx">j</span>
-</span><span class='line'>  <span class="k">case</span> <span class="sc">&#39;v&#39;</span><span class="p">:</span>
-</span><span class='line'>      <span class="k">return</span> <span class="p">(</span><span class="nx">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">%</span> <span class="nx">h</span><span class="p">,</span> <span class="nx">j</span>
-</span><span class='line'>  <span class="k">default</span><span class="p">:</span>
-</span><span class='line'>      <span class="nb">panic</span><span class="p">(</span><span class="s">&quot;wtf&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">func</span> <span class="nx">CreateLinks</span><span class="p">(</span><span class="nx">grid</span> <span class="o">*</span><span class="p">[]</span><span class="nx">Node</span><span class="p">,</span> <span class="nx">height</span><span class="p">,</span> <span class="nx">width</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="kd">var</span> <span class="nx">node</span> <span class="o">*</span><span class="nx">Node</span>
-</span><span class='line'>  <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">height</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">for</span> <span class="nx">j</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">j</span> <span class="p">&lt;</span> <span class="nx">width</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span> <span class="p">{</span>
-</span><span class='line'>          <span class="nx">node</span> <span class="p">=</span> <span class="o">&amp;</span><span class="p">(</span><span class="o">*</span><span class="nx">grid</span><span class="p">)[</span><span class="nx">i</span><span class="o">*</span><span class="nx">width</span><span class="o">+</span><span class="nx">j</span><span class="p">]</span>
-</span><span class='line'>          <span class="nx">nexti</span><span class="p">,</span> <span class="nx">nextj</span> <span class="o">:=</span> <span class="nx">GetNextNode</span><span class="p">(</span><span class="nx">node</span><span class="p">.</span><span class="nx">val</span><span class="p">,</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">j</span><span class="p">,</span> <span class="nx">height</span><span class="p">,</span> <span class="nx">width</span><span class="p">)</span>
-</span><span class='line'>          <span class="nx">node</span><span class="p">.</span><span class="nx">next</span> <span class="p">=</span> <span class="o">&amp;</span><span class="p">(</span><span class="o">*</span><span class="nx">grid</span><span class="p">)[</span><span class="nx">nexti</span><span class="o">*</span><span class="nx">width</span><span class="o">+</span><span class="nx">nextj</span><span class="p">]</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">func</span> <span class="nx">TraceCycle</span><span class="p">(</span><span class="nx">grid</span> <span class="p">[]</span><span class="nx">Node</span><span class="p">,</span> <span class="nx">height</span><span class="p">,</span> <span class="nx">width</span><span class="p">,</span> <span class="nx">curY</span><span class="p">,</span> <span class="nx">curX</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="nx">tracedGrid</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="nx">Node</span><span class="p">,</span> <span class="nx">height</span><span class="o">*</span><span class="nx">width</span><span class="p">)</span>
-</span><span class='line'>  <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">height</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">for</span> <span class="nx">j</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">j</span> <span class="p">&lt;</span> <span class="nx">width</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span> <span class="p">{</span>
-</span><span class='line'>          <span class="nx">tracedGrid</span><span class="p">[</span><span class="nx">i</span><span class="o">*</span><span class="nx">width</span><span class="o">+</span><span class="nx">j</span><span class="p">]</span> <span class="p">=</span> <span class="nx">Node</span><span class="p">{</span><span class="sc">&#39; &#39;</span><span class="p">,</span> <span class="kc">nil</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="mi">1</span><span class="p">}</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">for</span> <span class="p">{</span>
-</span><span class='line'>      <span class="nx">v</span> <span class="o">:=</span> <span class="nx">grid</span><span class="p">[</span><span class="nx">curY</span><span class="o">*</span><span class="nx">width</span><span class="o">+</span><span class="nx">curX</span><span class="p">].</span><span class="nx">val</span>
-</span><span class='line'>      <span class="nx">tracedGrid</span><span class="p">[</span><span class="nx">curY</span><span class="o">*</span><span class="nx">width</span><span class="o">+</span><span class="nx">curX</span><span class="p">].</span><span class="nx">val</span> <span class="p">=</span> <span class="nx">v</span>
-</span><span class='line'>      <span class="nx">tracedGrid</span><span class="p">[</span><span class="nx">curY</span><span class="o">*</span><span class="nx">width</span><span class="o">+</span><span class="nx">curX</span><span class="p">].</span><span class="nx">visited</span> <span class="p">=</span> <span class="kc">true</span>
-</span><span class='line'>      <span class="nx">curY</span><span class="p">,</span> <span class="nx">curX</span> <span class="p">=</span> <span class="nx">GetNextNode</span><span class="p">(</span><span class="nx">v</span><span class="p">,</span> <span class="nx">curY</span><span class="p">,</span> <span class="nx">curX</span><span class="p">,</span> <span class="nx">height</span><span class="p">,</span> <span class="nx">width</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="k">if</span> <span class="nx">tracedGrid</span><span class="p">[</span><span class="nx">curY</span><span class="o">*</span><span class="nx">width</span><span class="o">+</span><span class="nx">curX</span><span class="p">].</span><span class="nx">visited</span> <span class="o">==</span> <span class="kc">true</span> <span class="p">{</span>
-</span><span class='line'>          <span class="k">break</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Here is the longest cycle :-\n&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">height</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">for</span> <span class="nx">j</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">j</span> <span class="p">&lt;</span> <span class="nx">width</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span> <span class="p">{</span>
-</span><span class='line'>          <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;%c&quot;</span><span class="p">,</span> <span class="nx">tracedGrid</span><span class="p">[</span><span class="nx">i</span><span class="o">*</span><span class="nx">width</span><span class="o">+</span><span class="nx">j</span><span class="p">].</span><span class="nx">val</span><span class="p">)</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">()</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>It runs as follows:</p>
-
-<p>(sample 1)</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='go'><span class='line'><span class="err">$</span> <span class="nx">cat</span> <span class="nx">sample</span><span class="o">-</span><span class="nx">input1</span>
-</span><span class='line'><span class="mi">5</span> <span class="mi">5</span>
-</span><span class='line'><span class="o">&gt;&gt;&gt;&gt;</span><span class="nx">v</span>
-</span><span class='line'><span class="p">^</span><span class="nx">v</span><span class="o">&lt;&lt;</span><span class="nx">v</span>
-</span><span class='line'><span class="p">^</span><span class="nx">vv</span><span class="p">^</span><span class="nx">v</span>
-</span><span class='line'><span class="p">^</span><span class="o">&gt;&gt;</span><span class="nx">v</span><span class="p">&lt;</span>
-</span><span class='line'><span class="p">^</span><span class="o">&lt;&lt;</span><span class="p">&lt;^</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>cat sample-input1 <span class="p">|</span> go run cycles.go
-</span><span class='line'>The largest cycle was found at <span class="o">(</span>0, 0<span class="o">)</span> with a length of 16
-</span><span class='line'>Here is the longest cycle :-
-</span><span class='line'>
-</span><span class='line'>&gt;&gt;&gt;&gt;v
-</span><span class='line'>^   v
-</span><span class='line'>^   v
-</span><span class='line'>^  v&lt;
-</span><span class='line'>^<span class="o">&lt;&lt;&lt;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>(sample 2)</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="m">45</span> 20
-</span><span class='line'>^^v&gt;&gt;v^&gt;&gt;v<span class="o">&lt;&lt;&lt;</span>v&gt;v&lt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;^vvv^^vvvv&lt;v^^&gt;&lt;^^v&gt;
-</span><span class='line'>&gt;&gt;&lt;&lt;&gt;vv&lt;&gt;<span class="o">&lt;&lt;&lt;</span>^&gt;&lt;^&lt;^v^^&lt;vv&gt;&gt;^v&lt;v^vv^^v&lt;&gt;&lt;^&gt;&gt;&lt;v&lt;
-</span><span class='line'>vv&lt;^v&lt;v&lt;v&lt;vvv&gt;v&lt;v&lt;vv&lt;^&lt;v<span class="o">&lt;&lt;&lt;&lt;&lt;&lt;</span>&lt;&lt;^&lt;&gt;&lt;&gt;^&gt;&lt;^v&gt;&gt;&gt;
-</span><span class='line'>&lt;v&lt;v^^&lt;v&lt;&gt;v&lt;&gt;v&lt;v&lt;^v^&gt;^&lt;^<span class="s">&lt;&lt;v&gt;^v</span>&gt;&lt;^v^&gt;&gt;^^^&lt;&gt;&lt;^v
-</span><span class='line'>^&gt;&gt;&gt;^v^v^&lt;&gt;&gt;vvv&gt;v^^&lt;^<span class="o">&lt;&lt;&lt;</span>&gt;&lt;&gt;v&gt;&gt;^v&lt;^^&lt;&gt;v&gt;&gt;v&lt;v&gt;^
-</span><span class='line'>^^^&lt;&lt;^&lt;^&gt;&gt;^v&gt;&gt;&gt;&gt;&gt;&lt;&gt;&gt;^v&lt;^^^&lt;^^v^v&lt;^&lt;v^&gt;&lt;&lt;^<span class="o">&lt;&lt;&lt;</span>&gt;
-</span><span class='line'>v&lt;&gt;v^vv^v&lt;&gt;&lt;^&gt;v^vv&gt;^^v^&lt;&gt;v^^^&gt;^&gt;vv&lt;^<span class="s">&lt;&lt;v^&lt;&lt;&gt;^v</span>
-</span><span class='line'><span class="o">&lt;&lt;&lt;</span>&lt;&lt;^&lt;vv&lt;^&gt;&lt;&gt;^^&gt;&gt;&gt;^^^^&lt;^&lt;^v^&gt;&lt;^v^v&gt;^vvv&gt;^v^^
-</span><span class='line'><span class="s">&lt;&lt;v^&lt;v</span>&lt;&lt;^^v&lt;&gt;v&gt;v^<span class="o">&lt;&lt;&lt;</span>&lt;&lt;&gt;^^v&lt;v^&gt;&gt;&gt;v^&gt;&lt;v^v&lt;v^^^&lt;
-</span><span class='line'>^^&gt;&gt;^&lt;vv&lt;vv&lt;&gt;v^&lt;^&lt;^^&gt;&lt;&gt;&lt;^vvvv<span class="s">&lt;&lt;v&lt;^&lt;&lt;^&gt;^&gt;v</span>v^&lt;v
-</span><span class='line'>^^v^&gt;&gt;^&gt;^&lt;vv^^&lt;&gt;&gt;^^v&gt;v&gt;&gt;v&gt;&gt;v^vv&lt;vv^&gt;&gt;&lt;&gt;&gt;v&lt;&lt;&gt;&gt;
-</span><span class='line'>^v&lt;^v&lt;v&gt;^^&lt;&gt;&gt;^&gt;^&gt;^^v&gt;v<span class="o">&lt;&lt;&lt;</span>&lt;&lt;&gt;&gt;&lt;&gt;&lt;^v&lt;^^v&gt;&lt;v&gt;^<span class="s">&lt;&lt;</span>
-</span><span class='line'><span class="s">v&gt;v</span>&lt;&gt;&lt;^v&lt;&lt;^^&lt;^&gt;v&gt;^&gt;&lt;^&gt;&lt;v^&gt;&lt;v^^^&gt;&gt;&lt;^^&lt;^vv^^^&gt;^
-</span><span class='line'>v&gt;&lt;&gt;^&gt;&lt;vv^v^^&gt;&gt;&lt;&gt;^&lt;^v&lt;^&gt;&lt;v&gt;^v^&lt;^&lt;&gt;&gt;^&lt;^vv&lt;v&gt;^v
-</span><span class='line'>&gt;&lt;^&lt;v&gt;&gt;v&gt;^&lt;&lt;^&gt;^&lt;^^&gt;v^^v&lt;&gt;&gt;v&gt;&lt;&lt;&gt;v&lt;&lt;^&gt;&lt;&lt;&gt;^&gt;^v&lt;v
-</span><span class='line'>&gt;vv&gt;^&gt;^v&gt;&lt;^^&lt;v^&gt;^&gt;v&lt;^v&gt;&lt;&gt;vv&gt;v&lt;^&gt;<span class="o">&lt;&lt;&lt;</span>&lt;v^&lt;^vv&lt;&gt;v
-</span><span class='line'>&lt;&gt;&lt;&lt;^^&gt;&gt;^&lt;&gt;vv&gt;&lt;^^&lt;vv&lt;&lt;^v^v^&lt;^^^^vv&lt;&lt;&gt;^&lt;vvv^vv
-</span><span class='line'>&gt;v<span class="s">&lt;&lt;v^&gt;&lt;v</span>&lt;^^&gt;&lt;^v^<span class="o">&lt;&lt;&lt;</span>&gt;^<span class="s">&lt;&lt;vvvv^^^v&lt;&lt;v&gt;vv&gt;^&gt;&gt;^&lt;&gt;</span>
-</span><span class='line'><span class="s">^^^^&lt;^&lt;&gt;^^vvv</span>&gt;v^&lt;&lt;&gt;&gt;&lt;^<span class="s">&lt;&lt;v&gt;^&lt;&lt;v</span>&gt;&gt;&gt;&lt;&gt;&gt;&gt;&lt;&lt;^^&gt;vv&gt;
-</span><span class='line'>&lt;^&lt;^&lt;&gt;vvv^v&gt;<span class="o">&lt;&lt;&lt;</span>vvv&lt;&gt;&gt;&gt;&gt;^<span class="o">&lt;&lt;&lt;</span>^vvv&gt;^<span class="o">&lt;&lt;&lt;</span>^vv&gt;v^&gt;&lt;^
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>cat sample-input2 <span class="p">|</span> go run cycles.go
-</span><span class='line'>The largest cycle was found at <span class="o">(</span>19, 18<span class="o">)</span> with a length of 49
-</span><span class='line'>Here is the longest cycle :-
-</span><span class='line'>
-</span><span class='line'>                 &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;^
-</span><span class='line'>                    ^&lt;
-</span><span class='line'>                     ^
-</span><span class='line'>                    &gt;^
-</span><span class='line'>                    ^
-</span><span class='line'>                   &gt;^
-</span><span class='line'>                   ^
-</span><span class='line'>                &gt;&gt;&gt;^
-</span><span class='line'>                ^
-</span><span class='line'>                ^&lt;
-</span><span class='line'>                 ^
-</span><span class='line'>                 ^
-</span><span class='line'>                 ^
-</span><span class='line'>                &gt;^
-</span><span class='line'>                ^
-</span><span class='line'>                ^
-</span><span class='line'>                ^  v&lt;&lt;
-</span><span class='line'>                ^<span class="o">&lt;&lt;&lt;</span> ^
-</span><span class='line'>                     ^&lt;&lt;
-</span><span class='line'>                 v&lt;    ^&lt;&lt;
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><strong>Notes:</strong></p>
-
-<ul>
-<li><p>Spent a lot of time tracking down essentially a <code>s/width/height</code> error throughout. Embarrassing.</p></li>
-<li><p>I&rsquo;m a bit disturbed that my answer for sample 2 is different from the one given in the problem description (that one is <em>shorter</em>!)</p></li>
-</ul>
-
 ]]></content>
   </entry>
   
