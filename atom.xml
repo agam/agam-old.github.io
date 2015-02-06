@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-02-02T03:13:24+00:00</updated>
+  <updated>2015-02-06T04:21:33+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,630 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Failure to get started? :)]]></title>
+    <link href="http://agam.github.io/blog/2015/02/06/failure-to-get-started/"/>
+    <updated>2015-02-06T04:15:51+00:00</updated>
+    <id>http://agam.github.io/blog/2015/02/06/failure-to-get-started</id>
+    <content type="html"><![CDATA[<p>For the last month, I&rsquo;ve been trying out various programming languages, as a sort of extended &ldquo;Programming Language Zoo&rdquo; experience. My inability to like any one of them and commit to it is depressing, but I made a few Gists out of the initial steps I followed for each of them, so hopefully a less indecisive person who knows what they want to do might benefit.</p>
+
+<p>Some of these are different implementations of a language; a couple of these are specific libraries within a language and meant for OSX; the rest are all targeted for a Linux machine, assuming an Emacs editor/interface.</p>
+
+<p>(Included here are <code>SBCL</code>, <code>Clozure</code>, <code>Ocaml</code>, <code>Clojure</code>, <code>Quil</code>, <code>Overtone</code>, <code>Haskell</code>, <code>Fsharp</code>, <code>Shen</code>, <code>Dart</code>)</p>
+
+<div><script src='https://gist.github.com/57904f16400ab9e099ed.js'></script>
+<noscript><pre><code># SBCL: Getting Started
+
+### Install SBCL itself
+
+$ `wget http://prdownloads.sourceforge.net/sbcl/sbcl-1.2.7-x86-64-linux-binary.tar.bz2`
+
+$ `cd sbcl...`
+
+$ `sudo sh install.sh`           # Note: errors on missing doc/manual/... are expected, ignore.
+
+### Install Quicklisp
+
+$ `wget http://beta.quicklisp.org/quicklisp.lisp`
+
+$ `sbcl --load quicklisp.lisp`
+
+### Evaluate the following within the Repl:
+
+* `(quicklisp-quickstart:install)`
+
+* `(ql:add-to-init-file)`   _;; confirm addition to .sbclrc_
+
+* `(ql:quickload &quot;swank&quot;)`
+
+### Install Slime
+
+- `M-x package-list-packages`
+- search for `slime`, install it
+
+### Add the following to `.emacs`
+
+`(require 'slime)`
+
+`(slime-setup '(slime-fancy))`
+
+`(setq inferior-lisp-program &quot;sbcl&quot;)`
+
+### Get started
+
+- Run Emacs
+- `M-x slime` .... _Boom!!_
+
+</code></pre></noscript></div>
+
+
+
+
+<div><script src='https://gist.github.com/e9bd32cc77fe52da97d2.js'></script>
+<noscript><pre><code># ClozureCL: Getting Started
+
+- Download the `.tar.gz` file from [here](http://ccl.clozure.com/download.html)
+- Unpack it
+- Open a terminal window, go to that directory (e.g. `~/Downloads/ccl`)
+- Run `./dx86cl64`, you'll be dropped into a prompt similar to
+```
+  Welcome to Clozure Common Lisp Version 1.10-r16196  (DarwinX8664)!
+
+CCL is developed and maintained by Clozure Associates. For more information
+about CCL visit http://ccl.clozure.com.  To enquire about Clozure's Common Lisp
+consulting services e-mail info@clozure.com or visit http://www.clozure.com.
+
+?
+```
+- At the prompt, evaluate `(require :cocoa-application)`
+- This will go ahead and build the application, at the end you should see something like:
+```
+Saving application to /Users/agam/Downloads/ccl/Clozure CL64.app/
+```
+- Close the terminal and drag the directory into the _Applications_ folder
+- Go to the _Applications_ folder, and within it to the _ccl_ folder, and open the **Clozure CL64** app you should see there. _That's it!_</code></pre></noscript></div>
+
+
+
+
+<div><script src='https://gist.github.com/218c5dec4c2267531d61.js'></script>
+<noscript><pre><code># OCaml: Getting Started
+
+### Preliminary steps
+
+First, make sure you're on [the testing branch](https://gist.github.com/agam/c8be327326293a84df22)
+
+### Install `OPAM`
+
+(Hit `y` when asked if it's ok to modify `~/.bashrc`)
+
+```
+$ sudo apt-get install opam
+$ opam init          
+```
+
+### Check compiler version
+
+```
+$ opam switch
+```
+
+This is what I see:
+```
+system  C system  System compiler (4.01.0)
+--     -- 3.11.2  Official 3.11.2 release
+--     -- 3.12.1  Official 3.12.1 release
+--     -- 4.00.0  Official 4.00.0 release
+--     -- 4.00.1  Official 4.00.1 release
+--     -- 4.01.0  Official 4.01.0 release
+--     -- 4.02.0  Official 4.02.0 release
+--     -- 4.02.1  Official 4.02.1 release
+# 66 more patched or experimental compilers, use '--all' to show
+```
+
+### Get basic packages
+```
+$ opam install core utop
+The following actions will be performed:
+ - install   ocamlfind.1.5.5                       [required by utop, core]
+ - install   camlp4.4.01.0                         [required by utop, core]
+ - install   base-no-ppx.base                      [required by lwt]
+ - install   react.1.2.0                           [required by utop]
+ - install   ounit.2.0.0                           [required by pa_ounit]
+ - install   cppo.1.1.2                            [required by utop]
+ - install   camomile.0.8.5                        [required by zed]
+ - install   base-bytes.legacy                     [required by zed]
+ - install   type_conv.111.13.00                   [required by custom_printf, bin_prot, comparelib]
+ - install   pipebang.110.01.00                    [required by core]
+ - install   herelib.109.35.02                     [required by core]
+ - install   lwt.2.4.7                             [required by utop]
+ - install   zed.1.4                               [required by lambda-term]
+ - install   variantslib.109.15.03                 [required by core]
+ - install   sexplib.111.25.00                     [required by core]
+ - install   pa_ounit.111.28.00                    [required by core]
+ - install   fieldslib.109.20.03                   [required by core]
+ - install   enumerate.111.08.00                   [required by core]
+ - install   comparelib.109.60.00                  [required by core]
+ - install   bin_prot.111.03.00                    [required by core]
+ - install   lambda-term.1.8                       [required by utop]
+ - install   pa_bench.111.28.00                    [required by core]
+ - install   custom_printf.111.25.00               [required by core]
+ - install   pa_test.111.08.00                     [required by core]
+ - install   typerep.111.17.00                     [required by core_kernel]
+ - install   utop.1.17
+ - install   core_kernel.111.28.00                 [required by core]
+ - install   core.111.28.01
+=== 28 to install ===
+Do you want to continue ? [Y/n]
+```
+
+Hit `y` to get all these. Note:
+- You will need `m4` installed (`sudo apt-get install m4`)
+- This will take some time! (Basically running `--configure`, `make` and `make install` on a bunch of targets)
+
+### Try out `utop`
+
+```
+$ eval `opam config env`
+$ utop
+```
+
+You should see something as follows:
+
+```
+──────────────────────────────────────────────────────────────────────┬────────────────────────────────────────────────────────────┬───────────────────────────────────────────────────────────────────────
+                                                                      │ Welcome to utop version 1.17 (using OCaml version 4.01.0)! │
+                                                                      └────────────────────────────────────────────────────────────┘
+
+Type #utop_help for help about using utop.
+
+─( 23:57:59 )─&lt; command 0 &gt;─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────{ counter: 0 }─
+utop # 1 + 3;;
+- : int = 4
+─( 23:57:59 )─&lt; command 1 &gt;─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────{ counter: 0 }
+─utop #
+┌───┬────────────┬─────┬───────────┬──────────────┬───────┬────────┬──────┬────────┬────────────────┬───────────────┬──────────────┬──────┬─────────┬─────────┬─────────────┬─────────────┬──────────┬────┐
+│Arg│Arith_status│Array│ArrayLabels│Assert_failure│Big_int│Bigarray│Buffer│Callback│CamlinternalLazy│CamlinternalMod│CamlinternalOO│Camlp4│Camlp4Bin│Camlp4Top│Camlp4_config│Camlp4_import│Camlp4prof│Char│
+└───┴────────────┴─────┴───────────┴──────────────┴───────┴────────┴──────┴────────┴────────────────┴───────────────┴──────────────┴──────┴─────────┴─────────┴─────────────┴─────────────┴──────────┴────┘
+```
+
+Also install `merlin`:
+
+```
+$ opam install merlin
+The following actions will be performed:
+ - install   easy-format.1.0.2                     [required by yojson]
+ - install   biniou.1.0.9                          [required by yojson]
+ - install   yojson.1.2.0                          [required by merlin]
+ - install   merlin.2.1.0
+=== 4 to install ===
+Do you want to continue ? [Y/n] y
+```
+
+Note: at the end of the installation, it provides a snippet of code to insert in your `.emacs`
+
+
+### Emacs support
+
+`M-x package-list-packages`
+Select `tuareg`, `utop`, and `merlin`, and install them.
+(Note: you _might_ need to install `iedit` first if you see an error during the installation)
+
+Add the snippet from the step above. This is what I had:
+
+```elisp
+;; Add opam emacs directory to the load-path
+(setq opam-share (substring (shell-command-to-string &quot;opam config var share 2&gt; /dev/null&quot;) 0 -1))
+(add-to-list 'load-path (concat opam-share &quot;/emacs/site-lisp&quot;))
+;; Load merlin-mode
+(require 'merlin)
+;; Start merlin on ocaml files
+(add-hook 'tuareg-mode-hook 'merlin-mode t)
+(add-hook 'caml-mode-hook 'merlin-mode t)
+;; Enable auto-complete
+(setq merlin-use-auto-complete-mode 'easy)
+;; Use opam switch to lookup ocamlmerlin binary
+(setq merlin-command 'opam)
+```
+
+##### That's it, go write some Ocaml!
+</code></pre></noscript></div>
+
+
+
+
+<div><script src='https://gist.github.com/04794e72035ab2e1c430.js'></script>
+<noscript><pre><code># Clojure: Getting Started
+
+### Install `brew`
+(if you haven't already done so)
+```sh
+$ ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;
+```
+
+### Get Leiningen
+```sh
+$ brew install leiningen
+```
+
+### Get CIDER
+
+`M-x package-install`, enter `CIDER`
+
+(Yes, it's _not as good as `SLIME`_, but it's what fits better with Clojure)
+
+#### (Optional) Connect CIDER to Lein
+
+- Check Cider version: `M-x cider-version`
+-- E.g. I see `CIDER 0.9.0snapshot (package: 20150118.421)`
+- Create `~/.lein/profiles.clj`, enter the following
+
+```clojure
+{:user {:plugins [[cider/cider-nrepl &quot;0.9.0-SNAPSHOT&quot;]]}}
+```
+-- Modify the version to suit what you have. Don't worry if you mistype this here, you'll see an error about a missing `.jar` later, and you can go check the possible options [here](https://clojars.org/repo/cider/cider-nrepl/) to pick the right one.
+
+### Verifying your install
+
+#### Create a dummy project
+```sh
+$ lein new my-dummy-proj
+```
+
+#### Navigate to this from `Emacs`
+
+- Open `my-dummy-proj/src/my_dummy_proj/core.clj`, it should show something like:
+
+```clojure
+(ns my-dummy-proj.core)
+
+(defn foo
+  &quot;I don't do a whole lot.&quot;
+  [x]
+  (println x &quot;Hello, World!&quot;))
+```
+
+#### Start the REPL:
+
+`M-x cider-jack-in`
+
+- Heh, I like the name :)
+- _Warning:_ this will take some time when run initially, as it has to fetch the libraries in the background (it's essentially running `lein repl :headless` behind the scenes)
+
+#### (Optional) Customize your Repl
+- `@bbatsov` has a lot of possible customizations and keyboard shortcuts [here](https://github.com/clojure-emacs/cider#installation), take a look.
+
+#### Run some code from your project
+```clojure
+user&gt; (require 'my-cloj-proj.core)
+nil
+user&gt; (source my-cloj-proj.core/foo)
+(defn foo
+  &quot;I don't do a whole lot.&quot;
+  [x]
+  (println x &quot;Hello, World!&quot;))
+nil
+user&gt; (my-cloj-proj.core/foo 5)
+5 Hello, World!
+nil
+```
+
+### Write some code !</code></pre></noscript></div>
+
+
+
+
+<div><script src='https://gist.github.com/8c4350c09d36507c6b93.js'></script>
+<noscript><pre><code># Quil: Getting Started
+
+### Pre-requisites
+- Introduce yourself [to Clojure](https://gist.github.com/agam/04794e72035ab2e1c430)
+
+### Create new project with the 'quil' template
+```sh
+$ lein new quil my-dummy-art
+```
+
+### Evaluate your 'sketch'
+- Open `my-dummy-art/src/my_dummy_art/core.clj`
+- Hit `C-c C-k` to run (alternatively, `M-x cider-load-buffer`)
+
+### Get a 'big picture' overview
+- Look at the `q/defsketch` function
+- Modify `setup`, `update` or `draw` as needed!
+
+#### (Optional) Fix Possible errors
+- In case you see an error of the form `Could not locate quil/core__init.class or quil/core.clj on classpath`, you might need to get it manually
+- This as simple as
+```
+$ cd my_dummy_art
+$ lein deps
+```
+- If you _still_ get the same error, try closing and restarting Emacs.
+
+#### Happy ~~Processing~~ Quilling!</code></pre></noscript></div>
+
+
+
+
+<div><script src='https://gist.github.com/8ae32d5cd584a3435a1c.js'></script>
+<noscript><pre><code># Overtone: Getting Started
+
+### Pre-requisites
+- Introduce yourself [to Clojure](https://gist.github.com/agam/04794e72035ab2e1c430)
+- Install [SuperCollider](http://supercollider.sourceforge.net/downloads/)
+
+### Create a project
+```sh
+$ lein new my-dummy-sound
+```
+
+#### (Optional) Identify Overtone version
+```sh
+$ lein search overtone
+Downloading https://clojars.org/repo/.index/nexus-maven-repository-index.gz
+100.0% complete
+Searching over Artifact ID...
+&lt;skipping some lines&gt;
+[overtone &quot;0.9.0-RC1&quot;] Collaborative Programmable Music. (http://overtone.github.com)
+[overtone &quot;0.9.0-RC3&quot;] Collaborative Programmable Music.
+[overtone &quot;0.9.0-RC4&quot;] Collaborative Programmable Music.
+[overtone &quot;0.9.1&quot;] Collaborative Programmable Music.
+[overtone &quot;0.9.0&quot;] Collaborative Programmable Music.
+```
+(yes, this takes _some time_, `quicklisp`'s `apropos` works _instantaneously_ ... but right now this is the only game in town, so it's either this or write your own `SuperCollider` bindings (which is actually a good idea, if you have the time. I don't))
+
+### Add overtone dependencies
+- Modify `project.clj`, and add an appropriate dependency on `overtone`. E.g. in my case this looks like
+```clojure
+(defproject my-dummy-sound &quot;0.1.0-SNAPSHOT&quot;
+  :description &quot;FIXME: write description&quot;
+  :url &quot;http://example.com/FIXME&quot;
+  :license {:name &quot;Eclipse Public License&quot;
+            :url &quot;http://www.eclipse.org/legal/epl-v10.html&quot;}
+  :dependencies [[org.clojure/clojure &quot;1.6.0&quot;]
+                 [overtone &quot;0.9.0&quot;]])
+```
+
+### Test it out
+- Modify `core.clj`, and add something like this ([credits](http://chatley.com/posts/10-28-2011/overtone/))
+
+```clojure
+(ns my-dummy-sound.core
+  (:require [overtone.live :as o]))
+
+(o/definst square-wave [freq 440] (o/square freq))
+
+(def times (take 220 (iterate #(+ 30 %) 0)))
+
+(defn change-pitch [t f inst] (o/at (+ t (o/now)) (o/ctl inst :freq f)))
+
+(defn falling-pitches [start] (take (/ start 2) (iterate dec start)))
+(defn rising-pitches [start] (take start (iterate inc start)))
+
+(defn slide [pitches inst] (map (fn [x y] (change-pitch x y inst)) times pitches))
+
+(defn -main
+  [&amp; args]
+  (while 
+      (do 
+        (square-wave)
+        (slide (falling-pitches 440) square-wave)
+        (slide (rising-pitches 220) square-wave)
+        (o/stop))))
+```
+
+- run it
+```sh
+$ cd my-dummy-sound
+$ lein deps
+$ lein run
+```
+
+### Happy &quot;Overtoning&quot;!</code></pre></noscript></div>
+
+
+
+
+<div><script src='https://gist.github.com/316227ad65cf0aefca5b.js'></script>
+<noscript><pre><code># Haskell: Getting Started
+
+#### Get the platform
+
+```sh
+$ sudo apt-get install haskell-platform
+
+$ ghc --version
+The Glorious Glasgow Haskell Compilation System, version 7.6.3
+
+$ cabal --version
+cabal-install version 1.20.0.3
+using version 1.20.0.2 of the Cabal library
+```
+
+#### Get initial cabal stuff
+
+```sh
+$ cabal update
+$ cabal install happy ghc-mod stylish-haskell structured-haskell-mode
+```
+
+_(installs way more than you'd expect; take a bathroom break and come back before proceeding ...)_
+
+#### Set up Emacs
+
+Hit `M-x package-list-packages`, select the following
+
+- `haskell-mode`
+- `ghc`
+- `shm`
+
+#### Your first project/file/repl
+
+- Create a directory `test`
+- Run `emacs test.hs`
+- `M-x interactive-haskell-mode`, answer the prompts (create default project, choose path)
+- _Bam!_ ... you should see the **&quot;Hello Haskell&quot;** window with a cute &quot;lambda&quot; prompt
+- Enter something ... then continue hacking!
+
+##### (Aside) Exploring with the prompt
+
+Your biggest friends are going to be
+
+- `:info`
+- `:type`</code></pre></noscript></div>
+
+
+
+
+<div><script src='https://gist.github.com/40ea76d04b4b8473edda.js'></script>
+<noscript><pre><code># FSharp: Getting Started
+
+### Get the Debian package
+
+$ sudo apt-get install fsharp
+
+### Emacs integration
+
+- Within emacs, hit `M-x package-list-packages`, then select `fsharp-mode` and install it.
+
+- Add the following to your `.emacs`:
+(setq inferior-fsharp-program &quot;/usr/bin/fsharpi --readline-&quot;)
+(setq fsharp-compiler &quot;/usr/bin/fsharpc&quot;)
+
+### Write some code:
+- Open a new file, ending with `.fs`
+- Write some code
+
+```fsharp
+module Foo.Bar
+
+printfn &quot;Hello World&quot;;;
+```
+
+- Hit `C-c C-f`; this starts up a &quot;top-level&quot; running `fsharpi` that loads your code. You should see a &quot;Hello World&quot; too ...
+
+- That's it! Now go **write some more code**!!</code></pre></noscript></div>
+
+
+
+
+<div><script src='https://gist.github.com/dbdb585dcc9bce5b2ac2.js'></script>
+<noscript><pre><code># Shen: Getting started
+
+There are various ways to do this, since it's really a _&quot;multilevel&quot;_ structure, with a **kernel lisp** layered on top of the **host language**, and then Shen (the artist formerly known as _Qi_) layered on top of the kernel lisp. This approach uses SBCL; you might [use ruby](https://github.com/gregspurrier/shen-ruby) or [clojure instead](https://github.com/hraberg/shen.clj).
+
+_Note_: As of February 3, 2015, Shen is under a BSD-license (and is, in Mark's words, _&quot;... officially self-generating and sufficient.&quot;_)
+
+### Get the source
+
+```sh
+$ wget http://www.shenlanguage.org/Download/Shen.zip
+```
+
+### Load the source
+
+- `mv Shen\ 17 Shen17`  (not strictly needed, but why keep the damn space in the file-path?!)
+- `cd Shen 17/Platforms/SBCL`
+- `cp ../../KLambda/* .`
+- Run `sbcl`
+- Evaluate the following: `(load &quot;install.lsp&quot;)`: this will compile a bunch of stuff, _dump the image_ and exit
+- At this point, you should see `Shen.exe` in your current directory (don't be fooled by the suffix, run `file Shen.exe` for satisfaction)
+
+### Some Emacs Lovin'
+
+- Get `shen-mode` (_note_: it's only in `ELPA`, so if like me you had a `marmalade` or `MELPA` override, you'll have to add this back in to your Emacs package repo list)
+- Add the following to your `.emacs`:
+```emacs
+(require 'shen-mode)
+(require 'inf-shen)
+(setq inferior-shen-program &quot;path-to-Shen.exe-created-above&quot;)
+```
+
+### (Optional) Plan B
+##### (Mentioned for sake of completeness only)
+- Another _&quot;bleeding edge&quot;_ option (as of early Feb 2015) is to use Rainier Joswig's [modifications](http://lispm.de/source/Shen%2016/Common%20Lisp/), which should provide a better experience on SBCL or Lispworks.
+
+### Get to work
+
+- Create `test.shen`
+- Enter this:
+```lisp
+(define hello ()
+  &quot;hello world&quot;)
+```
+- Hit `C-c C-z`, or `M-x switch-to-shen`
+- You should see the Shen top-level prompt:
+```
+
+Shen, copyright (C) 2010-2015 Mark Tarver
+www.shenlanguage.org, Shen 17
+running under Common Lisp, implementation: SBCL
+port 1.7 ported by Mark Tarver
+
+(0-)
+```
+- As a test, select the text entered, and hit `C-c C-r`, or `M-x shen-eval-region`, you should see the result in the `*inferior-shen*` buffer!
+- Alternatively, skip the file and just try this stuff (defining functions and calling them) out at the REPL prompt
+- See `M-x describe-mode` for other goodies (compiling the file, loading a different file, evaluating an expression ... _all that good stuff_)
+
+### Work through a tutorial
+
+The [&quot;15 minute version&quot;](http://www.shenlanguage.org/learn-shen/tutorials/shen_in_15mins.html)
+
+### Lisp-interop FTW
+
+A key feature of each hosted Shen implementation is accessing the underlying layer. In this case, try `load-lisp` (see the [documentation](http://shen-wiki.tiodante.com/NativeCalls))
+
+### Get busy coding!</code></pre></noscript></div>
+
+
+
+
+<div><script src='https://gist.github.com/f2cc14a325019fe29f66.js'></script>
+<noscript><pre><code># Dart: Getting Started
+
+### Get the SDK
+
+- Some one-time stuff needed to get 
+```sh
+$ sudo apt-get update
+$ sudo apt-get install apt-transport-https
+$ sudo sh -c 'curl https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -'
+$ sudo sh -c 'curl https://storage.googleapis.com/download.dartlang.org/linux/debian/dart_stable.list &gt; /etc/apt/sources.list.d/dart_stable.list'
+$ sudo apt-get update
+$ sudo apt-get install dart
+```
+
+### Set up Emacs
+
+- `M-x package-list-packages`, select `dart-mode` and install it
+
+### Write some code
+
+- Open `hello-world.dart` and enter something like:
+
+```dart
+import &quot;dart:io&quot;;
+
+main() {
+  print('Hello World');
+}
+```
+- At the command-line, run `dart hello-world.dart`, you should see &quot;Hello World&quot; printed out
+- (Ok, this isn't the _right_ &quot;hello world&quot; for Dart; you should try [something similar in the browser](https://www.dartlang.org/codelabs/darrrt/) ... but Dart is suitable for both the browser and the server, so it's fine to start with this too)
+
+### Write _more_ code!
+
+(Seriously, other than **Go**, _nothing else_ gets you up and running this fast)
+
+_Note_: Dart now [runs on App Engine](https://www.dartlang.org/server/google-cloud-platform/app-engine/setup.html) as well!</code></pre></noscript></div>
+
+
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Euler 23: Non-abundant sums]]></title>
@@ -8592,122 +9216,6 @@ After this, evaluating <code>amicables 10000</code> took <code>23.71</code> seco
 </ol>
 </div>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[IO Performance (is that really an SSD?)]]></title>
-    <link href="http://agam.github.io/blog/2014/12/18/io-performance-is-that-really-an-ssd/"/>
-    <updated>2014-12-18T04:25:20+00:00</updated>
-    <id>http://agam.github.io/blog/2014/12/18/io-performance-is-that-really-an-ssd</id>
-    <content type="html"><![CDATA[<p>I created a new VM in Google Compute Engine a few days ago, and assigned it an SSD disk, and then began wondering <em>if it was really an SSD disk</em>.</p>
-
-<p>(<em>Digression</em>: I never appreciated the difference an SSD makes until the first time a Macbook Air awoke from sleep <em>instantly</em>. From that moment onwards, the time taken for my desktop at home to show its login screen has <em>always</em> felt irritatingly long)</p>
-
-<p>So, this is a crude benchmark of a &ldquo;regular&rdquo; hard drive on my workstation:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>sudo hdparm -tT /dev/sda1
-</span><span class='line'>
-</span><span class='line'>/dev/sda1:
-</span><span class='line'> Timing cached reads:   <span class="m">20772</span> MB in  2.00 <span class="nv">seconds</span> <span class="o">=</span> 10403.36 MB/sec
-</span><span class='line'> Timing buffered disk reads: <span class="m">242</span> MB in  1.34 <span class="nv">seconds</span> <span class="o">=</span> 180.53 MB/sec
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>By the way, the &ldquo;fresh&rdquo; disk division for a new VM looks something like this:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>df -h
-</span><span class='line'>Filesystem                                              Size  Used Avail Use% Mounted on
-</span><span class='line'>rootfs                                                  9.9G  734M  8.7G   8% /
-</span><span class='line'>udev                                                     10M     <span class="m">0</span>   10M   0% /dev
-</span><span class='line'>tmpfs                                                   3.0G  104K  3.0G   1% /run
-</span><span class='line'>/dev/disk/by-uuid/foo  9.9G  734M  8.7G   8% /
-</span><span class='line'>tmpfs                                                   5.0M     <span class="m">0</span>  5.0M   0% /run/lock
-</span><span class='line'>tmpfs                                                   6.0G     <span class="m">0</span>  6.0G   0% /run/shm
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><code>foo</code> above is really a long uuid, which I subsituted to avoid repeating. This is the output from <code>hdparm</code>, run within my VM:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>agam@myvm:~<span class="nv">$ </span>sudo hdparm -tT /dev/disk/by-uuid/foo
-</span><span class='line'>/dev/disk/by-uuid/foo:
-</span><span class='line'> Timing cached reads:   <span class="m">16996</span> MB in  2.00 <span class="nv">seconds</span> <span class="o">=</span> 8506.48 MB/sec
-</span><span class='line'> Timing buffered disk reads: <span class="m">310</span> MB in  3.02 <span class="nv">seconds</span> <span class="o">=</span> 102.65 MB/sec
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>So that&rsquo;s &hellip; <em>confusing</em>. The two seem pretty close (and the SSD seems slower!) Obviously, we&rsquo;re looking at the wrong metric. The big distinguishing factor for these two types of storage is <em>seek time</em>. So instead of <code>hdparm</code>, let&rsquo;s try <code>ioping</code> instead.</p>
-
-<p>Here&rsquo;s the workstation with the hard drive first (run twice, first random then sequential):</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>sudo ioping -R /dev/sda1
-</span><span class='line'>
-</span><span class='line'>--- /dev/sda1 <span class="o">(</span>device 243.0 MiB<span class="o">)</span> ioping statistics ---
-</span><span class='line'><span class="m">450</span> requests completed in 3.0 s, <span class="m">150</span> iops, 600.3 KiB/s
-</span><span class='line'>min/avg/max/mdev <span class="o">=</span> <span class="m">54</span> us / 6.7 ms / 74.1 ms / 6.5 ms
-</span><span class='line'>
-</span><span class='line'><span class="nv">$ </span>sudo ioping -RL /dev/sda1
-</span><span class='line'>
-</span><span class='line'>--- /dev/sda1 <span class="o">(</span>device 243.0 MiB<span class="o">)</span> ioping statistics ---
-</span><span class='line'>1.8 k requests completed in 3.0 s, <span class="m">600</span> iops, 150.1 MiB/s
-</span><span class='line'>min/avg/max/mdev <span class="o">=</span> <span class="m">648</span> us / 1.7 ms / 152.2 ms / 5.2 ms
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>And now &hellip; here&rsquo;s the VM with the SSD:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>agam@myvm:~<span class="nv">$ </span>sudo ioping -R /dev/disk/by-uuid/foo
-</span><span class='line'>--- /dev/disk/by-uuid/foo <span class="o">(</span>device 10.0 Gb<span class="o">)</span> ioping statistics ---
-</span><span class='line'><span class="m">9020</span> requests completed in 3000.1 ms, <span class="m">5016</span> iops, 19.6 mb/s
-</span><span class='line'>min/avg/max/mdev <span class="o">=</span> 0.0/0.2/6.0/0.4 ms
-</span><span class='line'>
-</span><span class='line'>agam@myvm:~<span class="nv">$ </span>sudo ioping -RL /dev/disk/by-uuid/foo
-</span><span class='line'>--- /dev/disk/by-uuid/foo <span class="o">(</span>device 10.0 Gb<span class="o">)</span> ioping statistics ---
-</span><span class='line'><span class="m">1230</span> requests completed in 3002.0 ms, <span class="m">439</span> iops, 109.6 mb/s
-</span><span class='line'>min/avg/max/mdev <span class="o">=</span> 0.2/2.3/8.2/0.6 ms
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><em>Here</em> is where you see a big difference &hellip; a smaller one for the sequential case, but a huge one for the random case (at least an order of magnitude more).</p>
-
-<p>So yeah, the SSD is legit.</p>
 ]]></content>
   </entry>
   
