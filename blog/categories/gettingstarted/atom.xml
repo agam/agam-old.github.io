@@ -4,7 +4,7 @@
   <title><![CDATA[Category: gettingstarted | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/gettingstarted/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-02-06T04:21:33+00:00</updated>
+  <updated>2015-02-06T08:37:53+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,33 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Rethinking the suggested beginning language]]></title>
+    <link href="http://agam.github.io/blog/2015/02/06/rethinking-the-suggested-beginning-language/"/>
+    <updated>2015-02-06T07:01:14+00:00</updated>
+    <id>http://agam.github.io/blog/2015/02/06/rethinking-the-suggested-beginning-language</id>
+    <content type="html"><![CDATA[<p>I was all gung-ho about recommending <strong>Go</strong> as the ideal starting point for <em>everyone</em>, and abstract driving force behind this was a supposed combination of the ease and power of <strong>Python</strong> and <strong>C</strong> respectively, both of which can individually make a case for being the <em>right</em> place to start.</p>
+
+<p>This depended on two things:</p>
+
+<ul>
+<li>Leave it to the student to figure out the editor/IDE/tooling, and</li>
+<li>Don&rsquo;t worry about GUIs in the beginning (it&rsquo;s ok to focus on a text interface alone).</li>
+</ul>
+
+
+<p>Unfortunately, when I discuss this with other people (yes, an unscientific small sample), these seem like dumb assumptions. The accepted wisdom seems to be that</p>
+
+<ul>
+<li>IDEs are <em>very</em> important, and</li>
+<li>GUIs and web apps <em>have</em> to be the primary focus.</li>
+</ul>
+
+
+<p>So now I&rsquo;m confused all over again. I really, <em>really</em> don&rsquo;t want to return to Javascript. Perhaps <strong>Dart</strong> would fit the bill? The default eclipse-ish editor is pretty self-contained and is easy to download and get up and running on all platforms. The syntax is a bit <em>meh</em>, but that&rsquo;s just my current ignorance. I don&rsquo;t know. Maybe there <em>isn&rsquo;t</em> any such thing as a good beginner programming language.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Failure to get started? :)]]></title>

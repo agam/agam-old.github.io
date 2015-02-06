@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-02-06T04:21:33+00:00</updated>
+  <updated>2015-02-06T08:37:53+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,33 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Rethinking the suggested beginning language]]></title>
+    <link href="http://agam.github.io/blog/2015/02/06/rethinking-the-suggested-beginning-language/"/>
+    <updated>2015-02-06T07:01:14+00:00</updated>
+    <id>http://agam.github.io/blog/2015/02/06/rethinking-the-suggested-beginning-language</id>
+    <content type="html"><![CDATA[<p>I was all gung-ho about recommending <strong>Go</strong> as the ideal starting point for <em>everyone</em>, and abstract driving force behind this was a supposed combination of the ease and power of <strong>Python</strong> and <strong>C</strong> respectively, both of which can individually make a case for being the <em>right</em> place to start.</p>
+
+<p>This depended on two things:</p>
+
+<ul>
+<li>Leave it to the student to figure out the editor/IDE/tooling, and</li>
+<li>Don&rsquo;t worry about GUIs in the beginning (it&rsquo;s ok to focus on a text interface alone).</li>
+</ul>
+
+
+<p>Unfortunately, when I discuss this with other people (yes, an unscientific small sample), these seem like dumb assumptions. The accepted wisdom seems to be that</p>
+
+<ul>
+<li>IDEs are <em>very</em> important, and</li>
+<li>GUIs and web apps <em>have</em> to be the primary focus.</li>
+</ul>
+
+
+<p>So now I&rsquo;m confused all over again. I really, <em>really</em> don&rsquo;t want to return to Javascript. Perhaps <strong>Dart</strong> would fit the bill? The default eclipse-ish editor is pretty self-contained and is easy to download and get up and running on all platforms. The syntax is a bit <em>meh</em>, but that&rsquo;s just my current ignorance. I don&rsquo;t know. Maybe there <em>isn&rsquo;t</em> any such thing as a good beginner programming language.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Failure to get started? :)]]></title>
@@ -9187,35 +9214,6 @@ After this, evaluating <code>amicables 10000</code> took <code>23.71</code> seco
 
 
 <p>Most of the &ldquo;action&rdquo; is in the <code>Compare()</code> function, but I also like how it&rsquo;s possible to define arbitrary &ldquo;receivers&rdquo; for functions in Go (e.g. used for <code>getY()</code> above)</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Logic through Haskell? Not necessarily ...]]></title>
-    <link href="http://agam.github.io/blog/2014/12/19/logic-through-haskell-not-necessarily-dot-dot-dot/"/>
-    <updated>2014-12-19T01:20:58+00:00</updated>
-    <id>http://agam.github.io/blog/2014/12/19/logic-through-haskell-not-necessarily-dot-dot-dot</id>
-    <content type="html"><![CDATA[<p>Finished reading (browsing, really, after the first few chapters) through The Haskell Road to Logic, Maths and Programming<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>, and I am &hellip; <em>underwhelmed</em>. I mean the book was great and all, but maybe I made the mistake of forming some unreasonable expectations.</p>
-
-<p>If you&rsquo;re already familiar with a bit of Haskell and basic logic/sets/numbers, you&rsquo;ll get the most <em>bang for your buck</em> from Chapter 10 on <em>Corecursion</em><sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>. This was &ldquo;brand new&rdquo; for me and I had multiple &ldquo;aha&rdquo; moments after seeing the mechanism used to reason about non-deterministic processes etc.</p>
-
-<p><strong>Conclusions</strong>:</p>
-
-<ul>
-<li>More than Haskell, this motivated me to learn more math (though I don&rsquo;t know <em>where to start</em>!)</li>
-<li>I feel like Mathematica could be used too, for everything in this book; for stuff like this it&rsquo;s like Haskell <em>plus lots of libraries and visualization</em></li>
-</ul>
-
-<div class="footnotes">
-<hr/>
-<ol>
-<li id="fn:1">
-<p><a href="http://www.amazon.com/Haskell-Programming-Second-Edition-Computing/dp/0954300696">via Amazon</a><a href="#fnref:1" rev="footnote">&#8617;</a></p></li>
-<li id="fn:2">
-<p><a href="http://en.wikipedia.org/wiki/Corecursion">via Wikipedia</a><a href="#fnref:2" rev="footnote">&#8617;</a></p></li>
-</ol>
-</div>
-
 ]]></content>
   </entry>
   
