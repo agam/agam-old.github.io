@@ -3,7 +3,7 @@ layout: post
 title: "Euler 24: Permutations, a long story"
 date: 2015-02-08 07:48:20 +0000
 comments: true
-categories: projecteuler
+categories: projecteuler lisp ocaml
 ---
 
 (The fact that this turned out to be a long story is _ridiculous_, but perhaps it'll be useful to someone else)
