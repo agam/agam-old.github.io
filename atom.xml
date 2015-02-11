@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-02-10T18:57:56+00:00</updated>
+  <updated>2015-02-11T18:15:49+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,200 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Euler 26: Reciprocal Cycles]]></title>
+    <link href="http://agam.github.io/blog/2015/02/11/euler-26-reciprocal-cycles/"/>
+    <updated>2015-02-11T18:07:38+00:00</updated>
+    <id>http://agam.github.io/blog/2015/02/11/euler-26-reciprocal-cycles</id>
+    <content type="html"><![CDATA[<p><strong>Statutory Warning</strong>: Spoilers ahead</p>
+
+<p><em>Problem: find the number less than 1000 with the largest repeating cycle of digits in the decimal expansion of its reciprocal</em></p>
+
+<p>As always, the initial reacion was on the lines of <em>aha! this is obvious!</em>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">get-repeated-substring-length</span> <span class="p">(</span><span class="nv">str</span> <span class="nv">len</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">let*</span> <span class="p">((</span><span class="nv">rev-str</span> <span class="p">(</span><span class="nb">reverse</span> <span class="nv">str</span><span class="p">))</span>
+</span><span class='line'>   <span class="p">(</span><span class="nv">offset</span> <span class="p">(</span><span class="nb">-</span> <span class="p">(</span><span class="nb">length</span> <span class="nv">str</span><span class="p">)</span> <span class="p">(</span><span class="nb">*</span> <span class="mi">2</span> <span class="nv">len</span><span class="p">)))</span>
+</span><span class='line'>   <span class="p">(</span><span class="nv">match</span> <span class="p">(</span><span class="nb">equal</span> <span class="p">(</span><span class="nb">subseq</span> <span class="nv">rev-str</span> <span class="mi">0</span> <span class="nv">len</span><span class="p">)</span>
+</span><span class='line'>             <span class="p">(</span><span class="nb">reverse</span> <span class="p">(</span><span class="nb">subseq</span> <span class="nv">str</span> <span class="nv">offset</span> <span class="p">(</span><span class="nb">+</span> <span class="nv">offset</span> <span class="nv">len</span><span class="p">))))))</span>
+</span><span class='line'>    <span class="p">(</span><span class="k">if</span> <span class="nv">match</span>
+</span><span class='line'>  <span class="nv">len</span>
+</span><span class='line'>  <span class="mi">0</span><span class="p">)))</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">get-cycle-length</span> <span class="p">(</span><span class="nv">dec</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">declare</span> <span class="p">(</span><span class="k">type</span> <span class="kt">double-float</span> <span class="nv">dec</span><span class="p">))</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">let*</span> <span class="p">((</span><span class="nv">dec-str</span> <span class="p">(</span><span class="nb">princ-to-string</span> <span class="nv">dec</span><span class="p">))</span>
+</span><span class='line'>   <span class="p">(</span><span class="nv">exp-str</span> <span class="p">(</span><span class="nb">subseq</span> <span class="nv">dec-str</span>
+</span><span class='line'>            <span class="p">(</span><span class="nb">1+</span> <span class="p">(</span><span class="nb">position</span> <span class="sc">#\.</span> <span class="nv">dec-str</span><span class="p">))</span>
+</span><span class='line'>            <span class="p">(</span><span class="nb">position</span> <span class="sc">#\d</span> <span class="nv">dec-str</span><span class="p">))))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nb">do</span> <span class="p">((</span><span class="nv">i</span> <span class="mi">0</span> <span class="p">(</span><span class="nb">1+</span> <span class="nv">i</span><span class="p">))</span>
+</span><span class='line'>   <span class="p">(</span><span class="nv">cycle-length</span> <span class="mi">0</span> <span class="p">(</span><span class="nv">get-repeated-substring-length</span> <span class="nv">exp-str</span> <span class="nv">i</span><span class="p">)))</span>
+</span><span class='line'>  <span class="p">((</span><span class="nb">or</span> <span class="p">(</span><span class="nb">&gt;</span> <span class="nv">cycle-length</span> <span class="mi">0</span><span class="p">)</span> <span class="p">(</span><span class="nb">&gt;</span> <span class="nv">i</span> <span class="p">(</span><span class="nb">/</span> <span class="p">(</span><span class="nb">length</span> <span class="nv">exp-str</span><span class="p">)</span> <span class="mi">2</span><span class="p">)))</span> <span class="nv">cycle-length</span><span class="p">))))</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">inverse-cycle-digits</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">inverse</span> <span class="p">(</span><span class="nb">/</span> <span class="mf">1.0</span> <span class="p">(</span><span class="nb">coerce</span> <span class="nv">n</span> <span class="ss">&#39;double-float</span><span class="p">))))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nb">do*</span> <span class="p">((</span><span class="nv">i</span> <span class="mi">0</span> <span class="p">(</span><span class="nb">1+</span> <span class="nv">i</span><span class="p">))</span>
+</span><span class='line'>   <span class="p">(</span><span class="nv">dec</span> <span class="p">(</span><span class="nb">*</span> <span class="mf">1.0</span> <span class="nv">inverse</span><span class="p">)</span> <span class="p">(</span><span class="nb">*</span> <span class="mf">10.0</span> <span class="nv">dec</span><span class="p">))</span>
+</span><span class='line'>   <span class="p">(</span><span class="nv">cycle-length</span> <span class="mi">0</span> <span class="p">(</span><span class="nv">get-cycle-length</span> <span class="nv">dec</span><span class="p">)))</span>
+</span><span class='line'>   <span class="p">((</span><span class="nb">&gt;</span> <span class="nv">cycle-length</span> <span class="mi">0</span><span class="p">)</span> <span class="nv">cycle-length</span><span class="p">))))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">euler-26-fail</span> <span class="p">()</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">all-cycles</span> <span class="p">(</span><span class="nb">mapcar</span> <span class="nf">#&#39;</span><span class="nv">inverse-cycle-digits</span> <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">i</span> <span class="nv">from</span> <span class="mi">1</span> <span class="nv">to</span> <span class="mi">1000</span> <span class="nv">collect</span> <span class="nv">i</span><span class="p">))))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nb">reduce</span> <span class="nf">#&#39;</span><span class="nb">max</span> <span class="nv">all-cycles</span><span class="p">)))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>But the aptly named <code>euler-26-fail</code> fails to do what we want, because once again, the largest reciprocal when expanded fully, lies beyond the standard <em>double-float</em> range. So, we hand-roll &hellip;</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">inverse</span> <span class="p">(</span><span class="nv">n</span> <span class="k">&amp;key</span> <span class="p">(</span><span class="nv">precision</span><span class="p">))</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">do*</span> <span class="p">((</span><span class="nv">i</span> <span class="mi">0</span> <span class="p">(</span><span class="nb">1+</span> <span class="nv">i</span><span class="p">))</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">numerator</span> <span class="mi">10</span> <span class="p">(</span><span class="nb">*</span> <span class="mi">10</span> <span class="p">(</span><span class="nb">mod</span> <span class="nb">numerator</span> <span class="nv">n</span><span class="p">)))</span>
+</span><span class='line'>  <span class="p">(</span><span class="nv">dec</span> <span class="p">(</span><span class="nb">floor</span> <span class="p">(</span><span class="nb">/</span> <span class="mi">10</span> <span class="nv">n</span><span class="p">))</span> <span class="p">(</span><span class="nb">floor</span> <span class="p">(</span><span class="nb">/</span> <span class="nb">numerator</span> <span class="nv">n</span><span class="p">)))</span>
+</span><span class='line'>  <span class="p">(</span><span class="nv">declist</span> <span class="p">(</span><span class="nb">list</span> <span class="nv">dec</span><span class="p">)</span> <span class="p">(</span><span class="nb">cons</span> <span class="nv">dec</span> <span class="nv">declist</span><span class="p">)))</span>
+</span><span class='line'>       <span class="p">((</span><span class="nb">&gt;</span> <span class="nv">i</span> <span class="nv">precision</span><span class="p">)</span> <span class="p">(</span><span class="nb">nreverse</span> <span class="nv">declist</span><span class="p">))))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">cycle-length-helper</span> <span class="p">(</span><span class="nv">declist</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">do</span> <span class="p">((</span><span class="nv">i</span> <span class="mi">0</span> <span class="p">(</span><span class="nb">1+</span> <span class="nv">i</span><span class="p">))</span>
+</span><span class='line'>       <span class="p">(</span><span class="nv">cycle-length</span> <span class="mi">0</span> <span class="p">(</span><span class="nv">get-repeated-substring-length</span> <span class="nv">declist</span> <span class="nv">i</span><span class="p">)))</span>
+</span><span class='line'>      <span class="p">((</span><span class="nb">or</span> <span class="p">(</span><span class="nb">&gt;</span> <span class="nv">cycle-length</span> <span class="mi">0</span><span class="p">)</span> <span class="p">(</span><span class="nb">&gt;</span> <span class="nv">i</span> <span class="p">(</span><span class="nb">/</span> <span class="p">(</span><span class="nb">length</span> <span class="nv">declist</span><span class="p">)</span> <span class="mi">2</span><span class="p">)))</span> <span class="nv">cycle-length</span><span class="p">)))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">cycle-length</span> <span class="p">(</span><span class="nv">declist</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nb">length</span> <span class="nv">in</span> <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">i</span> <span class="nv">from</span> <span class="mi">1</span> <span class="nv">to</span> <span class="p">(</span><span class="nb">length</span> <span class="nv">declist</span><span class="p">)</span>
+</span><span class='line'>           <span class="nv">collect</span> <span class="p">(</span><span class="nv">cycle-length-helper</span> <span class="p">(</span><span class="nb">subseq</span> <span class="nv">declist</span> <span class="mi">0</span> <span class="nv">i</span><span class="p">)))</span>
+</span><span class='line'>       <span class="nv">maximizing</span> <span class="nb">length</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">get-all-inverse-lengths</span> <span class="p">(</span><span class="nv">lst</span> <span class="nv">max-precision</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">mapcar</span> <span class="nf">#&#39;</span><span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span> <span class="p">(</span><span class="nv">cycle-length</span> <span class="p">(</span><span class="nv">inverse</span> <span class="nv">n</span> <span class="ss">:precision</span> <span class="nv">max-precision</span><span class="p">)))</span>
+</span><span class='line'>    <span class="nv">lst</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">unique-max</span> <span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nb">max</span> <span class="p">(</span><span class="nb">reduce</span> <span class="nf">#&#39;</span><span class="nb">max</span> <span class="nb">list</span><span class="p">)))</span>
+</span><span class='line'>    <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">=</span> <span class="mi">1</span> <span class="p">(</span><span class="nb">count</span> <span class="nb">max</span> <span class="nb">list</span><span class="p">))</span>
+</span><span class='line'>  <span class="nb">max</span>
+</span><span class='line'>  <span class="mi">0</span><span class="p">)))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">biggest-cycle</span> <span class="p">(</span><span class="nv">max-num</span> <span class="nv">prec</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">let*</span> <span class="p">((</span><span class="nv">lst</span> <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">i</span> <span class="nv">from</span> <span class="mi">1</span> <span class="nv">to</span>  <span class="nv">max-num</span> <span class="nv">collect</span> <span class="nv">i</span><span class="p">))</span>
+</span><span class='line'>   <span class="p">(</span><span class="nv">lengths</span> <span class="p">(</span><span class="nv">get-all-inverse-lengths</span> <span class="nv">lst</span> <span class="nv">prec</span><span class="p">))</span>
+</span><span class='line'>   <span class="p">(</span><span class="nv">max-len</span> <span class="p">(</span><span class="nb">reduce</span> <span class="nf">#&#39;</span><span class="nb">max</span> <span class="nv">lengths</span><span class="p">)))</span>
+</span><span class='line'>    <span class="c1">;;(format t &quot;Debug: lengths = ~A, max = ~A~%&quot; lengths max-len)</span>
+</span><span class='line'>    <span class="p">(</span><span class="nb">nth</span> <span class="p">(</span><span class="nb">position</span> <span class="nv">max-len</span> <span class="nv">lengths</span><span class="p">)</span> <span class="nv">lst</span><span class="p">)))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The idea is to loop over all numbers with a given precision, find the max, then maybe increase the precision and try again. This is a terrible idea, relying on the ability to submit multiple answers at the Project Euler website :(</p>
+
+<p>But more than that, it&rsquo;s terribly slow. It becomes marginally faster if we restrict our search to primes.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">biggest-cycle</span> <span class="p">(</span><span class="nv">max-num</span> <span class="nv">prec</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">let*</span> <span class="p">((</span><span class="nv">lst</span> <span class="p">(</span><span class="nv">eratosthenes</span> <span class="nv">max-num</span><span class="p">))</span>
+</span><span class='line'>   <span class="p">(</span><span class="nv">lengths</span> <span class="p">(</span><span class="nv">get-all-inverse-lengths</span> <span class="nv">lst</span> <span class="nv">prec</span><span class="p">))</span>
+</span><span class='line'>   <span class="p">(</span><span class="nv">max-len</span> <span class="p">(</span><span class="nb">reduce</span> <span class="nf">#&#39;</span><span class="nb">max</span> <span class="nv">lengths</span><span class="p">)))</span>
+</span><span class='line'>    <span class="c1">;;(format t &quot;Debug: lengths = ~A, max = ~A~%&quot; lengths max-len)</span>
+</span><span class='line'>    <span class="p">(</span><span class="nb">nth</span> <span class="p">(</span><span class="nb">position</span> <span class="nv">max-len</span> <span class="nv">lengths</span><span class="p">)</span> <span class="nv">lst</span><span class="p">)))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">sieve</span> <span class="p">(</span><span class="nv">prime</span> <span class="nb">list</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">null</span> <span class="nb">list</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">(</span><span class="nb">list</span> <span class="nv">prime</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">(</span><span class="nb">cons</span> <span class="nv">prime</span> <span class="p">(</span><span class="nv">sieve</span> <span class="p">(</span><span class="nb">first</span> <span class="nb">list</span><span class="p">)</span>
+</span><span class='line'>           <span class="p">(</span><span class="nb">remove-if</span> <span class="nf">#&#39;</span><span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
+</span><span class='line'>                  <span class="p">(</span><span class="nb">=</span> <span class="mi">0</span> <span class="p">(</span><span class="nb">mod</span> <span class="nv">n</span> <span class="nv">prime</span><span class="p">)))</span>
+</span><span class='line'>                  <span class="p">(</span><span class="nb">rest</span> <span class="nb">list</span><span class="p">))))))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">eratosthenes</span> <span class="p">(</span><span class="nv">max-num</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">all-numbers</span> <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">i</span> <span class="nv">from</span> <span class="mi">2</span> <span class="nv">to</span> <span class="nv">max-num</span> <span class="nv">collect</span> <span class="nv">i</span><span class="p">)))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nv">sieve</span> <span class="p">(</span><span class="nb">first</span> <span class="nv">all-numbers</span><span class="p">)</span> <span class="p">(</span><span class="nb">rest</span> <span class="nv">all-numbers</span><span class="p">))))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>With this change, <code>(biggest-cycle 1000 1000)</code> yielded <code>499</code> (in <em>211 seconds+), but it turned out to be incorrect. <code>(biggest-cycle 1000 10000)</code> took </em>22810 seconds_, which is shameful, but yielded the right answer.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Euler 25: Fibonacci Digits]]></title>
@@ -9253,70 +9447,6 @@ After this, evaluating <code>amicables 10000</code> took <code>23.71</code> seco
 </span><span class='line'>Log <span class="c">#8 takes A -&gt; B -&gt; D -&gt; C -&gt; G -&gt; H -&gt; I -- path of 7</span>
 </span><span class='line'>River is now full. We could send <span class="m">8</span> logs.
 </span></code></pre></td></tr></table></div></figure>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Status Update, just before Christmas]]></title>
-    <link href="http://agam.github.io/blog/2014/12/23/status-update/"/>
-    <updated>2014-12-23T23:58:46+00:00</updated>
-    <id>http://agam.github.io/blog/2014/12/23/status-update</id>
-    <content type="html"><![CDATA[<p>Since the FreeBSD experiment didn&rsquo;t work out<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>, I picked a different one: &ldquo;plain old&rdquo; Debian<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>! (should be <em>acronymized</em> to POD).</p>
-
-<p>I read an old piece of evangelism<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup> which gave me the idea to version-control <code>/etc</code>, though I have sinced found <code>etckeeper</code> to do the same<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>sudo apt-get install etckeeper
-</span><span class='line'>
-</span><span class='line'><span class="c"># Modify VCS to `git` (not necessary on Debian, AFAICS)</span>
-</span><span class='line'><span class="nv">$ </span>sudo vi /etc/etckeeper/etckeeper.conf
-</span><span class='line'>
-</span><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /etc
-</span><span class='line'><span class="nv">$ </span>sudo git log
-</span><span class='line'><span class="c"># Should show &quot;...blah blah blah ... Initial Commit&quot;</span>
-</span><span class='line'><span class="c"># On Ubuntu, might need to explicitly run `sudo git commit -a -m &#39;Initial commit`</span>
-</span><span class='line'>
-</span><span class='line'><span class="c"># Fully integrated with APT</span>
-</span><span class='line'><span class="nv">$ </span>sudo git log
-</span><span class='line'><span class="c"># will show something like &quot;... committing changes in /etc after apt run ...&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Other than that, not much else. Busy with a new baby daughter (!)<sup id="fnref:5"><a href="#fn:5" rel="footnote">5</a></sup>, trying to read less &ldquo;news and blogs&rdquo;<sup id="fnref:6"><a href="#fn:6" rel="footnote">6</a></sup>, pretending to read a book on NLP<sup id="fnref:7"><a href="#fn:7" rel="footnote">7</a></sup>, and having a &ldquo;brand new linux box&rdquo; experience with a VM in Google Cloud.</p>
-
-<p>Have a happy new year, everyone.</p>
-<div class="footnotes">
-<hr/>
-<ol>
-<li id="fn:1">
-<p><a href="http://agam.github.io/blog/2014/12/14/trying-out-freebsd-and-failing-at-it/">http://agam.github.io/blog/2014/12/14/trying-out-freebsd-and-failing-at-it/</a><a href="#fnref:1" rev="footnote">&#8617;</a></p></li>
-<li id="fn:2">
-<p><a href="https://www.debian.org/">https://www.debian.org/</a><a href="#fnref:2" rev="footnote">&#8617;</a></p></li>
-<li id="fn:3">
-<p><a href="https://wiki.debian.org/WhyDebian">https://wiki.debian.org/WhyDebian</a><a href="#fnref:3" rev="footnote">&#8617;</a></p></li>
-<li id="fn:4">
-<p><a href="https://gist.github.com/agam/2cda8597966f49a04e07">https://gist.github.com/agam/2cda8597966f49a04e07</a><a href="#fnref:4" rev="footnote">&#8617;</a></p></li>
-<li id="fn:5">
-<p><a href="https://plus.google.com/108609219349604504501/posts/1CVG1iFTtXe">https://plus.google.com/108609219349604504501/posts/1CVG1iFTtXe</a><a href="#fnref:5" rev="footnote">&#8617;</a></p></li>
-<li id="fn:6">
-<p><a href="http://www.theguardian.com/media/2013/apr/12/news-is-bad-rolf-dobelli">http://www.theguardian.com/media/2013/apr/12/news-is-bad-rolf-dobelli</a><a href="#fnref:6" rev="footnote">&#8617;</a></p></li>
-<li id="fn:7">
-<p><a href="http://nlp.stanford.edu/fsnlp/">http://nlp.stanford.edu/fsnlp/</a><a href="#fnref:7" rev="footnote">&#8617;</a></p></li>
-</ol>
-</div>
 
 ]]></content>
   </entry>
