@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-02-12T16:38:16+00:00</updated>
+  <updated>2015-02-12T16:41:32+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -203,7 +203,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<p>With this change, <code>(biggest-cycle 1000 1000)</code> yielded <code>499</code> (in <em>211 seconds+), but it turned out to be incorrect. <code>(biggest-cycle 1000 10000)</code> took </em>22810 seconds_, which is shameful, but yielded the right answer.</p>
+<p>With this change, <code>(biggest-cycle 1000 1000)</code> yielded <code>499</code> (in <em>211 seconds</em>), but it turned out to be incorrect. <code>(biggest-cycle 1000 10000)</code> took <em>22810 seconds</em>, which is shameful, but yielded the right answer.</p>
 
 <h3>Update</h3>
 
