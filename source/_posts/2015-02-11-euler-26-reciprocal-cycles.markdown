@@ -111,3 +111,86 @@ But more than that, it's terribly slow. It becomes marginally faster if we restr
 ```
 
 With this change, `(biggest-cycle 1000 1000)` yielded `499` (in _211 seconds+), but it turned out to be incorrect. `(biggest-cycle 1000 10000)` took _22810 seconds_, which is shameful, but yielded the right answer.
+
+### Update
+
+Here is an effort to redeem myself:
+
+```haskell
+import qualified Data.List as L
+import qualified Data.Vector as V
+
+eratosthenes :: Int -> [Int]
+-- ^Get a list of prime numbers less than the given number.                
+eratosthenes n =
+  let x = [2 .. n] in
+  sieve (head x) (tail x)
+
+sieve :: Int -> [Int] -> [Int]
+sieve p nums =
+  let rest = filter (\x -> x `mod` p > 0) nums
+  in if null rest
+     then [p]
+     else p : sieve (head rest) (tail rest)
+
+inverse :: Int -> Int -> V.Vector Int        
+-- ^Given a number and the required precision, calculate the decimal expansion of its reciprocal.
+inverse n prec =
+  let truncate x y = (x `div` y, x `mod` y)
+      nextDigit x count
+        | count == 0 = []
+        | otherwise = let (d,m) = truncate (x * 10) n
+                      in d : nextDigit m (count - 1)
+  in
+   V.fromList $ nextDigit 1 prec
+
+getInverses :: Int -> Int -> [V.Vector Int]
+-- ^Get a list of all the inverses of all numbers upto a given number, for a given precision
+getInverses maxNum maxPrec = [inverse x maxPrec | x <- [1 .. maxNum]]
+
+checkRepeatLength :: V.Vector Int -> Int -> Int -> Int
+checkRepeatLength expansion end len =
+  let s1 = V.slice (end - len) len expansion
+      s2 = V.slice (end - len - len) len expansion
+      c = V.zipWith (==) s1 s2
+  in
+   if V.and c
+   then len
+   else 0
+
+checkCycles :: V.Vector Int -> Int -> Int
+-- ^Check if a cycle exists at a given end point with a given length; if it does, returns the length itself, otherwise 0
+checkCycles expansion end =
+  let l = quot end 2
+      cycles = filter (> 0) $ map (checkRepeatLength expansion end) [1 .. l]
+  in
+   case cycles of
+    x:xs -> x
+    otherwise -> 0
+
+findCycleLength :: V.Vector Int -> Int
+-- ^Get the length of a cycle at a certain end point; if none found, returns 0
+findCycleLength expansion =
+  let l = V.length expansion
+      minEnd = quot l 2
+      cycles = filter (> 0) $ map (checkCycles expansion) [l, l-1 .. minEnd]
+  in
+   case cycles of
+    x:xs -> x
+    otherwise -> 0
+   
+euler26 :: Int -> Int
+-- ^Attempts to solve Euler Problem #26 for a given precision
+euler26 prec =
+  let nums = [2 .. 1000]
+      cycles = map (\x -> findCycleLength $ inverse x prec) nums
+      maxPos = L.elemIndex (maximum cycles) cycles
+  in
+   case maxPos of
+    Just n -> nums !! n
+    _ -> 0
+```
+
+This gives the same answer (`euler26 10000`) in `7.5 seconds` (which is a 3000x speedup). Just to make sure you don't jump to that conclusion, it isn't a Haskell vs Lisp thing, it's just _calculating less stuff_, and doing it with _vectors instead of lists_.
+
+In particular, the first version was running for _12 hours_ before I killed it out of disgust, and realized that instead of checking if the `length` of the list was greater than 0, I should do a `case` match instead since I only needed the first element. This made a _big_ difference. Also, this is the first time I _didn't_ have to rely on `Debug.Trace`, so I feel good about that :)
