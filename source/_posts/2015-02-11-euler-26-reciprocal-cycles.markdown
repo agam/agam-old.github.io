@@ -110,7 +110,7 @@ But more than that, it's terribly slow. It becomes marginally faster if we restr
     (sieve (first all-numbers) (rest all-numbers))))
 ```
 
-With this change, `(biggest-cycle 1000 1000)` yielded `499` (in _211 seconds+), but it turned out to be incorrect. `(biggest-cycle 1000 10000)` took _22810 seconds_, which is shameful, but yielded the right answer.
+With this change, `(biggest-cycle 1000 1000)` yielded `499` (in _211 seconds_), but it turned out to be incorrect. `(biggest-cycle 1000 10000)` took _22810 seconds_, which is shameful, but yielded the right answer.
 
 ### Update
 
