@@ -4,7 +4,7 @@
   <title><![CDATA[Category: lisp | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/lisp/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-02-11T18:15:49+00:00</updated>
+  <updated>2015-02-12T16:38:16+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -150,6 +150,113 @@ max
 <p>```</p>
 
 <p>With this change, <code>(biggest-cycle 1000 1000)</code> yielded <code>499</code> (in <em>211 seconds+), but it turned out to be incorrect. <code>(biggest-cycle 1000 10000)</code> took </em>22810 seconds_, which is shameful, but yielded the right answer.</p>
+
+<h3>Update</h3>
+
+<p>Here is an effort to redeem myself:</p>
+
+<p>```haskell
+import qualified Data.List as L
+import qualified Data.Vector as V</p>
+
+<p>eratosthenes :: Int &ndash;> [Int]
+&mdash; ^Get a list of prime numbers less than the given number.              <br/>
+eratosthenes n =
+  let x = [2 .. n] in
+  sieve (head x) (tail x)</p>
+
+<p>sieve :: Int &ndash;> [Int] &ndash;> [Int]
+sieve p nums =
+  let rest = filter (\x &ndash;> x <code>mod</code> p > 0) nums
+  in if null rest</p>
+
+<pre><code> then [p]
+ else p : sieve (head rest) (tail rest)
+</code></pre>
+
+<p>inverse :: Int &ndash;> Int &ndash;> V.Vector Int      <br/>
+&mdash; ^Given a number and the required precision, calculate the decimal expansion of its reciprocal.
+inverse n prec =
+  let truncate x y = (x <code>div</code> y, x <code>mod</code> y)</p>
+
+<pre><code>  nextDigit x count
+    | count == 0 = []
+    | otherwise = let (d,m) = truncate (x * 10) n
+                  in d : nextDigit m (count - 1)
+</code></pre>
+
+<p>  in
+   V.fromList $ nextDigit 1 prec</p>
+
+<p>getInverses :: Int &ndash;> Int &ndash;> [V.Vector Int]
+&mdash; ^Get a list of all the inverses of all numbers upto a given number, for a given precision
+getInverses maxNum maxPrec = [inverse x maxPrec | x &lt;&ndash; [1 .. maxNum]]</p>
+
+<p>checkRepeatLength :: V.Vector Int &ndash;> Int &ndash;> Int &ndash;> Int
+checkRepeatLength expansion end len =
+  let s1 = V.slice (end &ndash; len) len expansion</p>
+
+<pre><code>  s2 = V.slice (end - len - len) len expansion
+  c = V.zipWith (==) s1 s2
+</code></pre>
+
+<p>  in
+   if V.and c
+   then len
+   else 0</p>
+
+<p>checkCycles :: V.Vector Int &ndash;> Int &ndash;> Int
+&mdash; ^Check if a cycle exists at a given end point with a given length; if it does, returns the length itself, otherwise 0
+checkCycles expansion end =
+  let l = quot end 2</p>
+
+<pre><code>  cycles = filter (&gt; 0) $ map (checkRepeatLength expansion end) [1 .. l]
+</code></pre>
+
+<p>  in
+   case cycles of</p>
+
+<pre><code>x:xs -&gt; x
+otherwise -&gt; 0
+</code></pre>
+
+<p>findCycleLength :: V.Vector Int &ndash;> Int
+&mdash; ^Get the length of a cycle at a certain end point; if none found, returns 0
+findCycleLength expansion =
+  let l = V.length expansion</p>
+
+<pre><code>  minEnd = quot l 2
+  cycles = filter (&gt; 0) $ map (checkCycles expansion) [l, l-1 .. minEnd]
+</code></pre>
+
+<p>  in
+   case cycles of</p>
+
+<pre><code>x:xs -&gt; x
+otherwise -&gt; 0
+</code></pre>
+
+<p>euler26 :: Int &ndash;> Int
+&mdash; ^Attempts to solve Euler Problem #26 for a given precision
+euler26 prec =
+  let nums = [2 .. 1000]</p>
+
+<pre><code>  cycles = map (\x -&gt; findCycleLength $ inverse x prec) nums
+  maxPos = L.elemIndex (maximum cycles) cycles
+</code></pre>
+
+<p>  in
+   case maxPos of</p>
+
+<pre><code>Just n -&gt; nums !! n
+_ -&gt; 0
+</code></pre>
+
+<p>```</p>
+
+<p>This gives the same answer (<code>euler26 10000</code>) in <code>7.5 seconds</code> (which is a 3000x speedup). Just to make sure you don&rsquo;t jump to that conclusion, it isn&rsquo;t a Haskell vs Lisp thing, it&rsquo;s just <em>calculating less stuff</em>, and doing it with <em>vectors instead of lists</em>.</p>
+
+<p>In particular, the first version was running for <em>12 hours</em> before I killed it out of disgust, and realized that instead of checking if the <code>length</code> of the list was greater than 0, I should do a <code>case</code> match instead since I only needed the first element. This made a <em>big</em> difference. Also, this is the first time I <em>didn&rsquo;t</em> have to rely on <code>Debug.Trace</code>, so I feel good about that :)</p>
 ]]></content>
   </entry>
   

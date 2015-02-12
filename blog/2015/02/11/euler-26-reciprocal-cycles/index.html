@@ -273,6 +273,161 @@
 
 
 <p>With this change, <code>(biggest-cycle 1000 1000)</code> yielded <code>499</code> (in <em>211 seconds+), but it turned out to be incorrect. <code>(biggest-cycle 1000 10000)</code> took </em>22810 seconds_, which is shameful, but yielded the right answer.</p>
+
+<h3>Update</h3>
+
+<p>Here is an effort to redeem myself:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="kr">import</span> <span class="k">qualified</span> <span class="nn">Data.List</span> <span class="k">as</span> <span class="n">L</span>
+</span><span class='line'><span class="kr">import</span> <span class="k">qualified</span> <span class="nn">Data.Vector</span> <span class="k">as</span> <span class="n">V</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">eratosthenes</span> <span class="ow">::</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="kt">Int</span><span class="p">]</span>
+</span><span class='line'><span class="c1">-- ^Get a list of prime numbers less than the given number.                </span>
+</span><span class='line'><span class="nf">eratosthenes</span> <span class="n">n</span> <span class="ow">=</span>
+</span><span class='line'>  <span class="kr">let</span> <span class="n">x</span> <span class="ow">=</span> <span class="p">[</span><span class="mi">2</span> <span class="o">..</span> <span class="n">n</span><span class="p">]</span> <span class="kr">in</span>
+</span><span class='line'>  <span class="n">sieve</span> <span class="p">(</span><span class="n">head</span> <span class="n">x</span><span class="p">)</span> <span class="p">(</span><span class="n">tail</span> <span class="n">x</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">sieve</span> <span class="ow">::</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="kt">Int</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="kt">Int</span><span class="p">]</span>
+</span><span class='line'><span class="nf">sieve</span> <span class="n">p</span> <span class="n">nums</span> <span class="ow">=</span>
+</span><span class='line'>  <span class="kr">let</span> <span class="n">rest</span> <span class="ow">=</span> <span class="n">filter</span> <span class="p">(</span><span class="nf">\</span><span class="n">x</span> <span class="ow">-&gt;</span> <span class="n">x</span> <span class="p">`</span><span class="n">mod</span><span class="p">`</span> <span class="n">p</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="n">nums</span>
+</span><span class='line'>  <span class="kr">in</span> <span class="kr">if</span> <span class="n">null</span> <span class="n">rest</span>
+</span><span class='line'>     <span class="kr">then</span> <span class="p">[</span><span class="n">p</span><span class="p">]</span>
+</span><span class='line'>     <span class="kr">else</span> <span class="n">p</span> <span class="kt">:</span> <span class="n">sieve</span> <span class="p">(</span><span class="n">head</span> <span class="n">rest</span><span class="p">)</span> <span class="p">(</span><span class="n">tail</span> <span class="n">rest</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">inverse</span> <span class="ow">::</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="kt">V</span><span class="o">.</span><span class="kt">Vector</span> <span class="kt">Int</span>
+</span><span class='line'><span class="c1">-- ^Given a number and the required precision, calculate the decimal expansion of its reciprocal.</span>
+</span><span class='line'><span class="nf">inverse</span> <span class="n">n</span> <span class="n">prec</span> <span class="ow">=</span>
+</span><span class='line'>  <span class="kr">let</span> <span class="n">truncate</span> <span class="n">x</span> <span class="n">y</span> <span class="ow">=</span> <span class="p">(</span><span class="n">x</span> <span class="p">`</span><span class="n">div</span><span class="p">`</span> <span class="n">y</span><span class="p">,</span> <span class="n">x</span> <span class="p">`</span><span class="n">mod</span><span class="p">`</span> <span class="n">y</span><span class="p">)</span>
+</span><span class='line'>      <span class="n">nextDigit</span> <span class="n">x</span> <span class="n">count</span>
+</span><span class='line'>        <span class="o">|</span> <span class="n">count</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">=</span> <span class="kt">[]</span>
+</span><span class='line'>        <span class="o">|</span> <span class="n">otherwise</span> <span class="ow">=</span> <span class="kr">let</span> <span class="p">(</span><span class="n">d</span><span class="p">,</span><span class="n">m</span><span class="p">)</span> <span class="ow">=</span> <span class="n">truncate</span> <span class="p">(</span><span class="n">x</span> <span class="o">*</span> <span class="mi">10</span><span class="p">)</span> <span class="n">n</span>
+</span><span class='line'>                      <span class="kr">in</span> <span class="n">d</span> <span class="kt">:</span> <span class="n">nextDigit</span> <span class="n">m</span> <span class="p">(</span><span class="n">count</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>  <span class="kr">in</span>
+</span><span class='line'>   <span class="kt">V</span><span class="o">.</span><span class="n">fromList</span> <span class="o">$</span> <span class="n">nextDigit</span> <span class="mi">1</span> <span class="n">prec</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">getInverses</span> <span class="ow">::</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="kt">V</span><span class="o">.</span><span class="kt">Vector</span> <span class="kt">Int</span><span class="p">]</span>
+</span><span class='line'><span class="c1">-- ^Get a list of all the inverses of all numbers upto a given number, for a given precision</span>
+</span><span class='line'><span class="nf">getInverses</span> <span class="n">maxNum</span> <span class="n">maxPrec</span> <span class="ow">=</span> <span class="p">[</span><span class="n">inverse</span> <span class="n">x</span> <span class="n">maxPrec</span> <span class="o">|</span> <span class="n">x</span> <span class="ow">&lt;-</span> <span class="p">[</span><span class="mi">1</span> <span class="o">..</span> <span class="n">maxNum</span><span class="p">]]</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">checkRepeatLength</span> <span class="ow">::</span> <span class="kt">V</span><span class="o">.</span><span class="kt">Vector</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="kt">Int</span>
+</span><span class='line'><span class="nf">checkRepeatLength</span> <span class="n">expansion</span> <span class="n">end</span> <span class="n">len</span> <span class="ow">=</span>
+</span><span class='line'>  <span class="kr">let</span> <span class="n">s1</span> <span class="ow">=</span> <span class="kt">V</span><span class="o">.</span><span class="n">slice</span> <span class="p">(</span><span class="n">end</span> <span class="o">-</span> <span class="n">len</span><span class="p">)</span> <span class="n">len</span> <span class="n">expansion</span>
+</span><span class='line'>      <span class="n">s2</span> <span class="ow">=</span> <span class="kt">V</span><span class="o">.</span><span class="n">slice</span> <span class="p">(</span><span class="n">end</span> <span class="o">-</span> <span class="n">len</span> <span class="o">-</span> <span class="n">len</span><span class="p">)</span> <span class="n">len</span> <span class="n">expansion</span>
+</span><span class='line'>      <span class="n">c</span> <span class="ow">=</span> <span class="kt">V</span><span class="o">.</span><span class="n">zipWith</span> <span class="p">(</span><span class="o">==</span><span class="p">)</span> <span class="n">s1</span> <span class="n">s2</span>
+</span><span class='line'>  <span class="kr">in</span>
+</span><span class='line'>   <span class="kr">if</span> <span class="kt">V</span><span class="o">.</span><span class="n">and</span> <span class="n">c</span>
+</span><span class='line'>   <span class="kr">then</span> <span class="n">len</span>
+</span><span class='line'>   <span class="kr">else</span> <span class="mi">0</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">checkCycles</span> <span class="ow">::</span> <span class="kt">V</span><span class="o">.</span><span class="kt">Vector</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="kt">Int</span>
+</span><span class='line'><span class="c1">-- ^Check if a cycle exists at a given end point with a given length; if it does, returns the length itself, otherwise 0</span>
+</span><span class='line'><span class="nf">checkCycles</span> <span class="n">expansion</span> <span class="n">end</span> <span class="ow">=</span>
+</span><span class='line'>  <span class="kr">let</span> <span class="n">l</span> <span class="ow">=</span> <span class="n">quot</span> <span class="n">end</span> <span class="mi">2</span>
+</span><span class='line'>      <span class="n">cycles</span> <span class="ow">=</span> <span class="n">filter</span> <span class="p">(</span><span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">$</span> <span class="n">map</span> <span class="p">(</span><span class="n">checkRepeatLength</span> <span class="n">expansion</span> <span class="n">end</span><span class="p">)</span> <span class="p">[</span><span class="mi">1</span> <span class="o">..</span> <span class="n">l</span><span class="p">]</span>
+</span><span class='line'>  <span class="kr">in</span>
+</span><span class='line'>   <span class="kr">case</span> <span class="n">cycles</span> <span class="kr">of</span>
+</span><span class='line'>    <span class="n">x</span><span class="kt">:</span><span class="n">xs</span> <span class="ow">-&gt;</span> <span class="n">x</span>
+</span><span class='line'>    <span class="n">otherwise</span> <span class="ow">-&gt;</span> <span class="mi">0</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">findCycleLength</span> <span class="ow">::</span> <span class="kt">V</span><span class="o">.</span><span class="kt">Vector</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="kt">Int</span>
+</span><span class='line'><span class="c1">-- ^Get the length of a cycle at a certain end point; if none found, returns 0</span>
+</span><span class='line'><span class="nf">findCycleLength</span> <span class="n">expansion</span> <span class="ow">=</span>
+</span><span class='line'>  <span class="kr">let</span> <span class="n">l</span> <span class="ow">=</span> <span class="kt">V</span><span class="o">.</span><span class="n">length</span> <span class="n">expansion</span>
+</span><span class='line'>      <span class="n">minEnd</span> <span class="ow">=</span> <span class="n">quot</span> <span class="n">l</span> <span class="mi">2</span>
+</span><span class='line'>      <span class="n">cycles</span> <span class="ow">=</span> <span class="n">filter</span> <span class="p">(</span><span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="o">$</span> <span class="n">map</span> <span class="p">(</span><span class="n">checkCycles</span> <span class="n">expansion</span><span class="p">)</span> <span class="p">[</span><span class="n">l</span><span class="p">,</span> <span class="n">l</span><span class="o">-</span><span class="mi">1</span> <span class="o">..</span> <span class="n">minEnd</span><span class="p">]</span>
+</span><span class='line'>  <span class="kr">in</span>
+</span><span class='line'>   <span class="kr">case</span> <span class="n">cycles</span> <span class="kr">of</span>
+</span><span class='line'>    <span class="n">x</span><span class="kt">:</span><span class="n">xs</span> <span class="ow">-&gt;</span> <span class="n">x</span>
+</span><span class='line'>    <span class="n">otherwise</span> <span class="ow">-&gt;</span> <span class="mi">0</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">euler26</span> <span class="ow">::</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="kt">Int</span>
+</span><span class='line'><span class="c1">-- ^Attempts to solve Euler Problem #26 for a given precision</span>
+</span><span class='line'><span class="nf">euler26</span> <span class="n">prec</span> <span class="ow">=</span>
+</span><span class='line'>  <span class="kr">let</span> <span class="n">nums</span> <span class="ow">=</span> <span class="p">[</span><span class="mi">2</span> <span class="o">..</span> <span class="mi">1000</span><span class="p">]</span>
+</span><span class='line'>      <span class="n">cycles</span> <span class="ow">=</span> <span class="n">map</span> <span class="p">(</span><span class="nf">\</span><span class="n">x</span> <span class="ow">-&gt;</span> <span class="n">findCycleLength</span> <span class="o">$</span> <span class="n">inverse</span> <span class="n">x</span> <span class="n">prec</span><span class="p">)</span> <span class="n">nums</span>
+</span><span class='line'>      <span class="n">maxPos</span> <span class="ow">=</span> <span class="kt">L</span><span class="o">.</span><span class="n">elemIndex</span> <span class="p">(</span><span class="n">maximum</span> <span class="n">cycles</span><span class="p">)</span> <span class="n">cycles</span>
+</span><span class='line'>  <span class="kr">in</span>
+</span><span class='line'>   <span class="kr">case</span> <span class="n">maxPos</span> <span class="kr">of</span>
+</span><span class='line'>    <span class="kt">Just</span> <span class="n">n</span> <span class="ow">-&gt;</span> <span class="n">nums</span> <span class="o">!!</span> <span class="n">n</span>
+</span><span class='line'>    <span class="kr">_</span> <span class="ow">-&gt;</span> <span class="mi">0</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This gives the same answer (<code>euler26 10000</code>) in <code>7.5 seconds</code> (which is a 3000x speedup). Just to make sure you don&rsquo;t jump to that conclusion, it isn&rsquo;t a Haskell vs Lisp thing, it&rsquo;s just <em>calculating less stuff</em>, and doing it with <em>vectors instead of lists</em>.</p>
+
+<p>In particular, the first version was running for <em>12 hours</em> before I killed it out of disgust, and realized that instead of checking if the <code>length</code> of the list was greater than 0, I should do a <code>case</code> match instead since I only needed the first element. This made a <em>big</em> difference. Also, this is the first time I <em>didn&rsquo;t</em> have to rely on <code>Debug.Trace</code>, so I feel good about that :)</p>
 </div>
 
 
