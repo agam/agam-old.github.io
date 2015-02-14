@@ -7,36 +7,7 @@
 	<meta name="author" content="Agam">
 
 	
-	<meta name="description" content="All right, here you go, a first draft of a dumb Battleships player. 1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30 &hellip;">
+	<meta name="description" content="While I&rsquo;m on a roll, here&rsquo;s something else &hellip; a very simple game that is a contender for the &ldquo;first&rdquo; one, since it &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -115,6 +86,946 @@
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2015/01/20/lunar-lander/">
+		
+			Lunar Lander</a>
+	</h2>
+	<div class="entry-content">
+		<p>While I&rsquo;m on a roll, here&rsquo;s something else &hellip; a very simple game that is a contender for the &ldquo;first&rdquo; one, since it basically revolves around a couple of lines that involve a basic speed/distance calculation. Still, it <em>is</em> fun to play. It might be really hard though, since I haven&rsquo;t yet been able to <em>&ldquo;win&rdquo;</em> :P</p>
+
+<p>Anyhow, here&rsquo;s the Go source:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+<span class='line-number'>114</span>
+<span class='line-number'>115</span>
+<span class='line-number'>116</span>
+<span class='line-number'>117</span>
+<span class='line-number'>118</span>
+<span class='line-number'>119</span>
+<span class='line-number'>120</span>
+<span class='line-number'>121</span>
+<span class='line-number'>122</span>
+<span class='line-number'>123</span>
+<span class='line-number'>124</span>
+<span class='line-number'>125</span>
+<span class='line-number'>126</span>
+<span class='line-number'>127</span>
+<span class='line-number'>128</span>
+<span class='line-number'>129</span>
+</pre></td><td class='code'><pre><code class='go'><span class='line'><span class="kn">package</span> <span class="nx">main</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="p">(</span>
+</span><span class='line'>  <span class="s">&quot;fmt&quot;</span>
+</span><span class='line'>  <span class="s">&quot;math&quot;</span>
+</span><span class='line'>  <span class="s">&quot;math/rand&quot;</span>
+</span><span class='line'>  <span class="s">&quot;strings&quot;</span>
+</span><span class='line'>  <span class="s">&quot;time&quot;</span>
+</span><span class='line'><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">const</span> <span class="p">(</span>
+</span><span class='line'>  <span class="nx">initialHeight</span>   <span class="p">=</span> <span class="mf">500.0</span>
+</span><span class='line'>  <span class="nx">initialFuel</span>     <span class="p">=</span> <span class="mf">120.0</span>
+</span><span class='line'>  <span class="nx">initialVelocity</span> <span class="p">=</span> <span class="mf">50.0</span>
+</span><span class='line'>  <span class="nx">deviance</span>        <span class="p">=</span> <span class="mf">0.05</span>
+</span><span class='line'><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">const</span> <span class="p">(</span>
+</span><span class='line'>  <span class="nx">maxThrust</span>                      <span class="p">=</span> <span class="mi">30</span>
+</span><span class='line'>  <span class="nx">maxDistance</span>                    <span class="p">=</span> <span class="mi">600</span>
+</span><span class='line'>  <span class="nx">maxDistancePlotWidth</span>           <span class="p">=</span> <span class="mi">60</span>
+</span><span class='line'>  <span class="nx">maxAllowableImpactVelocity</span>     <span class="p">=</span> <span class="mi">2</span>
+</span><span class='line'>  <span class="nx">lunarGravitationalAccelaration</span> <span class="p">=</span> <span class="mf">5.3</span>
+</span><span class='line'><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">var</span> <span class="nx">height</span> <span class="kt">float64</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">fuel</span> <span class="kt">float64</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">velocity</span> <span class="kt">float64</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">func</span> <span class="nx">floatEqual</span><span class="p">(</span><span class="nx">x</span><span class="p">,</span> <span class="nx">y</span> <span class="kt">float64</span><span class="p">)</span> <span class="kt">bool</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">return</span> <span class="nx">math</span><span class="p">.</span><span class="nx">Abs</span><span class="p">(</span><span class="nx">x</span><span class="o">-</span><span class="nx">y</span><span class="p">)</span> <span class="p">&lt;</span> <span class="mf">0.00000001</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">func</span> <span class="nx">setInitialParameters</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">randomize</span> <span class="o">:=</span> <span class="kd">func</span><span class="p">(</span><span class="nx">val</span> <span class="kt">float64</span><span class="p">,</span> <span class="nx">deviance</span> <span class="kt">float64</span><span class="p">)</span> <span class="kt">float64</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">mult</span> <span class="o">:=</span> <span class="mi">1</span>
+</span><span class='line'>      <span class="k">if</span> <span class="nx">rand</span><span class="p">.</span><span class="nx">Intn</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="p">&gt;</span> <span class="mi">0</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nx">mult</span> <span class="p">=</span> <span class="o">-</span><span class="mi">1</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      <span class="k">return</span> <span class="nx">val</span> <span class="o">+</span> <span class="p">(</span><span class="nx">rand</span><span class="p">.</span><span class="nx">Float64</span><span class="p">()</span><span class="o">*</span><span class="nx">deviance</span><span class="p">)</span><span class="o">*</span><span class="nx">val</span><span class="o">*</span><span class="nb">float64</span><span class="p">(</span><span class="nx">mult</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="nx">height</span> <span class="p">=</span> <span class="nx">randomize</span><span class="p">(</span><span class="nx">initialHeight</span><span class="p">,</span> <span class="nx">deviance</span><span class="p">)</span>
+</span><span class='line'>  <span class="nx">velocity</span> <span class="p">=</span> <span class="nx">randomize</span><span class="p">(</span><span class="nx">initialVelocity</span><span class="p">,</span> <span class="nx">deviance</span><span class="p">)</span>
+</span><span class='line'>  <span class="nx">fuel</span> <span class="p">=</span> <span class="nx">randomize</span><span class="p">(</span><span class="nx">initialFuel</span><span class="p">,</span> <span class="nx">deviance</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">func</span> <span class="nx">showUsage</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;\n    Welcome to the Lunar Landing Simulation!&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;--------------------------------------------------------------\n&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;Do you want instructions ? (enter &#39;y&#39; or &#39;n&#39;): &quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">choice</span> <span class="kt">string</span>
+</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Scan</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">choice</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">if</span> <span class="nx">strings</span><span class="p">.</span><span class="nx">ToLower</span><span class="p">(</span><span class="nx">choice</span><span class="p">)</span> <span class="o">==</span> <span class="s">&quot;n&quot;</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">return</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;You are landing on the moon and have taken over manual control %5.2f feet above a good landing spot. You have a downward velocity of %5.2f ft/sec. %5.2f units of fuel remain.\n&quot;</span><span class="p">,</span> <span class="nx">height</span><span class="p">,</span> <span class="nx">velocity</span><span class="p">,</span> <span class="nx">fuel</span><span class="p">)</span>
+</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;\nHere are the rules that govern your space vehicle: &quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;(1) After each second, the height, velocity and remaining fuel will be reported.&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;(2) You will enter the number of units of fuel to burn during the next second. Each unit will slow your descent by 1 ft/sec (at a prompt showing &#39;?&#39;)&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;(3) The maximum thrust of your engine is %d ft/sec/sec, or %d units of fuel per second.\n&quot;</span><span class="p">,</span> <span class="nx">maxThrust</span><span class="p">,</span> <span class="nx">maxThrust</span><span class="p">)</span>
+</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;(4) When you contact the lunar surface, you will be given a report of your landing speed and remaining fuel.&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;(5) If you run out of fuel, you will no longer be prompted, but the second-by-second report will continue.&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;(6) You may enter a number greater than the total amount of fuel remaining to indicate that you want to use all your fuel.&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;\n... beginning landing procedure ...\n&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;GOOD LUCK!\n&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">func</span> <span class="nx">getFuel</span><span class="p">()</span> <span class="kt">float64</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">for</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;? &quot;</span><span class="p">)</span>
+</span><span class='line'>      <span class="kd">var</span> <span class="nx">fuelToBurn</span> <span class="kt">float64</span>
+</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Scan</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">fuelToBurn</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">if</span> <span class="nx">fuelToBurn</span> <span class="p">&gt;</span> <span class="nx">fuel</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">return</span> <span class="nx">fuel</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      <span class="k">if</span> <span class="nx">fuelToBurn</span> <span class="p">&gt;</span> <span class="nx">maxThrust</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;Sorry, you cannot use more than %d units at a time!\n&quot;</span><span class="p">,</span> <span class="nx">maxThrust</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">return</span> <span class="nx">fuelToBurn</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">func</span> <span class="nx">update</span><span class="p">(</span><span class="nx">height</span><span class="p">,</span> <span class="nx">velocity</span><span class="p">,</span> <span class="nx">fuel</span> <span class="kt">float64</span><span class="p">)</span> <span class="p">(</span><span class="nx">newheight</span><span class="p">,</span> <span class="nx">newvelocity</span> <span class="kt">float64</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">newvelocity</span> <span class="p">=</span> <span class="nx">velocity</span> <span class="o">-</span> <span class="nx">fuel</span> <span class="o">+</span> <span class="nx">lunarGravitationalAccelaration</span>
+</span><span class='line'>  <span class="nx">newheight</span> <span class="p">=</span> <span class="nx">height</span> <span class="o">-</span> <span class="mf">0.5</span><span class="o">*</span><span class="p">(</span><span class="nx">velocity</span><span class="o">+</span><span class="nx">newvelocity</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">return</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">rand</span><span class="p">.</span><span class="nx">Seed</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Now</span><span class="p">().</span><span class="nx">Unix</span><span class="p">())</span>
+</span><span class='line'>  <span class="nx">setInitialParameters</span><span class="p">()</span>
+</span><span class='line'>  <span class="nx">showUsage</span><span class="p">()</span>
+</span><span class='line'>  <span class="nx">seconds</span> <span class="o">:=</span> <span class="mi">0</span>
+</span><span class='line'>  <span class="nx">fuelUnitsToBurn</span> <span class="o">:=</span> <span class="mf">0.0</span>
+</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Seconds Height     Speed     Fuel     |    Plot of Distance&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">for</span> <span class="nx">height</span> <span class="p">&gt;</span> <span class="mf">0.0</span> <span class="o">&amp;&amp;</span> <span class="nx">height</span> <span class="p">&lt;</span> <span class="nx">maxDistance</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;%5d %8.2f %9.2f %9.2f    | &quot;</span><span class="p">,</span> <span class="nx">seconds</span><span class="p">,</span> <span class="nx">height</span><span class="p">,</span> <span class="nx">velocity</span><span class="p">,</span> <span class="nx">fuel</span><span class="p">)</span>
+</span><span class='line'>      <span class="nx">scaledDistance</span> <span class="o">:=</span> <span class="nx">maxDistancePlotWidth</span> <span class="o">*</span> <span class="nx">height</span> <span class="o">/</span> <span class="nx">maxDistance</span>
+</span><span class='line'>      <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nb">int</span><span class="p">(</span><span class="nx">scaledDistance</span><span class="p">);</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot; &quot;</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;*&quot;</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">if</span> <span class="nx">fuel</span> <span class="p">&gt;</span> <span class="mi">0</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nx">fuelUnitsToBurn</span> <span class="p">=</span> <span class="nx">getFuel</span><span class="p">()</span>
+</span><span class='line'>          <span class="k">if</span> <span class="nx">floatEqual</span><span class="p">(</span><span class="nx">fuel</span><span class="p">,</span> <span class="nx">fuelUnitsToBurn</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>              <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;   ***   OUT OF FUEL   ***&quot;</span><span class="p">)</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nx">fuelUnitsToBurn</span> <span class="p">=</span> <span class="mf">0.0</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      <span class="nx">height</span><span class="p">,</span> <span class="nx">velocity</span> <span class="p">=</span> <span class="nx">update</span><span class="p">(</span><span class="nx">height</span><span class="p">,</span> <span class="nx">velocity</span><span class="p">,</span> <span class="nx">fuelUnitsToBurn</span><span class="p">)</span>
+</span><span class='line'>      <span class="nx">fuel</span> <span class="p">=</span> <span class="nx">fuel</span> <span class="o">-</span> <span class="nx">fuelUnitsToBurn</span>
+</span><span class='line'>      <span class="nx">seconds</span><span class="o">++</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">if</span> <span class="nx">height</span> <span class="p">&gt;</span> <span class="nx">maxDistance</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;\nSomehow, you managed to drift away into space. Unfortunately, we can&#39;t afford a rescue mission. Say hello to Dave Bowman in a few years. Goodbye.\n\n&quot;</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">return</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;\n   *** CONTACT ***\n&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;Touchdown at %d seconds.\n&quot;</span><span class="p">,</span> <span class="nx">seconds</span><span class="p">)</span>
+</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;Landing velocity = %5.2f ft/sec.\n\n&quot;</span><span class="p">,</span> <span class="nx">velocity</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">if</span> <span class="nx">math</span><span class="p">.</span><span class="nx">Abs</span><span class="p">(</span><span class="nx">velocity</span><span class="p">)</span> <span class="p">&gt;</span> <span class="nx">maxAllowableImpactVelocity</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Sorry, you didn&#39;t make it. Condolences will be sent to your next of kin ...\n&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Good job! Now make yourself comfortable, and come back with the next mission that makes it there ...\n&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&hellip; and the original BASIC &hellip;</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+<span class='line-number'>114</span>
+<span class='line-number'>115</span>
+<span class='line-number'>116</span>
+<span class='line-number'>117</span>
+<span class='line-number'>118</span>
+<span class='line-number'>119</span>
+<span class='line-number'>120</span>
+<span class='line-number'>121</span>
+<span class='line-number'>122</span>
+<span class='line-number'>123</span>
+<span class='line-number'>124</span>
+<span class='line-number'>125</span>
+<span class='line-number'>126</span>
+<span class='line-number'>127</span>
+<span class='line-number'>128</span>
+<span class='line-number'>129</span>
+<span class='line-number'>130</span>
+<span class='line-number'>131</span>
+<span class='line-number'>132</span>
+<span class='line-number'>133</span>
+<span class='line-number'>134</span>
+<span class='line-number'>135</span>
+<span class='line-number'>136</span>
+<span class='line-number'>137</span>
+<span class='line-number'>138</span>
+<span class='line-number'>139</span>
+<span class='line-number'>140</span>
+<span class='line-number'>141</span>
+<span class='line-number'>142</span>
+<span class='line-number'>143</span>
+<span class='line-number'>144</span>
+<span class='line-number'>145</span>
+<span class='line-number'>146</span>
+<span class='line-number'>147</span>
+<span class='line-number'>148</span>
+<span class='line-number'>149</span>
+<span class='line-number'>150</span>
+<span class='line-number'>151</span>
+<span class='line-number'>152</span>
+<span class='line-number'>153</span>
+<span class='line-number'>154</span>
+<span class='line-number'>155</span>
+<span class='line-number'>156</span>
+<span class='line-number'>157</span>
+<span class='line-number'>158</span>
+<span class='line-number'>159</span>
+<span class='line-number'>160</span>
+<span class='line-number'>161</span>
+<span class='line-number'>162</span>
+<span class='line-number'>163</span>
+<span class='line-number'>164</span>
+<span class='line-number'>165</span>
+<span class='line-number'>166</span>
+<span class='line-number'>167</span>
+<span class='line-number'>168</span>
+<span class='line-number'>169</span>
+<span class='line-number'>170</span>
+<span class='line-number'>171</span>
+<span class='line-number'>172</span>
+<span class='line-number'>173</span>
+<span class='line-number'>174</span>
+<span class='line-number'>175</span>
+<span class='line-number'>176</span>
+<span class='line-number'>177</span>
+<span class='line-number'>178</span>
+<span class='line-number'>179</span>
+<span class='line-number'>180</span>
+<span class='line-number'>181</span>
+<span class='line-number'>182</span>
+<span class='line-number'>183</span>
+<span class='line-number'>184</span>
+<span class='line-number'>185</span>
+<span class='line-number'>186</span>
+<span class='line-number'>187</span>
+<span class='line-number'>188</span>
+<span class='line-number'>189</span>
+<span class='line-number'>190</span>
+<span class='line-number'>191</span>
+<span class='line-number'>192</span>
+<span class='line-number'>193</span>
+<span class='line-number'>194</span>
+<span class='line-number'>195</span>
+<span class='line-number'>196</span>
+<span class='line-number'>197</span>
+<span class='line-number'>198</span>
+<span class='line-number'>199</span>
+<span class='line-number'>200</span>
+<span class='line-number'>201</span>
+<span class='line-number'>202</span>
+<span class='line-number'>203</span>
+<span class='line-number'>204</span>
+<span class='line-number'>205</span>
+<span class='line-number'>206</span>
+<span class='line-number'>207</span>
+<span class='line-number'>208</span>
+<span class='line-number'>209</span>
+<span class='line-number'>210</span>
+<span class='line-number'>211</span>
+<span class='line-number'>212</span>
+<span class='line-number'>213</span>
+<span class='line-number'>214</span>
+<span class='line-number'>215</span>
+<span class='line-number'>216</span>
+<span class='line-number'>217</span>
+<span class='line-number'>218</span>
+<span class='line-number'>219</span>
+<span class='line-number'>220</span>
+<span class='line-number'>221</span>
+<span class='line-number'>222</span>
+<span class='line-number'>223</span>
+<span class='line-number'>224</span>
+<span class='line-number'>225</span>
+<span class='line-number'>226</span>
+<span class='line-number'>227</span>
+<span class='line-number'>228</span>
+<span class='line-number'>229</span>
+<span class='line-number'>230</span>
+<span class='line-number'>231</span>
+<span class='line-number'>232</span>
+<span class='line-number'>233</span>
+<span class='line-number'>234</span>
+<span class='line-number'>235</span>
+<span class='line-number'>236</span>
+<span class='line-number'>237</span>
+<span class='line-number'>238</span>
+<span class='line-number'>239</span>
+<span class='line-number'>240</span>
+<span class='line-number'>241</span>
+<span class='line-number'>242</span>
+<span class='line-number'>243</span>
+<span class='line-number'>244</span>
+<span class='line-number'>245</span>
+<span class='line-number'>246</span>
+</pre></td><td class='code'><pre><code class='basic'><span class='line'><span class="nl">2</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="kr">TAB</span><span class="p">(</span><span class="il">34</span><span class="p">);</span><span class="s2">&quot;LEM&quot;</span>
+</span><span class='line'><span class="nl">4</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="kr">TAB</span><span class="p">(</span><span class="il">15</span><span class="p">);</span><span class="s2">&quot;CREATIVE COMPUTING  MORRISTOWN, NEW JERSEY&quot;</span>
+</span><span class='line'><span class="nl">7</span><span class="w"> </span><span class="c1">REM ROCKT2 IS AN INTERACTIVE GAME THAT SIMULATES A LUNAR</span>
+</span><span class='line'><span class="nl">8</span><span class="w"> </span><span class="c1">REM LANDING IS SIMILAR TO THAT OF THE APOLLO PROGRAM.</span>
+</span><span class='line'><span class="nl">9</span><span class="w"> </span><span class="c1">REM THERE IS ABSOLUTELY NO CHANCE INVOLVED</span>
+</span><span class='line'><span class="nl">10</span><span class="w"> </span><span class="vg">Z$</span><span class="o">=</span><span class="s2">&quot;GO&quot;</span>
+</span><span class='line'><span class="nl">15</span><span class="w"> </span><span class="vg">B1</span><span class="o">=</span><span class="il">1</span>
+</span><span class='line'><span class="nl">20</span><span class="w"> </span><span class="vg">M</span><span class="o">=</span><span class="mf">17.95</span>
+</span><span class='line'><span class="nl">25</span><span class="w"> </span><span class="vg">F1</span><span class="o">=</span><span class="mf">5.25</span>
+</span><span class='line'><span class="nl">30</span><span class="w"> </span><span class="vg">N</span><span class="o">=</span><span class="mf">7.5</span>
+</span><span class='line'><span class="nl">35</span><span class="w"> </span><span class="vg">R0</span><span class="o">=</span><span class="il">926</span>
+</span><span class='line'><span class="nl">40</span><span class="w"> </span><span class="vg">V0</span><span class="o">=</span><span class="mf">1.29</span>
+</span><span class='line'><span class="nl">45</span><span class="w"> </span><span class="vg">T</span><span class="o">=</span><span class="il">0</span>
+</span><span class='line'><span class="nl">50</span><span class="w"> </span><span class="vg">H0</span><span class="o">=</span><span class="il">60</span>
+</span><span class='line'><span class="nl">55</span><span class="w"> </span><span class="vg">R</span><span class="o">=</span><span class="vg">R0</span><span class="o">+</span><span class="vg">H0</span>
+</span><span class='line'><span class="nl">60</span><span class="w"> </span><span class="vg">A</span><span class="o">=</span><span class="mf">-3.425</span>
+</span><span class='line'><span class="nl">65</span><span class="w"> </span><span class="vg">R1</span><span class="o">=</span><span class="il">0</span>
+</span><span class='line'><span class="nl">70</span><span class="w"> </span><span class="vg">A1</span><span class="o">=</span><span class="mf">8.84361</span><span class="vg">E</span><span class="il">-04</span>
+</span><span class='line'><span class="nl">75</span><span class="w"> </span><span class="vg">R3</span><span class="o">=</span><span class="il">0</span>
+</span><span class='line'><span class="nl">80</span><span class="w"> </span><span class="vg">A3</span><span class="o">=</span><span class="il">0</span>
+</span><span class='line'><span class="nl">85</span><span class="w"> </span><span class="vg">M1</span><span class="o">=</span><span class="mf">7.45</span>
+</span><span class='line'><span class="nl">90</span><span class="w"> </span><span class="vg">M0</span><span class="o">=</span><span class="vg">M1</span>
+</span><span class='line'><span class="nl">95</span><span class="w"> </span><span class="vg">B</span><span class="o">=</span><span class="il">750</span>
+</span><span class='line'><span class="nl">100</span><span class="w"> </span><span class="vg">T1</span><span class="o">=</span><span class="il">0</span>
+</span><span class='line'><span class="nl">105</span><span class="w"> </span><span class="vg">F</span><span class="o">=</span><span class="il">0</span>
+</span><span class='line'><span class="nl">110</span><span class="w"> </span><span class="vg">P</span><span class="o">=</span><span class="il">0</span>
+</span><span class='line'><span class="nl">115</span><span class="w"> </span><span class="vg">N</span><span class="o">=</span><span class="il">1</span>
+</span><span class='line'><span class="nl">120</span><span class="w"> </span><span class="vg">M2</span><span class="o">=</span><span class="il">0</span>
+</span><span class='line'><span class="nl">125</span><span class="w"> </span><span class="vg">S</span><span class="o">=</span><span class="il">0</span>
+</span><span class='line'><span class="nl">130</span><span class="w"> </span><span class="vg">C</span><span class="o">=</span><span class="il">0</span>
+</span><span class='line'><span class="nl">135</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">Z$</span><span class="o">=</span><span class="s2">&quot;YES&quot;</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">1150</span>
+</span><span class='line'><span class="nl">140</span><span class="w"> </span><span class="kr">PRINT</span>
+</span><span class='line'><span class="nl">145</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;LUNAR LANDING SIMULATION&quot;</span>
+</span><span class='line'><span class="nl">150</span><span class="w"> </span><span class="kr">PRINT</span>
+</span><span class='line'><span class="nl">155</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;HAVE YOU FLOWN AN APOLLO/LEM MISSION BEFORE&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="nl">160</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot; (YES OR NO)&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="nl">165</span><span class="w"> </span><span class="kr">INPUT</span><span class="w"> </span><span class="vg">Q$</span>
+</span><span class='line'><span class="nl">170</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">Q$</span><span class="o">=</span><span class="s2">&quot;YES&quot;</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">190</span>
+</span><span class='line'><span class="nl">175</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">Q$</span><span class="o">=</span><span class="s2">&quot;NO&quot;</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">205</span>
+</span><span class='line'><span class="nl">180</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;JUST ANSWER THE QUESTION, PLEASE, &quot;</span><span class="p">;</span>
+</span><span class='line'><span class="nl">185</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">160</span>
+</span><span class='line'><span class="nl">190</span><span class="w"> </span><span class="kr">PRINT</span>
+</span><span class='line'><span class="nl">195</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;INPUT MEASUREMENT OPTION NUMBER&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="nl">200</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">225</span>
+</span><span class='line'><span class="nl">205</span><span class="w"> </span><span class="kr">PRINT</span>
+</span><span class='line'><span class="nl">210</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;WHICH SYSTEM OF MEASUREMENT DO YOU PREFER?&quot;</span>
+</span><span class='line'><span class="nl">215</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot; 1=METRIC     0=ENGLISH&quot;</span>
+</span><span class='line'><span class="nl">220</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;ENTER THE APPROPRIATE NUMBER&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="nl">225</span><span class="w"> </span><span class="kr">INPUT</span><span class="w"> </span><span class="vg">K</span>
+</span><span class='line'><span class="nl">230</span><span class="w"> </span><span class="kr">PRINT</span>
+</span><span class='line'><span class="nl">235</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">K</span><span class="o">=</span><span class="il">0</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">280</span>
+</span><span class='line'><span class="nl">240</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">K</span><span class="o">=</span><span class="il">1</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">250</span>
+</span><span class='line'><span class="nl">245</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">220</span>
+</span><span class='line'><span class="nl">250</span><span class="w"> </span><span class="vg">Z</span><span class="o">=</span><span class="mf">1852.8</span>
+</span><span class='line'><span class="nl">255</span><span class="w"> </span><span class="vg">M$</span><span class="o">=</span><span class="s2">&quot;METERS&quot;</span>
+</span><span class='line'><span class="nl">260</span><span class="w"> </span><span class="vg">G3</span><span class="o">=</span><span class="mf">3.6</span>
+</span><span class='line'><span class="nl">265</span><span class="w"> </span><span class="vg">N$</span><span class="o">=</span><span class="s2">&quot; KILOMETERS&quot;</span>
+</span><span class='line'><span class="nl">270</span><span class="w"> </span><span class="vg">G5</span><span class="o">=</span><span class="il">1000</span>
+</span><span class='line'><span class="nl">275</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">305</span>
+</span><span class='line'><span class="nl">280</span><span class="w"> </span><span class="vg">Z</span><span class="o">=</span><span class="il">6080</span>
+</span><span class='line'><span class="nl">285</span><span class="w"> </span><span class="vg">M$</span><span class="o">=</span><span class="s2">&quot;FEET&quot;</span>
+</span><span class='line'><span class="nl">290</span><span class="w"> </span><span class="vg">G3</span><span class="o">=</span><span class="mf">.592</span>
+</span><span class='line'><span class="nl">295</span><span class="w"> </span><span class="vg">N$</span><span class="o">=</span><span class="s2">&quot;N.MILES&quot;</span>
+</span><span class='line'><span class="nl">300</span><span class="w"> </span><span class="vg">G5</span><span class="o">=</span><span class="vg">Z</span>
+</span><span class='line'><span class="nl">305</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">B1</span><span class="o">=</span><span class="il">3</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">670</span>
+</span><span class='line'><span class="nl">310</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">Q$</span><span class="o">=</span><span class="s2">&quot;YES&quot;</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">485</span>
+</span><span class='line'><span class="nl">315</span><span class="w"> </span><span class="kr">PRINT</span>
+</span><span class='line'><span class="nl">320</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;  YOU ARE ON A LUNAR LANDING MISSION.  AS THE PILOT OF&quot;</span>
+</span><span class='line'><span class="nl">325</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;THE LUNAR EXCURSION MODULE, YOU WILL BE EXPECTED TO&quot;</span>
+</span><span class='line'><span class="nl">330</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;GIVE CERTAIN COMMANDS TO THE MODULE NAVIGATION SYSTEM.&quot;</span>
+</span><span class='line'><span class="nl">335</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;THE ON-BOARD COMPUTER WILL GIVE A RUNNING ACCOUNT&quot;</span>
+</span><span class='line'><span class="nl">340</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;OF INFORMATION NEEDED TO NAVIGATE THE SHIP.&quot;</span>
+</span><span class='line'><span class="nl">345</span><span class="w"> </span><span class="kr">PRINT</span>
+</span><span class='line'><span class="nl">350</span><span class="w"> </span><span class="kr">PRINT</span>
+</span><span class='line'><span class="nl">355</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;THE ATTITUDE ANGLE CALLED FOR IS DESCRIBED AS FOLLOWS.&quot;</span>
+</span><span class='line'><span class="nl">360</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;+ OR -180 DEGREES IS DIRECTLY AWAY FROM THE MOON&quot;</span>
+</span><span class='line'><span class="nl">365</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;-90 DEGREES IS ON A TANGENT IN THE DIRECTION OF ORBIT&quot;</span>
+</span><span class='line'><span class="nl">370</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;+90 DEGREES IS ON A TANGENT FROM THE DIRECTION OF ORBIT&quot;</span>
+</span><span class='line'><span class="nl">375</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;0 (ZERO) DEGREES IS DIRECTLY TOWARD THE MOON&quot;</span>
+</span><span class='line'><span class="nl">380</span><span class="w"> </span><span class="kr">PRINT</span>
+</span><span class='line'><span class="nl">385</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="kr">TAB</span><span class="p">(</span><span class="il">30</span><span class="p">);</span><span class="s2">&quot;-180|+180&quot;</span>
+</span><span class='line'><span class="nl">390</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="kr">TAB</span><span class="p">(</span><span class="il">34</span><span class="p">);</span><span class="s2">&quot;^&quot;</span>
+</span><span class='line'><span class="nl">395</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="kr">TAB</span><span class="p">(</span><span class="il">27</span><span class="p">);</span><span class="s2">&quot;-90 &lt; -+- &gt; +90&quot;</span>
+</span><span class='line'><span class="nl">400</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="kr">TAB</span><span class="p">(</span><span class="il">34</span><span class="p">);</span><span class="s2">&quot;!&quot;</span>
+</span><span class='line'><span class="nl">405</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="kr">TAB</span><span class="p">(</span><span class="il">34</span><span class="p">);</span><span class="s2">&quot;0&quot;</span>
+</span><span class='line'><span class="nl">410</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="kr">TAB</span><span class="p">(</span><span class="il">21</span><span class="p">);</span><span class="s2">&quot;&lt;&lt;&lt;&lt; DIRECTION OF ORBIT &lt;&lt;&lt;&lt;&quot;</span>
+</span><span class='line'><span class="nl">415</span><span class="w"> </span><span class="kr">PRINT</span>
+</span><span class='line'><span class="nl">420</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="kr">TAB</span><span class="p">(</span><span class="il">20</span><span class="p">);</span><span class="s2">&quot;------ SURFACE OF MOON ------&quot;</span>
+</span><span class='line'><span class="nl">425</span><span class="w"> </span><span class="kr">PRINT</span>
+</span><span class='line'><span class="nl">430</span><span class="w"> </span><span class="kr">PRINT</span>
+</span><span class='line'><span class="nl">435</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;ALL ANGLES BETWEEN -180 AND +180 DEGREES ARE ACCEPTED.&quot;</span>
+</span><span class='line'><span class="nl">440</span><span class="w"> </span><span class="kr">PRINT</span>
+</span><span class='line'><span class="nl">445</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;1 FUEL UNIT = 1 SEC. AT MAX THRUST&quot;</span>
+</span><span class='line'><span class="nl">450</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;ANY DISCREPANCIES ARE ACCOUNTED FOR IN THE USE OF FUEL&quot;</span>
+</span><span class='line'><span class="nl">455</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;FOR AN ATTITUDE CHANGE.&quot;</span>
+</span><span class='line'><span class="nl">460</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;AVAILABLE ENGINE POWER: 0 (ZERO) AND ANY VALUE BETWEEN&quot;</span>
+</span><span class='line'><span class="nl">465</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;10 AND 100 PERCENT.&quot;</span>
+</span><span class='line'><span class="nl">470</span><span class="w"> </span><span class="kr">PRINT</span>
+</span><span class='line'><span class="nl">475</span><span class="w"> </span><span class="kr">PRINT</span><span class="s2">&quot;NEGATIVE THRUST OR TIME IS PROHIBITED.&quot;</span>
+</span><span class='line'><span class="nl">480</span><span class="w"> </span><span class="kr">PRINT</span>
+</span><span class='line'><span class="nl">485</span><span class="w"> </span><span class="kr">PRINT</span>
+</span><span class='line'><span class="nl">490</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;INPUT: TIME INTERVAL IN SECONDS ------ (T)&quot;</span>
+</span><span class='line'><span class="nl">495</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;       PERCENTAGE OF THRUST ---------- (P)&quot;</span>
+</span><span class='line'><span class="nl">500</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;       ATTITUDE ANGLE IN DEGREES ----- (A)&quot;</span>
+</span><span class='line'><span class="nl">505</span><span class="w"> </span><span class="kr">PRINT</span>
+</span><span class='line'><span class="nl">510</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">Q$</span><span class="o">=</span><span class="s2">&quot;YES&quot;</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">535</span>
+</span><span class='line'><span class="nl">515</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;FOR EXAMPLE:&quot;</span>
+</span><span class='line'><span class="nl">520</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;T,P,A? 10,65,-60&quot;</span>
+</span><span class='line'><span class="nl">525</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;TO ABORT THE MISSION AT ANY TIME, ENTER 0,0,0&quot;</span>
+</span><span class='line'><span class="nl">530</span><span class="w"> </span><span class="kr">PRINT</span>
+</span><span class='line'><span class="nl">535</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;OUTPUT: TOTAL TIME IN ELAPSED SECONDS&quot;</span>
+</span><span class='line'><span class="nl">540</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;        HEIGHT IN &quot;</span><span class="p">;</span><span class="vg">M$</span>
+</span><span class='line'><span class="nl">545</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;        DISTANCE FROM LANDING SITE IN &quot;</span><span class="p">;</span><span class="vg">M$</span>
+</span><span class='line'><span class="nl">550</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;        VERTICAL VELOCITY IN &quot;</span><span class="p">;</span><span class="vg">M$</span><span class="p">;</span><span class="s2">&quot;/SECOND&quot;</span>
+</span><span class='line'><span class="nl">555</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;        HORIZONTAL VELOCITY IN &quot;</span><span class="p">;</span><span class="vg">M$</span><span class="p">;</span><span class="s2">&quot;/SECOND&quot;</span>
+</span><span class='line'><span class="nl">560</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;        FUEL UNITS REMAINING&quot;</span>
+</span><span class='line'><span class="nl">565</span><span class="w"> </span><span class="kr">PRINT</span>
+</span><span class='line'><span class="nl">570</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">670</span>
+</span><span class='line'><span class="nl">575</span><span class="w"> </span><span class="kr">PRINT</span>
+</span><span class='line'><span class="nl">580</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;T,P,A&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="nl">585</span><span class="w"> </span><span class="kr">INPUT</span><span class="w"> </span><span class="vg">T1</span><span class="p">,</span><span class="vg">F</span><span class="p">,</span><span class="vg">P</span>
+</span><span class='line'><span class="nl">590</span><span class="w"> </span><span class="vg">F</span><span class="o">=</span><span class="vg">F</span><span class="o">/</span><span class="il">100</span>
+</span><span class='line'><span class="nl">595</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">T1</span><span class="o">&lt;</span><span class="il">0</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">905</span>
+</span><span class='line'><span class="nl">600</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">T1</span><span class="o">=</span><span class="il">0</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">1090</span>
+</span><span class='line'><span class="nl">605</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="kr">ABS</span><span class="p">(</span><span class="vg">F</span><span class="mf">-.05</span><span class="p">)</span><span class="o">&gt;</span><span class="il">1</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">945</span>
+</span><span class='line'><span class="nl">610</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="kr">ABS</span><span class="p">(</span><span class="vg">F</span><span class="mf">-.05</span><span class="p">)</span><span class="o">&lt;</span><span class="mf">.05</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">945</span>
+</span><span class='line'><span class="nl">615</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="kr">ABS</span><span class="p">(</span><span class="vg">P</span><span class="p">)</span><span class="o">&gt;</span><span class="il">180</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">925</span>
+</span><span class='line'><span class="nl">620</span><span class="w"> </span><span class="vg">N</span><span class="o">=</span><span class="il">20</span>
+</span><span class='line'><span class="nl">625</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">T1</span><span class="o">&lt;</span><span class="il">400</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">635</span>
+</span><span class='line'><span class="nl">630</span><span class="w"> </span><span class="vg">N</span><span class="o">=</span><span class="vg">T1</span><span class="o">/</span><span class="il">20</span>
+</span><span class='line'><span class="nl">635</span><span class="w"> </span><span class="vg">T1</span><span class="o">=</span><span class="vg">T1</span><span class="o">/</span><span class="vg">N</span>
+</span><span class='line'><span class="nl">640</span><span class="w"> </span><span class="vg">P</span><span class="o">=</span><span class="vg">P</span><span class="o">*</span><span class="mf">3.14159</span><span class="o">/</span><span class="il">180</span>
+</span><span class='line'><span class="nl">645</span><span class="w"> </span><span class="vg">S</span><span class="o">=</span><span class="kr">SIN</span><span class="p">(</span><span class="vg">P</span><span class="p">)</span>
+</span><span class='line'><span class="nl">650</span><span class="w"> </span><span class="vg">C</span><span class="o">=</span><span class="kr">COS</span><span class="p">(</span><span class="vg">P</span><span class="p">)</span>
+</span><span class='line'><span class="nl">655</span><span class="w"> </span><span class="vg">M2</span><span class="o">=</span><span class="vg">M0</span><span class="o">*</span><span class="vg">T1</span><span class="o">*</span><span class="vg">F</span><span class="o">/</span><span class="vg">B</span>
+</span><span class='line'><span class="nl">660</span><span class="w"> </span><span class="vg">R3</span><span class="o">=</span><span class="mf">-.5</span><span class="o">*</span><span class="vg">R0</span><span class="o">*</span><span class="p">((</span><span class="vg">V0</span><span class="o">/</span><span class="vg">R</span><span class="p">)</span><span class="o">^</span><span class="il">2</span><span class="p">)</span><span class="o">+</span><span class="vg">R</span><span class="o">*</span><span class="vg">A1</span><span class="o">*</span><span class="vg">A1</span>
+</span><span class='line'><span class="nl">665</span><span class="w"> </span><span class="vg">A3</span><span class="o">=</span><span class="il">-2</span><span class="o">*</span><span class="vg">R1</span><span class="o">*</span><span class="vg">A1</span><span class="o">/</span><span class="vg">R</span>
+</span><span class='line'><span class="nl">670</span><span class="w"> </span><span class="kr">FOR</span><span class="w"> </span><span class="vg">I</span><span class="o">=</span><span class="il">1</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="vg">N</span>
+</span><span class='line'><span class="nl">675</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">M1</span><span class="o">=</span><span class="il">0</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">715</span>
+</span><span class='line'><span class="nl">680</span><span class="w"> </span><span class="vg">M1</span><span class="o">=</span><span class="vg">M1</span><span class="o">-</span><span class="vg">M2</span>
+</span><span class='line'><span class="nl">685</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">M1</span><span class="o">&gt;</span><span class="il">0</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">725</span>
+</span><span class='line'><span class="nl">690</span><span class="w"> </span><span class="vg">F</span><span class="o">=</span><span class="vg">F</span><span class="o">*</span><span class="p">(</span><span class="il">1</span><span class="o">+</span><span class="vg">M1</span><span class="o">/</span><span class="vg">M2</span><span class="p">)</span>
+</span><span class='line'><span class="nl">695</span><span class="w"> </span><span class="vg">M2</span><span class="o">=</span><span class="vg">M1</span><span class="o">+</span><span class="vg">M2</span>
+</span><span class='line'><span class="nl">700</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;YOU ARE OUT OF FUEL.&quot;</span>
+</span><span class='line'><span class="nl">705</span><span class="w"> </span><span class="vg">M1</span><span class="o">=</span><span class="il">0</span>
+</span><span class='line'><span class="nl">710</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">725</span>
+</span><span class='line'><span class="nl">715</span><span class="w"> </span><span class="vg">F</span><span class="o">=</span><span class="il">0</span>
+</span><span class='line'><span class="nl">720</span><span class="w"> </span><span class="vg">M2</span><span class="o">=</span><span class="il">0</span>
+</span><span class='line'><span class="nl">725</span><span class="w"> </span><span class="vg">M</span><span class="o">=</span><span class="vg">M</span><span class="mf">-.5</span><span class="o">*</span><span class="vg">M2</span>
+</span><span class='line'><span class="nl">730</span><span class="w"> </span><span class="vg">R4</span><span class="o">=</span><span class="vg">R3</span>
+</span><span class='line'><span class="nl">735</span><span class="w"> </span><span class="vg">R3</span><span class="o">=</span><span class="mf">-.5</span><span class="o">*</span><span class="vg">R0</span><span class="o">*</span><span class="p">((</span><span class="vg">V0</span><span class="o">/</span><span class="vg">R</span><span class="p">)</span><span class="o">^</span><span class="il">2</span><span class="p">)</span><span class="o">+</span><span class="vg">R</span><span class="o">*</span><span class="vg">A1</span><span class="o">*</span><span class="vg">A1</span>
+</span><span class='line'><span class="nl">740</span><span class="w"> </span><span class="vg">R2</span><span class="o">=</span><span class="p">(</span><span class="il">3</span><span class="o">*</span><span class="vg">R3</span><span class="o">-</span><span class="vg">R4</span><span class="p">)</span><span class="o">/</span><span class="il">2</span><span class="o">+</span><span class="mf">.00526</span><span class="o">*</span><span class="vg">F1</span><span class="o">*</span><span class="vg">F</span><span class="o">*</span><span class="vg">C</span><span class="o">/</span><span class="vg">M</span>
+</span><span class='line'><span class="nl">745</span><span class="w"> </span><span class="vg">A4</span><span class="o">=</span><span class="vg">A3</span>
+</span><span class='line'><span class="nl">750</span><span class="w"> </span><span class="vg">A3</span><span class="o">=</span><span class="il">-2</span><span class="o">*</span><span class="vg">R1</span><span class="o">*</span><span class="vg">A1</span><span class="o">/</span><span class="vg">R</span>
+</span><span class='line'><span class="nl">755</span><span class="w"> </span><span class="vg">A2</span><span class="o">=</span><span class="p">(</span><span class="il">3</span><span class="o">*</span><span class="vg">A3</span><span class="o">-</span><span class="vg">A4</span><span class="p">)</span><span class="o">/</span><span class="il">2</span><span class="o">+</span><span class="mf">.0056</span><span class="o">*</span><span class="vg">F1</span><span class="o">*</span><span class="vg">F</span><span class="o">*</span><span class="vg">S</span><span class="o">/</span><span class="p">(</span><span class="vg">M</span><span class="o">*</span><span class="vg">R</span><span class="p">)</span>
+</span><span class='line'><span class="nl">760</span><span class="w"> </span><span class="vg">X</span><span class="o">=</span><span class="vg">R1</span><span class="o">*</span><span class="vg">T1</span><span class="o">+</span><span class="mf">.5</span><span class="o">*</span><span class="vg">R2</span><span class="o">*</span><span class="vg">T1</span><span class="o">*</span><span class="vg">T1</span>
+</span><span class='line'><span class="nl">765</span><span class="w"> </span><span class="vg">R</span><span class="o">=</span><span class="vg">R</span><span class="o">+</span><span class="vg">X</span>
+</span><span class='line'><span class="nl">770</span><span class="w"> </span><span class="vg">H0</span><span class="o">=</span><span class="vg">H0</span><span class="o">+</span><span class="vg">X</span>
+</span><span class='line'><span class="nl">775</span><span class="w"> </span><span class="vg">R1</span><span class="o">=</span><span class="vg">R1</span><span class="o">+</span><span class="vg">R2</span><span class="o">*</span><span class="vg">T1</span>
+</span><span class='line'><span class="nl">780</span><span class="w"> </span><span class="vg">A</span><span class="o">=</span><span class="vg">A</span><span class="o">+</span><span class="vg">A1</span><span class="o">*</span><span class="vg">T1</span><span class="o">+</span><span class="mf">.5</span><span class="o">*</span><span class="vg">A2</span><span class="o">*</span><span class="vg">T1</span><span class="o">*</span><span class="vg">T1</span>
+</span><span class='line'><span class="nl">785</span><span class="w"> </span><span class="vg">A1</span><span class="o">=</span><span class="vg">A1</span><span class="o">+</span><span class="vg">A2</span><span class="o">*</span><span class="vg">T1</span>
+</span><span class='line'><span class="nl">790</span><span class="w"> </span><span class="vg">M</span><span class="o">=</span><span class="vg">M</span><span class="mf">-.5</span><span class="o">*</span><span class="vg">M2</span>
+</span><span class='line'><span class="nl">795</span><span class="w"> </span><span class="vg">T</span><span class="o">=</span><span class="vg">T</span><span class="o">+</span><span class="vg">T1</span>
+</span><span class='line'><span class="nl">800</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">H0</span><span class="o">&lt;</span><span class="mf">3.287828</span><span class="vg">E</span><span class="il">-04</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">810</span>
+</span><span class='line'><span class="nl">805</span><span class="w"> </span><span class="kr">NEXT</span><span class="w"> </span><span class="vg">I</span>
+</span><span class='line'><span class="nl">810</span><span class="w"> </span><span class="vg">H</span><span class="o">=</span><span class="vg">H0</span><span class="o">*</span><span class="vg">Z</span>
+</span><span class='line'><span class="nl">815</span><span class="w"> </span><span class="vg">H1</span><span class="o">=</span><span class="vg">R1</span><span class="o">*</span><span class="vg">Z</span>
+</span><span class='line'><span class="nl">820</span><span class="w"> </span><span class="vg">D</span><span class="o">=</span><span class="vg">R0</span><span class="o">*</span><span class="vg">A</span><span class="o">*</span><span class="vg">Z</span>
+</span><span class='line'><span class="nl">825</span><span class="w"> </span><span class="vg">D1</span><span class="o">=</span><span class="vg">R</span><span class="o">*</span><span class="vg">A1</span><span class="o">*</span><span class="vg">Z</span>
+</span><span class='line'><span class="nl">830</span><span class="w"> </span><span class="vg">T2</span><span class="o">=</span><span class="vg">M1</span><span class="o">*</span><span class="vg">B</span><span class="o">/</span><span class="vg">M0</span>
+</span><span class='line'><span class="nl">835</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot; &quot;</span><span class="p">;</span><span class="vg">T</span><span class="p">;</span><span class="kr">TAB</span><span class="p">(</span><span class="il">10</span><span class="p">);</span><span class="vg">H</span><span class="p">;</span><span class="kr">TAB</span><span class="p">(</span><span class="il">23</span><span class="p">);</span><span class="vg">D</span><span class="p">;</span>
+</span><span class='line'><span class="nl">840</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="kr">TAB</span><span class="p">(</span><span class="il">37</span><span class="p">);</span><span class="vg">H1</span><span class="p">;</span><span class="kr">TAB</span><span class="p">(</span><span class="il">49</span><span class="p">);</span><span class="vg">D1</span><span class="p">;</span><span class="kr">TAB</span><span class="p">(</span><span class="il">60</span><span class="p">);</span><span class="vg">T2</span>
+</span><span class='line'><span class="nl">845</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">H0</span><span class="o">&lt;</span><span class="mf">3.287828</span><span class="vg">E</span><span class="il">-04</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">880</span>
+</span><span class='line'><span class="nl">850</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">R0</span><span class="o">*</span><span class="vg">A</span><span class="o">&gt;</span><span class="mf">164.474</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">1050</span>
+</span><span class='line'><span class="nl">855</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">M1</span><span class="o">&gt;</span><span class="il">0</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">580</span>
+</span><span class='line'><span class="nl">860</span><span class="w"> </span><span class="vg">T1</span><span class="o">=</span><span class="il">20</span>
+</span><span class='line'><span class="nl">865</span><span class="w"> </span><span class="vg">F</span><span class="o">=</span><span class="il">0</span>
+</span><span class='line'><span class="nl">870</span><span class="w"> </span><span class="vg">P</span><span class="o">=</span><span class="il">0</span>
+</span><span class='line'><span class="nl">875</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">620</span>
+</span><span class='line'><span class="nl">880</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">R1</span><span class="o">&lt;</span><span class="mf">-8.21957</span><span class="vg">E</span><span class="il">-04</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">1020</span>
+</span><span class='line'><span class="nl">885</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="kr">ABS</span><span class="p">(</span><span class="vg">R</span><span class="o">*</span><span class="vg">A1</span><span class="p">)</span><span class="o">&gt;</span><span class="mf">4.93174</span><span class="vg">E</span><span class="il">-04</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">1020</span>
+</span><span class='line'><span class="nl">890</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">H0</span><span class="o">&lt;</span><span class="mf">-3.287828</span><span class="vg">E</span><span class="il">-04</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">1020</span>
+</span><span class='line'><span class="nl">895</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="kr">ABS</span><span class="p">(</span><span class="vg">D</span><span class="p">)</span><span class="o">&gt;</span><span class="il">10</span><span class="o">*</span><span class="vg">Z</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">1065</span>
+</span><span class='line'><span class="nl">900</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">995</span>
+</span><span class='line'><span class="nl">905</span><span class="w"> </span><span class="kr">PRINT</span>
+</span><span class='line'><span class="nl">910</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;THIS SPACECRAFT IS NOT ABLE TO VIOLATE THE SPACE-&quot;</span><span class="p">;</span>
+</span><span class='line'><span class="nl">915</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;TIME CONTINUUM.&quot;</span>
+</span><span class='line'><span class="nl">920</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">575</span>
+</span><span class='line'><span class="nl">925</span><span class="w"> </span><span class="kr">PRINT</span>
+</span><span class='line'><span class="nl">930</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;IF YOU WANT TO SPIN AROUND, GO OUTSIDE THE MODULE&quot;</span>
+</span><span class='line'><span class="nl">935</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;FOR AN E.V.A.&quot;</span>
+</span><span class='line'><span class="nl">940</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">575</span>
+</span><span class='line'><span class="nl">945</span><span class="w"> </span><span class="kr">PRINT</span>
+</span><span class='line'><span class="nl">950</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;IMPOSSIBLE THRUST VALUE &quot;</span><span class="p">;</span>
+</span><span class='line'><span class="nl">955</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">F</span><span class="o">&lt;</span><span class="il">0</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">985</span>
+</span><span class='line'><span class="nl">960</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">F</span><span class="mf">-.05</span><span class="o">&lt;</span><span class="mf">.05</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">975</span>
+</span><span class='line'><span class="nl">965</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;TOO LARGE&quot;</span>
+</span><span class='line'><span class="nl">970</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">575</span>
+</span><span class='line'><span class="nl">975</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;TOO SMALL&quot;</span>
+</span><span class='line'><span class="nl">980</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">575</span>
+</span><span class='line'><span class="nl">985</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;NEGATIVE&quot;</span>
+</span><span class='line'><span class="nl">990</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">575</span>
+</span><span class='line'><span class="nl">995</span><span class="w"> </span><span class="kr">PRINT</span>
+</span><span class='line'><span class="nl">1000</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;TRANQUILITY BASE HERE -- THE EAGLE HAS LANDED.&quot;</span>
+</span><span class='line'><span class="nl">1005</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;CONGRATULATIONS -- THERE WAS NO SPACECRAFT DAMAGE.&quot;</span>
+</span><span class='line'><span class="nl">1010</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;YOU MAY NOW PROCEED WITH SURFACE EXPLORATION.&quot;</span>
+</span><span class='line'><span class="nl">1015</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">1100</span>
+</span><span class='line'><span class="nl">1020</span><span class="w"> </span><span class="kr">PRINT</span>
+</span><span class='line'><span class="nl">1025</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;CRASH !!!!!!!!!!!!!!!!&quot;</span>
+</span><span class='line'><span class="nl">1030</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;YOUR IMPACT CREATED A CRATER&quot;</span><span class="p">;</span><span class="kr">ABS</span><span class="p">(</span><span class="vg">H</span><span class="p">);</span><span class="vg">M$</span><span class="p">;</span><span class="s2">&quot; DEEP.&quot;</span>
+</span><span class='line'><span class="nl">1035</span><span class="w"> </span><span class="vg">X1</span><span class="o">=</span><span class="kr">SQR</span><span class="p">(</span><span class="vg">D1</span><span class="o">*</span><span class="vg">D1</span><span class="o">+</span><span class="vg">H1</span><span class="o">*</span><span class="vg">H1</span><span class="p">)</span><span class="o">*</span><span class="vg">G3</span>
+</span><span class='line'><span class="nl">1040</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;AT CONTACT YOU WERE TRAVELING&quot;</span><span class="p">;</span><span class="vg">X1</span><span class="p">;</span><span class="vg">N$</span><span class="p">;</span><span class="s2">&quot;/HR&quot;</span>
+</span><span class='line'><span class="nl">1045</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">1100</span>
+</span><span class='line'><span class="nl">1050</span><span class="w"> </span><span class="kr">PRINT</span>
+</span><span class='line'><span class="nl">1055</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;YOU HAVE BEEN LOST IN SPACE WITH NO HOPE OF RECOVERY.&quot;</span>
+</span><span class='line'><span class="nl">1060</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">1100</span>
+</span><span class='line'><span class="nl">1065</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;YOU ARE DOWN SAFELY - &quot;</span>
+</span><span class='line'><span class="nl">1075</span><span class="w"> </span><span class="kr">PRINT</span>
+</span><span class='line'><span class="nl">1080</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;BUT MISSED THE LANDING SITE BY&quot;</span><span class="p">;</span><span class="kr">ABS</span><span class="p">(</span><span class="vg">D</span><span class="o">/</span><span class="vg">G5</span><span class="p">);</span><span class="vg">N$</span><span class="p">;</span><span class="s2">&quot;.&quot;</span>
+</span><span class='line'><span class="nl">1085</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">1100</span>
+</span><span class='line'><span class="nl">1090</span><span class="w"> </span><span class="kr">PRINT</span>
+</span><span class='line'><span class="nl">1095</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;MISSION ABENDED&quot;</span>
+</span><span class='line'><span class="nl">1100</span><span class="w"> </span><span class="kr">PRINT</span>
+</span><span class='line'><span class="nl">1105</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;DO YOU WANT TO TRY IT AGAIN (YES/NO)?&quot;</span>
+</span><span class='line'><span class="nl">1110</span><span class="w"> </span><span class="kr">INPUT</span><span class="w"> </span><span class="vg">Z$</span>
+</span><span class='line'><span class="nl">1115</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">Z$</span><span class="o">=</span><span class="s2">&quot;YES&quot;</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">20</span>
+</span><span class='line'><span class="nl">1120</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">Z$</span><span class="o">=</span><span class="s2">&quot;NO&quot;</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">1130</span>
+</span><span class='line'><span class="nl">1125</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">1105</span>
+</span><span class='line'><span class="nl">1130</span><span class="w"> </span><span class="kr">PRINT</span>
+</span><span class='line'><span class="nl">1135</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;TOO BAD, THE SPACE PROGRAM HATES TO LOSE EXPERIENCED&quot;</span>
+</span><span class='line'><span class="nl">1140</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;ASTRONAUTS.&quot;</span>
+</span><span class='line'><span class="nl">1145</span><span class="w"> </span><span class="kr">STOP</span>
+</span><span class='line'><span class="nl">1150</span><span class="w"> </span><span class="kr">PRINT</span>
+</span><span class='line'><span class="nl">1155</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;OK, DO YOU WANT THE COMPLETE INSTRUCTIONS OR THE INPUT -&quot;</span>
+</span><span class='line'><span class="nl">1160</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;OUTPUT STATEMENTS?&quot;</span>
+</span><span class='line'><span class="nl">1165</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;1=COMPLETE INSTRUCTIONS&quot;</span>
+</span><span class='line'><span class="nl">1170</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;2=INPUT-OUTPUT STATEMENTS&quot;</span>
+</span><span class='line'><span class="nl">1175</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;3=NEITHER&quot;</span>
+</span><span class='line'><span class="nl">1180</span><span class="w"> </span><span class="kr">INPUT</span><span class="w"> </span><span class="vg">B1</span>
+</span><span class='line'><span class="nl">1185</span><span class="w"> </span><span class="vg">Q$</span><span class="o">=</span><span class="s2">&quot;NO&quot;</span>
+</span><span class='line'><span class="nl">1190</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">B1</span><span class="o">=</span><span class="il">1</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">205</span>
+</span><span class='line'><span class="nl">1195</span><span class="w"> </span><span class="vg">Q$</span><span class="o">=</span><span class="s2">&quot;YES&quot;</span>
+</span><span class='line'><span class="nl">1200</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">B1</span><span class="o">=</span><span class="il">2</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">190</span>
+</span><span class='line'><span class="nl">1205</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">B1</span><span class="o">=</span><span class="il">3</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">190</span>
+</span><span class='line'><span class="nl">1210</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">1165</span>
+</span><span class='line'><span class="nl">1215</span><span class="w"> </span><span class="kr">END</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&hellip; and the <em>delightful</em> gameplay (you&rsquo;ll have to scroll a bit to the right to see the whole screenful):</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>go run lander.go
+</span><span class='line'>
+</span><span class='line'>Welcome to the Lunar Landing Simulation!
+</span><span class='line'>--------------------------------------------------------------
+</span><span class='line'>
+</span><span class='line'>Do you want instructions ? <span class="o">(</span>enter <span class="s1">&#39;y&#39;</span> or <span class="s1">&#39;n&#39;</span><span class="o">)</span>: y
+</span><span class='line'>You are landing on the moon and have taken over manual control 499.33 feet above a good landing spot. You have a downward velocity of 49.17 ft/sec. 114.86 units of fuel remain.
+</span><span class='line'>
+</span><span class='line'>Here are the rules that govern your space vehicle:
+</span><span class='line'><span class="o">(</span>1<span class="o">)</span> After each second, the height, velocity and remaining fuel will be reported.
+</span><span class='line'><span class="o">(</span>2<span class="o">)</span> You will enter the number of units of fuel to burn during the next second. Each unit will slow your descent by <span class="m">1</span> ft/sec <span class="o">(</span>at a prompt showing <span class="s1">&#39;?&#39;</span><span class="o">)</span>
+</span><span class='line'><span class="o">(</span>3<span class="o">)</span> The maximum thrust of your engine is <span class="m">30</span> ft/sec/sec, or <span class="m">30</span> units of fuel per second.
+</span><span class='line'><span class="o">(</span>4<span class="o">)</span> When you contact the lunar surface, you will be given a report of your landing speed and remaining fuel.
+</span><span class='line'><span class="o">(</span>5<span class="o">)</span> If you run out of fuel, you will no longer be prompted, but the second-by-second report will <span class="k">continue</span>.
+</span><span class='line'><span class="o">(</span>6<span class="o">)</span> You may enter a number greater than the total amount of fuel remaining to indicate that you want to use all your fuel.
+</span><span class='line'>
+</span><span class='line'>... beginning landing procedure ...
+</span><span class='line'>
+</span><span class='line'>GOOD LUCK!
+</span><span class='line'>
+</span><span class='line'>Seconds Height     Speed     Fuel     <span class="p">|</span>    Plot of Distance
+</span><span class='line'><span class="m">0</span>   499.33     49.17    114.86    <span class="p">|</span>                                                  *
+</span><span class='line'>? 30
+</span><span class='line'><span class="m">1</span>   462.52     24.47     84.86    <span class="p">|</span>                                               *
+</span><span class='line'>? 20
+</span><span class='line'><span class="m">2</span>   445.40      9.77     64.86    <span class="p">|</span>                                             *
+</span><span class='line'>? 10
+</span><span class='line'><span class="m">3</span>   437.98      5.07     54.86    <span class="p">|</span>                                            *
+</span><span class='line'>? 0
+</span><span class='line'><span class="m">4</span>   430.27     10.37     54.86    <span class="p">|</span>                                            *
+</span><span class='line'>? 0
+</span><span class='line'><span class="m">5</span>   417.25     15.67     54.86    <span class="p">|</span>                                          *
+</span><span class='line'>? 0
+</span><span class='line'><span class="m">6</span>   398.94     20.97     54.86    <span class="p">|</span>                                        *
+</span><span class='line'>? 0
+</span><span class='line'><span class="m">7</span>   375.32     26.27     54.86    <span class="p">|</span>                                      *
+</span><span class='line'>? 10
+</span><span class='line'><span class="m">8</span>   351.40     21.57     44.86    <span class="p">|</span>                                    *
+</span><span class='line'>? 0
+</span><span class='line'><span class="m">9</span>   327.19     26.87     44.86    <span class="p">|</span>                                 *
+</span><span class='line'>? 0
+</span><span class='line'><span class="m">10</span>   297.67     32.17     44.86    <span class="p">|</span>                              *
+</span><span class='line'>? 10
+</span><span class='line'><span class="m">11</span>   267.85     27.47     34.86    <span class="p">|</span>                           *
+</span><span class='line'>? 0
+</span><span class='line'><span class="m">12</span>   237.74     32.77     34.86    <span class="p">|</span>                        *
+</span><span class='line'>? 10
+</span><span class='line'><span class="m">13</span>   207.32     28.07     24.86    <span class="p">|</span>                     *
+</span><span class='line'>? 10
+</span><span class='line'><span class="m">14</span>   181.60     23.37     14.86    <span class="p">|</span>                   *
+</span><span class='line'>? 5
+</span><span class='line'><span class="m">15</span>   158.09     23.67      9.86    <span class="p">|</span>                *
+</span><span class='line'>? 10
+</span><span class='line'>***   OUT OF FUEL   ***
+</span><span class='line'><span class="m">16</span>   136.70     19.11      0.00    <span class="p">|</span>              *
+</span><span class='line'><span class="m">17</span>   114.94     24.41      0.00    <span class="p">|</span>            *
+</span><span class='line'><span class="m">18</span>    87.89     29.71      0.00    <span class="p">|</span>         *
+</span><span class='line'><span class="m">19</span>    55.53     35.01      0.00    <span class="p">|</span>      *
+</span><span class='line'><span class="m">20</span>    17.87     40.31      0.00    <span class="p">|</span>  *
+</span><span class='line'>
+</span><span class='line'>*** CONTACT ***
+</span><span class='line'>
+</span><span class='line'>Touchdown at <span class="m">21</span> seconds.
+</span><span class='line'>Landing <span class="nv">velocity</span> <span class="o">=</span> 45.61 ft/sec.
+</span><span class='line'>
+</span><span class='line'>Sorry, you didn<span class="err">&#39;</span>t make it. Condolences will be sent to your next of kin ...
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>As always, copy-paste and try it out!</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-01-20T02:08:35+00:00" pubdate data-updated="true">Jan 20<sup>th</sup>, 2015</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/games/'>games</a>, <a class='category' href='/blog/categories/golang/'>golang</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -6663,410 +7574,6 @@
 
 
 	<a class='category' href='/blog/categories/golang/'>golang</a>, <a class='category' href='/blog/categories/nlp/'>nlp</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2014/12/27/daily-programming-logs-down-the-river/">
-		
-			Daily Programming: Logs Down the River</a>
-	</h2>
-	<div class="entry-content">
-		<p>Found <a href="http://www.reddit.com/r/dailyprogrammer/comments/2lljyq/11052014_challenge_187_hard_lumberjack_floating/">this problem</a> from about a month ago. I did a sloppy job on this one &mdash; it&rsquo;s correct, but mostly straight-line &ldquo;C &ndash; style&rdquo; code. I&rsquo;ll come up with a better way to do this later, <em>promise</em>. Meanwhile, here&rsquo;s the code.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-<span class='line-number'>72</span>
-<span class='line-number'>73</span>
-<span class='line-number'>74</span>
-<span class='line-number'>75</span>
-<span class='line-number'>76</span>
-<span class='line-number'>77</span>
-<span class='line-number'>78</span>
-<span class='line-number'>79</span>
-<span class='line-number'>80</span>
-<span class='line-number'>81</span>
-<span class='line-number'>82</span>
-<span class='line-number'>83</span>
-<span class='line-number'>84</span>
-<span class='line-number'>85</span>
-<span class='line-number'>86</span>
-<span class='line-number'>87</span>
-<span class='line-number'>88</span>
-<span class='line-number'>89</span>
-<span class='line-number'>90</span>
-<span class='line-number'>91</span>
-<span class='line-number'>92</span>
-<span class='line-number'>93</span>
-<span class='line-number'>94</span>
-<span class='line-number'>95</span>
-<span class='line-number'>96</span>
-<span class='line-number'>97</span>
-<span class='line-number'>98</span>
-<span class='line-number'>99</span>
-<span class='line-number'>100</span>
-<span class='line-number'>101</span>
-<span class='line-number'>102</span>
-<span class='line-number'>103</span>
-<span class='line-number'>104</span>
-<span class='line-number'>105</span>
-<span class='line-number'>106</span>
-<span class='line-number'>107</span>
-<span class='line-number'>108</span>
-<span class='line-number'>109</span>
-<span class='line-number'>110</span>
-<span class='line-number'>111</span>
-<span class='line-number'>112</span>
-<span class='line-number'>113</span>
-<span class='line-number'>114</span>
-<span class='line-number'>115</span>
-<span class='line-number'>116</span>
-<span class='line-number'>117</span>
-<span class='line-number'>118</span>
-<span class='line-number'>119</span>
-<span class='line-number'>120</span>
-<span class='line-number'>121</span>
-<span class='line-number'>122</span>
-<span class='line-number'>123</span>
-<span class='line-number'>124</span>
-<span class='line-number'>125</span>
-<span class='line-number'>126</span>
-<span class='line-number'>127</span>
-<span class='line-number'>128</span>
-<span class='line-number'>129</span>
-<span class='line-number'>130</span>
-<span class='line-number'>131</span>
-<span class='line-number'>132</span>
-<span class='line-number'>133</span>
-<span class='line-number'>134</span>
-<span class='line-number'>135</span>
-<span class='line-number'>136</span>
-<span class='line-number'>137</span>
-<span class='line-number'>138</span>
-<span class='line-number'>139</span>
-<span class='line-number'>140</span>
-<span class='line-number'>141</span>
-<span class='line-number'>142</span>
-<span class='line-number'>143</span>
-<span class='line-number'>144</span>
-<span class='line-number'>145</span>
-</pre></td><td class='code'><pre><code class='go'><span class='line'><span class="kn">package</span> <span class="nx">main</span>
-</span><span class='line'>
-</span><span class='line'><span class="kn">import</span> <span class="s">&quot;bufio&quot;</span>
-</span><span class='line'><span class="kn">import</span> <span class="s">&quot;fmt&quot;</span>
-</span><span class='line'><span class="kn">import</span> <span class="s">&quot;os&quot;</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">type</span> <span class="nx">nodelabel</span> <span class="kt">uint8</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">type</span> <span class="nx">link</span> <span class="kd">struct</span> <span class="p">{</span>
-</span><span class='line'>  <span class="nx">next</span>      <span class="o">*</span><span class="nx">node</span>
-</span><span class='line'>  <span class="nx">available</span> <span class="kt">int</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">type</span> <span class="nx">node</span> <span class="kd">struct</span> <span class="p">{</span>
-</span><span class='line'>  <span class="nx">label</span>    <span class="nx">nodelabel</span>
-</span><span class='line'>  <span class="nx">links</span>    <span class="p">[]</span><span class="nx">link</span>
-</span><span class='line'>  <span class="nx">hops</span>     <span class="kt">int</span>
-</span><span class='line'>  <span class="nx">capacity</span> <span class="kt">int</span>
-</span><span class='line'>  <span class="nx">isFinal</span>  <span class="kt">bool</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">type</span> <span class="nx">nodeset</span> <span class="kd">map</span><span class="p">[</span><span class="nx">nodelabel</span><span class="p">]</span><span class="o">*</span><span class="nx">node</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>  <span class="nx">nodes</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="nx">nodeset</span><span class="p">)</span>
-</span><span class='line'>  <span class="nx">scanner</span> <span class="o">:=</span> <span class="nx">bufio</span><span class="p">.</span><span class="nx">NewScanner</span><span class="p">(</span><span class="nx">os</span><span class="p">.</span><span class="nx">Stdin</span><span class="p">)</span>
-</span><span class='line'>  <span class="kd">var</span> <span class="nx">numNodes</span> <span class="kt">int</span>
-</span><span class='line'>  <span class="k">for</span> <span class="nx">scanner</span><span class="p">.</span><span class="nx">Scan</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>      <span class="nx">line</span> <span class="o">:=</span> <span class="nx">scanner</span><span class="p">.</span><span class="nx">Text</span><span class="p">()</span>
-</span><span class='line'>      <span class="k">if</span> <span class="nx">line</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;#&#39;</span> <span class="p">{</span>
-</span><span class='line'>          <span class="k">continue</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>      <span class="k">if</span> <span class="nx">numNodes</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
-</span><span class='line'>          <span class="nx">fmt</span><span class="p">.</span><span class="nx">Sscanln</span><span class="p">(</span><span class="nx">line</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">numNodes</span><span class="p">)</span>
-</span><span class='line'>      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</span><span class='line'>          <span class="kd">var</span> <span class="nx">startNode</span><span class="p">,</span> <span class="nx">endNode</span> <span class="nx">nodelabel</span>
-</span><span class='line'>          <span class="kd">var</span> <span class="nx">capacity</span> <span class="kt">int</span>
-</span><span class='line'>          <span class="nx">fmt</span><span class="p">.</span><span class="nx">Sscanf</span><span class="p">(</span><span class="nx">line</span><span class="p">,</span> <span class="s">&quot;%c %c %d&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">startNode</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">endNode</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">capacity</span><span class="p">)</span>
-</span><span class='line'>          <span class="nx">n</span> <span class="o">:=</span> <span class="nx">nodes</span><span class="p">.</span><span class="nx">getNode</span><span class="p">(</span><span class="nx">startNode</span><span class="p">)</span>
-</span><span class='line'>          <span class="nx">next</span> <span class="o">:=</span> <span class="nx">nodes</span><span class="p">.</span><span class="nx">getNode</span><span class="p">(</span><span class="nx">endNode</span><span class="p">)</span>
-</span><span class='line'>          <span class="nx">l</span> <span class="o">:=</span> <span class="nx">link</span><span class="p">{</span><span class="nx">next</span><span class="p">:</span> <span class="nx">next</span><span class="p">,</span> <span class="nx">available</span><span class="p">:</span> <span class="nx">capacity</span><span class="p">}</span>
-</span><span class='line'>          <span class="nx">n</span><span class="p">.</span><span class="nx">links</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">n</span><span class="p">.</span><span class="nx">links</span><span class="p">,</span> <span class="nx">l</span><span class="p">)</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="nx">finalNodeLabel</span> <span class="o">:=</span> <span class="nx">nodelabel</span><span class="p">(</span><span class="sc">&#39;A&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="nx">nodelabel</span><span class="p">(</span><span class="nx">numNodes</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nx">startNode</span> <span class="o">:=</span> <span class="nx">nodes</span><span class="p">.</span><span class="nx">getNode</span><span class="p">(</span><span class="sc">&#39;A&#39;</span><span class="p">)</span>
-</span><span class='line'>  <span class="nx">numLogs</span> <span class="o">:=</span> <span class="mi">0</span>
-</span><span class='line'>  <span class="k">for</span> <span class="p">{</span>
-</span><span class='line'>      <span class="nx">nodes</span><span class="p">.</span><span class="nx">updateHopsAndCapacities</span><span class="p">(</span><span class="nx">finalNodeLabel</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="k">if</span> <span class="nx">startNode</span><span class="p">.</span><span class="nx">capacity</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
-</span><span class='line'>          <span class="k">break</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>      <span class="nx">path</span> <span class="o">:=</span> <span class="nx">startNode</span><span class="p">.</span><span class="nx">sendOneLog</span><span class="p">()</span>
-</span><span class='line'>      <span class="nx">numLogs</span><span class="o">++</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="c1">// Print out path (in reverse)</span>
-</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;Log #%d takes &quot;</span><span class="p">,</span> <span class="nx">numLogs</span><span class="p">)</span>
-</span><span class='line'>      <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="nb">len</span><span class="p">(</span><span class="nx">path</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&gt;</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">--</span> <span class="p">{</span>
-</span><span class='line'>          <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;%c -&gt; &quot;</span><span class="p">,</span> <span class="nx">path</span><span class="p">[</span><span class="nx">i</span><span class="p">])</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;%c -- path of %d\n&quot;</span><span class="p">,</span> <span class="nx">path</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">len</span><span class="p">(</span><span class="nx">path</span><span class="p">))</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;River is now full. We could send %d logs\n&quot;</span><span class="p">,</span> <span class="nx">numLogs</span><span class="p">)</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">func</span> <span class="p">(</span><span class="nx">nodes</span> <span class="nx">nodeset</span><span class="p">)</span> <span class="nx">updateHopsAndCapacities</span><span class="p">(</span><span class="nx">finalNodeLabel</span> <span class="nx">nodelabel</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">n</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">nodes</span> <span class="p">{</span>
-</span><span class='line'>      <span class="nx">n</span><span class="p">.</span><span class="nx">hops</span> <span class="p">=</span> <span class="o">-</span><span class="mi">1</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">n</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">nodes</span> <span class="p">{</span>
-</span><span class='line'>      <span class="nx">n</span><span class="p">.</span><span class="nx">computeHops</span><span class="p">(</span><span class="nx">finalNodeLabel</span><span class="p">)</span>
-</span><span class='line'>      <span class="nx">n</span><span class="p">.</span><span class="nx">capacity</span> <span class="p">=</span> <span class="mi">0</span>
-</span><span class='line'>      <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">l</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">n</span><span class="p">.</span><span class="nx">links</span> <span class="p">{</span>
-</span><span class='line'>          <span class="nx">n</span><span class="p">.</span><span class="nx">capacity</span> <span class="o">+=</span> <span class="nx">l</span><span class="p">.</span><span class="nx">available</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">func</span> <span class="p">(</span><span class="nx">n</span> <span class="o">*</span><span class="nx">node</span><span class="p">)</span> <span class="nx">sendOneLog</span><span class="p">()</span> <span class="p">[]</span><span class="nx">nodelabel</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">if</span> <span class="nx">n</span><span class="p">.</span><span class="nx">isFinal</span> <span class="p">{</span>
-</span><span class='line'>      <span class="nx">singlePath</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="nx">nodelabel</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-</span><span class='line'>      <span class="nx">singlePath</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">=</span> <span class="nx">n</span><span class="p">.</span><span class="nx">label</span>
-</span><span class='line'>      <span class="k">return</span> <span class="nx">singlePath</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="c1">// Pick shortest path</span>
-</span><span class='line'>  <span class="nx">minHops</span> <span class="o">:=</span> <span class="o">-</span><span class="mi">1</span>
-</span><span class='line'>  <span class="kd">var</span> <span class="nx">nextLink</span> <span class="o">*</span><span class="nx">link</span>
-</span><span class='line'>  <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">n</span><span class="p">.</span><span class="nx">links</span><span class="p">);</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
-</span><span class='line'>      <span class="nx">l</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">n</span><span class="p">.</span><span class="nx">links</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span>
-</span><span class='line'>      <span class="k">if</span> <span class="p">!</span><span class="nx">l</span><span class="p">.</span><span class="nx">next</span><span class="p">.</span><span class="nx">isFinal</span> <span class="o">&amp;&amp;</span> <span class="nx">l</span><span class="p">.</span><span class="nx">next</span><span class="p">.</span><span class="nx">capacity</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
-</span><span class='line'>          <span class="k">continue</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>      <span class="k">if</span> <span class="nx">minHops</span> <span class="p">&lt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="p">(</span><span class="nx">l</span><span class="p">.</span><span class="nx">available</span> <span class="p">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nx">l</span><span class="p">.</span><span class="nx">next</span><span class="p">.</span><span class="nx">hops</span> <span class="p">&lt;</span> <span class="nx">minHops</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>          <span class="nx">minHops</span> <span class="p">=</span> <span class="nx">l</span><span class="p">.</span><span class="nx">next</span><span class="p">.</span><span class="nx">hops</span>
-</span><span class='line'>          <span class="nx">nextLink</span> <span class="p">=</span> <span class="nx">l</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nx">path</span> <span class="o">:=</span> <span class="nx">nextLink</span><span class="p">.</span><span class="nx">next</span><span class="p">.</span><span class="nx">sendOneLog</span><span class="p">()</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="c1">// Update current node and link</span>
-</span><span class='line'>  <span class="nx">n</span><span class="p">.</span><span class="nx">capacity</span><span class="o">--</span>
-</span><span class='line'>  <span class="nx">nextLink</span><span class="p">.</span><span class="nx">available</span><span class="o">--</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="c1">// TODO: avoid making a copy here (!)</span>
-</span><span class='line'>  <span class="nx">newPath</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="nx">nodelabel</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nx">path</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
-</span><span class='line'>  <span class="nb">copy</span><span class="p">(</span><span class="nx">newPath</span><span class="p">,</span> <span class="nx">path</span><span class="p">)</span>
-</span><span class='line'>  <span class="nx">newPath</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="nx">path</span><span class="p">)]</span> <span class="p">=</span> <span class="nx">n</span><span class="p">.</span><span class="nx">label</span>
-</span><span class='line'>  <span class="k">return</span> <span class="nx">newPath</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">func</span> <span class="p">(</span><span class="nx">nodes</span> <span class="nx">nodeset</span><span class="p">)</span> <span class="nx">getNode</span><span class="p">(</span><span class="nx">r</span> <span class="nx">nodelabel</span><span class="p">)</span> <span class="o">*</span><span class="nx">node</span> <span class="p">{</span>
-</span><span class='line'>  <span class="nx">n</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">nodes</span><span class="p">[</span><span class="nx">r</span><span class="p">]</span>
-</span><span class='line'>  <span class="k">if</span> <span class="p">!</span><span class="nx">ok</span> <span class="p">{</span>
-</span><span class='line'>      <span class="nx">n</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">node</span><span class="p">{</span><span class="nx">label</span><span class="p">:</span> <span class="nx">r</span><span class="p">,</span> <span class="nx">isFinal</span><span class="p">:</span> <span class="kc">false</span><span class="p">}</span>
-</span><span class='line'>      <span class="nx">nodes</span><span class="p">[</span><span class="nx">r</span><span class="p">]</span> <span class="p">=</span> <span class="nx">n</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="k">return</span> <span class="nx">n</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">func</span> <span class="p">(</span><span class="nx">n</span> <span class="o">*</span><span class="nx">node</span><span class="p">)</span> <span class="nx">computeHops</span><span class="p">(</span><span class="nx">finish</span> <span class="nx">nodelabel</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">if</span> <span class="nx">n</span><span class="p">.</span><span class="nx">hops</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">return</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="k">if</span> <span class="nx">n</span><span class="p">.</span><span class="nx">label</span> <span class="o">==</span> <span class="nx">finish</span> <span class="p">{</span>
-</span><span class='line'>      <span class="nx">n</span><span class="p">.</span><span class="nx">hops</span> <span class="p">=</span> <span class="mi">0</span>
-</span><span class='line'>      <span class="nx">n</span><span class="p">.</span><span class="nx">isFinal</span> <span class="p">=</span> <span class="kc">true</span>
-</span><span class='line'>      <span class="k">return</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="nx">minHops</span> <span class="o">:=</span> <span class="o">-</span><span class="mi">1</span>
-</span><span class='line'>  <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">l</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">n</span><span class="p">.</span><span class="nx">links</span> <span class="p">{</span>
-</span><span class='line'>      <span class="nx">l</span><span class="p">.</span><span class="nx">next</span><span class="p">.</span><span class="nx">computeHops</span><span class="p">(</span><span class="nx">finish</span><span class="p">)</span>
-</span><span class='line'>      <span class="k">if</span> <span class="nx">l</span><span class="p">.</span><span class="nx">available</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
-</span><span class='line'>          <span class="k">continue</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>      <span class="k">if</span> <span class="nx">minHops</span> <span class="p">&lt;</span> <span class="mi">0</span> <span class="o">||</span>
-</span><span class='line'>          <span class="nx">l</span><span class="p">.</span><span class="nx">next</span><span class="p">.</span><span class="nx">hops</span> <span class="p">&lt;</span> <span class="nx">minHops</span> <span class="p">{</span>
-</span><span class='line'>          <span class="nx">minHops</span> <span class="p">=</span> <span class="nx">l</span><span class="p">.</span><span class="nx">next</span><span class="p">.</span><span class="nx">hops</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="nx">n</span><span class="p">.</span><span class="nx">hops</span> <span class="p">=</span> <span class="nx">minHops</span> <span class="o">+</span> <span class="mi">1</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>It was easy to read in a formatted text file, so I did that instead of storing the specified routes and weights as a data literal. Here is the input:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="c"># Format:</span>
-</span><span class='line'><span class="c"># Number of nodes on the first line</span>
-</span><span class='line'><span class="c"># Each subsequent line contains</span>
-</span><span class='line'><span class="c"># &lt;start node&gt; &lt;end node&gt; capacity</span>
-</span><span class='line'><span class="c"># Nodes are labelled starting with &#39;A&#39;</span>
-</span><span class='line'>9
-</span><span class='line'>A B 6
-</span><span class='line'>A C 2
-</span><span class='line'>B E 3
-</span><span class='line'>B D 3
-</span><span class='line'>D C 2
-</span><span class='line'>D F 1
-</span><span class='line'>C G 5
-</span><span class='line'>E H 1
-</span><span class='line'>E I 2
-</span><span class='line'>F H 1
-</span><span class='line'>G H 2
-</span><span class='line'>G I 2
-</span><span class='line'>H I 4
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>And here is how the program runs:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>cat /tmp/logroutes  <span class="p">|</span> go run src/reddit-prog/log-routes.go
-</span><span class='line'>
-</span><span class='line'>Log <span class="c">#1 takes A -&gt; B -&gt; E -&gt; I -- path of 4</span>
-</span><span class='line'>Log <span class="c">#2 takes A -&gt; B -&gt; E -&gt; I -- path of 4</span>
-</span><span class='line'>Log <span class="c">#3 takes A -&gt; C -&gt; G -&gt; I -- path of 4</span>
-</span><span class='line'>Log <span class="c">#4 takes A -&gt; C -&gt; G -&gt; I -- path of 4</span>
-</span><span class='line'>Log <span class="c">#5 takes A -&gt; B -&gt; E -&gt; H -&gt; I -- path of 5</span>
-</span><span class='line'>Log <span class="c">#6 takes A -&gt; B -&gt; D -&gt; F -&gt; H -&gt; I -- path of 6</span>
-</span><span class='line'>Log <span class="c">#7 takes A -&gt; B -&gt; D -&gt; C -&gt; G -&gt; H -&gt; I -- path of 7</span>
-</span><span class='line'>Log <span class="c">#8 takes A -&gt; B -&gt; D -&gt; C -&gt; G -&gt; H -&gt; I -- path of 7</span>
-</span><span class='line'>River is now full. We could send <span class="m">8</span> logs.
-</span></code></pre></td></tr></table></div></figure>
-
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-12-27T02:11:28+00:00" pubdate data-updated="true">Dec 27<sup>th</sup>, 2014</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/alwaysbecoding/'>alwaysbecoding</a>, <a class='category' href='/blog/categories/glang/'>glang</a>
 
 
 </div>

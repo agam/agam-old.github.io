@@ -4,7 +4,7 @@
   <title><![CDATA[Category: math | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/math/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-02-12T16:41:53+00:00</updated>
+  <updated>2015-02-14T18:49:39+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -37,7 +37,7 @@
 
 <p><em>P.S. Emacs support for Haskell is pretty sweet. Here&rsquo;s a n00b-level screenshot showing a &ldquo;SLIME-style&rdquo; ghci session</em></p>
 
-<p>{% img center /images/haskell-emacs-ghci.png %}</p>
+<p><img class="center" src="/images/haskell-emacs-ghci.png"></p>
 
 <p><strong>Update:</strong> Someone suggested I should read <em>a more recent</em> book, <a href="http://www.cs.nott.ac.uk/~gmh/book.html">Programming in Haskell</a> by Graham Hutton, so I guess I&rsquo;ll do that first.</p>
 ]]></content>

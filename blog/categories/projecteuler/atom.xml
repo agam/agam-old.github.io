@@ -4,7 +4,7 @@
   <title><![CDATA[Category: projecteuler | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/projecteuler/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-02-12T16:41:53+00:00</updated>
+  <updated>2015-02-14T18:49:39+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,98 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Euler 27: Quadratic Primes]]></title>
+    <link href="http://agam.github.io/blog/2015/02/14/euler-27-quadratic-primes/"/>
+    <updated>2015-02-14T18:43:24+00:00</updated>
+    <id>http://agam.github.io/blog/2015/02/14/euler-27-quadratic-primes</id>
+    <content type="html"><![CDATA[<p><strong>Statutory Warning</strong>: Spoilers ahead</p>
+
+<p><em>This turned out to be really simple, though I went through a phase of churning out complicated solutions because of a stupid mistake.</em></p>
+
+<p>I didn&rsquo;t preserve intermediate versions, so here is the final solution:</p>
+
+<p>```haskell
+import qualified Data.List as L
+import qualified Data.Vector as V
+import qualified Data.Function as F</p>
+
+<p>sieve :: Int &ndash;> [Int] &ndash;> [Int]
+sieve num list =
+  if null list
+  then [num]
+  else let rest = filter (\x &ndash;> x <code>mod</code> num > 0) list</p>
+
+<pre><code>   in
+    num : sieve (head rest) (tail rest)
+</code></pre>
+
+<p>eratosthenes :: Int &ndash;> [Int]
+eratosthenes maxNum = sieve 2 [3 .. maxNum]</p>
+
+<p>allPrimes :: Int &ndash;> V.Vector Int
+allPrimes maxNum = V.fromList $ eratosthenes maxNum</p>
+
+<p>eulerEqn :: Int &ndash;> Int &ndash;> Int &ndash;> Int
+eulerEqn a b n = n * n + a * n + b</p>
+
+<p>&mdash; TODO(agam): replace with the &ldquo;standard&rdquo; way to do binary search
+binSearch :: V.Vector Int &ndash;> Int &ndash;> Int &ndash;> Int &ndash;> Bool
+binSearch arr min max elem =
+  let low = arr V.! min</p>
+
+<pre><code>  high = arr V.! max
+</code></pre>
+
+<p>  in
+   if max &ndash; min &lt; 2
+   then if low == elem</p>
+
+<pre><code>    then True
+    else False
+</code></pre>
+
+<p>   else let mid = div (min + max) 2</p>
+
+<pre><code>        midElem = arr V.! mid
+    in
+     if midElem &gt; elem
+     then binSearch arr min mid elem
+     else binSearch arr mid max elem
+</code></pre>
+
+<p>consecutivePrimes a b primes start length =
+  let p = eulerEqn a b start</p>
+
+<pre><code>  l = V.length primes
+  isPrime = binSearch primes 0 l p
+</code></pre>
+
+<p>  in
+   if isPrime
+   then consecutivePrimes a b primes (start + 1) (length + 1)
+   else length</p>
+
+<p>numPrimes a b primes = consecutivePrimes a b primes 0 0</p>
+
+<p>euler27 maxNum =
+  let ap = allPrimes maxNum</p>
+
+<pre><code>  primeLengths = [(a * b, numPrimes a b ap) | a &lt;- [-1000 .. 1000], b &lt;- [-1000 .. 1000]]
+</code></pre>
+
+<p>  in
+   L.maximumBy (F.on compare snd) primeLengths
+```</p>
+
+<p>When I ran this (i.e. <code>euler27 1000</code>) I got the correct answer the first time! But <em>I didn&rsquo;t see it</em>. Instead, I entered the <em>second</em> value of the tuple, which is <em>not</em> the one asked for, and it was therefore <em>obviously</em> wrong. So I thought &ldquo;hmm, we&rsquo;re looking at some large repeating sequence among really large primes&rdquo;, and tried <code>euler27 100000</code> and <code>euler27 10000000</code>, with no luck.</p>
+
+<p>The last one kept running for hours and I killed it, and then came up with the idea of &ldquo;vectorizing everything&rdquo; &mdash; which was perhaps a good academic exercise but did absolutely <em>nothing</em> for the performance here.</p>
+
+<p>So I forgot about it for a while, then came back and ran <code>euler27 1000</code>, entered the <em>first</em> value of the tuple, and that was the end of this story.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Euler 26: Reciprocal Cycles]]></title>
@@ -725,113 +817,6 @@ divisors n = [x | x &lt;- [1 .. round $ sqrt $ fromIntegral n], n `mod` x == 0]
 <li><p>Haskell makes it very easy to quickly arrive at a <em>correct</em> solution, but the road from there to an <em>efficient</em> solution is less clear.</p></li>
 <li><p>The brevity of the notation helps, but I get a feeling it&rsquo;s also due to the single-letter variable names &mdash; which is all right (and indeed well-suited) for a tiny math problem, but unclear whether it&rsquo;ll hold up for code in a large-scale project.</p></li>
 <li><p>People usually jump to the <a href="">&ldquo;Programming Language shootout&rdquo;</a>, but if the code <em>there</em> is any indication, writing performant Haskell code is a dark art, and <em>the three-line quicksort is a devilish honeytrap</em>.</p></li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Euler 22: Scoring names ?]]></title>
-    <link href="http://agam.github.io/blog/2015/02/01/euler-22-scoring-names/"/>
-    <updated>2015-02-01T05:01:13+00:00</updated>
-    <id>http://agam.github.io/blog/2015/02/01/euler-22-scoring-names</id>
-    <content type="html"><![CDATA[<p>This one seemed simple but turned out to be a good showcase for a short haskell program (I&rsquo;m sure it can be shorter but IMHO that would probably approach <em>Perl-ness</em>)</p>
-
-<p>```haskell
-import qualified Data.Char as C
-import qualified Data.List as L
-import qualified Debug.Trace as T</p>
-
-<p>charValue c = C.ord (C.toUpper c) &ndash; C.ord &lsquo;A&rsquo; + 1</p>
-
-<p>nameValue n = sum $ map charValue n</p>
-
-<p>nameProduct (name, index) = index * nameValue name</p>
-
-<p>splitString c s =
-  case break (== c) s of</p>
-
-<pre><code>   ([], _:xs) -&gt; [xs]
-   (y, _:xs) -&gt; [y] ++ splitString c xs
-   (xs, []) -&gt; [xs]
-</code></pre>
-
-<p>getNameSum f =</p>
-
-<pre><code> let w = splitString ',' $ filter (/= '\"') f
- in
-    T.traceShow (length w)
-    sum $ map nameProduct $ zip (L.sort w) [1 .. ]
-</code></pre>
-
-<p>getNames fileName =
-  do</p>
-
-<pre><code> f &lt;- readFile fileName
- return $ getNameSum f
-</code></pre>
-
-<p>```</p>
-
-<p>I left the `traceShow' in there to give an example of the debugging I relied upon. Other than that, it was enjoyable, and I really do appreciate how much longer this would have been in most other languages.</p>
-
-<p><strong>Notes:</strong></p>
-
-<ul>
-<li><p>I skipped the part about <em>sorting</em> the input and spent a long time (<em>unnecessarily!</em>) complaining about the <em>black-boxness</em> of the &ldquo;IO&rdquo;</p></li>
-<li><p>I suspected the initial version had an off-by-one error; luckily <code>awk</code> was on hand to sanity check the number of words:</p></li>
-</ul>
-
-
-<p><code>sh
-$ cat /tmp/p022_names.txt | tr ',' ' ' | tr '"' ' ' | tr -s " " | awk 'BEGIN { RS = " " }; END { print NR }'
-5163
-</code></p>
-
-<ul>
-<li>Just to dump it out there, the <em>other</em> way of checking the soundness of the logic:</li>
-</ul>
-
-
-<p>```lisp
-(defun char-value &copy;
-  (1+ (&ndash; (char-code c)</p>
-
-<pre><code> (char-code #\A))))
-</code></pre>
-
-<p>(defun string-value (str)
-  (loop for c across (string-upcase str)</p>
-
-<pre><code>   sum (char-value c)))
-</code></pre>
-
-<p>(defun name-product (name index)
-  (* index</p>
-
-<pre><code> (string-value name)))
-</code></pre>
-
-<p>(defun range (n)
-  (loop for i from 1 to n</p>
-
-<pre><code> collect i))
-</code></pre>
-
-<p>(defun sum-names (names)
-  (reduce #&lsquo;+</p>
-
-<pre><code>  (mapcar #'name-product
-      names
-      (range (length names)))))
-</code></pre>
-
-<p>```</p>
-
-<p>&hellip; used (e.g.) as <code>(sum-names (list "foo" "bar"))</code></p>
-
-<ul>
-<li>For some reason, the code-formatter for Jekyll (<code>pygments</code>) is completely thrown off by the Haskell source above. Perhaps this post have been in &ldquo;literate code&rdquo;. Most likely it would have been procrastinated out of existence if attempted that way.</li>
 </ul>
 
 ]]></content>
