@@ -4,7 +4,7 @@
   <title><![CDATA[Category: projecteuler | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/projecteuler/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-02-14T18:49:39+00:00</updated>
+  <updated>2015-02-17T20:13:25+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,131 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Euler 28: Spiral diagonals]]></title>
+    <link href="http://agam.github.io/blog/2015/02/17/euler-28-spiral-diagonals/"/>
+    <updated>2015-02-17T19:33:10+00:00</updated>
+    <id>http://agam.github.io/blog/2015/02/17/euler-28-spiral-diagonals</id>
+    <content type="html"><![CDATA[<p>This problem afforded a chance to be lazy and have fun.</p>
+
+<p>There definitely is a pattern in the diagonals here: for a <code>3 x 3</code> matrix, the elements are 3, 5, 7, 9. For a <code>5 x 5</code> matrix, the additional elements are 13, 17, 21, 25.</p>
+
+<p>You can see these as being (1 + 2), (1 + 4), (1 + 6), (1 + 8), and then (1 + 2 + 2 + 8), (1 + 4 + 4 + 8), (1 + 6 + 6 + 8), (1 + 8 + 8 + 8).</p>
+
+<p>Similarly, for a <code>7 x 7</code> matrix, the numbers are 31, 37, 43, 49, which are (1 + 2 + 2 + 2 + 8 + 8 + 8), (1 + 4 + 4 + 4 + 8 + 8 + 8), (1 + 6 + 6 + 6 + 8 + 8 + 8), (1 + 8 + 8 + 8 + 8 + 8 + 8)</p>
+
+<p>On the other hand, the problem mentions a <code>1001 x 1001</code> matrix, which is <em>tiny</em>, so why bother with these patterns? Just create the matrix and sum up the diagonals directly! (It&rsquo;s <em>just</em> a million elements &hellip; now if it was a few orders of magnitude higher, it would be a different story)</p>
+
+<p>```haskell
+import qualified Data.List as L
+import qualified Data.Vector as V
+import qualified Data.Matrix as M
+import qualified Data.HashMap.Strict as H
+import Prelude hiding (Left,Right)</p>
+
+<p>&mdash; Euler 28: spiral int matrix</p>
+
+<p>data Direction = Down | Left | Right | Up deriving Show</p>
+
+<p>move :: (Int,Int) &ndash;> Direction &ndash;> (Int,Int)
+move oldPoint@(y,x) dir =
+  case dir of Down &ndash;> (y+1,x)</p>
+
+<pre><code>          Left -&gt; (y,x-1)
+          Right -&gt; (y,x+1)
+          Up -&gt; (y-1,x)
+</code></pre>
+
+<p>getSpiralMoves :: Int &ndash;> [Direction]
+getSpiralMoves n =
+  if n == 3
+  then [Down, Right, Up, Up, Left, Left, Down, Down]
+  else let prevMoves = getSpiralMoves (n-2)</p>
+
+<pre><code>       firstMove = [Down]
+       secondMove = take (n-2) $ repeat Right
+       thirdMove = take (n-1) $ repeat Up
+       fourthMove = take (n-1) $ repeat Left
+       fifthMove = take (n-1) $ repeat Down
+   in
+    prevMoves ++ firstMove ++ secondMove ++ thirdMove ++ fourthMove ++ fifthMove
+</code></pre>
+
+<p>getSpiralCoords :: Int &ndash;> [(Int,Int)]
+getSpiralCoords n =
+  let mid = div (n+1) 2</p>
+
+<pre><code>  start = (mid,mid)
+</code></pre>
+
+<p>  in
+   L.scanl move start $ getSpiralMoves n</p>
+
+<p>getCoordHash :: Int &ndash;> H.HashMap (Int,Int) Int
+getCoordHash n = H.fromList $ zip (getSpiralCoords n) [1..]</p>
+
+<p>genF :: H.HashMap (Int,Int) Int &ndash;> (Int, Int) &ndash;> Int
+genF h (i,j) = h H.! (i,j)</p>
+
+<p>getDiagElems :: M.Matrix Int &ndash;> Int &ndash;> Int
+getDiagElems mat n =
+  let leftDiag = sum $ [M.getElem i i mat | i &lt;&ndash; [1 .. n]]</p>
+
+<pre><code>  rightDiag = sum $ [M.getElem i (n + 1 - i) mat | i &lt;- [1 .. n]]
+  centerElem = let c = div (n+1) 2
+               in
+                M.getElem c c mat
+</code></pre>
+
+<p>  in
+   leftDiag + rightDiag &ndash; centerElem</p>
+
+<p>getSpiralMatrix :: Int &ndash;> M.Matrix Int
+getSpiralMatrix n = M.matrix n n $ genF $ getCoordHash n</p>
+
+<p>diagSum :: Int &ndash;> Int
+diagSum n = getDiagElems (getSpiralMatrix n) n
+```</p>
+
+<p>I added type signatures for every function, so here&rsquo;s a quick overview (this is terribly over-engineered, and turned out to be more of a way to get to know various Haskell datatypes than to actually solve this problem!):</p>
+
+<p><code>getSpiralMoves</code> translates the literal pattern of the square spiral into concrete steps and then <code>getSpiralCoords</code> converts these into <code>(i,j)</code> elements within the matrix. Since I use a <em>generating function</em> (in <code>getSpiralMatrix</code>) to create the matrix, I use a hash-map to store the value of each co-ordinate &hellip; and then <code>getDiagElems</code> iterates over the diagonal elements.</p>
+
+<p>The matrix does turn out as expected:</p>
+
+<p><code>haskell
+*Main&gt; getSpiralMatrix 7
+( 43 42 41 40 39 38 37 )
+( 44 21 20 19 18 17 36 )
+( 45 22  7  6  5 16 35 )
+( 46 23  8  1  4 15 34 )
+( 47 24  9  2  3 14 33 )
+( 48 25 10 11 12 13 32 )
+( 49 26 27 28 29 30 31 )
+</code></p>
+
+<p>This was a simple problem but I was surprised by how <em>short</em> the code was; I didn&rsquo;t write overly terse code, added lots of whitespace, indentation, extra lines, etc, and the whole piece was <em>still</em> just 60 lines!</p>
+
+<p><strong>Update</strong>: Fine, here&rsquo;s the simple solution too.</p>
+
+<p>For every <code>N x N</code> matrix (where <code>N</code> is odd), the diagonal elements are all the diagonal elements of the <code>N-2</code>-sized matrix, plus four more. And these four include <code>N^2</code> and three others, each being <code>(N-1)</code> less than the other. The base case is <code>1 x 1</code>, with a value of 1.</p>
+
+<p>```haskell
+euler28 :: Int &ndash;> Int
+euler28 1 = 1
+euler28 n = let sideDiff = n &ndash; 1</p>
+
+<pre><code>            sq = n ^ 2
+        in
+         euler28 (n-2) + 4 * sq - (1 + 2 + 3) * sideDiff
+</code></pre>
+
+<p>```</p>
+
+<p>&hellip; and then <code>euler28 1001</code> gives the same answer.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Euler 27: Quadratic Primes]]></title>
@@ -711,114 +836,6 @@ else match get_perm total index_size with
 </code></p>
 
 <p>&hellip; and it gave the same answer (and obviously, so did the Ocaml version). So a happy ending to this story, but a painful reminder of the fact that <strong>there are only two hard problems in computer science: naming, caching, and off-by-one errors.</strong></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Euler 23: Non-abundant sums]]></title>
-    <link href="http://agam.github.io/blog/2015/02/01/euler-23-non-abundant-sums/"/>
-    <updated>2015-02-01T19:01:00+00:00</updated>
-    <id>http://agam.github.io/blog/2015/02/01/euler-23-non-abundant-sums</id>
-    <content type="html"><![CDATA[<p>Had a slice of free time, so decided to look at the next problem. Here&rsquo;s the initial naive solution:</p>
-
-<p><code>``haskell
-divisors n = [x | x &lt;- [1 .. n-1], n</code>mod` x == 0]</p>
-
-<p>isAbundant n = n &lt; (sum $ divisors n)</p>
-
-<p>abundants n = filter isAbundant $ [1 .. n]</p>
-
-<p>expressSum z nums = not $ null [(x,y) | x &lt;&ndash; nums, y &lt;&ndash; nums, x + y == z]</p>
-
-<p>sumAbundants n =
-  let a = abundants n in</p>
-
-<pre><code>      sum $ filter (\x -&gt; not $ expressSum x a) [1 .. n]
-</code></pre>
-
-<p>```</p>
-
-<p>While it gave the correct answer, it did so in <code>3133.33</code> seconds, which is &hellip; embarrassing.</p>
-
-<p>This is just <em>too</em> inefficient, even the following &hellip;</p>
-
-<p>```lisp
-(defun divisors (n)
-  (loop for i from 1 below n</p>
-
-<pre><code> when (= 0 (mod n i))
-   collect i))
-</code></pre>
-
-<p>(defun abundantp (n)
-  (&lt; n</p>
-
-<pre><code> (reduce #'+ (divisors n))))
-</code></pre>
-
-<p>(defun abundants (n)
-  (loop for i from 1 below n</p>
-
-<pre><code> when (abundantp i)
-   collect i))
-</code></pre>
-
-<p>(defun possible-summands (z nums)
-  (loop for x in nums do</p>
-
-<pre><code>   (loop for y in nums
-  when (= z (+ x y)) do
-    (return-from possible-summands (cons x y)))))
-</code></pre>
-
-<p>(defun sum-abundants (n)
-  (let* ((ab (abundants n))</p>
-
-<pre><code> (summands 
-  (loop for i from 1 to n
-     when (null (possible-summands i ab))
-     collect i)))
-(reduce #'+ summands)))
-</code></pre>
-
-<p>```</p>
-
-<p>&hellip; takes no less than half as long, at <code>1329.168</code> seconds.</p>
-
-<p>BTW why is <code>28123</code> the upper limit for this sequence? I had no idea, and found <a href="http://mathschallenge.net/full/sum_of_two_abundant_numbers">this explanation</a> (and tangentially, <a href="http://mathschallenge.net/view/even_sum_of_two_abundant_numbers">this one</a> too).</p>
-
-<p>Anyway, I&rsquo;m ashamed to say I didn&rsquo;t put in the effort to learn how to profile Haskell programs (<em>next time ?</em>) and profiled the Lisp version instead, which showed that (<strong>duh</strong>) all the time was going in finding divisors. Obviously, we can just loop till the <em>square root of N</em> instead of looping <em>all the way to N</em>. After this change:</p>
-
-<p>```lisp
-(defun divisors (n)
-(declare (type fixnum n))
-  (loop for i from 1 below (floor (sqrt n))</p>
-
-<pre><code> when (= 0 (mod n i))
-   collect i))
-</code></pre>
-
-<p>```</p>
-
-<p>&hellip; it runs in <code>38 milliseconds</code> !!</p>
-
-<p>And a similar change to the Haskell version:</p>
-
-<p><code>haskell
-divisors :: Int -&gt; [Int]
-divisors n = [x | x &lt;- [1 .. round $ sqrt $ fromIntegral n], n `mod` x == 0]
-</code></p>
-
-<p>gave the expected answer in <code>180 milliseconds</code>. Not bad (though it should be noted we&rsquo;re still an order of magnitude away in efficiency).</p>
-
-<p><strong>Notes:</strong></p>
-
-<ul>
-<li><p>Haskell makes it very easy to quickly arrive at a <em>correct</em> solution, but the road from there to an <em>efficient</em> solution is less clear.</p></li>
-<li><p>The brevity of the notation helps, but I get a feeling it&rsquo;s also due to the single-letter variable names &mdash; which is all right (and indeed well-suited) for a tiny math problem, but unclear whether it&rsquo;ll hold up for code in a large-scale project.</p></li>
-<li><p>People usually jump to the <a href="">&ldquo;Programming Language shootout&rdquo;</a>, but if the code <em>there</em> is any indication, writing performant Haskell code is a dark art, and <em>the three-line quicksort is a devilish honeytrap</em>.</p></li>
-</ul>
-
 ]]></content>
   </entry>
   

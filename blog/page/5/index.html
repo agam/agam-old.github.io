@@ -7,7 +7,20 @@
 	<meta name="author" content="Agam">
 
 	
-	<meta name="description" content="Using all three (val, var, `d ef), I initialize, and then attempt to reassign. Onlyvar` succeeds (as it should), but the other two fail in different &hellip;">
+	<meta name="description" content="1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+scala&gt; def loop: Boolean = loop
+&lt;console&gt;:10: warning: method loop does nothing other than call itself &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -86,6 +99,74 @@
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2014/07/31/possibly-unevaluated-variables/">
+		
+			Possibly Unevaluated Variables</a>
+	</h2>
+	<div class="entry-content">
+		<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="k">def</span> <span class="n">loop</span><span class="k">:</span> <span class="kt">Boolean</span> <span class="o">=</span> <span class="n">loop</span>
+</span><span class='line'><span class="o">&lt;</span><span class="n">console</span><span class="k">&gt;:</span><span class="mi">10</span><span class="k">:</span> <span class="kt">warning:</span> <span class="kt">method</span> <span class="kt">loop</span> <span class="kt">does</span> <span class="kt">nothing</span> <span class="kt">other</span> <span class="kt">than</span> <span class="kt">call</span> <span class="kt">itself</span> <span class="kt">recursively</span>
+</span><span class='line'>       <span class="k">def</span> <span class="n">loop</span><span class="k">:</span> <span class="kt">Boolean</span> <span class="o">=</span> <span class="n">loop</span>
+</span><span class='line'>                           <span class="o">^</span>
+</span><span class='line'><span class="n">loop</span><span class="k">:</span> <span class="kt">Boolean</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="kc">true</span> <span class="o">||</span> <span class="n">loop</span>
+</span><span class='line'><span class="n">res34</span><span class="k">:</span> <span class="kt">Boolean</span> <span class="o">=</span> <span class="kc">true</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="kc">true</span> <span class="o">&amp;&amp;</span> <span class="n">loop</span>
+</span><span class='line'>
+</span><span class='line'><span class="o">[</span><span class="kt">need</span> <span class="kt">to</span> <span class="kt">Ctrl-C</span> <span class="kt">out</span> <span class="kt">at</span> <span class="kt">this</span> <span class="kt">point</span><span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>(I like that warning message!)</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-31T23:11:40+00:00" pubdate data-updated="true">Jul 31<sup>st</sup>, 2014</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/scala/'>scala</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -1182,51 +1263,6 @@ itself implicitly at (radius,radius) set to 0&quot;
 
 
 <time datetime="2014-05-07T00:00:00+00:00" pubdate data-updated="true"></time></div>
-	<div class="tags">
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2014/04/02/google-cloud-dot-dot-dot-again/">
-		
-			Google Cloud &#8230; Again !</a>
-	</h2>
-	<div class="entry-content">
-		<p>If you didn&rsquo;t watch the recent Google Cloud Live presentation, you missed out twice. First, you missed learning about some awesome price reductions as well as some cool features; and <em>second</em>, you missed a possible $500 credit for signing up to watch it!</p>
-
-<p>(Though if you did, kudos, I hope you put that credit to good use!)</p>
-
-<p>So anyway, if this credit goes through, I might spin up a VM and give this whole thing a shot again once the price reduction is confirmed &hellip;</p>
-
-<p><strong>Edit</strong>: The credit expires in July :(</p>
-
-<p><strong>Edit</strong>: Amazon actually has a <a href="http://aws.amazon.com/free">free tier</a> which effectively amounts to the same thing</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-04-02T14:06:00+00:00" pubdate data-updated="true">Apr 2<sup>nd</sup>, 2014</time></div>
 	<div class="tags">
 
 </div>
