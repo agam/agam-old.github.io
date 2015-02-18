@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-02-18T01:01:33+00:00</updated>
+  <updated>2015-02-18T21:47:29+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,48 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Euler 30: sums of powers of digits]]></title>
+    <link href="http://agam.github.io/blog/2015/02/18/euler-30-sums-of-powers-of-digits/"/>
+    <updated>2015-02-18T21:41:02+00:00</updated>
+    <id>http://agam.github.io/blog/2015/02/18/euler-30-sums-of-powers-of-digits</id>
+    <content type="html"><![CDATA[<p>Another quick and easy solution. This doesn&rsquo;t mean it&rsquo;s an <em>easy problem!</em>; no, it&rsquo;s more like playing a level at the <em>rookie level</em>. The hard and &ldquo;correct&rdquo; solution would be to work it out on pen-and-paper using Number Theory.</p>
+
+<p><strong>Statutory Warning</strong>: <em>Spoilers ahead</em></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="nf">digits</span> <span class="ow">::</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="kt">Int</span><span class="p">]</span>
+</span><span class='line'><span class="nf">digits</span> <span class="n">n</span> <span class="ow">=</span> <span class="n">digitsHelper</span> <span class="n">n</span> <span class="kt">[]</span>
+</span><span class='line'>  <span class="kr">where</span>
+</span><span class='line'>    <span class="n">digitsHelper</span> <span class="n">num</span> <span class="n">dList</span> <span class="ow">=</span>
+</span><span class='line'>      <span class="kr">if</span> <span class="n">num</span> <span class="o">&gt;</span> <span class="mi">0</span>
+</span><span class='line'>      <span class="kr">then</span> <span class="n">digitsHelper</span> <span class="p">(</span><span class="n">div</span> <span class="n">num</span> <span class="mi">10</span><span class="p">)</span> <span class="o">$</span> <span class="p">(</span><span class="n">mod</span> <span class="n">num</span> <span class="mi">10</span><span class="p">)</span> <span class="kt">:</span> <span class="n">dList</span>
+</span><span class='line'>      <span class="kr">else</span> <span class="n">dList</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">sumFifthPow</span> <span class="ow">::</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="kt">Int</span>
+</span><span class='line'><span class="nf">sumFifthPow</span> <span class="n">n</span> <span class="ow">=</span> <span class="n">sum</span> <span class="o">$</span> <span class="n">map</span> <span class="p">(</span><span class="o">^</span> <span class="mi">5</span><span class="p">)</span> <span class="o">$</span> <span class="n">digits</span> <span class="n">n</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">euler30</span> <span class="ow">::</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="kt">Int</span>
+</span><span class='line'><span class="nf">euler30</span> <span class="n">limit</span> <span class="ow">=</span> <span class="n">sum</span> <span class="o">$</span> <span class="p">[</span><span class="n">x</span> <span class="o">|</span> <span class="n">x</span> <span class="ow">&lt;-</span> <span class="p">[</span><span class="mi">2</span> <span class="o">..</span> <span class="n">limit</span><span class="p">],</span> <span class="n">x</span> <span class="o">==</span> <span class="n">sumFifthPow</span> <span class="n">x</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Again, this version needs &ldquo;manual intervention&rdquo;, since I used the rough approximation that if <code>euler30 1000000</code> and <code>euler30 10000000</code> gave the same result, this was probably the right answer. It was.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Euler 29: Distinct Powers]]></title>
@@ -9029,121 +9071,6 @@ After this, evaluating <code>amicables 10000</code> took <code>23.71</code> seco
 <p>So yeah, we&rsquo;ll find out how this all worked out, same time next year :)</p>
 
 <p><strong>Update (1/13): This is a bunch of crap</strong> I just realized I wrote a <a href="http://agam.github.io/blog/2014/01/05/resolutions/">similar post</a> last year and did <em>nothing</em> about it (well, ok, I <em>did</em> do the <em>r/dailyprogrammer</em> stuff, more or less), so scratch all of the above. I&rsquo;ll leave it up to remind myself of how foolish this is. I&rsquo;m guessing this will reoccur the same time next year :P. Perhaps the best way out is to make <em>no resolutions</em>.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Lisp performance check-up]]></title>
-    <link href="http://agam.github.io/blog/2015/01/07/lisp-performance-check-up/"/>
-    <updated>2015-01-07T06:22:09+00:00</updated>
-    <id>http://agam.github.io/blog/2015/01/07/lisp-performance-check-up</id>
-    <content type="html"><![CDATA[<p>Came across <a href="https://github.com/pixie-lang/pixie">pixie-lang</a>, and it had this bit about &ldquo;<em>the loop compiles down to six instructions!</em>&rdquo;</p>
-
-<p>So I decided to go and satisfy my curiosity about just how many instructions a loop like this <em>should</em> be expected to compile down to.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="nv">CL-USER&gt;</span> <span class="p">(</span><span class="nb">defun</span> <span class="nv">add-fn</span> <span class="p">(</span><span class="nv">args</span><span class="p">)</span>
-</span><span class='line'>           <span class="p">(</span><span class="nb">reduce</span> <span class="nf">#&#39;</span><span class="nb">+</span> <span class="nv">args</span><span class="p">))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>which obviously runs as</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="nv">CL-USER&gt;</span> <span class="p">(</span><span class="nv">add-fn</span> <span class="o">&#39;</span><span class="p">(</span><span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span><span class="p">))</span>
-</span><span class='line'><span class="mi">12</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Now, a look at what&rsquo;s going on &ldquo;under the hood&rdquo;</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="nv">CL-USER&gt;</span> <span class="p">(</span><span class="nb">disassemble</span> <span class="nf">#&#39;</span><span class="nv">add-fn</span><span class="p">)</span>
-</span><span class='line'><span class="c1">; disassembly for ADD-FN</span>
-</span><span class='line'><span class="c1">; Size: 42 bytes. Origin: #x1004FBC3F8</span>
-</span><span class='line'><span class="c1">; 3F8:       498B4C2460       MOV RCX, [R12+96]               ; thread.binding-stack-pointer</span>
-</span><span class='line'>                                                              <span class="c1">; no-arg-parsing entry point</span>
-</span><span class='line'><span class="c1">; 3FD:       48894DF8         MOV [RBP-8], RCX</span>
-</span><span class='line'><span class="c1">; 401:       488B1598FFFFFF   MOV RDX, [RIP-104]              ; #&lt;FUNCTION +&gt;</span>
-</span><span class='line'><span class="c1">; 408:       488BFE           MOV RDI, RSI</span>
-</span><span class='line'><span class="c1">; 40B:       488B0596FFFFFF   MOV RAX, [RIP-106]              ; #&lt;FDEFINITION for REDUCE&gt;</span>
-</span><span class='line'><span class="c1">; 412:       B904000000       MOV ECX, 4</span>
-</span><span class='line'><span class="c1">; 417:       FF7508           PUSH QWORD PTR [RBP+8]</span>
-</span><span class='line'><span class="c1">; 41A:       FF6009           JMP QWORD PTR [RAX+9]</span>
-</span><span class='line'><span class="c1">; 41D:       CC0A             BREAK 10                        ; error trap</span>
-</span><span class='line'><span class="c1">; 41F:       02               BYTE #X02</span>
-</span><span class='line'><span class="c1">; 420:       19               BYTE #X19                       ; INVALID-ARG-COUNT-ERROR</span>
-</span><span class='line'><span class="c1">; 421:       9A               BYTE #X9A                       ; RCX</span>
-</span><span class='line'><span class="no">NIL</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Ok, let&rsquo;s see if we can slightly improve that</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="nv">CL-USER&gt;</span> <span class="p">(</span><span class="nb">defun</span> <span class="nv">add-fn</span> <span class="p">(</span><span class="nv">args</span><span class="p">)</span>
-</span><span class='line'>           <span class="p">(</span><span class="k">declare</span> <span class="p">(</span><span class="k">optimize</span> <span class="p">(</span><span class="nv">speed</span> <span class="mi">3</span><span class="p">)</span> <span class="p">(</span><span class="nv">safety</span> <span class="mi">0</span><span class="p">)))</span>
-</span><span class='line'>           <span class="p">(</span><span class="nb">reduce</span> <span class="nf">#&#39;</span><span class="nb">+</span> <span class="nv">args</span><span class="p">))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="nv">CL-USER&gt;</span> <span class="p">(</span><span class="nb">disassemble</span> <span class="nf">#&#39;</span><span class="nv">add-fn</span><span class="p">)</span>
-</span><span class='line'><span class="c1">; disassembly for ADD-FN</span>
-</span><span class='line'><span class="c1">; Size: 25 bytes. Origin: #x10051BDB12</span>
-</span><span class='line'><span class="c1">; 12:       488B15A7FFFFFF   MOV RDX, [RIP-89]                ; #&lt;FUNCTION +&gt;</span>
-</span><span class='line'>                                                              <span class="c1">; no-arg-parsing entry point</span>
-</span><span class='line'><span class="c1">; 19:       488B05A8FFFFFF   MOV RAX, [RIP-88]                ; #&lt;FDEFINITION for REDUCE&gt;</span>
-</span><span class='line'><span class="c1">; 20:       B904000000       MOV ECX, 4</span>
-</span><span class='line'><span class="c1">; 25:       FF7508           PUSH QWORD PTR [RBP+8]</span>
-</span><span class='line'><span class="c1">; 28:       FF6009           JMP QWORD PTR [RAX+9]</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Pretty sweet, eh? <em>You don&rsquo;t get that kind of feedback every day</em>.</p>
-
-<p>This was all run on 64-bit SBCL:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="nv">CL-USER&gt;</span> <span class="p">(</span><span class="nb">lisp-implementation-type</span><span class="p">)</span>
-</span><span class='line'><span class="s">&quot;SBCL&quot;</span>
-</span><span class='line'><span class="nv">CL-USER&gt;</span> <span class="p">(</span><span class="nb">lisp-implementation-version</span><span class="p">)</span>
-</span><span class='line'><span class="s">&quot;1.2.7&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
 ]]></content>
   </entry>
   

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: font, | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/font/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-02-18T01:01:58+00:00</updated>
+  <updated>2015-02-18T21:47:29+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -20,7 +20,7 @@
     <id>http://agam.github.io/blog/2014/02/01/change-that-font</id>
     <content type="html"><![CDATA[<p>You don&rsquo;t have to be chained to <code>Monaco</code> if you don&rsquo;t like it. I changed it to <code>Inconsolata</code>, which is as simply as <a href="http://www.levien.com/type/myfonts/inconsolata.html">downloading it</a> (click on the <em>Open Type File</em> link).</p>
 
-<p>{% img center <a href="http://farm6.staticflickr.com/5509/12246575643_d92ae27492_z_d.jpg">http://farm6.staticflickr.com/5509/12246575643_d92ae27492_z_d.jpg</a> %}</p>
+<p><img class="center <a" src="href="http://farm6.staticflickr.com/5509/12246575643_d92ae27492_z_d.jpg">http://farm6.staticflickr.com/5509/12246575643_d92ae27492_z_d.jpg</a>"></p>
 
 <p>Once you click on the downloaded file, the <strong>Font Book</strong> app should open up automatically, showing the font face and with a <code>Install</code> button.</p>
 
