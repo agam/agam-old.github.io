@@ -16,6 +16,7 @@ Similarly, for a `7 x 7` matrix, the numbers are 31, 37, 43, 49, which are (1 + 
 
 On the other hand, the problem mentions a `1001 x 1001` matrix, which is _tiny_, so why bother with these patterns? Just create the matrix and sum up the diagonals directly! (It's _just_ a million elements ... now if it was a few orders of magnitude higher, it would be a different story)
 
+**Statutory Warning**: Spoilers ahead!
 
 ```haskell
 import qualified Data.List as L
