@@ -7,7 +7,7 @@
 	<meta name="author" content="Agam">
 
 	
-	<meta name="description" content="Another quick and easy solution. This doesn&rsquo;t mean it&rsquo;s an easy problem!; no, it&rsquo;s more like playing a level at the rookie level. &hellip;">
+	<meta name="description" content="I had this one all wrong, and made it way more complex than it really was. I&rsquo;m embarassed to post the final code &hellip; but it is what it is &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -86,6 +86,114 @@
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2015/02/22/euler-31-coin-combinations-and-over-engineering/">
+		
+			Euler 31: Coin Combinations (and Over-engineering)</a>
+	</h2>
+	<div class="entry-content">
+		<p>I had this one all wrong, and made it way more complex than it really was. I&rsquo;m embarassed to post the final code &hellip; but it is what it is.</p>
+
+<p><strong>Statutory Warning</strong>: <em>Spoilers ahead</em></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="kr">import</span> <span class="nn">Data.Maybe</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">-- Basic idea is something like this:</span>
+</span><span class='line'><span class="c1">-- [*] given amount and some coins, pick the largest coin</span>
+</span><span class='line'><span class="c1">-- [*] there are (floor (total/coin)) ways of using this coin value</span>
+</span><span class='line'><span class="c1">-- [*] but ... NOT ALL of these count! Only the ones that leave a total that can be used with the remaining coins!</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">coins</span> <span class="ow">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">sortedCoins</span> <span class="ow">::</span> <span class="p">[</span><span class="kt">Int</span><span class="p">]</span>
+</span><span class='line'><span class="nf">sortedCoins</span> <span class="ow">=</span> <span class="kt">L</span><span class="o">.</span><span class="n">reverse</span> <span class="o">$</span> <span class="kt">L</span><span class="o">.</span><span class="n">sort</span> <span class="o">$</span> <span class="n">coins</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">combinations</span> <span class="ow">::</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="kt">Int</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="kt">Maybe</span> <span class="kt">Int</span>
+</span><span class='line'><span class="nf">combinations</span> <span class="n">total</span> <span class="n">coins</span> <span class="ow">=</span>
+</span><span class='line'><span class="c1">--  T.trace (&quot;total = &quot; ++ show total ++ &quot;, coins = &quot; ++ show coins) $</span>
+</span><span class='line'>  <span class="kr">if</span> <span class="n">total</span> <span class="o">==</span> <span class="mi">0</span>
+</span><span class='line'>  <span class="kr">then</span> <span class="kt">Just</span> <span class="mi">1</span>
+</span><span class='line'>  <span class="kr">else</span> <span class="kr">case</span> <span class="n">coins</span> <span class="kr">of</span>
+</span><span class='line'>        <span class="kt">[]</span> <span class="ow">-&gt;</span> <span class="kt">Nothing</span>
+</span><span class='line'>        <span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="kr">if</span> <span class="n">mod</span> <span class="n">total</span> <span class="n">c</span> <span class="o">==</span> <span class="mi">0</span> <span class="kr">then</span> <span class="kt">Just</span> <span class="mi">1</span> <span class="kr">else</span> <span class="kt">Nothing</span>
+</span><span class='line'>        <span class="n">c</span><span class="kt">:</span><span class="n">cs</span> <span class="ow">-&gt;</span> <span class="kr">if</span> <span class="n">total</span> <span class="o">==</span> <span class="mi">0</span>
+</span><span class='line'>                <span class="kr">then</span> <span class="kt">Just</span> <span class="mi">1</span>
+</span><span class='line'>                <span class="kr">else</span> <span class="kr">let</span> <span class="n">newTotal</span> <span class="n">total</span> <span class="n">coin</span> <span class="n">num</span> <span class="ow">=</span> <span class="n">total</span> <span class="o">-</span> <span class="p">(</span><span class="n">coin</span> <span class="o">*</span> <span class="n">num</span><span class="p">)</span>
+</span><span class='line'>                         <span class="n">combs</span> <span class="ow">=</span> <span class="p">[</span><span class="n">combinations</span> <span class="p">(</span><span class="n">newTotal</span> <span class="n">total</span> <span class="n">c</span> <span class="n">num</span><span class="p">)</span> <span class="n">cs</span> <span class="o">|</span> <span class="n">num</span> <span class="ow">&lt;-</span> <span class="p">[</span><span class="mi">0</span> <span class="o">..</span> <span class="n">div</span> <span class="n">total</span> <span class="n">c</span><span class="p">]]</span>
+</span><span class='line'>                         <span class="n">counts</span> <span class="ow">=</span> <span class="n">sum</span> <span class="o">$</span> <span class="n">catMaybes</span> <span class="n">combs</span>
+</span><span class='line'>                     <span class="kr">in</span>
+</span><span class='line'>                      <span class="kr">if</span> <span class="n">counts</span> <span class="o">==</span> <span class="mi">0</span> <span class="kr">then</span> <span class="kt">Nothing</span> <span class="kr">else</span> <span class="kt">Just</span> <span class="n">counts</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">euler31</span> <span class="ow">::</span> <span class="kt">Int</span>
+</span><span class='line'><span class="nf">euler31</span> <span class="ow">=</span> <span class="n">fromJust</span> <span class="o">$</span> <span class="n">combinations</span> <span class="mi">200</span> <span class="n">sortedCoins</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It turns out, I was being overly cautious and could have just used lists in a different way (left in a commented out debug line to show that I needed it).</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-02-22T04:44:55+00:00" pubdate data-updated="true">Feb 22<sup>nd</sup>, 2015</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/haskell/'>haskell</a>, <a class='category' href='/blog/categories/projecteuler/'>projecteuler</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -2259,174 +2367,6 @@ _Note_: Dart now [runs on App Engine](https://www.dartlang.org/server/google-clo
 
 
 	<a class='category' href='/blog/categories/gettingstarted/'>gettingstarted</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2015/02/01/euler-23-non-abundant-sums/">
-		
-			Euler 23: Non-abundant Sums</a>
-	</h2>
-	<div class="entry-content">
-		<p>Had a slice of free time, so decided to look at the next problem. Here&rsquo;s the initial naive solution:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="nf">divisors</span> <span class="n">n</span> <span class="ow">=</span> <span class="p">[</span><span class="n">x</span> <span class="o">|</span> <span class="n">x</span> <span class="ow">&lt;-</span> <span class="p">[</span><span class="mi">1</span> <span class="o">..</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">n</span> <span class="p">`</span><span class="n">mod</span><span class="p">`</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
-</span><span class='line'>
-</span><span class='line'><span class="nf">isAbundant</span> <span class="n">n</span> <span class="ow">=</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="p">(</span><span class="n">sum</span> <span class="o">$</span> <span class="n">divisors</span> <span class="n">n</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="nf">abundants</span> <span class="n">n</span> <span class="ow">=</span> <span class="n">filter</span> <span class="n">isAbundant</span> <span class="o">$</span> <span class="p">[</span><span class="mi">1</span> <span class="o">..</span> <span class="n">n</span><span class="p">]</span>
-</span><span class='line'>
-</span><span class='line'><span class="nf">expressSum</span> <span class="n">z</span> <span class="n">nums</span> <span class="ow">=</span> <span class="n">not</span> <span class="o">$</span> <span class="n">null</span> <span class="p">[(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="o">|</span> <span class="n">x</span> <span class="ow">&lt;-</span> <span class="n">nums</span><span class="p">,</span> <span class="n">y</span> <span class="ow">&lt;-</span> <span class="n">nums</span><span class="p">,</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">==</span> <span class="n">z</span><span class="p">]</span>
-</span><span class='line'>
-</span><span class='line'><span class="nf">sumAbundants</span> <span class="n">n</span> <span class="ow">=</span>
-</span><span class='line'>  <span class="kr">let</span> <span class="n">a</span> <span class="ow">=</span> <span class="n">abundants</span> <span class="n">n</span> <span class="kr">in</span>
-</span><span class='line'>          <span class="n">sum</span> <span class="o">$</span> <span class="n">filter</span> <span class="p">(</span><span class="nf">\</span><span class="n">x</span> <span class="ow">-&gt;</span> <span class="n">not</span> <span class="o">$</span> <span class="n">expressSum</span> <span class="n">x</span> <span class="n">a</span><span class="p">)</span> <span class="p">[</span><span class="mi">1</span> <span class="o">..</span> <span class="n">n</span><span class="p">]</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>While it gave the correct answer, it did so in <code>3133.33</code> seconds, which is &hellip; embarrassing.</p>
-
-<p>This is just <em>too</em> inefficient, even the following &hellip;</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">divisors</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">i</span> <span class="nv">from</span> <span class="mi">1</span> <span class="nv">below</span> <span class="nv">n</span>
-</span><span class='line'>     <span class="nb">when</span> <span class="p">(</span><span class="nb">=</span> <span class="mi">0</span> <span class="p">(</span><span class="nb">mod</span> <span class="nv">n</span> <span class="nv">i</span><span class="p">))</span>
-</span><span class='line'>       <span class="nv">collect</span> <span class="nv">i</span><span class="p">))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">abundantp</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">&lt;</span> <span class="nv">n</span>
-</span><span class='line'>     <span class="p">(</span><span class="nb">reduce</span> <span class="nf">#&#39;</span><span class="nb">+</span> <span class="p">(</span><span class="nv">divisors</span> <span class="nv">n</span><span class="p">))))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">abundants</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">i</span> <span class="nv">from</span> <span class="mi">1</span> <span class="nv">below</span> <span class="nv">n</span>
-</span><span class='line'>     <span class="nb">when</span> <span class="p">(</span><span class="nv">abundantp</span> <span class="nv">i</span><span class="p">)</span>
-</span><span class='line'>       <span class="nv">collect</span> <span class="nv">i</span><span class="p">))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">possible-summands</span> <span class="p">(</span><span class="nv">z</span> <span class="nv">nums</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">x</span> <span class="nv">in</span> <span class="nv">nums</span> <span class="nb">do</span>
-</span><span class='line'>       <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">y</span> <span class="nv">in</span> <span class="nv">nums</span>
-</span><span class='line'>    <span class="nb">when</span> <span class="p">(</span><span class="nb">=</span> <span class="nv">z</span> <span class="p">(</span><span class="nb">+</span> <span class="nv">x</span> <span class="nv">y</span><span class="p">))</span> <span class="nb">do</span>
-</span><span class='line'>      <span class="p">(</span><span class="k">return-from</span> <span class="nv">possible-summands</span> <span class="p">(</span><span class="nb">cons</span> <span class="nv">x</span> <span class="nv">y</span><span class="p">)))))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">sum-abundants</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">let*</span> <span class="p">((</span><span class="nv">ab</span> <span class="p">(</span><span class="nv">abundants</span> <span class="nv">n</span><span class="p">))</span>
-</span><span class='line'>   <span class="p">(</span><span class="nv">summands</span>
-</span><span class='line'>    <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">i</span> <span class="nv">from</span> <span class="mi">1</span> <span class="nv">to</span> <span class="nv">n</span>
-</span><span class='line'>       <span class="nb">when</span> <span class="p">(</span><span class="nb">null</span> <span class="p">(</span><span class="nv">possible-summands</span> <span class="nv">i</span> <span class="nv">ab</span><span class="p">))</span>
-</span><span class='line'>       <span class="nv">collect</span> <span class="nv">i</span><span class="p">)))</span>
-</span><span class='line'>    <span class="p">(</span><span class="nb">reduce</span> <span class="nf">#&#39;</span><span class="nb">+</span> <span class="nv">summands</span><span class="p">)))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>&hellip; takes no less than half as long, at <code>1329.168</code> seconds.</p>
-
-<p>BTW why is <code>28123</code> the upper limit for this sequence? I had no idea, and found <a href="http://mathschallenge.net/full/sum_of_two_abundant_numbers">this explanation</a> (and tangentially, <a href="http://mathschallenge.net/view/even_sum_of_two_abundant_numbers">this one</a> too).</p>
-
-<p>Anyway, I&rsquo;m ashamed to say I didn&rsquo;t put in the effort to learn how to profile Haskell programs (<em>next time ?</em>) and profiled the Lisp version instead, which showed that (<strong>duh</strong>) all the time was going in finding divisors. Obviously, we can just loop till the <em>square root of N</em> instead of looping <em>all the way to N</em>. After this change:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">divisors</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="k">declare</span> <span class="p">(</span><span class="k">type</span> <span class="kt">fixnum</span> <span class="nv">n</span><span class="p">))</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">i</span> <span class="nv">from</span> <span class="mi">1</span> <span class="nv">below</span> <span class="p">(</span><span class="nb">floor</span> <span class="p">(</span><span class="nb">sqrt</span> <span class="nv">n</span><span class="p">))</span>
-</span><span class='line'>     <span class="nb">when</span> <span class="p">(</span><span class="nb">=</span> <span class="mi">0</span> <span class="p">(</span><span class="nb">mod</span> <span class="nv">n</span> <span class="nv">i</span><span class="p">))</span>
-</span><span class='line'>       <span class="nv">collect</span> <span class="nv">i</span><span class="p">))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>&hellip; it runs in <code>38 milliseconds</code> !!</p>
-
-<p>And a similar change to the Haskell version:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="nf">divisors</span> <span class="ow">::</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="kt">Int</span><span class="p">]</span>
-</span><span class='line'><span class="nf">divisors</span> <span class="n">n</span> <span class="ow">=</span> <span class="p">[</span><span class="n">x</span> <span class="o">|</span> <span class="n">x</span> <span class="ow">&lt;-</span> <span class="p">[</span><span class="mi">1</span> <span class="o">..</span> <span class="n">round</span> <span class="o">$</span> <span class="n">sqrt</span> <span class="o">$</span> <span class="n">fromIntegral</span> <span class="n">n</span><span class="p">],</span> <span class="n">n</span> <span class="p">`</span><span class="n">mod</span><span class="p">`</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>gave the expected answer in <code>180 milliseconds</code>. Not bad (though it should be noted we&rsquo;re still an order of magnitude away in efficiency).</p>
-
-<p><strong>Notes:</strong></p>
-
-<ul>
-<li><p>Haskell makes it very easy to quickly arrive at a <em>correct</em> solution, but the road from there to an <em>efficient</em> solution is less clear.</p></li>
-<li><p>The brevity of the notation helps, but I get a feeling it&rsquo;s also due to the single-letter variable names &mdash; which is all right (and indeed well-suited) for a tiny math problem, but unclear whether it&rsquo;ll hold up for code in a large-scale project.</p></li>
-<li><p>People usually jump to the <a href="">&ldquo;Programming Language shootout&rdquo;</a>, but if the code <em>there</em> is any indication, writing performant Haskell code is a dark art, and <em>the three-line quicksort is a devilish honeytrap</em>.</p></li>
-</ul>
-
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-02-01T19:01:00+00:00" pubdate data-updated="true">Feb 1<sup>st</sup>, 2015</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/haskell/'>haskell</a>, <a class='category' href='/blog/categories/projecteuler/'>projecteuler</a>
 
 
 </div>

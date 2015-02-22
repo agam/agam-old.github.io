@@ -7,7 +7,7 @@
 	<meta name="author" content="Agam">
 
 	
-	<meta name="description" content="I saw this piece about how 1/1998 was approximated by series of powers of 2, which raised the question, &ldquo;Can Mathematica help confirm this?& &hellip;">
+	<meta name="description" content="You don&rsquo;t have to be chained to Monaco if you don&rsquo;t like it. I changed it to Inconsolata, which is as simply as downloading it (click on &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -86,6 +86,53 @@
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2014/02/01/change-that-font/">
+		
+			Change That Font!</a>
+	</h2>
+	<div class="entry-content">
+		<p>You don&rsquo;t have to be chained to <code>Monaco</code> if you don&rsquo;t like it. I changed it to <code>Inconsolata</code>, which is as simply as <a href="http://www.levien.com/type/myfonts/inconsolata.html">downloading it</a> (click on the <em>Open Type File</em> link).</p>
+
+<p><img class="center" src="http://farm6.staticflickr.com/5509/12246575643_d92ae27492_z_d.jpg"></p>
+
+<p>Once you click on the downloaded file, the <strong>Font Book</strong> app should open up automatically, showing the font face and with a <code>Install</code> button.</p>
+
+<p>Once you do this (I love this part) <em>any open font selection windows will refresh automatically</em>, and you can pick this new font for your terminal (which, by the way, I hope is <a href="http://iterm.sourceforge.net/">iTerm</a> because &hellip; if not, why?)</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-01T06:25:00+00:00" pubdate data-updated="true">Feb 1<sup>st</sup>, 2014</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/font/'>font,</a>, <a class='category' href='/blog/categories/osx/'>osx</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -1146,467 +1193,6 @@ int main(int argc, char* argv[]) {
 
 
 <time datetime="2014-01-19T00:39:00+00:00" pubdate data-updated="true">Jan 19<sup>th</sup>, 2014</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/alwaysbecoding/'>alwaysbecoding,</a>, <a class='category' href='/blog/categories/reddit/'>reddit</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2014/01/18/programming-fun-telephone-keypads/">
-		
-			Programming Fun: Telephone Keypads</a>
-	</h2>
-	<div class="entry-content">
-		<p><a href="http://www.reddit.com/r/dailyprogrammer/comments/1sody4/12113_challenge_139_intermediate_telephone_keypads/">This is a <em>medium</em> level problem</a>  with two levels of difficulty.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>Input Description
-</span><span class='line'>-----------------
-</span><span class='line'>
-</span><span class='line'>On standard console input, you will be given an array of digits (0 to 9) and
-</span><span class='line'>spaces. All digits will be space-delimited, unless the digits represent
-</span><span class='line'>multiple presses of the same button (for example pressing 2 twice gives you the
-</span><span class='line'>letter 'B').  Use the modern Telephone Keypads digit-letter layout:
-</span><span class='line'>0 = Not used
-</span><span class='line'>1 = Not used
-</span><span class='line'>2 = ABC
-</span><span class='line'>3 = DEF
-</span><span class='line'>4 = GHI
-</span><span class='line'>5 = JKL
-</span><span class='line'>6 = MNO
-</span><span class='line'>7 = PQRS
-</span><span class='line'>8 = TUV
-</span><span class='line'>9 = WXYZ
-</span><span class='line'>You may use any source for looking up English-language words, though this
-</span><span class='line'>simple English-language dictionary is complete enough for the challenge.
-</span><span class='line'>
-</span><span class='line'>Output Description
-</span><span class='line'>------------------
-</span><span class='line'>Print a list of all best-fitting words, meaning words that start with the word
-</span><span class='line'>generated using the given input on a telephone keypad. You do not have to only
-</span><span class='line'>print words of the same length as the input (e.g. even if the input is
-</span><span class='line'>4-digits, it's possible there are many long words that start with those
-</span><span class='line'>4-digits).</span></code></pre></td></tr></table></div></figure>
-
-
-<p>You could do this by reading the dictionary into a vector of strings, then figuring out the prefix determined by the input and matching it against each dictionary word. There is a better way to do this though, which makes more sense considering the second part of this question.</p>
-
-<p>Instead of using a vector, you could use a <a href="http://en.wikipedia.org/wiki/Trie">Trie</a> which in this case would look something like:</p>
-
-<p>(showing the words &lsquo;sailor&rsquo;, &lsquo;soldier&rsquo; and &lsquo;solder&rsquo;)</p>
-
-<p><img class="center" src="http://farm6.staticflickr.com/5534/12005243014_69145160ae_o_d.jpg" width="400"></p>
-
-<p>This is a sort of naive implementation, you could compress this by storing strings and only expanding out to character chains if needed, but I skipped that optimization here.</p>
-
-<div><script src='https://gist.github.com/8422418.js'></script>
-<noscript><pre><code>#include &lt;cassert&gt;
-#include &lt;cmath&gt;
-#include &lt;cstdint&gt;
-#include &lt;cstdio&gt;
-#include &lt;cstdlib&gt;
-#include &lt;algorithm&gt;
-#include &lt;array&gt;
-#include &lt;fstream&gt;
-#include &lt;iomanip&gt;
-#include &lt;iostream&gt;
-#include &lt;limits&gt;
-#include &lt;map&gt;
-#include &lt;memory&gt;
-#include &lt;string&gt;
-#include &lt;vector&gt;
-#include &lt;queue&gt;
-#include &lt;unordered_map&gt;
-
-using namespace std;
-
-static const array&lt;string,10&gt; kKeypadLetters {
-  &quot;&quot;,
-  &quot;&quot;,
-  &quot;abc&quot;,
-  &quot;def&quot;,
-  &quot;ghi&quot;,
-  &quot;jkl&quot;,
-  &quot;mno&quot;,
-  &quot;pqrs&quot;,
-  &quot;tuv&quot;,
-  &quot;wxyz&quot;
-};
-
-// Naive trie implementation
-struct TrieNode {
-  map&lt;char, unique_ptr&lt;TrieNode&gt;&gt; children;
-  bool terminal_node = false;
-};
-
-class Trie {
-public:
-  Trie() {
-    head_.reset(new TrieNode());
-  }
-
-  void Insert(const string&amp; str) {
-    InsertHelper(str, head_.get());
-  }
-
-  bool Lookup(const string&amp; str) {
-    return (LookupHelper(str, head_.get()) != nullptr);
-  }
-
-  void FindAllWithPrefix(const string&amp; str, vector&lt;string&gt;* matches) {
-    const TrieNode* start_node = LookupHelper(str, head_.get());
-    if (start_node == nullptr) { return; }
-    FindAllHelper(str, start_node, matches);
-  }
-
-private:
-  void InsertHelper(const string&amp; str, TrieNode* node) {
-    if (str.empty()) {
-      node-&gt;terminal_node = true;
-      return;
-    }
-    assert(node != nullptr);
-    char c = str.front();
-    const auto&amp; it = node-&gt;children.find(c);
-    if (it == node-&gt;children.end()) {
-      node-&gt;children.insert(make_pair(c, unique_ptr&lt;TrieNode&gt;(new TrieNode)));
-    }
-    TrieNode* next_node = node-&gt;children.find(c)-&gt;second.get();
-    InsertHelper(str.substr(1), next_node);
-  }
-
-  const TrieNode* LookupHelper(const string&amp; str, const TrieNode* node) {
-    if (str.empty()) { return node; }
-    assert(node != nullptr);
-    const auto&amp; it = node-&gt;children.find(str.front());
-    if (it == node-&gt;children.end()) {
-      return nullptr;
-    } else {
-      return LookupHelper(str.substr(1), it-&gt;second.get());
-    }
-  }
-
-  void FindAllHelper(
-      const string&amp; current_str,
-      const TrieNode* current_node,
-      vector&lt;string&gt;* matches) {
-    if (current_node-&gt;terminal_node) {
-      matches-&gt;push_back(current_str);
-    }
-    for (const auto&amp; it : current_node-&gt;children) {
-      FindAllHelper(current_str + it.first, it.second.get(), matches);
-    }
-  }
-
-  unique_ptr&lt;TrieNode&gt; head_;
-};
-
-void PopulateTrie(const string&amp; fname, Trie* trie) {
-  ifstream ifs;
-  ifs.open(fname, ifstream::in);
-  while (!ifs.eof()) {
-    string word;
-    getline(ifs, word);
-    if (word.size()) {
-      trie-&gt;Insert(word);
-    }
-  }
-}
-
-int main(int argc, char* argv[]) {
-  // Read digiletters from stdin
-  vector&lt;int&gt; digiletters;
-  int digiletter;
-  while (cin &gt;&gt; digiletter) {
-    digiletters.push_back(digiletter);
-  }
-
-  // Read strings from file into Trie
-  assert(argc == 2);
-  Trie dict_trie;
-  PopulateTrie(argv[1], &amp;dict_trie);
-
-  // Get letter counts
-  string keypad_str;
-  for (int dl : digiletters) {
-    int count = 0;
-    const int letter = dl % 10;
-    while (dl &gt; 0) {
-      assert(dl % 10 == letter);
-      dl /= 10;
-      ++count;
-    }
-    const string&amp; keypad_letters = kKeypadLetters[letter];
-    assert(count &lt;= keypad_letters.size());
-    keypad_str.push_back(keypad_letters[count - 1]);
-  }
-
-  // Get matches
-  vector&lt;string&gt; possible_matches;
-  dict_trie.FindAllWithPrefix(keypad_str, &amp;possible_matches);
-
-  // Print matches
-  for (const string&amp; s : possible_matches) {
-    cout &lt;&lt; s &lt;&lt; endl;
-  }
-}
-</code></pre></noscript></div>
-
-
-<p>There is a harder version of this problem:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>Challenge++
-</span><span class='line'>-----------
-</span><span class='line'>If you want an extra challenge, accomplish the same challenge but without
-</span><span class='line'>knowing the number of times a digit is pressed. For example "7653" could mean
-</span><span class='line'>sold, or poke, or even solenoid! You must do this efficiently with regards to
-</span><span class='line'>Big-O complexity.</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This would have been more inefficient with a vector of strings (you would sort the vector and then for each prefix, print out all subsequent ones until you encounter a string with a different prefix. So it&rsquo;s O(n log n) where n is the size of the dictionary).</p>
-
-<p>With our trie, we can (once we have a list of all combinatorially possible prefixes) look them up <em>quickly</em> (O(k + n), where k is the length of the prefix; O(k) time for each lookup and O(n) time for creating the trie (or O(mn) where m is the length of the largest word, though I would consider that a constant here)).</p>
-
-<p>(Note: there&rsquo;s some duplication of common code, especially in the <code>Trie</code> class; sorry about that!)</p>
-
-<div><script src='https://gist.github.com/8460783.js'></script>
-<noscript><pre><code>#include &lt;cassert&gt;
-#include &lt;cmath&gt;
-#include &lt;cstdint&gt;
-#include &lt;cstdio&gt;
-#include &lt;cstdlib&gt;
-#include &lt;algorithm&gt;
-#include &lt;array&gt;
-#include &lt;fstream&gt;
-#include &lt;iomanip&gt;
-#include &lt;iostream&gt;
-#include &lt;limits&gt;
-#include &lt;map&gt;
-#include &lt;memory&gt;
-#include &lt;string&gt;
-#include &lt;vector&gt;
-#include &lt;queue&gt;
-#include &lt;unordered_map&gt;
-
-using namespace std;
-
-static const array&lt;string,10&gt; kKeypadLetters {
-  &quot;&quot;,
-  &quot;&quot;,
-  &quot;abc&quot;,
-  &quot;def&quot;,
-  &quot;ghi&quot;,
-  &quot;jkl&quot;,
-  &quot;mno&quot;,
-  &quot;pqrs&quot;,
-  &quot;tuv&quot;,
-  &quot;wxyz&quot;
-};
-
-// Naive trie implementation
-struct TrieNode {
-  map&lt;char, unique_ptr&lt;TrieNode&gt;&gt; children;
-  bool terminal_node = false;
-};
-
-class Trie {
-public:
-  Trie() {
-    head_.reset(new TrieNode());
-  }
-
-  void Insert(const string&amp; str) {
-    InsertHelper(str, head_.get());
-  }
-
-  bool Lookup(const string&amp; str) {
-    return (LookupHelper(str, head_.get()) != nullptr);
-  }
-
-  void FindAllWithPrefix(const string&amp; str, vector&lt;string&gt;* matches) {
-    const TrieNode* start_node = LookupHelper(str, head_.get());
-    if (start_node == nullptr) { return; }
-    FindAllHelper(str, start_node, matches);
-  }
-
-private:
-  void InsertHelper(const string&amp; str, TrieNode* node) {
-    if (str.empty()) {
-      node-&gt;terminal_node = true;
-      return;
-    }
-    assert(node != nullptr);
-    char c = str.front();
-    const auto&amp; it = node-&gt;children.find(c);
-    if (it == node-&gt;children.end()) {
-      node-&gt;children.insert(make_pair(c, unique_ptr&lt;TrieNode&gt;(new TrieNode)));
-    }
-    TrieNode* next_node = node-&gt;children.find(c)-&gt;second.get();
-    InsertHelper(str.substr(1), next_node);
-  }
-
-  const TrieNode* LookupHelper(const string&amp; str, const TrieNode* node) {
-    if (str.empty()) { return node; }
-    assert(node != nullptr);
-    const auto&amp; it = node-&gt;children.find(str.front());
-    if (it == node-&gt;children.end()) {
-      return nullptr;
-    } else {
-      return LookupHelper(str.substr(1), it-&gt;second.get());
-    }
-  }
-
-  void FindAllHelper(
-      const string&amp; current_str,
-      const TrieNode* current_node,
-      vector&lt;string&gt;* matches) {
-    if (current_node-&gt;terminal_node) {
-      matches-&gt;push_back(current_str);
-    }
-    for (const auto&amp; it : current_node-&gt;children) {
-      FindAllHelper(current_str + it.first, it.second.get(), matches);
-    }
-  }
-
-  unique_ptr&lt;TrieNode&gt; head_;
-};
-
-void PopulateTrie(const string&amp; fname, Trie* trie) {
-  ifstream ifs;
-  ifs.open(fname, ifstream::in);
-  while (!ifs.eof()) {
-    string word;
-    getline(ifs, word);
-    if (word.size()) {
-      trie-&gt;Insert(word);
-    }
-  }
-}
-
-void GetPrefixesHelper(
-    const vector&lt;int&gt;&amp; digiletters,
-    int index,
-    const string current_prefix,
-    vector&lt;string&gt;* possible_prefixes) {
-  if (index == digiletters.size()) {
-    possible_prefixes-&gt;push_back(current_prefix);
-    return;
-  }
-  const string candidates = kKeypadLetters[digiletters.at(index)];
-  for (char c : candidates) {
-    GetPrefixesHelper(
-        digiletters,
-        index + 1,
-        current_prefix + c,
-        possible_prefixes);
-  }
-}
-
-void GetPrefixes(
-    const vector&lt;int&gt;&amp; digiletters, vector&lt;string&gt;* possible_prefixes) {
-  GetPrefixesHelper(digiletters, 0, &quot;&quot;, possible_prefixes);
-}
-
-int main(int argc, char* argv[]) {
-  // Read the keypad input
-  int keypad_input;
-  cin &gt;&gt; keypad_input;
-
-  // Read strings from file into Trie
-  assert(argc == 2);
-  Trie dict_trie;
-  PopulateTrie(argv[1], &amp;dict_trie);
-
-  // Get letter counts
-  vector&lt;int&gt; digiletters;
-  while (keypad_input) {
-    digiletters.push_back(keypad_input % 10);
-    keypad_input /= 10;
-  }
-  reverse(digiletters.begin(), digiletters.end());
-
-  // First get the combinatorially possible prefixes
-  vector&lt;string&gt; possible_prefixes;
-  GetPrefixes(digiletters, &amp;possible_prefixes);
-
-  // Use the prefixes to get complete matches.
-  vector&lt;string&gt; possible_matches;
-  for (const string&amp; prefix : possible_prefixes) {
-    if (dict_trie.Lookup(prefix)) {
-      dict_trie.FindAllWithPrefix(prefix, &amp;possible_matches);
-    }
-  }
-
-  // Print matches
-  for (const string&amp; s : possible_matches) {
-    cout &lt;&lt; s &lt;&lt; endl;
-  }
-}
-</code></pre></noscript></div>
-
-
-
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-01-18T02:21:00+00:00" pubdate data-updated="true">Jan 18<sup>th</sup>, 2014</time></div>
 	<div class="tags">
 
 
