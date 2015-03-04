@@ -4,7 +4,7 @@
   <title><![CDATA[Category: projecteuler | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/projecteuler/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-03-04T07:20:11+00:00</updated>
+  <updated>2015-03-04T19:02:59+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,110 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Euler 33: Curious Fractions]]></title>
+    <link href="http://agam.github.io/blog/2015/03/04/euler-33-curious-fractions/"/>
+    <updated>2015-03-04T18:52:31+00:00</updated>
+    <id>http://agam.github.io/blog/2015/03/04/euler-33-curious-fractions</id>
+    <content type="html"><![CDATA[<p>Hmm .. this is almost too straightforward to post, but here goes &hellip;</p>
+
+<p><strong>Statutory Warning</strong>: <em>Spoilers ahead</em></p>
+
+<p>```c++
+using std::pair;</p>
+
+<p>pair&lt;int,int> getDigits(int num) {
+  return std::make_pair(num / 10, num % 10);
+}</p>
+
+<p>int gcd(int a, int b) {
+  assert(b &lt;= a);
+  if (b == 0) {</p>
+
+<pre><code>return a;
+</code></pre>
+
+<p>  } else {</p>
+
+<pre><code>return gcd(b, a % b);
+</code></pre>
+
+<p>  }
+}</p>
+
+<p>pair&lt;int,int> getReducedForm(int num, int den) {
+  int g = gcd(den, num);
+  return std::make_pair(num / g, den / g);
+}</p>
+
+<p>bool isCuriousFraction(int num, int den) {
+  // If (1) the numbers share digits, and (2) they can be reduced,
+  // then they form a &lsquo;curious fraction&rsquo;
+  auto reducedForm = getReducedForm(num, den);</p>
+
+<p>  auto n = getDigits(num);
+  auto d = getDigits(den);</p>
+
+<p>  if ((n.second == 0 &amp;&amp; d.second == 0) || n.first > d.second) {</p>
+
+<pre><code>return false;
+</code></pre>
+
+<p>  }</p>
+
+<p>  auto curiousForm = getReducedForm(n.first, d.second);</p>
+
+<p>  if (n.second == d.first &amp;&amp; curiousForm == reducedForm) {</p>
+
+<pre><code>return true;
+</code></pre>
+
+<p>  } else {</p>
+
+<pre><code>return false;
+</code></pre>
+
+<p>  }
+}</p>
+
+<p>int main() {
+  int numProduct = 1, denProduct = 1;
+  // Go through all pairs of two-digit numbers, where one is smaller than the other.
+  for (int den = 10; den &lt; 100; ++den) {</p>
+
+<pre><code>for (int num = 10; num &lt; den; ++num) {
+  if (isCuriousFraction(num, den)) {
+std::cout &lt;&lt; "Debug: found " &lt;&lt; num &lt;&lt; " / " &lt;&lt; den &lt;&lt; std::endl;
+numProduct *= num;
+denProduct *= den;
+  }
+}
+</code></pre>
+
+<p>  }
+  // For lowest common terms, divide both by GCD
+  std::cout &lt;&lt; &ldquo;Denominator of product = &rdquo;</p>
+
+<pre><code>        &lt;&lt; denProduct / gcd(denProduct, numProduct) &lt;&lt; std::endl;
+</code></pre>
+
+<p>}
+```</p>
+
+<p>&hellip; and runs as follows</p>
+
+<p><code>sh
+Debug: found 16 / 64
+Debug: found 26 / 65
+Debug: found 19 / 95
+Debug: found 49 / 98
+Denominator of product = &lt;redacted&gt;
+</code></p>
+
+<p>(<em>Sigh</em> &hellip; yes, its <em>longer</em> than some of the previous solutions, but it really didn&rsquo;t take me long to write it &hellip; I think I&rsquo;m developing a renewed appreciation for C++)</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Euler 32: Sum of Pan-digital products]]></title>
@@ -245,133 +349,6 @@ euler29 = length $ L.nub $ [a ^ b | a &lt;- [2 .. 100], b &lt;- [2 .. 100]]
 <p>(where <code>L</code> is <code>Data.List</code>)</p>
 
 <p><em>P.S.</em> I did make a dumb error by initiall writing this as two functions, with the second one taking <code>Int</code> instead of <code>Integer</code>, which (I&rsquo;m disappointed to say) resulted in everything silently overflowing to negative numbers.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Euler 28: Spiral diagonals]]></title>
-    <link href="http://agam.github.io/blog/2015/02/17/euler-28-spiral-diagonals/"/>
-    <updated>2015-02-17T19:33:10+00:00</updated>
-    <id>http://agam.github.io/blog/2015/02/17/euler-28-spiral-diagonals</id>
-    <content type="html"><![CDATA[<p>This problem afforded a chance to be lazy and have fun.</p>
-
-<p>There definitely is a pattern in the diagonals here: for a <code>3 x 3</code> matrix, the elements are 3, 5, 7, 9. For a <code>5 x 5</code> matrix, the additional elements are 13, 17, 21, 25.</p>
-
-<p>You can see these as being (1 + 2), (1 + 4), (1 + 6), (1 + 8), and then (1 + 2 + 2 + 8), (1 + 4 + 4 + 8), (1 + 6 + 6 + 8), (1 + 8 + 8 + 8).</p>
-
-<p>Similarly, for a <code>7 x 7</code> matrix, the numbers are 31, 37, 43, 49, which are (1 + 2 + 2 + 2 + 8 + 8 + 8), (1 + 4 + 4 + 4 + 8 + 8 + 8), (1 + 6 + 6 + 6 + 8 + 8 + 8), (1 + 8 + 8 + 8 + 8 + 8 + 8)</p>
-
-<p>On the other hand, the problem mentions a <code>1001 x 1001</code> matrix, which is <em>tiny</em>, so why bother with these patterns? Just create the matrix and sum up the diagonals directly! (It&rsquo;s <em>just</em> a million elements &hellip; now if it was a few orders of magnitude higher, it would be a different story)</p>
-
-<p><strong>Statutory Warning</strong>: Spoilers ahead!</p>
-
-<p>```haskell
-import qualified Data.List as L
-import qualified Data.Vector as V
-import qualified Data.Matrix as M
-import qualified Data.HashMap.Strict as H
-import Prelude hiding (Left,Right)</p>
-
-<p>&mdash; Euler 28: spiral int matrix</p>
-
-<p>data Direction = Down | Left | Right | Up deriving Show</p>
-
-<p>move :: (Int,Int) &ndash;> Direction &ndash;> (Int,Int)
-move oldPoint@(y,x) dir =
-  case dir of Down &ndash;> (y+1,x)</p>
-
-<pre><code>          Left -&gt; (y,x-1)
-          Right -&gt; (y,x+1)
-          Up -&gt; (y-1,x)
-</code></pre>
-
-<p>getSpiralMoves :: Int &ndash;> [Direction]
-getSpiralMoves n =
-  if n == 3
-  then [Down, Right, Up, Up, Left, Left, Down, Down]
-  else let prevMoves = getSpiralMoves (n-2)</p>
-
-<pre><code>       firstMove = [Down]
-       secondMove = take (n-2) $ repeat Right
-       thirdMove = take (n-1) $ repeat Up
-       fourthMove = take (n-1) $ repeat Left
-       fifthMove = take (n-1) $ repeat Down
-   in
-    prevMoves ++ firstMove ++ secondMove ++ thirdMove ++ fourthMove ++ fifthMove
-</code></pre>
-
-<p>getSpiralCoords :: Int &ndash;> [(Int,Int)]
-getSpiralCoords n =
-  let mid = div (n+1) 2</p>
-
-<pre><code>  start = (mid,mid)
-</code></pre>
-
-<p>  in
-   L.scanl move start $ getSpiralMoves n</p>
-
-<p>getCoordHash :: Int &ndash;> H.HashMap (Int,Int) Int
-getCoordHash n = H.fromList $ zip (getSpiralCoords n) [1..]</p>
-
-<p>genF :: H.HashMap (Int,Int) Int &ndash;> (Int, Int) &ndash;> Int
-genF h (i,j) = h H.! (i,j)</p>
-
-<p>getDiagElems :: M.Matrix Int &ndash;> Int &ndash;> Int
-getDiagElems mat n =
-  let leftDiag = sum $ [M.getElem i i mat | i &lt;&ndash; [1 .. n]]</p>
-
-<pre><code>  rightDiag = sum $ [M.getElem i (n + 1 - i) mat | i &lt;- [1 .. n]]
-  centerElem = let c = div (n+1) 2
-               in
-                M.getElem c c mat
-</code></pre>
-
-<p>  in
-   leftDiag + rightDiag &ndash; centerElem</p>
-
-<p>getSpiralMatrix :: Int &ndash;> M.Matrix Int
-getSpiralMatrix n = M.matrix n n $ genF $ getCoordHash n</p>
-
-<p>diagSum :: Int &ndash;> Int
-diagSum n = getDiagElems (getSpiralMatrix n) n
-```</p>
-
-<p>I added type signatures for every function, so here&rsquo;s a quick overview (this is terribly over-engineered, and turned out to be more of a way to get to know various Haskell datatypes than to actually solve this problem!):</p>
-
-<p><code>getSpiralMoves</code> translates the literal pattern of the square spiral into concrete steps and then <code>getSpiralCoords</code> converts these into <code>(i,j)</code> elements within the matrix. Since I use a <em>generating function</em> (in <code>getSpiralMatrix</code>) to create the matrix, I use a hash-map to store the value of each co-ordinate &hellip; and then <code>getDiagElems</code> iterates over the diagonal elements.</p>
-
-<p>The matrix does turn out as expected:</p>
-
-<p><code>haskell
-*Main&gt; getSpiralMatrix 7
-( 43 42 41 40 39 38 37 )
-( 44 21 20 19 18 17 36 )
-( 45 22  7  6  5 16 35 )
-( 46 23  8  1  4 15 34 )
-( 47 24  9  2  3 14 33 )
-( 48 25 10 11 12 13 32 )
-( 49 26 27 28 29 30 31 )
-</code></p>
-
-<p>This was a simple problem but I was surprised by how <em>short</em> the code was; I didn&rsquo;t write overly terse code, added lots of whitespace, indentation, extra lines, etc, and the whole piece was <em>still</em> just 60 lines!</p>
-
-<p><strong>Update</strong>: Fine, here&rsquo;s the simple solution too.</p>
-
-<p>For every <code>N x N</code> matrix (where <code>N</code> is odd), the diagonal elements are all the diagonal elements of the <code>N-2</code>-sized matrix, plus four more. And these four include <code>N^2</code> and three others, each being <code>(N-1)</code> less than the other. The base case is <code>1 x 1</code>, with a value of 1.</p>
-
-<p>```haskell
-euler28 :: Int &ndash;> Int
-euler28 1 = 1
-euler28 n = let sideDiff = n &ndash; 1</p>
-
-<pre><code>            sq = n ^ 2
-        in
-         euler28 (n-2) + 4 * sq - (1 + 2 + 3) * sideDiff
-</code></pre>
-
-<p>```</p>
-
-<p>&hellip; and then <code>euler28 1001</code> gives the same answer.</p>
 ]]></content>
   </entry>
   

@@ -7,7 +7,7 @@
 	<meta name="author" content="Agam">
 
 	
-	<meta name="description" content="I created a new VM in Google Compute Engine a few days ago, and assigned it an SSD disk, and then began wondering if it was really an SSD disk. ( &hellip;">
+	<meta name="description" content="Finished reading (browsing, really, after the first few chapters) through The Haskell Road to Logic, Maths and Programming1, and I am &hellip; &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -86,6 +86,67 @@
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2014/12/19/logic-through-haskell-not-necessarily-dot-dot-dot/">
+		
+			Logic Through Haskell? Not Necessarily &#8230;</a>
+	</h2>
+	<div class="entry-content">
+		<p>Finished reading (browsing, really, after the first few chapters) through The Haskell Road to Logic, Maths and Programming<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>, and I am &hellip; <em>underwhelmed</em>. I mean the book was great and all, but maybe I made the mistake of forming some unreasonable expectations.</p>
+
+<p>If you&rsquo;re already familiar with a bit of Haskell and basic logic/sets/numbers, you&rsquo;ll get the most <em>bang for your buck</em> from Chapter 10 on <em>Corecursion</em><sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>. This was &ldquo;brand new&rdquo; for me and I had multiple &ldquo;aha&rdquo; moments after seeing the mechanism used to reason about non-deterministic processes etc.</p>
+
+<p><strong>Conclusions</strong>:</p>
+
+<ul>
+<li>More than Haskell, this motivated me to learn more math (though I don&rsquo;t know <em>where to start</em>!)</li>
+<li>I feel like Mathematica could be used too, for everything in this book; for stuff like this it&rsquo;s like Haskell <em>plus lots of libraries and visualization</em></li>
+</ul>
+
+<div class="footnotes">
+<hr/>
+<ol>
+<li id="fn:1">
+<p><a href="http://www.amazon.com/Haskell-Programming-Second-Edition-Computing/dp/0954300696">via Amazon</a><a href="#fnref:1" rev="footnote">&#8617;</a></p></li>
+<li id="fn:2">
+<p><a href="http://en.wikipedia.org/wiki/Corecursion">via Wikipedia</a><a href="#fnref:2" rev="footnote">&#8617;</a></p></li>
+</ol>
+</div>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-12-19T01:20:58+00:00" pubdate data-updated="true">Dec 19<sup>th</sup>, 2014</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/haskell/'>haskell</a>, <a class='category' href='/blog/categories/logic/'>logic</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -1735,275 +1796,6 @@ Error: <code>The resource 'projects/algol-c/zones/us-central1-a/instances/myvm' 
 
 
 	<a class='category' href='/blog/categories/concurrency/'>concurrency</a>, <a class='category' href='/blog/categories/golang/'>golang,</a>, <a class='category' href='/blog/categories/graph/'>graph,</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2014/08/19/a-ridiculous-adder/">
-		
-			A Ridiculous Adder</a>
-	</h2>
-	<div class="entry-content">
-		<p>Alright, the first example of <em>&ldquo;Ridiculous Concurrency&rdquo;</em> ! Here is a terribly inefficient adder that performs arithmetic on arbitrarily large integers.</p>
-
-<p>See <a href="https://gist.github.com/agam/3d82745c84c8f44dd51c">this gist</a> for the complete source &hellip;</p>
-
-<p>In case no one gets the joke, I&rsquo;ll be explicit: this is <em>not really</em> a way to implement a &ldquo;BigNum&rdquo;, it&rsquo;s a terrible way to do it, but it&rsquo;s a fun way to do it that can only be done with Go.</p>
-
-<p>This is the <code>main</code> function:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='go'><span class='line'><span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>     <span class="nx">bignum</span> <span class="o">:=</span> <span class="nx">MakeBigNum</span><span class="p">([]</span><span class="kt">int</span><span class="p">{</span><span class="mi">9</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">8</span><span class="p">})</span>
-</span><span class='line'>     <span class="nb">print</span><span class="p">(</span><span class="nx">bignum</span><span class="p">)</span>
-</span><span class='line'>     <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;\nAnd after adding ... \n&quot;</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>     <span class="nx">add</span><span class="p">(</span><span class="mi">100000</span><span class="p">,</span> <span class="nx">bignum</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>     <span class="nb">print</span><span class="p">(</span><span class="nx">bignum</span><span class="p">)</span>
-</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">()</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Pretty straightforward &hellip; and this is how you make the big number:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-</pre></td><td class='code'><pre><code class='go'><span class='line'><span class="kd">func</span> <span class="nx">addDigit</span><span class="p">(</span><span class="nx">b</span> <span class="o">*</span><span class="nx">Bignum</span><span class="p">,</span> <span class="nx">num</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">in</span> <span class="o">&lt;-</span><span class="kd">chan</span> <span class="kt">bool</span><span class="p">)</span> <span class="kd">chan</span> <span class="kt">bool</span> <span class="p">{</span>
-</span><span class='line'>     <span class="nx">new_out</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">bool</span><span class="p">)</span>
-</span><span class='line'>     <span class="nx">d</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">Digit</span><span class="p">{</span><span class="nx">num</span><span class="p">,</span> <span class="nx">in</span><span class="p">,</span> <span class="nx">new_out</span><span class="p">}</span>
-</span><span class='line'>     <span class="nx">b</span><span class="p">.</span><span class="nx">digits</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">b</span><span class="p">.</span><span class="nx">digits</span><span class="p">,</span> <span class="nx">d</span><span class="p">)</span>
-</span><span class='line'>     <span class="k">go</span> <span class="nx">carry</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span>
-</span><span class='line'>     <span class="k">return</span> <span class="nx">new_out</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">func</span> <span class="nx">carry</span><span class="p">(</span><span class="nx">d</span> <span class="o">*</span><span class="nx">Digit</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>         <span class="k">for</span> <span class="nx">in_msg</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">d</span><span class="p">.</span><span class="nx">pull_carry</span> <span class="p">{</span>
-</span><span class='line'>               <span class="nx">out_msg</span> <span class="o">:=</span> <span class="kc">false</span>
-</span><span class='line'>                 <span class="k">if</span> <span class="nx">in_msg</span> <span class="p">{</span>
-</span><span class='line'>                         <span class="nx">sum</span> <span class="o">:=</span> <span class="nx">d</span><span class="p">.</span><span class="nx">value</span> <span class="o">+</span> <span class="mi">1</span>
-</span><span class='line'>                         <span class="k">if</span> <span class="nx">sum</span> <span class="o">&gt;=</span> <span class="mi">10</span> <span class="p">{</span>
-</span><span class='line'>                                 <span class="nx">d</span><span class="p">.</span><span class="nx">value</span> <span class="p">=</span> <span class="nx">sum</span> <span class="o">-</span> <span class="mi">10</span>
-</span><span class='line'>                                 <span class="nx">out_msg</span> <span class="p">=</span> <span class="kc">true</span>
-</span><span class='line'>                         <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</span><span class='line'>                                 <span class="nx">d</span><span class="p">.</span><span class="nx">value</span> <span class="p">=</span> <span class="nx">sum</span>
-</span><span class='line'>                         <span class="p">}</span>
-</span><span class='line'>                 <span class="p">}</span>
-</span><span class='line'>                 <span class="nx">d</span><span class="p">.</span><span class="nx">push_carry</span> <span class="o">&lt;-</span> <span class="nx">out_msg</span>
-</span><span class='line'>          <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">func</span> <span class="nx">sentinel</span><span class="p">(</span><span class="nx">b</span> <span class="o">*</span><span class="nx">Bignum</span><span class="p">,</span> <span class="nx">in</span> <span class="o">&lt;-</span><span class="kd">chan</span> <span class="kt">bool</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="k">for</span> <span class="p">{</span>
-</span><span class='line'>                <span class="kd">var</span> <span class="nx">msg</span> <span class="p">=</span> <span class="o">&lt;-</span><span class="nx">in</span>
-</span><span class='line'>                <span class="k">if</span> <span class="nx">msg</span> <span class="p">{</span>
-</span><span class='line'>                        <span class="nx">last_out</span> <span class="o">:=</span> <span class="nx">addDigit</span><span class="p">(</span><span class="nx">b</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="nx">in</span><span class="p">)</span>
-</span><span class='line'>                        <span class="k">go</span> <span class="nx">sentinel</span><span class="p">(</span><span class="nx">b</span><span class="p">,</span> <span class="nx">last_out</span><span class="p">)</span>
-</span><span class='line'>                        <span class="nx">last_out</span> <span class="o">&lt;-</span> <span class="kc">false</span>
-</span><span class='line'>                        <span class="k">break</span>
-</span><span class='line'>                 <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</span><span class='line'>                        <span class="nx">b</span><span class="p">.</span><span class="nx">stable</span> <span class="o">&lt;-</span> <span class="kc">true</span>
-</span><span class='line'>                 <span class="p">}</span>
-</span><span class='line'>         <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">func</span> <span class="nx">MakeBigNum</span><span class="p">(</span><span class="nx">num_arr</span> <span class="p">[]</span><span class="kt">int</span><span class="p">)</span> <span class="o">*</span><span class="nx">Bignum</span> <span class="p">{</span>
-</span><span class='line'>         <span class="kd">var</span> <span class="nx">digits</span> <span class="p">[]</span><span class="o">*</span><span class="nx">Digit</span>
-</span><span class='line'>         <span class="nx">last_out</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">bool</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>         <span class="nx">stable</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">bool</span><span class="p">)</span>
-</span><span class='line'>         <span class="nx">b</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">Bignum</span><span class="p">{</span><span class="nx">digits</span><span class="p">,</span> <span class="nx">last_out</span><span class="p">,</span> <span class="nx">stable</span><span class="p">}</span>
-</span><span class='line'>         <span class="nx">l</span> <span class="o">:=</span> <span class="nb">len</span><span class="p">(</span><span class="nx">num_arr</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>         <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">l</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
-</span><span class='line'>                 <span class="nx">last_out</span> <span class="p">=</span> <span class="nx">addDigit</span><span class="p">(</span><span class="nx">b</span><span class="p">,</span> <span class="nx">num_arr</span><span class="p">[</span><span class="nx">l</span><span class="o">-</span><span class="nx">i</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="nx">last_out</span><span class="p">)</span>
-</span><span class='line'>         <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>         <span class="k">go</span> <span class="nx">sentinel</span><span class="p">(</span><span class="nx">b</span><span class="p">,</span> <span class="nx">last_out</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>         <span class="k">return</span> <span class="nx">b</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Yup, <em>every digit</em> is a Goroutine here!</p>
-
-<p>Each digit is connected to the one on its left and the one on its right, and has channels open to each. It listens in on one (<code>pull_carry</code>) and increments itself if necessary. If it overflows, it lets the next one know.</p>
-
-<p>The last digit is always a &ldquo;sentinel&rdquo;, which on receiving a carry signal (i.e. when the overall big number grows in size), creates a new &ldquo;digit&rdquo; (spawning a goroutine for it) and makes <em>that</em> one the new sentinel.</p>
-
-<p>With this arrangement, the actual task of addition is boring:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-</pre></td><td class='code'><pre><code class='go'><span class='line'><span class="kd">func</span> <span class="nx">add</span><span class="p">(</span><span class="nx">n</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">b</span> <span class="o">*</span><span class="nx">Bignum</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="nx">sent</span> <span class="o">:=</span> <span class="mi">0</span>
-</span><span class='line'>        <span class="nx">done</span> <span class="o">:=</span> <span class="mi">0</span>
-</span><span class='line'><span class="nx">done_sending</span><span class="p">:</span>
-</span><span class='line'>  <span class="k">for</span> <span class="p">{</span>
-</span><span class='line'>           <span class="k">select</span> <span class="p">{</span>
-</span><span class='line'>           <span class="k">case</span> <span class="nx">b</span><span class="p">.</span><span class="nx">add</span> <span class="o">&lt;-</span> <span class="kc">true</span><span class="p">:</span>
-</span><span class='line'>               <span class="nx">sent</span><span class="o">++</span>
-</span><span class='line'>           <span class="k">if</span> <span class="nx">sent</span> <span class="o">==</span> <span class="nx">n</span> <span class="p">{</span>
-</span><span class='line'>                   <span class="k">break</span> <span class="nx">done_sending</span>
-</span><span class='line'>           <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>           <span class="k">case</span> <span class="o">&lt;-</span><span class="nx">b</span><span class="p">.</span><span class="nx">stable</span><span class="p">:</span>
-</span><span class='line'>               <span class="nx">done</span><span class="o">++</span>
-</span><span class='line'>       <span class="p">}</span>
-</span><span class='line'>   <span class="p">}</span>
-</span><span class='line'>   <span class="k">for</span> <span class="p">;</span> <span class="nx">done</span> <span class="p">&lt;</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">done</span><span class="o">++</span> <span class="p">{</span>
-</span><span class='line'>           <span class="o">&lt;-</span> <span class="nx">b</span><span class="p">.</span><span class="nx">stable</span>
-</span><span class='line'>   <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Well, alright, not <em>that</em> boring. <code>b.add</code> is nothing other than the <code>pull_carry</code> channel of the <em>first</em> digit. We just pump that channel as many times as the size of the number we&rsquo;re adding, and wait for the number to &ldquo;stabilize&rdquo; at the end. <code>b.stable</code> is the flip side of <code>b.add</code>: it&rsquo;s the <code>push_carry</code> channel of the <em>last</em> digit.</p>
-
-<p>The small trick here is to start receiving the results in parallel, to avoid deadlock. Another option would be to provide buffered channels, but I prefer it this way so I don&rsquo;t have to think about how much buffer space to allocate. This is just as correct.</p>
-
-<p>That&rsquo;s pretty much it &hellip; here are the data types we used in our adder:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='go'><span class='line'><span class="kd">type</span> <span class="nx">Bignum</span> <span class="kd">struct</span> <span class="p">{</span>
-</span><span class='line'>         <span class="nx">digits</span>   <span class="p">[]</span><span class="o">*</span><span class="nx">Digit</span>
-</span><span class='line'>         <span class="nx">add</span>      <span class="kd">chan</span><span class="o">&lt;-</span> <span class="kt">bool</span>
-</span><span class='line'>         <span class="nx">stable</span>   <span class="kd">chan</span> <span class="kt">bool</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">type</span> <span class="nx">Digit</span> <span class="kd">struct</span> <span class="p">{</span>
-</span><span class='line'>         <span class="nx">value</span>      <span class="kt">int</span>
-</span><span class='line'>         <span class="nx">pull_carry</span> <span class="o">&lt;-</span><span class="kd">chan</span> <span class="kt">bool</span>
-</span><span class='line'>         <span class="nx">push_carry</span> <span class="kd">chan</span><span class="o">&lt;-</span> <span class="kt">bool</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This isn&rsquo;t really about adding numbers, creating a reasonably complex (statically typed!) asynchronous model like this would be hard in any other language (yes, I&rsquo;m aware of <code>core.async</code>, and it has <code>go</code>, <code>|&gt;</code>, <code>&lt;|</code> and so on, and using <code>alts!!</code> might result in something similar, but it feels a bit clunkier to play around with).</p>
-
-<p>Here&rsquo;s another great perk of #golang &hellip; you don&rsquo;t have to take my word for all this: try out this example live at <a href="http://play.golang.org/p/dOK16qov1e">the Go Playground</a>!</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-08-19T21:32:09+00:00" pubdate data-updated="true">Aug 19<sup>th</sup>, 2014</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/golang/'>golang</a>
 
 
 </div>

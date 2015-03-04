@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-03-04T07:20:11+00:00</updated>
+  <updated>2015-03-04T19:02:59+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,151 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Euler 33: Curious Fractions]]></title>
+    <link href="http://agam.github.io/blog/2015/03/04/euler-33-curious-fractions/"/>
+    <updated>2015-03-04T18:52:31+00:00</updated>
+    <id>http://agam.github.io/blog/2015/03/04/euler-33-curious-fractions</id>
+    <content type="html"><![CDATA[<p>Hmm .. this is almost too straightforward to post, but here goes &hellip;</p>
+
+<p><strong>Statutory Warning</strong>: <em>Spoilers ahead</em></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+</pre></td><td class='code'><pre><code class='c++'><span class='line'><span class="k">using</span> <span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">pair</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">getDigits</span><span class="p">(</span><span class="kt">int</span> <span class="n">num</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">return</span> <span class="n">std</span><span class="o">::</span><span class="n">make_pair</span><span class="p">(</span><span class="n">num</span> <span class="o">/</span> <span class="mi">10</span><span class="p">,</span> <span class="n">num</span> <span class="o">%</span> <span class="mi">10</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="n">gcd</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">assert</span><span class="p">(</span><span class="n">b</span> <span class="o">&lt;=</span> <span class="n">a</span><span class="p">);</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="n">b</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">a</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">gcd</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">a</span> <span class="o">%</span> <span class="n">b</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">pair</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">getReducedForm</span><span class="p">(</span><span class="kt">int</span> <span class="n">num</span><span class="p">,</span> <span class="kt">int</span> <span class="n">den</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="kt">int</span> <span class="n">g</span> <span class="o">=</span> <span class="n">gcd</span><span class="p">(</span><span class="n">den</span><span class="p">,</span> <span class="n">num</span><span class="p">);</span>
+</span><span class='line'>  <span class="k">return</span> <span class="n">std</span><span class="o">::</span><span class="n">make_pair</span><span class="p">(</span><span class="n">num</span> <span class="o">/</span> <span class="n">g</span><span class="p">,</span> <span class="n">den</span> <span class="o">/</span> <span class="n">g</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">bool</span> <span class="n">isCuriousFraction</span><span class="p">(</span><span class="kt">int</span> <span class="n">num</span><span class="p">,</span> <span class="kt">int</span> <span class="n">den</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="c1">// If (1) the numbers share digits, and (2) they can be reduced,</span>
+</span><span class='line'>  <span class="c1">// then they form a &#39;curious fraction&#39;</span>
+</span><span class='line'>  <span class="k">auto</span> <span class="n">reducedForm</span> <span class="o">=</span> <span class="n">getReducedForm</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">den</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">auto</span> <span class="n">n</span> <span class="o">=</span> <span class="n">getDigits</span><span class="p">(</span><span class="n">num</span><span class="p">);</span>
+</span><span class='line'>  <span class="k">auto</span> <span class="n">d</span> <span class="o">=</span> <span class="n">getDigits</span><span class="p">(</span><span class="n">den</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">if</span> <span class="p">((</span><span class="n">n</span><span class="p">.</span><span class="n">second</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">d</span><span class="p">.</span><span class="n">second</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">||</span> <span class="n">n</span><span class="p">.</span><span class="n">first</span> <span class="o">&gt;</span> <span class="n">d</span><span class="p">.</span><span class="n">second</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">auto</span> <span class="n">curiousForm</span> <span class="o">=</span> <span class="n">getReducedForm</span><span class="p">(</span><span class="n">n</span><span class="p">.</span><span class="n">first</span><span class="p">,</span> <span class="n">d</span><span class="p">.</span><span class="n">second</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="n">n</span><span class="p">.</span><span class="n">second</span> <span class="o">==</span> <span class="n">d</span><span class="p">.</span><span class="n">first</span> <span class="o">&amp;&amp;</span> <span class="n">curiousForm</span> <span class="o">==</span> <span class="n">reducedForm</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="kt">int</span> <span class="n">numProduct</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">denProduct</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>  <span class="c1">// Go through all pairs of two-digit numbers, where one is smaller than the other.</span>
+</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">den</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span> <span class="n">den</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">;</span> <span class="o">++</span><span class="n">den</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">num</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span> <span class="n">num</span> <span class="o">&lt;</span> <span class="n">den</span><span class="p">;</span> <span class="o">++</span><span class="n">num</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">isCuriousFraction</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">den</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Debug: found &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">num</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; / &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">den</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">numProduct</span> <span class="o">*=</span> <span class="n">num</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">denProduct</span> <span class="o">*=</span> <span class="n">den</span><span class="p">;</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="c1">// For lowest common terms, divide both by GCD</span>
+</span><span class='line'>  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Denominator of product = &quot;</span>
+</span><span class='line'>            <span class="o">&lt;&lt;</span> <span class="n">denProduct</span> <span class="o">/</span> <span class="n">gcd</span><span class="p">(</span><span class="n">denProduct</span><span class="p">,</span> <span class="n">numProduct</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&hellip; and runs as follows</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>Debug: found <span class="m">16</span> / 64
+</span><span class='line'>Debug: found <span class="m">26</span> / 65
+</span><span class='line'>Debug: found <span class="m">19</span> / 95
+</span><span class='line'>Debug: found <span class="m">49</span> / 98
+</span><span class='line'>Denominator of <span class="nv">product</span> <span class="o">=</span> &lt;redacted&gt;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>(<em>Sigh</em> &hellip; yes, its <em>longer</em> than some of the previous solutions, but it really didn&rsquo;t take me long to write it &hellip; I think I&rsquo;m developing a renewed appreciation for C++)</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Euler 32: Sum of Pan-digital products]]></title>
@@ -8483,480 +8628,6 @@ After this, evaluating <code>amicables 10000</code> took <code>23.71</code> seco
 
 
 <p>Coming next: a different kind of gambling game (Blackjack?) and a slightly more involved two-player game (Battleship?)</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[These pretzels are making me thirsty!]]></title>
-    <link href="http://agam.github.io/blog/2015/01/10/these-pretzels-are-making-me-thirsty/"/>
-    <updated>2015-01-10T07:29:26+00:00</updated>
-    <id>http://agam.github.io/blog/2015/01/10/these-pretzels-are-making-me-thirsty</id>
-    <content type="html"><![CDATA[<p>All right, here&rsquo;s <em>another</em> one of the series of hypothetically pedagogical text games in Go. This one is based on the original <em>Bagels</em>, which I then appropriated as <em>Pretzels</em>.</p>
-
-<p>Here&rsquo;s the code:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-<span class='line-number'>72</span>
-<span class='line-number'>73</span>
-<span class='line-number'>74</span>
-<span class='line-number'>75</span>
-<span class='line-number'>76</span>
-<span class='line-number'>77</span>
-<span class='line-number'>78</span>
-<span class='line-number'>79</span>
-<span class='line-number'>80</span>
-<span class='line-number'>81</span>
-<span class='line-number'>82</span>
-<span class='line-number'>83</span>
-<span class='line-number'>84</span>
-<span class='line-number'>85</span>
-<span class='line-number'>86</span>
-<span class='line-number'>87</span>
-<span class='line-number'>88</span>
-<span class='line-number'>89</span>
-<span class='line-number'>90</span>
-<span class='line-number'>91</span>
-<span class='line-number'>92</span>
-<span class='line-number'>93</span>
-<span class='line-number'>94</span>
-<span class='line-number'>95</span>
-<span class='line-number'>96</span>
-<span class='line-number'>97</span>
-<span class='line-number'>98</span>
-<span class='line-number'>99</span>
-<span class='line-number'>100</span>
-<span class='line-number'>101</span>
-</pre></td><td class='code'><pre><code class='go'><span class='line'><span class="kn">package</span> <span class="nx">main</span>
-</span><span class='line'>
-</span><span class='line'><span class="kn">import</span> <span class="p">(</span>
-</span><span class='line'>  <span class="s">&quot;fmt&quot;</span>
-</span><span class='line'>  <span class="s">&quot;math/rand&quot;</span>
-</span><span class='line'>  <span class="s">&quot;time&quot;</span>
-</span><span class='line'><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">const</span> <span class="p">(</span>
-</span><span class='line'>  <span class="nx">minRange</span>  <span class="p">=</span> <span class="mi">100</span>
-</span><span class='line'>  <span class="nx">maxRange</span>  <span class="p">=</span> <span class="mi">999</span>
-</span><span class='line'>  <span class="nx">numDigits</span> <span class="p">=</span> <span class="mi">3</span>
-</span><span class='line'>  <span class="nx">maxTries</span>  <span class="p">=</span> <span class="mi">20</span>
-</span><span class='line'><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">const</span> <span class="p">(</span>
-</span><span class='line'>  <span class="nx">picoStr</span>    <span class="p">=</span> <span class="s">&quot; -- PICO -- &quot;</span>
-</span><span class='line'>  <span class="nx">fermiStr</span>   <span class="p">=</span> <span class="s">&quot; -- FERMI -- &quot;</span>
-</span><span class='line'>  <span class="nx">pretzelStr</span> <span class="p">=</span> <span class="s">&quot; -- PRETZEL -- &quot;</span>
-</span><span class='line'><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">func</span> <span class="nx">showIntro</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;\nWelcome to &#39;PRETZELS&#39; !!&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;------------------------&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span>
-</span><span class='line'>      <span class="s">&quot;\nHere are the rules. I&#39;m going to guess a THREE-DIGIT number, and then &quot;</span> <span class="o">+</span>
-</span><span class='line'>          <span class="s">&quot;you have to guess it. I will give you clues as follows: \n&quot;</span> <span class="o">+</span>
-</span><span class='line'>          <span class="s">&quot;   PICO -- you got one digit correct, BUT in the wrong position\n&quot;</span> <span class="o">+</span>
-</span><span class='line'>          <span class="s">&quot;  FERMI -- you got on digit correct, AND in the right position\n&quot;</span> <span class="o">+</span>
-</span><span class='line'>          <span class="s">&quot;PRETZEL -- you got NO digits correct.\n&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;You get %d chances to guess it!\n\n&quot;</span><span class="p">,</span> <span class="nx">maxTries</span><span class="p">)</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">func</span> <span class="nx">getDigits</span><span class="p">(</span><span class="nx">num</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">digits</span> <span class="p">[]</span><span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="kd">var</span> <span class="nx">i</span> <span class="kt">int</span>
-</span><span class='line'>  <span class="k">for</span> <span class="p">{</span>
-</span><span class='line'>      <span class="nx">digits</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="p">=</span> <span class="nx">num</span> <span class="o">%</span> <span class="mi">10</span>
-</span><span class='line'>      <span class="nx">i</span><span class="o">++</span>
-</span><span class='line'>      <span class="nx">num</span> <span class="o">/=</span> <span class="mi">10</span>
-</span><span class='line'>      <span class="k">if</span> <span class="nx">num</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
-</span><span class='line'>          <span class="k">break</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">func</span> <span class="nx">showFeedback</span><span class="p">(</span><span class="nx">targetDigits</span> <span class="p">[]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">guess</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="nx">guessDigits</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">numDigits</span><span class="p">)</span>
-</span><span class='line'>  <span class="nx">getDigits</span><span class="p">(</span><span class="nx">guess</span><span class="p">,</span> <span class="nx">guessDigits</span><span class="p">)</span>
-</span><span class='line'>  <span class="nx">somethingMatched</span> <span class="o">:=</span> <span class="kc">false</span>
-</span><span class='line'>  <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">guessDigits</span><span class="p">);</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">if</span> <span class="nx">guessDigits</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">==</span> <span class="nx">targetDigits</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="p">{</span>
-</span><span class='line'>          <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="nx">fermiStr</span><span class="p">)</span>
-</span><span class='line'>          <span class="nx">somethingMatched</span> <span class="p">=</span> <span class="kc">true</span>
-</span><span class='line'>          <span class="k">continue</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>      <span class="k">for</span> <span class="nx">j</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">j</span> <span class="p">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">targetDigits</span><span class="p">);</span> <span class="nx">j</span><span class="o">++</span> <span class="p">{</span>
-</span><span class='line'>          <span class="k">if</span> <span class="nx">guessDigits</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">==</span> <span class="nx">targetDigits</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="p">{</span>
-</span><span class='line'>              <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="nx">picoStr</span><span class="p">)</span>
-</span><span class='line'>              <span class="nx">somethingMatched</span> <span class="p">=</span> <span class="kc">true</span>
-</span><span class='line'>              <span class="k">break</span>
-</span><span class='line'>          <span class="p">}</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="k">if</span> <span class="p">!</span><span class="nx">somethingMatched</span> <span class="p">{</span>
-</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="nx">pretzelStr</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">()</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>  <span class="nx">showIntro</span><span class="p">()</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nx">rand</span><span class="p">.</span><span class="nx">Seed</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Now</span><span class="p">().</span><span class="nx">Unix</span><span class="p">())</span>
-</span><span class='line'>  <span class="nx">target</span> <span class="o">:=</span> <span class="nx">minRange</span> <span class="o">+</span> <span class="nx">rand</span><span class="p">.</span><span class="nx">Intn</span><span class="p">(</span><span class="nx">maxRange</span><span class="o">-</span><span class="nx">minRange</span><span class="p">)</span>
-</span><span class='line'>  <span class="nx">targetDigits</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">int</span><span class="p">,</span> <span class="nx">numDigits</span><span class="p">)</span>
-</span><span class='line'>  <span class="nx">getDigits</span><span class="p">(</span><span class="nx">target</span><span class="p">,</span> <span class="nx">targetDigits</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="kd">var</span> <span class="nx">numTries</span> <span class="kt">int</span>
-</span><span class='line'>  <span class="k">for</span> <span class="p">{</span>
-</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;\nWhat is Guess #%d ? &quot;</span><span class="p">,</span> <span class="nx">numTries</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
-</span><span class='line'>      <span class="kd">var</span> <span class="nx">guess</span> <span class="kt">int</span>
-</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Scan</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">guess</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="k">if</span> <span class="nx">guess</span> <span class="p">&lt;</span> <span class="nx">minRange</span> <span class="o">||</span> <span class="nx">guess</span> <span class="p">&gt;</span> <span class="nx">maxRange</span> <span class="p">{</span>
-</span><span class='line'>          <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;You MUST choose a number between %d and %d, try again ...\n\n&quot;</span><span class="p">,</span> <span class="nx">minRange</span><span class="p">,</span> <span class="nx">maxRange</span><span class="p">)</span>
-</span><span class='line'>          <span class="k">continue</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>      <span class="nx">showFeedback</span><span class="p">(</span><span class="nx">targetDigits</span><span class="p">,</span> <span class="nx">guess</span><span class="p">)</span>
-</span><span class='line'>      <span class="k">if</span> <span class="nx">guess</span> <span class="o">==</span> <span class="nx">target</span> <span class="p">{</span>
-</span><span class='line'>          <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;\nYou got it!!\n&quot;</span><span class="p">)</span>
-</span><span class='line'>          <span class="k">break</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>      <span class="k">if</span> <span class="nx">numTries</span> <span class="p">&gt;</span> <span class="nx">maxTries</span> <span class="p">{</span>
-</span><span class='line'>          <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;\nOOPS ... you ran out of chances! :(\n&quot;</span><span class="p">)</span>
-</span><span class='line'>          <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;(The number I thought of was %d)\n\n&quot;</span><span class="p">,</span> <span class="nx">target</span><span class="p">)</span>
-</span><span class='line'>          <span class="k">break</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>      <span class="nx">numTries</span><span class="o">++</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;\n\n     ... these pretzels are making me thirsty! ...\n&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>and here&rsquo;s the eye-watering original:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-<span class='line-number'>72</span>
-<span class='line-number'>73</span>
-<span class='line-number'>74</span>
-<span class='line-number'>75</span>
-<span class='line-number'>76</span>
-<span class='line-number'>77</span>
-<span class='line-number'>78</span>
-<span class='line-number'>79</span>
-<span class='line-number'>80</span>
-<span class='line-number'>81</span>
-</pre></td><td class='code'><pre><code class='basic'><span class='line'><span class="nl">5</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="kr">TAB</span><span class="p">(</span><span class="il">33</span><span class="p">);</span><span class="s2">&quot;BAGELS&quot;</span>
-</span><span class='line'><span class="nl">10</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="kr">TAB</span><span class="p">(</span><span class="il">15</span><span class="p">);</span><span class="s2">&quot;CREATIVE COMPUTING  MORRISTOWN, NEW JERSEY&quot;</span><span class="o">:</span><span class="kr">PRINT</span><span class="o">:</span><span class="kr">PRINT</span>
-</span><span class='line'><span class="nl">15</span><span class="w"> </span><span class="c1">REM *** BAGLES NUMBER GUESSING GAME</span>
-</span><span class='line'><span class="nl">20</span><span class="w"> </span><span class="c1">REM *** ORIGINAL SOURCE UNKNOWN BUT SUSPECTED TO BE</span>
-</span><span class='line'><span class="nl">25</span><span class="w"> </span><span class="c1">REM *** LAWRENCE HALL OF SCIENCE, U.C. BERKELY</span>
-</span><span class='line'><span class="nl">30</span><span class="w"> </span><span class="kd">DIM</span><span class="w"> </span><span class="vg">A1</span><span class="p">(</span><span class="il">6</span><span class="p">),</span><span class="vg">A</span><span class="p">(</span><span class="il">3</span><span class="p">),</span><span class="vg">B</span><span class="p">(</span><span class="il">3</span><span class="p">)</span>
-</span><span class='line'><span class="nl">40</span><span class="w"> </span><span class="vg">Y</span><span class="o">=</span><span class="il">0</span><span class="o">:</span><span class="vg">T</span><span class="o">=</span><span class="il">255</span>
-</span><span class='line'><span class="nl">50</span><span class="w"> </span><span class="kr">PRINT</span><span class="o">:</span><span class="kr">PRINT</span><span class="o">:</span><span class="kr">PRINT</span>
-</span><span class='line'><span class="nl">70</span><span class="w"> </span><span class="kr">INPUT</span><span class="w"> </span><span class="s2">&quot;WOULD YOU LIKE THE RULES (YES OR NO)&quot;</span><span class="p">;</span><span class="vg">A$</span>
-</span><span class='line'><span class="nl">90</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="kr">LEFT$</span><span class="p">(</span><span class="vg">A$</span><span class="p">,</span><span class="il">1</span><span class="p">)</span><span class="o">=</span><span class="s2">&quot;N&quot;</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">150</span>
-</span><span class='line'><span class="nl">100</span><span class="w"> </span><span class="kr">PRINT</span><span class="o">:</span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;I AM THINKING OF A THREE-DIGIT NUMBER.  TRY TO GUESS&quot;</span>
-</span><span class='line'><span class="nl">110</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;MY NUMBER AND I WILL GIVE YOU CLUES AS FOLLOWS:&quot;</span>
-</span><span class='line'><span class="nl">120</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;   PICO   - ONE DIGIT CORRECT BUT IN THE WRONG POSITION&quot;</span>
-</span><span class='line'><span class="nl">130</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;   FERMI  - ONE DIGIT CORRECT AND IN THE RIGHT POSITION&quot;</span>
-</span><span class='line'><span class="nl">140</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;   BAGELS - NO DIGITS CORRECT&quot;</span>
-</span><span class='line'><span class="nl">150</span><span class="w"> </span><span class="kr">FOR</span><span class="w"> </span><span class="vg">I</span><span class="o">=</span><span class="il">1</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="il">3</span>
-</span><span class='line'><span class="nl">160</span><span class="w"> </span><span class="vg">A</span><span class="p">(</span><span class="vg">I</span><span class="p">)</span><span class="o">=</span><span class="kr">INT</span><span class="p">(</span><span class="il">10</span><span class="o">*</span><span class="kr">RND</span><span class="p">(</span><span class="il">1</span><span class="p">))</span>
-</span><span class='line'><span class="nl">165</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">I</span><span class="il">-1</span><span class="o">=</span><span class="il">0</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">200</span>
-</span><span class='line'><span class="nl">170</span><span class="w"> </span><span class="kr">FOR</span><span class="w"> </span><span class="vg">J</span><span class="o">=</span><span class="il">1</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="vg">I</span><span class="il">-1</span>
-</span><span class='line'><span class="nl">180</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">A</span><span class="p">(</span><span class="vg">I</span><span class="p">)</span><span class="o">=</span><span class="vg">A</span><span class="p">(</span><span class="vg">J</span><span class="p">)</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">160</span>
-</span><span class='line'><span class="nl">190</span><span class="w"> </span><span class="kr">NEXT</span><span class="w"> </span><span class="vg">J</span>
-</span><span class='line'><span class="nl">200</span><span class="w"> </span><span class="kr">NEXT</span><span class="w"> </span><span class="vg">I</span>
-</span><span class='line'><span class="nl">210</span><span class="w"> </span><span class="kr">PRINT</span><span class="o">:</span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;O.K.  I HAVE A NUMBER IN MIND.&quot;</span>
-</span><span class='line'><span class="nl">220</span><span class="w"> </span><span class="kr">FOR</span><span class="w"> </span><span class="vg">I</span><span class="o">=</span><span class="il">1</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="il">20</span>
-</span><span class='line'><span class="nl">230</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;GUESS #&quot;</span><span class="p">;</span><span class="vg">I</span><span class="p">,</span>
-</span><span class='line'><span class="nl">240</span><span class="w"> </span><span class="kr">INPUT</span><span class="w"> </span><span class="vg">A$</span>
-</span><span class='line'><span class="nl">245</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="kr">LEN</span><span class="p">(</span><span class="vg">A$</span><span class="p">)</span><span class="o">&lt;&gt;</span><span class="il">3</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">630</span>
-</span><span class='line'><span class="nl">250</span><span class="w"> </span><span class="kr">FOR</span><span class="w"> </span><span class="vg">Z</span><span class="o">=</span><span class="il">1</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="il">3</span><span class="o">:</span><span class="vg">A1</span><span class="p">(</span><span class="vg">Z</span><span class="p">)</span><span class="o">=</span><span class="kr">ASC</span><span class="p">(</span><span class="kr">MID$</span><span class="p">(</span><span class="vg">A$</span><span class="p">,</span><span class="vg">Z</span><span class="p">,</span><span class="il">1</span><span class="p">))</span><span class="o">:</span><span class="kr">NEXT</span><span class="w"> </span><span class="vg">Z</span>
-</span><span class='line'><span class="nl">260</span><span class="w"> </span><span class="kr">FOR</span><span class="w"> </span><span class="vg">J</span><span class="o">=</span><span class="il">1</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="il">3</span>
-</span><span class='line'><span class="nl">270</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">A1</span><span class="p">(</span><span class="vg">J</span><span class="p">)</span><span class="o">&lt;</span><span class="il">48</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">300</span>
-</span><span class='line'><span class="nl">280</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">A1</span><span class="p">(</span><span class="vg">J</span><span class="p">)</span><span class="o">&gt;</span><span class="il">57</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">300</span>
-</span><span class='line'><span class="nl">285</span><span class="w"> </span><span class="vg">B</span><span class="p">(</span><span class="vg">J</span><span class="p">)</span><span class="o">=</span><span class="vg">A1</span><span class="p">(</span><span class="vg">J</span><span class="p">)</span><span class="il">-48</span>
-</span><span class='line'><span class="nl">290</span><span class="w"> </span><span class="kr">NEXT</span><span class="w"> </span><span class="vg">J</span>
-</span><span class='line'><span class="nl">295</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">320</span>
-</span><span class='line'><span class="nl">300</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;WHAT?&quot;</span>
-</span><span class='line'><span class="nl">310</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">230</span>
-</span><span class='line'><span class="nl">320</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">B</span><span class="p">(</span><span class="il">1</span><span class="p">)</span><span class="o">=</span><span class="vg">B</span><span class="p">(</span><span class="il">2</span><span class="p">)</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">650</span>
-</span><span class='line'><span class="nl">330</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">B</span><span class="p">(</span><span class="il">2</span><span class="p">)</span><span class="o">=</span><span class="vg">B</span><span class="p">(</span><span class="il">3</span><span class="p">)</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">650</span>
-</span><span class='line'><span class="nl">340</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">B</span><span class="p">(</span><span class="il">3</span><span class="p">)</span><span class="o">=</span><span class="vg">B</span><span class="p">(</span><span class="il">1</span><span class="p">)</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">650</span>
-</span><span class='line'><span class="nl">350</span><span class="w"> </span><span class="vg">C</span><span class="o">=</span><span class="il">0</span><span class="o">:</span><span class="vg">D</span><span class="o">=</span><span class="il">0</span>
-</span><span class='line'><span class="nl">360</span><span class="w"> </span><span class="kr">FOR</span><span class="w"> </span><span class="vg">J</span><span class="o">=</span><span class="il">1</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="il">2</span>
-</span><span class='line'><span class="nl">370</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">A</span><span class="p">(</span><span class="vg">J</span><span class="p">)</span><span class="o">&lt;&gt;</span><span class="vg">B</span><span class="p">(</span><span class="vg">J</span><span class="o">+</span><span class="il">1</span><span class="p">)</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">390</span>
-</span><span class='line'><span class="nl">380</span><span class="w"> </span><span class="vg">C</span><span class="o">=</span><span class="vg">C</span><span class="o">+</span><span class="il">1</span>
-</span><span class='line'><span class="nl">390</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">A</span><span class="p">(</span><span class="vg">J</span><span class="o">+</span><span class="il">1</span><span class="p">)</span><span class="o">&lt;&gt;</span><span class="vg">B</span><span class="p">(</span><span class="vg">J</span><span class="p">)</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">410</span>
-</span><span class='line'><span class="nl">400</span><span class="w"> </span><span class="vg">C</span><span class="o">=</span><span class="vg">C</span><span class="o">+</span><span class="il">1</span>
-</span><span class='line'><span class="nl">410</span><span class="w"> </span><span class="kr">NEXT</span><span class="w"> </span><span class="vg">J</span>
-</span><span class='line'><span class="nl">420</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">A</span><span class="p">(</span><span class="il">1</span><span class="p">)</span><span class="o">&lt;&gt;</span><span class="vg">B</span><span class="p">(</span><span class="il">3</span><span class="p">)</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">440</span>
-</span><span class='line'><span class="nl">430</span><span class="w"> </span><span class="vg">C</span><span class="o">=</span><span class="vg">C</span><span class="o">+</span><span class="il">1</span>
-</span><span class='line'><span class="nl">440</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">A</span><span class="p">(</span><span class="il">3</span><span class="p">)</span><span class="o">&lt;&gt;</span><span class="vg">B</span><span class="p">(</span><span class="il">1</span><span class="p">)</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">460</span>
-</span><span class='line'><span class="nl">450</span><span class="w"> </span><span class="vg">C</span><span class="o">=</span><span class="vg">C</span><span class="o">+</span><span class="il">1</span>
-</span><span class='line'><span class="nl">460</span><span class="w"> </span><span class="kr">FOR</span><span class="w"> </span><span class="vg">J</span><span class="o">=</span><span class="il">1</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="il">3</span>
-</span><span class='line'><span class="nl">470</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">A</span><span class="p">(</span><span class="vg">J</span><span class="p">)</span><span class="o">&lt;&gt;</span><span class="vg">B</span><span class="p">(</span><span class="vg">J</span><span class="p">)</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">490</span>
-</span><span class='line'><span class="nl">480</span><span class="w"> </span><span class="vg">D</span><span class="o">=</span><span class="vg">D</span><span class="o">+</span><span class="il">1</span>
-</span><span class='line'><span class="nl">490</span><span class="w"> </span><span class="kr">NEXT</span><span class="w"> </span><span class="vg">J</span>
-</span><span class='line'><span class="nl">500</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">D</span><span class="o">=</span><span class="il">3</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">680</span>
-</span><span class='line'><span class="nl">505</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">C</span><span class="o">=</span><span class="il">0</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">545</span>
-</span><span class='line'><span class="nl">520</span><span class="w"> </span><span class="kr">FOR</span><span class="w"> </span><span class="vg">J</span><span class="o">=</span><span class="il">1</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="vg">C</span>
-</span><span class='line'><span class="nl">530</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;PICO &quot;</span><span class="p">;</span>
-</span><span class='line'><span class="nl">540</span><span class="w"> </span><span class="kr">NEXT</span><span class="w"> </span><span class="vg">J</span>
-</span><span class='line'><span class="nl">545</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">D</span><span class="o">=</span><span class="il">0</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">580</span>
-</span><span class='line'><span class="nl">550</span><span class="w"> </span><span class="kr">FOR</span><span class="w"> </span><span class="vg">J</span><span class="o">=</span><span class="il">1</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="vg">D</span>
-</span><span class='line'><span class="nl">560</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;FERMI &quot;</span><span class="p">;</span>
-</span><span class='line'><span class="nl">570</span><span class="w"> </span><span class="kr">NEXT</span><span class="w"> </span><span class="vg">J</span>
-</span><span class='line'><span class="nl">580</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">C</span><span class="o">+</span><span class="vg">D</span><span class="o">&lt;&gt;</span><span class="il">0</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">600</span>
-</span><span class='line'><span class="nl">590</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;BAGELS&quot;</span><span class="p">;</span>
-</span><span class='line'><span class="nl">600</span><span class="w"> </span><span class="kr">PRINT</span>
-</span><span class='line'><span class="nl">605</span><span class="w"> </span><span class="kr">NEXT</span><span class="w"> </span><span class="vg">I</span>
-</span><span class='line'><span class="nl">610</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;OH WELL.&quot;</span>
-</span><span class='line'><span class="nl">615</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;THAT&#39;S TWNETY GUESSES.  MY NUMBER WAS&quot;</span><span class="p">;</span><span class="il">100</span><span class="o">*</span><span class="vg">A</span><span class="p">(</span><span class="il">1</span><span class="p">)</span><span class="o">+</span><span class="il">10</span><span class="o">*</span><span class="vg">A</span><span class="p">(</span><span class="il">2</span><span class="p">)</span><span class="o">+</span><span class="vg">A</span><span class="p">(</span><span class="il">3</span><span class="p">)</span>
-</span><span class='line'><span class="nl">620</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">700</span>
-</span><span class='line'><span class="nl">630</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;TRY GUESSING A THREE-DIGIT NUMBER.&quot;</span><span class="o">:</span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">230</span>
-</span><span class='line'><span class="nl">650</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;OH, I FORGOT TO TELL YOU THAT THE NUMBER I HAVE IN MIND&quot;</span>
-</span><span class='line'><span class="nl">660</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;HAS NO TWO DIGITS THE SAME.&quot;</span><span class="o">:</span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">230</span>
-</span><span class='line'><span class="nl">680</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;YOU GOT IT!!!&quot;</span><span class="o">:</span><span class="kr">PRINT</span>
-</span><span class='line'><span class="nl">690</span><span class="w"> </span><span class="vg">Y</span><span class="o">=</span><span class="vg">Y</span><span class="o">+</span><span class="il">1</span>
-</span><span class='line'><span class="nl">700</span><span class="w"> </span><span class="kr">INPUT</span><span class="w"> </span><span class="s2">&quot;PLAY AGAIN (YES OR NO)&quot;</span><span class="p">;</span><span class="vg">A$</span>
-</span><span class='line'><span class="nl">720</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="kr">LEFT$</span><span class="p">(</span><span class="vg">A$</span><span class="p">,</span><span class="il">1</span><span class="p">)</span><span class="o">=</span><span class="s2">&quot;YES&quot;</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">150</span>
-</span><span class='line'><span class="nl">730</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">Y</span><span class="o">=</span><span class="il">0</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">750</span>
-</span><span class='line'><span class="nl">740</span><span class="w"> </span><span class="kr">PRINT</span><span class="o">:</span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;A&quot;</span><span class="p">;</span><span class="vg">Y</span><span class="p">;</span><span class="s2">&quot;POINT BAGELS BUFF!!&quot;</span>
-</span><span class='line'><span class="nl">750</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;HOPE YOU HAD FUN.  BYE.&quot;</span>
-</span><span class='line'><span class="nl">999</span><span class="w"> </span><span class="kr">END</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>And just to show how much fun this is (copy-paste and try it!), here&rsquo;s a sample run:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>go run pretzels.go
-</span><span class='line'>
-</span><span class='line'>Welcome to <span class="s1">&#39;PRETZELS&#39;</span> !!
-</span><span class='line'>------------------------
-</span><span class='line'>
-</span><span class='line'>Here are the rules. I<span class="err">&#39;</span>m going to guess a THREE-DIGIT number, and <span class="k">then</span> you have to guess it. I will give you clues as follows:
-</span><span class='line'>   PICO -- you got one digit correct, BUT in the wrong position
-</span><span class='line'>  FERMI -- you got on digit correct, AND in the right position
-</span><span class='line'>PRETZEL -- you got NO digits correct.
-</span><span class='line'>
-</span><span class='line'>You get <span class="m">20</span> chances to guess it!
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>What is Guess <span class="c">#1 ? 123</span>
-</span><span class='line'> -- PRETZEL --
-</span><span class='line'>
-</span><span class='line'>What is Guess <span class="c">#2 ? 456</span>
-</span><span class='line'> -- PICO --
-</span><span class='line'>
-</span><span class='line'>What is Guess <span class="c">#3 ? 789</span>
-</span><span class='line'> -- PICO --  -- PICO --
-</span><span class='line'>
-</span><span class='line'>What is Guess <span class="c">#4 ? 100</span>
-</span><span class='line'> -- PRETZEL --
-</span><span class='line'>
-</span><span class='line'>What is Guess <span class="c">#5 ? 987</span>
-</span><span class='line'> -- PICO --  -- PICO --
-</span><span class='line'>
-</span><span class='line'>What is Guess <span class="c">#6 ? 8797</span>
-</span><span class='line'>You MUST choose a number between <span class="m">100</span> and 999, try again ...
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>What is Guess <span class="c">#6 ? 897</span>
-</span><span class='line'> -- FERMI --  -- FERMI --
-</span><span class='line'>
-</span><span class='line'>What is Guess <span class="c">#7 ? 894</span>
-</span><span class='line'> -- FERMI --  -- FERMI --  -- FERMI --
-</span><span class='line'>
-</span><span class='line'>You got it!!
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>     ... these pretzels are making me thirsty! ...
-</span></code></pre></td></tr></table></div></figure>
-
 ]]></content>
   </entry>
   

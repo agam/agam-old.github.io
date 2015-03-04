@@ -4,7 +4,7 @@
   <title><![CDATA[Category: cpp | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/cpp/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-03-04T07:20:11+00:00</updated>
+  <updated>2015-03-04T19:02:59+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,110 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Euler 33: Curious Fractions]]></title>
+    <link href="http://agam.github.io/blog/2015/03/04/euler-33-curious-fractions/"/>
+    <updated>2015-03-04T18:52:31+00:00</updated>
+    <id>http://agam.github.io/blog/2015/03/04/euler-33-curious-fractions</id>
+    <content type="html"><![CDATA[<p>Hmm .. this is almost too straightforward to post, but here goes &hellip;</p>
+
+<p><strong>Statutory Warning</strong>: <em>Spoilers ahead</em></p>
+
+<p>```c++
+using std::pair;</p>
+
+<p>pair&lt;int,int> getDigits(int num) {
+  return std::make_pair(num / 10, num % 10);
+}</p>
+
+<p>int gcd(int a, int b) {
+  assert(b &lt;= a);
+  if (b == 0) {</p>
+
+<pre><code>return a;
+</code></pre>
+
+<p>  } else {</p>
+
+<pre><code>return gcd(b, a % b);
+</code></pre>
+
+<p>  }
+}</p>
+
+<p>pair&lt;int,int> getReducedForm(int num, int den) {
+  int g = gcd(den, num);
+  return std::make_pair(num / g, den / g);
+}</p>
+
+<p>bool isCuriousFraction(int num, int den) {
+  // If (1) the numbers share digits, and (2) they can be reduced,
+  // then they form a &lsquo;curious fraction&rsquo;
+  auto reducedForm = getReducedForm(num, den);</p>
+
+<p>  auto n = getDigits(num);
+  auto d = getDigits(den);</p>
+
+<p>  if ((n.second == 0 &amp;&amp; d.second == 0) || n.first > d.second) {</p>
+
+<pre><code>return false;
+</code></pre>
+
+<p>  }</p>
+
+<p>  auto curiousForm = getReducedForm(n.first, d.second);</p>
+
+<p>  if (n.second == d.first &amp;&amp; curiousForm == reducedForm) {</p>
+
+<pre><code>return true;
+</code></pre>
+
+<p>  } else {</p>
+
+<pre><code>return false;
+</code></pre>
+
+<p>  }
+}</p>
+
+<p>int main() {
+  int numProduct = 1, denProduct = 1;
+  // Go through all pairs of two-digit numbers, where one is smaller than the other.
+  for (int den = 10; den &lt; 100; ++den) {</p>
+
+<pre><code>for (int num = 10; num &lt; den; ++num) {
+  if (isCuriousFraction(num, den)) {
+std::cout &lt;&lt; "Debug: found " &lt;&lt; num &lt;&lt; " / " &lt;&lt; den &lt;&lt; std::endl;
+numProduct *= num;
+denProduct *= den;
+  }
+}
+</code></pre>
+
+<p>  }
+  // For lowest common terms, divide both by GCD
+  std::cout &lt;&lt; &ldquo;Denominator of product = &rdquo;</p>
+
+<pre><code>        &lt;&lt; denProduct / gcd(denProduct, numProduct) &lt;&lt; std::endl;
+</code></pre>
+
+<p>}
+```</p>
+
+<p>&hellip; and runs as follows</p>
+
+<p><code>sh
+Debug: found 16 / 64
+Debug: found 26 / 65
+Debug: found 19 / 95
+Debug: found 49 / 98
+Denominator of product = &lt;redacted&gt;
+</code></p>
+
+<p>(<em>Sigh</em> &hellip; yes, its <em>longer</em> than some of the previous solutions, but it really didn&rsquo;t take me long to write it &hellip; I think I&rsquo;m developing a renewed appreciation for C++)</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Euler 32: Sum of Pan-digital products]]></title>
