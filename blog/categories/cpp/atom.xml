@@ -4,7 +4,7 @@
   <title><![CDATA[Category: cpp | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/cpp/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-03-04T19:02:59+00:00</updated>
+  <updated>2015-03-04T19:04:39+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -123,6 +123,8 @@ Denominator of product = &lt;redacted&gt;
     <updated>2015-03-04T07:10:28+00:00</updated>
     <id>http://agam.github.io/blog/2015/03/04/euler-32-sum-of-pan-digital-products</id>
     <content type="html"><![CDATA[<p>Pretty dumb naive solution.</p>
+
+<p><strong>Statutory Warning</strong>: <em>Spoilers ahead</em></p>
 
 <p>```c++
 using std::vector;
