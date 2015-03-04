@@ -4,7 +4,7 @@
   <title><![CDATA[Category: projecteuler | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/projecteuler/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-02-22T04:48:12+00:00</updated>
+  <updated>2015-03-04T07:20:11+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,143 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Euler 32: Sum of Pan-digital products]]></title>
+    <link href="http://agam.github.io/blog/2015/03/04/euler-32-sum-of-pan-digital-products/"/>
+    <updated>2015-03-04T07:10:28+00:00</updated>
+    <id>http://agam.github.io/blog/2015/03/04/euler-32-sum-of-pan-digital-products</id>
+    <content type="html"><![CDATA[<p>Pretty dumb naive solution.</p>
+
+<p>```c++
+using std::vector;
+static const int kNumDigits = 9;</p>
+
+<p>int getNumber(const vector<int>&amp; vNum) {
+  int result = 0;
+  for (int i = 0; i &lt; vNum.size(); ++i) {</p>
+
+<pre><code>result = result * 10 + vNum[i];
+</code></pre>
+
+<p>  }
+  return result;
+}</p>
+
+<p>bool isProduct(const vector<int>&amp; vMultA,</p>
+
+<pre><code>           const vector&lt;int&gt;&amp; vMultB,
+           const vector&lt;int&gt;&amp; vProduct) {
+</code></pre>
+
+<p>  int multa = getNumber(vMultA);
+  int multb = getNumber(vMultB);
+  int product = getNumber(vProduct);
+  bool result = (multa * multb == product);
+  if (result) {</p>
+
+<pre><code>std::cout &lt;&lt; "Debug: Testing " &lt;&lt; multa &lt;&lt; " * " &lt;&lt; multb &lt;&lt; " = " &lt;&lt; product
+          &lt;&lt; "  --- MATCH!\n";
+</code></pre>
+
+<p>  }
+  return result;
+}</p>
+
+<p>// Try all possible splits from this combination
+void tryPermutation(const vector<int>&amp; p,</p>
+
+<pre><code>                int* total_matches,
+                std::unordered_set&lt;int&gt;* products) {
+</code></pre>
+
+<p>  assert(p.size() == kNumDigits);
+  // There are nine digits, indexed from 0 to 8
+  // First number spans 0 to i, the second i + 1 to j, third is from j + 1 to 8
+  for (int i = 0; i &lt;= kNumDigits &ndash; 3; ++i) {</p>
+
+<pre><code>for (int j = i+1; j &lt;= kNumDigits - 2; ++j) {
+  vector&lt;int&gt; n1, n2, n3;
+  for (int k = 0; k &lt;= i; ++k) {
+    n1.push_back(p[k]);
+  }
+  for (int k = i+1; k &lt;= j; ++k) {
+    n2.push_back(p[k]);
+  }
+  for (int k = j+1; k &lt;= kNumDigits-1; ++k) {
+    n3.push_back(p[k]);
+  }
+  if (isProduct(n1,n2,n3)) {
+    ++(*total_matches);
+    products-&gt;insert(getNumber(n3));
+  }
+}
+</code></pre>
+
+<p>  }
+}</p>
+
+<p>int main() {
+  vector<int> digits;
+  for (int i = 1; i &lt;= kNumDigits; ++i) {</p>
+
+<pre><code>digits.push_back(i);
+</code></pre>
+
+<p>  }
+  int total_matches = 0;
+  std::unordered_set<int> products;
+  do {</p>
+
+<pre><code>tryPermutation(digits, &amp;total_matches, &amp;products);
+</code></pre>
+
+<p>  } while (std::next_permutation(digits.begin(), digits.end()));
+  int products_sum = 0;
+  for (const auto&amp; p : products) {</p>
+
+<pre><code>products_sum += p;
+</code></pre>
+
+<p>  }
+  std::cout &lt;&lt; &ldquo;Number of matches = &rdquo; &lt;&lt; total_matches &lt;&lt; &ldquo;, &rdquo;</p>
+
+<pre><code>        &lt;&lt; "Sum of products = " &lt;&lt; products_sum &lt;&lt; std::endl;
+</code></pre>
+
+<p>}</p>
+
+<p>```</p>
+
+<p>Runs as follows:</p>
+
+<p><code>sh
+~/cpp $ time ./Test
+Debug: Testing 12 * 483 = 5796  --- MATCH!
+Debug: Testing 138 * 42 = 5796  --- MATCH!
+Debug: Testing 157 * 28 = 4396  --- MATCH!
+Debug: Testing 159 * 48 = 7632  --- MATCH!
+Debug: Testing 1738 * 4 = 6952  --- MATCH!
+Debug: Testing 18 * 297 = 5346  --- MATCH!
+Debug: Testing 186 * 39 = 7254  --- MATCH!
+Debug: Testing 1963 * 4 = 7852  --- MATCH!
+Debug: Testing 198 * 27 = 5346  --- MATCH!
+Debug: Testing 27 * 198 = 5346  --- MATCH!
+Debug: Testing 28 * 157 = 4396  --- MATCH!
+Debug: Testing 297 * 18 = 5346  --- MATCH!
+Debug: Testing 39 * 186 = 7254  --- MATCH!
+Debug: Testing 4 * 1738 = 6952  --- MATCH!
+Debug: Testing 4 * 1963 = 7852  --- MATCH!
+Debug: Testing 42 * 138 = 5796  --- MATCH!
+Debug: Testing 48 * 159 = 7632  --- MATCH!
+Debug: Testing 483 * 12 = 5796  --- MATCH!
+Number of matches = 18, Sum of products = 45228
+15.517 secs
+</code></p>
+
+<p>(Wait, why C++ instead of &hellip; other recent languages? Couple of reasons: (1) I thought I&rsquo;d need to brute force this (though it eventually turned out to take much less time than I anticipated), and (2) I&rsquo;m sort of <em>over</em> the <em>over-experimentation</em> with languages that I&rsquo;m not <em>really</em> going to use, and I&rsquo;m not going to get much out of anyway. Yes, tough. Deal with it)</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Euler 31: Coin combinations (and over-engineering)]]></title>
@@ -235,98 +372,6 @@ euler28 n = let sideDiff = n &ndash; 1</p>
 <p>```</p>
 
 <p>&hellip; and then <code>euler28 1001</code> gives the same answer.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Euler 27: Quadratic Primes]]></title>
-    <link href="http://agam.github.io/blog/2015/02/14/euler-27-quadratic-primes/"/>
-    <updated>2015-02-14T18:43:24+00:00</updated>
-    <id>http://agam.github.io/blog/2015/02/14/euler-27-quadratic-primes</id>
-    <content type="html"><![CDATA[<p><strong>Statutory Warning</strong>: Spoilers ahead</p>
-
-<p><em>This turned out to be really simple, though I went through a phase of churning out complicated solutions because of a stupid mistake.</em></p>
-
-<p>I didn&rsquo;t preserve intermediate versions, so here is the final solution:</p>
-
-<p>```haskell
-import qualified Data.List as L
-import qualified Data.Vector as V
-import qualified Data.Function as F</p>
-
-<p>sieve :: Int &ndash;> [Int] &ndash;> [Int]
-sieve num list =
-  if null list
-  then [num]
-  else let rest = filter (\x &ndash;> x <code>mod</code> num > 0) list</p>
-
-<pre><code>   in
-    num : sieve (head rest) (tail rest)
-</code></pre>
-
-<p>eratosthenes :: Int &ndash;> [Int]
-eratosthenes maxNum = sieve 2 [3 .. maxNum]</p>
-
-<p>allPrimes :: Int &ndash;> V.Vector Int
-allPrimes maxNum = V.fromList $ eratosthenes maxNum</p>
-
-<p>eulerEqn :: Int &ndash;> Int &ndash;> Int &ndash;> Int
-eulerEqn a b n = n * n + a * n + b</p>
-
-<p>&mdash; TODO(agam): replace with the &ldquo;standard&rdquo; way to do binary search
-binSearch :: V.Vector Int &ndash;> Int &ndash;> Int &ndash;> Int &ndash;> Bool
-binSearch arr min max elem =
-  let low = arr V.! min</p>
-
-<pre><code>  high = arr V.! max
-</code></pre>
-
-<p>  in
-   if max &ndash; min &lt; 2
-   then if low == elem</p>
-
-<pre><code>    then True
-    else False
-</code></pre>
-
-<p>   else let mid = div (min + max) 2</p>
-
-<pre><code>        midElem = arr V.! mid
-    in
-     if midElem &gt; elem
-     then binSearch arr min mid elem
-     else binSearch arr mid max elem
-</code></pre>
-
-<p>consecutivePrimes a b primes start length =
-  let p = eulerEqn a b start</p>
-
-<pre><code>  l = V.length primes
-  isPrime = binSearch primes 0 l p
-</code></pre>
-
-<p>  in
-   if isPrime
-   then consecutivePrimes a b primes (start + 1) (length + 1)
-   else length</p>
-
-<p>numPrimes a b primes = consecutivePrimes a b primes 0 0</p>
-
-<p>euler27 maxNum =
-  let ap = allPrimes maxNum</p>
-
-<pre><code>  primeLengths = [(a * b, numPrimes a b ap) | a &lt;- [-1000 .. 1000], b &lt;- [-1000 .. 1000]]
-</code></pre>
-
-<p>  in
-   L.maximumBy (F.on compare snd) primeLengths
-```</p>
-
-<p>When I ran this (i.e. <code>euler27 1000</code>) I got the correct answer the first time! But <em>I didn&rsquo;t see it</em>. Instead, I entered the <em>second</em> value of the tuple, which is <em>not</em> the one asked for, and it was therefore <em>obviously</em> wrong. So I thought &ldquo;hmm, we&rsquo;re looking at some large repeating sequence among really large primes&rdquo;, and tried <code>euler27 100000</code> and <code>euler27 10000000</code>, with no luck.</p>
-
-<p>The last one kept running for hours and I killed it, and then came up with the idea of &ldquo;vectorizing everything&rdquo; &mdash; which was perhaps a good academic exercise but did absolutely <em>nothing</em> for the performance here.</p>
-
-<p>So I forgot about it for a while, then came back and ran <code>euler27 1000</code>, entered the <em>first</em> value of the tuple, and that was the end of this story.</p>
 ]]></content>
   </entry>
   

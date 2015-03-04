@@ -3,6 +3,12 @@
   
   
   <url>
+    <loc>http://agam.github.io/blog/2015/03/04/euler-32-sum-of-pan-digital-products/</loc>
+    <lastmod>2015-03-04T07:10:28+00:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
     <loc>http://agam.github.io/blog/2015/02/22/euler-31-coin-combinations-and-over-engineering/</loc>
     <lastmod>2015-02-22T04:44:55+00:00</lastmod>
     <priority>0.8</priority>
@@ -677,14 +683,14 @@
   
   <url>
     <loc>http://agam.github.io/</loc>
-    <lastmod>2015-02-22T04:48:12+00:00</lastmod>
+    <lastmod>2015-03-04T07:20:11+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   
   <url>
     <loc>http://agam.github.io/blog/archives/</loc>
-    <lastmod>2015-02-22T04:48:12+00:00</lastmod>
+    <lastmod>2015-03-04T07:20:11+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>

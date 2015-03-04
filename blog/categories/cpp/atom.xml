@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: cpp | Agam's Mashed-Up Pome]]></title>
+  <link href="http://agam.github.io/blog/categories/cpp/atom.xml" rel="self"/>
+  <link href="http://agam.github.io/"/>
+  <updated>2015-03-04T07:20:11+00:00</updated>
+  <id>http://agam.github.io/</id>
+  <author>
+    <name><![CDATA[Agam]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Euler 32: Sum of Pan-digital products]]></title>
+    <link href="http://agam.github.io/blog/2015/03/04/euler-32-sum-of-pan-digital-products/"/>
+    <updated>2015-03-04T07:10:28+00:00</updated>
+    <id>http://agam.github.io/blog/2015/03/04/euler-32-sum-of-pan-digital-products</id>
+    <content type="html"><![CDATA[<p>Pretty dumb naive solution.</p>
+
+<p>```c++
+using std::vector;
+static const int kNumDigits = 9;</p>
+
+<p>int getNumber(const vector<int>&amp; vNum) {
+  int result = 0;
+  for (int i = 0; i &lt; vNum.size(); ++i) {</p>
+
+<pre><code>result = result * 10 + vNum[i];
+</code></pre>
+
+<p>  }
+  return result;
+}</p>
+
+<p>bool isProduct(const vector<int>&amp; vMultA,</p>
+
+<pre><code>           const vector&lt;int&gt;&amp; vMultB,
+           const vector&lt;int&gt;&amp; vProduct) {
+</code></pre>
+
+<p>  int multa = getNumber(vMultA);
+  int multb = getNumber(vMultB);
+  int product = getNumber(vProduct);
+  bool result = (multa * multb == product);
+  if (result) {</p>
+
+<pre><code>std::cout &lt;&lt; "Debug: Testing " &lt;&lt; multa &lt;&lt; " * " &lt;&lt; multb &lt;&lt; " = " &lt;&lt; product
+          &lt;&lt; "  --- MATCH!\n";
+</code></pre>
+
+<p>  }
+  return result;
+}</p>
+
+<p>// Try all possible splits from this combination
+void tryPermutation(const vector<int>&amp; p,</p>
+
+<pre><code>                int* total_matches,
+                std::unordered_set&lt;int&gt;* products) {
+</code></pre>
+
+<p>  assert(p.size() == kNumDigits);
+  // There are nine digits, indexed from 0 to 8
+  // First number spans 0 to i, the second i + 1 to j, third is from j + 1 to 8
+  for (int i = 0; i &lt;= kNumDigits &ndash; 3; ++i) {</p>
+
+<pre><code>for (int j = i+1; j &lt;= kNumDigits - 2; ++j) {
+  vector&lt;int&gt; n1, n2, n3;
+  for (int k = 0; k &lt;= i; ++k) {
+    n1.push_back(p[k]);
+  }
+  for (int k = i+1; k &lt;= j; ++k) {
+    n2.push_back(p[k]);
+  }
+  for (int k = j+1; k &lt;= kNumDigits-1; ++k) {
+    n3.push_back(p[k]);
+  }
+  if (isProduct(n1,n2,n3)) {
+    ++(*total_matches);
+    products-&gt;insert(getNumber(n3));
+  }
+}
+</code></pre>
+
+<p>  }
+}</p>
+
+<p>int main() {
+  vector<int> digits;
+  for (int i = 1; i &lt;= kNumDigits; ++i) {</p>
+
+<pre><code>digits.push_back(i);
+</code></pre>
+
+<p>  }
+  int total_matches = 0;
+  std::unordered_set<int> products;
+  do {</p>
+
+<pre><code>tryPermutation(digits, &amp;total_matches, &amp;products);
+</code></pre>
+
+<p>  } while (std::next_permutation(digits.begin(), digits.end()));
+  int products_sum = 0;
+  for (const auto&amp; p : products) {</p>
+
+<pre><code>products_sum += p;
+</code></pre>
+
+<p>  }
+  std::cout &lt;&lt; &ldquo;Number of matches = &rdquo; &lt;&lt; total_matches &lt;&lt; &ldquo;, &rdquo;</p>
+
+<pre><code>        &lt;&lt; "Sum of products = " &lt;&lt; products_sum &lt;&lt; std::endl;
+</code></pre>
+
+<p>}</p>
+
+<p>```</p>
+
+<p>Runs as follows:</p>
+
+<p><code>sh
+~/cpp $ time ./Test
+Debug: Testing 12 * 483 = 5796  --- MATCH!
+Debug: Testing 138 * 42 = 5796  --- MATCH!
+Debug: Testing 157 * 28 = 4396  --- MATCH!
+Debug: Testing 159 * 48 = 7632  --- MATCH!
+Debug: Testing 1738 * 4 = 6952  --- MATCH!
+Debug: Testing 18 * 297 = 5346  --- MATCH!
+Debug: Testing 186 * 39 = 7254  --- MATCH!
+Debug: Testing 1963 * 4 = 7852  --- MATCH!
+Debug: Testing 198 * 27 = 5346  --- MATCH!
+Debug: Testing 27 * 198 = 5346  --- MATCH!
+Debug: Testing 28 * 157 = 4396  --- MATCH!
+Debug: Testing 297 * 18 = 5346  --- MATCH!
+Debug: Testing 39 * 186 = 7254  --- MATCH!
+Debug: Testing 4 * 1738 = 6952  --- MATCH!
+Debug: Testing 4 * 1963 = 7852  --- MATCH!
+Debug: Testing 42 * 138 = 5796  --- MATCH!
+Debug: Testing 48 * 159 = 7632  --- MATCH!
+Debug: Testing 483 * 12 = 5796  --- MATCH!
+Number of matches = 18, Sum of products = 45228
+15.517 secs
+</code></p>
+
+<p>(Wait, why C++ instead of &hellip; other recent languages? Couple of reasons: (1) I thought I&rsquo;d need to brute force this (though it eventually turned out to take much less time than I anticipated), and (2) I&rsquo;m sort of <em>over</em> the <em>over-experimentation</em> with languages that I&rsquo;m not <em>really</em> going to use, and I&rsquo;m not going to get much out of anyway. Yes, tough. Deal with it)</p>
+]]></content>
+  </entry>
+  
+</feed>
