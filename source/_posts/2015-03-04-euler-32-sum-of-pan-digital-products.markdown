@@ -8,6 +8,8 @@ categories: projecteuler cpp
 
 Pretty dumb naive solution.
 
+**Statutory Warning**: _Spoilers ahead_
+
 ```c++
 using std::vector;
 static const int kNumDigits = 9;
