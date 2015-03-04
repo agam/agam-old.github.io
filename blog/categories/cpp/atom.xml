@@ -4,7 +4,7 @@
   <title><![CDATA[Category: cpp | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/cpp/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-03-04T19:04:39+00:00</updated>
+  <updated>2015-03-04T21:35:44+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,102 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Euler 34: Curious Numbers]]></title>
+    <link href="http://agam.github.io/blog/2015/03/04/euler-34-curious-numbers/"/>
+    <updated>2015-03-04T21:33:28+00:00</updated>
+    <id>http://agam.github.io/blog/2015/03/04/euler-34-curious-numbers</id>
+    <content type="html"><![CDATA[<p><em>Grumble</em> &hellip; I&rsquo;m missing the tougher problems we saw earlier. This is another easy one.</p>
+
+<p><strong>Statutory Warning</strong>: <em>Spoilers ahead</em></p>
+
+<p>```c++
+using std::vector;</p>
+
+<p>vector<int> getDigits(int number) {
+  vector<int> v;
+  while (number > 0) {</p>
+
+<pre><code>v.push_back(number % 10);
+number /= 10;
+</code></pre>
+
+<p>  }
+  return v;
+}</p>
+
+<p>void printVector(const vector<int>&amp; v) {
+  std::cout &lt;&lt; &ldquo;[ &rdquo;;
+  for (const auto&amp; d : v) {</p>
+
+<pre><code>std::cout &lt;&lt; d &lt;&lt; ", ";
+</code></pre>
+
+<p>  }
+  std::cout &lt;&lt; &ldquo; ]\n&rdquo;;
+}</p>
+
+<p>int factorial(int n) {
+  // Yep, crude, but it works.
+  static std::unordered_map&lt;int,int> memos;
+  const auto&amp; it = memos.find(n);
+  if (it != memos.end()) {</p>
+
+<pre><code>return it-&gt;second;
+</code></pre>
+
+<p>  }
+  int fact = 1;
+  for (int i = 1; i &lt;= n; ++i) {</p>
+
+<pre><code>fact *= i;
+</code></pre>
+
+<p>  }
+  memos[n] = fact;
+  return fact;
+}</p>
+
+<p>int sumFactDigits(const vector<int>&amp; v) {
+  int sum = 0;
+  for (const auto&amp; d : v) {</p>
+
+<pre><code>sum += factorial(d);
+</code></pre>
+
+<p>  }
+  return sum;
+}</p>
+
+<p>int main() {
+  static const int kMaxTries = 1000000;
+  long sum = 0;
+  for (int i = 3; i &lt; kMaxTries; ++i) {</p>
+
+<pre><code>vector&lt;int&gt; d = getDigits(i);
+if (i == sumFactDigits(d)) {
+  sum += i;
+  std::cout &lt;&lt; "Debug: found ";
+  std::reverse(d.begin(), d.end());
+  printVector(d);
+}
+</code></pre>
+
+<p>  }
+  std::cout &lt;&lt; &ldquo;Required sum = &rdquo; &lt;&lt; sum &lt;&lt; std::endl;
+}
+```</p>
+
+<p>&hellip; and it runs as</p>
+
+<p><code>sh
+Debug: found [ 1, 4, 5,  ]
+Debug: found [ 4, 0, 5, 8, 5,  ]
+Required sum = &lt;redacted&gt;
+</code></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Euler 33: Curious Fractions]]></title>
