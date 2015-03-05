@@ -4,7 +4,7 @@
   <title><![CDATA[Category: cpp | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/cpp/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-03-04T21:35:44+00:00</updated>
+  <updated>2015-03-05T00:06:47+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,124 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Euler 35: Circular Primes]]></title>
+    <link href="http://agam.github.io/blog/2015/03/04/euler-35-circular-primes/"/>
+    <updated>2015-03-04T23:49:53+00:00</updated>
+    <id>http://agam.github.io/blog/2015/03/04/euler-35-circular-primes</id>
+    <content type="html"><![CDATA[<p>The easy solutions continue (or, I&rsquo;ve just gotten used to C++ for these)</p>
+
+<p><strong>Statutory Warning</strong>: <em>Spoilers ahead</em></p>
+
+<p>```c++
+// Euler 35: A number is a circular prime if all the <em>rotations</em> of
+// its digits are prime numbers.</p>
+
+<p>using std::vector;</p>
+
+<p>const int kMaxNumbers = 1000000;
+typedef std::bitset<kMaxNumbers> AllNumbers;</p>
+
+<p>void markMultiples(AllNumbers* v, int n) {
+  const int kStart = 2 * n;
+  if (kStart >= kMaxNumbers) {</p>
+
+<pre><code>return;
+</code></pre>
+
+<p>  }
+  for (int i = kStart; i &lt; kMaxNumbers; i += n) {</p>
+
+<pre><code>v-&gt;set(i, false);
+</code></pre>
+
+<p>  }
+}</p>
+
+<p>void markPrimes(AllNumbers* v) {
+  v->set(0, false);
+  v->set(1, false);
+  int i = 2;
+  while (true) {</p>
+
+<pre><code>markMultiples(v, i);
+++i;
+for (; i &lt; kMaxNumbers &amp;&amp; !v-&gt;test(i); ++i) {}
+if (i == kMaxNumbers) {
+  return;
+}
+</code></pre>
+
+<p>  }
+}</p>
+
+<p>vector<int> getDigits(int n) {
+  vector<int> v;
+  while (n > 0) {</p>
+
+<pre><code>v.push_back(n % 10);
+n /= 10;
+</code></pre>
+
+<p>  }
+  return v;
+}</p>
+
+<p>int getNumber(const vector<int>&amp; v) {
+  int n = 0;
+  for (int i = v.size()-1; i >=0; &mdash;i) {</p>
+
+<pre><code>n = n*10 + v[i];
+</code></pre>
+
+<p>  }
+  return n;
+}</p>
+
+<p>vector<int> getRotatedNumbers(int n) {
+  auto v = getDigits(n);
+  vector<int> numbers;
+  for (int i = 0; i &lt; v.size(); ++i) {</p>
+
+<pre><code>numbers.push_back(getNumber(v));
+std::rotate(v.begin(), v.end()-1, v.end());
+</code></pre>
+
+<p>  }
+  return numbers;
+}</p>
+
+<p>int main() {
+  AllNumbers v;
+  for (int i = 0; i &lt; kMaxNumbers; ++i) {</p>
+
+<pre><code>v.set(i, true);
+</code></pre>
+
+<p>  }
+  markPrimes(&amp;v);
+  int numCircularPrimes = 0;
+  for (int i = 0; i &lt; kMaxNumbers; ++i) {</p>
+
+<pre><code>// Fail early
+if (!v.test(i)) {
+  continue;
+}
+vector&lt;int&gt; ps = getRotatedNumbers(i);
+if (std::all_of(ps.begin(), ps.end(), [&amp;v](int p){return v.test(p);})) {
+  ++numCircularPrimes;
+}
+</code></pre>
+
+<p>  }
+  std::cout &lt;&lt; &ldquo;Number of circular primes = &rdquo; &lt;&lt; numCircularPrimes &lt;&lt; std::endl;
+}
+```</p>
+
+<p>It runs in <code>335 milliseconds</code> &mdash; though I&rsquo;m not sure if it is a high or a low number.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Euler 34: Curious Numbers]]></title>
