@@ -4,7 +4,7 @@
   <title><![CDATA[Category: cpp | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/cpp/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-03-05T00:06:47+00:00</updated>
+  <updated>2015-03-05T06:12:37+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,58 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Euler 36: Palindromic Numbers]]></title>
+    <link href="http://agam.github.io/blog/2015/03/05/euler-36-palindromic-numbers/"/>
+    <updated>2015-03-05T06:10:59+00:00</updated>
+    <id>http://agam.github.io/blog/2015/03/05/euler-36-palindromic-numbers</id>
+    <content type="html"><![CDATA[<p>Wha &hellip; this is getting boring.</p>
+
+<p><strong>Statutory Warning</strong>: <em>Spoilers ahead</em></p>
+
+<p>```c++
+using std::vector;
+static const int kMaxNumbers = 1000000;</p>
+
+<p>bool isPalindromic(int n, int base) {
+  vector<int> digits;
+  while (n > 0) {</p>
+
+<pre><code>digits.push_back(n % base);
+n /= base;
+</code></pre>
+
+<p>  }
+  int length = digits.size();
+  for (int i = 0; i &lt; length/2; ++i) {</p>
+
+<pre><code>if (digits[i] != digits[length-1-i]) {
+  return false;
+}
+</code></pre>
+
+<p>  }
+  return true;
+}</p>
+
+<p>int main() {
+  int sum = 0;
+  for (int i = 1; i &lt; kMaxNumbers; ++i) {</p>
+
+<pre><code>if (isPalindromic(i, 10) &amp;&amp; isPalindromic(i, 2)) {
+  sum += i;
+}
+</code></pre>
+
+<p>  }
+  std::cout &lt;&lt; &ldquo;Sum of palindromic numbers = &rdquo; &lt;&lt; sum &lt;&lt; std::endl;
+}
+```</p>
+
+<p>(runs in <code>931 milliseconds</code>)</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Euler 35: Circular Primes]]></title>

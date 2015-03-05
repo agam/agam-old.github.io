@@ -3,6 +3,12 @@
   
   
   <url>
+    <loc>http://agam.github.io/blog/2015/03/05/euler-36-palindromic-numbers/</loc>
+    <lastmod>2015-03-05T06:10:59+00:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
     <loc>http://agam.github.io/blog/2015/03/04/euler-35-circular-primes/</loc>
     <lastmod>2015-03-04T23:49:53+00:00</lastmod>
     <priority>0.8</priority>
@@ -701,14 +707,91 @@
   
   <url>
     <loc>http://agam.github.io/</loc>
-    <lastmod>2015-03-05T00:06:47+00:00</lastmod>
+    <lastmod>2015-03-05T06:12:37+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   
   <url>
     <loc>http://agam.github.io/blog/archives/</loc>
-    <lastmod>2015-03-05T00:06:47+00:00</lastmod>
+    <lastmod>2015-03-05T06:12:37+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>http://agam.github.io/blog/page/2/</loc>
+    <lastmod>2015-03-05T06:12:37+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>http://agam.github.io/blog/page/3/</loc>
+    <lastmod>2015-03-05T06:12:37+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>http://agam.github.io/blog/page/4/</loc>
+    <lastmod>2015-03-05T06:12:37+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>http://agam.github.io/blog/page/5/</loc>
+    <lastmod>2015-03-05T06:12:37+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>http://agam.github.io/blog/page/6/</loc>
+    <lastmod>2015-03-05T06:12:37+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>http://agam.github.io/blog/page/7/</loc>
+    <lastmod>2015-03-05T06:12:37+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>http://agam.github.io/blog/page/8/</loc>
+    <lastmod>2015-03-05T06:12:37+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>http://agam.github.io/blog/page/9/</loc>
+    <lastmod>2015-03-05T06:12:37+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>http://agam.github.io/blog/page/10/</loc>
+    <lastmod>2015-03-05T06:12:37+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>http://agam.github.io/blog/page/11/</loc>
+    <lastmod>2015-03-05T06:12:37+00:00</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+  <url>
+    <loc>http://agam.github.io/blog/page/12/</loc>
+    <lastmod>2015-03-05T06:12:37+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
