@@ -1,0 +1,202 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Static Types, Dynamic Types, is your type my type? - Agam's Mashed-Up Pome</title>
+	<meta name="author" content="Agam">
+
+	
+	<meta name="description" content="Numerous people smarter than me have weighed into the static vs dynamic typing debate, so I&rsquo;ll be brief: I won&rsquo;t pick sides because there &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Agam's Mashed-Up Pome" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script async="true" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+
+</head>
+
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">Agam's Mashed-Up Pome</a></h1>
+<!-- DebugAgam: Uncomment if necessary!
+<nav id="main-nav"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:agam.github.io">
+			</form>
+		</div>
+	</div>
+</nav>
+-->
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		<a class="google" href="https://plus.google.com/+AgamBrahma?rel=author" title="Google+">Google+</a>
+		
+		
+		<a class="twitter" href="http://twitter.com/agambrahma" title="Twitter">Twitter</a>
+		
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+    
+	</div>
+        <!-- DebugAgam: uncomment if necessary!
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:agam.github.io">
+	</form>
+        -->
+</nav>
+
+</header>
+	
+		
+	
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">Static Types, Dynamic Types, Is Your Type My Type?</h2>
+	<div class="entry-content"><p>Numerous people smarter than me have weighed into the static vs dynamic typing debate, so I&rsquo;ll be brief: I won&rsquo;t pick sides because <em>there are no sides to pick</em>. Except for some <em>obvious</em> cases where there is little disagreement, the word &ldquo;type&rdquo; just happens to mean two very different things when putting forth arguments on the benefits of either <em>side</em>.</p>
+
+<p>Looking back now, the only language that I&rsquo;ve seen where the distinction I&rsquo;m talking about is made explicit, is SML. The <code>type</code> keyword is <em>different</em> from the <code>datatype</code> keyword. The benefits of static types are tied up with the former, whereas people defending dynamic typing are usually resisting an <em>overuse</em> of the latter (with a mass of confusion in the middle).</p>
+
+<p>The usual way (C, C++, Java) of thinking about types is &ldquo;struct&rdquo; types or &ldquo;class&rdquo; types, i.e. some sort of <em>storage</em> type for values &mdash; given some raw bits, what can I &ldquo;cast&rdquo; these bits to? What <em>datatype</em> do these bits represent?</p>
+
+<p>From this perspective, having some guarantees about the datatype represented by these bits is <strong>very important</strong>, and this is the reason given by people preferring (say) C++/Java over either untyped or weakly typed languages (e.g. C, Python).</p>
+
+<p>One outlier worth mentioning is the case where the primitive level is <em>not</em> raw bits, but run-time-typed values, as in Lisp. Here the low-level stuff <em>does</em> have a type, so you don&rsquo;t <em>really</em> need the strong guarantees of &ldquo;which datatype do these bits represent?&rdquo; (and therefore, this is where the static vs dynamic typing debate really heats up).</p>
+
+<p>On the other hand, <em>types</em> as in ML/Haskell etc. are a superset (usually) of datatypes, and might be better thought of as &ldquo;tags&rdquo; of some sort &mdash; tags that satisfy certain constraints. Roughly, if you tag your values correctly, then the implicit constraints of the <strong>type system</strong> will guarantee constraints on how these values might be related, which in turn implicitly proves certain invariants of your program.</p>
+
+<p>As an example, statically typed programs in these languages heavily use <em>Algebraic Data Types</em>, which are practically absent from both dynamically-typed languages (e.g. Lisp) as well as languages that stick to strong datatypes (e.g. C++). This makes sense &mdash; you don&rsquo;t &ldquo;cast&rdquo; a bit pattern into an algebraic data type; you use it to constrain the uses of values tagged with it.</p>
+
+<p>Anyway, there are <em>real</em> tradeoffs in the static-vs-dynamic debate, but a very small and explicit set. Most of the heat is just people talking past each other, using and misusing this overloaded word. Perhaps it would be better if we could just be disciplined enough to distinguish between <code>type</code> and <code>datatype</code> where it matters.</p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-03-19T02:51:00+00:00" pubdate data-updated="true">Mar 19<sup>th</sup>, 2015</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/misc/'>misc</a>
+
+
+</div>
+	
+</div>
+</article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+		
+		
+		<a class="addthis_button_tweet"></a>
+		
+		
+		<a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+		
+		
+	</div>
+	
+</div>
+
+
+
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2015
+
+    Agam
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'agamamp';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://agam.github.io/blog/2015/03/19/static-typing/';
+        var disqus_url = 'http://agam.github.io/blog/2015/03/19/static-typing/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//go.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-16612682-4']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

@@ -7,11 +7,23 @@
 	<meta name="author" content="Agam">
 
 	
-	<meta name="description" content="Turns out I was affected by the last &ldquo;continuity breach&rdquo;. So I had to delete everything and start over. In my case this meant 1
+	<meta name="description" content="Straightforward math-only, no-algorithm problem 1
 2
 3
 4
-5 &hellip;">
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+Input Description
+----------------- On standard input you will &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -90,6 +102,149 @@
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2014/01/08/programming-fun-circle-area/">
+		
+			Programming Fun: Circle Area</a>
+	</h2>
+	<div class="entry-content">
+		<p>Straightforward <em>math-only, no-algorithm</em> <a href="http://www.reddit.com/r/dailyprogrammer/comments/1s6484/120513_challenge_138_intermediate_overlapping/">problem</a></p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Input Description
+</span><span class='line'>-----------------
+</span><span class='line'>
+</span><span class='line'>On standard input you will be given four floating-point space-delimited values:
+</span><span class='line'>x y u w. x and y are the first circle's position in Cartesian coordinates. The
+</span><span class='line'>second pair u and w are the second circle's position.
+</span><span class='line'>
+</span><span class='line'>Note that the given circles may not actually intersect. If this is the case,
+</span><span class='line'>return the sum of both circles (which will always be Pi x 2 since our circles
+</span><span class='line'>are unit-circles).
+</span><span class='line'>
+</span><span class='line'>Output Description
+</span><span class='line'>------------------
+</span><span class='line'>
+</span><span class='line'>Print the summed volume of the two circles, up to an accuracy of 4 digits after the decimal place.</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This is just trigonometry, so I made some Post-It illustrations. This one shows the general problem we have to solve.</p>
+
+<p><img class="center" src="/images/programming-fun/circle-area-1.jpg" width="300"></p>
+
+<p>Given the centres of the two circles, and their radii, we know <em>d</em>, the distance between their centres and whether it leads to overlap at all.</p>
+
+<p><img class="center" src="/images/programming-fun/circle-area-2.jpg" width="300"></p>
+
+<p>Overlap only occurs when <em>d &lt; 2r</em>. When <em>d > 2r</em> the answer is just the sum of the areas.</p>
+
+<p><img class="center" src="/images/programming-fun/circle-area-3.jpg" width="300"></p>
+
+<p>From this figure, it should be clear that the overlapping area is the segment of the circle subtended by the chord that is common to both circles. We can find the length of this chord by considering the right triangle formed by half of it, the radius, and half the centre distance.</p>
+
+<p>This then leads to the relationship between the area of the sector (<em>A</em>), the area of the triangle inside it (<em>A_1</em>) and the segment area (<em>A_2</em>)</p>
+
+<p><img class="center" src="/images/programming-fun/circle-area-4.jpg" width="300"></p>
+
+<p>Finally, we subtract the segment area from the area of the circle (and then double it, for two circles) to get our answer.</p>
+
+<p><img class="center" src="/images/programming-fun/circle-area-5.jpg" width="300"></p>
+
+<div><script src='https://gist.github.com/8323896.js'></script>
+<noscript><pre><code>#include &lt;cassert&gt;
+#include &lt;cmath&gt;
+#include &lt;cstdint&gt;
+#include &lt;cstdio&gt;
+#include &lt;cstdlib&gt;
+#include &lt;algorithm&gt;
+#include &lt;iomanip&gt;
+#include &lt;iostream&gt;
+#include &lt;limits&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+#include &lt;unordered_map&gt;
+
+using namespace std;
+
+int main() {
+  double x1, y1, x2, y2;
+  cin &gt;&gt; x1 &gt;&gt; y1 &gt;&gt; x2 &gt;&gt; y2;
+  cout &lt;&lt; &quot;Got circle 1 as (&quot; &lt;&lt; x1 &lt;&lt; &quot;, &quot; &lt;&lt; y1 &lt;&lt; &quot;)\n&quot;;
+  cout &lt;&lt; &quot;Got circle 2 as (&quot; &lt;&lt; x2 &lt;&lt; &quot;, &quot; &lt;&lt; y2 &lt;&lt; &quot;)\n&quot;;
+
+  // Total area = 2 * (area of each circle) - 2 * (segment area of overlap)
+  const double kPI = atan(1.0) * 4.0;
+  const double kRadius = 1.0;
+  const double circle_area = kPI * pow(kRadius, 2);
+
+  const double centre_distance = sqrt(pow(x2 - x1, 2) + pow(y2 - y1, 2));
+  if (centre_distance &gt; (2 * kRadius)) {
+    // No overlap
+    cout &lt;&lt; (2 * circle_area) &lt;&lt; endl;
+    return 0;
+  }
+
+  const double segment_half_length = sqrt(pow(kRadius, 2) - pow(centre_distance/2.0, 2));
+  const double theta = asin(segment_half_length / kRadius);
+  const double sector_area = theta * pow(kRadius, 2);
+  const double segment_area = sector_area - (centre_distance * segment_half_length / 2);
+
+  cout.precision(5);
+  cout &lt;&lt; (2 * circle_area) - (2 * segment_area) &lt;&lt; endl;
+}
+</code></pre></noscript></div>
+
+
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-08T20:22:00+00:00" pubdate data-updated="true">Jan 8<sup>th</sup>, 2014</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/alwaysbecoding/'>alwaysbecoding,</a>, <a class='category' href='/blog/categories/reddit/'>reddit</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -1631,63 +1786,6 @@ For each round of computation, print the percentage of votes for each candidate,
 
 
 	<a class='category' href='/blog/categories/git/'>git</a>, <a class='category' href='/blog/categories/vim/'>vim,</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2013/12/16/setting-up-screen/">
-		
-			Setting Up Screen</a>
-	</h2>
-	<div class="entry-content">
-		<p>This is pretty much the first thing I do. I&rsquo;ve learned the hard way that I really really need persistent terminal state.</p>
-
-<p>One of the changes I always make is to switch the default key combination away from <code>C-a</code>. Initially I did this during my &ldquo;year of trying Emacs&rdquo; (since it&rsquo;s the default &ldquo;move to beginning of line&rdquo; shortcut). I chose <code>C-z</code> (via <code>escape ^Zz</code>) but you might want to do this anyway if for example you feel <code>C-b</code> would be easier to type.</p>
-
-<p>The other must-have is labels for the tabs. I want to know what I&rsquo;m switching between (a suitable modification to <code>hardstatus</code>).</p>
-
-<p>The status line looks something like this.</p>
-
-<p><img src="https://pbs.twimg.com/media/BblUW36CQAAG_Ol.png:large" alt="screen status with 3 tabs open" /></p>
-
-<p>It&rsquo;s pretty minimal; you can add an arbitrary amount of customization to your status line, but this is all that I need.</p>
-
-<p>Finally, there are a couple of &ldquo;features&rdquo; that <em>have</em> to be disabled: the screen flash on tab completion (<code>vbell off</code>), and the annoying startup message (<code>startup_message off</code>).</p>
-
-<p>I&rsquo;m sure you know all about switching tabs, detaching and resuming sessions and all that. The only (in hindsight obvious) rule of thumb I&rsquo;ve learnt is to <em>always</em> launch a session with a name. Because you might just want to start two sessions. And then when it comes time to resume them, you won&rsquo;t know which is which. So make <code>screen -S &lt;sessionname&gt;</code> your friend.</p>
-
-<p>Anyway I have a github repo for my &ldquo;dotfiles&rdquo; and you can see my basic screenrc <a href="https://github.com/agam/dotfiles/blob/master/.screenrc">here</a></p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-12-16T05:30:00+00:00" pubdate data-updated="true">Dec 16<sup>th</sup>, 2013</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/screen/'>screen</a>
 
 
 </div>

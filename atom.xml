@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-03-13T07:14:07+00:00</updated>
+  <updated>2015-03-19T03:00:10+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,29 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Static Types, Dynamic Types, is your type my type?]]></title>
+    <link href="http://agam.github.io/blog/2015/03/19/static-typing/"/>
+    <updated>2015-03-19T02:51:00+00:00</updated>
+    <id>http://agam.github.io/blog/2015/03/19/static-typing</id>
+    <content type="html"><![CDATA[<p>Numerous people smarter than me have weighed into the static vs dynamic typing debate, so I&rsquo;ll be brief: I won&rsquo;t pick sides because <em>there are no sides to pick</em>. Except for some <em>obvious</em> cases where there is little disagreement, the word &ldquo;type&rdquo; just happens to mean two very different things when putting forth arguments on the benefits of either <em>side</em>.</p>
+
+<p>Looking back now, the only language that I&rsquo;ve seen where the distinction I&rsquo;m talking about is made explicit, is SML. The <code>type</code> keyword is <em>different</em> from the <code>datatype</code> keyword. The benefits of static types are tied up with the former, whereas people defending dynamic typing are usually resisting an <em>overuse</em> of the latter (with a mass of confusion in the middle).</p>
+
+<p>The usual way (C, C++, Java) of thinking about types is &ldquo;struct&rdquo; types or &ldquo;class&rdquo; types, i.e. some sort of <em>storage</em> type for values &mdash; given some raw bits, what can I &ldquo;cast&rdquo; these bits to? What <em>datatype</em> do these bits represent?</p>
+
+<p>From this perspective, having some guarantees about the datatype represented by these bits is <strong>very important</strong>, and this is the reason given by people preferring (say) C++/Java over either untyped or weakly typed languages (e.g. C, Python).</p>
+
+<p>One outlier worth mentioning is the case where the primitive level is <em>not</em> raw bits, but run-time-typed values, as in Lisp. Here the low-level stuff <em>does</em> have a type, so you don&rsquo;t <em>really</em> need the strong guarantees of &ldquo;which datatype do these bits represent?&rdquo; (and therefore, this is where the static vs dynamic typing debate really heats up).</p>
+
+<p>On the other hand, <em>types</em> as in ML/Haskell etc. are a superset (usually) of datatypes, and might be better thought of as &ldquo;tags&rdquo; of some sort &mdash; tags that satisfy certain constraints. Roughly, if you tag your values correctly, then the implicit constraints of the <strong>type system</strong> will guarantee constraints on how these values might be related, which in turn implicitly proves certain invariants of your program.</p>
+
+<p>As an example, statically typed programs in these languages heavily use <em>Algebraic Data Types</em>, which are practically absent from both dynamically-typed languages (e.g. Lisp) as well as languages that stick to strong datatypes (e.g. C++). This makes sense &mdash; you don&rsquo;t &ldquo;cast&rdquo; a bit pattern into an algebraic data type; you use it to constrain the uses of values tagged with it.</p>
+
+<p>Anyway, there are <em>real</em> tradeoffs in the static-vs-dynamic debate, but a very small and explicit set. Most of the heat is just people talking past each other, using and misusing this overloaded word. Perhaps it would be better if we could just be disciplined enough to distinguish between <code>type</code> and <code>datatype</code> where it matters.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Euler 37: Truncatable Primes]]></title>
@@ -3170,241 +3193,6 @@ _Note_: Dart now [runs on App Engine](https://www.dartlang.org/server/google-clo
 <li>For some reason, the code-formatter for Jekyll (<code>pygments</code>) is completely thrown off by the Haskell source above. Perhaps this post have been in &ldquo;literate code&rdquo;. Most likely it would have been procrastinated out of existence if attempted that way.</li>
 </ul>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Euler 21: Amicable numbers (in unamicable languages)]]></title>
-    <link href="http://agam.github.io/blog/2015/01/31/euler-21-amicable-numbers/"/>
-    <updated>2015-01-31T04:01:08+00:00</updated>
-    <id>http://agam.github.io/blog/2015/01/31/euler-21-amicable-numbers</id>
-    <content type="html"><![CDATA[<p><em>Picking up where I left off, apparently 2 years ago !! :(</em></p>
-
-<p>To avoid a procrastination excuse, I decided to skip the step of adding it to the github repo I had started earlier. Here is the raw, unedited form of the attempt at the next problem in my sequence, #21.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="nf">isDiv</span> <span class="n">a</span> <span class="n">b</span> <span class="ow">=</span> <span class="n">a</span> <span class="p">`</span><span class="n">mod</span><span class="p">`</span> <span class="n">b</span> <span class="o">==</span> <span class="mi">0</span>
-</span><span class='line'>
-</span><span class='line'><span class="nf">divisors</span> <span class="n">n</span> <span class="ow">=</span> <span class="p">[</span><span class="n">x</span> <span class="o">|</span> <span class="n">x</span> <span class="ow">&lt;-</span> <span class="p">[</span><span class="mi">1</span> <span class="o">..</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">isDiv</span> <span class="n">n</span> <span class="n">x</span><span class="p">]</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">-- d(n) = sum of divisors of n</span>
-</span><span class='line'><span class="nf">sumDiv</span> <span class="n">n</span> <span class="ow">=</span> <span class="n">sum</span> <span class="o">$</span> <span class="n">divisors</span> <span class="n">n</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">-- a and b are &#39;amicable&#39; if d(a) = b, and d(b) = a</span>
-</span><span class='line'><span class="nf">amicable</span> <span class="n">a</span> <span class="n">b</span> <span class="ow">=</span> <span class="p">(</span><span class="n">a</span> <span class="o">/=</span> <span class="n">b</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">sumDiv</span> <span class="n">a</span> <span class="o">==</span> <span class="n">b</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">sumDiv</span> <span class="n">b</span> <span class="o">==</span> <span class="n">a</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">-- evaluate all pairs under 1000</span>
-</span><span class='line'><span class="c1">-- amicableUnder1000 = [(x,y) | x &lt;- [1 .. 999], y &lt;- [1 .. 999], amicable x y]</span>
-</span><span class='line'><span class="c1">-- euler21 = foldr (\(x,y) -&gt; x + y) 0  amicableUnder1000</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This naive version was predictably going to take forever, so interrupted Ghci and decided to try a slightly different approach (to explicitly pre-evaluate the sums of divisors).</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="nf">sumDivNumbersUnder10000</span> <span class="ow">=</span> <span class="p">[</span><span class="n">sumDiv</span> <span class="n">n</span> <span class="o">|</span> <span class="n">n</span> <span class="ow">&lt;-</span> <span class="p">[</span><span class="mi">1</span> <span class="o">..</span> <span class="mi">9999</span><span class="p">]]</span>
-</span><span class='line'><span class="nf">sumDiv&#39;</span> <span class="n">n</span> <span class="ow">=</span> <span class="n">sumDivNumbersUnder10000</span> <span class="o">!!</span> <span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="nf">amicable&#39;</span> <span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">sa</span><span class="p">)</span> <span class="p">(</span><span class="n">b</span><span class="p">,</span><span class="n">sb</span><span class="p">)</span> <span class="ow">=</span> <span class="p">(</span><span class="n">a</span> <span class="o">/=</span> <span class="n">b</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">sa</span> <span class="o">==</span> <span class="n">b</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">sb</span> <span class="o">==</span> <span class="n">a</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="nf">amicableUnder10000</span> <span class="ow">=</span> <span class="p">[(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="o">|</span> <span class="n">x</span> <span class="ow">&lt;-</span> <span class="p">[</span><span class="mi">1</span> <span class="o">..</span> <span class="mi">9999</span><span class="p">],</span> <span class="n">y</span> <span class="ow">&lt;-</span> <span class="p">[</span><span class="mi">1</span> <span class="o">..</span> <span class="mi">9999</span><span class="p">],</span> <span class="n">amicable&#39;</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">sumDiv&#39;</span> <span class="n">x</span><span class="p">)</span> <span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">sumDiv&#39;</span> <span class="n">y</span><span class="p">)]</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This version took <code>4.64</code> seconds in Ghci for the numbers less than 1000, at which point I realized the problem had actually called for the numbers less than <em>10000</em> instead. I left it running, out of curiosity, and it took <code>1758.96</code> seconds (not to mention a <em>prodigious</em> amount of memory: <code>97202052160</code> bytes!)</p>
-
-<p>This done, the final answer was easy:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="nf">sum</span> <span class="o">$</span> <span class="n">map</span> <span class="n">fst</span> <span class="n">amicableUnder10000</span>
-</span><span class='line'><span class="mi">31626</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>But this sort of gets to my problem with Haskell; I&rsquo;m never sure what&rsquo;s <em>really</em> going on, and how to make it do <em>what I want it to do</em>. On the other hand, I can feel an excess of &ldquo;imperative thinking&rdquo; is getting in the way (why isn&rsquo;t this as fast as a nested for loop?) Obviously, I need more time at this :)</p>
-
-<p>Anyway, I tried yet another way towards this:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="nf">partialAmicable</span> <span class="n">x</span> <span class="n">n</span> <span class="ow">=</span> <span class="p">[(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="o">|</span> <span class="n">y</span> <span class="ow">&lt;-</span> <span class="p">[</span><span class="mi">1</span> <span class="o">..</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">amicable&#39;</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">sumDiv&#39;</span> <span class="n">x</span><span class="p">)</span> <span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">sumDiv&#39;</span> <span class="n">y</span><span class="p">)]</span>
-</span><span class='line'>
-</span><span class='line'><span class="nf">fullAmicable</span> <span class="n">n</span> <span class="ow">=</span> <span class="n">filter</span> <span class="p">(</span><span class="n">not</span> <span class="o">.</span> <span class="n">null</span><span class="p">)</span> <span class="p">(</span><span class="n">map</span> <span class="n">f</span> <span class="o">$</span> <span class="n">take</span> <span class="n">n</span> <span class="p">[</span><span class="mi">1</span> <span class="o">..</span><span class="p">])</span>
-</span><span class='line'>             <span class="kr">where</span> <span class="n">f</span> <span class="n">x</span> <span class="ow">=</span> <span class="n">partialAmicable</span> <span class="n">x</span> <span class="n">n</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>&hellip; which ran into <code>*** Exception: Prelude.(!!): index too large</code></p>
-
-<p>At this point I realized that:</p>
-
-<ul>
-<li>I had no idea how to &lsquo;debug&rsquo; this (lacking a &lsquo;stack trace&rsquo;), but also</li>
-<li>I was still dealing with <strong>lists</strong>, when I really wanted <strong>vectors</strong>.</li>
-</ul>
-
-
-<p>So I gave it one <em>final</em> shot:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="kr">import</span> <span class="nn">Data.Vector</span> <span class="k">as</span> <span class="n">V</span>
-</span><span class='line'>
-</span><span class='line'><span class="nf">divSums</span> <span class="n">n</span> <span class="ow">=</span> <span class="kt">V</span><span class="o">.</span><span class="n">fromList</span> <span class="p">[</span><span class="n">sumDiv</span> <span class="n">x</span> <span class="o">|</span> <span class="n">x</span> <span class="ow">&lt;-</span> <span class="p">[</span><span class="mi">1</span> <span class="o">..</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">]]</span>
-</span><span class='line'>
-</span><span class='line'><span class="nf">amicables</span> <span class="n">n</span> <span class="ow">=</span> <span class="kr">let</span> <span class="n">ds</span> <span class="ow">=</span> <span class="n">divSums</span> <span class="n">n</span> <span class="kr">in</span>
-</span><span class='line'>                  <span class="kt">V</span><span class="o">.</span><span class="n">fromList</span> <span class="p">[(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="o">|</span> <span class="n">x</span> <span class="ow">&lt;-</span> <span class="p">[</span><span class="mi">1</span> <span class="o">..</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">y</span> <span class="ow">&lt;-</span> <span class="p">[</span><span class="mi">1</span> <span class="o">..</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">amicable&#39;</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">ds</span> <span class="o">!</span> <span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="p">))</span> <span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">ds</span> <span class="o">!</span> <span class="p">(</span><span class="n">y</span><span class="o">-</span><span class="mi">1</span><span class="p">))]</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>&hellip; and this time, I got</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="nf">λ</span><span class="o">&gt;</span> <span class="n">amicables</span> <span class="mi">10000</span>
-</span><span class='line'><span class="nf">fromList</span> <span class="p">[(</span><span class="mi">220</span><span class="p">,</span><span class="mi">284</span><span class="p">),(</span><span class="mi">284</span><span class="p">,</span><span class="mi">220</span><span class="p">),(</span><span class="mi">1184</span><span class="p">,</span><span class="mi">1210</span><span class="p">),(</span><span class="mi">1210</span><span class="p">,</span><span class="mi">1184</span><span class="p">),(</span><span class="mi">2620</span><span class="p">,</span><span class="mi">2924</span><span class="p">),(</span><span class="mi">2924</span><span class="p">,</span><span class="mi">2620</span><span class="p">),(</span><span class="mi">5020</span><span class="p">,</span><span class="mi">5564</span><span class="p">),(</span><span class="mi">5564</span><span class="p">,</span><span class="mi">5020</span><span class="p">),(</span><span class="mi">6232</span><span class="p">,</span><span class="mi">6368</span><span class="p">),(</span><span class="mi">6368</span><span class="p">,</span><span class="mi">6232</span><span class="p">)]</span>
-</span><span class='line'><span class="p">(</span><span class="mf">204.01</span> <span class="n">secs</span><span class="p">,</span> <span class="mi">97203591888</span> <span class="n">bytes</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Ok, I can stop here; perhaps <code>204</code> seconds of brute-forcing isn&rsquo;t all that bad?</p>
-
-<p>Unfortunately, my &ldquo;comfort zone&rdquo; yielded this:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">div</span> <span class="p">(</span><span class="nv">x</span> <span class="nv">y</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">=</span> <span class="p">(</span><span class="nb">mod</span> <span class="nv">x</span> <span class="nv">y</span><span class="p">)</span> <span class="mi">0</span><span class="p">))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">divisors</span> <span class="p">(</span><span class="nv">x</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">i</span> <span class="nv">from</span> <span class="mi">1</span> <span class="nv">below</span> <span class="nv">x</span>
-</span><span class='line'>     <span class="nb">when</span> <span class="p">(</span><span class="nv">div</span> <span class="nv">x</span> <span class="nv">i</span><span class="p">)</span>
-</span><span class='line'>       <span class="nv">collect</span> <span class="nv">i</span><span class="p">))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">sum-divs</span> <span class="p">(</span><span class="nv">x</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">reduce</span> <span class="nf">#&#39;</span><span class="nb">+</span> <span class="p">(</span><span class="nv">divisors</span> <span class="nv">x</span><span class="p">)))</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">pre-sum-divs</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">myarr</span> <span class="p">(</span><span class="nb">make-array</span> <span class="nv">n</span> <span class="ss">:element-type</span> <span class="ss">&#39;fixnum</span><span class="p">)))</span>
-</span><span class='line'>    <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">i</span> <span class="nv">from</span> <span class="mi">1</span> <span class="nv">below</span> <span class="nv">n</span>
-</span><span class='line'>   <span class="nb">do</span> <span class="p">(</span><span class="nb">setf</span> <span class="p">(</span><span class="nb">aref</span> <span class="nv">myarr</span> <span class="nv">i</span><span class="p">)</span> <span class="p">(</span><span class="nv">sum-divs</span> <span class="nv">i</span><span class="p">)))</span>
-</span><span class='line'>    <span class="nv">myarr</span><span class="p">))</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">amicablep</span> <span class="p">(</span><span class="nv">x</span> <span class="nv">sx</span> <span class="nv">y</span> <span class="nv">sy</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">and</span> <span class="p">(</span><span class="nb">not</span> <span class="p">(</span><span class="nb">=</span> <span class="nv">x</span> <span class="nv">y</span><span class="p">))</span>
-</span><span class='line'>       <span class="p">(</span><span class="nb">=</span> <span class="nv">sx</span> <span class="nv">y</span><span class="p">)</span>
-</span><span class='line'>       <span class="p">(</span><span class="nb">=</span> <span class="nv">sy</span> <span class="nv">x</span><span class="p">)))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">amicables</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">ds</span> <span class="p">(</span><span class="nv">pre-sum-divs</span> <span class="nv">n</span><span class="p">)))</span>
-</span><span class='line'>    <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">i</span> <span class="nv">from</span> <span class="mi">1</span> <span class="nv">below</span> <span class="nv">n</span> <span class="nb">do</span>
-</span><span class='line'>   <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">j</span> <span class="nv">from</span> <span class="mi">1</span> <span class="nv">below</span> <span class="nv">n</span>
-</span><span class='line'>      <span class="nb">when</span> <span class="p">(</span><span class="nv">amicablep</span> <span class="nv">i</span> <span class="p">(</span><span class="nb">aref</span> <span class="nv">ds</span> <span class="nv">i</span><span class="p">)</span> <span class="nv">j</span> <span class="p">(</span><span class="nb">aref</span> <span class="nv">ds</span> <span class="nv">j</span><span class="p">))</span>
-</span><span class='line'>      <span class="nb">do</span> <span class="p">(</span><span class="nb">print</span> <span class="nv">j</span><span class="p">)))))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>which runs <em>just a little bit faster</em> (!!)</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="nv">CL-USER&gt;</span> <span class="p">(</span><span class="nb">time</span> <span class="p">(</span><span class="nv">amicables</span> <span class="mi">10000</span><span class="p">))</span>
-</span><span class='line'>
-</span><span class='line'><span class="mi">284</span>
-</span><span class='line'><span class="mi">220</span>
-</span><span class='line'><span class="mi">1210</span>
-</span><span class='line'><span class="mi">1184</span>
-</span><span class='line'><span class="mi">2924</span>
-</span><span class='line'><span class="mi">2620</span>
-</span><span class='line'><span class="mi">5564</span>
-</span><span class='line'><span class="mi">5020</span>
-</span><span class='line'><span class="mi">6368</span>
-</span><span class='line'><span class="mi">6232</span>
-</span><span class='line'><span class="nv">Evaluation</span> <span class="nv">took:</span>
-</span><span class='line'><span class="mf">2.815</span> <span class="nv">seconds</span> <span class="nv">of</span> <span class="nc">real</span> <span class="nb">time</span>
-</span><span class='line'><span class="mf">2.820000</span> <span class="nv">seconds</span> <span class="nv">of</span> <span class="nv">total</span> <span class="nv">run</span> <span class="nb">time</span> <span class="p">(</span><span class="mf">2.820000</span> <span class="nv">user,</span> <span class="mf">0.000000</span> <span class="nv">system</span><span class="p">)</span>
-</span><span class='line'><span class="nv">100.18%</span> <span class="nv">CPU</span>
-</span><span class='line'><span class="mi">7</span><span class="o">,</span><span class="mi">318</span><span class="o">,</span><span class="mi">463</span><span class="o">,</span><span class="mi">192</span> <span class="nv">processor</span> <span class="nv">cycles</span>
-</span><span class='line'><span class="mi">3</span><span class="o">,</span><span class="mi">939</span><span class="o">,</span><span class="mi">984</span> <span class="nv">bytes</span> <span class="nv">consed</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>So this is my problem: I need to find a way to get my mental model of Haskell to perform at this speed (and clearly, it&rsquo;s two orders of magnitude off). It isn&rsquo;t going to be easy &hellip;</p>
-
-<p><strong>EDIT</strong>: Make that just <em>one</em> order of magnitude.
-It&rsquo;s possible for Ghci to use compiled object code instead of byte code, by entering <code>:set -fobject-code</code>.
-After this, evaluating <code>amicables 10000</code> took <code>23.71</code> seconds.</p>
 ]]></content>
   </entry>
   

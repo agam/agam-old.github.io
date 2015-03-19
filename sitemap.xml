@@ -3,6 +3,12 @@
   
   
   <url>
+    <loc>http://agam.github.io/blog/2015/03/19/static-typing/</loc>
+    <lastmod>2015-03-19T02:51:00+00:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
     <loc>http://agam.github.io/blog/2015/03/13/euler-37-truncatable-primes/</loc>
     <lastmod>2015-03-13T07:04:08+00:00</lastmod>
     <priority>0.8</priority>
@@ -719,14 +725,14 @@
   
   <url>
     <loc>http://agam.github.io/</loc>
-    <lastmod>2015-03-13T07:14:07+00:00</lastmod>
+    <lastmod>2015-03-19T03:00:10+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   
   <url>
     <loc>http://agam.github.io/blog/archives/</loc>
-    <lastmod>2015-03-13T07:14:07+00:00</lastmod>
+    <lastmod>2015-03-19T03:00:10+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
