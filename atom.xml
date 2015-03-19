@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-03-19T03:00:10+00:00</updated>
+  <updated>2015-03-19T03:52:17+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,155 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Euler 38: Pandigital multiples]]></title>
+    <link href="http://agam.github.io/blog/2015/03/19/euler-38-pandigital-multiples/"/>
+    <updated>2015-03-19T03:41:10+00:00</updated>
+    <id>http://agam.github.io/blog/2015/03/19/euler-38-pandigital-multiples</id>
+    <content type="html"><![CDATA[<p>I&rsquo;m embarassed at how ridiculously naive my solution is. In hindsight, it&rsquo;s so <em>obvious</em> that the solution <em>has</em> to be a four-digit number and its double, and that the first digit is going to be a 9.</p>
+
+<p>Still, C++ makes you lazy. This took <code>24 milliseconds</code>, and I didn&rsquo;t feel the need to speed it up :)</p>
+
+<p><strong>Statutory Warning</strong>: <em>Spoilers ahead</em></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+</pre></td><td class='code'><pre><code class='c++'><span class='line'><span class="k">static</span> <span class="k">const</span> <span class="kt">long</span> <span class="n">kMaxNumbers</span> <span class="o">=</span> <span class="mi">10000</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="kt">long</span> <span class="n">largestPanDigital</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="kt">long</span> <span class="n">num</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="n">num</span> <span class="o">&lt;</span> <span class="n">kMaxNumbers</span><span class="p">;</span> <span class="o">++</span><span class="n">num</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">pandigits</span><span class="p">;</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">o</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">while</span> <span class="p">(</span><span class="n">o</span> <span class="o">&lt;=</span> <span class="mi">20</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="kt">long</span> <span class="n">product</span> <span class="o">=</span> <span class="n">num</span> <span class="o">*</span> <span class="n">o</span><span class="p">;</span>
+</span><span class='line'>      <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">pd</span><span class="p">;</span>
+</span><span class='line'>      <span class="k">while</span> <span class="p">(</span><span class="n">product</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="kt">int</span> <span class="n">d</span> <span class="o">=</span> <span class="n">product</span> <span class="o">%</span> <span class="mi">10</span><span class="p">;</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="n">d</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">||</span>
+</span><span class='line'>            <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">find</span><span class="p">(</span><span class="n">pandigits</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">pandigits</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">d</span><span class="p">)</span> <span class="o">!=</span> <span class="n">pandigits</span><span class="p">.</span><span class="n">end</span><span class="p">())</span> <span class="o">||</span>
+</span><span class='line'>            <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">find</span><span class="p">(</span><span class="n">pd</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">pd</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">d</span><span class="p">)</span> <span class="o">!=</span> <span class="n">pd</span><span class="p">.</span><span class="n">end</span><span class="p">()))</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">break</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="n">pd</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">d</span><span class="p">);</span>
+</span><span class='line'>        <span class="n">product</span> <span class="o">/=</span> <span class="mi">10</span><span class="p">;</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">product</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="c1">// Found an existing digit</span>
+</span><span class='line'>        <span class="k">break</span><span class="p">;</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      <span class="c1">// We formed a new product; keep going!</span>
+</span><span class='line'>      <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="n">it</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">rbegin</span><span class="p">();</span> <span class="n">it</span> <span class="o">!=</span> <span class="n">pd</span><span class="p">.</span><span class="n">rend</span><span class="p">();</span> <span class="o">++</span><span class="n">it</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">pandigits</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="o">*</span><span class="n">it</span><span class="p">);</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      <span class="o">++</span><span class="n">o</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">pandigits</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">==</span> <span class="mi">9</span> <span class="o">&amp;&amp;</span> <span class="n">o</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="kt">long</span> <span class="n">panDigital</span> <span class="o">=</span> <span class="mi">0L</span><span class="p">;</span>
+</span><span class='line'>      <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Found: &quot;</span><span class="p">;</span>
+</span><span class='line'>      <span class="k">for</span> <span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span> <span class="nl">d</span> <span class="p">:</span> <span class="n">pandigits</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">d</span><span class="p">;</span>
+</span><span class='line'>        <span class="n">panDigital</span> <span class="o">=</span> <span class="n">panDigital</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">+</span> <span class="n">d</span><span class="p">;</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; = &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">num</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; * &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">o</span><span class="o">-</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">panDigital</span> <span class="o">&gt;</span> <span class="n">largestPanDigital</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">largestPanDigital</span> <span class="o">=</span> <span class="n">panDigital</span><span class="p">;</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;The largest one is &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">largestPanDigital</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It runs as follows:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>~/cpp/Test
+</span><span class='line'>Found: <span class="nv">918273645</span> <span class="o">=</span> <span class="m">9</span> * 5
+</span><span class='line'>Found: <span class="nv">192384576</span> <span class="o">=</span> <span class="m">192</span> * 3
+</span><span class='line'>Found: <span class="nv">219438657</span> <span class="o">=</span> <span class="m">219</span> * 3
+</span><span class='line'>Found: <span class="nv">273546819</span> <span class="o">=</span> <span class="m">273</span> * 3
+</span><span class='line'>Found: <span class="nv">327654981</span> <span class="o">=</span> <span class="m">327</span> * 3
+</span><span class='line'>Found: <span class="nv">672913458</span> <span class="o">=</span> <span class="m">6729</span> * 2
+</span><span class='line'>Found: <span class="nv">679213584</span> <span class="o">=</span> <span class="m">6792</span> * 2
+</span><span class='line'>Found: <span class="nv">692713854</span> <span class="o">=</span> <span class="m">6927</span> * 2
+</span><span class='line'>Found: <span class="nv">726914538</span> <span class="o">=</span> <span class="m">7269</span> * 2
+</span><span class='line'>Found: <span class="nv">729314586</span> <span class="o">=</span> <span class="m">7293</span> * 2
+</span><span class='line'>Found: <span class="nv">732914658</span> <span class="o">=</span> <span class="m">7329</span> * 2
+</span><span class='line'>Found: <span class="nv">769215384</span> <span class="o">=</span> <span class="m">7692</span> * 2
+</span><span class='line'>Found: <span class="nv">792315846</span> <span class="o">=</span> <span class="m">7923</span> * 2
+</span><span class='line'>Found: <span class="nv">793215864</span> <span class="o">=</span> <span class="m">7932</span> * 2
+</span><span class='line'>Found: <span class="nv">926718534</span> <span class="o">=</span> <span class="m">9267</span> * 2
+</span><span class='line'>Found: <span class="nv">927318546</span> <span class="o">=</span> <span class="m">9273</span> * 2
+</span><span class='line'>Found: <span class="nv">932718654</span> <span class="o">=</span> <span class="m">9327</span> * 2
+</span><span class='line'>The largest one is &lt;redacted&gt;
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Static Types, Dynamic Types, is your type my type?]]></title>
@@ -3053,144 +3202,6 @@ _Note_: Dart now [runs on App Engine](https://www.dartlang.org/server/google-clo
 <li><p>Haskell makes it very easy to quickly arrive at a <em>correct</em> solution, but the road from there to an <em>efficient</em> solution is less clear.</p></li>
 <li><p>The brevity of the notation helps, but I get a feeling it&rsquo;s also due to the single-letter variable names &mdash; which is all right (and indeed well-suited) for a tiny math problem, but unclear whether it&rsquo;ll hold up for code in a large-scale project.</p></li>
 <li><p>People usually jump to the <a href="">&ldquo;Programming Language shootout&rdquo;</a>, but if the code <em>there</em> is any indication, writing performant Haskell code is a dark art, and <em>the three-line quicksort is a devilish honeytrap</em>.</p></li>
-</ul>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Euler 22: Scoring names ?]]></title>
-    <link href="http://agam.github.io/blog/2015/02/01/euler-22-scoring-names/"/>
-    <updated>2015-02-01T05:01:13+00:00</updated>
-    <id>http://agam.github.io/blog/2015/02/01/euler-22-scoring-names</id>
-    <content type="html"><![CDATA[<p>This one seemed simple but turned out to be a good showcase for a short haskell program (I&rsquo;m sure it can be shorter but IMHO that would probably approach <em>Perl-ness</em>)</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="kr">import</span> <span class="k">qualified</span> <span class="nn">Data.Char</span> <span class="k">as</span> <span class="n">C</span>
-</span><span class='line'><span class="kr">import</span> <span class="k">qualified</span> <span class="nn">Data.List</span> <span class="k">as</span> <span class="n">L</span>
-</span><span class='line'><span class="kr">import</span> <span class="k">qualified</span> <span class="nn">Debug.Trace</span> <span class="k">as</span> <span class="n">T</span>
-</span><span class='line'>
-</span><span class='line'><span class="nf">charValue</span> <span class="n">c</span> <span class="ow">=</span> <span class="kt">C</span><span class="o">.</span><span class="n">ord</span> <span class="p">(</span><span class="kt">C</span><span class="o">.</span><span class="n">toUpper</span> <span class="n">c</span><span class="p">)</span> <span class="o">-</span> <span class="kt">C</span><span class="o">.</span><span class="n">ord</span> <span class="n">&#39;A&#39;</span> <span class="o">+</span> <span class="mi">1</span>
-</span><span class='line'>
-</span><span class='line'><span class="nf">nameValue</span> <span class="n">n</span> <span class="ow">=</span> <span class="n">sum</span> <span class="o">$</span> <span class="n">map</span> <span class="n">charValue</span> <span class="n">n</span>
-</span><span class='line'>
-</span><span class='line'><span class="nf">nameProduct</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span> <span class="ow">=</span> <span class="n">index</span> <span class="o">*</span> <span class="n">nameValue</span> <span class="n">name</span>
-</span><span class='line'>
-</span><span class='line'><span class="nf">splitString</span> <span class="n">c</span> <span class="n">s</span> <span class="ow">=</span>
-</span><span class='line'>  <span class="kr">case</span> <span class="n">break</span> <span class="p">(</span><span class="o">==</span> <span class="n">c</span><span class="p">)</span> <span class="n">s</span> <span class="kr">of</span>
-</span><span class='line'>       <span class="p">(</span><span class="kt">[]</span><span class="p">,</span> <span class="kr">_</span><span class="kt">:</span><span class="n">xs</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">xs</span><span class="p">]</span>
-</span><span class='line'>       <span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="kr">_</span><span class="kt">:</span><span class="n">xs</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">y</span><span class="p">]</span> <span class="o">++</span> <span class="n">splitString</span> <span class="n">c</span> <span class="n">xs</span>
-</span><span class='line'>       <span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="kt">[]</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">xs</span><span class="p">]</span>
-</span><span class='line'>
-</span><span class='line'><span class="nf">getNameSum</span> <span class="n">f</span> <span class="ow">=</span>
-</span><span class='line'>     <span class="kr">let</span> <span class="n">w</span> <span class="ow">=</span> <span class="n">splitString</span> <span class="n">&#39;</span><span class="p">,</span><span class="n">&#39;</span> <span class="o">$</span> <span class="n">filter</span> <span class="p">(</span><span class="o">/=</span> <span class="n">&#39;</span><span class="nf">\</span><span class="s">&quot;&#39;) f</span>
-</span><span class='line'><span class="s">     in</span>
-</span><span class='line'><span class="s">        T.traceShow (length w)</span>
-</span><span class='line'><span class="s">        sum $ map nameProduct $ zip (L.sort w) [1 .. ]</span>
-</span><span class='line'>
-</span><span class='line'><span class="s">getNames fileName =</span>
-</span><span class='line'><span class="s">  do</span>
-</span><span class='line'><span class="s">     f &lt;- readFile fileName</span>
-</span><span class='line'><span class="s">     return $ getNameSum f</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>I left the `traceShow&#8217; in there to give an example of the debugging I relied upon. Other than that, it was enjoyable, and I really do appreciate how much longer this would have been in most other languages.</p>
-
-<p><strong>Notes:</strong></p>
-
-<ul>
-<li><p>I skipped the part about <em>sorting</em> the input and spent a long time (<em>unnecessarily!</em>) complaining about the <em>black-boxness</em> of the &ldquo;IO&rdquo;</p></li>
-<li><p>I suspected the initial version had an off-by-one error; luckily <code>awk</code> was on hand to sanity check the number of words:</p></li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>cat /tmp/p022_names.txt <span class="p">|</span> tr <span class="s1">&#39;,&#39;</span> <span class="s1">&#39; &#39;</span> <span class="p">|</span> tr <span class="s1">&#39;&quot;&#39;</span> <span class="s1">&#39; &#39;</span> <span class="p">|</span> tr -s <span class="s2">&quot; &quot;</span> <span class="p">|</span> awk <span class="s1">&#39;BEGIN { RS = &quot; &quot; }; END { print NR }&#39;</span>
-</span><span class='line'>5163
-</span></code></pre></td></tr></table></div></figure>
-
-
-<ul>
-<li>Just to dump it out there, the <em>other</em> way of checking the soundness of the logic:</li>
-</ul>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">char-value</span> <span class="p">(</span><span class="nv">c</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">1+</span> <span class="p">(</span><span class="nb">-</span> <span class="p">(</span><span class="nb">char-code</span> <span class="nv">c</span><span class="p">)</span>
-</span><span class='line'>   <span class="p">(</span><span class="nb">char-code</span> <span class="sc">#\A</span><span class="p">))))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">string-value</span> <span class="p">(</span><span class="nv">str</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">c</span> <span class="nv">across</span> <span class="p">(</span><span class="nb">string-upcase</span> <span class="nv">str</span><span class="p">)</span>
-</span><span class='line'>       <span class="nv">sum</span> <span class="p">(</span><span class="nv">char-value</span> <span class="nv">c</span><span class="p">)))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">name-product</span> <span class="p">(</span><span class="nv">name</span> <span class="nv">index</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">*</span> <span class="nv">index</span>
-</span><span class='line'>     <span class="p">(</span><span class="nv">string-value</span> <span class="nv">name</span><span class="p">)))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">range</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">i</span> <span class="nv">from</span> <span class="mi">1</span> <span class="nv">to</span> <span class="nv">n</span>
-</span><span class='line'>     <span class="nv">collect</span> <span class="nv">i</span><span class="p">))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">sum-names</span> <span class="p">(</span><span class="nv">names</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">reduce</span> <span class="nf">#&#39;</span><span class="nb">+</span>
-</span><span class='line'>    <span class="p">(</span><span class="nb">mapcar</span> <span class="nf">#&#39;</span><span class="nv">name-product</span>
-</span><span class='line'>        <span class="nv">names</span>
-</span><span class='line'>        <span class="p">(</span><span class="nv">range</span> <span class="p">(</span><span class="nb">length</span> <span class="nv">names</span><span class="p">)))))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>&hellip; used (e.g.) as <code>(sum-names (list "foo" "bar"))</code></p>
-
-<ul>
-<li>For some reason, the code-formatter for Jekyll (<code>pygments</code>) is completely thrown off by the Haskell source above. Perhaps this post have been in &ldquo;literate code&rdquo;. Most likely it would have been procrastinated out of existence if attempted that way.</li>
 </ul>
 
 ]]></content>
