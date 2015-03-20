@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-03-19T03:52:17+00:00</updated>
+  <updated>2015-03-20T23:14:06+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,68 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Euler 39: Integer Right Triangles]]></title>
+    <link href="http://agam.github.io/blog/2015/03/20/euler-39-integer-right-triangles/"/>
+    <updated>2015-03-20T23:09:44+00:00</updated>
+    <id>http://agam.github.io/blog/2015/03/20/euler-39-integer-right-triangles</id>
+    <content type="html"><![CDATA[<p>Straightfoward, this. An interesting insight into speed difference between <code>SBCL</code> and <code>Clozure</code>: the former took <em>0.75 seconds</em> to run this, while the latter took about <em>4 seconds</em> (without the type annotations, <code>SBCL</code> takes <em>33 seconds</em>).</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">is-right-triangle</span> <span class="p">(</span><span class="nv">n1</span> <span class="nv">n2</span> <span class="nv">n3</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">declare</span> <span class="p">(</span><span class="k">type</span> <span class="kt">fixnum</span> <span class="nv">n1</span> <span class="nv">n2</span> <span class="nv">n3</span><span class="p">))</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">=</span> <span class="p">(</span><span class="nb">+</span> <span class="p">(</span><span class="nb">expt</span> <span class="nv">n1</span> <span class="mi">2</span><span class="p">)</span> <span class="p">(</span><span class="nb">expt</span> <span class="nv">n2</span> <span class="mi">2</span><span class="p">))</span> <span class="p">(</span><span class="nb">expt</span> <span class="nv">n3</span> <span class="mi">2</span><span class="p">)))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">triangle-solutions</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">declare</span> <span class="p">(</span><span class="k">type</span> <span class="kt">fixnum</span> <span class="nv">n</span><span class="p">))</span>
+</span><span class='line'>  <span class="c1">;; Largest side (hyp) can&#39;t be less than a third of the total</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">hyp</span> <span class="nv">from</span> <span class="p">(</span><span class="nb">floor</span> <span class="p">(</span><span class="nb">/</span> <span class="nv">n</span> <span class="mi">3</span><span class="p">))</span> <span class="nv">upto</span> <span class="p">(</span><span class="nb">-</span> <span class="nv">n</span> <span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>     <span class="c1">;; Avoid repeating combinations, so WLOG let one side</span>
+</span><span class='line'>     <span class="c1">;; be greater than the other</span>
+</span><span class='line'>     <span class="nv">for</span> <span class="nv">sides-sum</span> <span class="nb">=</span> <span class="p">(</span><span class="nb">-</span> <span class="nv">n</span> <span class="nv">hyp</span><span class="p">)</span>
+</span><span class='line'>     <span class="nb">when</span> <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">side1</span> <span class="nv">from</span> <span class="p">(</span><span class="nb">ceiling</span> <span class="p">(</span><span class="nb">/</span> <span class="nv">sides-sum</span> <span class="mi">2</span><span class="p">))</span> <span class="nv">to</span> <span class="p">(</span><span class="nb">1-</span> <span class="nv">sides-sum</span><span class="p">)</span>
+</span><span class='line'>             <span class="nv">for</span> <span class="nv">side2</span> <span class="nb">=</span> <span class="p">(</span><span class="nb">-</span> <span class="nv">sides-sum</span> <span class="nv">side1</span><span class="p">)</span>
+</span><span class='line'>             <span class="nb">when</span> <span class="p">(</span><span class="nv">is-right-triangle</span> <span class="nv">side1</span> <span class="nv">side2</span> <span class="nv">hyp</span><span class="p">)</span>
+</span><span class='line'>             <span class="nv">collect</span> <span class="p">(</span><span class="nb">list</span> <span class="nv">side1</span> <span class="nv">side2</span> <span class="nv">hyp</span><span class="p">))</span>
+</span><span class='line'>     <span class="nv">collect</span> <span class="nv">it</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">max-triangle-solutions</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">declare</span> <span class="p">(</span><span class="k">type</span> <span class="kt">fixnum</span> <span class="nv">n</span><span class="p">))</span>
+</span><span class='line'>  <span class="c1">;; n cannot be less than 3</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">let*</span> <span class="p">((</span><span class="nv">solutions</span> <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">i</span> <span class="nv">from</span> <span class="mi">3</span> <span class="nv">to</span> <span class="nv">n</span>
+</span><span class='line'>                       <span class="nv">collect</span> <span class="p">(</span><span class="nb">length</span> <span class="p">(</span><span class="nv">triangle-solutions</span> <span class="nv">i</span><span class="p">))))</span>
+</span><span class='line'>         <span class="p">(</span><span class="nv">max-solution</span> <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">elem</span> <span class="nv">in</span> <span class="nv">solutions</span> <span class="nv">maximizing</span> <span class="nv">elem</span><span class="p">)))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nb">cons</span> <span class="nv">max-solution</span> <span class="p">(</span><span class="nb">+</span> <span class="mi">3</span> <span class="p">(</span><span class="nb">position</span> <span class="nv">max-solution</span> <span class="nv">solutions</span><span class="p">)))))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The answer needed is given by <code>(max-triangle-solutions 1000)</code>, while any specific solution can be got by (e.g.) running <code>(triangle-solutions 120)</code> which yields <code>(((40 30 50)) ((45 24 51)) ((48 20 52)))</code></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Euler 38: Pandigital multiples]]></title>
@@ -3067,142 +3129,6 @@ main() {
 _Note_: Dart now [runs on App Engine](https://www.dartlang.org/server/google-cloud-platform/app-engine/setup.html) as well!</code></pre></noscript></div>
 
 
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Euler 23: Non-abundant sums]]></title>
-    <link href="http://agam.github.io/blog/2015/02/01/euler-23-non-abundant-sums/"/>
-    <updated>2015-02-01T19:01:00+00:00</updated>
-    <id>http://agam.github.io/blog/2015/02/01/euler-23-non-abundant-sums</id>
-    <content type="html"><![CDATA[<p>Had a slice of free time, so decided to look at the next problem. Here&rsquo;s the initial naive solution:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="nf">divisors</span> <span class="n">n</span> <span class="ow">=</span> <span class="p">[</span><span class="n">x</span> <span class="o">|</span> <span class="n">x</span> <span class="ow">&lt;-</span> <span class="p">[</span><span class="mi">1</span> <span class="o">..</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">n</span> <span class="p">`</span><span class="n">mod</span><span class="p">`</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
-</span><span class='line'>
-</span><span class='line'><span class="nf">isAbundant</span> <span class="n">n</span> <span class="ow">=</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="p">(</span><span class="n">sum</span> <span class="o">$</span> <span class="n">divisors</span> <span class="n">n</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="nf">abundants</span> <span class="n">n</span> <span class="ow">=</span> <span class="n">filter</span> <span class="n">isAbundant</span> <span class="o">$</span> <span class="p">[</span><span class="mi">1</span> <span class="o">..</span> <span class="n">n</span><span class="p">]</span>
-</span><span class='line'>
-</span><span class='line'><span class="nf">expressSum</span> <span class="n">z</span> <span class="n">nums</span> <span class="ow">=</span> <span class="n">not</span> <span class="o">$</span> <span class="n">null</span> <span class="p">[(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="o">|</span> <span class="n">x</span> <span class="ow">&lt;-</span> <span class="n">nums</span><span class="p">,</span> <span class="n">y</span> <span class="ow">&lt;-</span> <span class="n">nums</span><span class="p">,</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">==</span> <span class="n">z</span><span class="p">]</span>
-</span><span class='line'>
-</span><span class='line'><span class="nf">sumAbundants</span> <span class="n">n</span> <span class="ow">=</span>
-</span><span class='line'>  <span class="kr">let</span> <span class="n">a</span> <span class="ow">=</span> <span class="n">abundants</span> <span class="n">n</span> <span class="kr">in</span>
-</span><span class='line'>          <span class="n">sum</span> <span class="o">$</span> <span class="n">filter</span> <span class="p">(</span><span class="nf">\</span><span class="n">x</span> <span class="ow">-&gt;</span> <span class="n">not</span> <span class="o">$</span> <span class="n">expressSum</span> <span class="n">x</span> <span class="n">a</span><span class="p">)</span> <span class="p">[</span><span class="mi">1</span> <span class="o">..</span> <span class="n">n</span><span class="p">]</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>While it gave the correct answer, it did so in <code>3133.33</code> seconds, which is &hellip; embarrassing.</p>
-
-<p>This is just <em>too</em> inefficient, even the following &hellip;</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">divisors</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">i</span> <span class="nv">from</span> <span class="mi">1</span> <span class="nv">below</span> <span class="nv">n</span>
-</span><span class='line'>     <span class="nb">when</span> <span class="p">(</span><span class="nb">=</span> <span class="mi">0</span> <span class="p">(</span><span class="nb">mod</span> <span class="nv">n</span> <span class="nv">i</span><span class="p">))</span>
-</span><span class='line'>       <span class="nv">collect</span> <span class="nv">i</span><span class="p">))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">abundantp</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">&lt;</span> <span class="nv">n</span>
-</span><span class='line'>     <span class="p">(</span><span class="nb">reduce</span> <span class="nf">#&#39;</span><span class="nb">+</span> <span class="p">(</span><span class="nv">divisors</span> <span class="nv">n</span><span class="p">))))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">abundants</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">i</span> <span class="nv">from</span> <span class="mi">1</span> <span class="nv">below</span> <span class="nv">n</span>
-</span><span class='line'>     <span class="nb">when</span> <span class="p">(</span><span class="nv">abundantp</span> <span class="nv">i</span><span class="p">)</span>
-</span><span class='line'>       <span class="nv">collect</span> <span class="nv">i</span><span class="p">))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">possible-summands</span> <span class="p">(</span><span class="nv">z</span> <span class="nv">nums</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">x</span> <span class="nv">in</span> <span class="nv">nums</span> <span class="nb">do</span>
-</span><span class='line'>       <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">y</span> <span class="nv">in</span> <span class="nv">nums</span>
-</span><span class='line'>    <span class="nb">when</span> <span class="p">(</span><span class="nb">=</span> <span class="nv">z</span> <span class="p">(</span><span class="nb">+</span> <span class="nv">x</span> <span class="nv">y</span><span class="p">))</span> <span class="nb">do</span>
-</span><span class='line'>      <span class="p">(</span><span class="k">return-from</span> <span class="nv">possible-summands</span> <span class="p">(</span><span class="nb">cons</span> <span class="nv">x</span> <span class="nv">y</span><span class="p">)))))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">sum-abundants</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">let*</span> <span class="p">((</span><span class="nv">ab</span> <span class="p">(</span><span class="nv">abundants</span> <span class="nv">n</span><span class="p">))</span>
-</span><span class='line'>   <span class="p">(</span><span class="nv">summands</span>
-</span><span class='line'>    <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">i</span> <span class="nv">from</span> <span class="mi">1</span> <span class="nv">to</span> <span class="nv">n</span>
-</span><span class='line'>       <span class="nb">when</span> <span class="p">(</span><span class="nb">null</span> <span class="p">(</span><span class="nv">possible-summands</span> <span class="nv">i</span> <span class="nv">ab</span><span class="p">))</span>
-</span><span class='line'>       <span class="nv">collect</span> <span class="nv">i</span><span class="p">)))</span>
-</span><span class='line'>    <span class="p">(</span><span class="nb">reduce</span> <span class="nf">#&#39;</span><span class="nb">+</span> <span class="nv">summands</span><span class="p">)))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>&hellip; takes no less than half as long, at <code>1329.168</code> seconds.</p>
-
-<p>BTW why is <code>28123</code> the upper limit for this sequence? I had no idea, and found <a href="http://mathschallenge.net/full/sum_of_two_abundant_numbers">this explanation</a> (and tangentially, <a href="http://mathschallenge.net/view/even_sum_of_two_abundant_numbers">this one</a> too).</p>
-
-<p>Anyway, I&rsquo;m ashamed to say I didn&rsquo;t put in the effort to learn how to profile Haskell programs (<em>next time ?</em>) and profiled the Lisp version instead, which showed that (<strong>duh</strong>) all the time was going in finding divisors. Obviously, we can just loop till the <em>square root of N</em> instead of looping <em>all the way to N</em>. After this change:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">divisors</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="k">declare</span> <span class="p">(</span><span class="k">type</span> <span class="kt">fixnum</span> <span class="nv">n</span><span class="p">))</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">i</span> <span class="nv">from</span> <span class="mi">1</span> <span class="nv">below</span> <span class="p">(</span><span class="nb">floor</span> <span class="p">(</span><span class="nb">sqrt</span> <span class="nv">n</span><span class="p">))</span>
-</span><span class='line'>     <span class="nb">when</span> <span class="p">(</span><span class="nb">=</span> <span class="mi">0</span> <span class="p">(</span><span class="nb">mod</span> <span class="nv">n</span> <span class="nv">i</span><span class="p">))</span>
-</span><span class='line'>       <span class="nv">collect</span> <span class="nv">i</span><span class="p">))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>&hellip; it runs in <code>38 milliseconds</code> !!</p>
-
-<p>And a similar change to the Haskell version:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="nf">divisors</span> <span class="ow">::</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="kt">Int</span><span class="p">]</span>
-</span><span class='line'><span class="nf">divisors</span> <span class="n">n</span> <span class="ow">=</span> <span class="p">[</span><span class="n">x</span> <span class="o">|</span> <span class="n">x</span> <span class="ow">&lt;-</span> <span class="p">[</span><span class="mi">1</span> <span class="o">..</span> <span class="n">round</span> <span class="o">$</span> <span class="n">sqrt</span> <span class="o">$</span> <span class="n">fromIntegral</span> <span class="n">n</span><span class="p">],</span> <span class="n">n</span> <span class="p">`</span><span class="n">mod</span><span class="p">`</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>gave the expected answer in <code>180 milliseconds</code>. Not bad (though it should be noted we&rsquo;re still an order of magnitude away in efficiency).</p>
-
-<p><strong>Notes:</strong></p>
-
-<ul>
-<li><p>Haskell makes it very easy to quickly arrive at a <em>correct</em> solution, but the road from there to an <em>efficient</em> solution is less clear.</p></li>
-<li><p>The brevity of the notation helps, but I get a feeling it&rsquo;s also due to the single-letter variable names &mdash; which is all right (and indeed well-suited) for a tiny math problem, but unclear whether it&rsquo;ll hold up for code in a large-scale project.</p></li>
-<li><p>People usually jump to the <a href="">&ldquo;Programming Language shootout&rdquo;</a>, but if the code <em>there</em> is any indication, writing performant Haskell code is a dark art, and <em>the three-line quicksort is a devilish honeytrap</em>.</p></li>
-</ul>
 
 ]]></content>
   </entry>

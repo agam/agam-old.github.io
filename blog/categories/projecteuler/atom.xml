@@ -4,7 +4,7 @@
   <title><![CDATA[Category: projecteuler | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/projecteuler/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-03-19T03:52:17+00:00</updated>
+  <updated>2015-03-20T23:14:06+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,49 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Euler 39: Integer Right Triangles]]></title>
+    <link href="http://agam.github.io/blog/2015/03/20/euler-39-integer-right-triangles/"/>
+    <updated>2015-03-20T23:09:44+00:00</updated>
+    <id>http://agam.github.io/blog/2015/03/20/euler-39-integer-right-triangles</id>
+    <content type="html"><![CDATA[<p>Straightfoward, this. An interesting insight into speed difference between <code>SBCL</code> and <code>Clozure</code>: the former took <em>0.75 seconds</em> to run this, while the latter took about <em>4 seconds</em> (without the type annotations, <code>SBCL</code> takes <em>33 seconds</em>).</p>
+
+<p>```lisp
+(defun is-right-triangle (n1 n2 n3)
+  (declare (type fixnum n1 n2 n3))
+  (= (+ (expt n1 2) (expt n2 2)) (expt n3 2)))</p>
+
+<p>(defun triangle-solutions (n)
+  (declare (type fixnum n))
+  ;; Largest side (hyp) can&rsquo;t be less than a third of the total
+  (loop for hyp from (floor (/ n 3)) upto (&ndash; n 2)</p>
+
+<pre><code> ;; Avoid repeating combinations, so WLOG let one side
+ ;; be greater than the other
+ for sides-sum = (- n hyp)
+ when (loop for side1 from (ceiling (/ sides-sum 2)) to (1- sides-sum)
+         for side2 = (- sides-sum side1) 
+         when (is-right-triangle side1 side2 hyp)
+         collect (list side1 side2 hyp))
+ collect it))
+</code></pre>
+
+<p>(defun max-triangle-solutions (n)
+  (declare (type fixnum n))
+  ;; n cannot be less than 3
+  (let* ((solutions (loop for i from 3 to n</p>
+
+<pre><code>                   collect (length (triangle-solutions i))))
+     (max-solution (loop for elem in solutions maximizing elem)))
+(cons max-solution (+ 3 (position max-solution solutions)))))
+</code></pre>
+
+<p>```</p>
+
+<p>The answer needed is given by <code>(max-triangle-solutions 1000)</code>, while any specific solution can be got by (e.g.) running <code>(triangle-solutions 120)</code> which yields <code>(((40 30 50)) ((45 24 51)) ((48 20 52)))</code></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Euler 38: Pandigital multiples]]></title>
@@ -379,102 +422,6 @@ if (std::all_of(ps.begin(), ps.end(), [&amp;v](int p){return v.test(p);})) {
 ```</p>
 
 <p>It runs in <code>335 milliseconds</code> &mdash; though I&rsquo;m not sure if it is a high or a low number.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Euler 34: Curious Numbers]]></title>
-    <link href="http://agam.github.io/blog/2015/03/04/euler-34-curious-numbers/"/>
-    <updated>2015-03-04T21:33:28+00:00</updated>
-    <id>http://agam.github.io/blog/2015/03/04/euler-34-curious-numbers</id>
-    <content type="html"><![CDATA[<p><em>Grumble</em> &hellip; I&rsquo;m missing the tougher problems we saw earlier. This is another easy one.</p>
-
-<p><strong>Statutory Warning</strong>: <em>Spoilers ahead</em></p>
-
-<p>```c++
-using std::vector;</p>
-
-<p>vector<int> getDigits(int number) {
-  vector<int> v;
-  while (number > 0) {</p>
-
-<pre><code>v.push_back(number % 10);
-number /= 10;
-</code></pre>
-
-<p>  }
-  return v;
-}</p>
-
-<p>void printVector(const vector<int>&amp; v) {
-  std::cout &lt;&lt; &ldquo;[ &rdquo;;
-  for (const auto&amp; d : v) {</p>
-
-<pre><code>std::cout &lt;&lt; d &lt;&lt; ", ";
-</code></pre>
-
-<p>  }
-  std::cout &lt;&lt; &ldquo; ]\n&rdquo;;
-}</p>
-
-<p>int factorial(int n) {
-  // Yep, crude, but it works.
-  static std::unordered_map&lt;int,int> memos;
-  const auto&amp; it = memos.find(n);
-  if (it != memos.end()) {</p>
-
-<pre><code>return it-&gt;second;
-</code></pre>
-
-<p>  }
-  int fact = 1;
-  for (int i = 1; i &lt;= n; ++i) {</p>
-
-<pre><code>fact *= i;
-</code></pre>
-
-<p>  }
-  memos[n] = fact;
-  return fact;
-}</p>
-
-<p>int sumFactDigits(const vector<int>&amp; v) {
-  int sum = 0;
-  for (const auto&amp; d : v) {</p>
-
-<pre><code>sum += factorial(d);
-</code></pre>
-
-<p>  }
-  return sum;
-}</p>
-
-<p>int main() {
-  static const int kMaxTries = 1000000;
-  long sum = 0;
-  for (int i = 3; i &lt; kMaxTries; ++i) {</p>
-
-<pre><code>vector&lt;int&gt; d = getDigits(i);
-if (i == sumFactDigits(d)) {
-  sum += i;
-  std::cout &lt;&lt; "Debug: found ";
-  std::reverse(d.begin(), d.end());
-  printVector(d);
-}
-</code></pre>
-
-<p>  }
-  std::cout &lt;&lt; &ldquo;Required sum = &rdquo; &lt;&lt; sum &lt;&lt; std::endl;
-}
-```</p>
-
-<p>&hellip; and it runs as</p>
-
-<p><code>sh
-Debug: found [ 1, 4, 5,  ]
-Debug: found [ 4, 0, 5, 8, 5,  ]
-Required sum = &lt;redacted&gt;
-</code></p>
 ]]></content>
   </entry>
   

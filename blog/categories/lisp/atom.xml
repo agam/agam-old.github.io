@@ -4,7 +4,7 @@
   <title><![CDATA[Category: lisp | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/lisp/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-03-19T03:52:17+00:00</updated>
+  <updated>2015-03-20T23:14:06+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,49 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Euler 39: Integer Right Triangles]]></title>
+    <link href="http://agam.github.io/blog/2015/03/20/euler-39-integer-right-triangles/"/>
+    <updated>2015-03-20T23:09:44+00:00</updated>
+    <id>http://agam.github.io/blog/2015/03/20/euler-39-integer-right-triangles</id>
+    <content type="html"><![CDATA[<p>Straightfoward, this. An interesting insight into speed difference between <code>SBCL</code> and <code>Clozure</code>: the former took <em>0.75 seconds</em> to run this, while the latter took about <em>4 seconds</em> (without the type annotations, <code>SBCL</code> takes <em>33 seconds</em>).</p>
+
+<p>```lisp
+(defun is-right-triangle (n1 n2 n3)
+  (declare (type fixnum n1 n2 n3))
+  (= (+ (expt n1 2) (expt n2 2)) (expt n3 2)))</p>
+
+<p>(defun triangle-solutions (n)
+  (declare (type fixnum n))
+  ;; Largest side (hyp) can&rsquo;t be less than a third of the total
+  (loop for hyp from (floor (/ n 3)) upto (&ndash; n 2)</p>
+
+<pre><code> ;; Avoid repeating combinations, so WLOG let one side
+ ;; be greater than the other
+ for sides-sum = (- n hyp)
+ when (loop for side1 from (ceiling (/ sides-sum 2)) to (1- sides-sum)
+         for side2 = (- sides-sum side1) 
+         when (is-right-triangle side1 side2 hyp)
+         collect (list side1 side2 hyp))
+ collect it))
+</code></pre>
+
+<p>(defun max-triangle-solutions (n)
+  (declare (type fixnum n))
+  ;; n cannot be less than 3
+  (let* ((solutions (loop for i from 3 to n</p>
+
+<pre><code>                   collect (length (triangle-solutions i))))
+     (max-solution (loop for elem in solutions maximizing elem)))
+(cons max-solution (+ 3 (position max-solution solutions)))))
+</code></pre>
+
+<p>```</p>
+
+<p>The answer needed is given by <code>(max-triangle-solutions 1000)</code>, while any specific solution can be got by (e.g.) running <code>(triangle-solutions 120)</code> which yields <code>(((40 30 50)) ((45 24 51)) ((48 20 52)))</code></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Euler 26: Reciprocal Cycles]]></title>
