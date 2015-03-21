@@ -4,7 +4,7 @@
   <title><![CDATA[Category: lisp | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/lisp/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-03-20T23:14:06+00:00</updated>
+  <updated>2015-03-21T19:45:48+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,76 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Euler 40: Champernowne's Constant]]></title>
+    <link href="http://agam.github.io/blog/2015/03/21/euler-40-champernownes-constant/"/>
+    <updated>2015-03-21T19:34:12+00:00</updated>
+    <id>http://agam.github.io/blog/2015/03/21/euler-40-champernownes-constant</id>
+    <content type="html"><![CDATA[<p>I was too lazy to avoid the brute-force approach here, especially since it took less than a second to run. The following seems longer than it should be, partly because I left in some helper and debugging functions &hellip;</p>
+
+<p><strong>Statutory Warning</strong>: <em>Spoilers Ahead</em></p>
+
+<p>```lisp
+(defparameter <em>max-digits</em> 2000000)</p>
+
+<p>(defun digits (n)
+  (declare (type fixnum n))
+  (nreverse (loop</p>
+
+<pre><code>           for tmp = n then (floor (/ tmp 10))
+           until (= tmp 0)
+           collect (mod tmp 10))))
+</code></pre>
+
+<p>(defun set-digits (d start all-digits)
+  (loop</p>
+
+<pre><code> for elem in d
+ for idx = start then (1+ idx) do
+   (setf (aref all-digits idx) elem)))
+</code></pre>
+
+<p>;; Fills out the array of digits and returns an accessor function
+;; Note: the index increments by the length of the number of
+;; digits of the <em>previous</em> number.
+(let ((all-digits (make-array (list <em>max-digits</em>) :element-type &lsquo;(integer 0 9) :initial-element 0)))
+  (defun populate-digits (n)</p>
+
+<pre><code>(progn
+  (loop
+     for num = 1 then (1+ num)
+     for d = (digits num)
+     for i = 0 then (+ i (length (digits (1- num))))
+     while (&lt; i n) do
+       (set-digits d i all-digits))
+(lambda (idx)
+  (aref all-digits idx)))))
+</code></pre>
+
+<p>(defun power-list ()
+  (let ((champer (populate-digits 1000000)))</p>
+
+<pre><code>(loop for p from 0 to 6 collect
+     (funcall champer (1- (expt 10 p))))))
+</code></pre>
+
+<p>(defun euler40 ()
+  (apply &lsquo;* (power-list)))</p>
+
+<p>;; Useful debugging tool
+(defun scan-list (start end)
+  (let ((champer (populate-digits)))</p>
+
+<pre><code>(loop for i from start to end do
+     (print (cons i (funcall champer i))))))
+</code></pre>
+
+<p>```</p>
+
+<p>The &ldquo;final answer&rdquo; is given by <code>(euler40)</code>, and the intermediate digits themselves by <code>(power-list)</code>. I found <code>(scan-list)</code> useful to debug an embarassing off-by-one error in the loop.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Euler 39: Integer Right Triangles]]></title>
@@ -662,94 +732,6 @@ else match get_perm total index_size with
 </code></p>
 
 <p>&hellip; and it gave the same answer (and obviously, so did the Ocaml version). So a happy ending to this story, but a painful reminder of the fact that <strong>there are only two hard problems in computer science: naming, caching, and off-by-one errors.</strong></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Lisp performance check-up]]></title>
-    <link href="http://agam.github.io/blog/2015/01/07/lisp-performance-check-up/"/>
-    <updated>2015-01-07T06:22:09+00:00</updated>
-    <id>http://agam.github.io/blog/2015/01/07/lisp-performance-check-up</id>
-    <content type="html"><![CDATA[<p>Came across <a href="https://github.com/pixie-lang/pixie">pixie-lang</a>, and it had this bit about &ldquo;<em>the loop compiles down to six instructions!</em>&rdquo;</p>
-
-<p>So I decided to go and satisfy my curiosity about just how many instructions a loop like this <em>should</em> be expected to compile down to.</p>
-
-<p>```lisp
-CL-USER> (defun add-fn (args)</p>
-
-<pre><code>       (reduce #'+ args))
-</code></pre>
-
-<p>```</p>
-
-<p>which obviously runs as</p>
-
-<p><code>lisp
-CL-USER&gt; (add-fn '(3 4 5))
-12
-</code></p>
-
-<p>Now, a look at what&rsquo;s going on &ldquo;under the hood&rdquo;</p>
-
-<p>```lisp
-CL-USER> (disassemble #&lsquo;add-fn)
-; disassembly for ADD-FN
-; Size: 42 bytes. Origin: #x1004FBC3F8
-; 3F8:       498B4C2460       MOV RCX, [R12+96]               ; thread.binding-stack-pointer</p>
-
-<pre><code>                                                          ; no-arg-parsing entry point
-</code></pre>
-
-<p>; 3FD:       48894DF8         MOV [RBP-8], RCX
-; 401:       488B1598FFFFFF   MOV RDX, [RIP-104]              ; #<FUNCTION +>
-; 408:       488BFE           MOV RDI, RSI
-; 40B:       488B0596FFFFFF   MOV RAX, [RIP-106]              ; #<FDEFINITION for REDUCE>
-; 412:       B904000000       MOV ECX, 4
-; 417:       FF7508           PUSH QWORD PTR [RBP+8]
-; 41A:       FF6009           JMP QWORD PTR [RAX+9]
-; 41D:       CC0A             BREAK 10                        ; error trap
-; 41F:       02               BYTE #X02
-; 420:       19               BYTE #X19                       ; INVALID-ARG-COUNT-ERROR
-; 421:       9A               BYTE #X9A                       ; RCX
-NIL
-```</p>
-
-<p>Ok, let&rsquo;s see if we can slightly improve that</p>
-
-<p>```lisp
-CL-USER> (defun add-fn (args)</p>
-
-<pre><code>       (declare (optimize (speed 3) (safety 0)))
-       (reduce #'+ args))
-</code></pre>
-
-<p>```</p>
-
-<p>```lisp
-CL-USER> (disassemble #&lsquo;add-fn)
-; disassembly for ADD-FN
-; Size: 25 bytes. Origin: #x10051BDB12
-; 12:       488B15A7FFFFFF   MOV RDX, [RIP-89]                ; #<FUNCTION +></p>
-
-<pre><code>                                                          ; no-arg-parsing entry point
-</code></pre>
-
-<p>; 19:       488B05A8FFFFFF   MOV RAX, [RIP-88]                ; #<FDEFINITION for REDUCE>
-; 20:       B904000000       MOV ECX, 4
-; 25:       FF7508           PUSH QWORD PTR [RBP+8]
-; 28:       FF6009           JMP QWORD PTR [RAX+9]
-```</p>
-
-<p>Pretty sweet, eh? <em>You don&rsquo;t get that kind of feedback every day</em>.</p>
-
-<p>This was all run on 64-bit SBCL:</p>
-
-<p><code>lisp
-CL-USER&gt; (lisp-implementation-type)
-"SBCL"
-CL-USER&gt; (lisp-implementation-version)
-"1.2.7"
-</code></p>
 ]]></content>
   </entry>
   

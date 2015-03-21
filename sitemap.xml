@@ -3,6 +3,12 @@
   
   
   <url>
+    <loc>http://agam.github.io/blog/2015/03/21/euler-40-champernownes-constant/</loc>
+    <lastmod>2015-03-21T19:34:12+00:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
     <loc>http://agam.github.io/blog/2015/03/20/euler-39-integer-right-triangles/</loc>
     <lastmod>2015-03-20T23:09:44+00:00</lastmod>
     <priority>0.8</priority>
@@ -737,14 +743,14 @@
   
   <url>
     <loc>http://agam.github.io/</loc>
-    <lastmod>2015-03-20T23:14:06+00:00</lastmod>
+    <lastmod>2015-03-21T19:45:48+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   
   <url>
     <loc>http://agam.github.io/blog/archives/</loc>
-    <lastmod>2015-03-20T23:14:06+00:00</lastmod>
+    <lastmod>2015-03-21T19:45:48+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: projecteuler | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/projecteuler/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-03-20T23:14:06+00:00</updated>
+  <updated>2015-03-21T19:45:48+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,76 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Euler 40: Champernowne's Constant]]></title>
+    <link href="http://agam.github.io/blog/2015/03/21/euler-40-champernownes-constant/"/>
+    <updated>2015-03-21T19:34:12+00:00</updated>
+    <id>http://agam.github.io/blog/2015/03/21/euler-40-champernownes-constant</id>
+    <content type="html"><![CDATA[<p>I was too lazy to avoid the brute-force approach here, especially since it took less than a second to run. The following seems longer than it should be, partly because I left in some helper and debugging functions &hellip;</p>
+
+<p><strong>Statutory Warning</strong>: <em>Spoilers Ahead</em></p>
+
+<p>```lisp
+(defparameter <em>max-digits</em> 2000000)</p>
+
+<p>(defun digits (n)
+  (declare (type fixnum n))
+  (nreverse (loop</p>
+
+<pre><code>           for tmp = n then (floor (/ tmp 10))
+           until (= tmp 0)
+           collect (mod tmp 10))))
+</code></pre>
+
+<p>(defun set-digits (d start all-digits)
+  (loop</p>
+
+<pre><code> for elem in d
+ for idx = start then (1+ idx) do
+   (setf (aref all-digits idx) elem)))
+</code></pre>
+
+<p>;; Fills out the array of digits and returns an accessor function
+;; Note: the index increments by the length of the number of
+;; digits of the <em>previous</em> number.
+(let ((all-digits (make-array (list <em>max-digits</em>) :element-type &lsquo;(integer 0 9) :initial-element 0)))
+  (defun populate-digits (n)</p>
+
+<pre><code>(progn
+  (loop
+     for num = 1 then (1+ num)
+     for d = (digits num)
+     for i = 0 then (+ i (length (digits (1- num))))
+     while (&lt; i n) do
+       (set-digits d i all-digits))
+(lambda (idx)
+  (aref all-digits idx)))))
+</code></pre>
+
+<p>(defun power-list ()
+  (let ((champer (populate-digits 1000000)))</p>
+
+<pre><code>(loop for p from 0 to 6 collect
+     (funcall champer (1- (expt 10 p))))))
+</code></pre>
+
+<p>(defun euler40 ()
+  (apply &lsquo;* (power-list)))</p>
+
+<p>;; Useful debugging tool
+(defun scan-list (start end)
+  (let ((champer (populate-digits)))</p>
+
+<pre><code>(loop for i from start to end do
+     (print (cons i (funcall champer i))))))
+</code></pre>
+
+<p>```</p>
+
+<p>The &ldquo;final answer&rdquo; is given by <code>(euler40)</code>, and the intermediate digits themselves by <code>(power-list)</code>. I found <code>(scan-list)</code> useful to debug an embarassing off-by-one error in the loop.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Euler 39: Integer Right Triangles]]></title>
@@ -304,124 +374,6 @@ n /= base;
 ```</p>
 
 <p>(runs in <code>931 milliseconds</code>)</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Euler 35: Circular Primes]]></title>
-    <link href="http://agam.github.io/blog/2015/03/04/euler-35-circular-primes/"/>
-    <updated>2015-03-04T23:49:53+00:00</updated>
-    <id>http://agam.github.io/blog/2015/03/04/euler-35-circular-primes</id>
-    <content type="html"><![CDATA[<p>The easy solutions continue (or, I&rsquo;ve just gotten used to C++ for these)</p>
-
-<p><strong>Statutory Warning</strong>: <em>Spoilers ahead</em></p>
-
-<p>```c++
-// Euler 35: A number is a circular prime if all the <em>rotations</em> of
-// its digits are prime numbers.</p>
-
-<p>using std::vector;</p>
-
-<p>const int kMaxNumbers = 1000000;
-typedef std::bitset<kMaxNumbers> AllNumbers;</p>
-
-<p>void markMultiples(AllNumbers* v, int n) {
-  const int kStart = 2 * n;
-  if (kStart >= kMaxNumbers) {</p>
-
-<pre><code>return;
-</code></pre>
-
-<p>  }
-  for (int i = kStart; i &lt; kMaxNumbers; i += n) {</p>
-
-<pre><code>v-&gt;set(i, false);
-</code></pre>
-
-<p>  }
-}</p>
-
-<p>void markPrimes(AllNumbers* v) {
-  v->set(0, false);
-  v->set(1, false);
-  int i = 2;
-  while (true) {</p>
-
-<pre><code>markMultiples(v, i);
-++i;
-for (; i &lt; kMaxNumbers &amp;&amp; !v-&gt;test(i); ++i) {}
-if (i == kMaxNumbers) {
-  return;
-}
-</code></pre>
-
-<p>  }
-}</p>
-
-<p>vector<int> getDigits(int n) {
-  vector<int> v;
-  while (n > 0) {</p>
-
-<pre><code>v.push_back(n % 10);
-n /= 10;
-</code></pre>
-
-<p>  }
-  return v;
-}</p>
-
-<p>int getNumber(const vector<int>&amp; v) {
-  int n = 0;
-  for (int i = v.size()-1; i >=0; &mdash;i) {</p>
-
-<pre><code>n = n*10 + v[i];
-</code></pre>
-
-<p>  }
-  return n;
-}</p>
-
-<p>vector<int> getRotatedNumbers(int n) {
-  auto v = getDigits(n);
-  vector<int> numbers;
-  for (int i = 0; i &lt; v.size(); ++i) {</p>
-
-<pre><code>numbers.push_back(getNumber(v));
-std::rotate(v.begin(), v.end()-1, v.end());
-</code></pre>
-
-<p>  }
-  return numbers;
-}</p>
-
-<p>int main() {
-  AllNumbers v;
-  for (int i = 0; i &lt; kMaxNumbers; ++i) {</p>
-
-<pre><code>v.set(i, true);
-</code></pre>
-
-<p>  }
-  markPrimes(&amp;v);
-  int numCircularPrimes = 0;
-  for (int i = 0; i &lt; kMaxNumbers; ++i) {</p>
-
-<pre><code>// Fail early
-if (!v.test(i)) {
-  continue;
-}
-vector&lt;int&gt; ps = getRotatedNumbers(i);
-if (std::all_of(ps.begin(), ps.end(), [&amp;v](int p){return v.test(p);})) {
-  ++numCircularPrimes;
-}
-</code></pre>
-
-<p>  }
-  std::cout &lt;&lt; &ldquo;Number of circular primes = &rdquo; &lt;&lt; numCircularPrimes &lt;&lt; std::endl;
-}
-```</p>
-
-<p>It runs in <code>335 milliseconds</code> &mdash; though I&rsquo;m not sure if it is a high or a low number.</p>
 ]]></content>
   </entry>
   
