@@ -8,6 +8,8 @@ categories: projecteuler lisp
 
 I was too lazy to avoid the brute-force approach here, especially since it took less than a second to run. The following seems longer than it should be, partly because I left in some helper and debugging functions ...
 
+_Edit_: There is obviously a very nice paper-and-pen solution to this -- the 10th place is '1' (for 10), then the 100th place is '5' (for 55), and so on ...
+
 **Statutory Warning**: _Spoilers Ahead_
 
 ```lisp
