@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-03-21T19:45:48+00:00</updated>
+  <updated>2015-03-22T04:39:14+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -14,11 +14,123 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Euler 41: Pandigital primes]]></title>
+    <link href="http://agam.github.io/blog/2015/03/22/euler-41-pandigital-primes/"/>
+    <updated>2015-03-22T04:35:08+00:00</updated>
+    <id>http://agam.github.io/blog/2015/03/22/euler-41-pandigital-primes</id>
+    <content type="html"><![CDATA[<p>Yet another <em>brute-force</em> solution, pushing the line a bit at <em>1991 seconds</em>. But hey, it works, and was quick to write, so &hellip;</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*max-num-limit*</span> <span class="mi">1000000000</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*all-numbers*</span> <span class="p">(</span><span class="nb">make-array</span> <span class="p">(</span><span class="nb">list</span> <span class="vg">*max-num-limit*</span><span class="p">)</span> <span class="ss">:element-type</span> <span class="ss">&#39;bit</span> <span class="ss">:initial-element</span> <span class="mi">1</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">mark-primes</span> <span class="p">(</span><span class="k">&amp;optional</span> <span class="p">(</span><span class="nv">n</span> <span class="vg">*max-num-limit*</span><span class="p">))</span>
+</span><span class='line'>  <span class="c1">;; 0 and 1 are not prime</span>
+</span><span class='line'>  <span class="p">(</span><span class="nv">mark-not-prime</span> <span class="mi">0</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nv">mark-not-prime</span> <span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>  <span class="c1">;; Mark 2 as prime, then do the following:</span>
+</span><span class='line'>  <span class="c1">;; (1) Mark all multiples of the prime number,</span>
+</span><span class='line'>  <span class="c1">;; (2) Find next available prime number, mark it as prime,</span>
+</span><span class='line'>  <span class="c1">;; Repeat (1) until n</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">prime</span> <span class="mi">2</span><span class="p">))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nb">loop</span> <span class="nv">while</span> <span class="p">(</span><span class="nb">&lt;</span> <span class="nv">prime</span> <span class="nv">n</span><span class="p">)</span> <span class="nb">do</span>
+</span><span class='line'>         <span class="p">(</span><span class="nv">mark-prime-multiples</span> <span class="nv">prime</span> <span class="nv">n</span><span class="p">)</span>
+</span><span class='line'>         <span class="p">(</span><span class="nb">setf</span> <span class="nv">prime</span> <span class="p">(</span><span class="nv">find-next-prime</span> <span class="nv">prime</span> <span class="nv">n</span><span class="p">)))))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">mark-not-prime</span> <span class="p">(</span><span class="nv">idx</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">setf</span> <span class="p">(</span><span class="nb">bit</span> <span class="vg">*all-numbers*</span> <span class="nv">idx</span><span class="p">)</span> <span class="mi">0</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">mark-prime-multiples</span> <span class="p">(</span><span class="nv">prime</span> <span class="nv">limit</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">do</span> <span class="p">((</span><span class="nv">i</span> <span class="p">(</span><span class="nb">*</span> <span class="nv">prime</span> <span class="mi">2</span><span class="p">)</span> <span class="p">(</span><span class="nb">+</span> <span class="nv">i</span> <span class="nv">prime</span><span class="p">)))</span>
+</span><span class='line'>      <span class="p">((</span><span class="nb">&gt;=</span> <span class="nv">i</span> <span class="nv">limit</span><span class="p">))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nv">mark-not-prime</span> <span class="nv">i</span><span class="p">)))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">find-next-prime</span> <span class="p">(</span><span class="nv">prev-prime</span> <span class="nv">limit</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">do</span> <span class="p">((</span><span class="nv">i</span> <span class="p">(</span><span class="nb">1+</span> <span class="nv">prev-prime</span><span class="p">)</span> <span class="p">(</span><span class="nb">1+</span> <span class="nv">i</span><span class="p">)))</span>
+</span><span class='line'>      <span class="p">((</span><span class="nb">or</span> <span class="p">(</span><span class="nb">=</span> <span class="nv">i</span> <span class="nv">limit</span><span class="p">)</span> <span class="p">(</span><span class="nb">=</span> <span class="mi">1</span> <span class="p">(</span><span class="nb">bit</span> <span class="vg">*all-numbers*</span> <span class="nv">i</span><span class="p">)))</span> <span class="nv">i</span><span class="p">)))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">is-prime</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">=</span> <span class="mi">1</span> <span class="p">(</span><span class="nb">bit</span> <span class="vg">*all-numbers*</span> <span class="nv">n</span><span class="p">)))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">get-num-digits</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">ceiling</span> <span class="p">(</span><span class="nb">log</span> <span class="nv">n</span> <span class="mi">10</span><span class="p">)))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">is-pandigital</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">let*</span> <span class="p">((</span><span class="nv">num-digits</span> <span class="p">(</span><span class="nv">get-num-digits</span> <span class="nv">n</span><span class="p">))</span>
+</span><span class='line'>         <span class="p">(</span><span class="nv">digits</span> <span class="p">(</span><span class="nb">make-array</span> <span class="nv">num-digits</span> <span class="ss">:element-type</span> <span class="ss">&#39;bit</span> <span class="ss">:initial-element</span> <span class="mi">0</span><span class="p">)))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nb">loop</span> <span class="nv">while</span> <span class="p">(</span><span class="nb">and</span> <span class="p">(</span><span class="nb">&gt;</span> <span class="nv">n</span> <span class="mi">0</span><span class="p">)</span>
+</span><span class='line'>                     <span class="p">(</span><span class="nb">&gt;</span> <span class="p">(</span><span class="nb">mod</span> <span class="nv">n</span> <span class="mi">10</span><span class="p">)</span> <span class="mi">0</span><span class="p">)</span>
+</span><span class='line'>                     <span class="p">(</span><span class="nb">&lt;=</span> <span class="p">(</span><span class="nb">mod</span> <span class="nv">n</span> <span class="mi">10</span><span class="p">)</span> <span class="nv">num-digits</span><span class="p">))</span> <span class="nb">do</span>
+</span><span class='line'>         <span class="p">(</span><span class="nb">setf</span> <span class="p">(</span><span class="nb">bit</span> <span class="nv">digits</span> <span class="p">(</span><span class="nb">1-</span> <span class="p">(</span><span class="nb">mod</span> <span class="nv">n</span> <span class="mi">10</span><span class="p">)))</span> <span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>         <span class="p">(</span><span class="nb">setf</span> <span class="nv">n</span> <span class="p">(</span><span class="nb">floor</span> <span class="p">(</span><span class="nb">/</span> <span class="nv">n</span> <span class="mi">10</span><span class="p">))))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nb">=</span> <span class="p">(</span><span class="nb">length</span> <span class="nv">digits</span><span class="p">)</span> <span class="p">(</span><span class="nb">count</span> <span class="mi">1</span> <span class="nv">digits</span><span class="p">))))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">euler41</span> <span class="p">()</span>
+</span><span class='line'>  <span class="p">(</span><span class="nv">mark-primes</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">do</span> <span class="p">((</span><span class="nv">n</span> <span class="mi">987654321</span> <span class="p">(</span><span class="nb">1-</span> <span class="nv">n</span><span class="p">)))</span>
+</span><span class='line'>      <span class="p">((</span><span class="nb">and</span> <span class="p">(</span><span class="nv">is-pandigital</span> <span class="nv">n</span><span class="p">)</span> <span class="p">(</span><span class="nv">is-prime</span> <span class="nv">n</span><span class="p">))</span> <span class="nv">n</span><span class="p">)))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Everything is wrapped up in the call to <code>(euler41)</code>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Euler 40: Champernowne's Constant]]></title>
     <link href="http://agam.github.io/blog/2015/03/21/euler-40-champernownes-constant/"/>
     <updated>2015-03-21T19:34:12+00:00</updated>
     <id>http://agam.github.io/blog/2015/03/21/euler-40-champernownes-constant</id>
     <content type="html"><![CDATA[<p>I was too lazy to avoid the brute-force approach here, especially since it took less than a second to run. The following seems longer than it should be, partly because I left in some helper and debugging functions &hellip;</p>
+
+<p><em>Edit</em>: There is obviously a very nice paper-and-pen solution to this &mdash; the 10th place is &lsquo;1&rsquo; (for 10), then the 100th place is &lsquo;5&rsquo; (for 55), and so on &hellip;</p>
 
 <p><strong>Statutory Warning</strong>: <em>Spoilers Ahead</em></p>
 
@@ -2583,33 +2695,6 @@
 
 
 <p>&hellip; and it gave the same answer (and obviously, so did the Ocaml version). So a happy ending to this story, but a painful reminder of the fact that <strong>there are only two hard problems in computer science: naming, caching, and off-by-one errors.</strong></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Rethinking the suggested beginning language]]></title>
-    <link href="http://agam.github.io/blog/2015/02/06/rethinking-the-suggested-beginning-language/"/>
-    <updated>2015-02-06T07:01:14+00:00</updated>
-    <id>http://agam.github.io/blog/2015/02/06/rethinking-the-suggested-beginning-language</id>
-    <content type="html"><![CDATA[<p>I was all gung-ho about recommending <strong>Go</strong> as the ideal starting point for <em>everyone</em>, and abstract driving force behind this was a supposed combination of the ease and power of <strong>Python</strong> and <strong>C</strong> respectively, both of which can individually make a case for being the <em>right</em> place to start.</p>
-
-<p>This depended on two things:</p>
-
-<ul>
-<li>Leave it to the student to figure out the editor/IDE/tooling, and</li>
-<li>Don&rsquo;t worry about GUIs in the beginning (it&rsquo;s ok to focus on a text interface alone).</li>
-</ul>
-
-
-<p>Unfortunately, when I discuss this with other people (yes, an unscientific small sample), these seem like dumb assumptions. The accepted wisdom seems to be that</p>
-
-<ul>
-<li>IDEs are <em>very</em> important, and</li>
-<li>GUIs and web apps <em>have</em> to be the primary focus.</li>
-</ul>
-
-
-<p>So now I&rsquo;m confused all over again. I really, <em>really</em> don&rsquo;t want to return to Javascript. Perhaps <strong>Dart</strong> would fit the bill? The default eclipse-ish editor is pretty self-contained and is easy to download and get up and running on all platforms. The syntax is a bit <em>meh</em>, but that&rsquo;s just my current ignorance. I don&rsquo;t know. Maybe there <em>isn&rsquo;t</em> any such thing as a good beginner programming language.</p>
 ]]></content>
   </entry>
   

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: projecteuler | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/projecteuler/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-03-21T19:45:48+00:00</updated>
+  <updated>2015-03-22T04:39:14+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -14,11 +14,86 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Euler 41: Pandigital primes]]></title>
+    <link href="http://agam.github.io/blog/2015/03/22/euler-41-pandigital-primes/"/>
+    <updated>2015-03-22T04:35:08+00:00</updated>
+    <id>http://agam.github.io/blog/2015/03/22/euler-41-pandigital-primes</id>
+    <content type="html"><![CDATA[<p>Yet another <em>brute-force</em> solution, pushing the line a bit at <em>1991 seconds</em>. But hey, it works, and was quick to write, so &hellip;</p>
+
+<p>```lisp
+(defparameter <em>max-num-limit</em> 1000000000)
+(defparameter <em>all-numbers</em> (make-array (list <em>max-num-limit</em>) :element-type &lsquo;bit :initial-element 1))</p>
+
+<p>(defun mark-primes (&amp;optional (n <em>max-num-limit</em>))
+  ;; 0 and 1 are not prime
+  (mark-not-prime 0)
+  (mark-not-prime 1)
+  ;; Mark 2 as prime, then do the following:
+  ;; (1) Mark all multiples of the prime number,
+  ;; (2) Find next available prime number, mark it as prime,
+  ;; Repeat (1) until n
+  (let ((prime 2))</p>
+
+<pre><code>(loop while (&lt; prime n) do
+     (mark-prime-multiples prime n)
+     (setf prime (find-next-prime prime n)))))
+</code></pre>
+
+<p>(defun mark-not-prime (idx)
+  (setf (bit <em>all-numbers</em> idx) 0))</p>
+
+<p>(defun mark-prime-multiples (prime limit)
+  (do ((i (* prime 2) (+ i prime)))</p>
+
+<pre><code>  ((&gt;= i limit))
+(mark-not-prime i)))
+</code></pre>
+
+<p>(defun find-next-prime (prev-prime limit)
+  (do ((i (1+ prev-prime) (1+ i)))</p>
+
+<pre><code>  ((or (= i limit) (= 1 (bit *all-numbers* i))) i)))
+</code></pre>
+
+<p>(defun is-prime (n)
+  (= 1 (bit <em>all-numbers</em> n)))</p>
+
+<p>(defun get-num-digits (n)
+  (ceiling (log n 10)))</p>
+
+<p>(defun is-pandigital (n)
+  (let* ((num-digits (get-num-digits n))</p>
+
+<pre><code>     (digits (make-array num-digits :element-type 'bit :initial-element 0)))
+(loop while (and (&gt; n 0)
+                 (&gt; (mod n 10) 0)
+                 (&lt;= (mod n 10) num-digits)) do
+     (setf (bit digits (1- (mod n 10))) 1)
+     (setf n (floor (/ n 10))))
+(= (length digits) (count 1 digits))))
+</code></pre>
+
+<p>(defun euler41 ()
+  (mark-primes)
+  (do ((n 987654321 (1- n)))</p>
+
+<pre><code>  ((and (is-pandigital n) (is-prime n)) n)))
+</code></pre>
+
+<p>```</p>
+
+<p>Everything is wrapped up in the call to <code>(euler41)</code>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Euler 40: Champernowne's Constant]]></title>
     <link href="http://agam.github.io/blog/2015/03/21/euler-40-champernownes-constant/"/>
     <updated>2015-03-21T19:34:12+00:00</updated>
     <id>http://agam.github.io/blog/2015/03/21/euler-40-champernownes-constant</id>
     <content type="html"><![CDATA[<p>I was too lazy to avoid the brute-force approach here, especially since it took less than a second to run. The following seems longer than it should be, partly because I left in some helper and debugging functions &hellip;</p>
+
+<p><em>Edit</em>: There is obviously a very nice paper-and-pen solution to this &mdash; the 10th place is &lsquo;1&rsquo; (for 10), then the 100th place is &lsquo;5&rsquo; (for 55), and so on &hellip;</p>
 
 <p><strong>Statutory Warning</strong>: <em>Spoilers Ahead</em></p>
 
@@ -322,58 +397,6 @@ Debug: found 3797
 Debug: found 739397
 The sum is: &lt;redacted&gt;
 </code></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Euler 36: Palindromic Numbers]]></title>
-    <link href="http://agam.github.io/blog/2015/03/05/euler-36-palindromic-numbers/"/>
-    <updated>2015-03-05T06:10:59+00:00</updated>
-    <id>http://agam.github.io/blog/2015/03/05/euler-36-palindromic-numbers</id>
-    <content type="html"><![CDATA[<p>Wha &hellip; this is getting boring.</p>
-
-<p><strong>Statutory Warning</strong>: <em>Spoilers ahead</em></p>
-
-<p>```c++
-using std::vector;
-static const int kMaxNumbers = 1000000;</p>
-
-<p>bool isPalindromic(int n, int base) {
-  vector<int> digits;
-  while (n > 0) {</p>
-
-<pre><code>digits.push_back(n % base);
-n /= base;
-</code></pre>
-
-<p>  }
-  int length = digits.size();
-  for (int i = 0; i &lt; length/2; ++i) {</p>
-
-<pre><code>if (digits[i] != digits[length-1-i]) {
-  return false;
-}
-</code></pre>
-
-<p>  }
-  return true;
-}</p>
-
-<p>int main() {
-  int sum = 0;
-  for (int i = 1; i &lt; kMaxNumbers; ++i) {</p>
-
-<pre><code>if (isPalindromic(i, 10) &amp;&amp; isPalindromic(i, 2)) {
-  sum += i;
-}
-</code></pre>
-
-<p>  }
-  std::cout &lt;&lt; &ldquo;Sum of palindromic numbers = &rdquo; &lt;&lt; sum &lt;&lt; std::endl;
-}
-```</p>
-
-<p>(runs in <code>931 milliseconds</code>)</p>
 ]]></content>
   </entry>
   

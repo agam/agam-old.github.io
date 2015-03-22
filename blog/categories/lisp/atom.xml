@@ -4,7 +4,7 @@
   <title><![CDATA[Category: lisp | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/lisp/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-03-21T19:45:48+00:00</updated>
+  <updated>2015-03-22T04:39:14+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -14,11 +14,86 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Euler 41: Pandigital primes]]></title>
+    <link href="http://agam.github.io/blog/2015/03/22/euler-41-pandigital-primes/"/>
+    <updated>2015-03-22T04:35:08+00:00</updated>
+    <id>http://agam.github.io/blog/2015/03/22/euler-41-pandigital-primes</id>
+    <content type="html"><![CDATA[<p>Yet another <em>brute-force</em> solution, pushing the line a bit at <em>1991 seconds</em>. But hey, it works, and was quick to write, so &hellip;</p>
+
+<p>```lisp
+(defparameter <em>max-num-limit</em> 1000000000)
+(defparameter <em>all-numbers</em> (make-array (list <em>max-num-limit</em>) :element-type &lsquo;bit :initial-element 1))</p>
+
+<p>(defun mark-primes (&amp;optional (n <em>max-num-limit</em>))
+  ;; 0 and 1 are not prime
+  (mark-not-prime 0)
+  (mark-not-prime 1)
+  ;; Mark 2 as prime, then do the following:
+  ;; (1) Mark all multiples of the prime number,
+  ;; (2) Find next available prime number, mark it as prime,
+  ;; Repeat (1) until n
+  (let ((prime 2))</p>
+
+<pre><code>(loop while (&lt; prime n) do
+     (mark-prime-multiples prime n)
+     (setf prime (find-next-prime prime n)))))
+</code></pre>
+
+<p>(defun mark-not-prime (idx)
+  (setf (bit <em>all-numbers</em> idx) 0))</p>
+
+<p>(defun mark-prime-multiples (prime limit)
+  (do ((i (* prime 2) (+ i prime)))</p>
+
+<pre><code>  ((&gt;= i limit))
+(mark-not-prime i)))
+</code></pre>
+
+<p>(defun find-next-prime (prev-prime limit)
+  (do ((i (1+ prev-prime) (1+ i)))</p>
+
+<pre><code>  ((or (= i limit) (= 1 (bit *all-numbers* i))) i)))
+</code></pre>
+
+<p>(defun is-prime (n)
+  (= 1 (bit <em>all-numbers</em> n)))</p>
+
+<p>(defun get-num-digits (n)
+  (ceiling (log n 10)))</p>
+
+<p>(defun is-pandigital (n)
+  (let* ((num-digits (get-num-digits n))</p>
+
+<pre><code>     (digits (make-array num-digits :element-type 'bit :initial-element 0)))
+(loop while (and (&gt; n 0)
+                 (&gt; (mod n 10) 0)
+                 (&lt;= (mod n 10) num-digits)) do
+     (setf (bit digits (1- (mod n 10))) 1)
+     (setf n (floor (/ n 10))))
+(= (length digits) (count 1 digits))))
+</code></pre>
+
+<p>(defun euler41 ()
+  (mark-primes)
+  (do ((n 987654321 (1- n)))</p>
+
+<pre><code>  ((and (is-pandigital n) (is-prime n)) n)))
+</code></pre>
+
+<p>```</p>
+
+<p>Everything is wrapped up in the call to <code>(euler41)</code>.</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Euler 40: Champernowne's Constant]]></title>
     <link href="http://agam.github.io/blog/2015/03/21/euler-40-champernownes-constant/"/>
     <updated>2015-03-21T19:34:12+00:00</updated>
     <id>http://agam.github.io/blog/2015/03/21/euler-40-champernownes-constant</id>
     <content type="html"><![CDATA[<p>I was too lazy to avoid the brute-force approach here, especially since it took less than a second to run. The following seems longer than it should be, partly because I left in some helper and debugging functions &hellip;</p>
+
+<p><em>Edit</em>: There is obviously a very nice paper-and-pen solution to this &mdash; the 10th place is &lsquo;1&rsquo; (for 10), then the 100th place is &lsquo;5&rsquo; (for 55), and so on &hellip;</p>
 
 <p><strong>Statutory Warning</strong>: <em>Spoilers Ahead</em></p>
 
@@ -519,219 +594,6 @@ Debug: Searching b/w (4781, 4782), found (4782, 1000)
 </code></p>
 
 <p>The whole thing took <code>6 ms</code>. Not bad, eh?</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Euler 24: Permutations, a long story]]></title>
-    <link href="http://agam.github.io/blog/2015/02/08/euler-24-permutations/"/>
-    <updated>2015-02-08T07:48:20+00:00</updated>
-    <id>http://agam.github.io/blog/2015/02/08/euler-24-permutations</id>
-    <content type="html"><![CDATA[<p>(The fact that this turned out to be a long story is <em>ridiculous</em>, but perhaps it&rsquo;ll be useful to someone else)</p>
-
-<p>The idea here is intuitive: given say <code>0</code>, <code>1</code> and <code>2</code>, we can immediately come up with the following orderings:</p>
-
-<p><code>
-012
-021
-102
-120
-201
-210
-</code></p>
-
-<p>The problem here is to find the millionth permutation of <code>0</code>, <code>1</code>, <code>2</code>, <code>3</code>, <code>4</code>, <code>5</code>, <code>6</code>, <code>7</code>, <code>8</code>, <code>9</code>.</p>
-
-<p>The first way is to <em>cheat</em> and work it out with pen-and-paper, upon which you soon realize that there are cycles for each set of numbers. E.g. for two numbers we would have 2 possible orderings (<code>01</code> and <code>10</code>), for three we have the ones shown above, etc, and this is because for <code>n</code> numbers we have <code>n!</code> combinations. Right, that&rsquo;s obvious. But the next step is to see that <em>within</em> each block of <code>n!</code>, there are <code>n</code> blocks of size <code>(n-1)!</code>, where the first digit is the same, which means we have a straightforward way of reducing the problem of size <code>n</code> to a problem of size <code>n-1</code>.</p>
-
-<p>As an example, to find the fifth permutation in the example above, we would see that it involves two cycles of two digits each, and then halfway through a single cycle. So we can come up with the first digit being <code>2</code>, and the next digit being the second of the remaining digits (i.e. <code>1</code>), and we&rsquo;re finally left with <code>0</code>.</p>
-
-<p>(<strong>Note</strong>: Argh &hellip; This sentence is wrong! But I didn&rsquo;t realize that until later)</p>
-
-<p>So I wrote the code for this, and I used Ocaml because I&rsquo;m a complete n00b at it.</p>
-
-<p>```ocaml
-let rec fact n =
-  if n = 0 then 1
-  else n * fact (n &ndash; 1)</p>
-
-<p>let perm_total = 1_000_000;;</p>
-
-<p>let get_perm total index =
-  let fact_index = fact index in
-  total / (fact_index), total mod fact_index</p>
-
-<p>let rec get_all_perms total index_size =
-  let rec get_next_perm total index_size perm_list =</p>
-
-<pre><code>if index_size = 0 then perm_list
-else match get_perm total index_size with
- | p, new_total -&gt; get_next_perm new_total (index_size - 1) (p :: perm_list)
-</code></pre>
-
-<p>  in List.rev (get_next_perm total index_size [])</p>
-
-<p>let rec digits_list n lst =
-  if n = 0 then (0 :: lst)
-  else digits_list (n &ndash; 1) (n :: lst)</p>
-
-<p>let remove_digit digit lst =
-  List.filter (fun x &ndash;> x &lt;> digit) lst</p>
-
-<p>let rec get_next_perm_digit perm_list digit_list pdlist =
-  if List.length perm_list = 0 then pdlist
-  else let p = List.hd perm_list in</p>
-
-<pre><code>   let d = List.nth digit_list p in
-   get_next_perm_digit (List.tl perm_list) (remove_digit d digit_list) (d :: pdlist)
-</code></pre>
-
-<p>let rec get_perm_digits perm_list =
-  let digits = digits_list (List.length perm_list) [] in
-  List.rev (get_next_perm_digit perm_list digits [])</p>
-
-<p>let euler24 = get_perm_digits (get_all_perms perm_total 9);;     <br/>
-```</p>
-
-<p>Yes, the names are terrible. Many of the started out as nested functions which I pulled into the top-level to test separately. Anyway, the point is &hellip; the answer was <strong>wrong</strong>.</p>
-
-<p>Ok, I thought, I must&rsquo;ve screwed up in the <em>Ocaml-ness</em> of my solution. So I rewrote it thusly:</p>
-
-<p>```lisp
-(defun fact (n)
-  (if (= n 1)</p>
-
-<pre><code>  1
-  (* n (fact (1- n)))))
-</code></pre>
-
-<p>(defparameter <em>total</em> 1000000)</p>
-
-<p>(defun get-perm (total index)
-  (let ((f (fact index)))</p>
-
-<pre><code>(truncate total f)))
-</code></pre>
-
-<p>(defun get-next-perm (total index-size perm-list)
-  (if (= index-size 0)</p>
-
-<pre><code>  (cons 0 perm-list)
-  (multiple-value-bind (p new_total)
-  (get-perm total index-size)
-(get-next-perm new_total (1- index-size) (cons p perm-list)))))
-</code></pre>
-
-<p>(defun get-all-perms (total index-size)
-  (reverse (get-next-perm total index-size &lsquo;())))</p>
-
-<p>(defun digits-list (n)
-  (loop for i from 0 to n</p>
-
-<pre><code>   collect i))
-</code></pre>
-
-<p>(defun get-next-perm-digit (perm-list digit-list p-d-list)
-  (if (null perm-list)</p>
-
-<pre><code>  p-d-list
-  (let* ((p (first perm-list))
-     (d (nth p digit-list)))
-(get-next-perm-digit (rest perm-list)
-             (remove d digit-list)
-             (cons d p-d-list)))))
-</code></pre>
-
-<p>(defun get-perm-digits (perm-list)
-  (let ((digits (digits-list (1- (length perm-list)))))</p>
-
-<pre><code>(reverse (get-next-perm-digit perm-list digits '()))))
-</code></pre>
-
-<p>(defun euler-24 ()
-  (get-perm-digits (get-all-perms <em>total</em> 9)))
-```</p>
-
-<p>The <em>same</em> answer popped out &mdash; which means I was successful at my translation &mdash; but it was still the wrong answer. In the initial few seconds of denial, I refreshed the Project Euler page and tried again. No luck.</p>
-
-<p>Now it was time for desperate measures, so I came up with this brute force solution:</p>
-
-<p>```lisp
-(defun list->number (list)
-  (reduce (lambda (x y) (+ (* x 10) y)) list))</p>
-
-<p>(defun number->list (n)
-  (do ((tempn n (floor (/ tempn 10)))</p>
-
-<pre><code>   (digits '() (cons (mod tempn 10) digits)))
-  ((= tempn 0) digits)))
-</code></pre>
-
-<p>(defun has-digits (n digit-list)
-  (let ((nlist (number->list n)))</p>
-
-<pre><code>(not (set-difference digit-list nlist))))
-</code></pre>
-
-<p>(defun brute-force-next-permutation (digit-list)
-  (let ((n (list->number digit-list)))</p>
-
-<pre><code>(do ((trynum (1+ n) (1+ trynum)))
-((has-digits trynum digit-list) (number-&gt;list trynum))
-  (format t "Trying ~A~%" trynum))))
-</code></pre>
-
-<p>```</p>
-
-<p>&hellip;. which wasn&rsquo;t <em>quite</em> right either, since it skipped the leading zero in our lists. This one seemed to work:</p>
-
-<p>```lisp</p>
-
-<p>(defun add-num (digit-list)
-  (let ((sum (1+ (first digit-list))))</p>
-
-<pre><code>(if (&lt; sum 10)
-(cons sum (rest digit-list))
-(cons (mod sum 10) (add-num (rest digit-list))))))
-</code></pre>
-
-<p>(defun next-number (digit-list)
-  (let ((revlist (reverse digit-list)))</p>
-
-<pre><code>(nreverse (add-num revlist))))
-</code></pre>
-
-<p>(defun brute-force-next-permutation (digit-list)
-  (do ((trynum (next-number digit-list) (next-number trynum)))</p>
-
-<pre><code>  ((not (set-difference digit-list trynum)) trynum)))
-</code></pre>
-
-<p>(defun brute-force-nth-permutation (digit-list n)
-  (do ((i 1 (1+ i))</p>
-
-<pre><code>   (trynum digit-list (brute-force-next-permutation trynum)))
-  ((= i n) trynum)))
-</code></pre>
-
-<p>```</p>
-
-<p>So I set that running with <code>(brute-force-nth-permutation '(0 1 2 3 4 5 6 7 8 9) 1000000)</code>, and it looked like it was clearly going to take a while.</p>
-
-<p>At this point I was really depressed, since I couldn&rsquo;t figure out <em>what</em> was wrong with the initial approach which was so <em>straightforward</em> &hellip; and then I realized that <strong>I was probably off by one</strong>.</p>
-
-<p>So I took the answer submitted earlier, and entered the <em>next</em> permutation. Nope. Ok, what about the <em>previous</em> one? That worked!</p>
-
-<p>(<strong>Note</strong>: To circle back to the &lsquo;trivial&rsquo; example at the top of the post: I didn&rsquo;t catch myself talking about the fifth permutation as being 0,1,2,3,4,5 &mdash; so I was really talking about the <em>sixth</em> permutation &hellip;)</p>
-
-<p>Later, the (inefficient) brute-force computation terminated in <code>1668</code> seconds, and happily, the answers matched. I tried the previous code with a small modification:</p>
-
-<p><code>lisp
-(defun euler-24 ()
-  (get-perm-digits (get-all-perms (1- *total*) 9)))
-</code></p>
-
-<p>&hellip; and it gave the same answer (and obviously, so did the Ocaml version). So a happy ending to this story, but a painful reminder of the fact that <strong>there are only two hard problems in computer science: naming, caching, and off-by-one errors.</strong></p>
 ]]></content>
   </entry>
   
