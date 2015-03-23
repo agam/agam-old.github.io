@@ -8,6 +8,8 @@ categories: projecteuler lisp
 
 Yet another _brute-force_ solution, pushing the line a bit at _1991 seconds_. But hey, it works, and was quick to write, so ...
 
+**Statutory Warning**: _spoilers ahead_
+
 ```lisp
 (defparameter *max-num-limit* 1000000000)
 (defparameter *all-numbers* (make-array (list *max-num-limit*) :element-type 'bit :initial-element 1))
