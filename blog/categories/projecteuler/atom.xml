@@ -4,7 +4,7 @@
   <title><![CDATA[Category: projecteuler | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/projecteuler/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-03-22T04:39:14+00:00</updated>
+  <updated>2015-03-23T01:18:37+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -14,11 +14,76 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Euler 42: Coded triangle numbers]]></title>
+    <link href="http://agam.github.io/blog/2015/03/23/euler-42-coded-triangle-numbers/"/>
+    <updated>2015-03-23T01:11:01+00:00</updated>
+    <id>http://agam.github.io/blog/2015/03/23/euler-42-coded-triangle-numbers</id>
+    <content type="html"><![CDATA[<p>Very straightforward, this one. And I don&rsquo;t need to feel bad that I did it the simple way. If you&rsquo;re wondering where <code>split-sequence-if</code> and <code>read-file</code> came from, the answer is <code>rutils</code>, which is a good general-purpose utility package, a sort of superset of <code>alexandria</code>, and just a <code>(ql:quickload 'rutils)</code> away. As before, the final answer is obtained by evaluating <code>(euler42)</code>.</p>
+
+<p><strong>Statutory Warning</strong>: <em>spoilers ahead</em></p>
+
+<p>```lisp
+;; If x = 0.5 * n * (n+1) is a triangle number, then there is an
+;; integral solution for n<sup>2</sup> + n &ndash; 2<em>x = 0.
+(defun quadratic-solution (a b c)
+  (let ((det (sqrt (&ndash; (</em> b b) (* 4 a c))))</p>
+
+<pre><code>    (denom (* 2 a)))
+(cons (/ (- (- b) det) denom)
+      (/ (+ (- b) det) denom))))
+</code></pre>
+
+<p>(defun positive-int (num)
+  (and (integerp num)</p>
+
+<pre><code>   (plusp num)))
+</code></pre>
+
+<p>(defun is-triangle-number (num)
+  (let ((soln (quadratic-solution 1 1 (* (&ndash; 2) num))))</p>
+
+<pre><code>(or (positive-int (car soln))
+    (positive-int (cdr soln)))))
+</code></pre>
+
+<p>(defun char->number (char)
+  (1+ (&ndash; (char-code char) (char-code #\A))))</p>
+
+<p>(defun is-triangle-word (word)
+  (let ((value (loop for char across word</p>
+
+<pre><code>              summing (char-&gt;number char))))
+(is-triangle-number value)))       
+</code></pre>
+
+<p>(defun un-quote (str)
+  (remove #\&ldquo; str))</p>
+
+<p>(defun euler42 ()
+  ;; Read in the file, split on the commas, remove the quotes
+  (let* ((file-text (read-file &ldquo;/home/agam/Downloads/p042_words.txt&rdquo;))</p>
+
+<pre><code>     (words-with-quotes (split-sequence-if
+                         (lambda (char) (eq char #\,))
+                         file-text))
+     (words (mapcar (lambda (w) (remove #\" w))
+                    words-with-quotes)))
+(loop for w in words count
+     (is-triangle-word w))))
+</code></pre>
+
+<p>```</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Euler 41: Pandigital primes]]></title>
     <link href="http://agam.github.io/blog/2015/03/22/euler-41-pandigital-primes/"/>
     <updated>2015-03-22T04:35:08+00:00</updated>
     <id>http://agam.github.io/blog/2015/03/22/euler-41-pandigital-primes</id>
     <content type="html"><![CDATA[<p>Yet another <em>brute-force</em> solution, pushing the line a bit at <em>1991 seconds</em>. But hey, it works, and was quick to write, so &hellip;</p>
+
+<p><strong>Statutory Warning</strong>: <em>spoilers ahead</em></p>
 
 <p>```lisp
 (defparameter <em>max-num-limit</em> 1000000000)
@@ -285,117 +350,6 @@ Found: 926718534 = 9267 * 2
 Found: 927318546 = 9273 * 2
 Found: 932718654 = 9327 * 2
 The largest one is &lt;redacted&gt;
-</code></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Euler 37: Truncatable Primes]]></title>
-    <link href="http://agam.github.io/blog/2015/03/13/euler-37-truncatable-primes/"/>
-    <updated>2015-03-13T07:04:08+00:00</updated>
-    <id>http://agam.github.io/blog/2015/03/13/euler-37-truncatable-primes</id>
-    <content type="html"><![CDATA[<p>I realize using <em>C++</em> is a bit like cheating since the initial motive of doing ProjectEuler was to explore a new <em>language</em>. But I reserve the right to &ldquo;revise&rdquo; that motive :P. Besides, I find it hard to overrule the part of myself that just wants to know the answer <em>now</em>, <em>quickly</em>.</p>
-
-<p><strong>Statutory Warning</strong>: <em>Spoilers ahead</em></p>
-
-<p>```c++
-static const int kMaxNumbers = 1000000;</p>
-
-<p>void filterPrimes(vector<bool>* numbers) {
-  for (int candidate = 2; candidate &lt; kMaxNumbers; ) {</p>
-
-<pre><code>int multiple = candidate * 2;
-while (multiple &lt; kMaxNumbers) {
-  numbers-&gt;at(multiple) = false;
-  multiple += candidate;
-}
-++candidate;
-while (candidate &lt; kMaxNumbers &amp;&amp; !numbers-&gt;at(candidate)) {
-  ++candidate;
-}
-if (candidate == kMaxNumbers) {
-  return;
-}
-</code></pre>
-
-<p>  }
-}</p>
-
-<p>int getNumber(const vector<int>&amp; digits, int start, int end) {
-  int num = 0;
-  for (int i = end; i >= start; &mdash;i) {</p>
-
-<pre><code>num = num * 10 + digits[i];
-</code></pre>
-
-<p>  }
-  return num;
-}</p>
-
-<p>bool isTruncatablePrime(int num, const vector<bool>&amp; primes) {
-  if (num == 2 || num == 3 || num == 5 || num == 7) {</p>
-
-<pre><code>return false;
-</code></pre>
-
-<p>  }
-  assert(primes.size() == kMaxNumbers);
-  vector<int> digits;
-  for (int t = num; t > 0; t /= 10) {</p>
-
-<pre><code>digits.push_back(t % 10);
-</code></pre>
-
-<p>  }
-  for (int i = 0; i &lt; digits.size(); ++i) {</p>
-
-<pre><code>int n1 = getNumber(digits, 0, i);
-int n2 = getNumber(digits, i, digits.size() - 1);
-if (!primes[n1] || !primes[n2]) {
-  return false;
-}
-</code></pre>
-
-<p>  }
-  return true;
-}</p>
-
-<p>int main() {
-  vector<bool> prime_candidates(kMaxNumbers, true);
-  prime_candidates[0] = false;
-  prime_candidates[1] = false;
-  filterPrimes(&amp;prime_candidates);
-  int sum_truncatables = 0;
-  for (int i = 13; i &lt; kMaxNumbers; ++i) {</p>
-
-<pre><code>if (prime_candidates[i]) {
-  if (isTruncatablePrime(i, prime_candidates)) {
-    std::cout &lt;&lt; "Debug: found " &lt;&lt; i &lt;&lt; std::endl;
-    sum_truncatables += i;
-  }
-}
-</code></pre>
-
-<p>  }
-  std::cout &lt;&lt; &ldquo;The sum is: &rdquo; &lt;&lt; sum_truncatables &lt;&lt; std::endl;
-}
-```</p>
-
-<p>which runs as</p>
-
-<p><code>sh
-Debug: found 23
-Debug: found 37
-Debug: found 53
-Debug: found 73
-Debug: found 313
-Debug: found 317
-Debug: found 373
-Debug: found 797
-Debug: found 3137
-Debug: found 3797
-Debug: found 739397
-The sum is: &lt;redacted&gt;
 </code></p>
 ]]></content>
   </entry>

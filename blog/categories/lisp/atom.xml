@@ -4,7 +4,7 @@
   <title><![CDATA[Category: lisp | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/lisp/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-03-22T04:39:14+00:00</updated>
+  <updated>2015-03-23T01:18:37+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -14,11 +14,76 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Euler 42: Coded triangle numbers]]></title>
+    <link href="http://agam.github.io/blog/2015/03/23/euler-42-coded-triangle-numbers/"/>
+    <updated>2015-03-23T01:11:01+00:00</updated>
+    <id>http://agam.github.io/blog/2015/03/23/euler-42-coded-triangle-numbers</id>
+    <content type="html"><![CDATA[<p>Very straightforward, this one. And I don&rsquo;t need to feel bad that I did it the simple way. If you&rsquo;re wondering where <code>split-sequence-if</code> and <code>read-file</code> came from, the answer is <code>rutils</code>, which is a good general-purpose utility package, a sort of superset of <code>alexandria</code>, and just a <code>(ql:quickload 'rutils)</code> away. As before, the final answer is obtained by evaluating <code>(euler42)</code>.</p>
+
+<p><strong>Statutory Warning</strong>: <em>spoilers ahead</em></p>
+
+<p>```lisp
+;; If x = 0.5 * n * (n+1) is a triangle number, then there is an
+;; integral solution for n<sup>2</sup> + n &ndash; 2<em>x = 0.
+(defun quadratic-solution (a b c)
+  (let ((det (sqrt (&ndash; (</em> b b) (* 4 a c))))</p>
+
+<pre><code>    (denom (* 2 a)))
+(cons (/ (- (- b) det) denom)
+      (/ (+ (- b) det) denom))))
+</code></pre>
+
+<p>(defun positive-int (num)
+  (and (integerp num)</p>
+
+<pre><code>   (plusp num)))
+</code></pre>
+
+<p>(defun is-triangle-number (num)
+  (let ((soln (quadratic-solution 1 1 (* (&ndash; 2) num))))</p>
+
+<pre><code>(or (positive-int (car soln))
+    (positive-int (cdr soln)))))
+</code></pre>
+
+<p>(defun char->number (char)
+  (1+ (&ndash; (char-code char) (char-code #\A))))</p>
+
+<p>(defun is-triangle-word (word)
+  (let ((value (loop for char across word</p>
+
+<pre><code>              summing (char-&gt;number char))))
+(is-triangle-number value)))       
+</code></pre>
+
+<p>(defun un-quote (str)
+  (remove #\&ldquo; str))</p>
+
+<p>(defun euler42 ()
+  ;; Read in the file, split on the commas, remove the quotes
+  (let* ((file-text (read-file &ldquo;/home/agam/Downloads/p042_words.txt&rdquo;))</p>
+
+<pre><code>     (words-with-quotes (split-sequence-if
+                         (lambda (char) (eq char #\,))
+                         file-text))
+     (words (mapcar (lambda (w) (remove #\" w))
+                    words-with-quotes)))
+(loop for w in words count
+     (is-triangle-word w))))
+</code></pre>
+
+<p>```</p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Euler 41: Pandigital primes]]></title>
     <link href="http://agam.github.io/blog/2015/03/22/euler-41-pandigital-primes/"/>
     <updated>2015-03-22T04:35:08+00:00</updated>
     <id>http://agam.github.io/blog/2015/03/22/euler-41-pandigital-primes</id>
     <content type="html"><![CDATA[<p>Yet another <em>brute-force</em> solution, pushing the line a bit at <em>1991 seconds</em>. But hey, it works, and was quick to write, so &hellip;</p>
+
+<p><strong>Statutory Warning</strong>: <em>spoilers ahead</em></p>
 
 <p>```lisp
 (defparameter <em>max-num-limit</em> 1000000000)
@@ -445,155 +510,6 @@ _ -&gt; 0
 <p>This gives the same answer (<code>euler26 10000</code>) in <code>7.5 seconds</code> (which is a 3000x speedup). Just to make sure you don&rsquo;t jump to that conclusion, it isn&rsquo;t a Haskell vs Lisp thing, it&rsquo;s just <em>calculating less stuff</em>, and doing it with <em>vectors instead of lists</em>.</p>
 
 <p>In particular, the first version was running for <em>12 hours</em> before I killed it out of disgust, and realized that instead of checking if the <code>length</code> of the list was greater than 0, I should do a <code>case</code> match instead since I only needed the first element. This made a <em>big</em> difference. Also, this is the first time I <em>didn&rsquo;t</em> have to rely on <code>Debug.Trace</code>, so I feel good about that :)</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Euler 25: Fibonacci Digits]]></title>
-    <link href="http://agam.github.io/blog/2015/02/10/euler-25-fibonacci-digits/"/>
-    <updated>2015-02-10T18:43:52+00:00</updated>
-    <id>http://agam.github.io/blog/2015/02/10/euler-25-fibonacci-digits</id>
-    <content type="html"><![CDATA[<p><strong>Statutory Warning</strong>: spoilers ahead</p>
-
-<p><em>Problem: find the first fibonacci number with 1000 digits</em></p>
-
-<p>First though: hah, I can get the Nth fibonacci number in O(1) time!</p>
-
-<p>```lisp
-(defun fib (n)
-  (let ((inv-sq-5 (/ 1 (sqrt 5)))</p>
-
-<pre><code>(phi (/ (1+ (sqrt 5)) 2)))
-(floor (+ 0.5 (* inv-sq-5 (expt phi n))))))
-</code></pre>
-
-<p>(defun digits (n)
-  (round (1+ (log n 10))))</p>
-
-<p>(defun log-fib-10 (n)
-  (let ((log-10 (log 10))</p>
-
-<pre><code>(log-phi (log (/ (1+ (sqrt 5)) 2)))
-(log-k (log (/ 1 (sqrt 5)))))
-(* log-10 (+ log-k (* n log-phi)))))
-</code></pre>
-
-<p>```</p>
-
-<p>Nope, floating point numbers don&rsquo;t go beyond 308 digits or so</p>
-
-<p><code>lisp
-CL-USER&gt; most-positive-double-float
-1.7976931348623157d308
-</code></p>
-
-<p>Perhaps there was a clever way to workaround this, but I wasn&rsquo;t feeling clever enough at the time. So, back to brute force.</p>
-
-<p>```lisp
-(defun fib (n)
-  (cond ((= n 0) 0)</p>
-
-<pre><code>((= n 1) 1)
-(t (+ (fib (- n 1)) (fib (- n 2))))))
-</code></pre>
-
-<p>```</p>
-
-<p>Well, this just takes <em>too long</em> (<code>(fib 40)</code> takes <code>3.883</code> seconds, and that has just 9 digits, so forget about anything bigger). Next step: memoization.</p>
-
-<p>```lisp
-(let ((memo-table (make-hash-table)))
-  (defun memo-fib (n)</p>
-
-<pre><code>(multiple-value-bind (hash-val exists) (gethash n memo-table)
-  (if exists
-  hash-val
-  (let ((new-val (cond ((= n 0) 0)
-                       ((= n 1) 1)
-                       (t (+ (memo-fib (- n 1)) (memo-fib (- n 2)))))))
-    (setf (gethash n memo-table) new-val)
-    new-val)))))
-</code></pre>
-
-<p>(defun digits-num (n)
-  (length (princ-to-string n)))
-```</p>
-
-<p>(yeah just to be even less clever, I get the digits by seeing the length of the string representation of the number &hellip; works)</p>
-
-<p><code>(memo-fib 40)</code> is instantaneous, so is <code>(memo-fib 1000)</code>, and <code>(memo-fib 10000)</code> takes <code>3 ms</code>, so this should do it.</p>
-
-<p>I used this to manually guess my way around and found the answer. Woohoo!</p>
-
-<p>But this last part felt a bit &hellip; dirty, so before quitting this problem, I decided to automate it this way:</p>
-
-<p>```lisp
-(defun bin-search-range (fn target)
-  (do<em> ((i 1 (</em> 2 i))</p>
-
-<pre><code>   (val (funcall fn 1) (funcall fn i)))
-   ((&gt;= val target) (values i (/ i 2)))
-(format t "Debug: Trying (~A, ~A)~%" i val)))
-</code></pre>
-
-<p>(defun bin-search (fn low high target)
-  (let* ((mid (round (/ (+ low high) 2)))</p>
-
-<pre><code> (mid-val (funcall fn mid)))
-(format t "Debug: Searching b/w (~A, ~A), found (~A, ~A)~%" low high mid mid-val)
-(cond ((= high mid) mid)
-  ((&gt;= mid-val target) (bin-search fn low mid target))
-  ((&lt; mid-val target) (bin-search fn mid high target)))))
-</code></pre>
-
-<p>(defun solve (fn target)
-  &ldquo;Two-phase search; first, exponentially increase argument until target is exceeded, then begin binary search with last argument&rdquo;
-  (multiple-value-bind (high low) (bin-search-range fn target)</p>
-
-<pre><code>(bin-search fn low high target)))
-</code></pre>
-
-<p>(defun target-function (n)
-  (digits-num (memo-fib n)))</p>
-
-<p>(defun euler-25 ()
-  (solve #&lsquo;target-function 1000))
-```</p>
-
-<p>Yes, it does work. I left in my original debug statements (BTW the initial version had not one but <em>two</em> off-by-one errors! I learn slowly &hellip;), so the working is illustrated as follows:</p>
-
-<p><code>lisp
-CL-USER&gt; (euler-25)
-Debug: Trying (1, 1)
-Debug: Trying (2, 1)
-Debug: Trying (4, 1)
-Debug: Trying (8, 2)
-Debug: Trying (16, 3)
-Debug: Trying (32, 7)
-Debug: Trying (64, 14)
-Debug: Trying (128, 27)
-Debug: Trying (256, 54)
-Debug: Trying (512, 107)
-Debug: Trying (1024, 214)
-Debug: Trying (2048, 428)
-Debug: Trying (4096, 856)
-Debug: Searching b/w (4096, 8192), found (6144, 1284)
-Debug: Searching b/w (4096, 6144), found (5120, 1070)
-Debug: Searching b/w (4096, 5120), found (4608, 963)
-Debug: Searching b/w (4608, 5120), found (4864, 1017)
-Debug: Searching b/w (4608, 4864), found (4736, 990)
-Debug: Searching b/w (4736, 4864), found (4800, 1003)
-Debug: Searching b/w (4736, 4800), found (4768, 997)
-Debug: Searching b/w (4768, 4800), found (4784, 1000)
-Debug: Searching b/w (4768, 4784), found (4776, 998)
-Debug: Searching b/w (4776, 4784), found (4780, 999)
-Debug: Searching b/w (4780, 4784), found (4782, 1000)
-Debug: Searching b/w (4780, 4782), found (4781, 999)
-Debug: Searching b/w (4781, 4782), found (4782, 1000)
-4782
-</code></p>
-
-<p>The whole thing took <code>6 ms</code>. Not bad, eh?</p>
 ]]></content>
   </entry>
   
