@@ -135,9 +135,6 @@
 <span class='line-number'>33</span>
 <span class='line-number'>34</span>
 <span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
 </pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="c1">;; If x = 0.5 * n * (n+1) is a triangle number, then there is an</span>
 </span><span class='line'><span class="c1">;; integral solution for n^2 + n - 2*x = 0.</span>
 </span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">quadratic-solution</span> <span class="p">(</span><span class="nv">a</span> <span class="nv">b</span> <span class="nv">c</span><span class="p">)</span>
@@ -162,9 +159,6 @@
 </span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">value</span> <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nb">char</span> <span class="nv">across</span> <span class="nv">word</span>
 </span><span class='line'>                  <span class="nv">summing</span> <span class="p">(</span><span class="nv">char-&gt;number</span> <span class="nb">char</span><span class="p">))))</span>
 </span><span class='line'>    <span class="p">(</span><span class="nv">is-triangle-number</span> <span class="nv">value</span><span class="p">)))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">un-quote</span> <span class="p">(</span><span class="nv">str</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">remove</span> <span class="sc">#\&quot;</span> <span class="nv">str</span><span class="p">))</span>
 </span><span class='line'>
 </span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">euler42</span> <span class="p">()</span>
 </span><span class='line'>  <span class="c1">;; Read in the file, split on the commas, remove the quotes</span>

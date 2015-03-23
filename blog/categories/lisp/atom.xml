@@ -4,7 +4,7 @@
   <title><![CDATA[Category: lisp | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/lisp/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-03-23T01:18:37+00:00</updated>
+  <updated>2015-03-23T01:27:35+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -55,9 +55,6 @@
 <pre><code>              summing (char-&gt;number char))))
 (is-triangle-number value)))       
 </code></pre>
-
-<p>(defun un-quote (str)
-  (remove #\&ldquo; str))</p>
 
 <p>(defun euler42 ()
   ;; Read in the file, split on the commas, remove the quotes
