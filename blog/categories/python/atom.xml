@@ -4,7 +4,7 @@
   <title><![CDATA[Category: python | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/python/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-03-23T01:27:35+00:00</updated>
+  <updated>2015-03-25T07:02:05+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,21 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[A second look at Python]]></title>
+    <link href="http://agam.github.io/blog/2015/03/25/a-second-look-at-python/"/>
+    <updated>2015-03-25T06:53:44+00:00</updated>
+    <id>http://agam.github.io/blog/2015/03/25/a-second-look-at-python</id>
+    <content type="html"><![CDATA[<p>The first time I <em>used</em> Python for something (it was a silly little script, IIRC) was about 12 years ago. I eventually gave it up in shock and horror the first time I encountered a critical error that turned out to be a <em>syntax error</em>.</p>
+
+<p>Over the years I&rsquo;ve had to mess with Python code on and off but it&rsquo;s always been something I&rsquo;ve done reluctantly, under the lingering effects of PTSD from the &ldquo;I can&rsquo;t tell how this program might fail&rdquo; experience.</p>
+
+<p>Recently I had to work with <code>IPython</code> and &hellip; it didn&rsquo;t seem so bad. So I&rsquo;ve decided to wipe the slate clean in its favor and re-evaluate it on its own terms. So much is different over the last decade that it seems like a good idea to start afresh anyway.</p>
+
+<p>The other place to consider the language is in my constant &ldquo;what language is best for beginners?&rdquo; contest &mdash; until now it was basically Go vs Racket, but I might include Python as a contender too. We&rsquo;ll see &hellip;</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Appengine transition from Python to Go]]></title>

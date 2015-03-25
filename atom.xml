@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-03-23T01:27:35+00:00</updated>
+  <updated>2015-03-25T07:02:05+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,21 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[A second look at Python]]></title>
+    <link href="http://agam.github.io/blog/2015/03/25/a-second-look-at-python/"/>
+    <updated>2015-03-25T06:53:44+00:00</updated>
+    <id>http://agam.github.io/blog/2015/03/25/a-second-look-at-python</id>
+    <content type="html"><![CDATA[<p>The first time I <em>used</em> Python for something (it was a silly little script, IIRC) was about 12 years ago. I eventually gave it up in shock and horror the first time I encountered a critical error that turned out to be a <em>syntax error</em>.</p>
+
+<p>Over the years I&rsquo;ve had to mess with Python code on and off but it&rsquo;s always been something I&rsquo;ve done reluctantly, under the lingering effects of PTSD from the &ldquo;I can&rsquo;t tell how this program might fail&rdquo; experience.</p>
+
+<p>Recently I had to work with <code>IPython</code> and &hellip; it didn&rsquo;t seem so bad. So I&rsquo;ve decided to wipe the slate clean in its favor and re-evaluate it on its own terms. So much is different over the last decade that it seems like a good idea to start afresh anyway.</p>
+
+<p>The other place to consider the language is in my constant &ldquo;what language is best for beginners?&rdquo; contest &mdash; until now it was basically Go vs Racket, but I might include Python as a contender too. We&rsquo;ll see &hellip;</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Euler 42: Coded triangle numbers]]></title>
@@ -2270,223 +2285,6 @@
 <p>This gives the same answer (<code>euler26 10000</code>) in <code>7.5 seconds</code> (which is a 3000x speedup). Just to make sure you don&rsquo;t jump to that conclusion, it isn&rsquo;t a Haskell vs Lisp thing, it&rsquo;s just <em>calculating less stuff</em>, and doing it with <em>vectors instead of lists</em>.</p>
 
 <p>In particular, the first version was running for <em>12 hours</em> before I killed it out of disgust, and realized that instead of checking if the <code>length</code> of the list was greater than 0, I should do a <code>case</code> match instead since I only needed the first element. This made a <em>big</em> difference. Also, this is the first time I <em>didn&rsquo;t</em> have to rely on <code>Debug.Trace</code>, so I feel good about that :)</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Euler 25: Fibonacci Digits]]></title>
-    <link href="http://agam.github.io/blog/2015/02/10/euler-25-fibonacci-digits/"/>
-    <updated>2015-02-10T18:43:52+00:00</updated>
-    <id>http://agam.github.io/blog/2015/02/10/euler-25-fibonacci-digits</id>
-    <content type="html"><![CDATA[<p><strong>Statutory Warning</strong>: spoilers ahead</p>
-
-<p><em>Problem: find the first fibonacci number with 1000 digits</em></p>
-
-<p>First though: hah, I can get the Nth fibonacci number in O(1) time!</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">fib</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">inv-sq-5</span> <span class="p">(</span><span class="nb">/</span> <span class="mi">1</span> <span class="p">(</span><span class="nb">sqrt</span> <span class="mi">5</span><span class="p">)))</span>
-</span><span class='line'>  <span class="p">(</span><span class="nv">phi</span> <span class="p">(</span><span class="nb">/</span> <span class="p">(</span><span class="nb">1+</span> <span class="p">(</span><span class="nb">sqrt</span> <span class="mi">5</span><span class="p">))</span> <span class="mi">2</span><span class="p">)))</span>
-</span><span class='line'>    <span class="p">(</span><span class="nb">floor</span> <span class="p">(</span><span class="nb">+</span> <span class="mf">0.5</span> <span class="p">(</span><span class="nb">*</span> <span class="nv">inv-sq-5</span> <span class="p">(</span><span class="nb">expt</span> <span class="nv">phi</span> <span class="nv">n</span><span class="p">))))))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">digits</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">round</span> <span class="p">(</span><span class="nb">1+</span> <span class="p">(</span><span class="nb">log</span> <span class="nv">n</span> <span class="mi">10</span><span class="p">))))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">log-fib-10</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">log-10</span> <span class="p">(</span><span class="nb">log</span> <span class="mi">10</span><span class="p">))</span>
-</span><span class='line'>  <span class="p">(</span><span class="nv">log-phi</span> <span class="p">(</span><span class="nb">log</span> <span class="p">(</span><span class="nb">/</span> <span class="p">(</span><span class="nb">1+</span> <span class="p">(</span><span class="nb">sqrt</span> <span class="mi">5</span><span class="p">))</span> <span class="mi">2</span><span class="p">)))</span>
-</span><span class='line'>  <span class="p">(</span><span class="nv">log-k</span> <span class="p">(</span><span class="nb">log</span> <span class="p">(</span><span class="nb">/</span> <span class="mi">1</span> <span class="p">(</span><span class="nb">sqrt</span> <span class="mi">5</span><span class="p">)))))</span>
-</span><span class='line'>    <span class="p">(</span><span class="nb">*</span> <span class="nv">log-10</span> <span class="p">(</span><span class="nb">+</span> <span class="nv">log-k</span> <span class="p">(</span><span class="nb">*</span> <span class="nv">n</span> <span class="nv">log-phi</span><span class="p">)))))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Nope, floating point numbers don&rsquo;t go beyond 308 digits or so</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="nv">CL-USER&gt;</span> <span class="nv">most-positive-double-float</span>
-</span><span class='line'><span class="mf">1.7976931348623157d308</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Perhaps there was a clever way to workaround this, but I wasn&rsquo;t feeling clever enough at the time. So, back to brute force.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">fib</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">cond</span> <span class="p">((</span><span class="nb">=</span> <span class="nv">n</span> <span class="mi">0</span><span class="p">)</span> <span class="mi">0</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">((</span><span class="nb">=</span> <span class="nv">n</span> <span class="mi">1</span><span class="p">)</span> <span class="mi">1</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="no">t</span> <span class="p">(</span><span class="nb">+</span> <span class="p">(</span><span class="nv">fib</span> <span class="p">(</span><span class="nb">-</span> <span class="nv">n</span> <span class="mi">1</span><span class="p">))</span> <span class="p">(</span><span class="nv">fib</span> <span class="p">(</span><span class="nb">-</span> <span class="nv">n</span> <span class="mi">2</span><span class="p">))))))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Well, this just takes <em>too long</em> (<code>(fib 40)</code> takes <code>3.883</code> seconds, and that has just 9 digits, so forget about anything bigger). Next step: memoization.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">memo-table</span> <span class="p">(</span><span class="nb">make-hash-table</span><span class="p">)))</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">defun</span> <span class="nv">memo-fib</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">(</span><span class="nb">multiple-value-bind</span> <span class="p">(</span><span class="nv">hash-val</span> <span class="nv">exists</span><span class="p">)</span> <span class="p">(</span><span class="nb">gethash</span> <span class="nv">n</span> <span class="nv">memo-table</span><span class="p">)</span>
-</span><span class='line'>      <span class="p">(</span><span class="k">if</span> <span class="nv">exists</span>
-</span><span class='line'>    <span class="nv">hash-val</span>
-</span><span class='line'>    <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">new-val</span> <span class="p">(</span><span class="nb">cond</span> <span class="p">((</span><span class="nb">=</span> <span class="nv">n</span> <span class="mi">0</span><span class="p">)</span> <span class="mi">0</span><span class="p">)</span>
-</span><span class='line'>                         <span class="p">((</span><span class="nb">=</span> <span class="nv">n</span> <span class="mi">1</span><span class="p">)</span> <span class="mi">1</span><span class="p">)</span>
-</span><span class='line'>                         <span class="p">(</span><span class="no">t</span> <span class="p">(</span><span class="nb">+</span> <span class="p">(</span><span class="nv">memo-fib</span> <span class="p">(</span><span class="nb">-</span> <span class="nv">n</span> <span class="mi">1</span><span class="p">))</span> <span class="p">(</span><span class="nv">memo-fib</span> <span class="p">(</span><span class="nb">-</span> <span class="nv">n</span> <span class="mi">2</span><span class="p">)))))))</span>
-</span><span class='line'>      <span class="p">(</span><span class="nb">setf</span> <span class="p">(</span><span class="nb">gethash</span> <span class="nv">n</span> <span class="nv">memo-table</span><span class="p">)</span> <span class="nv">new-val</span><span class="p">)</span>
-</span><span class='line'>      <span class="nv">new-val</span><span class="p">)))))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">digits-num</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">length</span> <span class="p">(</span><span class="nb">princ-to-string</span> <span class="nv">n</span><span class="p">)))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>(yeah just to be even less clever, I get the digits by seeing the length of the string representation of the number &hellip; works)</p>
-
-<p><code>(memo-fib 40)</code> is instantaneous, so is <code>(memo-fib 1000)</code>, and <code>(memo-fib 10000)</code> takes <code>3 ms</code>, so this should do it.</p>
-
-<p>I used this to manually guess my way around and found the answer. Woohoo!</p>
-
-<p>But this last part felt a bit &hellip; dirty, so before quitting this problem, I decided to automate it this way:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">bin-search-range</span> <span class="p">(</span><span class="nv">fn</span> <span class="nv">target</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">do*</span> <span class="p">((</span><span class="nv">i</span> <span class="mi">1</span> <span class="p">(</span><span class="nb">*</span> <span class="mi">2</span> <span class="nv">i</span><span class="p">))</span>
-</span><span class='line'>       <span class="p">(</span><span class="nv">val</span> <span class="p">(</span><span class="nb">funcall</span> <span class="nv">fn</span> <span class="mi">1</span><span class="p">)</span> <span class="p">(</span><span class="nb">funcall</span> <span class="nv">fn</span> <span class="nv">i</span><span class="p">)))</span>
-</span><span class='line'>       <span class="p">((</span><span class="nb">&gt;=</span> <span class="nv">val</span> <span class="nv">target</span><span class="p">)</span> <span class="p">(</span><span class="nb">values</span> <span class="nv">i</span> <span class="p">(</span><span class="nb">/</span> <span class="nv">i</span> <span class="mi">2</span><span class="p">)))</span>
-</span><span class='line'>    <span class="p">(</span><span class="nb">format</span> <span class="no">t</span> <span class="s">&quot;Debug: Trying (~A, ~A)~%&quot;</span> <span class="nv">i</span> <span class="nv">val</span><span class="p">)))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">bin-search</span> <span class="p">(</span><span class="nv">fn</span> <span class="nv">low</span> <span class="nv">high</span> <span class="nv">target</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">let*</span> <span class="p">((</span><span class="nv">mid</span> <span class="p">(</span><span class="nb">round</span> <span class="p">(</span><span class="nb">/</span> <span class="p">(</span><span class="nb">+</span> <span class="nv">low</span> <span class="nv">high</span><span class="p">)</span> <span class="mi">2</span><span class="p">)))</span>
-</span><span class='line'>   <span class="p">(</span><span class="nv">mid-val</span> <span class="p">(</span><span class="nb">funcall</span> <span class="nv">fn</span> <span class="nv">mid</span><span class="p">)))</span>
-</span><span class='line'>    <span class="p">(</span><span class="nb">format</span> <span class="no">t</span> <span class="s">&quot;Debug: Searching b/w (~A, ~A), found (~A, ~A)~%&quot;</span> <span class="nv">low</span> <span class="nv">high</span> <span class="nv">mid</span> <span class="nv">mid-val</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">(</span><span class="nb">cond</span> <span class="p">((</span><span class="nb">=</span> <span class="nv">high</span> <span class="nv">mid</span><span class="p">)</span> <span class="nv">mid</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">((</span><span class="nb">&gt;=</span> <span class="nv">mid-val</span> <span class="nv">target</span><span class="p">)</span> <span class="p">(</span><span class="nv">bin-search</span> <span class="nv">fn</span> <span class="nv">low</span> <span class="nv">mid</span> <span class="nv">target</span><span class="p">))</span>
-</span><span class='line'>    <span class="p">((</span><span class="nb">&lt;</span> <span class="nv">mid-val</span> <span class="nv">target</span><span class="p">)</span> <span class="p">(</span><span class="nv">bin-search</span> <span class="nv">fn</span> <span class="nv">mid</span> <span class="nv">high</span> <span class="nv">target</span><span class="p">)))))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">solve</span> <span class="p">(</span><span class="nv">fn</span> <span class="nv">target</span><span class="p">)</span>
-</span><span class='line'>  <span class="s">&quot;Two-phase search; first, exponentially increase argument until target is exceeded, then begin binary search with last argument&quot;</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">multiple-value-bind</span> <span class="p">(</span><span class="nv">high</span> <span class="nv">low</span><span class="p">)</span> <span class="p">(</span><span class="nv">bin-search-range</span> <span class="nv">fn</span> <span class="nv">target</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">(</span><span class="nv">bin-search</span> <span class="nv">fn</span> <span class="nv">low</span> <span class="nv">high</span> <span class="nv">target</span><span class="p">)))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">target-function</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nv">digits-num</span> <span class="p">(</span><span class="nv">memo-fib</span> <span class="nv">n</span><span class="p">)))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">euler-25</span> <span class="p">()</span>
-</span><span class='line'>  <span class="p">(</span><span class="nv">solve</span> <span class="nf">#&#39;</span><span class="nv">target-function</span> <span class="mi">1000</span><span class="p">))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Yes, it does work. I left in my original debug statements (BTW the initial version had not one but <em>two</em> off-by-one errors! I learn slowly &hellip;), so the working is illustrated as follows:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="nv">CL-USER&gt;</span> <span class="p">(</span><span class="nv">euler-25</span><span class="p">)</span>
-</span><span class='line'><span class="nv">Debug:</span> <span class="nv">Trying</span> <span class="p">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">1</span><span class="p">)</span>
-</span><span class='line'><span class="nv">Debug:</span> <span class="nv">Trying</span> <span class="p">(</span><span class="mi">2</span><span class="o">,</span> <span class="mi">1</span><span class="p">)</span>
-</span><span class='line'><span class="nv">Debug:</span> <span class="nv">Trying</span> <span class="p">(</span><span class="mi">4</span><span class="o">,</span> <span class="mi">1</span><span class="p">)</span>
-</span><span class='line'><span class="nv">Debug:</span> <span class="nv">Trying</span> <span class="p">(</span><span class="mi">8</span><span class="o">,</span> <span class="mi">2</span><span class="p">)</span>
-</span><span class='line'><span class="nv">Debug:</span> <span class="nv">Trying</span> <span class="p">(</span><span class="mi">16</span><span class="o">,</span> <span class="mi">3</span><span class="p">)</span>
-</span><span class='line'><span class="nv">Debug:</span> <span class="nv">Trying</span> <span class="p">(</span><span class="mi">32</span><span class="o">,</span> <span class="mi">7</span><span class="p">)</span>
-</span><span class='line'><span class="nv">Debug:</span> <span class="nv">Trying</span> <span class="p">(</span><span class="mi">64</span><span class="o">,</span> <span class="mi">14</span><span class="p">)</span>
-</span><span class='line'><span class="nv">Debug:</span> <span class="nv">Trying</span> <span class="p">(</span><span class="mi">128</span><span class="o">,</span> <span class="mi">27</span><span class="p">)</span>
-</span><span class='line'><span class="nv">Debug:</span> <span class="nv">Trying</span> <span class="p">(</span><span class="mi">256</span><span class="o">,</span> <span class="mi">54</span><span class="p">)</span>
-</span><span class='line'><span class="nv">Debug:</span> <span class="nv">Trying</span> <span class="p">(</span><span class="mi">512</span><span class="o">,</span> <span class="mi">107</span><span class="p">)</span>
-</span><span class='line'><span class="nv">Debug:</span> <span class="nv">Trying</span> <span class="p">(</span><span class="mi">1024</span><span class="o">,</span> <span class="mi">214</span><span class="p">)</span>
-</span><span class='line'><span class="nv">Debug:</span> <span class="nv">Trying</span> <span class="p">(</span><span class="mi">2048</span><span class="o">,</span> <span class="mi">428</span><span class="p">)</span>
-</span><span class='line'><span class="nv">Debug:</span> <span class="nv">Trying</span> <span class="p">(</span><span class="mi">4096</span><span class="o">,</span> <span class="mi">856</span><span class="p">)</span>
-</span><span class='line'><span class="nv">Debug:</span> <span class="nv">Searching</span> <span class="nv">b/w</span> <span class="p">(</span><span class="mi">4096</span><span class="o">,</span> <span class="mi">8192</span><span class="p">)</span><span class="o">,</span> <span class="nv">found</span> <span class="p">(</span><span class="mi">6144</span><span class="o">,</span> <span class="mi">1284</span><span class="p">)</span>
-</span><span class='line'><span class="nv">Debug:</span> <span class="nv">Searching</span> <span class="nv">b/w</span> <span class="p">(</span><span class="mi">4096</span><span class="o">,</span> <span class="mi">6144</span><span class="p">)</span><span class="o">,</span> <span class="nv">found</span> <span class="p">(</span><span class="mi">5120</span><span class="o">,</span> <span class="mi">1070</span><span class="p">)</span>
-</span><span class='line'><span class="nv">Debug:</span> <span class="nv">Searching</span> <span class="nv">b/w</span> <span class="p">(</span><span class="mi">4096</span><span class="o">,</span> <span class="mi">5120</span><span class="p">)</span><span class="o">,</span> <span class="nv">found</span> <span class="p">(</span><span class="mi">4608</span><span class="o">,</span> <span class="mi">963</span><span class="p">)</span>
-</span><span class='line'><span class="nv">Debug:</span> <span class="nv">Searching</span> <span class="nv">b/w</span> <span class="p">(</span><span class="mi">4608</span><span class="o">,</span> <span class="mi">5120</span><span class="p">)</span><span class="o">,</span> <span class="nv">found</span> <span class="p">(</span><span class="mi">4864</span><span class="o">,</span> <span class="mi">1017</span><span class="p">)</span>
-</span><span class='line'><span class="nv">Debug:</span> <span class="nv">Searching</span> <span class="nv">b/w</span> <span class="p">(</span><span class="mi">4608</span><span class="o">,</span> <span class="mi">4864</span><span class="p">)</span><span class="o">,</span> <span class="nv">found</span> <span class="p">(</span><span class="mi">4736</span><span class="o">,</span> <span class="mi">990</span><span class="p">)</span>
-</span><span class='line'><span class="nv">Debug:</span> <span class="nv">Searching</span> <span class="nv">b/w</span> <span class="p">(</span><span class="mi">4736</span><span class="o">,</span> <span class="mi">4864</span><span class="p">)</span><span class="o">,</span> <span class="nv">found</span> <span class="p">(</span><span class="mi">4800</span><span class="o">,</span> <span class="mi">1003</span><span class="p">)</span>
-</span><span class='line'><span class="nv">Debug:</span> <span class="nv">Searching</span> <span class="nv">b/w</span> <span class="p">(</span><span class="mi">4736</span><span class="o">,</span> <span class="mi">4800</span><span class="p">)</span><span class="o">,</span> <span class="nv">found</span> <span class="p">(</span><span class="mi">4768</span><span class="o">,</span> <span class="mi">997</span><span class="p">)</span>
-</span><span class='line'><span class="nv">Debug:</span> <span class="nv">Searching</span> <span class="nv">b/w</span> <span class="p">(</span><span class="mi">4768</span><span class="o">,</span> <span class="mi">4800</span><span class="p">)</span><span class="o">,</span> <span class="nv">found</span> <span class="p">(</span><span class="mi">4784</span><span class="o">,</span> <span class="mi">1000</span><span class="p">)</span>
-</span><span class='line'><span class="nv">Debug:</span> <span class="nv">Searching</span> <span class="nv">b/w</span> <span class="p">(</span><span class="mi">4768</span><span class="o">,</span> <span class="mi">4784</span><span class="p">)</span><span class="o">,</span> <span class="nv">found</span> <span class="p">(</span><span class="mi">4776</span><span class="o">,</span> <span class="mi">998</span><span class="p">)</span>
-</span><span class='line'><span class="nv">Debug:</span> <span class="nv">Searching</span> <span class="nv">b/w</span> <span class="p">(</span><span class="mi">4776</span><span class="o">,</span> <span class="mi">4784</span><span class="p">)</span><span class="o">,</span> <span class="nv">found</span> <span class="p">(</span><span class="mi">4780</span><span class="o">,</span> <span class="mi">999</span><span class="p">)</span>
-</span><span class='line'><span class="nv">Debug:</span> <span class="nv">Searching</span> <span class="nv">b/w</span> <span class="p">(</span><span class="mi">4780</span><span class="o">,</span> <span class="mi">4784</span><span class="p">)</span><span class="o">,</span> <span class="nv">found</span> <span class="p">(</span><span class="mi">4782</span><span class="o">,</span> <span class="mi">1000</span><span class="p">)</span>
-</span><span class='line'><span class="nv">Debug:</span> <span class="nv">Searching</span> <span class="nv">b/w</span> <span class="p">(</span><span class="mi">4780</span><span class="o">,</span> <span class="mi">4782</span><span class="p">)</span><span class="o">,</span> <span class="nv">found</span> <span class="p">(</span><span class="mi">4781</span><span class="o">,</span> <span class="mi">999</span><span class="p">)</span>
-</span><span class='line'><span class="nv">Debug:</span> <span class="nv">Searching</span> <span class="nv">b/w</span> <span class="p">(</span><span class="mi">4781</span><span class="o">,</span> <span class="mi">4782</span><span class="p">)</span><span class="o">,</span> <span class="nv">found</span> <span class="p">(</span><span class="mi">4782</span><span class="o">,</span> <span class="mi">1000</span><span class="p">)</span>
-</span><span class='line'><span class="mi">4782</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The whole thing took <code>6 ms</code>. Not bad, eh?</p>
 ]]></content>
   </entry>
   
