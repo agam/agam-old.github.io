@@ -1,0 +1,293 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Euler 42: Pandigitals with sub-string divisibility - Agam's Mashed-Up Pome</title>
+	<meta name="author" content="Agam">
+
+	
+	<meta name="description" content="These brute force solutions are getting a bit worrying, but here is another one. (I keep promising myself to get out of my comfort zone, but ( &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Agam's Mashed-Up Pome" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script async="true" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+
+</head>
+
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">Agam's Mashed-Up Pome</a></h1>
+<!-- DebugAgam: Uncomment if necessary!
+<nav id="main-nav"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:agam.github.io">
+			</form>
+		</div>
+	</div>
+</nav>
+-->
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		<a class="google" href="https://plus.google.com/+AgamBrahma?rel=author" title="Google+">Google+</a>
+		
+		
+		<a class="twitter" href="http://twitter.com/agambrahma" title="Twitter">Twitter</a>
+		
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+    
+	</div>
+        <!-- DebugAgam: uncomment if necessary!
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:agam.github.io">
+	</form>
+        -->
+</nav>
+
+</header>
+	
+		
+	
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">Euler 42: Pandigitals With Sub-string Divisibility</h2>
+	<div class="entry-content"><p>These brute force solutions are getting a bit worrying, but here is another one. (I keep promising myself to get out of my comfort zone, but (<em>unfortunately!</em>) code like this is too easy to write).</p>
+
+<p><strong>Statutory Warning</strong>: <em>Spoilers ahead</em></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="c1">;; For all 0-9 pandigital numbers, find the ones which have successive</span>
+</span><span class='line'><span class="c1">;; substrings of length 3 diisible by 2,3,...,17.</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*prime-divisors*</span> <span class="o">#(</span><span class="mi">17</span> <span class="mi">13</span> <span class="mi">11</span> <span class="mi">7</span> <span class="mi">5</span> <span class="mi">3</span> <span class="mi">2</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">;; A number is 0-9 pandigital if it (a) is 10 digits long, and (b) has every digit from 0-9</span>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">is-pandigital</span> <span class="p">(</span><span class="nv">num</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">declare</span> <span class="p">(</span><span class="k">type</span> <span class="kt">fixnum</span> <span class="nv">num</span><span class="p">))</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">digits-seen</span> <span class="p">(</span><span class="nb">make-array</span> <span class="mi">10</span> <span class="ss">:element-type</span> <span class="ss">&#39;bit</span> <span class="ss">:initial-element</span> <span class="mi">0</span><span class="p">)))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nb">do*</span> <span class="p">((</span><span class="nv">n</span> <span class="nv">num</span> <span class="p">(</span><span class="nb">floor</span> <span class="p">(</span><span class="nb">/</span> <span class="nv">n</span> <span class="mi">10</span><span class="p">)))</span>
+</span><span class='line'>          <span class="p">(</span><span class="nv">d</span> <span class="p">(</span><span class="nb">mod</span> <span class="nv">n</span> <span class="mi">10</span><span class="p">)</span> <span class="p">(</span><span class="nb">mod</span> <span class="nv">n</span> <span class="mi">10</span><span class="p">))</span>
+</span><span class='line'>          <span class="p">(</span><span class="nv">num-digits</span> <span class="mi">0</span> <span class="p">(</span><span class="nb">1+</span> <span class="nv">num-digits</span><span class="p">)))</span>
+</span><span class='line'>         <span class="p">((</span><span class="nb">=</span> <span class="nv">n</span> <span class="mi">0</span><span class="p">)</span> <span class="p">(</span><span class="nb">and</span> <span class="p">(</span><span class="nb">=</span> <span class="nv">num-digits</span> <span class="mi">10</span><span class="p">)</span>
+</span><span class='line'>                       <span class="p">(</span><span class="nb">every</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">x</span><span class="p">)</span> <span class="p">(</span><span class="nb">=</span> <span class="nv">x</span> <span class="mi">1</span><span class="p">))</span> <span class="nv">digits-seen</span><span class="p">)))</span>
+</span><span class='line'>      <span class="p">(</span><span class="nb">setf</span> <span class="p">(</span><span class="nb">bit</span> <span class="nv">digits-seen</span> <span class="nv">d</span><span class="p">)</span> <span class="mi">1</span><span class="p">))))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">check-divisibility</span> <span class="p">(</span><span class="nv">num</span> <span class="nv">div-index</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">=</span> <span class="mi">0</span> <span class="p">(</span><span class="nb">mod</span> <span class="nv">num</span> <span class="p">(</span><span class="nb">aref</span> <span class="vg">*prime-divisors*</span> <span class="nv">div-index</span><span class="p">))))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">get-three-digit-num</span> <span class="p">(</span><span class="nv">num</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">ones</span> <span class="p">(</span><span class="nb">mod</span> <span class="nv">num</span> <span class="mi">10</span><span class="p">))</span>
+</span><span class='line'>        <span class="p">(</span><span class="nv">tens</span> <span class="p">(</span><span class="nb">mod</span> <span class="p">(</span><span class="nb">floor</span> <span class="p">(</span><span class="nb">/</span> <span class="nv">num</span> <span class="mi">10</span><span class="p">))</span> <span class="mi">10</span><span class="p">))</span>
+</span><span class='line'>        <span class="p">(</span><span class="nv">hundreds</span> <span class="p">(</span><span class="nb">mod</span> <span class="p">(</span><span class="nb">floor</span> <span class="p">(</span><span class="nb">/</span> <span class="nv">num</span> <span class="mi">100</span><span class="p">))</span> <span class="mi">10</span><span class="p">)))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nb">+</span> <span class="nv">ones</span>
+</span><span class='line'>       <span class="p">(</span><span class="nb">*</span> <span class="mi">10</span> <span class="nv">tens</span><span class="p">)</span>
+</span><span class='line'>       <span class="p">(</span><span class="nb">*</span> <span class="mi">100</span> <span class="nv">hundreds</span><span class="p">))))</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">;; Go backwards in groups of three digits and check divisibility</span>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">has-divisible-substrings</span> <span class="p">(</span><span class="nv">num</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">do*</span> <span class="p">((</span><span class="nv">n</span> <span class="nv">num</span> <span class="p">(</span><span class="nb">floor</span> <span class="p">(</span><span class="nb">/</span> <span class="nv">n</span> <span class="mi">10</span><span class="p">)))</span>
+</span><span class='line'>        <span class="p">(</span><span class="nv">div-index</span> <span class="mi">0</span> <span class="p">(</span><span class="nb">1+</span> <span class="nv">div-index</span><span class="p">))</span>
+</span><span class='line'>        <span class="p">(</span><span class="nv">dividend</span> <span class="p">(</span><span class="nv">get-three-digit-num</span> <span class="nv">n</span><span class="p">)</span> <span class="p">(</span><span class="nv">get-three-digit-num</span> <span class="nv">n</span><span class="p">))</span>
+</span><span class='line'>        <span class="p">(</span><span class="nv">div-p</span> <span class="p">(</span><span class="nv">check-divisibility</span> <span class="nv">dividend</span> <span class="nv">div-index</span><span class="p">)</span>
+</span><span class='line'>               <span class="p">(</span><span class="nb">and</span> <span class="nv">div-p</span> <span class="p">(</span><span class="nv">check-divisibility</span> <span class="nv">dividend</span> <span class="nv">div-index</span><span class="p">))))</span>
+</span><span class='line'>       <span class="p">((</span><span class="nb">&lt;</span> <span class="nv">n</span> <span class="mi">10000</span><span class="p">)</span> <span class="nv">div-p</span><span class="p">)))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">check-substring-pandigital-range</span> <span class="p">(</span><span class="nv">start</span> <span class="nv">end</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">declare</span> <span class="p">(</span><span class="k">type</span> <span class="kt">fixnum</span> <span class="nv">start</span> <span class="nv">end</span><span class="p">))</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">candidates</span> <span class="o">&#39;</span><span class="p">()))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">num</span> <span class="nv">from</span> <span class="nv">start</span> <span class="nv">to</span> <span class="nv">end</span> <span class="nb">do</span>
+</span><span class='line'>         <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">and</span> <span class="p">(</span><span class="nv">is-pandigital</span> <span class="nv">num</span><span class="p">)</span>
+</span><span class='line'>                  <span class="p">(</span><span class="nv">has-divisible-substrings</span> <span class="nv">num</span><span class="p">))</span>
+</span><span class='line'>             <span class="p">(</span><span class="nb">push</span> <span class="nv">num</span> <span class="nv">candidates</span><span class="p">)))</span>
+</span><span class='line'>    <span class="nv">candidates</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">euler43</span> <span class="p">()</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">candidates</span> <span class="p">(</span><span class="nv">check-substring-pandigital-range</span> <span class="mi">1234567890</span> <span class="mi">9876543210</span><span class="p">)))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nb">print</span> <span class="nv">candidates</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">(</span><span class="nb">apply</span> <span class="nf">#&#39;</span><span class="nb">+</span> <span class="nv">candidates</span><span class="p">)))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>As before, evaluating <code>(euler43)</code> shows the final solution (sum), along with the (six!) candidate numbers making up the sum. This took a whopping <code>4.3 hours</code> to churn through the 8.5 billion numbers. Maybe I need to create a new constraint for these problems: either pen-and-paper, or something <em>slow</em> (like Python ?! :P), so that brute force is never tempting again.</p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-03-25T23:33:56+00:00" pubdate data-updated="true">Mar 25<sup>th</sup>, 2015</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/lisp/'>lisp</a>, <a class='category' href='/blog/categories/projecteuler/'>projecteuler</a>
+
+
+</div>
+	
+</div>
+</article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+		
+		
+		<a class="addthis_button_tweet"></a>
+		
+		
+		<a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+		
+		
+	</div>
+	
+</div>
+
+
+
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2015
+
+    Agam
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'agamamp';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://agam.github.io/blog/2015/03/25/euler-42-pandigitals-with-sub-string-divisibility/';
+        var disqus_url = 'http://agam.github.io/blog/2015/03/25/euler-42-pandigitals-with-sub-string-divisibility/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//go.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-16612682-4']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>
