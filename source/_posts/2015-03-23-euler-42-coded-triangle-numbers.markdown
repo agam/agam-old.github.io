@@ -36,9 +36,6 @@ Very straightforward, this one. And I don't need to feel bad that I did it the s
                   summing (char->number char))))
     (is-triangle-number value)))       
   
-(defun un-quote (str)
-  (remove #\" str))
-
 (defun euler42 ()
   ;; Read in the file, split on the commas, remove the quotes
   (let* ((file-text (read-file "/home/agam/Downloads/p042_words.txt"))
