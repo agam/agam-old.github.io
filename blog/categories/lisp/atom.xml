@@ -4,7 +4,7 @@
   <title><![CDATA[Category: lisp | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/lisp/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-03-26T05:09:48+00:00</updated>
+  <updated>2015-04-23T06:23:01+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,86 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Fooling around with array memory ...]]></title>
+    <link href="http://agam.github.io/blog/2015/04/10/fooling-around-with-array-memory-dot-dot-dot/"/>
+    <updated>2015-04-10T23:42:23+00:00</updated>
+    <id>http://agam.github.io/blog/2015/04/10/fooling-around-with-array-memory-dot-dot-dot</id>
+    <content type="html"><![CDATA[<p>Something I saved in a scratch buffer once &hellip;</p>
+
+<p>```lisp
+* (room)</p>
+
+<p>Dynamic space usage is: 43,629,232 bytes.
+Read-only space usage is: 6,736 bytes.
+Static space usage is: 4,000 bytes.
+Control stack usage is: 2,976 bytes.
+Binding stack usage is: 800 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.</p>
+
+<p>Breakdown for dynamic space:
+13,392,016 bytes for 12,550 code objects.
+7,629,616 bytes for 87,920 instance objects.
+7,108,736 bytes for 444,296 cons objects.
+7,093,664 bytes for 59,224 simple-vector objects.
+2,268,928 bytes for 35,452 symbol objects.
+6,136,272 bytes for 115,793 other objects.
+43,629,232 bytes for 755,235 dynamic objects (space total.)</p>
+
+<ul>
+<li>(defparameter <em>a</em> (make-array &lsquo;(3000 3000) :element-type &rsquo;(unsigned-byte 8) :initial-element 0))</li>
+</ul>
+
+
+<p><em>A</em>
+* (room)</p>
+
+<p>Dynamic space usage is: 52,662,000 bytes.
+Read-only space usage is: 6,736 bytes.
+Static space usage is: 4,000 bytes.
+Control stack usage is: 2,976 bytes.
+Binding stack usage is: 800 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.</p>
+
+<p>Breakdown for dynamic space:
+13,392,016 bytes for 12,550 code objects.
+9,221,424 bytes for 1,914 simple-array-unsigned-byte-8 objects.
+7,644,768 bytes for 88,074 instance objects.
+7,123,088 bytes for 445,193 cons objects.
+7,096,224 bytes for 59,245 simple-vector objects.
+8,217,248 bytes for 149,969 other objects.
+52,694,768 bytes for 756,945 dynamic objects (space total.)</p>
+
+<ul>
+<li>(gc)</li>
+</ul>
+
+
+<p>NIL
+* (room)</p>
+
+<p>Dynamic space usage is: 43,810,864 bytes.
+Read-only space usage is: 6,736 bytes.
+Static space usage is: 4,000 bytes.
+Control stack usage is: 2,976 bytes.
+Binding stack usage is: 800 bytes.
+Control and binding stack usage is for the current thread only.
+Garbage collection is currently enabled.</p>
+
+<p>Breakdown for dynamic space:
+13,392,016 bytes for 12,550 code objects.
+7,687,200 bytes for 88,515 instance objects.
+7,144,528 bytes for 59,470 simple-vector objects.
+7,134,528 bytes for 445,908 cons objects.
+2,269,312 bytes for 35,458 symbol objects.
+6,183,280 bytes for 116,551 other objects.
+43,810,864 bytes for 758,452 dynamic objects (space total.)
+```</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Euler 42: Pandigitals with sub-string divisibility]]></title>
@@ -293,49 +373,6 @@ candidates))
 <p>```</p>
 
 <p>The &ldquo;final answer&rdquo; is given by <code>(euler40)</code>, and the intermediate digits themselves by <code>(power-list)</code>. I found <code>(scan-list)</code> useful to debug an embarassing off-by-one error in the loop.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Euler 39: Integer Right Triangles]]></title>
-    <link href="http://agam.github.io/blog/2015/03/20/euler-39-integer-right-triangles/"/>
-    <updated>2015-03-20T23:09:44+00:00</updated>
-    <id>http://agam.github.io/blog/2015/03/20/euler-39-integer-right-triangles</id>
-    <content type="html"><![CDATA[<p>Straightfoward, this. An interesting insight into speed difference between <code>SBCL</code> and <code>Clozure</code>: the former took <em>0.75 seconds</em> to run this, while the latter took about <em>4 seconds</em> (without the type annotations, <code>SBCL</code> takes <em>33 seconds</em>).</p>
-
-<p>```lisp
-(defun is-right-triangle (n1 n2 n3)
-  (declare (type fixnum n1 n2 n3))
-  (= (+ (expt n1 2) (expt n2 2)) (expt n3 2)))</p>
-
-<p>(defun triangle-solutions (n)
-  (declare (type fixnum n))
-  ;; Largest side (hyp) can&rsquo;t be less than a third of the total
-  (loop for hyp from (floor (/ n 3)) upto (&ndash; n 2)</p>
-
-<pre><code> ;; Avoid repeating combinations, so WLOG let one side
- ;; be greater than the other
- for sides-sum = (- n hyp)
- when (loop for side1 from (ceiling (/ sides-sum 2)) to (1- sides-sum)
-         for side2 = (- sides-sum side1) 
-         when (is-right-triangle side1 side2 hyp)
-         collect (list side1 side2 hyp))
- collect it))
-</code></pre>
-
-<p>(defun max-triangle-solutions (n)
-  (declare (type fixnum n))
-  ;; n cannot be less than 3
-  (let* ((solutions (loop for i from 3 to n</p>
-
-<pre><code>                   collect (length (triangle-solutions i))))
-     (max-solution (loop for elem in solutions maximizing elem)))
-(cons max-solution (+ 3 (position max-solution solutions)))))
-</code></pre>
-
-<p>```</p>
-
-<p>The answer needed is given by <code>(max-triangle-solutions 1000)</code>, while any specific solution can be got by (e.g.) running <code>(triangle-solutions 120)</code> which yields <code>(((40 30 50)) ((45 24 51)) ((48 20 52)))</code></p>
 ]]></content>
   </entry>
   

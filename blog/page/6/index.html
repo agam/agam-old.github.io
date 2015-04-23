@@ -7,7 +7,7 @@
 	<meta name="author" content="Agam">
 
 	
-	<meta name="description" content="I don&rsquo;t recall the very first articles I might have read about Haskell, but the first non-short text was Real World Haskell, which I went &hellip;">
+	<meta name="description" content="Wait, what? Why?! No reason, really. I saw the new FreeBSD book1 lying around in someone&rsquo;s office, and separately I was reminded of the week I &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -86,6 +86,509 @@
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2014/12/14/trying-out-freebsd-and-failing-at-it/">
+		
+			Trying Out FreeBSD (and Failing at It)</a>
+	</h2>
+	<div class="entry-content">
+		<p>Wait, what? Why?! No reason, really. I saw the new FreeBSD book<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> lying around in someone&rsquo;s office, and separately I was reminded of the week I spent getting Gentoo up and running a decade ago, and decided I missed all that and wanted to repeat a similar experience.</p>
+
+<p>So, this is an attempt to both (1) install it within a VM on the Google Compute Engine<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>, and (2) slowly learn more about it. Here follows a log of everything I did, based on the original instructions from the mailing list <sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>. (<em>Meta-note: if running remotely, be sensible; use <code>tmux</code> or <code>screen</code></em>)</p>
+
+<h3><em>Step 1</em>: Install the emulator</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>sudo apt-get install qemu
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3><em>Step 2</em>: Get the FreeBSD version to install &mdash; in my case, I picked the &ldquo;disc1&rdquo; version corresponding to the &ldquo;RELEASE&rdquo; image<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup></h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>wget ftp://ftp.freebsd.org/pub/FreeBSD/releases/amd64/amd64/ISO-IMAGES/10.1/FreeBSD-10.1-RELEASE-amd64-disc1.iso
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3><em>Step 3</em>: Create the disk image for the emulator</h3>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>qemu-img create disk.raw 100g
+</span><span class='line'>Formatting <span class="s1">&#39;disk.raw&#39;</span>, <span class="nv">fmt</span><span class="o">=</span>raw <span class="nv">size</span><span class="o">=</span><span class="m">107374182400</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3><em>Step 4</em>: Boot from the ISO downloaded earlier</h3>
+
+<p>Notes:
+&ndash; The original instructions also mention <code>--enable_kvm</code>, but that didn&rsquo;t work for me. I tried <code>sudo modprobe kvm-intel</code>, but <code>dmesg | grep kvm</code> informed me that it had been disabled by the Bios, so I skipped it here.
+&ndash; If you are running this remotely (like I was), you&rsquo;ll have to add <code>--curses</code> to the <code>qemu</code> command line.</p>
+
+<h3><em>Step 5</em>: Install FreeBSD</h3>
+
+<p>At this point, if all went well, the emulator should boot up and you should see the &ldquo;Welcome&rdquo; screen, where you can hit &ldquo;Install&rdquo; and begin.</p>
+
+<p>Notes:
+&ndash; Pretty standard stuff, if you&rsquo;ve done a linux install before.
+&ndash; When it came to the disk setup I chose <code>ufs</code> for no particular reason<sup id="fnref:5"><a href="#fn:5" rel="footnote">5</a></sup>, but you can choose any of the options; it&rsquo;ll show you the suggested table for the &ldquo;entire disk&rdquo; as split between <code>freebsd-boot</code>, <code>freebsd-ufs</code> and <code>freebsd-swap</code>, just hit <em>&ldquo;Finish&rdquo;</em> and then <em>&ldquo;Commit&rdquo;</em> to proceed.
+&ndash; Take a nice long break when the <em>&ldquo;Archive Extraction&rdquo;</em> step begins; this is computationally intensive, and (especially without <code>kvm</code> enabled) takes a <em>long</em> time on the emulator.
+&ndash; DNS settings are <code>google.internal.</code> for the <em>&ldquo;search&rdquo;</em>, and <code>169.254.169.254</code> for the DNS IP.
+&ndash; Include <code>sshd</code> and <code>ntpd</code> in the list of services to start at boot</p>
+
+<h3><em>Step 6</em>: Further configuration (as root)</h3>
+
+<p>Once you hit <em>&ldquo;Exit&rdquo;</em> at the end, choose the option to drop into a shell and then run the following:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nb">echo</span> <span class="s1">&#39;console=&quot;comconsole&quot;&#39;</span> &gt;&gt;/etc/rc.conf
+</span><span class='line'><span class="nb">echo</span> ‘console<span class="o">=</span>”comconsole”’ &gt; /boot/loader.conf
+</span><span class='line'>sed -I -e “/hostname/d” /etc/rc.conf
+</span><span class='line'><span class="nb">echo</span> -Dh &gt;/boot.config
+</span><span class='line'>
+</span><span class='line'>cat <span class="s">&lt;&lt;EOF &gt;/etc/dhclient.conf</span>
+</span><span class='line'><span class="s">interface &quot;vtnet0&quot; {</span>
+</span><span class='line'><span class="s">  supersede subnet-mask 255.255.0.0;</span>
+</span><span class='line'><span class="s">}</span>
+</span><span class='line'><span class="s">EOF</span>
+</span><span class='line'>
+</span><span class='line'>sed -I -e “/server/d” /etc/ntp.conf
+</span><span class='line'><span class="nb">echo</span> “server 169.254.169.254” &gt;&gt; /etc/ntp.conf
+</span><span class='line'>
+</span><span class='line'><span class="nb">echo</span> “169.254.169.254 metadata.google.internal metadata” &gt;&gt; /etc/hosts
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3><em>Step 7</em>: Add yourself as a user</h3>
+
+<ul>
+<li>Run <code>adduser</code> and follow the prompts<sup id="fnref:6"><a href="#fn:6" rel="footnote">6</a></sup></li>
+<li>Add yourself to the <code>wheel</code> group. E.g. in my case:</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>pw user mod agam -G wheel
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Allow yourself to login via <code>ssh</code>:</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>sed -I -e “s/#PasswordAuthentication no/PasswordAuthentication yes/” /etc/ssh/sshd_config
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h3><em>Step 8</em>: Setup GCE (within the image)</h3>
+
+<ul>
+<li>Enable either OpenDNS or Google Public DNS . E.g. for the latter:</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span><span class="nb">echo</span> “nameserver 8.8.8.8” &gt;&gt; /etc/resolv.conf
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Install <code>sudo</code>, <code>python</code><sup id="fnref:7"><a href="#fn:7" rel="footnote">7</a></sup>, and <code>wget</code><sup id="fnref:8"><a href="#fn:8" rel="footnote">8</a></sup></li>
+<li>Get <code>gcloud</code><a href="" title="More information [here](https://cloud.google.com/compute/docs/gcloud-compute/)">^9</a></li>
+<li>Remove the DNS record added earlier:</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>sed -I -e “/8.8.8.8/d” /etc/resolv.conf
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Turn off FreeBSD (run <code>poweroff</code>)</li>
+</ul>
+
+
+<h3><em>Step 9</em>: Setup GCE (on your workstation)</h3>
+
+<ul>
+<li>Install <code>gcloud</code> (as before)</li>
+<li>Authenticate: Run <code>gcloud auth login</code> and follow the url to enter the code</li>
+<li>Prepare the image for upload: <code>tar -Szcf freebsd.tar.gz disk.raw</code></li>
+<li>Create a bucket<sup id="fnref:9"><a href="#fn:9" rel="footnote">9</a></sup> and upload<sup id="fnref:10"><a href="#fn:10" rel="footnote">10</a></sup> the image there (Note: I was shocked, <em>shocked</em>, by how <em>fast</em> this upload went!)</li>
+<li>Prepare the image for use in your VM and insert it</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>gcutil addimage freebsd gs://&lt;bucket&gt;/&lt;object&gt;
+</span><span class='line'><span class="nv">$ </span>gcutil --project &lt;project_id&gt; freebsd gs://&lt;bucket&gt;/&lt;object&gt;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Add a VM and SSH to it (both these operations can be done either through the &ldquo;Google Cloud Console&rdquo; or the command-line client<sup id="fnref:11"><a href="#fn:11" rel="footnote">11</a></sup>). E.g. in my case the latter is
+<code>&gt; gcloud compute ssh myvm</code><sup id="fnref:12"><a href="#fn:12" rel="footnote">12</a></sup></li>
+</ul>
+
+
+<h3><em>Step 10</em>: Nope</h3>
+
+<p>Yeah this didn&rsquo;t work for me. Luckily, the &ldquo;serial console&rdquo; can be viewed through the dashboard, and what I saw was a repeated failure to boot.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>Mounting <span class="nb">local </span>file systems:.
+</span><span class='line'>Writing entropy file:.
+</span><span class='line'>vtnet0: link state changed to UP
+</span><span class='line'>Starting Network: lo0 vtnet0.
+</span><span class='line'>lo0: <span class="nv">flags</span><span class="o">=</span>8049&lt;UP,LOOPBACK,RUNNING,MULTICAST&gt; metric <span class="m">0</span> mtu 16384
+</span><span class='line'>     <span class="nv">options</span><span class="o">=</span>600003&lt;RXCSUM,TXCSUM,RXCSUM_IPV6,TXCSUM_IPV6&gt;
+</span><span class='line'>     inet6 ::1 prefixlen <span class="m">128</span>
+</span><span class='line'>     inet6 fe80::1%lo0 prefixlen <span class="m">64</span> scopeid 0x2
+</span><span class='line'>     inet 127.0.0.1 netmask 0xff000000
+</span><span class='line'>     nd6 <span class="nv">options</span><span class="o">=</span>21&lt;PERFORMNUD,AUTO_LINKLOCAL&gt;
+</span><span class='line'>vtnet0: <span class="nv">flags</span><span class="o">=</span>8943&lt;UP,BROADCAST,RUNNING,PROMISC,SIMPLEX,MULTICAST&gt; metric <span class="m">0</span> mtu 1500
+</span><span class='line'>  <span class="nv">options</span><span class="o">=</span>6c01bb&lt;RXCSUM,TXCSUM,VLAN_MTU,VLAN_HWTAGGING,JUMBO_MTU,VLAN_HWCSUM,TSO4,VLAN_HWTSO,LINKSTATE,RXCSUM_IPV6,TXCSUM_IPV6&gt;
+</span><span class='line'>  ether 42:01:0a:f0:c8:6c
+</span><span class='line'>  nd6 <span class="nv">options</span><span class="o">=</span>29&lt;PERFORMNUD,IFDISABLED,AUTO_LINKLOCAL&gt;
+</span><span class='line'>  media: Ethernet 10Gbase-T &lt;full-duplex&gt;
+</span><span class='line'>  status: active
+</span><span class='line'>Starting devd.
+</span><span class='line'>Starting dhclient.
+</span><span class='line'>DHCPREQUEST on vtnet0 to 255.255.255.255 port 67
+</span><span class='line'>DHCPNAK from 169.254.169.254
+</span><span class='line'>DHCPDISCOVER on vtnet0 to 255.255.255.255 port <span class="m">67</span> interval 8
+</span><span class='line'>DHCPOFFER from 169.254.169.254
+</span><span class='line'>DHCPREQUEST on vtnet0 to 255.255.255.255 port 67
+</span><span class='line'>DHCPACK from 169.254.169.254
+</span><span class='line'>panic: ffs_write: <span class="nb">type </span>0xfffff80008a1cb10 <span class="m">0</span> <span class="o">(</span>0,150<span class="o">)</span>
+</span><span class='line'><span class="nv">cpuid</span> <span class="o">=</span> 2
+</span><span class='line'>KDB: stack backtrace:
+</span><span class='line'><span class="c">#0 0xffffffff80963000 at kdb_backtrace+0x60</span>
+</span><span class='line'><span class="c">#1 0xffffffff80928125 at panic+0x155</span>
+</span><span class='line'><span class="c">#2 0xffffffff80b7f825 at ffs_write+0x5b5</span>
+</span><span class='line'><span class="c">#3 0xffffffff80e428f5 at VOP_WRITE_APV+0x145</span>
+</span><span class='line'><span class="c">#4 0xffffffff809d96f9 at vn_write+0x259</span>
+</span><span class='line'><span class="c">#5 0xffffffff809d598b at vn_io_fault+0x10b</span>
+</span><span class='line'><span class="c">#6 0xffffffff8097a437 at dofilewrite+0x87</span>
+</span><span class='line'><span class="c">#7 0xffffffff8097a168 at kern_writev+0x68</span>
+</span><span class='line'><span class="c">#8 0xffffffff8097a0f3 at sys_write+0x63</span>
+</span><span class='line'><span class="c">#9 0xffffffff80d25851 at amd64_syscall+0x351</span>
+</span><span class='line'><span class="c">#10 0xffffffff80d0aa6b at Xfast_syscall+0xfb</span>
+</span><span class='line'>Uptime: 7s
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Looks like this may be a corrupt disk? Not sure. But pretty bummed :(</p>
+
+<p><em><strong>Update</strong></em>: I see people having luck with either (1) building a &ldquo;rescue disk&rdquo; on a running FreeBSD machine (not an option for me), or (2) using the <code>mfsbsd</code><sup id="fnref:13"><a href="#fn:13" rel="footnote">13</a></sup> remote install. I think I&rsquo;ll try the latter when I get time.</p>
+
+<p><em><strong>Update</strong></em>: Here&rsquo;s how that went :&ndash;</p>
+
+<ul>
+<li>Get the <code>mfsbsd</code> image<sup id="fnref:14"><a href="#fn:14" rel="footnote">14</a></sup></li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$curl</span> -o disk.raw http://mfsbsd.vx.sk/files/iso/10/amd64/mfsbsd-se-10.1-RELEASE-amd64.iso<span class="sb">`</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Tar it, upload it</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>tar -Szcf mfs-freebsd.tar.gz disk.raw
+</span><span class='line'><span class="nv">$ </span>gsutil cp mfs-freebsd.tar.gz gs://&lt;bucket_name&gt;
+</span><span class='line'><span class="nv">$ </span>gcutil addimage mfs-freebsd gs://&lt;bucket_name&gt;/mfs-freebsd.tar.gz
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Create a VM with this instance</li>
+</ul>
+
+
+<p>Aaand &hellip; NOPE again; fails to even show the serial console this time :(
+Error: <code>The resource 'projects/algol-c/zones/us-central1-a/instances/myvm' is not ready</code></p>
+
+<ul>
+<li>Deleted the VM and created it again<sup id="fnref:15"><a href="#fn:15" rel="footnote">15</a></sup></li>
+</ul>
+
+
+<p>Failed again, but this time I grabbed the output before it vanished:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>Unable to lock ram - bridge not found
+</span><span class='line'>Changing serial settings was 3/2 now 3/0
+</span><span class='line'>enter handle_19:
+</span><span class='line'>  NULL
+</span><span class='line'>Booting from Hard Disk...
+</span><span class='line'>Boot failed: not a bootable disk
+</span><span class='line'>
+</span><span class='line'>enter handle_18:
+</span><span class='line'>  NULL
+</span><span class='line'>Booting from Floppy...
+</span><span class='line'>Boot failed: could not <span class="nb">read </span>the boot disk
+</span><span class='line'>
+</span><span class='line'>enter handle_18:
+</span><span class='line'>  NULL
+</span><span class='line'>No bootable device.  Powering off VM.
+</span><span class='line'>END OF LINE
+</span><span class='line'>  Retrying in <span class="m">60</span> seconds.
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li><em>Of course!</em> I have to <em>make</em> a bootable image using this iso (!) But, But, But &hellip;. that needs a running FreeBSD system?!</li>
+</ul>
+
+
+<p><em><strong>Update</strong></em>: Damn, looks like GCE is behind both Amazon and (wtf!) Microsoft on this. From the release notes for v10.1:</p>
+
+<blockquote><p>FreeBSD 10.1-RELEASE is also available on these cloud hosting platforms:</p>
+
+<ul>
+<li>Amazon® EC2™ FreeBSD/amd64</li>
+<li>Microsoft® Azure™ FreeBSD/amd64,  FreeBSD/i386</li>
+</ul>
+</blockquote>
+
+<p><em><strong>Conclusion</strong></em>: The <code>qemu</code> path should have worked, I don&rsquo;t yet understand why not. Another option might be to try the <em>vhd</em> image and get that to work. Or try EC2/Azure. Or wait for someone to figure this out and publicly share a working image. Or give up on FreeBSD and get back &ldquo;to real work&rdquo; :)</p>
+<div class="footnotes">
+<hr/>
+<ol>
+<li id="fn:1">
+<p>The <a href="http://www.amazon.com/gp/product/0321968972/ref=pd_lpo_sbs_dp_ss_1?pf_rd_p=1944687562&amp;pf_rd_s=lpo-top-stripe-1&amp;pf_rd_t=201&amp;pf_rd_i=0201702452&amp;pf_rd_m=ATVPDKIKX0DER&amp;pf_rd_r=0QBY4BRZHVN8ZNNFWDMW">newer edition</a> of &ldquo;The Design and Implementation of the FreeBSD Operating System&rdquo;<a href="#fnref:1" rev="footnote">&#8617;</a></p></li>
+<li id="fn:2">
+<p>Yes, I&rsquo;ve heard <a href="http://www.daemonology.net/freebsd-on-ec2/">the Amazon experience</a> is easier, but that would be &hellip; uh &hellip; slightly disloyal right now :P<a href="#fnref:2" rev="footnote">&#8617;</a></p></li>
+<li id="fn:3">
+<p>https://groups.google.com/forum/#!msg/gce-discussion/YWoa3Aa_49U/FYAg9oiRlLUJ<a href="#fnref:3" rev="footnote">&#8617;</a></p></li>
+<li id="fn:4">
+<p>From <a href="ftp://ftp.freebsd.org/pub/FreeBSD/releases/amd64/amd64/ISO-IMAGES/10.1/">this list</a><a href="#fnref:4" rev="footnote">&#8617;</a></p></li>
+<li id="fn:5">
+<p>Don&rsquo;t necessarily care too much about the <a href="http://www.smbitjournal.com/2014/05/the-cult-of-zfs/">&ldquo;Cult of ZFS&rdquo;</a>; besides, UFS is faster.<a href="#fnref:5" rev="footnote">&#8617;</a></p></li>
+<li id="fn:6">
+<p>Shell choices are <code>sh</code>/<code>csh</code>/<code>tcsh</code>, with the first being the default option. Take your pick; I&rsquo;m going to replace <code>sh</code> with <code>bash</code> later anyway.<a href="#fnref:6" rev="footnote">&#8617;</a></p></li>
+<li id="fn:7">
+<p>If you try to guess and install Python 3, you&rsquo;ll see this error: <code>ERROR: Python 3 is not supported by the Google Cloud SDK.  Please use a Python 2.x version that is 2.6 or greater</code> (Do as it says! (Also, you might not want to put bets on python 3?))<a href="#fnref:7" rev="footnote">&#8617;</a></p></li>
+<li id="fn:8">
+<p>Either run <code>pkg_add -r</code> for each tool, or compile it from source with ports. For the latter, first run <code>portsnap fetch</code>, <code>portsnap extract</code>, and <code>portsnap update</code>, in that order (this is a one-time setup), then <code>cd</code> to the appropriate directory under <code>/usr/ports</code> and run <code>make install</code> for each tool (<strong>warning</strong>: this takes a long, long, <em>long</em> time! If you&rsquo;re running the emulator without <code>kvm</code> support, you have to be <em>extremely masochistic</em> to try compiling from source).<a href="#fnref:8" rev="footnote">&#8617;</a></p></li>
+<li id="fn:9">
+<p><code>gsutil -p &lt;project_id&gt; -c gs://&lt;bucket_name&gt;</code><a href="#fnref:9" rev="footnote">&#8617;</a></p></li>
+<li id="fn:10">
+<p><code>gsutil cp &lt;gzipped_file&gt; gs://&lt;bucket_name&gt;</code><a href="#fnref:10" rev="footnote">&#8617;</a></p></li>
+<li id="fn:11">
+<p>https://cloud.google.com/sdk/gcloud/reference/compute/instances/create<a href="#fnref:11" rev="footnote">&#8617;</a></p></li>
+<li id="fn:12">
+<p>You also need a <code>--project</code> flag, but you can set a global value for this by running <code>gcloud config set project &lt;project_id&gt;</code><a href="#fnref:12" rev="footnote">&#8617;</a></p></li>
+<li id="fn:13">
+<p>https://www.freebsd.org/doc/en_US.ISO8859-1/articles/remote-install/preparation.html<a href="#fnref:13" rev="footnote">&#8617;</a></p></li>
+<li id="fn:14">
+<p>In case you were wondering, the file name inside the uploaded image <em>has</em> to be <code>disk.raw</code><a href="#fnref:14" rev="footnote">&#8617;</a></p></li>
+<li id="fn:15">
+<p>&ldquo;Terminated&rdquo; VMs have to be dealt with this way, AFAICS<a href="#fnref:15" rev="footnote">&#8617;</a></p></li>
+</ol>
+</div>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-12-14T22:00:13+00:00" pubdate data-updated="true">Dec 14<sup>th</sup>, 2014</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/freebsd/'>freebsd,</a>, <a class='category' href='/blog/categories/gce/'>gce</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2014/12/12/failure-to-ragequit/">
+		
+			Failure to Ragequit</a>
+	</h2>
+	<div class="entry-content">
+		<p>Migrating from my Github blog (in Octopress) was supposed to work pretty much as specified in <a href="http://www.stackednotion.com/blog/2014/02/26/migrating-from-octopress-to-wordpress/">this guide</a> <sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></p>
+
+<ul>
+<li>I used <a href="https://gist.github.com/lucaspiller/9229838#file-rss-xml">this gist</a> in <code>source/rss.xml</code> and then ran <code>rake generate</code></li>
+<li>I imported the generated file (in <code>public/rss.xml</code>) into my Wordpress blog, only to see this error
+
+<blockquote><p>This does not appear to be a WXR file, missing/invalid WXR version number.</p></blockquote></li>
+<li>A helpful post on <a href="https://wordpress.org/support/topic/xml-to-wxr-issue">the Wordpress Forums</a> suggested the following change</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;rss xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0"&gt;
+</span><span class='line'>  &lt;channel&gt;
+</span><span class='line'>    &lt;atom:link rel="hub" href="http://pubsubhubbub.appspot.com" xmlns:atom="http://www.w3.org/2005/Atom"/&gt;
+</span><span class='line'>    &lt;wp:wxr_version&gt;1.1&lt;/wp:wxr_version&gt;
+</span><span class='line'>    &lt;title&gt;Agam&#39;s Mashed-Up Pome&lt;/title&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>(i.e. adding the <code>wxr_version</code> marker line after the language specification)</p>
+
+<ul>
+<li>After this, I tried importing again, it gave some warnings about not recognizing the author (which was to be expected) &hellip; and then though it said &ldquo;import successful!&rdquo;, there were no posts to be seen!</li>
+</ul>
+
+
+<p><strong>WTF Aaaarrgh WTF</strong></p>
+
+<p><em>Update: An hour later, more sober &hellip;</em></p>
+
+<p>Yeah, I don&rsquo;t have the <em>$&amp;@%in</em> time to waste trying various other hacks. The big reasons I wanted to switch was that</p>
+
+<ol>
+<li>I don&rsquo;t want to muck around with Ruby <em>ever again</em>, and</li>
+<li>I want to be able to write posts <em>online</em> (i.e. through some sort of browser interface).</li>
+</ol>
+
+
+<p>Now (1) is not an immediate problem, so I suppose if it re-occurs, I&rsquo;ll put more time/effort into quitting Octopress, but meanwhile there are compromises possible for (2), such as the nice interface of <a href="http://draftin.com">draftin.com</a> that I <em>just</em> discovered. <em>So yeah, this blog lives on &hellip;</em></p>
+<div class="footnotes">
+<hr/>
+<ol>
+<li id="fn:1">
+<p>This is the <em>second</em> time I&rsquo;ve tried to jump from Octopress to Wordpress; Google suggests that most people seem to be <a href="https://www.google.com/search?q=migrate+%22from+wordpress+to+octopress%22&amp;oq=migrate+%22from+wordpress+to+octopress">going the opposite direction</a><a href="#fnref:1" rev="footnote">&#8617;</a></p></li>
+</ol>
+</div>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-12-12T06:07:14+00:00" pubdate data-updated="true">Dec 12<sup>th</sup>, 2014</time></div>
+	<div class="tags">
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -861,164 +1364,6 @@
 
 
 	<a class='category' href='/blog/categories/golang/'>golang</a>, <a class='category' href='/blog/categories/haskell/'>haskell,</a>, <a class='category' href='/blog/categories/scala/'>scala,</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2014/07/31/possibly-unevaluated-variables/">
-		
-			Possibly Unevaluated Variables</a>
-	</h2>
-	<div class="entry-content">
-		<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="k">def</span> <span class="n">loop</span><span class="k">:</span> <span class="kt">Boolean</span> <span class="o">=</span> <span class="n">loop</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">console</span><span class="k">&gt;:</span><span class="mi">10</span><span class="k">:</span> <span class="kt">warning:</span> <span class="kt">method</span> <span class="kt">loop</span> <span class="kt">does</span> <span class="kt">nothing</span> <span class="kt">other</span> <span class="kt">than</span> <span class="kt">call</span> <span class="kt">itself</span> <span class="kt">recursively</span>
-</span><span class='line'>       <span class="k">def</span> <span class="n">loop</span><span class="k">:</span> <span class="kt">Boolean</span> <span class="o">=</span> <span class="n">loop</span>
-</span><span class='line'>                           <span class="o">^</span>
-</span><span class='line'><span class="n">loop</span><span class="k">:</span> <span class="kt">Boolean</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="kc">true</span> <span class="o">||</span> <span class="n">loop</span>
-</span><span class='line'><span class="n">res34</span><span class="k">:</span> <span class="kt">Boolean</span> <span class="o">=</span> <span class="kc">true</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="kc">true</span> <span class="o">&amp;&amp;</span> <span class="n">loop</span>
-</span><span class='line'>
-</span><span class='line'><span class="o">[</span><span class="kt">need</span> <span class="kt">to</span> <span class="kt">Ctrl-C</span> <span class="kt">out</span> <span class="kt">at</span> <span class="kt">this</span> <span class="kt">point</span><span class="o">]</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>(I like that warning message!)</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-07-31T23:11:40+00:00" pubdate data-updated="true">Jul 31<sup>st</sup>, 2014</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/scala/'>scala</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2014/07/31/scala-var/">
-		
-			Scala: Var, Val, Def</a>
-	</h2>
-	<div class="entry-content">
-		<p>Using all three (<code>val</code>, <code>var</code>, `d</p>
-
-<p>ef<code>), I initialize, and then attempt to reassign. Only</code>var` succeeds (as it should), but the other two fail in different ways.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="k">val</span> <span class="n">x</span> <span class="k">=</span> <span class="mi">6</span>
-</span><span class='line'><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">6</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="n">x</span> <span class="k">=</span> <span class="mi">7</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">console</span><span class="k">&gt;:</span><span class="mi">11</span><span class="k">:</span> <span class="kt">error:</span> <span class="kt">reassignment</span> <span class="kt">to</span> <span class="kt">val</span>
-</span><span class='line'>       <span class="n">x</span> <span class="k">=</span> <span class="mi">7</span>
-</span><span class='line'>         <span class="o">^</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="k">var</span> <span class="n">x</span> <span class="k">=</span> <span class="mi">6</span>
-</span><span class='line'><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">6</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="n">x</span> <span class="k">=</span> <span class="mi">7</span>
-</span><span class='line'><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">7</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="k">def</span> <span class="n">x</span> <span class="k">=</span> <span class="mi">6</span>
-</span><span class='line'><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="n">x</span> <span class="k">=</span> <span class="mi">7</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">console</span><span class="k">&gt;:</span><span class="mi">11</span><span class="k">:</span> <span class="kt">error:</span> <span class="kt">value</span> <span class="kt">x_=</span> <span class="kt">is</span> <span class="kt">not</span> <span class="kt">a</span> <span class="kt">member</span> <span class="kt">of</span> <span class="kt">object</span> <span class="kt">$iw</span>
-</span><span class='line'>       <span class="n">x</span> <span class="k">=</span> <span class="mi">7</span>
-</span><span class='line'>       <span class="o">^</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Deceptively similar at first, but I suppose you get used to it. Also, what the heck is <code>$iw</code> ?? (I&rsquo;m guessing it&rsquo;s an internal Java representation of the <code>Int</code> class)</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-07-31T20:04:30+00:00" pubdate data-updated="true">Jul 31<sup>st</sup>, 2014</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/scalax/'>scalax</a>
 
 
 </div>
