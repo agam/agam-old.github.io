@@ -7,7 +7,7 @@
 	<meta name="author" content="Agam">
 
 	
-	<meta name="description" content="I realize using C++ is a bit like cheating since the initial motive of doing ProjectEuler was to explore a new language. But I reserve the right to &hellip;">
+	<meta name="description" content="Numerous people smarter than me have weighed into the static vs dynamic typing debate, so I&rsquo;ll be brief: I won&rsquo;t pick sides because &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -86,6 +86,61 @@
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2015/03/19/static-typing/">
+		
+			Static Types, Dynamic Types, Is Your Type My Type?</a>
+	</h2>
+	<div class="entry-content">
+		<p>Numerous people smarter than me have weighed into the static vs dynamic typing debate, so I&rsquo;ll be brief: I won&rsquo;t pick sides because <em>there are no sides to pick</em>. Except for some <em>obvious</em> cases where there is little disagreement, the word &ldquo;type&rdquo; just happens to mean two very different things when putting forth arguments on the benefits of either <em>side</em>.</p>
+
+<p>Looking back now, the only language that I&rsquo;ve seen where the distinction I&rsquo;m talking about is made explicit, is SML. The <code>type</code> keyword is <em>different</em> from the <code>datatype</code> keyword. The benefits of static types are tied up with the former, whereas people defending dynamic typing are usually resisting an <em>overuse</em> of the latter (with a mass of confusion in the middle).</p>
+
+<p>The usual way (C, C++, Java) of thinking about types is &ldquo;struct&rdquo; types or &ldquo;class&rdquo; types, i.e. some sort of <em>storage</em> type for values &mdash; given some raw bits, what can I &ldquo;cast&rdquo; these bits to? What <em>datatype</em> do these bits represent?</p>
+
+<p>From this perspective, having some guarantees about the datatype represented by these bits is <strong>very important</strong>, and this is the reason given by people preferring (say) C++/Java over either untyped or weakly typed languages (e.g. C, Python).</p>
+
+<p>One outlier worth mentioning is the case where the primitive level is <em>not</em> raw bits, but run-time-typed values, as in Lisp. Here the low-level stuff <em>does</em> have a type, so you don&rsquo;t <em>really</em> need the strong guarantees of &ldquo;which datatype do these bits represent?&rdquo; (and therefore, this is where the static vs dynamic typing debate really heats up).</p>
+
+<p>On the other hand, <em>types</em> as in ML/Haskell etc. are a superset (usually) of datatypes, and might be better thought of as &ldquo;tags&rdquo; of some sort &mdash; tags that satisfy certain constraints. Roughly, if you tag your values correctly, then the implicit constraints of the <strong>type system</strong> will guarantee constraints on how these values might be related, which in turn implicitly proves certain invariants of your program.</p>
+
+<p>As an example, statically typed programs in these languages heavily use <em>Algebraic Data Types</em>, which are practically absent from both dynamically-typed languages (e.g. Lisp) as well as languages that stick to strong datatypes (e.g. C++). This makes sense &mdash; you don&rsquo;t &ldquo;cast&rdquo; a bit pattern into an algebraic data type; you use it to constrain the uses of values tagged with it.</p>
+
+<p>Anyway, there are <em>real</em> tradeoffs in the static-vs-dynamic debate, but a very small and explicit set. Most of the heat is just people talking past each other, using and misusing this overloaded word. Perhaps it would be better if we could just be disciplined enough to distinguish between <code>type</code> and <code>datatype</code> where it matters.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-03-19T02:51:00+00:00" pubdate data-updated="true">Mar 19<sup>th</sup>, 2015</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/misc/'>misc</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -1401,58 +1456,6 @@
 
 
 <time datetime="2015-02-18T21:41:02+00:00" pubdate data-updated="true">Feb 18<sup>th</sup>, 2015</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/haskell/'>haskell</a>, <a class='category' href='/blog/categories/projecteuler/'>projecteuler</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2015/02/18/euler-29-distinct-powers/">
-		
-			Euler 29: Distinct Powers</a>
-	</h2>
-	<div class="entry-content">
-		<p><strong>Statutory Warning</strong>: <em>Spoilers ahead!</em></p>
-
-<p>Finally, we have a one-liner:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="nf">euler29</span> <span class="ow">=</span> <span class="n">length</span> <span class="o">$</span> <span class="kt">L</span><span class="o">.</span><span class="n">nub</span> <span class="o">$</span> <span class="p">[</span><span class="n">a</span> <span class="o">^</span> <span class="n">b</span> <span class="o">|</span> <span class="n">a</span> <span class="ow">&lt;-</span> <span class="p">[</span><span class="mi">2</span> <span class="o">..</span> <span class="mi">100</span><span class="p">],</span> <span class="n">b</span> <span class="ow">&lt;-</span> <span class="p">[</span><span class="mi">2</span> <span class="o">..</span> <span class="mi">100</span><span class="p">]]</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>(where <code>L</code> is <code>Data.List</code>)</p>
-
-<p><em>P.S.</em> I did make a dumb error by initiall writing this as two functions, with the second one taking <code>Int</code> instead of <code>Integer</code>, which (I&rsquo;m disappointed to say) resulted in everything silently overflowing to negative numbers.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-02-18T00:56:01+00:00" pubdate data-updated="true">Feb 18<sup>th</sup>, 2015</time></div>
 	<div class="tags">
 
 
