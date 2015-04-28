@@ -4,7 +4,7 @@
   <title><![CDATA[Category: projecteuler | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/projecteuler/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-04-24T07:28:30+00:00</updated>
+  <updated>2015-04-28T18:13:47+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,81 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Euler 44: Pentagonal Numbers]]></title>
+    <link href="http://agam.github.io/blog/2015/04/28/euler-44-pentagonal-numbers/"/>
+    <updated>2015-04-28T18:08:09+00:00</updated>
+    <id>http://agam.github.io/blog/2015/04/28/euler-44-pentagonal-numbers</id>
+    <content type="html"><![CDATA[<p>I said I&rsquo;d try to work out the next problem on paper, but I gave up and wrote a program for it again :(</p>
+
+<p>I honestly thought it would take a long time to run, with the final answer some grotesquely long number &hellip; but I was mistaken. ProjectEuler agrees with this assessment, since this happens to be officially categorized as among the <em>fifty easiest problems</em> (!)</p>
+
+<p>It took just <code>90ms</code> to run, which is simply too much of a tradeoff to pass up.</p>
+
+<p><strong>Statutory Warning</strong>: <em>Spoilers Ahead</em></p>
+
+<p>```c++
+uint64_t get_pentagonal(int n) {
+  assert(n > 0);
+  return n * (3 * n &ndash; 1) / 2;
+}</p>
+
+<p>bool is_pentagonal(uint64_t num) {
+  // y = x * (3*x &ndash; 1) / 2
+  // So x is an integral solution of 3x<sup>2</sup> + (-1)x + (-2y) = 0
+  // &hellip; or (1 + sqrt(1 + 24y))/6</p>
+
+<p>  double solution = (1 + sqrt(1 + 24 * num)) / 6.0;
+  double dummy;</p>
+
+<p>  // Check if the solution is an integer
+  return (std::modf(solution, &amp;dummy) == 0.0);
+}</p>
+
+<p>bool check_pentagonal(int i, int j) {
+  assert(i > 0 &amp;&amp; j > 0);
+  assert(j &lt; i);
+  uint64_t penta_i = get_pentagonal(i);
+  uint64_t penta_j = get_pentagonal(j);
+  uint64_t sum = penta_i + penta_j;
+  uint64_t diff = penta_i &ndash; penta_j;
+  if (is_pentagonal(sum) &amp;&amp; is_pentagonal(diff)) {</p>
+
+<pre><code>cout &lt;&lt; "Found match for i = " &lt;&lt; i
+     &lt;&lt; " and j = " &lt;&lt; j
+     &lt;&lt; ", with diff = " &lt;&lt; diff &lt;&lt; endl;
+return true;
+</code></pre>
+
+<p>  } else {</p>
+
+<pre><code>return false;
+</code></pre>
+
+<p>  }
+}</p>
+
+<p>int main() {
+  cout &lt;&lt; &ldquo;Euler # 44 &hellip; \n\n&rdquo;;
+  int i = 0;
+  for (int i = 0; ; ++i) {</p>
+
+<pre><code>for (int j = i-1; j &gt; 0; --j) {
+  if (check_pentagonal(i,j)) {
+    return 0;
+  }
+}
+if (i % 1000 == 0) {
+  cout &lt;&lt; "Done testing " &lt;&lt; i &lt;&lt; endl;
+}
+</code></pre>
+
+<p>  }
+}
+```</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Euler 42: Pandigitals with sub-string divisibility]]></title>
@@ -293,49 +368,6 @@ candidates))
 <p>```</p>
 
 <p>The &ldquo;final answer&rdquo; is given by <code>(euler40)</code>, and the intermediate digits themselves by <code>(power-list)</code>. I found <code>(scan-list)</code> useful to debug an embarassing off-by-one error in the loop.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Euler 39: Integer Right Triangles]]></title>
-    <link href="http://agam.github.io/blog/2015/03/20/euler-39-integer-right-triangles/"/>
-    <updated>2015-03-20T23:09:44+00:00</updated>
-    <id>http://agam.github.io/blog/2015/03/20/euler-39-integer-right-triangles</id>
-    <content type="html"><![CDATA[<p>Straightfoward, this. An interesting insight into speed difference between <code>SBCL</code> and <code>Clozure</code>: the former took <em>0.75 seconds</em> to run this, while the latter took about <em>4 seconds</em> (without the type annotations, <code>SBCL</code> takes <em>33 seconds</em>).</p>
-
-<p>```lisp
-(defun is-right-triangle (n1 n2 n3)
-  (declare (type fixnum n1 n2 n3))
-  (= (+ (expt n1 2) (expt n2 2)) (expt n3 2)))</p>
-
-<p>(defun triangle-solutions (n)
-  (declare (type fixnum n))
-  ;; Largest side (hyp) can&rsquo;t be less than a third of the total
-  (loop for hyp from (floor (/ n 3)) upto (&ndash; n 2)</p>
-
-<pre><code> ;; Avoid repeating combinations, so WLOG let one side
- ;; be greater than the other
- for sides-sum = (- n hyp)
- when (loop for side1 from (ceiling (/ sides-sum 2)) to (1- sides-sum)
-         for side2 = (- sides-sum side1) 
-         when (is-right-triangle side1 side2 hyp)
-         collect (list side1 side2 hyp))
- collect it))
-</code></pre>
-
-<p>(defun max-triangle-solutions (n)
-  (declare (type fixnum n))
-  ;; n cannot be less than 3
-  (let* ((solutions (loop for i from 3 to n</p>
-
-<pre><code>                   collect (length (triangle-solutions i))))
-     (max-solution (loop for elem in solutions maximizing elem)))
-(cons max-solution (+ 3 (position max-solution solutions)))))
-</code></pre>
-
-<p>```</p>
-
-<p>The answer needed is given by <code>(max-triangle-solutions 1000)</code>, while any specific solution can be got by (e.g.) running <code>(triangle-solutions 120)</code> which yields <code>(((40 30 50)) ((45 24 51)) ((48 20 52)))</code></p>
 ]]></content>
   </entry>
   
