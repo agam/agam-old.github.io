@@ -4,7 +4,7 @@
   <title><![CDATA[Category: projecteuler | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/projecteuler/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-04-28T18:13:47+00:00</updated>
+  <updated>2015-04-28T19:50:05+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,72 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Euler 45: Triangle, Pengagonal, Hexagonal Numbers]]></title>
+    <link href="http://agam.github.io/blog/2015/04/28/euler-44-triangle/"/>
+    <updated>2015-04-28T19:41:00+00:00</updated>
+    <id>http://agam.github.io/blog/2015/04/28/euler-44-triangle</id>
+    <content type="html"><![CDATA[<p>While we&rsquo;re doing brute force solutions, here&rsquo;s another one &hellip;</p>
+
+<p><strong>Statutory Warning</strong>: <em>Spoilers Ahead</em></p>
+
+<p>```c++
+uint64_t get_triangle(uint64_t n) {
+  return n * (n + 1) / 2;
+}</p>
+
+<p>bool is_pentagonal(uint64_t num) {
+  // y = x * (3*x &ndash; 1) / 2
+  // So x is an integral solution of 3x<sup>2</sup> + (-1)x + (-2y) = 0
+  // &hellip; or (1 + sqrt(1 + 24y))/6</p>
+
+<p>  double solution = (1 + sqrt(1 + 24 * num)) / 6.0;
+  double dummy;
+  return (std::modf(solution, &amp;dummy) == 0.0);
+}</p>
+
+<p>bool is_hexagonal(uint64_t num) {
+  // y = x * (2*x &ndash; 1)
+  // So x is an integral solution of 2x<sup>2</sup> + (-1)x + (-y) = 0
+  // &hellip; or (1 + sqrt(1 + 8y))/4</p>
+
+<p>  double solution = (1 + sqrt(1 + 8 * num)) / 4.0;
+  double dummy;
+  return (std::modf(solution, &amp;dummy) == 0.0);
+}</p>
+
+<p>void sanity_check() {
+  uint64_t t285 = get_triangle(285);
+  assert(t285 == 40755);
+  assert(is_pentagonal(t285));
+  assert(is_hexagonal(t285));
+}</p>
+
+<p>int main() {
+  cout &lt;&lt; &ldquo;Euler # 45 &hellip; \n\n&rdquo;;</p>
+
+<p>  sanity_check();
+  // We already now that T_285 is pentagonal and hexagonal, so start
+  // from the next index;
+  uint64_t i = 286;
+  for (; ; ++i) {</p>
+
+<pre><code>uint64_t num = get_triangle(i);
+if (is_pentagonal(num) &amp;&amp; is_hexagonal(num)) {
+  cout &lt;&lt; "Found triangle# " &lt;&lt; i &lt;&lt; "  (" &lt;&lt; num &lt;&lt; ")" &lt;&lt; endl;
+  return 0;
+}
+if (i % 100000 == 0) {
+  cout &lt;&lt; "Done testing " &lt;&lt; i &lt;&lt; endl;
+}
+</code></pre>
+
+<p>  }
+}
+```</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Euler 44: Pentagonal Numbers]]></title>
@@ -296,78 +362,6 @@ candidates))
 <p>```</p>
 
 <p>Everything is wrapped up in the call to <code>(euler41)</code>.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Euler 40: Champernowne's Constant]]></title>
-    <link href="http://agam.github.io/blog/2015/03/21/euler-40-champernownes-constant/"/>
-    <updated>2015-03-21T19:34:12+00:00</updated>
-    <id>http://agam.github.io/blog/2015/03/21/euler-40-champernownes-constant</id>
-    <content type="html"><![CDATA[<p>I was too lazy to avoid the brute-force approach here, especially since it took less than a second to run. The following seems longer than it should be, partly because I left in some helper and debugging functions &hellip;</p>
-
-<p><em>Edit</em>: There is obviously a very nice paper-and-pen solution to this &mdash; the 10th place is &lsquo;1&rsquo; (for 10), then the 100th place is &lsquo;5&rsquo; (for 55), and so on &hellip;</p>
-
-<p><strong>Statutory Warning</strong>: <em>Spoilers Ahead</em></p>
-
-<p>```lisp
-(defparameter <em>max-digits</em> 2000000)</p>
-
-<p>(defun digits (n)
-  (declare (type fixnum n))
-  (nreverse (loop</p>
-
-<pre><code>           for tmp = n then (floor (/ tmp 10))
-           until (= tmp 0)
-           collect (mod tmp 10))))
-</code></pre>
-
-<p>(defun set-digits (d start all-digits)
-  (loop</p>
-
-<pre><code> for elem in d
- for idx = start then (1+ idx) do
-   (setf (aref all-digits idx) elem)))
-</code></pre>
-
-<p>;; Fills out the array of digits and returns an accessor function
-;; Note: the index increments by the length of the number of
-;; digits of the <em>previous</em> number.
-(let ((all-digits (make-array (list <em>max-digits</em>) :element-type &lsquo;(integer 0 9) :initial-element 0)))
-  (defun populate-digits (n)</p>
-
-<pre><code>(progn
-  (loop
-     for num = 1 then (1+ num)
-     for d = (digits num)
-     for i = 0 then (+ i (length (digits (1- num))))
-     while (&lt; i n) do
-       (set-digits d i all-digits))
-(lambda (idx)
-  (aref all-digits idx)))))
-</code></pre>
-
-<p>(defun power-list ()
-  (let ((champer (populate-digits 1000000)))</p>
-
-<pre><code>(loop for p from 0 to 6 collect
-     (funcall champer (1- (expt 10 p))))))
-</code></pre>
-
-<p>(defun euler40 ()
-  (apply &lsquo;* (power-list)))</p>
-
-<p>;; Useful debugging tool
-(defun scan-list (start end)
-  (let ((champer (populate-digits)))</p>
-
-<pre><code>(loop for i from start to end do
-     (print (cons i (funcall champer i))))))
-</code></pre>
-
-<p>```</p>
-
-<p>The &ldquo;final answer&rdquo; is given by <code>(euler40)</code>, and the intermediate digits themselves by <code>(power-list)</code>. I found <code>(scan-list)</code> useful to debug an embarassing off-by-one error in the loop.</p>
 ]]></content>
   </entry>
   

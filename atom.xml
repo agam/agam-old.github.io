@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-04-28T18:13:47+00:00</updated>
+  <updated>2015-04-28T19:50:05+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,118 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Euler 45: Triangle, Pengagonal, Hexagonal Numbers]]></title>
+    <link href="http://agam.github.io/blog/2015/04/28/euler-44-triangle/"/>
+    <updated>2015-04-28T19:41:00+00:00</updated>
+    <id>http://agam.github.io/blog/2015/04/28/euler-44-triangle</id>
+    <content type="html"><![CDATA[<p>While we&rsquo;re doing brute force solutions, here&rsquo;s another one &hellip;</p>
+
+<p><strong>Statutory Warning</strong>: <em>Spoilers Ahead</em></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+</pre></td><td class='code'><pre><code class='c++'><span class='line'><span class="kt">uint64_t</span> <span class="nf">get_triangle</span><span class="p">(</span><span class="kt">uint64_t</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">return</span> <span class="n">n</span> <span class="o">*</span> <span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">bool</span> <span class="nf">is_pentagonal</span><span class="p">(</span><span class="kt">uint64_t</span> <span class="n">num</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="c1">// y = x * (3*x - 1) / 2</span>
+</span><span class='line'>  <span class="c1">// So x is an integral solution of 3x^2 + (-1)x + (-2y) = 0</span>
+</span><span class='line'>  <span class="c1">// ... or (1 + sqrt(1 + 24y))/6</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kt">double</span> <span class="n">solution</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">24</span> <span class="o">*</span> <span class="n">num</span><span class="p">))</span> <span class="o">/</span> <span class="mf">6.0</span><span class="p">;</span>
+</span><span class='line'>  <span class="kt">double</span> <span class="n">dummy</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">return</span> <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">modf</span><span class="p">(</span><span class="n">solution</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">dummy</span><span class="p">)</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">bool</span> <span class="nf">is_hexagonal</span><span class="p">(</span><span class="kt">uint64_t</span> <span class="n">num</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="c1">// y = x * (2*x - 1)</span>
+</span><span class='line'>  <span class="c1">// So x is an integral solution of 2x^2 + (-1)x + (-y) = 0</span>
+</span><span class='line'>  <span class="c1">// ... or (1 + sqrt(1 + 8y))/4</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kt">double</span> <span class="n">solution</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">8</span> <span class="o">*</span> <span class="n">num</span><span class="p">))</span> <span class="o">/</span> <span class="mf">4.0</span><span class="p">;</span>
+</span><span class='line'>  <span class="kt">double</span> <span class="n">dummy</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">return</span> <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">modf</span><span class="p">(</span><span class="n">solution</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">dummy</span><span class="p">)</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">void</span> <span class="nf">sanity_check</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="kt">uint64_t</span> <span class="n">t285</span> <span class="o">=</span> <span class="n">get_triangle</span><span class="p">(</span><span class="mi">285</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">assert</span><span class="p">(</span><span class="n">t285</span> <span class="o">==</span> <span class="mi">40755</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">assert</span><span class="p">(</span><span class="n">is_pentagonal</span><span class="p">(</span><span class="n">t285</span><span class="p">));</span>
+</span><span class='line'>  <span class="n">assert</span><span class="p">(</span><span class="n">is_hexagonal</span><span class="p">(</span><span class="n">t285</span><span class="p">));</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Euler # 45 ... </span><span class="se">\n\n</span><span class="s">&quot;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">sanity_check</span><span class="p">();</span>
+</span><span class='line'>  <span class="c1">// We already now that T_285 is pentagonal and hexagonal, so start</span>
+</span><span class='line'>  <span class="c1">// from the next index;</span>
+</span><span class='line'>  <span class="kt">uint64_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">286</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">for</span> <span class="p">(;</span> <span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kt">uint64_t</span> <span class="n">num</span> <span class="o">=</span> <span class="n">get_triangle</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">is_pentagonal</span><span class="p">(</span><span class="n">num</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">is_hexagonal</span><span class="p">(</span><span class="n">num</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>      <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Found triangle# &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">i</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;  (&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">num</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;)&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span><span class='line'>      <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">%</span> <span class="mi">100000</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Done testing &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">i</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Euler 44: Pentagonal Numbers]]></title>
@@ -1928,82 +2040,6 @@
 
 
 <p>(Wait, why C++ instead of &hellip; other recent languages? Couple of reasons: (1) I thought I&rsquo;d need to brute force this (though it eventually turned out to take much less time than I anticipated), and (2) I&rsquo;m sort of <em>over</em> the <em>over-experimentation</em> with languages that I&rsquo;m not <em>really</em> going to use, and I&rsquo;m not going to get much out of anyway. Yes, tough. Deal with it)</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Euler 31: Coin combinations (and over-engineering)]]></title>
-    <link href="http://agam.github.io/blog/2015/02/22/euler-31-coin-combinations-and-over-engineering/"/>
-    <updated>2015-02-22T04:44:55+00:00</updated>
-    <id>http://agam.github.io/blog/2015/02/22/euler-31-coin-combinations-and-over-engineering</id>
-    <content type="html"><![CDATA[<p>I had this one all wrong, and made it way more complex than it really was. I&rsquo;m embarassed to post the final code &hellip; but it is what it is.</p>
-
-<p><strong>Statutory Warning</strong>: <em>Spoilers ahead</em></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="kr">import</span> <span class="nn">Data.Maybe</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">-- Basic idea is something like this:</span>
-</span><span class='line'><span class="c1">-- [*] given amount and some coins, pick the largest coin</span>
-</span><span class='line'><span class="c1">-- [*] there are (floor (total/coin)) ways of using this coin value</span>
-</span><span class='line'><span class="c1">-- [*] but ... NOT ALL of these count! Only the ones that leave a total that can be used with the remaining coins!</span>
-</span><span class='line'>
-</span><span class='line'><span class="nf">coins</span> <span class="ow">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">200</span><span class="p">]</span>
-</span><span class='line'>
-</span><span class='line'><span class="nf">sortedCoins</span> <span class="ow">::</span> <span class="p">[</span><span class="kt">Int</span><span class="p">]</span>
-</span><span class='line'><span class="nf">sortedCoins</span> <span class="ow">=</span> <span class="kt">L</span><span class="o">.</span><span class="n">reverse</span> <span class="o">$</span> <span class="kt">L</span><span class="o">.</span><span class="n">sort</span> <span class="o">$</span> <span class="n">coins</span>
-</span><span class='line'>
-</span><span class='line'><span class="nf">combinations</span> <span class="ow">::</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="kt">Int</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="kt">Maybe</span> <span class="kt">Int</span>
-</span><span class='line'><span class="nf">combinations</span> <span class="n">total</span> <span class="n">coins</span> <span class="ow">=</span>
-</span><span class='line'><span class="c1">--  T.trace (&quot;total = &quot; ++ show total ++ &quot;, coins = &quot; ++ show coins) $</span>
-</span><span class='line'>  <span class="kr">if</span> <span class="n">total</span> <span class="o">==</span> <span class="mi">0</span>
-</span><span class='line'>  <span class="kr">then</span> <span class="kt">Just</span> <span class="mi">1</span>
-</span><span class='line'>  <span class="kr">else</span> <span class="kr">case</span> <span class="n">coins</span> <span class="kr">of</span>
-</span><span class='line'>        <span class="kt">[]</span> <span class="ow">-&gt;</span> <span class="kt">Nothing</span>
-</span><span class='line'>        <span class="p">[</span><span class="n">c</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="kr">if</span> <span class="n">mod</span> <span class="n">total</span> <span class="n">c</span> <span class="o">==</span> <span class="mi">0</span> <span class="kr">then</span> <span class="kt">Just</span> <span class="mi">1</span> <span class="kr">else</span> <span class="kt">Nothing</span>
-</span><span class='line'>        <span class="n">c</span><span class="kt">:</span><span class="n">cs</span> <span class="ow">-&gt;</span> <span class="kr">if</span> <span class="n">total</span> <span class="o">==</span> <span class="mi">0</span>
-</span><span class='line'>                <span class="kr">then</span> <span class="kt">Just</span> <span class="mi">1</span>
-</span><span class='line'>                <span class="kr">else</span> <span class="kr">let</span> <span class="n">newTotal</span> <span class="n">total</span> <span class="n">coin</span> <span class="n">num</span> <span class="ow">=</span> <span class="n">total</span> <span class="o">-</span> <span class="p">(</span><span class="n">coin</span> <span class="o">*</span> <span class="n">num</span><span class="p">)</span>
-</span><span class='line'>                         <span class="n">combs</span> <span class="ow">=</span> <span class="p">[</span><span class="n">combinations</span> <span class="p">(</span><span class="n">newTotal</span> <span class="n">total</span> <span class="n">c</span> <span class="n">num</span><span class="p">)</span> <span class="n">cs</span> <span class="o">|</span> <span class="n">num</span> <span class="ow">&lt;-</span> <span class="p">[</span><span class="mi">0</span> <span class="o">..</span> <span class="n">div</span> <span class="n">total</span> <span class="n">c</span><span class="p">]]</span>
-</span><span class='line'>                         <span class="n">counts</span> <span class="ow">=</span> <span class="n">sum</span> <span class="o">$</span> <span class="n">catMaybes</span> <span class="n">combs</span>
-</span><span class='line'>                     <span class="kr">in</span>
-</span><span class='line'>                      <span class="kr">if</span> <span class="n">counts</span> <span class="o">==</span> <span class="mi">0</span> <span class="kr">then</span> <span class="kt">Nothing</span> <span class="kr">else</span> <span class="kt">Just</span> <span class="n">counts</span>
-</span><span class='line'>
-</span><span class='line'><span class="nf">euler31</span> <span class="ow">::</span> <span class="kt">Int</span>
-</span><span class='line'><span class="nf">euler31</span> <span class="ow">=</span> <span class="n">fromJust</span> <span class="o">$</span> <span class="n">combinations</span> <span class="mi">200</span> <span class="n">sortedCoins</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>It turns out, I was being overly cautious and could have just used lists in a different way (left in a commented out debug line to show that I needed it).</p>
 ]]></content>
   </entry>
   
