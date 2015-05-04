@@ -4,7 +4,7 @@
   <title><![CDATA[Category: cpp | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/cpp/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-04-28T19:50:05+00:00</updated>
+  <updated>2015-05-04T00:27:42+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,132 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Euler 46: Goldbach's Other Conjecture]]></title>
+    <link href="http://agam.github.io/blog/2015/05/03/euler-46-goldbacks-other-conjecture/"/>
+    <updated>2015-05-03T23:46:24+00:00</updated>
+    <id>http://agam.github.io/blog/2015/05/03/euler-46-goldbacks-other-conjecture</id>
+    <content type="html"><![CDATA[<p>May the brute force be with you. Here is another one (sorry for the over-engineered code).</p>
+
+<p><strong>Statutory Warning</strong>: <em>Spoilers ahead</em></p>
+
+<p>```c++
+class PrimeIterator {
+public:
+  PrimeIterator() : prime_index<em>(primes</em>.size() &ndash; 1) {}</p>
+
+<p>  int getNextPrime() {</p>
+
+<pre><code>assert(prime_index_ &gt; 0);
+return primes_[--prime_index_];
+</code></pre>
+
+<p>  }</p>
+
+<p>  bool hasMorePrimes() {</p>
+
+<pre><code>return prime_index_ &gt; 0;
+</code></pre>
+
+<p>  }</p>
+
+<p>  void fillPrimes(int max) {</p>
+
+<pre><code>while (primes_.back() &lt;= max) {
+  addPrime();
+}
+// Reset to the last element
+prime_index_ = primes_.size() - 1;
+</code></pre>
+
+<p>  }</p>
+
+<p>private:
+  static void addPrime() {</p>
+
+<pre><code>assert(primes_.size() &gt; 0);
+int n = primes_.back();
+while (true) {
+  ++n;
+  bool is_prime = true;
+  for (const int&amp; p : primes_) {
+    if (n % p == 0) {
+      is_prime = false;
+      break;  // Try next number
+    }
+  }
+  if (is_prime) {
+    primes_.push_back(n);
+    return;
+  }
+}
+</code></pre>
+
+<p>  }</p>
+
+<p>  static vector<int> primes_;</p>
+
+<p>  int prime_index_;
+};</p>
+
+<p>vector<int> PrimeIterator::primes_ = {2};</p>
+
+<p>bool goldbachDecompositionExists(int n) {
+  assert(n % 2 == 1);
+  // n = p + 2<em>m<sup>2</sup>
+  // Since 2</em>m<sup>2</sup> is always even, and n is odd, p must be odd too (so p has to be 3 or greater)</p>
+
+<p>  // Use a generator to get more primes on demand.
+  PrimeIterator pit;
+  pit.fillPrimes(n);
+  while (pit.hasMorePrimes()) {</p>
+
+<pre><code>int p = pit.getNextPrime();
+if (p == n) {
+  // If n is a prime, then n = p + 2*(0*0)
+  return true;
+}
+double sq = (n - p)/2.0;
+if (sqrt(sq) == floor(sqrt(sq))) {
+  // n = p + 2*sqrt(sq)
+  return true;
+}
+</code></pre>
+
+<p>  }
+  return false;
+}</p>
+
+<p>int main() {
+  cout &lt;&lt; &ldquo;Euler #46 &hellip; \n&rdquo;;</p>
+
+<p>  // Loop over odd composite numbers &hellip;
+  for (int i = 9; ; i+= 2) {</p>
+
+<pre><code>if (!goldbachDecompositionExists(i)) {
+  cout &lt;&lt; "Failed at " &lt;&lt; i &lt;&lt; endl;
+  return -1;
+}
+</code></pre>
+
+<p>  }
+}
+```</p>
+
+<p>Runs as follows:</p>
+
+<p>```sh
+$ time ./Test
+Euler #46 &hellip;
+Failed at <redacted></p>
+
+<p>real    0m0.007s
+user    0m0.004s
+sys     0m0.000s
+```</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Euler 45: Triangle, Pengagonal, Hexagonal Numbers]]></title>
@@ -350,58 +476,6 @@ Debug: found 3797
 Debug: found 739397
 The sum is: &lt;redacted&gt;
 </code></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Euler 36: Palindromic Numbers]]></title>
-    <link href="http://agam.github.io/blog/2015/03/05/euler-36-palindromic-numbers/"/>
-    <updated>2015-03-05T06:10:59+00:00</updated>
-    <id>http://agam.github.io/blog/2015/03/05/euler-36-palindromic-numbers</id>
-    <content type="html"><![CDATA[<p>Wha &hellip; this is getting boring.</p>
-
-<p><strong>Statutory Warning</strong>: <em>Spoilers ahead</em></p>
-
-<p>```c++
-using std::vector;
-static const int kMaxNumbers = 1000000;</p>
-
-<p>bool isPalindromic(int n, int base) {
-  vector<int> digits;
-  while (n > 0) {</p>
-
-<pre><code>digits.push_back(n % base);
-n /= base;
-</code></pre>
-
-<p>  }
-  int length = digits.size();
-  for (int i = 0; i &lt; length/2; ++i) {</p>
-
-<pre><code>if (digits[i] != digits[length-1-i]) {
-  return false;
-}
-</code></pre>
-
-<p>  }
-  return true;
-}</p>
-
-<p>int main() {
-  int sum = 0;
-  for (int i = 1; i &lt; kMaxNumbers; ++i) {</p>
-
-<pre><code>if (isPalindromic(i, 10) &amp;&amp; isPalindromic(i, 2)) {
-  sum += i;
-}
-</code></pre>
-
-<p>  }
-  std::cout &lt;&lt; &ldquo;Sum of palindromic numbers = &rdquo; &lt;&lt; sum &lt;&lt; std::endl;
-}
-```</p>
-
-<p>(runs in <code>931 milliseconds</code>)</p>
 ]]></content>
   </entry>
   
