@@ -4,7 +4,7 @@
   <title><![CDATA[Category: projecteuler | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/projecteuler/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-05-04T00:27:42+00:00</updated>
+  <updated>2015-05-04T01:02:21+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,134 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Euler 47: Distinct Prime Factors]]></title>
+    <link href="http://agam.github.io/blog/2015/05/04/euler-47-distinct-prime-factors/"/>
+    <updated>2015-05-04T01:00:00+00:00</updated>
+    <id>http://agam.github.io/blog/2015/05/04/euler-47-distinct-prime-factors</id>
+    <content type="html"><![CDATA[<p>This one turned out to be very similar to the previous one (except for the small detail of iterating from the smallest prime upwards, instead of the other way round).</p>
+
+<p><strong>Statutory Warning</strong>: <em>Spoilers ahead</em></p>
+
+<p>```cpp
+class PrimeIterator {
+public:
+  PrimeIterator() : prime_index_(-1) {}</p>
+
+<p>  int getNextPrime() {</p>
+
+<pre><code>assert((prime_index_ + 1) &lt; primes_.size());
+return primes_[++prime_index_];
+</code></pre>
+
+<p>  }</p>
+
+<p>  bool hasMorePrimes() {</p>
+
+<pre><code>assert(prime_index_ &gt;= -1 &amp;&amp; (prime_index_ + 1) &lt;= primes_.size());
+return (prime_index_ + 1) &lt; primes_.size();
+</code></pre>
+
+<p>  }</p>
+
+<p>  void fillPrimes(int max) {</p>
+
+<pre><code>while (primes_.back() &lt;= max) {
+  addPrime();
+}
+// Reset to before the first element
+prime_index_ = -1;
+</code></pre>
+
+<p>  }</p>
+
+<p>private:
+  static void addPrime() {</p>
+
+<pre><code>assert(primes_.size() &gt; 0);
+int n = primes_.back();
+while (true) {
+  ++n;
+  bool is_prime = true;
+  for (const int&amp; p : primes_) {
+    if (n % p == 0) {
+      is_prime = false;
+      break;  // Try next number
+    }
+  }
+  if (is_prime) {
+    primes_.push_back(n);
+    return;
+  }
+}
+</code></pre>
+
+<p>  }</p>
+
+<p>  static vector<int> primes_;</p>
+
+<p>  int prime_index_;
+};</p>
+
+<p>vector<int> PrimeIterator::primes_ = {2};</p>
+
+<p>int getNumPrimeFactors(int n) {
+  int numPrimeFactors = 0;
+  PrimeIterator pit;
+  pit.fillPrimes(n);
+  while (n > 1 &amp;&amp; pit.hasMorePrimes()) {</p>
+
+<pre><code>int p = pit.getNextPrime();
+if (n % p == 0) {
+  while (n % p == 0) {
+    n /= p;
+  }
+  ++numPrimeFactors;
+}
+</code></pre>
+
+<p>  }
+  return numPrimeFactors;
+}</p>
+
+<p>int main() {
+  cout &lt;&lt; &ldquo;Euler #47 &hellip; \n&rdquo;;</p>
+
+<p>  int runLength = 0;
+  for (int n = 2; ; ++n) {</p>
+
+<pre><code>if (getNumPrimeFactors(n) == 4) {
+  ++runLength;
+} else {
+  runLength = 0;
+}
+if (runLength == 4) {
+  cout &lt;&lt; "Found a sequence of four numbers with four prime "
+       &lt;&lt; "factors starting at : " &lt;&lt; n - 3 &lt;&lt; endl;
+  return 0;
+}
+</code></pre>
+
+<p>  }
+}
+```</p>
+
+<p>Runs as follows:</p>
+
+<p>```sh
+$ time ./Test
+Euler #47 &hellip;
+Found a sequence of four numbers with four prime factors starting at : <redacted></p>
+
+<p>real    0m3.814s
+user    0m3.812s
+sys     0m0.000s
+```</p>
+
+<p>(Yep, a noticeable delay, but anything under 5 seconds is good for me &hellip;)</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Euler 46: Goldbach's Other Conjecture]]></title>
@@ -353,66 +481,6 @@ candidates))
 <p>```</p>
 
 <p>As before, evaluating <code>(euler43)</code> shows the final solution (sum), along with the (six!) candidate numbers making up the sum. This took a whopping <code>4.3 hours</code> to churn through the 8.5 billion numbers. Maybe I need to create a new constraint for these problems: either pen-and-paper, or something <em>slow</em> (like Python ?! :P), so that brute force is never tempting again.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Euler 42: Coded triangle numbers]]></title>
-    <link href="http://agam.github.io/blog/2015/03/23/euler-42-coded-triangle-numbers/"/>
-    <updated>2015-03-23T01:11:01+00:00</updated>
-    <id>http://agam.github.io/blog/2015/03/23/euler-42-coded-triangle-numbers</id>
-    <content type="html"><![CDATA[<p>Very straightforward, this one. And I don&rsquo;t need to feel bad that I did it the simple way. If you&rsquo;re wondering where <code>split-sequence-if</code> and <code>read-file</code> came from, the answer is <code>rutils</code>, which is a good general-purpose utility package, a sort of superset of <code>alexandria</code>, and just a <code>(ql:quickload 'rutils)</code> away. As before, the final answer is obtained by evaluating <code>(euler42)</code>.</p>
-
-<p><strong>Statutory Warning</strong>: <em>spoilers ahead</em></p>
-
-<p>```lisp
-;; If x = 0.5 * n * (n+1) is a triangle number, then there is an
-;; integral solution for n<sup>2</sup> + n &ndash; 2<em>x = 0.
-(defun quadratic-solution (a b c)
-  (let ((det (sqrt (&ndash; (</em> b b) (* 4 a c))))</p>
-
-<pre><code>    (denom (* 2 a)))
-(cons (/ (- (- b) det) denom)
-      (/ (+ (- b) det) denom))))
-</code></pre>
-
-<p>(defun positive-int (num)
-  (and (integerp num)</p>
-
-<pre><code>   (plusp num)))
-</code></pre>
-
-<p>(defun is-triangle-number (num)
-  (let ((soln (quadratic-solution 1 1 (* (&ndash; 2) num))))</p>
-
-<pre><code>(or (positive-int (car soln))
-    (positive-int (cdr soln)))))
-</code></pre>
-
-<p>(defun char->number (char)
-  (1+ (&ndash; (char-code char) (char-code #\A))))</p>
-
-<p>(defun is-triangle-word (word)
-  (let ((value (loop for char across word</p>
-
-<pre><code>              summing (char-&gt;number char))))
-(is-triangle-number value)))       
-</code></pre>
-
-<p>(defun euler42 ()
-  ;; Read in the file, split on the commas, remove the quotes
-  (let* ((file-text (read-file &ldquo;/home/agam/Downloads/p042_words.txt&rdquo;))</p>
-
-<pre><code>     (words-with-quotes (split-sequence-if
-                         (lambda (char) (eq char #\,))
-                         file-text))
-     (words (mapcar (lambda (w) (remove #\" w))
-                    words-with-quotes)))
-(loop for w in words count
-     (is-triangle-word w))))
-</code></pre>
-
-<p>```</p>
 ]]></content>
   </entry>
   
