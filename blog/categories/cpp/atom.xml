@@ -4,7 +4,7 @@
   <title><![CDATA[Category: cpp | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/cpp/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-05-04T01:02:21+00:00</updated>
+  <updated>2015-05-04T03:11:58+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,52 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Euler 48: Self powers]]></title>
+    <link href="http://agam.github.io/blog/2015/05/04/euler-48-self-powers/"/>
+    <updated>2015-05-04T03:09:53+00:00</updated>
+    <id>http://agam.github.io/blog/2015/05/04/euler-48-self-powers</id>
+    <content type="html"><![CDATA[<p>One of the simplest problems, that would be a one-liner in Python or Lisp. Decided to do it in C++ anyway, using the <code>GMP</code> library (verbose, but runs in <code>4 ms</code>)</p>
+
+<p>For this to work, you&rsquo;ll need to add (e.g. for <code>CMake</code>) a line like <code>target_link_libraries(Test gmpxx gmp)</code>, and include <code>gmpxx.h</code>.</p>
+
+<p><strong>Statutory Warning</strong>: <em>Spoilers Ahead</em></p>
+
+<p>```cpp
+int main() {
+  cout &lt;&lt; &ldquo;Euler #48 &hellip; \n&rdquo;;
+  const int kNumTerms = 1000;</p>
+
+<p>  // GMP has a C++ interface, see the following link:
+  // <a href="https://gmplib.org/manual/C_002b_002b-Interface-General.html">https://gmplib.org/manual/C_002b_002b-Interface-General.html</a>
+  mpz_class sum = 0;</p>
+
+<p>  // Loop from 1 to 1000
+  for (int i = 1; i &lt;= kNumTerms; ++i) {</p>
+
+<pre><code>mpz_class term = 0;
+
+// GMP exponentiation function, see documentation at:
+// https://gmplib.org/manual/Integer-Exponentiation.html
+mpz_ui_pow_ui(term.get_mpz_t(), i, i);
+
+sum = sum + term;
+</code></pre>
+
+<p>  }</p>
+
+<p>  mpz_class last_ten_digits;</p>
+
+<p>  // We&rsquo;re looking for sum modulo (10 ^ 10)
+  mpz_class divisor;
+  mpz_ui_pow_ui(divisor.get_mpz_t(), 10, 10);
+  mpz_mod(last_ten_digits.get_mpz_t(), sum.get_mpz_t(), divisor.get_mpz_t());
+  cout &lt;&lt; &ldquo;The final answer is : &rdquo; &lt;&lt; last_ten_digits &lt;&lt; endl;
+}
+```</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Euler 47: Distinct Prime Factors]]></title>
@@ -405,94 +451,6 @@ if (i % 1000 == 0) {
 <p>  }
 }
 ```</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Euler 38: Pandigital multiples]]></title>
-    <link href="http://agam.github.io/blog/2015/03/19/euler-38-pandigital-multiples/"/>
-    <updated>2015-03-19T03:41:10+00:00</updated>
-    <id>http://agam.github.io/blog/2015/03/19/euler-38-pandigital-multiples</id>
-    <content type="html"><![CDATA[<p>I&rsquo;m embarassed at how ridiculously naive my solution is. In hindsight, it&rsquo;s so <em>obvious</em> that the solution <em>has</em> to be a four-digit number and its double, and that the first digit is going to be a 9.</p>
-
-<p>Still, C++ makes you lazy. This took <code>24 milliseconds</code>, and I didn&rsquo;t feel the need to speed it up :)</p>
-
-<p><strong>Statutory Warning</strong>: <em>Spoilers ahead</em></p>
-
-<p>```c++
-static const long kMaxNumbers = 10000;</p>
-
-<p>int main() {
-  long largestPanDigital = 0;
-  for (long num = 2; num &lt; kMaxNumbers; ++num) {</p>
-
-<pre><code>vector&lt;int&gt; pandigits;
-int o = 1;
-while (o &lt;= 20) {
-  long product = num * o;
-  vector&lt;int&gt; pd;
-  while (product &gt; 0) {
-    int d = product % 10;
-    if (d == 0 ||
-        (std::find(pandigits.begin(), pandigits.end(), d) != pandigits.end()) ||
-        (std::find(pd.begin(), pd.end(), d) != pd.end())) {
-      break;
-    }
-    pd.push_back(d);
-    product /= 10;
-  }
-  if (product &gt; 0) {
-    // Found an existing digit
-    break;
-  }
-  // We formed a new product; keep going!
-  for (auto it = pd.rbegin(); it != pd.rend(); ++it) {
-    pandigits.push_back(*it);
-  }
-  ++o;
-}
-if (pandigits.size() == 9 &amp;&amp; o &gt; 1) {
-  long panDigital = 0L;
-  std::cout &lt;&lt; "Found: ";
-  for (auto&amp; d : pandigits) {
-    std::cout &lt;&lt; d;
-    panDigital = panDigital * 10 + d;
-  }
-  std::cout &lt;&lt; " = " &lt;&lt; num &lt;&lt; " * " &lt;&lt; o-1 &lt;&lt; std::endl;
-  if (panDigital &gt; largestPanDigital) {
-    largestPanDigital = panDigital;
-  }
-}
-</code></pre>
-
-<p>  }
-  std::cout &lt;&lt; &ldquo;The largest one is &rdquo; &lt;&lt; largestPanDigital &lt;&lt; std::endl;
-}
-```</p>
-
-<p>It runs as follows:</p>
-
-<p><code>sh
-$ ~/cpp/Test
-Found: 918273645 = 9 * 5
-Found: 192384576 = 192 * 3
-Found: 219438657 = 219 * 3
-Found: 273546819 = 273 * 3
-Found: 327654981 = 327 * 3
-Found: 672913458 = 6729 * 2
-Found: 679213584 = 6792 * 2
-Found: 692713854 = 6927 * 2
-Found: 726914538 = 7269 * 2
-Found: 729314586 = 7293 * 2
-Found: 732914658 = 7329 * 2
-Found: 769215384 = 7692 * 2
-Found: 792315846 = 7923 * 2
-Found: 793215864 = 7932 * 2
-Found: 926718534 = 9267 * 2
-Found: 927318546 = 9273 * 2
-Found: 932718654 = 9327 * 2
-The largest one is &lt;redacted&gt;
-</code></p>
 ]]></content>
   </entry>
   

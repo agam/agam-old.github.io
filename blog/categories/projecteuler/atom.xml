@@ -4,7 +4,7 @@
   <title><![CDATA[Category: projecteuler | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/projecteuler/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-05-04T01:02:21+00:00</updated>
+  <updated>2015-05-04T03:11:58+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,52 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Euler 48: Self powers]]></title>
+    <link href="http://agam.github.io/blog/2015/05/04/euler-48-self-powers/"/>
+    <updated>2015-05-04T03:09:53+00:00</updated>
+    <id>http://agam.github.io/blog/2015/05/04/euler-48-self-powers</id>
+    <content type="html"><![CDATA[<p>One of the simplest problems, that would be a one-liner in Python or Lisp. Decided to do it in C++ anyway, using the <code>GMP</code> library (verbose, but runs in <code>4 ms</code>)</p>
+
+<p>For this to work, you&rsquo;ll need to add (e.g. for <code>CMake</code>) a line like <code>target_link_libraries(Test gmpxx gmp)</code>, and include <code>gmpxx.h</code>.</p>
+
+<p><strong>Statutory Warning</strong>: <em>Spoilers Ahead</em></p>
+
+<p>```cpp
+int main() {
+  cout &lt;&lt; &ldquo;Euler #48 &hellip; \n&rdquo;;
+  const int kNumTerms = 1000;</p>
+
+<p>  // GMP has a C++ interface, see the following link:
+  // <a href="https://gmplib.org/manual/C_002b_002b-Interface-General.html">https://gmplib.org/manual/C_002b_002b-Interface-General.html</a>
+  mpz_class sum = 0;</p>
+
+<p>  // Loop from 1 to 1000
+  for (int i = 1; i &lt;= kNumTerms; ++i) {</p>
+
+<pre><code>mpz_class term = 0;
+
+// GMP exponentiation function, see documentation at:
+// https://gmplib.org/manual/Integer-Exponentiation.html
+mpz_ui_pow_ui(term.get_mpz_t(), i, i);
+
+sum = sum + term;
+</code></pre>
+
+<p>  }</p>
+
+<p>  mpz_class last_ten_digits;</p>
+
+<p>  // We&rsquo;re looking for sum modulo (10 ^ 10)
+  mpz_class divisor;
+  mpz_ui_pow_ui(divisor.get_mpz_t(), 10, 10);
+  mpz_mod(last_ten_digits.get_mpz_t(), sum.get_mpz_t(), divisor.get_mpz_t());
+  cout &lt;&lt; &ldquo;The final answer is : &rdquo; &lt;&lt; last_ten_digits &lt;&lt; endl;
+}
+```</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Euler 47: Distinct Prime Factors]]></title>
@@ -405,82 +451,6 @@ if (i % 1000 == 0) {
 <p>  }
 }
 ```</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Euler 42: Pandigitals with sub-string divisibility]]></title>
-    <link href="http://agam.github.io/blog/2015/03/25/euler-42-pandigitals-with-sub-string-divisibility/"/>
-    <updated>2015-03-25T23:33:56+00:00</updated>
-    <id>http://agam.github.io/blog/2015/03/25/euler-42-pandigitals-with-sub-string-divisibility</id>
-    <content type="html"><![CDATA[<p>These brute force solutions are getting a bit worrying, but here is another one. (I keep promising myself to get out of my comfort zone, but (<em>unfortunately!</em>) code like this is too easy to write).</p>
-
-<p><strong>Statutory Warning</strong>: <em>Spoilers ahead</em></p>
-
-<p>```lisp
-;; For all 0-9 pandigital numbers, find the ones which have successive
-;; substrings of length 3 diisible by 2,3,&hellip;,17.</p>
-
-<p>(defparameter <em>prime-divisors</em> #(17 13 11 7 5 3 2))</p>
-
-<p>;; A number is 0-9 pandigital if it (a) is 10 digits long, and (b) has every digit from 0-9
-(defun is-pandigital (num)
-  (declare (type fixnum num))
-  (let ((digits-seen (make-array 10 :element-type &lsquo;bit :initial-element 0)))</p>
-
-<pre><code>(do* ((n num (floor (/ n 10)))
-      (d (mod n 10) (mod n 10))
-      (num-digits 0 (1+ num-digits)))
-     ((= n 0) (and (= num-digits 10)
-                   (every (lambda (x) (= x 1)) digits-seen)))
-  (setf (bit digits-seen d) 1))))
-</code></pre>
-
-<p>(defun check-divisibility (num div-index)
-  (= 0 (mod num (aref <em>prime-divisors</em> div-index))))</p>
-
-<p>(defun get-three-digit-num (num)
-  (let ((ones (mod num 10))</p>
-
-<pre><code>    (tens (mod (floor (/ num 10)) 10))
-    (hundreds (mod (floor (/ num 100)) 10)))
-(+ ones
-   (* 10 tens)
-   (* 100 hundreds))))
-</code></pre>
-
-<p>;; Go backwards in groups of three digits and check divisibility
-(defun has-divisible-substrings (num)
-  (do* ((n num (floor (/ n 10)))</p>
-
-<pre><code>    (div-index 0 (1+ div-index))
-    (dividend (get-three-digit-num n) (get-three-digit-num n))
-    (div-p (check-divisibility dividend div-index)
-           (and div-p (check-divisibility dividend div-index))))
-   ((&lt; n 10000) div-p)))
-</code></pre>
-
-<p>(defun check-substring-pandigital-range (start end)
-  (declare (type fixnum start end))
-  (let ((candidates &lsquo;()))</p>
-
-<pre><code>(loop for num from start to end do
-     (if (and (is-pandigital num)
-              (has-divisible-substrings num))
-         (push num candidates)))
-candidates))
-</code></pre>
-
-<p>(defun euler43 ()
-  (let ((candidates (check-substring-pandigital-range 1234567890 9876543210)))</p>
-
-<pre><code>(print candidates)
-(apply #'+ candidates)))
-</code></pre>
-
-<p>```</p>
-
-<p>As before, evaluating <code>(euler43)</code> shows the final solution (sum), along with the (six!) candidate numbers making up the sum. This took a whopping <code>4.3 hours</code> to churn through the 8.5 billion numbers. Maybe I need to create a new constraint for these problems: either pen-and-paper, or something <em>slow</em> (like Python ?! :P), so that brute force is never tempting again.</p>
 ]]></content>
   </entry>
   
