@@ -7,7 +7,7 @@
 	<meta name="author" content="Agam">
 
 	
-	<meta name="description" content="I came across a reference to Marvin Minsky&rsquo;s 1970 Turing Award Lecture. I&rsquo;ve barely read any of these lectures, always assuming they &hellip;">
+	<meta name="description" content="Processing is intended to be a &ldquo;creative coding&rdquo; tool for non-programmers. It runs on top of Java, which is good enough to get started. &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -86,6 +86,110 @@
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2014/01/27/fun-with-processing-spinning-ellipses/">
+		
+			Fun With Processing: Spinning Ellipses</a>
+	</h2>
+	<div class="entry-content">
+		<p><a href="http://www.processing.org/">Processing</a> is intended to be a &ldquo;creative coding&rdquo; tool for non-programmers. It runs on top of Java, which is good enough to get started. The performance-anxious folks might eventually prefer something like <a href="http://libcinder.org/">Cinder</a>, which has C++ libraries instead.</p>
+
+<p>I tweaked a simple snippet from a tutorial as a first step:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='java'><span class='line'><span class="kt">void</span> <span class="nf">setup</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>  <span class="n">size</span><span class="o">(</span><span class="mi">600</span><span class="o">,</span> <span class="mi">600</span><span class="o">);</span>
+</span><span class='line'>  <span class="n">background</span><span class="o">(</span><span class="mi">255</span><span class="o">);</span>
+</span><span class='line'>  <span class="n">smooth</span><span class="o">();</span>
+</span><span class='line'>  <span class="n">translate</span><span class="o">(</span><span class="mi">300</span><span class="o">,</span> <span class="mi">300</span><span class="o">);</span>
+</span><span class='line'>  <span class="k">for</span> <span class="o">(</span><span class="kt">float</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">360</span><span class="o">;</span> <span class="n">i</span><span class="o">+=</span> <span class="mf">0.3</span><span class="o">)</span> <span class="o">{</span>
+</span><span class='line'>    <span class="n">pushMatrix</span><span class="o">();</span>
+</span><span class='line'>      <span class="n">rotate</span><span class="o">(</span><span class="n">radians</span><span class="o">(</span><span class="n">i</span><span class="o">));</span>
+</span><span class='line'>      <span class="n">translate</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">300</span><span class="o">);</span>
+</span><span class='line'>      <span class="n">rotate</span><span class="o">(</span><span class="n">radians</span><span class="o">(</span><span class="n">i</span> <span class="o">*</span> <span class="mi">10</span><span class="o">));</span>
+</span><span class='line'>      <span class="n">scale</span><span class="o">(</span><span class="n">map</span><span class="o">(</span><span class="n">sin</span><span class="o">(</span><span class="n">radians</span><span class="o">(</span><span class="n">i</span> <span class="o">*</span> <span class="mi">6</span><span class="o">)),</span> <span class="o">-</span><span class="mi">1</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span> <span class="o">.</span><span class="mi">5</span><span class="o">,</span> <span class="mi">1</span><span class="o">),</span>
+</span><span class='line'>        <span class="n">map</span><span class="o">(</span><span class="n">sin</span><span class="o">(</span><span class="n">radians</span><span class="o">(</span><span class="n">i</span> <span class="o">*</span> <span class="mi">3</span><span class="o">)),</span> <span class="o">-</span><span class="mi">1</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span> <span class="o">.</span><span class="mi">5</span><span class="o">,</span> <span class="mi">1</span><span class="o">));</span>
+</span><span class='line'>      <span class="n">drawEllipse</span><span class="o">();</span>
+</span><span class='line'>    <span class="n">popMatrix</span><span class="o">();</span>
+</span><span class='line'>  <span class="o">}</span>
+</span><span class='line'><span class="o">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">void</span> <span class="nf">drawEllipse</span><span class="o">()</span> <span class="o">{</span>
+</span><span class='line'>  <span class="n">noFill</span><span class="o">();</span>
+</span><span class='line'>  <span class="n">stroke</span><span class="o">(</span><span class="mi">255</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">128</span><span class="o">);</span>
+</span><span class='line'>  <span class="n">ellipse</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="mi">600</span><span class="o">,</span> <span class="mi">100</span><span class="o">);</span>
+</span><span class='line'><span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>and got some funky looking images.</p>
+
+<p><img class="center" src="http://farm4.staticflickr.com/3776/12162399443_14fd4eea37_z_d.jpg"></p>
+
+<p><img class="center" src="http://farm8.staticflickr.com/7423/12162160705_5bc891cfa6_z_d.jpg"></p>
+
+<p><img class="center" src="http://farm8.staticflickr.com/7341/12162577004_ee1689e71f_z_d.jpg"></p>
+
+<p><img class="center" src="http://farm4.staticflickr.com/3742/12162819596_176dc1a9d3_z_d.jpg"></p>
+
+<p><img class="center" src="http://farm6.staticflickr.com/5513/12162574864_10b7b887f3_z_d.jpg"></p>
+
+<p>Before you say <em>meh</em>, none of this is supposed to make you Michaelangelo. But it provides a kind of instant-gratification, since you can tweak your <em>sketch</em>, run it, tweak it again, run it again, and so on &hellip; which is rather hard to come by.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-27T00:11:00+00:00" pubdate data-updated="true">Jan 27<sup>th</sup>, 2014</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/ellipses/'>ellipses</a>, <a class='category' href='/blog/categories/processing/'>processing,</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -1775,312 +1879,6 @@ int main() {
 
 
 	<a class='category' href='/blog/categories/hoon/'>hoon</a>, <a class='category' href='/blog/categories/urbit/'>urbit,</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2014/01/07/programming-fun-banquet-planning/">
-		
-			Programming Fun: Banquet Planning</a>
-	</h2>
-	<div class="entry-content">
-		<p>Here&rsquo;s <a href="http://www.reddit.com/r/dailyprogrammer/comments/1rnrs2/112813_challenge_137_intermediate_hard_banquet/">another</a> daily programming problem:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>Input Description
-</span><span class='line'>-----------------
-</span><span class='line'>
-</span><span class='line'>On standard console input, you will be given two space-delimited integers, N and M. N is the number of food items, while M is the number of food-relationships. Food-items are unique single-word lower-case names with optional underscores (the '_' character), while food-relationships are two food items that are space delimited. All food-items will be listed first on their own lines, then all food-relationships will be listed on their own lines afterwards. A food-relationship is where the first item must be served before the second item.
-</span><span class='line'>Note that in the food-relationships list, some food-item names can use the wildcard-character '*'. You must support this by expanding the rule to fulfill any combination of strings that fit the wildcard. For example, using the items from Sample Input 2, the rule "turkey* *_pie" expands to the following four rules:
-</span><span class='line'>turkey almond_pie
-</span><span class='line'>turkey_stuffing almond_pie
-</span><span class='line'>turkey pecan_pie
-</span><span class='line'>turkey_stuffing pecan_pie
-</span><span class='line'>A helpful way to think about the wildcard expansion is to use the phrase "any item A must be before any item B". An example would be the food-relationship "*pie coffee", which can be read as "any pie must be before coffee".
-</span><span class='line'>Some orderings may be ambiguous: you might have two desserts before coffee, but the ordering of desserts may not be explicit. In such a case, group the items together.
-</span><span class='line'>
-</span><span class='line'>Output Description
-</span><span class='line'>------------------
-</span><span class='line'>
-</span><span class='line'>Print the correct order of food-items with a preceding index, starting from 1. If there are ambiguous ordering for items, list them together on the same line as a comma-delimited array of food-items. Any items that do not have a relationship must be printed with a warning or error message.
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The second sample input (to take an example) is as follows:</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>8 5
-</span><span class='line'>turkey
-</span><span class='line'>pecan_pie
-</span><span class='line'>salad
-</span><span class='line'>crab_cakes
-</span><span class='line'>almond_pie
-</span><span class='line'>rice
-</span><span class='line'>coffee
-</span><span class='line'>turkey_stuffing
-</span><span class='line'>turkey_stuffing turkey
-</span><span class='line'>turkey* *_pie
-</span><span class='line'>*pie coffee
-</span><span class='line'>salad turkey*
-</span><span class='line'>crab_cakes salad</span></code></pre></td></tr></table></div></figure>
-
-
-<p>So this implies a graph that looks something like this:</p>
-
-<p><img class="center" src="/images/programming-fun/graph-dependency-1.jpg" width="300"></p>
-
-<p>Or, if you wish, with the arrows reversed, like this:</p>
-
-<p><img class="center" src="/images/programming-fun/graph-dependency-2.jpg" width="300"></p>
-
-<p>So it&rsquo;s possible to start from the first <code>root</code> node, labelling it as <code>0</code> and its neighbors as <code>1</code>. This process can be repeated, with its neighbors&#8217; neighbors being labelled as <code>2</code>, and so on, until there are no nodes left to label.</p>
-
-<p><img class="center" src="/images/programming-fun/graph-dependency-3.jpg" width="300" title="" ></p>
-
-<p>Once all nodes are labelled, the solution is just a pairing of these numbers and the corresponding nodes.</p>
-
-<div><script src='https://gist.github.com/8293739.js'></script>
-<noscript><pre><code>#include &lt;cmath&gt;
-#include &lt;cstdint&gt;
-#include &lt;cstdio&gt;
-#include &lt;cstdlib&gt;
-#include &lt;algorithm&gt;
-#include &lt;iomanip&gt;
-#include &lt;iostream&gt;
-#include &lt;limits&gt;
-#include &lt;string&gt;
-#include &lt;vector&gt;
-#include &lt;queue&gt;
-
-using namespace std;
-
-struct GraphNode {
-  vector&lt;GraphNode*&gt; neighbors;
-  string label;
-  int level = 0;
-
-  GraphNode(const string&amp; l) : label(l) {}
-};
-
-void FindFoodItems(
-    const string&amp; food_glob,
-    const vector&lt;GraphNode*&gt;&amp; food_nodes,
-    vector&lt;GraphNode*&gt;* results) {
-  for (auto&amp; food_node : food_nodes) {
-    // The only cases supported are:
-    //   (1) Exact match
-    //   (2) '*' at the beginning
-    //   (3) '*' at the end
-    if (food_glob.find_first_of('*') == string::npos) {
-      if (food_glob == food_node-&gt;label) {
-        results-&gt;push_back(food_node);
-        continue;
-      }
-    }
-    if (food_glob.front() == '*') {
-      const string matcher = food_glob.substr(1);
-      if (food_node-&gt;label.substr(
-            food_node-&gt;label.length() - matcher.length()) ==
-          matcher) {
-        results-&gt;push_back(food_node);
-        continue;
-      }
-    }
-    if (food_glob.back() == '*') {
-      const string matcher = food_glob.substr(0, food_glob.length() - 1);
-      if (food_node-&gt;label.substr(0, matcher.length()) == matcher) {
-        results-&gt;push_back(food_node);
-        continue;
-      }
-    }
-  }
-}
-
-int main() {
-  int num_food_items, num_food_relationships;
-  cin &gt;&gt; num_food_items &gt;&gt; num_food_relationships;
-  cout &lt;&lt; &quot;Will read in &quot; &lt;&lt; num_food_relationships &lt;&lt; &quot; relationships for &quot; &lt;&lt; num_food_items &lt;&lt; &quot; food items.&quot; &lt;&lt; endl;
-  vector&lt;pair&lt;string, string&gt;&gt; food_relationships;
-  vector&lt;GraphNode*&gt; food_nodes;
-  for (int i = 0; i &lt; num_food_items; ++i) {
-    string food_item;
-    cin &gt;&gt; food_item;
-    food_nodes.push_back(new GraphNode(food_item));
-  }
-  for (int i = 0; i &lt; num_food_relationships; ++i) {
-    string food_item_1, food_item_2;
-    cin &gt;&gt; food_item_1 &gt;&gt; food_item_2;
-    // We are going to use regex matching whereas the input is in 'glob' format,
-    // so make a small adjustment.
-    food_relationships.push_back(make_pair(food_item_1, food_item_2));
-  }
-
-  // Sanity check what we got.
-  cout  &lt;&lt; &quot;Read in the following food items :- \n&quot;;
-  for (const auto&amp; food_item : food_nodes) {
-    cout &lt;&lt; food_item-&gt;label &lt;&lt; endl;
-  }
-  cout &lt;&lt; &quot;Read in the following food relationships :- \n&quot;;
-  for (const auto&amp; food_relationship : food_relationships) {
-    cout &lt;&lt; food_relationship.first &lt;&lt; &quot; &lt; &quot; &lt;&lt; food_relationship.second &lt;&lt; endl;
-  }
-
-  // General approach:
-  // 1. Create a graph which each node corresponding to a food item
-  // 2. For every relationship, expand the regex to determine the nodes involved, and
-  // then create a dependency link.
-  // 3. Go through the dependency links and number the nodes
-  //    - Increment the number of each of a node's dependencies
-  //    - Repeat for each of the dependent nodes
-  //    - Add the nodes into a numbered list.
-  //    - Note: this will require adding and removing nodes from the list
-  // 4. Once no more dependencies have to be processed, print out numbered list
-  // 5. Go through graph and print out 'isolated' nodes
-  //
-  // Edge cases: Multiple origins, multiple nodes of the same number, isolated nodes
-
-  // Step 2
-  vector&lt;GraphNode*&gt; root_nodes = food_nodes;
-  vector&lt;GraphNode*&gt; isolated_nodes = food_nodes;
-  for (const auto&amp; food_relationship : food_relationships) {
-    vector&lt;GraphNode*&gt; dependents, dependees;
-    // Each relationship can potentially be many-&gt;many
-    // Note: the c++ regex implementation isn't available in my standard library
-    // right now, so I'm going to support a limited range of globs:
-    //   only those where the '*' is either right at the beginning or at the end
-    FindFoodItems(food_relationship.first, food_nodes, &amp;dependents);
-    FindFoodItems(food_relationship.second, food_nodes, &amp;dependees);
-
-    // Now create dependency links
-    for (auto&amp; nodeA : dependents) {
-      for (auto&amp; nodeB : dependees) {
-        nodeA-&gt;neighbors.push_back(nodeB);
-      }
-    }
-
-    // Also as part of this process weed out non-root nodes for the next step, as well as isolated nodes.
-    for (auto&amp; node : dependees) {
-      root_nodes.erase(
-          remove(root_nodes.begin(), root_nodes.end(), node),
-          root_nodes.end());
-      isolated_nodes.erase(
-          remove(isolated_nodes.begin(), isolated_nodes.end(), node),
-          isolated_nodes.end());
-    }
-    for (auto&amp; node : dependents) {
-      isolated_nodes.erase(
-          remove(isolated_nodes.begin(), isolated_nodes.end(), node),
-          isolated_nodes.end());
-    }
-  }
-
-  // Step 3
-  // Process all the nodes in the current 'frontier' until there are non left.
-  // The first frontier is the set of root nodes
-  queue&lt;GraphNode*&gt; frontier;
-  for (auto&amp; node : root_nodes) {
-    frontier.push(node);
-  }
-  while (!frontier.empty()) {
-    GraphNode* current_node = frontier.front();
-    for (auto&amp; neighbor : current_node-&gt;neighbors) {
-      neighbor-&gt;level = current_node-&gt;level + 1;
-      frontier.push(neighbor);
-    }
-    frontier.pop();
-  }
-
-  // Step 4
-  vector&lt;vector&lt;GraphNode*&gt;&gt; levels(food_nodes.size());
-  for (const auto&amp; node : food_nodes) {
-    if (find(isolated_nodes.begin(), isolated_nodes.end(), node) ==
-        isolated_nodes.end()) {
-      levels[node-&gt;level].push_back(node);
-    }
-  }
-
-  for (int i = 0; i &lt; levels.size() &amp;&amp; !levels[i].empty(); ++i) {
-    cout &lt;&lt; i + 1 &lt;&lt; &quot; : &quot;;
-    for (const auto&amp; node : levels[i]) {
-      cout &lt;&lt; node-&gt;label &lt;&lt; &quot;  &quot;;
-    }
-    cout &lt;&lt; endl;
-  }
-  cout &lt;&lt; endl;
-
-  // Step 5
-  // Finally, print out the nodes without dependees
-  for (const auto&amp; node : isolated_nodes) {
-    cout &lt;&lt; &quot;Warning: &quot; &lt;&lt; node-&gt;label &lt;&lt; &quot; does not have any ordering.&quot; &lt;&lt; endl;
-  }
-
-  for (auto&amp; node : food_nodes) {                                                                          
-    delete node;                                                                                           
-  }                                                                                                        
-}
-</code></pre></noscript></div>
-
-
-
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-01-07T02:27:00+00:00" pubdate data-updated="true">Jan 7<sup>th</sup>, 2014</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/alwaysbecoding/'>alwaysbecoding,</a>, <a class='category' href='/blog/categories/reddit/'>reddit</a>
 
 
 </div>

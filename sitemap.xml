@@ -3,6 +3,12 @@
   
   
   <url>
+    <loc>http://agam.github.io/blog/2015/05/05/euler-49-prime-permutations/</loc>
+    <lastmod>2015-05-05T06:39:11+00:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
     <loc>http://agam.github.io/blog/2015/05/04/euler-48-self-powers/</loc>
     <lastmod>2015-05-04T03:09:53+00:00</lastmod>
     <priority>0.8</priority>
@@ -815,14 +821,14 @@
   
   <url>
     <loc>http://agam.github.io/</loc>
-    <lastmod>2015-05-04T03:11:58+00:00</lastmod>
+    <lastmod>2015-05-05T06:59:21+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   
   <url>
     <loc>http://agam.github.io/blog/archives/</loc>
-    <lastmod>2015-05-04T03:11:58+00:00</lastmod>
+    <lastmod>2015-05-05T06:59:21+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>

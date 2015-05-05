@@ -4,7 +4,7 @@
   <title><![CDATA[Category: projecteuler | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/projecteuler/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-05-04T03:11:58+00:00</updated>
+  <updated>2015-05-05T06:59:21+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,276 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Euler 49: Prime Permutations]]></title>
+    <link href="http://agam.github.io/blog/2015/05/05/euler-49-prime-permutations/"/>
+    <updated>2015-05-05T06:39:11+00:00</updated>
+    <id>http://agam.github.io/blog/2015/05/05/euler-49-prime-permutations</id>
+    <content type="html"><![CDATA[<p>This one took way longer than expected. I initially misunderstood the question to require 4-digit numbers <em>unique digits</em> (because that&rsquo;s what the example has!) and I went crazy trying to figure out why the <em>only</em> answer I was getting was the example in the question. Anyway I later realized I&rsquo;d over-complicated my solution and I just needed to look at numbers between <code>1000</code> and <code>9999</code>. Given this, it&rsquo;s <em>absurd</em> to have a class called &ldquo;FourDigits&rdquo; (duh), but I figured there&rsquo;s no point hiding my initial mistake :)</p>
+
+<p>The code fragment below is bloated because I&rsquo;ve left in old code from my first attempt (the functions suffixed with <code>...Old</code>), and half the code here is dead code.</p>
+
+<p><strong>Statutory Warning</strong>: <em>Spoilers Ahead</em> (well, not really)</p>
+
+<p>```cpp
+bool IsPrime(int n) {
+  // Rule out even numbers
+  if ((n > 2) &amp;&amp; (n % 2 == 0)) return false;</p>
+
+<p>  // Check divisibility by odd numbers starting from 3, uptil the
+  // square root of the number.
+  const int lim = sqrt(n);
+  for (int i = 3; i &lt;= lim; i+=2) {</p>
+
+<pre><code>if (n % i == 0) {
+  return false;
+}
+</code></pre>
+
+<p>  }
+  return true;
+}</p>
+
+<p>bool HasArithmeticSequence(const vector<int>&amp; v) {
+  assert(v.size() >= 3);
+  // Assumes sorted vector of ints
+  struct diff {</p>
+
+<pre><code>int n1, n2, d;
+</code></pre>
+
+<p>  };
+  vector<diff> diffs;
+  // Get the diffs between all elements, then find two pairs with the
+  // same diff (yes, N<sup>2</sup>, but will do). The two pairs must share a
+  // number, i.e. V_i + d = V_j, and V_j + d = V_k.
+  for (int i = 0; i &lt; v.size() &ndash; 1; ++i) {</p>
+
+<pre><code>for (int j = i+1; j &lt; v.size(); ++j) {
+  assert(v[j] &gt; v[i]);
+  diffs.push_back( { v[i], v[j], v[j] - v[i] } );
+}
+</code></pre>
+
+<p>  }
+  std::sort(diffs.begin(), diffs.end(),</p>
+
+<pre><code>        [](const diff&amp; df1, const diff&amp; df2) {
+          return df1.d &lt; df2.d;
+        });
+</code></pre>
+
+<p>  // Now that we have grouped elements by their difference, we can
+  // analyze each &lsquo;cluster&rsquo; to find the pairs we want.
+  for (int i = 0; i &lt; diffs.size() &ndash; 1; ++i) {</p>
+
+<pre><code>// Yes, it's inefficient, but ...
+int d = diffs[i].d;
+for (int j = i + 1; diffs[j].d == d; ++j) {
+  if (diffs[i].n2 == diffs[j].n1) {
+    cout &lt;&lt; "Found arithmetic progression: "
+         &lt;&lt; diffs[i].n1 &lt;&lt; " -&gt; "
+         &lt;&lt; diffs[i].n2 &lt;&lt; " -&gt; "
+         &lt;&lt; diffs[j].n2 &lt;&lt; endl;
+    return true;
+  }
+}
+</code></pre>
+
+<p>  }
+  return false;
+}</p>
+
+<p>class FourDigitCombinator {
+public:
+  FourDigitCombinator() : digits<em>({0,1,2,3}), number</em>(1000) {}</p>
+
+<p>  string GetDigitsOld() {</p>
+
+<pre><code>std::ostringstream stream;
+for (int i = 0; i &lt; kNumDigits; ++i) {
+  stream &lt;&lt; digits_[i];
+}
+return stream.str();
+</code></pre>
+
+<p>  }</p>
+
+<p>  bool NextOld() {</p>
+
+<pre><code>sanity_check();
+// See if there is a prior number that can be incremented
+for (int i = kNumDigits - 1; i &gt;= 0; --i) {
+  // The last digit can go up to kMaxDigit, the previous one up to
+  // kMaxDigit - 1, and so on ...
+  const int digitMax = kMaxDigit - kNumDigits + i + 1;
+  int digitValue = digits_[i];
+  assert(digitValue &lt;= digitMax);
+  if (digitValue == digitMax) {
+    // We've hit the limit for this digit. If this is the first
+    // digit, we've reached the end.
+    if (i == 0) {
+      return false;
+    }
+    // Otherwise, fall through to the previous digit ...
+  } else {
+    // Increment, and reset subsequent digits, if any.
+    for (int j = i; j &lt; kNumDigits; ++j) {
+      ++digitValue;
+      digits_[j] = digitValue;
+    }
+    return true;
+  }
+}
+assert(false);  // We should not get here!
+</code></pre>
+
+<p>  }</p>
+
+<p>  bool HasPrimePermutationsOld() {</p>
+
+<pre><code>array&lt;int, kNumDigits&gt; mutation = digits_;
+vector&lt;int&gt; prime_mutations;
+do {
+  // Skip permutations with a leading zero.
+  if (mutation[0] == 0) continue;
+
+  // Create the corresponding number
+  int number = 0;
+  for (int i = 0; i &lt; kNumDigits; ++i) {
+    number = number * 10 + mutation[i];
+  }
+  if (IsPrime(number)) {
+    prime_mutations.push_back(number);
+  }
+} while (std::next_permutation(mutation.begin(), mutation.end()));
+
+if ((prime_mutations.size() &gt;= 3) &amp;&amp; HasArithmeticSequence(prime_mutations)) {
+  return true;
+}
+return false;
+</code></pre>
+
+<p>  }</p>
+
+<p>  string GetDigits() {</p>
+
+<pre><code>std::ostringstream stream;
+stream &lt;&lt; number_;
+return stream.str();
+</code></pre>
+
+<p>  }</p>
+
+<p>  bool Next() {</p>
+
+<pre><code>if (number_ &lt; 9999) {
+  ++number_;
+  return true;
+}
+return false;
+</code></pre>
+
+<p>  }</p>
+
+<p>  bool HasPrimePermutations() {</p>
+
+<pre><code>array&lt;int, kNumDigits&gt; mutation;
+assert(number_ &gt;= 1000 &amp;&amp; number_ &lt;= 9999);
+
+// Convert number into an array of digits ...
+int n = number_;
+int digit_index = kNumDigits - 1;
+while (n &gt; 0) {
+  mutation[digit_index--] = n % 10;
+  n /= 10;
+}
+
+vector&lt;int&gt; prime_mutations;
+do {
+  // ... then convert the array of digits back into a number!
+  int num = 0;
+  for (int i = 0; i &lt; kNumDigits; ++i) {
+    num = num * 10 + mutation[i];
+  }
+  assert(num &gt;= 1000 &amp;&amp; num &lt;= 9999);
+  if (IsPrime(num)) {
+    prime_mutations.push_back(num);
+  }
+} while (std::next_permutation(mutation.begin(), mutation.end()));
+
+if ((prime_mutations.size() &gt;= 3) &amp;&amp; HasArithmeticSequence(prime_mutations)) {
+  return true;
+}
+return false;
+</code></pre>
+
+<p>  }</p>
+
+<p>private:
+  static const int kNumDigits = 4;
+  static const int kMaxDigit = 9;
+  array&lt;int, kNumDigits> digits<em>;
+  int number</em>;</p>
+
+<p>  void sanity_check() {</p>
+
+<pre><code>for (int i = 0; i &lt; kNumDigits - 1; ++i) {
+  assert(digits_[i] &lt; digits_[i+1]);
+}
+</code></pre>
+
+<p>  }
+};</p>
+
+<p>int main() {
+  cout &lt;&lt; &ldquo;Euler #49 &hellip; \n&rdquo;;</p>
+
+<p>  set<string> candidates;</p>
+
+<p>  // Go over all sets of four digits, and consider the permutations of
+  // each to see if any group of three permutations is prime.
+  FourDigitCombinator four_digits;
+  do {</p>
+
+<pre><code>if (four_digits.HasPrimePermutations()) {
+  candidates.insert(four_digits.GetDigits());
+}
+</code></pre>
+
+<p>  } while (four_digits.Next());</p>
+
+<p>  // Debugging aid &hellip; check if any combinations matched.
+  for (const auto&amp; c : candidates) {</p>
+
+<pre><code>cout &lt;&lt; "Debug: found : " &lt;&lt; c &lt;&lt; endl;
+</code></pre>
+
+<p>  }
+}
+```</p>
+
+<p>And it runs as &hellip;</p>
+
+<p>```sh
+$ time ./Test
+Euler #49 &hellip;
+Found arithmetic progression: 1487 &ndash;> 4817 &ndash;> 8147
+Found arithmetic progression: 1487 &ndash;> 4817 &ndash;> 8147
+Found arithmetic progression: 2969 &ndash;> 6299 &ndash;> 9629
+Found arithmetic progression: 2969 &ndash;> 6299 &ndash;> 9629
+Debug: found : 1478
+Debug: found : 1487
+Debug: found : 2699
+Debug: found : 2969</p>
+
+<p>real    0m0.019s
+user    0m0.016s
+sys     0m0.000s
+```</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Euler 48: Self powers]]></title>
@@ -369,81 +639,6 @@ if (is_pentagonal(num) &amp;&amp; is_hexagonal(num)) {
   return 0;
 }
 if (i % 100000 == 0) {
-  cout &lt;&lt; "Done testing " &lt;&lt; i &lt;&lt; endl;
-}
-</code></pre>
-
-<p>  }
-}
-```</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Euler 44: Pentagonal Numbers]]></title>
-    <link href="http://agam.github.io/blog/2015/04/28/euler-44-pentagonal-numbers/"/>
-    <updated>2015-04-28T18:08:09+00:00</updated>
-    <id>http://agam.github.io/blog/2015/04/28/euler-44-pentagonal-numbers</id>
-    <content type="html"><![CDATA[<p>I said I&rsquo;d try to work out the next problem on paper, but I gave up and wrote a program for it again :(</p>
-
-<p>I honestly thought it would take a long time to run, with the final answer some grotesquely long number &hellip; but I was mistaken. ProjectEuler agrees with this assessment, since this happens to be officially categorized as among the <em>fifty easiest problems</em> (!)</p>
-
-<p>It took just <code>90ms</code> to run, which is simply too much of a tradeoff to pass up.</p>
-
-<p><strong>Statutory Warning</strong>: <em>Spoilers Ahead</em></p>
-
-<p>```c++
-uint64_t get_pentagonal(int n) {
-  assert(n > 0);
-  return n * (3 * n &ndash; 1) / 2;
-}</p>
-
-<p>bool is_pentagonal(uint64_t num) {
-  // y = x * (3*x &ndash; 1) / 2
-  // So x is an integral solution of 3x<sup>2</sup> + (-1)x + (-2y) = 0
-  // &hellip; or (1 + sqrt(1 + 24y))/6</p>
-
-<p>  double solution = (1 + sqrt(1 + 24 * num)) / 6.0;
-  double dummy;</p>
-
-<p>  // Check if the solution is an integer
-  return (std::modf(solution, &amp;dummy) == 0.0);
-}</p>
-
-<p>bool check_pentagonal(int i, int j) {
-  assert(i > 0 &amp;&amp; j > 0);
-  assert(j &lt; i);
-  uint64_t penta_i = get_pentagonal(i);
-  uint64_t penta_j = get_pentagonal(j);
-  uint64_t sum = penta_i + penta_j;
-  uint64_t diff = penta_i &ndash; penta_j;
-  if (is_pentagonal(sum) &amp;&amp; is_pentagonal(diff)) {</p>
-
-<pre><code>cout &lt;&lt; "Found match for i = " &lt;&lt; i
-     &lt;&lt; " and j = " &lt;&lt; j
-     &lt;&lt; ", with diff = " &lt;&lt; diff &lt;&lt; endl;
-return true;
-</code></pre>
-
-<p>  } else {</p>
-
-<pre><code>return false;
-</code></pre>
-
-<p>  }
-}</p>
-
-<p>int main() {
-  cout &lt;&lt; &ldquo;Euler # 44 &hellip; \n\n&rdquo;;
-  int i = 0;
-  for (int i = 0; ; ++i) {</p>
-
-<pre><code>for (int j = i-1; j &gt; 0; --j) {
-  if (check_pentagonal(i,j)) {
-    return 0;
-  }
-}
-if (i % 1000 == 0) {
   cout &lt;&lt; "Done testing " &lt;&lt; i &lt;&lt; endl;
 }
 </code></pre>
