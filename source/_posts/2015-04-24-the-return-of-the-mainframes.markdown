@@ -50,4 +50,4 @@ Suggested alternative titles included: _The revenge of the mainframes_, _The mai
 
 [^9]: Yes, that’s where I really got the Noble quote from, I didn’t really read the 1986 book, sorry :)
 
-[^10]: And I’m looking forward to Maker Fair this year too!
+[^10]: And I’m looking forward to Maker Faire this year too!
