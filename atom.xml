@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-05-05T06:59:21+00:00</updated>
+  <updated>2015-05-16T06:32:46+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,35 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[In search of lost rants ...]]></title>
+    <link href="http://agam.github.io/blog/2015/05/16/in-search-of-lost-rants-dot-dot-dot/"/>
+    <updated>2015-05-16T06:20:14+00:00</updated>
+    <id>http://agam.github.io/blog/2015/05/16/in-search-of-lost-rants-dot-dot-dot</id>
+    <content type="html"><![CDATA[<p>I love reading rants. Not random, trollish ones, you know, intended only to provoke flamewars &mdash; those are <em>tiresome</em> and (worse!) predictable. No, I like the heartfelt ones, filled with (seemingly) genuine disgust and grief.</p>
+
+<p>Last year I went meticulously through <em>every single post</em> by Erik Naggum (thanks to Zach Beane who took the trouble of curating them<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>), and found a wealth of quotes. I highly recommend it &mdash; consider it casual reading, a replacement for whatever you plan to read on your next commute, travel trip or vacation.</p>
+
+<p>Anyway, today I found another worthy rant-er, Mr. Adam Rosenberg. Yes, he has a blog with a bunch of interesting articles<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>, he is also a self-described &ldquo;industrial mathematician&rdquo;, and has written an unabashed defense of Ye Olde FORTRAN and C style as the once and future programming style<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>. But what made me <em>binge-read</em> his writing was his collection of rants<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup>.</p>
+
+<p>A good place to start is <a href="http://www.the-adam.com/adam/rantrave/computers.html">&ldquo;The Failure of the Digital Computer&rdquo;</a>, but obviously <em>YMMV</em>.</p>
+<div class="footnotes">
+<hr/>
+<ol>
+<li id="fn:1">
+<p>The <a href="http://xach.com/naggum/articles/">Erik Naggum Archive</a><a href="#fnref:1" rev="footnote">&#8617;</a></p></li>
+<li id="fn:2">
+<p><a href="http://www.the-adam.com/adam/index.html">The Adam N. Rosenberg web page</a><a href="#fnref:2" rev="footnote">&#8617;</a></p></li>
+<li id="fn:3">
+<p><a href="http://www.the-adam.com/adam/rantrave/st02.pdf">&ldquo;A Description of One Programmer&rsquo;s Programming Style&rdquo;</a><a href="#fnref:3" rev="footnote">&#8617;</a></p></li>
+<li id="fn:4">
+<p><a href="http://www.the-adam.com/adam/rantrave/">&ldquo;Rants and Raves&rdquo;</a><a href="#fnref:4" rev="footnote">&#8617;</a></p></li>
+</ol>
+</div>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Euler 49: Prime Permutations]]></title>
@@ -2218,76 +2247,6 @@
 
 
 <p>Anyway, all I know so far is the <a href="http://www.informit.com/store/go-programming-language-9780134190440#bss0f8fc8f7-6d8d-4816-9b68-458cbd7149e6">Table of Contents</a>, but stay tuned for more!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Euler 36: Palindromic Numbers]]></title>
-    <link href="http://agam.github.io/blog/2015/03/05/euler-36-palindromic-numbers/"/>
-    <updated>2015-03-05T06:10:59+00:00</updated>
-    <id>http://agam.github.io/blog/2015/03/05/euler-36-palindromic-numbers</id>
-    <content type="html"><![CDATA[<p>Wha &hellip; this is getting boring.</p>
-
-<p><strong>Statutory Warning</strong>: <em>Spoilers ahead</em></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-</pre></td><td class='code'><pre><code class='c++'><span class='line'><span class="k">using</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="p">;</span>
-</span><span class='line'><span class="k">static</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">kMaxNumbers</span> <span class="o">=</span> <span class="mi">1000000</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">bool</span> <span class="nf">isPalindromic</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="kt">int</span> <span class="n">base</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">digits</span><span class="p">;</span>
-</span><span class='line'>  <span class="k">while</span> <span class="p">(</span><span class="n">n</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">digits</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">n</span> <span class="o">%</span> <span class="n">base</span><span class="p">);</span>
-</span><span class='line'>    <span class="n">n</span> <span class="o">/=</span> <span class="n">base</span><span class="p">;</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="kt">int</span> <span class="n">length</span> <span class="o">=</span> <span class="n">digits</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
-</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">length</span><span class="o">/</span><span class="mi">2</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">digits</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">!=</span> <span class="n">digits</span><span class="p">[</span><span class="n">length</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="n">i</span><span class="p">])</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>  <span class="kt">int</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">kMaxNumbers</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">isPalindromic</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">isPalindromic</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span> <span class="p">{</span>
-</span><span class='line'>      <span class="n">sum</span> <span class="o">+=</span> <span class="n">i</span><span class="p">;</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Sum of palindromic numbers = &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">sum</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>(runs in <code>931 milliseconds</code>)</p>
 ]]></content>
   </entry>
   
