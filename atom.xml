@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-05-17T04:41:30+00:00</updated>
+  <updated>2015-05-17T07:27:33+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,25 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[On the Internet of thing-like-things ...]]></title>
+    <link href="http://agam.github.io/blog/2015/05/17/on-the-internet-of-thing-like-things-dot-dot-dot/"/>
+    <updated>2015-05-17T07:16:24+00:00</updated>
+    <id>http://agam.github.io/blog/2015/05/17/on-the-internet-of-thing-like-things-dot-dot-dot</id>
+    <content type="html"><![CDATA[<p>Went to Maker Faire, had my mind blown <em>(as usual)</em>, and then came across this quote<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> by Cory Doctorow:</p>
+
+<blockquote><p>So today we have marketing departments who say things like ‘[…] Make me a computer that doesn’t run every program, just a program that does this specialized task, like streaming audio, or routing packets, or playing Xbox games’ […] But that’s not what we do when we turn a computer into an appliance. We’re not making a computer that runs only the “appliance” app; we’re making a computer that can run every program, but which uses some combination of rootkits, spyware, and code-signing to prevent the user from knowing which processes are running, from installing her own software, and from terminating processes that she doesn’t want. <strong>In other words, an appliance is not a stripped-down computer — it is a fully functional computer with spyware on it out of the box.</strong></p></blockquote>
+<div class="footnotes">
+<hr/>
+<ol>
+<li id="fn:1">
+<p>28th Chaos Communication Congress in Berlin (<a href="https://www.youtube.com/watch?v=HUEvRyemKSg&amp;feature=youtu.be">Youtube link</a>)<a href="#fnref:1" rev="footnote">&#8617;</a></p></li>
+</ol>
+</div>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[You say incidental, I say accidental ...]]></title>
@@ -2409,29 +2428,6 @@
 </span><span class='line'>The largest one is &lt;redacted&gt;
 </span></code></pre></td></tr></table></div></figure>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Static Types, Dynamic Types, is your type my type?]]></title>
-    <link href="http://agam.github.io/blog/2015/03/19/static-typing/"/>
-    <updated>2015-03-19T02:51:00+00:00</updated>
-    <id>http://agam.github.io/blog/2015/03/19/static-typing</id>
-    <content type="html"><![CDATA[<p>Numerous people smarter than me have weighed into the static vs dynamic typing debate, so I&rsquo;ll be brief: I won&rsquo;t pick sides because <em>there are no sides to pick</em>. Except for some <em>obvious</em> cases where there is little disagreement, the word &ldquo;type&rdquo; just happens to mean two very different things when putting forth arguments on the benefits of either <em>side</em>.</p>
-
-<p>Looking back now, the only language that I&rsquo;ve seen where the distinction I&rsquo;m talking about is made explicit, is SML. The <code>type</code> keyword is <em>different</em> from the <code>datatype</code> keyword. The benefits of static types are tied up with the former, whereas people defending dynamic typing are usually resisting an <em>overuse</em> of the latter (with a mass of confusion in the middle).</p>
-
-<p>The usual way (C, C++, Java) of thinking about types is &ldquo;struct&rdquo; types or &ldquo;class&rdquo; types, i.e. some sort of <em>storage</em> type for values &mdash; given some raw bits, what can I &ldquo;cast&rdquo; these bits to? What <em>datatype</em> do these bits represent?</p>
-
-<p>From this perspective, having some guarantees about the datatype represented by these bits is <strong>very important</strong>, and this is the reason given by people preferring (say) C++/Java over either untyped or weakly typed languages (e.g. C, Python).</p>
-
-<p>One outlier worth mentioning is the case where the primitive level is <em>not</em> raw bits, but run-time-typed values, as in Lisp. Here the low-level stuff <em>does</em> have a type, so you don&rsquo;t <em>really</em> need the strong guarantees of &ldquo;which datatype do these bits represent?&rdquo; (and therefore, this is where the static vs dynamic typing debate really heats up).</p>
-
-<p>On the other hand, <em>types</em> as in ML/Haskell etc. are a superset (usually) of datatypes, and might be better thought of as &ldquo;tags&rdquo; of some sort &mdash; tags that satisfy certain constraints. Roughly, if you tag your values correctly, then the implicit constraints of the <strong>type system</strong> will guarantee constraints on how these values might be related, which in turn implicitly proves certain invariants of your program.</p>
-
-<p>As an example, statically typed programs in these languages heavily use <em>Algebraic Data Types</em>, which are practically absent from both dynamically-typed languages (e.g. Lisp) as well as languages that stick to strong datatypes (e.g. C++). This makes sense &mdash; you don&rsquo;t &ldquo;cast&rdquo; a bit pattern into an algebraic data type; you use it to constrain the uses of values tagged with it.</p>
-
-<p>Anyway, there are <em>real</em> tradeoffs in the static-vs-dynamic debate, but a very small and explicit set. Most of the heat is just people talking past each other, using and misusing this overloaded word. Perhaps it would be better if we could just be disciplined enough to distinguish between <code>type</code> and <code>datatype</code> where it matters.</p>
 ]]></content>
   </entry>
   
