@@ -4,7 +4,7 @@
   <title><![CDATA[Category: projecteuler | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/projecteuler/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-05-16T06:32:46+00:00</updated>
+  <updated>2015-05-17T03:25:34+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,228 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Euler 50: A non-working solution]]></title>
+    <link href="http://agam.github.io/blog/2015/05/17/euler-50-a-non-working-solution/"/>
+    <updated>2015-05-17T02:56:08+00:00</updated>
+    <id>http://agam.github.io/blog/2015/05/17/euler-50-a-non-working-solution</id>
+    <content type="html"><![CDATA[<p>It&rsquo;s worth pointing out things that don&rsquo;t work, roads that lead to dead ends, etc &mdash; so here is a brute force solution that has absolutely no chance of ever working. It&rsquo;s long and verbose because it&rsquo;s a <em>franken-solution</em>, made out of parts of previous solution concatenated together into a terrible mess. Posting it here before I destroy it. The forlorn <code>TODO</code> at the end proved over-optimistic &hellip;</p>
+
+<p>```c++
+static const int kMaxNum = 1000000;</p>
+
+<p>void PopulatePrimes(vector<bool><em> numbers, vector<int></em> prime_indices) {
+  // Start off with all numbers marked prime.
+  for (int i = 2; i &lt; numbers->size(); ++i) {</p>
+
+<pre><code>numbers-&gt;at(i) = true;
+</code></pre>
+
+<p>  }</p>
+
+<p>  int prime_index = 2;
+  while (true) {</p>
+
+<pre><code>// Store the prime index for future reference
+prime_indices-&gt;push_back(prime_index);
+
+if (numbers-&gt;size() &lt; 2 * prime_index) {
+  break;
+}
+
+// Mark the multiples as not prime
+for (int i = prime_index * 2; i &lt; numbers-&gt;size(); i += prime_index) {
+  numbers-&gt;at(i) = false;
+}
+
+// Repeat with the next prime number
+do {
+  ++prime_index;
+} while (prime_index &lt; numbers-&gt;size() &amp;&amp; !numbers-&gt;at(prime_index));
+
+if (prime_index == numbers-&gt;size()) {
+  break;
+}
+</code></pre>
+
+<p>  }
+}</p>
+
+<p>void sanity_check_primes(const vector<bool>&amp; numbers,</p>
+
+<pre><code>                     const vector&lt;int&gt;&amp; prime_indices) {
+</code></pre>
+
+<p>  auto check_prime = <a href="int%20n,%20bool%20is_prime">&amp;numbers, &amp;prime_indices</a> {</p>
+
+<pre><code>if (is_prime) {
+  assert(numbers[n] == true);
+  assert(std::find(prime_indices.begin(), prime_indices.end(), n) !=
+         prime_indices.end());
+} else {
+  assert(numbers[n] == false);
+  assert(std::find(prime_indices.begin(), prime_indices.end(), n) ==
+         prime_indices.end());
+}
+</code></pre>
+
+<p>  };</p>
+
+<p>  check_prime(2, true);
+  check_prime(3, true);
+  check_prime(5, true);
+  check_prime(4, false);
+  check_prime(6, false);
+}</p>
+
+<p>class CombinationIterator {
+public:
+  CombinationIterator(int n, int m) : n<em>(n), m</em>(m) {</p>
+
+<pre><code>comb_.reserve(m);
+for (int i = 0; i &lt; m; ++i) {
+  comb_.push_back(i);
+}
+</code></pre>
+
+<p>  }</p>
+
+<p>  const vector<int>&amp; GetCombination() const {</p>
+
+<pre><code>return comb_;
+</code></pre>
+
+<p>  }</p>
+
+<p>  bool Next() {</p>
+
+<pre><code>// The last digit can go up to n, the next-to-last up to n-1, and
+// so on. The very first sequence is {0, 1, ..., m-1}, and the
+// very last is {n-m+1, ..., n-1, n}.
+for (int i = m_ - 1; i &gt;= 0; --i) {
+  int max = n_ + i - m_ + 1;
+  int val = comb_[i];
+  // cout &lt;&lt; "Debug: i = " &lt;&lt; i &lt;&lt; ", val = " &lt;&lt; val &lt;&lt; ", max = " &lt;&lt; max &lt;&lt; endl;
+  if (val &lt; max) {
+    // Increment this position, and update subsequent indices if
+    // necessary.
+    for (int j = i; j &lt; m_; ++j) {
+      comb_[j] = ++val;
+    }
+    return true;
+  }
+
+  // If we're at the beginning, we're done.
+  if (i == 0) {
+    return false;
+  }
+
+  // Otherwise, fallthrough to the previous index.
+}
+assert(false);  // Should not reach here!
+</code></pre>
+
+<p>  }
+private:
+  const int n<em>, m</em>;
+  vector<int> comb_;
+};</p>
+
+<p>void sanity_check_combinator() {
+  CombinationIterator cit(9, 4);
+  for (int i = 0; i &lt; 20; ++i) {</p>
+
+<pre><code>const auto&amp; v = cit.GetCombination();
+cout &lt;&lt; "Debug (" &lt;&lt; v.size() &lt;&lt; ") : ";
+for (int n : v) {
+  cout &lt;&lt; n &lt;&lt; "  ";
+}
+cout &lt;&lt; endl;
+assert(cit.Next());
+</code></pre>
+
+<p>  }
+}</p>
+
+<p>enum class Cardinality {
+  Zero, One, More
+};</p>
+
+<p>Cardinality GetPrimeSum(int num_summands,</p>
+
+<pre><code>                    const vector&lt;bool&gt;&amp; numbers,
+                    const vector&lt;int&gt;&amp; prime_indices) {
+</code></pre>
+
+<p>  // Try all possible combinations of adding prime numbers
+  // together. Either exhaust all combinations, in which case return
+  // Zero or One. The moment two are found, return More.</p>
+
+<p>  int num_primes = 0;
+  CombinationIterator cit(numbers.size(), num_summands);
+  do {</p>
+
+<pre><code>const auto&amp; pv = cit.GetCombination();
+int sum = 0;
+for (int p : pv) {
+  sum += p;
+}
+
+// Check if the primes add up to a prime
+if (sum &lt; numbers.size() &amp;&amp; numbers[sum]) {
+  ++num_primes;
+}
+if (num_primes == 2) {
+  return Cardinality::More;
+}
+</code></pre>
+
+<p>  } while (cit.Next());
+  assert(num_primes == 0 || num_primes == 1);
+  if (num_primes == 1) {</p>
+
+<pre><code>return Cardinality::One;
+</code></pre>
+
+<p>  } else {</p>
+
+<pre><code>return Cardinality::Zero;
+</code></pre>
+
+<p>  }
+}</p>
+
+<p>std::ostream&amp; operator&lt;&lt; (std::ostream&amp; os, const Cardinality&amp; c) {
+  os &lt;&lt; static_cast&lt;std::underlying_type<Cardinality>::type>&copy;;
+  return os;
+}</p>
+
+<p>int main() {
+  cout &lt;&lt; &ldquo;Euler #50 &hellip; \n&rdquo;;</p>
+
+<p>  // Get the prime numbers upto 1 million
+  vector<bool> numbers(kMaxNum);
+  vector<int> prime_indices;
+  PopulatePrimes(&amp;numbers, &amp;prime_indices);</p>
+
+<p>  sanity_check_primes(numbers, prime_indices);</p>
+
+<p>  cout &lt;&lt; &ldquo;Debug: number of primes  = &rdquo; &lt;&lt; prime_indices.size() &lt;&lt; endl;
+  sanity_check_combinator();</p>
+
+<p>  cout &lt;&lt; &ldquo;Debug : &rdquo; &lt;&lt; GetPrimeSum(10000, numbers, prime_indices);
+  // TODO(agam): Uncomment and continue &hellip;
+  // int left = 0;
+  // int right = 500;  /// random round number
+  // do {
+  //   Cardinality left_c = GetPrimeSum(left, numbers, prime_indices);
+  //   Cardinality right_c = GetPrimeSum(right, numbers, prime_indices);
+  // } while (left &lt; right);
+}
+```</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Euler 49: Prime Permutations]]></title>
@@ -579,72 +801,6 @@ Failed at <redacted></p>
 <p>real    0m0.007s
 user    0m0.004s
 sys     0m0.000s
-```</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Euler 45: Triangle, Pengagonal, Hexagonal Numbers]]></title>
-    <link href="http://agam.github.io/blog/2015/04/28/euler-44-triangle/"/>
-    <updated>2015-04-28T19:41:00+00:00</updated>
-    <id>http://agam.github.io/blog/2015/04/28/euler-44-triangle</id>
-    <content type="html"><![CDATA[<p>While we&rsquo;re doing brute force solutions, here&rsquo;s another one &hellip;</p>
-
-<p><strong>Statutory Warning</strong>: <em>Spoilers Ahead</em></p>
-
-<p>```c++
-uint64_t get_triangle(uint64_t n) {
-  return n * (n + 1) / 2;
-}</p>
-
-<p>bool is_pentagonal(uint64_t num) {
-  // y = x * (3*x &ndash; 1) / 2
-  // So x is an integral solution of 3x<sup>2</sup> + (-1)x + (-2y) = 0
-  // &hellip; or (1 + sqrt(1 + 24y))/6</p>
-
-<p>  double solution = (1 + sqrt(1 + 24 * num)) / 6.0;
-  double dummy;
-  return (std::modf(solution, &amp;dummy) == 0.0);
-}</p>
-
-<p>bool is_hexagonal(uint64_t num) {
-  // y = x * (2*x &ndash; 1)
-  // So x is an integral solution of 2x<sup>2</sup> + (-1)x + (-y) = 0
-  // &hellip; or (1 + sqrt(1 + 8y))/4</p>
-
-<p>  double solution = (1 + sqrt(1 + 8 * num)) / 4.0;
-  double dummy;
-  return (std::modf(solution, &amp;dummy) == 0.0);
-}</p>
-
-<p>void sanity_check() {
-  uint64_t t285 = get_triangle(285);
-  assert(t285 == 40755);
-  assert(is_pentagonal(t285));
-  assert(is_hexagonal(t285));
-}</p>
-
-<p>int main() {
-  cout &lt;&lt; &ldquo;Euler # 45 &hellip; \n\n&rdquo;;</p>
-
-<p>  sanity_check();
-  // We already now that T_285 is pentagonal and hexagonal, so start
-  // from the next index;
-  uint64_t i = 286;
-  for (; ; ++i) {</p>
-
-<pre><code>uint64_t num = get_triangle(i);
-if (is_pentagonal(num) &amp;&amp; is_hexagonal(num)) {
-  cout &lt;&lt; "Found triangle# " &lt;&lt; i &lt;&lt; "  (" &lt;&lt; num &lt;&lt; ")" &lt;&lt; endl;
-  return 0;
-}
-if (i % 100000 == 0) {
-  cout &lt;&lt; "Done testing " &lt;&lt; i &lt;&lt; endl;
-}
-</code></pre>
-
-<p>  }
-}
 ```</p>
 ]]></content>
   </entry>
