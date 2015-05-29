@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-05-17T07:27:33+00:00</updated>
+  <updated>2015-05-29T19:34:09+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,254 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Euler 50: Consecutive Prime Sum]]></title>
+    <link href="http://agam.github.io/blog/2015/05/29/euler-50-consecutive-prime-sum/"/>
+    <updated>2015-05-29T19:24:32+00:00</updated>
+    <id>http://agam.github.io/blog/2015/05/29/euler-50-consecutive-prime-sum</id>
+    <content type="html"><![CDATA[<p>I had posted a grotesque non-working solution to this <a href="http://agam.github.io/blog/2015/05/17/euler-50-a-non-working-solution/">previously</a>, so here is a grotesque <em>working</em> solution.</p>
+
+<p>Yes, it uses global variables and old-fashioned extra book-keeping, and the <code>main</code> function is just a step-wise procedural function, but it <em>works</em> and it&rsquo;s <em>correct</em>, so I&rsquo;m going to leave it as is.</p>
+
+<p><strong>Statutory warning</strong>: <em>Spoilers ahead</em></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+<span class='line-number'>114</span>
+<span class='line-number'>115</span>
+</pre></td><td class='code'><pre><code class='go'><span class='line'><span class="kd">const</span> <span class="nx">MAX_NUM</span> <span class="p">=</span> <span class="mi">1000000</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">type</span> <span class="nx">Number</span> <span class="kd">struct</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">isPrime</span>              <span class="kt">bool</span>
+</span><span class='line'>  <span class="nx">maxPrimeSum</span>          <span class="kt">int</span>
+</span><span class='line'>  <span class="nx">maxConsecutivePrimes</span> <span class="kt">int</span>
+</span><span class='line'>  <span class="nx">previousPrimeIndex</span>   <span class="kt">int</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// Oh noez! A _global_ variable!</span>
+</span><span class='line'><span class="kd">var</span> <span class="nx">numbers</span> <span class="p">[]</span><span class="nx">Number</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">func</span> <span class="nx">markMultiples</span><span class="p">(</span><span class="nx">p</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">for</span> <span class="nx">n</span> <span class="o">:=</span> <span class="mi">2</span> <span class="o">*</span> <span class="nx">p</span><span class="p">;</span> <span class="nx">n</span> <span class="p">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">numbers</span><span class="p">);</span> <span class="nx">n</span> <span class="o">+=</span> <span class="nx">p</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">numbers</span><span class="p">[</span><span class="nx">n</span><span class="p">].</span><span class="nx">isPrime</span> <span class="p">=</span> <span class="kc">false</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">func</span> <span class="nx">populatePrimes</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="c1">// First mark all numbers as prime</span>
+</span><span class='line'>  <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">numbers</span><span class="p">);</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">numbers</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">isPrime</span> <span class="p">=</span> <span class="kc">true</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// Bootstrap our loop with the first prime, 2</span>
+</span><span class='line'>  <span class="nx">numbers</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">isPrime</span> <span class="p">=</span> <span class="kc">false</span>
+</span><span class='line'>  <span class="nx">numbers</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nx">isPrime</span> <span class="p">=</span> <span class="kc">false</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">prevPrime</span> <span class="o">:=</span> <span class="mi">2</span>
+</span><span class='line'>  <span class="nx">numbers</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="nx">isPrime</span> <span class="p">=</span> <span class="kc">true</span>
+</span><span class='line'>  <span class="nx">numbers</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="nx">previousPrimeIndex</span> <span class="p">=</span> <span class="o">-</span><span class="mi">1</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// Straightforward sieve</span>
+</span><span class='line'>  <span class="nx">markMultiples</span><span class="p">(</span><span class="nx">prevPrime</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">for</span> <span class="nx">p</span> <span class="o">:=</span> <span class="mi">3</span><span class="p">;</span> <span class="nx">p</span> <span class="p">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">numbers</span><span class="p">);</span> <span class="nx">p</span><span class="o">++</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">if</span> <span class="nx">numbers</span><span class="p">[</span><span class="nx">p</span><span class="p">].</span><span class="nx">isPrime</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nx">numbers</span><span class="p">[</span><span class="nx">p</span><span class="p">].</span><span class="nx">previousPrimeIndex</span> <span class="p">=</span> <span class="nx">prevPrime</span>
+</span><span class='line'>          <span class="nx">prevPrime</span> <span class="p">=</span> <span class="nx">p</span>
+</span><span class='line'>          <span class="nx">markMultiples</span><span class="p">(</span><span class="nx">prevPrime</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">func</span> <span class="nx">calculatePrimeSums</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="c1">// Initialize first prime, then move out from there</span>
+</span><span class='line'>  <span class="nx">numbers</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="nx">maxPrimeSum</span> <span class="p">=</span> <span class="mi">2</span>
+</span><span class='line'>  <span class="nx">numbers</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="nx">maxConsecutivePrimes</span> <span class="p">=</span> <span class="mi">1</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// As an upper limit for sums, what&#39;s the largest prime we have?</span>
+</span><span class='line'>  <span class="nx">largestPrime</span> <span class="o">:=</span> <span class="nx">MAX_NUM</span>
+</span><span class='line'>  <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="nx">MAX_NUM</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&gt;</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">--</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">if</span> <span class="nx">numbers</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">isPrime</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nx">largestPrime</span> <span class="p">=</span> <span class="nx">i</span>
+</span><span class='line'>          <span class="k">break</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;The largest possible prime to sum to is : &quot;</span><span class="p">,</span> <span class="nx">largestPrime</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">3</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">numbers</span><span class="p">);</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">if</span> <span class="p">!</span><span class="nx">numbers</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">isPrime</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">continue</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="nx">sum</span> <span class="o">:=</span> <span class="mi">0</span>
+</span><span class='line'>      <span class="nx">numPrimesTried</span> <span class="o">:=</span> <span class="mi">0</span>
+</span><span class='line'>      <span class="nx">lastPrimeSum</span> <span class="o">:=</span> <span class="mi">0</span>
+</span><span class='line'>      <span class="nx">numPrimesInSum</span> <span class="o">:=</span> <span class="mi">0</span>
+</span><span class='line'>      <span class="c1">// Go back through the sequence of primes, until the</span>
+</span><span class='line'>      <span class="c1">// sum goes past the largest possible prime. Store the</span>
+</span><span class='line'>      <span class="c1">// last sum reached that _was_ a prime, and the number</span>
+</span><span class='line'>      <span class="c1">// of primes involved.</span>
+</span><span class='line'>      <span class="k">for</span> <span class="nx">p</span> <span class="o">:=</span> <span class="nx">i</span><span class="p">;</span> <span class="nx">p</span> <span class="p">&gt;</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">p</span> <span class="p">=</span> <span class="nx">numbers</span><span class="p">[</span><span class="nx">p</span><span class="p">].</span><span class="nx">previousPrimeIndex</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">if</span> <span class="p">!</span><span class="nx">numbers</span><span class="p">[</span><span class="nx">p</span><span class="p">].</span><span class="nx">isPrime</span> <span class="p">{</span>
+</span><span class='line'>              <span class="nb">panic</span><span class="p">(</span><span class="s">&quot;wtf&quot;</span><span class="p">)</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>          <span class="nx">sum</span> <span class="o">+=</span> <span class="nx">p</span>
+</span><span class='line'>          <span class="nx">numPrimesTried</span><span class="o">++</span>
+</span><span class='line'>          <span class="k">if</span> <span class="nx">sum</span> <span class="p">&gt;</span> <span class="nx">largestPrime</span> <span class="p">{</span>
+</span><span class='line'>              <span class="c1">// Don&#39;t try any more primes!</span>
+</span><span class='line'>              <span class="k">break</span>
+</span><span class='line'>          <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>              <span class="c1">// Book keeping</span>
+</span><span class='line'>              <span class="k">if</span> <span class="nx">numbers</span><span class="p">[</span><span class="nx">sum</span><span class="p">].</span><span class="nx">isPrime</span> <span class="p">{</span>
+</span><span class='line'>                  <span class="nx">lastPrimeSum</span> <span class="p">=</span> <span class="nx">sum</span>
+</span><span class='line'>                  <span class="nx">numPrimesInSum</span> <span class="p">=</span> <span class="nx">numPrimesTried</span>
+</span><span class='line'>              <span class="p">}</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      <span class="nx">numbers</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">maxPrimeSum</span> <span class="p">=</span> <span class="nx">lastPrimeSum</span>
+</span><span class='line'>      <span class="nx">numbers</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">maxConsecutivePrimes</span> <span class="p">=</span> <span class="nx">numPrimesInSum</span>
+</span><span class='line'>      <span class="c1">//     fmt.Println(&quot;max prime sum for &quot;, i, &quot; = &quot;, numbers[i].maxPrimeSum)</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">func</span> <span class="nx">findMaxPrimeSum</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="c1">// Use the pre-calculated primes sums to figure out the maximum and print some summary info</span>
+</span><span class='line'>  <span class="nx">maxConsecutivePrimes</span> <span class="o">:=</span> <span class="mi">0</span>
+</span><span class='line'>  <span class="nx">maxPrimeSum</span> <span class="o">:=</span> <span class="mi">0</span>
+</span><span class='line'>  <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">MAX_NUM</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">if</span> <span class="nx">numbers</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">isPrime</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">if</span> <span class="nx">numbers</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">maxConsecutivePrimes</span> <span class="p">&gt;</span> <span class="nx">maxConsecutivePrimes</span> <span class="p">{</span>
+</span><span class='line'>              <span class="nx">maxConsecutivePrimes</span> <span class="p">=</span> <span class="nx">numbers</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">maxConsecutivePrimes</span>
+</span><span class='line'>              <span class="nx">maxPrimeSum</span> <span class="p">=</span> <span class="nx">numbers</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">maxPrimeSum</span>
+</span><span class='line'>              <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;max prime sum = &quot;</span><span class="p">,</span> <span class="nx">maxPrimeSum</span><span class="p">,</span> <span class="s">&quot;, with &quot;</span><span class="p">,</span> <span class="nx">maxConsecutivePrimes</span><span class="p">,</span> <span class="s">&quot; primes, ending in &quot;</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">numbers</span> <span class="p">=</span> <span class="nb">make</span><span class="p">([]</span><span class="nx">Number</span><span class="p">,</span> <span class="nx">MAX_NUM</span><span class="p">)</span>
+</span><span class='line'>  <span class="nx">populatePrimes</span><span class="p">()</span>
+</span><span class='line'>  <span class="nx">calculatePrimeSums</span><span class="p">()</span>
+</span><span class='line'>  <span class="nx">findMaxPrimeSum</span><span class="p">()</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The best part? It ran in <code>0.363 seconds</code>!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[On the Internet of thing-like-things ...]]></title>
@@ -2279,155 +2527,6 @@
 
 
 <p>The answer needed is given by <code>(max-triangle-solutions 1000)</code>, while any specific solution can be got by (e.g.) running <code>(triangle-solutions 120)</code> which yields <code>(((40 30 50)) ((45 24 51)) ((48 20 52)))</code></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Euler 38: Pandigital multiples]]></title>
-    <link href="http://agam.github.io/blog/2015/03/19/euler-38-pandigital-multiples/"/>
-    <updated>2015-03-19T03:41:10+00:00</updated>
-    <id>http://agam.github.io/blog/2015/03/19/euler-38-pandigital-multiples</id>
-    <content type="html"><![CDATA[<p>I&rsquo;m embarassed at how ridiculously naive my solution is. In hindsight, it&rsquo;s so <em>obvious</em> that the solution <em>has</em> to be a four-digit number and its double, and that the first digit is going to be a 9.</p>
-
-<p>Still, C++ makes you lazy. This took <code>24 milliseconds</code>, and I didn&rsquo;t feel the need to speed it up :)</p>
-
-<p><strong>Statutory Warning</strong>: <em>Spoilers ahead</em></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-</pre></td><td class='code'><pre><code class='c++'><span class='line'><span class="k">static</span> <span class="k">const</span> <span class="kt">long</span> <span class="n">kMaxNumbers</span> <span class="o">=</span> <span class="mi">10000</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>  <span class="kt">long</span> <span class="n">largestPanDigital</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="kt">long</span> <span class="n">num</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="n">num</span> <span class="o">&lt;</span> <span class="n">kMaxNumbers</span><span class="p">;</span> <span class="o">++</span><span class="n">num</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">pandigits</span><span class="p">;</span>
-</span><span class='line'>    <span class="kt">int</span> <span class="n">o</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">while</span> <span class="p">(</span><span class="n">o</span> <span class="o">&lt;=</span> <span class="mi">20</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>      <span class="kt">long</span> <span class="n">product</span> <span class="o">=</span> <span class="n">num</span> <span class="o">*</span> <span class="n">o</span><span class="p">;</span>
-</span><span class='line'>      <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">pd</span><span class="p">;</span>
-</span><span class='line'>      <span class="k">while</span> <span class="p">(</span><span class="n">product</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="kt">int</span> <span class="n">d</span> <span class="o">=</span> <span class="n">product</span> <span class="o">%</span> <span class="mi">10</span><span class="p">;</span>
-</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="n">d</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">||</span>
-</span><span class='line'>            <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">find</span><span class="p">(</span><span class="n">pandigits</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">pandigits</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">d</span><span class="p">)</span> <span class="o">!=</span> <span class="n">pandigits</span><span class="p">.</span><span class="n">end</span><span class="p">())</span> <span class="o">||</span>
-</span><span class='line'>            <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">find</span><span class="p">(</span><span class="n">pd</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">pd</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">d</span><span class="p">)</span> <span class="o">!=</span> <span class="n">pd</span><span class="p">.</span><span class="n">end</span><span class="p">()))</span> <span class="p">{</span>
-</span><span class='line'>          <span class="k">break</span><span class="p">;</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>        <span class="n">pd</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">d</span><span class="p">);</span>
-</span><span class='line'>        <span class="n">product</span> <span class="o">/=</span> <span class="mi">10</span><span class="p">;</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">product</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="c1">// Found an existing digit</span>
-</span><span class='line'>        <span class="k">break</span><span class="p">;</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>      <span class="c1">// We formed a new product; keep going!</span>
-</span><span class='line'>      <span class="k">for</span> <span class="p">(</span><span class="k">auto</span> <span class="n">it</span> <span class="o">=</span> <span class="n">pd</span><span class="p">.</span><span class="n">rbegin</span><span class="p">();</span> <span class="n">it</span> <span class="o">!=</span> <span class="n">pd</span><span class="p">.</span><span class="n">rend</span><span class="p">();</span> <span class="o">++</span><span class="n">it</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">pandigits</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="o">*</span><span class="n">it</span><span class="p">);</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>      <span class="o">++</span><span class="n">o</span><span class="p">;</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">pandigits</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">==</span> <span class="mi">9</span> <span class="o">&amp;&amp;</span> <span class="n">o</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>      <span class="kt">long</span> <span class="n">panDigital</span> <span class="o">=</span> <span class="mi">0L</span><span class="p">;</span>
-</span><span class='line'>      <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Found: &quot;</span><span class="p">;</span>
-</span><span class='line'>      <span class="k">for</span> <span class="p">(</span><span class="k">auto</span><span class="o">&amp;</span> <span class="nl">d</span> <span class="p">:</span> <span class="n">pandigits</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">d</span><span class="p">;</span>
-</span><span class='line'>        <span class="n">panDigital</span> <span class="o">=</span> <span class="n">panDigital</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">+</span> <span class="n">d</span><span class="p">;</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>      <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; = &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">num</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; * &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">o</span><span class="o">-</span><span class="mi">1</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">panDigital</span> <span class="o">&gt;</span> <span class="n">largestPanDigital</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">largestPanDigital</span> <span class="o">=</span> <span class="n">panDigital</span><span class="p">;</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;The largest one is &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">largestPanDigital</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>It runs as follows:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>~/cpp/Test
-</span><span class='line'>Found: <span class="nv">918273645</span> <span class="o">=</span> <span class="m">9</span> * 5
-</span><span class='line'>Found: <span class="nv">192384576</span> <span class="o">=</span> <span class="m">192</span> * 3
-</span><span class='line'>Found: <span class="nv">219438657</span> <span class="o">=</span> <span class="m">219</span> * 3
-</span><span class='line'>Found: <span class="nv">273546819</span> <span class="o">=</span> <span class="m">273</span> * 3
-</span><span class='line'>Found: <span class="nv">327654981</span> <span class="o">=</span> <span class="m">327</span> * 3
-</span><span class='line'>Found: <span class="nv">672913458</span> <span class="o">=</span> <span class="m">6729</span> * 2
-</span><span class='line'>Found: <span class="nv">679213584</span> <span class="o">=</span> <span class="m">6792</span> * 2
-</span><span class='line'>Found: <span class="nv">692713854</span> <span class="o">=</span> <span class="m">6927</span> * 2
-</span><span class='line'>Found: <span class="nv">726914538</span> <span class="o">=</span> <span class="m">7269</span> * 2
-</span><span class='line'>Found: <span class="nv">729314586</span> <span class="o">=</span> <span class="m">7293</span> * 2
-</span><span class='line'>Found: <span class="nv">732914658</span> <span class="o">=</span> <span class="m">7329</span> * 2
-</span><span class='line'>Found: <span class="nv">769215384</span> <span class="o">=</span> <span class="m">7692</span> * 2
-</span><span class='line'>Found: <span class="nv">792315846</span> <span class="o">=</span> <span class="m">7923</span> * 2
-</span><span class='line'>Found: <span class="nv">793215864</span> <span class="o">=</span> <span class="m">7932</span> * 2
-</span><span class='line'>Found: <span class="nv">926718534</span> <span class="o">=</span> <span class="m">9267</span> * 2
-</span><span class='line'>Found: <span class="nv">927318546</span> <span class="o">=</span> <span class="m">9273</span> * 2
-</span><span class='line'>Found: <span class="nv">932718654</span> <span class="o">=</span> <span class="m">9327</span> * 2
-</span><span class='line'>The largest one is &lt;redacted&gt;
-</span></code></pre></td></tr></table></div></figure>
-
 ]]></content>
   </entry>
   
