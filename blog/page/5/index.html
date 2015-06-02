@@ -7,7 +7,7 @@
 	<meta name="author" content="Agam">
 
 	
-	<meta name="description" content="This one seemed simple but turned out to be a good showcase for a short haskell program (I&rsquo;m sure it can be shorter but IMHO that would &hellip;">
+	<meta name="description" content="For the last month, I&rsquo;ve been trying out various programming languages, as a sort of extended &ldquo;Programming Language Zoo&rdquo; &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -86,6 +86,830 @@
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2015/02/06/failure-to-get-started/">
+		
+			Failure to Get Started? :)</a>
+	</h2>
+	<div class="entry-content">
+		<p>For the last month, I&rsquo;ve been trying out various programming languages, as a sort of extended &ldquo;Programming Language Zoo&rdquo; experience. My inability to like any one of them and commit to it is depressing, but I made a few Gists out of the initial steps I followed for each of them, so hopefully a less indecisive person who knows what they want to do might benefit.</p>
+
+<p>Some of these are different implementations of a language; a couple of these are specific libraries within a language and meant for OSX; the rest are all targeted for a Linux machine, assuming an Emacs editor/interface.</p>
+
+<p>(Included here are <code>SBCL</code>, <code>Clozure</code>, <code>Ocaml</code>, <code>Clojure</code>, <code>Quil</code>, <code>Overtone</code>, <code>Haskell</code>, <code>Fsharp</code>, <code>Shen</code>, <code>Dart</code>)</p>
+
+<div><script src='https://gist.github.com/57904f16400ab9e099ed.js'></script>
+<noscript><pre><code># SBCL: Getting Started
+
+### Install SBCL itself
+
+$ `wget http://prdownloads.sourceforge.net/sbcl/sbcl-1.2.7-x86-64-linux-binary.tar.bz2`
+
+$ `cd sbcl...`
+
+$ `sudo sh install.sh`           # Note: errors on missing doc/manual/... are expected, ignore.
+
+### Install Quicklisp
+
+$ `wget http://beta.quicklisp.org/quicklisp.lisp`
+
+$ `sbcl --load quicklisp.lisp`
+
+### Evaluate the following within the Repl:
+
+* `(quicklisp-quickstart:install)`
+
+* `(ql:add-to-init-file)`   _;; confirm addition to .sbclrc_
+
+* `(ql:quickload &quot;swank&quot;)`
+
+### Install Slime
+
+- `M-x package-list-packages`
+- search for `slime`, install it
+
+### Add the following to `.emacs`
+
+`(require 'slime)`
+
+`(slime-setup '(slime-fancy))`
+
+`(setq inferior-lisp-program &quot;sbcl&quot;)`
+
+### Get started
+
+- Run Emacs
+- `M-x slime` .... _Boom!!_
+
+</code></pre></noscript></div>
+
+
+
+
+<div><script src='https://gist.github.com/e9bd32cc77fe52da97d2.js'></script>
+<noscript><pre><code># ClozureCL: Getting Started
+
+- Download the `.tar.gz` file from [here](http://ccl.clozure.com/download.html)
+- Unpack it
+- Open a terminal window, go to that directory (e.g. `~/Downloads/ccl`)
+- Run `./dx86cl64`, you'll be dropped into a prompt similar to
+```
+  Welcome to Clozure Common Lisp Version 1.10-r16196  (DarwinX8664)!
+
+CCL is developed and maintained by Clozure Associates. For more information
+about CCL visit http://ccl.clozure.com.  To enquire about Clozure's Common Lisp
+consulting services e-mail info@clozure.com or visit http://www.clozure.com.
+
+?
+```
+- At the prompt, evaluate `(require :cocoa-application)`
+- This will go ahead and build the application, at the end you should see something like:
+```
+Saving application to /Users/agam/Downloads/ccl/Clozure CL64.app/
+```
+- Close the terminal and drag the directory into the _Applications_ folder
+- Go to the _Applications_ folder, and within it to the _ccl_ folder, and open the **Clozure CL64** app you should see there. _That's it!_</code></pre></noscript></div>
+
+
+
+
+<div><script src='https://gist.github.com/218c5dec4c2267531d61.js'></script>
+<noscript><pre><code># OCaml: Getting Started
+
+### Preliminary steps
+
+First, make sure you're on [the testing branch](https://gist.github.com/agam/c8be327326293a84df22)
+
+### Install `OPAM`
+
+(Hit `y` when asked if it's ok to modify `~/.bashrc`)
+
+```
+$ sudo apt-get install opam
+$ opam init          
+```
+
+### Check compiler version
+
+```
+$ opam switch
+```
+
+This is what I see:
+```
+system  C system  System compiler (4.01.0)
+--     -- 3.11.2  Official 3.11.2 release
+--     -- 3.12.1  Official 3.12.1 release
+--     -- 4.00.0  Official 4.00.0 release
+--     -- 4.00.1  Official 4.00.1 release
+--     -- 4.01.0  Official 4.01.0 release
+--     -- 4.02.0  Official 4.02.0 release
+--     -- 4.02.1  Official 4.02.1 release
+# 66 more patched or experimental compilers, use '--all' to show
+```
+
+### Get basic packages
+```
+$ opam install core utop
+The following actions will be performed:
+ - install   ocamlfind.1.5.5                       [required by utop, core]
+ - install   camlp4.4.01.0                         [required by utop, core]
+ - install   base-no-ppx.base                      [required by lwt]
+ - install   react.1.2.0                           [required by utop]
+ - install   ounit.2.0.0                           [required by pa_ounit]
+ - install   cppo.1.1.2                            [required by utop]
+ - install   camomile.0.8.5                        [required by zed]
+ - install   base-bytes.legacy                     [required by zed]
+ - install   type_conv.111.13.00                   [required by custom_printf, bin_prot, comparelib]
+ - install   pipebang.110.01.00                    [required by core]
+ - install   herelib.109.35.02                     [required by core]
+ - install   lwt.2.4.7                             [required by utop]
+ - install   zed.1.4                               [required by lambda-term]
+ - install   variantslib.109.15.03                 [required by core]
+ - install   sexplib.111.25.00                     [required by core]
+ - install   pa_ounit.111.28.00                    [required by core]
+ - install   fieldslib.109.20.03                   [required by core]
+ - install   enumerate.111.08.00                   [required by core]
+ - install   comparelib.109.60.00                  [required by core]
+ - install   bin_prot.111.03.00                    [required by core]
+ - install   lambda-term.1.8                       [required by utop]
+ - install   pa_bench.111.28.00                    [required by core]
+ - install   custom_printf.111.25.00               [required by core]
+ - install   pa_test.111.08.00                     [required by core]
+ - install   typerep.111.17.00                     [required by core_kernel]
+ - install   utop.1.17
+ - install   core_kernel.111.28.00                 [required by core]
+ - install   core.111.28.01
+=== 28 to install ===
+Do you want to continue ? [Y/n]
+```
+
+Hit `y` to get all these. Note:
+- You will need `m4` installed (`sudo apt-get install m4`)
+- This will take some time! (Basically running `--configure`, `make` and `make install` on a bunch of targets)
+
+### Try out `utop`
+
+```
+$ eval `opam config env`
+$ utop
+```
+
+You should see something as follows:
+
+```
+──────────────────────────────────────────────────────────────────────┬────────────────────────────────────────────────────────────┬───────────────────────────────────────────────────────────────────────
+                                                                      │ Welcome to utop version 1.17 (using OCaml version 4.01.0)! │
+                                                                      └────────────────────────────────────────────────────────────┘
+
+Type #utop_help for help about using utop.
+
+─( 23:57:59 )─&lt; command 0 &gt;─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────{ counter: 0 }─
+utop # 1 + 3;;
+- : int = 4
+─( 23:57:59 )─&lt; command 1 &gt;─────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────{ counter: 0 }
+─utop #
+┌───┬────────────┬─────┬───────────┬──────────────┬───────┬────────┬──────┬────────┬────────────────┬───────────────┬──────────────┬──────┬─────────┬─────────┬─────────────┬─────────────┬──────────┬────┐
+│Arg│Arith_status│Array│ArrayLabels│Assert_failure│Big_int│Bigarray│Buffer│Callback│CamlinternalLazy│CamlinternalMod│CamlinternalOO│Camlp4│Camlp4Bin│Camlp4Top│Camlp4_config│Camlp4_import│Camlp4prof│Char│
+└───┴────────────┴─────┴───────────┴──────────────┴───────┴────────┴──────┴────────┴────────────────┴───────────────┴──────────────┴──────┴─────────┴─────────┴─────────────┴─────────────┴──────────┴────┘
+```
+
+Also install `merlin`:
+
+```
+$ opam install merlin
+The following actions will be performed:
+ - install   easy-format.1.0.2                     [required by yojson]
+ - install   biniou.1.0.9                          [required by yojson]
+ - install   yojson.1.2.0                          [required by merlin]
+ - install   merlin.2.1.0
+=== 4 to install ===
+Do you want to continue ? [Y/n] y
+```
+
+Note: at the end of the installation, it provides a snippet of code to insert in your `.emacs`
+
+
+### Emacs support
+
+`M-x package-list-packages`
+Select `tuareg`, `utop`, and `merlin`, and install them.
+(Note: you _might_ need to install `iedit` first if you see an error during the installation)
+
+Add the snippet from the step above. This is what I had:
+
+```elisp
+;; Add opam emacs directory to the load-path
+(setq opam-share (substring (shell-command-to-string &quot;opam config var share 2&gt; /dev/null&quot;) 0 -1))
+(add-to-list 'load-path (concat opam-share &quot;/emacs/site-lisp&quot;))
+;; Load merlin-mode
+(require 'merlin)
+;; Start merlin on ocaml files
+(add-hook 'tuareg-mode-hook 'merlin-mode t)
+(add-hook 'caml-mode-hook 'merlin-mode t)
+;; Enable auto-complete
+(setq merlin-use-auto-complete-mode 'easy)
+;; Use opam switch to lookup ocamlmerlin binary
+(setq merlin-command 'opam)
+```
+
+##### That's it, go write some Ocaml!
+</code></pre></noscript></div>
+
+
+
+
+<div><script src='https://gist.github.com/04794e72035ab2e1c430.js'></script>
+<noscript><pre><code># Clojure: Getting Started
+
+### Install `brew`
+(if you haven't already done so)
+```sh
+$ ruby -e &quot;$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)&quot;
+```
+
+### Get Leiningen
+```sh
+$ brew install leiningen
+```
+
+### Get CIDER
+
+`M-x package-install`, enter `CIDER`
+
+(Yes, it's _not as good as `SLIME`_, but it's what fits better with Clojure)
+
+#### (Optional) Connect CIDER to Lein
+
+- Check Cider version: `M-x cider-version`
+-- E.g. I see `CIDER 0.9.0snapshot (package: 20150118.421)`
+- Create `~/.lein/profiles.clj`, enter the following
+
+```clojure
+{:user {:plugins [[cider/cider-nrepl &quot;0.9.0-SNAPSHOT&quot;]]}}
+```
+-- Modify the version to suit what you have. Don't worry if you mistype this here, you'll see an error about a missing `.jar` later, and you can go check the possible options [here](https://clojars.org/repo/cider/cider-nrepl/) to pick the right one.
+
+### Verifying your install
+
+#### Create a dummy project
+```sh
+$ lein new my-dummy-proj
+```
+
+#### Navigate to this from `Emacs`
+
+- Open `my-dummy-proj/src/my_dummy_proj/core.clj`, it should show something like:
+
+```clojure
+(ns my-dummy-proj.core)
+
+(defn foo
+  &quot;I don't do a whole lot.&quot;
+  [x]
+  (println x &quot;Hello, World!&quot;))
+```
+
+#### Start the REPL:
+
+`M-x cider-jack-in`
+
+- Heh, I like the name :)
+- _Warning:_ this will take some time when run initially, as it has to fetch the libraries in the background (it's essentially running `lein repl :headless` behind the scenes)
+
+#### (Optional) Customize your Repl
+- `@bbatsov` has a lot of possible customizations and keyboard shortcuts [here](https://github.com/clojure-emacs/cider#installation), take a look.
+
+#### Run some code from your project
+```clojure
+user&gt; (require 'my-cloj-proj.core)
+nil
+user&gt; (source my-cloj-proj.core/foo)
+(defn foo
+  &quot;I don't do a whole lot.&quot;
+  [x]
+  (println x &quot;Hello, World!&quot;))
+nil
+user&gt; (my-cloj-proj.core/foo 5)
+5 Hello, World!
+nil
+```
+
+### Write some code !</code></pre></noscript></div>
+
+
+
+
+<div><script src='https://gist.github.com/8c4350c09d36507c6b93.js'></script>
+<noscript><pre><code># Quil: Getting Started
+
+### Pre-requisites
+- Introduce yourself [to Clojure](https://gist.github.com/agam/04794e72035ab2e1c430)
+
+### Create new project with the 'quil' template
+```sh
+$ lein new quil my-dummy-art
+```
+
+### Evaluate your 'sketch'
+- Open `my-dummy-art/src/my_dummy_art/core.clj`
+- Hit `C-c C-k` to run (alternatively, `M-x cider-load-buffer`)
+
+### Get a 'big picture' overview
+- Look at the `q/defsketch` function
+- Modify `setup`, `update` or `draw` as needed!
+
+#### (Optional) Fix Possible errors
+- In case you see an error of the form `Could not locate quil/core__init.class or quil/core.clj on classpath`, you might need to get it manually
+- This as simple as
+```
+$ cd my_dummy_art
+$ lein deps
+```
+- If you _still_ get the same error, try closing and restarting Emacs.
+
+#### Happy ~~Processing~~ Quilling!</code></pre></noscript></div>
+
+
+
+
+<div><script src='https://gist.github.com/8ae32d5cd584a3435a1c.js'></script>
+<noscript><pre><code># Overtone: Getting Started
+
+### Pre-requisites
+- Introduce yourself [to Clojure](https://gist.github.com/agam/04794e72035ab2e1c430)
+- Install [SuperCollider](http://supercollider.sourceforge.net/downloads/)
+
+### Create a project
+```sh
+$ lein new my-dummy-sound
+```
+
+#### (Optional) Identify Overtone version
+```sh
+$ lein search overtone
+Downloading https://clojars.org/repo/.index/nexus-maven-repository-index.gz
+100.0% complete
+Searching over Artifact ID...
+&lt;skipping some lines&gt;
+[overtone &quot;0.9.0-RC1&quot;] Collaborative Programmable Music. (http://overtone.github.com)
+[overtone &quot;0.9.0-RC3&quot;] Collaborative Programmable Music.
+[overtone &quot;0.9.0-RC4&quot;] Collaborative Programmable Music.
+[overtone &quot;0.9.1&quot;] Collaborative Programmable Music.
+[overtone &quot;0.9.0&quot;] Collaborative Programmable Music.
+```
+(yes, this takes _some time_, `quicklisp`'s `apropos` works _instantaneously_ ... but right now this is the only game in town, so it's either this or write your own `SuperCollider` bindings (which is actually a good idea, if you have the time. I don't))
+
+### Add overtone dependencies
+- Modify `project.clj`, and add an appropriate dependency on `overtone`. E.g. in my case this looks like
+```clojure
+(defproject my-dummy-sound &quot;0.1.0-SNAPSHOT&quot;
+  :description &quot;FIXME: write description&quot;
+  :url &quot;http://example.com/FIXME&quot;
+  :license {:name &quot;Eclipse Public License&quot;
+            :url &quot;http://www.eclipse.org/legal/epl-v10.html&quot;}
+  :dependencies [[org.clojure/clojure &quot;1.6.0&quot;]
+                 [overtone &quot;0.9.0&quot;]])
+```
+
+### Test it out
+- Modify `core.clj`, and add something like this ([credits](http://chatley.com/posts/10-28-2011/overtone/))
+
+```clojure
+(ns my-dummy-sound.core
+  (:require [overtone.live :as o]))
+
+(o/definst square-wave [freq 440] (o/square freq))
+
+(def times (take 220 (iterate #(+ 30 %) 0)))
+
+(defn change-pitch [t f inst] (o/at (+ t (o/now)) (o/ctl inst :freq f)))
+
+(defn falling-pitches [start] (take (/ start 2) (iterate dec start)))
+(defn rising-pitches [start] (take start (iterate inc start)))
+
+(defn slide [pitches inst] (map (fn [x y] (change-pitch x y inst)) times pitches))
+
+(defn -main
+  [&amp; args]
+  (while 
+      (do 
+        (square-wave)
+        (slide (falling-pitches 440) square-wave)
+        (slide (rising-pitches 220) square-wave)
+        (o/stop))))
+```
+
+- run it
+```sh
+$ cd my-dummy-sound
+$ lein deps
+$ lein run
+```
+
+### Happy &quot;Overtoning&quot;!</code></pre></noscript></div>
+
+
+
+
+<div><script src='https://gist.github.com/316227ad65cf0aefca5b.js'></script>
+<noscript><pre><code># Haskell: Getting Started
+
+#### Get the platform
+
+```sh
+$ sudo apt-get install haskell-platform
+
+$ ghc --version
+The Glorious Glasgow Haskell Compilation System, version 7.6.3
+
+$ cabal --version
+cabal-install version 1.20.0.3
+using version 1.20.0.2 of the Cabal library
+```
+
+#### Get initial cabal stuff
+
+```sh
+$ cabal update
+$ cabal install happy ghc-mod stylish-haskell structured-haskell-mode
+```
+
+_(installs way more than you'd expect; take a bathroom break and come back before proceeding ...)_
+
+#### Set up Emacs
+
+Hit `M-x package-list-packages`, select the following
+
+- `haskell-mode`
+- `ghc`
+- `shm`
+
+#### Your first project/file/repl
+
+- Create a directory `test`
+- Run `emacs test.hs`
+- `M-x interactive-haskell-mode`, answer the prompts (create default project, choose path)
+- _Bam!_ ... you should see the **&quot;Hello Haskell&quot;** window with a cute &quot;lambda&quot; prompt
+- Enter something ... then continue hacking!
+
+##### (Aside) Exploring with the prompt
+
+Your biggest friends are going to be
+
+- `:info`
+- `:type`</code></pre></noscript></div>
+
+
+
+
+<div><script src='https://gist.github.com/40ea76d04b4b8473edda.js'></script>
+<noscript><pre><code># FSharp: Getting Started
+
+### Get the Debian package
+
+$ sudo apt-get install fsharp
+
+### Emacs integration
+
+- Within emacs, hit `M-x package-list-packages`, then select `fsharp-mode` and install it.
+
+- Add the following to your `.emacs`:
+(setq inferior-fsharp-program &quot;/usr/bin/fsharpi --readline-&quot;)
+(setq fsharp-compiler &quot;/usr/bin/fsharpc&quot;)
+
+### Write some code:
+- Open a new file, ending with `.fs`
+- Write some code
+
+```fsharp
+module Foo.Bar
+
+printfn &quot;Hello World&quot;;;
+```
+
+- Hit `C-c C-f`; this starts up a &quot;top-level&quot; running `fsharpi` that loads your code. You should see a &quot;Hello World&quot; too ...
+
+- That's it! Now go **write some more code**!!</code></pre></noscript></div>
+
+
+
+
+<div><script src='https://gist.github.com/dbdb585dcc9bce5b2ac2.js'></script>
+<noscript><pre><code># Shen: Getting started
+
+There are various ways to do this, since it's really a _&quot;multilevel&quot;_ structure, with a **kernel lisp** layered on top of the **host language**, and then Shen (the artist formerly known as _Qi_) layered on top of the kernel lisp. This approach uses SBCL; you might [use ruby](https://github.com/gregspurrier/shen-ruby) or [clojure instead](https://github.com/hraberg/shen.clj).
+
+_Note_: As of February 3, 2015, Shen is under a BSD-license (and is, in Mark's words, _&quot;... officially self-generating and sufficient.&quot;_)
+
+### Get the source
+
+```sh
+$ wget http://www.shenlanguage.org/Download/Shen.zip
+```
+
+### Load the source
+
+- `mv Shen\ 17 Shen17`  (not strictly needed, but why keep the damn space in the file-path?!)
+- `cd Shen 17/Platforms/SBCL`
+- `cp ../../KLambda/* .`
+- Run `sbcl`
+- Evaluate the following: `(load &quot;install.lsp&quot;)`: this will compile a bunch of stuff, _dump the image_ and exit
+- At this point, you should see `Shen.exe` in your current directory (don't be fooled by the suffix, run `file Shen.exe` for satisfaction)
+
+### Some Emacs Lovin'
+
+- Get `shen-mode` (_note_: it's only in `ELPA`, so if like me you had a `marmalade` or `MELPA` override, you'll have to add this back in to your Emacs package repo list)
+- Add the following to your `.emacs`:
+```emacs
+(require 'shen-mode)
+(require 'inf-shen)
+(setq inferior-shen-program &quot;path-to-Shen.exe-created-above&quot;)
+```
+
+### (Optional) Plan B
+##### (Mentioned for sake of completeness only)
+- Another _&quot;bleeding edge&quot;_ option (as of early Feb 2015) is to use Rainier Joswig's [modifications](http://lispm.de/source/Shen%2016/Common%20Lisp/), which should provide a better experience on SBCL or Lispworks.
+
+### Get to work
+
+- Create `test.shen`
+- Enter this:
+```lisp
+(define hello ()
+  &quot;hello world&quot;)
+```
+- Hit `C-c C-z`, or `M-x switch-to-shen`
+- You should see the Shen top-level prompt:
+```
+
+Shen, copyright (C) 2010-2015 Mark Tarver
+www.shenlanguage.org, Shen 17
+running under Common Lisp, implementation: SBCL
+port 1.7 ported by Mark Tarver
+
+(0-)
+```
+- As a test, select the text entered, and hit `C-c C-r`, or `M-x shen-eval-region`, you should see the result in the `*inferior-shen*` buffer!
+- Alternatively, skip the file and just try this stuff (defining functions and calling them) out at the REPL prompt
+- See `M-x describe-mode` for other goodies (compiling the file, loading a different file, evaluating an expression ... _all that good stuff_)
+
+### Work through a tutorial
+
+The [&quot;15 minute version&quot;](http://www.shenlanguage.org/learn-shen/tutorials/shen_in_15mins.html)
+
+### Lisp-interop FTW
+
+A key feature of each hosted Shen implementation is accessing the underlying layer. In this case, try `load-lisp` (see the [documentation](http://shen-wiki.tiodante.com/NativeCalls))
+
+### Get busy coding!</code></pre></noscript></div>
+
+
+
+
+<div><script src='https://gist.github.com/f2cc14a325019fe29f66.js'></script>
+<noscript><pre><code># Dart: Getting Started
+
+### Get the SDK
+
+- Some one-time stuff needed to get 
+```sh
+$ sudo apt-get update
+$ sudo apt-get install apt-transport-https
+$ sudo sh -c 'curl https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add -'
+$ sudo sh -c 'curl https://storage.googleapis.com/download.dartlang.org/linux/debian/dart_stable.list &gt; /etc/apt/sources.list.d/dart_stable.list'
+$ sudo apt-get update
+$ sudo apt-get install dart
+```
+
+### Set up Emacs
+
+- `M-x package-list-packages`, select `dart-mode` and install it
+
+### Write some code
+
+- Open `hello-world.dart` and enter something like:
+
+```dart
+import &quot;dart:io&quot;;
+
+main() {
+  print('Hello World');
+}
+```
+- At the command-line, run `dart hello-world.dart`, you should see &quot;Hello World&quot; printed out
+- (Ok, this isn't the _right_ &quot;hello world&quot; for Dart; you should try [something similar in the browser](https://www.dartlang.org/codelabs/darrrt/) ... but Dart is suitable for both the browser and the server, so it's fine to start with this too)
+
+### Write _more_ code!
+
+(Seriously, other than **Go**, _nothing else_ gets you up and running this fast)
+
+_Note_: Dart now [runs on App Engine](https://www.dartlang.org/server/google-cloud-platform/app-engine/setup.html) as well!</code></pre></noscript></div>
+
+
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-02-06T04:15:51+00:00" pubdate data-updated="true">Feb 6<sup>th</sup>, 2015</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/gettingstarted/'>gettingstarted</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2015/02/01/euler-23-non-abundant-sums/">
+		
+			Euler 23: Non-abundant Sums</a>
+	</h2>
+	<div class="entry-content">
+		<p>Had a slice of free time, so decided to look at the next problem. Here&rsquo;s the initial naive solution:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="nf">divisors</span> <span class="n">n</span> <span class="ow">=</span> <span class="p">[</span><span class="n">x</span> <span class="o">|</span> <span class="n">x</span> <span class="ow">&lt;-</span> <span class="p">[</span><span class="mi">1</span> <span class="o">..</span> <span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">n</span> <span class="p">`</span><span class="n">mod</span><span class="p">`</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">isAbundant</span> <span class="n">n</span> <span class="ow">=</span> <span class="n">n</span> <span class="o">&lt;</span> <span class="p">(</span><span class="n">sum</span> <span class="o">$</span> <span class="n">divisors</span> <span class="n">n</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">abundants</span> <span class="n">n</span> <span class="ow">=</span> <span class="n">filter</span> <span class="n">isAbundant</span> <span class="o">$</span> <span class="p">[</span><span class="mi">1</span> <span class="o">..</span> <span class="n">n</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">expressSum</span> <span class="n">z</span> <span class="n">nums</span> <span class="ow">=</span> <span class="n">not</span> <span class="o">$</span> <span class="n">null</span> <span class="p">[(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span> <span class="o">|</span> <span class="n">x</span> <span class="ow">&lt;-</span> <span class="n">nums</span><span class="p">,</span> <span class="n">y</span> <span class="ow">&lt;-</span> <span class="n">nums</span><span class="p">,</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span> <span class="o">==</span> <span class="n">z</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">sumAbundants</span> <span class="n">n</span> <span class="ow">=</span>
+</span><span class='line'>  <span class="kr">let</span> <span class="n">a</span> <span class="ow">=</span> <span class="n">abundants</span> <span class="n">n</span> <span class="kr">in</span>
+</span><span class='line'>          <span class="n">sum</span> <span class="o">$</span> <span class="n">filter</span> <span class="p">(</span><span class="nf">\</span><span class="n">x</span> <span class="ow">-&gt;</span> <span class="n">not</span> <span class="o">$</span> <span class="n">expressSum</span> <span class="n">x</span> <span class="n">a</span><span class="p">)</span> <span class="p">[</span><span class="mi">1</span> <span class="o">..</span> <span class="n">n</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>While it gave the correct answer, it did so in <code>3133.33</code> seconds, which is &hellip; embarrassing.</p>
+
+<p>This is just <em>too</em> inefficient, even the following &hellip;</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">divisors</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">i</span> <span class="nv">from</span> <span class="mi">1</span> <span class="nv">below</span> <span class="nv">n</span>
+</span><span class='line'>     <span class="nb">when</span> <span class="p">(</span><span class="nb">=</span> <span class="mi">0</span> <span class="p">(</span><span class="nb">mod</span> <span class="nv">n</span> <span class="nv">i</span><span class="p">))</span>
+</span><span class='line'>       <span class="nv">collect</span> <span class="nv">i</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">abundantp</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">&lt;</span> <span class="nv">n</span>
+</span><span class='line'>     <span class="p">(</span><span class="nb">reduce</span> <span class="nf">#&#39;</span><span class="nb">+</span> <span class="p">(</span><span class="nv">divisors</span> <span class="nv">n</span><span class="p">))))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">abundants</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">i</span> <span class="nv">from</span> <span class="mi">1</span> <span class="nv">below</span> <span class="nv">n</span>
+</span><span class='line'>     <span class="nb">when</span> <span class="p">(</span><span class="nv">abundantp</span> <span class="nv">i</span><span class="p">)</span>
+</span><span class='line'>       <span class="nv">collect</span> <span class="nv">i</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">possible-summands</span> <span class="p">(</span><span class="nv">z</span> <span class="nv">nums</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">x</span> <span class="nv">in</span> <span class="nv">nums</span> <span class="nb">do</span>
+</span><span class='line'>       <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">y</span> <span class="nv">in</span> <span class="nv">nums</span>
+</span><span class='line'>    <span class="nb">when</span> <span class="p">(</span><span class="nb">=</span> <span class="nv">z</span> <span class="p">(</span><span class="nb">+</span> <span class="nv">x</span> <span class="nv">y</span><span class="p">))</span> <span class="nb">do</span>
+</span><span class='line'>      <span class="p">(</span><span class="k">return-from</span> <span class="nv">possible-summands</span> <span class="p">(</span><span class="nb">cons</span> <span class="nv">x</span> <span class="nv">y</span><span class="p">)))))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">sum-abundants</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">let*</span> <span class="p">((</span><span class="nv">ab</span> <span class="p">(</span><span class="nv">abundants</span> <span class="nv">n</span><span class="p">))</span>
+</span><span class='line'>   <span class="p">(</span><span class="nv">summands</span>
+</span><span class='line'>    <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">i</span> <span class="nv">from</span> <span class="mi">1</span> <span class="nv">to</span> <span class="nv">n</span>
+</span><span class='line'>       <span class="nb">when</span> <span class="p">(</span><span class="nb">null</span> <span class="p">(</span><span class="nv">possible-summands</span> <span class="nv">i</span> <span class="nv">ab</span><span class="p">))</span>
+</span><span class='line'>       <span class="nv">collect</span> <span class="nv">i</span><span class="p">)))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nb">reduce</span> <span class="nf">#&#39;</span><span class="nb">+</span> <span class="nv">summands</span><span class="p">)))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&hellip; takes no less than half as long, at <code>1329.168</code> seconds.</p>
+
+<p>BTW why is <code>28123</code> the upper limit for this sequence? I had no idea, and found <a href="http://mathschallenge.net/full/sum_of_two_abundant_numbers">this explanation</a> (and tangentially, <a href="http://mathschallenge.net/view/even_sum_of_two_abundant_numbers">this one</a> too).</p>
+
+<p>Anyway, I&rsquo;m ashamed to say I didn&rsquo;t put in the effort to learn how to profile Haskell programs (<em>next time ?</em>) and profiled the Lisp version instead, which showed that (<strong>duh</strong>) all the time was going in finding divisors. Obviously, we can just loop till the <em>square root of N</em> instead of looping <em>all the way to N</em>. After this change:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">divisors</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
+</span><span class='line'><span class="p">(</span><span class="k">declare</span> <span class="p">(</span><span class="k">type</span> <span class="kt">fixnum</span> <span class="nv">n</span><span class="p">))</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">i</span> <span class="nv">from</span> <span class="mi">1</span> <span class="nv">below</span> <span class="p">(</span><span class="nb">floor</span> <span class="p">(</span><span class="nb">sqrt</span> <span class="nv">n</span><span class="p">))</span>
+</span><span class='line'>     <span class="nb">when</span> <span class="p">(</span><span class="nb">=</span> <span class="mi">0</span> <span class="p">(</span><span class="nb">mod</span> <span class="nv">n</span> <span class="nv">i</span><span class="p">))</span>
+</span><span class='line'>       <span class="nv">collect</span> <span class="nv">i</span><span class="p">))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&hellip; it runs in <code>38 milliseconds</code> !!</p>
+
+<p>And a similar change to the Haskell version:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="nf">divisors</span> <span class="ow">::</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="kt">Int</span><span class="p">]</span>
+</span><span class='line'><span class="nf">divisors</span> <span class="n">n</span> <span class="ow">=</span> <span class="p">[</span><span class="n">x</span> <span class="o">|</span> <span class="n">x</span> <span class="ow">&lt;-</span> <span class="p">[</span><span class="mi">1</span> <span class="o">..</span> <span class="n">round</span> <span class="o">$</span> <span class="n">sqrt</span> <span class="o">$</span> <span class="n">fromIntegral</span> <span class="n">n</span><span class="p">],</span> <span class="n">n</span> <span class="p">`</span><span class="n">mod</span><span class="p">`</span> <span class="n">x</span> <span class="o">==</span> <span class="mi">0</span><span class="p">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>gave the expected answer in <code>180 milliseconds</code>. Not bad (though it should be noted we&rsquo;re still an order of magnitude away in efficiency).</p>
+
+<p><strong>Notes:</strong></p>
+
+<ul>
+<li><p>Haskell makes it very easy to quickly arrive at a <em>correct</em> solution, but the road from there to an <em>efficient</em> solution is less clear.</p></li>
+<li><p>The brevity of the notation helps, but I get a feeling it&rsquo;s also due to the single-letter variable names &mdash; which is all right (and indeed well-suited) for a tiny math problem, but unclear whether it&rsquo;ll hold up for code in a large-scale project.</p></li>
+<li><p>People usually jump to the <a href="">&ldquo;Programming Language shootout&rdquo;</a>, but if the code <em>there</em> is any indication, writing performant Haskell code is a dark art, and <em>the three-line quicksort is a devilish honeytrap</em>.</p></li>
+</ul>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-02-01T19:01:00+00:00" pubdate data-updated="true">Feb 1<sup>st</sup>, 2015</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/haskell/'>haskell</a>, <a class='category' href='/blog/categories/projecteuler/'>projecteuler</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -6981,459 +7805,6 @@ After this, evaluating <code>amicables 10000</code> took <code>23.71</code> seco
 
 
 	<a class='category' href='/blog/categories/game/'>game</a>, <a class='category' href='/blog/categories/golang/'>golang</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2015/01/08/rock/">
-		
-			Beginning &#8216;Basic&#8217; Text Games in Go: Rock, Paper, Scissors, Lizard, Spock</a>
-	</h2>
-	<div class="entry-content">
-		<p>I&rsquo;ve been having some fun with the idea of simple text-based games in Go<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>. The original BASIC games book<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup> was not hard to find, and it was interesting to revisit it again.</p>
-
-<p>The first thing that stared me in the face was just how <em>bad</em> (and by &ldquo;bad&rdquo; I mean <em>incomprehensible</em>) most of the code was. In my nostalgia I had completely lost sight of this.</p>
-
-<p>The second thing was how nicely self-contained each game was, focussed on one simple idea, and implicitly pedagogical. Indeed, the games can be divided into a few distinct families<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>.</p>
-
-<p>So I came up with a hypothetical organization for my hypothetical book &mdash; it would need some simple stuff to start out with (with for loops, conditionals, functions, and so on), and slowly introduce more stuff. <em>An explicit non-goal</em> would be teaching the language in its complete form (a link to <em>Effective Go</em><sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup> should suffice for the motivated reader).</p>
-
-<p>In terms of Games, the rough plan I came up with was: start with some simple guessing game, then maybe a slightly more involved version, then a card game, then the classic <em>Battleship</em> around the mid-point, followed by a sort of <em>&ldquo;dungeon RPG&rdquo;</em> with some optional discussion at each point (e.g. should the computer in &ldquo;Battleship&rdquo; be dumb and random, or <em>learn</em>?)</p>
-
-<p>To get an idea of what this might look like, I wrote the first four of these. Here is what might pass for the very first one, a modified version of <em>&ldquo;Rock, Paper, Scissors&rdquo;</em>.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-<span class='line-number'>72</span>
-<span class='line-number'>73</span>
-<span class='line-number'>74</span>
-<span class='line-number'>75</span>
-<span class='line-number'>76</span>
-<span class='line-number'>77</span>
-<span class='line-number'>78</span>
-<span class='line-number'>79</span>
-<span class='line-number'>80</span>
-<span class='line-number'>81</span>
-<span class='line-number'>82</span>
-<span class='line-number'>83</span>
-<span class='line-number'>84</span>
-<span class='line-number'>85</span>
-<span class='line-number'>86</span>
-<span class='line-number'>87</span>
-<span class='line-number'>88</span>
-<span class='line-number'>89</span>
-<span class='line-number'>90</span>
-<span class='line-number'>91</span>
-<span class='line-number'>92</span>
-<span class='line-number'>93</span>
-<span class='line-number'>94</span>
-<span class='line-number'>95</span>
-<span class='line-number'>96</span>
-<span class='line-number'>97</span>
-<span class='line-number'>98</span>
-<span class='line-number'>99</span>
-<span class='line-number'>100</span>
-<span class='line-number'>101</span>
-<span class='line-number'>102</span>
-<span class='line-number'>103</span>
-<span class='line-number'>104</span>
-<span class='line-number'>105</span>
-<span class='line-number'>106</span>
-<span class='line-number'>107</span>
-<span class='line-number'>108</span>
-<span class='line-number'>109</span>
-<span class='line-number'>110</span>
-<span class='line-number'>111</span>
-<span class='line-number'>112</span>
-<span class='line-number'>113</span>
-<span class='line-number'>114</span>
-<span class='line-number'>115</span>
-<span class='line-number'>116</span>
-<span class='line-number'>117</span>
-<span class='line-number'>118</span>
-<span class='line-number'>119</span>
-<span class='line-number'>120</span>
-<span class='line-number'>121</span>
-</pre></td><td class='code'><pre><code class='go'><span class='line'><span class="kn">package</span> <span class="nx">main</span>
-</span><span class='line'>
-</span><span class='line'><span class="kn">import</span> <span class="p">(</span>
-</span><span class='line'>  <span class="s">&quot;fmt&quot;</span>
-</span><span class='line'>  <span class="s">&quot;math/rand&quot;</span>
-</span><span class='line'>  <span class="s">&quot;strings&quot;</span>
-</span><span class='line'>  <span class="s">&quot;time&quot;</span>
-</span><span class='line'><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">const</span> <span class="p">(</span>
-</span><span class='line'>  <span class="nx">rock</span> <span class="p">=</span> <span class="kc">iota</span>
-</span><span class='line'>  <span class="nx">paper</span>
-</span><span class='line'>  <span class="nx">scissors</span>
-</span><span class='line'>  <span class="nx">lizard</span>
-</span><span class='line'>  <span class="nx">spock</span>
-</span><span class='line'>  <span class="nx">maxOptions</span>
-</span><span class='line'><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">var</span> <span class="nx">handOptions</span> <span class="p">=</span> <span class="p">[]</span><span class="kt">string</span><span class="p">{</span><span class="s">&quot;rock&quot;</span><span class="p">,</span> <span class="s">&quot;paper&quot;</span><span class="p">,</span> <span class="s">&quot;scissors&quot;</span><span class="p">,</span> <span class="s">&quot;lizard&quot;</span><span class="p">,</span> <span class="s">&quot;spock&quot;</span><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">type</span> <span class="nx">precedence</span> <span class="kd">struct</span> <span class="p">{</span>
-</span><span class='line'>  <span class="nx">hand1</span>  <span class="kt">int</span>
-</span><span class='line'>  <span class="nx">reason</span> <span class="kt">string</span>
-</span><span class='line'>  <span class="nx">hand2</span>  <span class="kt">int</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">var</span> <span class="nx">precedences</span> <span class="p">=</span> <span class="p">[]</span><span class="nx">precedence</span><span class="p">{</span>
-</span><span class='line'>  <span class="p">{</span><span class="nx">spock</span><span class="p">,</span> <span class="s">&quot;smashes&quot;</span><span class="p">,</span> <span class="nx">scissors</span><span class="p">},</span>
-</span><span class='line'>  <span class="p">{</span><span class="nx">spock</span><span class="p">,</span> <span class="s">&quot;vaporises&quot;</span><span class="p">,</span> <span class="nx">rock</span><span class="p">},</span>
-</span><span class='line'>  <span class="p">{</span><span class="nx">lizard</span><span class="p">,</span> <span class="s">&quot;posions&quot;</span><span class="p">,</span> <span class="nx">spock</span><span class="p">},</span>
-</span><span class='line'>  <span class="p">{</span><span class="nx">lizard</span><span class="p">,</span> <span class="s">&quot;eats&quot;</span><span class="p">,</span> <span class="nx">paper</span><span class="p">},</span>
-</span><span class='line'>  <span class="p">{</span><span class="nx">rock</span><span class="p">,</span> <span class="s">&quot;crushes&quot;</span><span class="p">,</span> <span class="nx">lizard</span><span class="p">},</span>
-</span><span class='line'>  <span class="p">{</span><span class="nx">rock</span><span class="p">,</span> <span class="s">&quot;cruses&quot;</span><span class="p">,</span> <span class="nx">scissors</span><span class="p">},</span>
-</span><span class='line'>  <span class="p">{</span><span class="nx">paper</span><span class="p">,</span> <span class="s">&quot;covers&quot;</span><span class="p">,</span> <span class="nx">rock</span><span class="p">},</span>
-</span><span class='line'>  <span class="p">{</span><span class="nx">paper</span><span class="p">,</span> <span class="s">&quot;disproves&quot;</span><span class="p">,</span> <span class="nx">spock</span><span class="p">},</span>
-</span><span class='line'>  <span class="p">{</span><span class="nx">scissors</span><span class="p">,</span> <span class="s">&quot;cuts&quot;</span><span class="p">,</span> <span class="nx">paper</span><span class="p">},</span>
-</span><span class='line'>  <span class="p">{</span><span class="nx">scissors</span><span class="p">,</span> <span class="s">&quot;decapitates&quot;</span><span class="p">,</span> <span class="nx">lizard</span><span class="p">},</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">func</span> <span class="nx">showUsage</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;\n     Welcome to ROCK - PAPER - SCISSORS - LIZARD - SPOCK  &quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;----------------------------------------------------------\n&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;We each pick one of the following : \n&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">maxOptions</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
-</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;--&gt;  %s  &lt;--\n&quot;</span><span class="p">,</span> <span class="nx">handOptions</span><span class="p">[</span><span class="nx">i</span><span class="p">])</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">()</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">func</span> <span class="nx">getPlayerChoice</span><span class="p">()</span> <span class="kt">int</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">for</span> <span class="p">{</span>
-</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;\nEnter your choice : &quot;</span><span class="p">)</span>
-</span><span class='line'>      <span class="kd">var</span> <span class="nx">choice</span> <span class="kt">string</span>
-</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Scan</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">choice</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="nx">choice</span> <span class="p">=</span> <span class="nx">strings</span><span class="p">.</span><span class="nx">ToLower</span><span class="p">(</span><span class="nx">choice</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">maxOptions</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
-</span><span class='line'>          <span class="k">if</span> <span class="nx">handOptions</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">==</span> <span class="nx">choice</span> <span class="p">{</span>
-</span><span class='line'>              <span class="k">return</span> <span class="nx">i</span>
-</span><span class='line'>          <span class="p">}</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">func</span> <span class="nx">getComputerChoice</span><span class="p">()</span> <span class="p">(</span><span class="nx">choice</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="nx">choice</span> <span class="p">=</span> <span class="nx">rand</span><span class="p">.</span><span class="nx">Intn</span><span class="p">(</span><span class="nx">maxOptions</span><span class="p">)</span>
-</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;I chose &quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">3</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
-</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;.&quot;</span><span class="p">)</span>
-</span><span class='line'>      <span class="nx">time</span><span class="p">.</span><span class="nx">Sleep</span><span class="p">(</span><span class="mi">200</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Millisecond</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot; %s\n\n&quot;</span><span class="p">,</span> <span class="nx">handOptions</span><span class="p">[</span><span class="nx">choice</span><span class="p">])</span>
-</span><span class='line'>  <span class="k">return</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>  <span class="nx">showUsage</span><span class="p">()</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nx">rand</span><span class="p">.</span><span class="nx">Seed</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Now</span><span class="p">().</span><span class="nx">Unix</span><span class="p">())</span>
-</span><span class='line'>  <span class="kd">var</span> <span class="nx">playerWins</span><span class="p">,</span> <span class="nx">computerWins</span> <span class="kt">int</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">for</span> <span class="p">{</span>
-</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;\nThe score is: Me %d, You %d\n&quot;</span><span class="p">,</span> <span class="nx">computerWins</span><span class="p">,</span> <span class="nx">playerWins</span><span class="p">)</span>
-</span><span class='line'>      <span class="nx">playerChoice</span> <span class="o">:=</span> <span class="nx">getPlayerChoice</span><span class="p">()</span>
-</span><span class='line'>      <span class="nx">computerChoice</span> <span class="o">:=</span> <span class="nx">getComputerChoice</span><span class="p">()</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="nx">playerWon</span> <span class="o">:=</span> <span class="kc">false</span>
-</span><span class='line'>      <span class="nx">computerWon</span> <span class="o">:=</span> <span class="kc">false</span>
-</span><span class='line'>      <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">p</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">precedences</span> <span class="p">{</span>
-</span><span class='line'>          <span class="k">if</span> <span class="nx">p</span><span class="p">.</span><span class="nx">hand1</span> <span class="o">==</span> <span class="nx">playerChoice</span> <span class="o">&amp;&amp;</span> <span class="nx">p</span><span class="p">.</span><span class="nx">hand2</span> <span class="o">==</span> <span class="nx">computerChoice</span> <span class="p">{</span>
-</span><span class='line'>              <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;Alas! %s %s %s! You Win! :(\n&quot;</span><span class="p">,</span>
-</span><span class='line'>                  <span class="nx">handOptions</span><span class="p">[</span><span class="nx">p</span><span class="p">.</span><span class="nx">hand1</span><span class="p">],</span> <span class="nx">p</span><span class="p">.</span><span class="nx">reason</span><span class="p">,</span> <span class="nx">handOptions</span><span class="p">[</span><span class="nx">p</span><span class="p">.</span><span class="nx">hand2</span><span class="p">])</span>
-</span><span class='line'>              <span class="nx">playerWon</span> <span class="p">=</span> <span class="kc">true</span>
-</span><span class='line'>          <span class="p">}</span>
-</span><span class='line'>          <span class="k">if</span> <span class="nx">p</span><span class="p">.</span><span class="nx">hand1</span> <span class="o">==</span> <span class="nx">computerChoice</span> <span class="o">&amp;&amp;</span> <span class="nx">p</span><span class="p">.</span><span class="nx">hand2</span> <span class="o">==</span> <span class="nx">playerChoice</span> <span class="p">{</span>
-</span><span class='line'>              <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;Aha! %s %s %s! I win! :)\n&quot;</span><span class="p">,</span>
-</span><span class='line'>                  <span class="nx">handOptions</span><span class="p">[</span><span class="nx">p</span><span class="p">.</span><span class="nx">hand1</span><span class="p">],</span> <span class="nx">p</span><span class="p">.</span><span class="nx">reason</span><span class="p">,</span> <span class="nx">handOptions</span><span class="p">[</span><span class="nx">p</span><span class="p">.</span><span class="nx">hand2</span><span class="p">])</span>
-</span><span class='line'>              <span class="nx">computerWon</span> <span class="p">=</span> <span class="kc">true</span>
-</span><span class='line'>          <span class="p">}</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="k">if</span> <span class="nx">playerWon</span> <span class="p">{</span>
-</span><span class='line'>          <span class="nx">playerWins</span><span class="o">++</span>
-</span><span class='line'>      <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="nx">computerWon</span> <span class="p">{</span>
-</span><span class='line'>          <span class="nx">computerWins</span><span class="o">++</span>
-</span><span class='line'>      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</span><span class='line'>          <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Hey, look, it was a draw!\n\n&quot;</span><span class="p">)</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;\nPlay another round ?  (enter &#39;y&#39; or &#39;n&#39;) : &quot;</span><span class="p">)</span>
-</span><span class='line'>      <span class="kd">var</span> <span class="nx">another</span> <span class="kt">string</span>
-</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Scan</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">another</span><span class="p">)</span>
-</span><span class='line'>      <span class="k">if</span> <span class="nx">strings</span><span class="p">.</span><span class="nx">ToLower</span><span class="p">(</span><span class="nx">another</span><span class="p">)</span> <span class="o">==</span> <span class="s">&quot;y&quot;</span> <span class="p">{</span>
-</span><span class='line'>          <span class="k">continue</span>
-</span><span class='line'>      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</span><span class='line'>          <span class="k">break</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;\nOh well, until next time then ... \n&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Try it out! It&rsquo;s meant to be simple and straightforward &mdash; but wait! Before you pass judgement, I present to you the <em>original</em> version:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-</pre></td><td class='code'><pre><code class='basic'><span class='line'><span class="nl">10</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="kr">TAB</span><span class="p">(</span><span class="il">21</span><span class="p">);</span><span class="s2">&quot;GAME OF ROCK, SCISSORS, PAPER&quot;</span>
-</span><span class='line'><span class="nl">20</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="kr">TAB</span><span class="p">(</span><span class="il">15</span><span class="p">);</span><span class="s2">&quot;CREATIVE COMPUTING  MORRISTOWN, NEW JERSEY&quot;</span>
-</span><span class='line'><span class="nl">25</span><span class="w"> </span><span class="kr">PRINT</span><span class="o">:</span><span class="kr">PRINT</span><span class="o">:</span><span class="kr">PRINT</span>
-</span><span class='line'><span class="nl">30</span><span class="w"> </span><span class="kr">INPUT</span><span class="w"> </span><span class="s2">&quot;HOW MANY GAMES&quot;</span><span class="p">;</span><span class="vg">Q</span>
-</span><span class='line'><span class="nl">40</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">Q</span><span class="o">&lt;</span><span class="il">11</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">60</span>
-</span><span class='line'><span class="nl">50</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;SORRY, BUT WE AREN&#39;T ALLOWED TO PLAY THAT MANY.&quot;</span><span class="o">:</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">30</span>
-</span><span class='line'><span class="nl">60</span><span class="w"> </span><span class="kr">FOR</span><span class="w"> </span><span class="vg">G</span><span class="o">=</span><span class="il">1</span><span class="w"> </span><span class="k">TO</span><span class="w"> </span><span class="vg">Q</span>
-</span><span class='line'><span class="nl">70</span><span class="w"> </span><span class="kr">PRINT</span><span class="o">:</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;GAME NUMBER&quot;</span><span class="p">;</span><span class="vg">G</span>
-</span><span class='line'><span class="nl">80</span><span class="w"> </span><span class="vg">X</span><span class="o">=</span><span class="kr">INT</span><span class="p">(</span><span class="kr">RND</span><span class="p">(</span><span class="il">1</span><span class="p">)</span><span class="o">*</span><span class="il">3</span><span class="o">+</span><span class="il">1</span><span class="p">)</span>
-</span><span class='line'><span class="nl">90</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;3=ROCK...2=SCISSORS...1=PAPER&quot;</span>
-</span><span class='line'><span class="nl">100</span><span class="w"> </span><span class="kr">INPUT</span><span class="w"> </span><span class="s2">&quot;1...2...3...WHAT&#39;S YOUR CHOICE&quot;</span><span class="p">;</span><span class="vg">K</span>
-</span><span class='line'><span class="nl">110</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="p">(</span><span class="vg">K</span><span class="il">-1</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="vg">K</span><span class="il">-2</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="vg">K</span><span class="il">-3</span><span class="p">)</span><span class="o">&lt;&gt;</span><span class="il">0</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;INVALID.&quot;</span><span class="o">:</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">90</span>
-</span><span class='line'><span class="nl">120</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;THIS IS MY CHOICE...&quot;</span>
-</span><span class='line'><span class="nl">130</span><span class="w"> </span><span class="kr">ON</span><span class="w"> </span><span class="vg">X</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">140</span><span class="p">,</span><span class="il">150</span><span class="p">,</span><span class="il">160</span>
-</span><span class='line'><span class="nl">140</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;...PAPER&quot;</span><span class="o">:</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">170</span>
-</span><span class='line'><span class="nl">150</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;...SCISSORS&quot;</span><span class="o">:</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">170</span>
-</span><span class='line'><span class="nl">160</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;...ROCK&quot;</span>
-</span><span class='line'><span class="nl">170</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">X</span><span class="o">=</span><span class="vg">K</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">250</span>
-</span><span class='line'><span class="nl">180</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">X</span><span class="o">&gt;</span><span class="vg">K</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">230</span>
-</span><span class='line'><span class="nl">190</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">X</span><span class="o">=</span><span class="il">1</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">210</span>
-</span><span class='line'><span class="nl">200</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;YOU WIN!!!&quot;</span><span class="o">:</span><span class="vg">H</span><span class="o">=</span><span class="vg">H</span><span class="o">+</span><span class="il">1</span><span class="o">:</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">260</span>
-</span><span class='line'><span class="nl">210</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">K</span><span class="o">&lt;&gt;</span><span class="il">3</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">200</span>
-</span><span class='line'><span class="nl">220</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;WOW!  I WIN!!!&quot;</span><span class="o">:</span><span class="vg">C</span><span class="o">=</span><span class="vg">C</span><span class="o">+</span><span class="il">1</span><span class="o">:</span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">260</span>
-</span><span class='line'><span class="nl">230</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">K</span><span class="o">&lt;&gt;</span><span class="il">1</span><span class="w"> </span><span class="ow">OR</span><span class="w"> </span><span class="vg">X</span><span class="o">&lt;&gt;</span><span class="il">3</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">220</span>
-</span><span class='line'><span class="nl">240</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">200</span>
-</span><span class='line'><span class="nl">250</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;TIE GAME.  NO WINNER.&quot;</span>
-</span><span class='line'><span class="nl">260</span><span class="w"> </span><span class="kr">NEXT</span><span class="w"> </span><span class="vg">G</span>
-</span><span class='line'><span class="nl">270</span><span class="w"> </span><span class="kr">PRINT</span><span class="o">:</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;HERE IS THE FINAL GAME SCORE:&quot;</span>
-</span><span class='line'><span class="nl">280</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;I HAVE WON&quot;</span><span class="p">;</span><span class="vg">C</span><span class="p">;</span><span class="s2">&quot;GAME(S).&quot;</span>
-</span><span class='line'><span class="nl">290</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;YOU HAVE WON&quot;</span><span class="p">;</span><span class="vg">H</span><span class="p">;</span><span class="s2">&quot;GAME(S).&quot;</span>
-</span><span class='line'><span class="nl">300</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;AND&quot;</span><span class="p">;</span><span class="vg">Q</span><span class="o">-</span><span class="p">(</span><span class="vg">C</span><span class="o">+</span><span class="vg">H</span><span class="p">);</span><span class="s2">&quot;GAME(S) ENDED IN A TIE.&quot;</span>
-</span><span class='line'><span class="nl">310</span><span class="w"> </span><span class="kr">PRINT</span><span class="o">:</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;THANKS FOR PLAYING!!&quot;</span>
-</span><span class='line'><span class="nl">320</span><span class="w"> </span><span class="kr">END</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Yes, folks, that is the kind of stuff I <em>cannot</em> believe I squinted over and read again and again :(</p>
-<div class="footnotes">
-<hr/>
-<ol>
-<li id="fn:1">
-<p>First mentioned <a href="http://agam.github.io/blog/2014/12/17/the-gardens-of-go/">here</a> a month ago<a href="#fnref:1" rev="footnote">&#8617;</a></p></li>
-<li id="fn:2">
-<p><a href="http://www.atariarchives.org/basicgames/">&ldquo;Basic Computer Games&rdquo;</a>, originally for the Atari<a href="#fnref:2" rev="footnote">&#8617;</a></p></li>
-<li id="fn:3">
-<p>As in <a href="http://bitsavers.trailing-edge.com/pdf/dec/_Books/101_BASIC_Computer_Games_Mar75.pdf">this version with commentary</a>; see <em>Appendix A (pg 247)</em><a href="#fnref:3" rev="footnote">&#8617;</a></p></li>
-<li id="fn:4">
-<p><a href="https://golang.org/doc/effective_go.html">&ldquo;Effective Go&rdquo;</a><a href="#fnref:4" rev="footnote">&#8617;</a></p></li>
-</ol>
-</div>
-
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-01-08T04:00:53+00:00" pubdate data-updated="true">Jan 8<sup>th</sup>, 2015</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/basic/'>basic</a>, <a class='category' href='/blog/categories/game/'>game</a>, <a class='category' href='/blog/categories/golang/'>golang</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2015/01/07/stuff-id-like-to-learn-in-2015/">
-		
-			Stuff I&#8217;d Like to Learn in 2015</a>
-	</h2>
-	<div class="entry-content">
-		<p>Ah yes, the time of New Year&rsquo;s Resolutions. It never ends. Many weeks pass by in a haze of &ldquo;<em>shoulds</em>&rdquo;. So here&rsquo;s something more to add on.</p>
-
-<ul>
-<li><p>Keep playing with Go. It&rsquo;s a great, simple language. In particular, I want to try out a whole bunch of crazy experiments.</p></li>
-<li><p>Think about the &ldquo;simple text games&rdquo; book. Or bury the idea as soon as possible.</p></li>
-</ul>
-
-
-<p><del>&ndash; Learn a bit more about the JVM (perhaps through Clojure?)</del></p>
-
-<ul>
-<li>Stem the atrophy in algorithmic skills</li>
-</ul>
-
-
-<p>&hellip; and there&rsquo;s more I can&rsquo;t remember right now. The first two seem self-evident, so a bit more about the third and fourth. I&rsquo;ve had a deep dislike for all things <em>Microsoft and Java</em> for over ten years now, and I think it&rsquo;s all mostly FUD.</p>
-
-<p>In the case of Microsoft, it was because everything I tried to learn became deprecated as fast as I learnt it, and I quit in disgust (I&rsquo;m told I quit before giving the CLR and C# a fair chance). I was quite naive fifteen years ago and thought that <em>everything</em> that was current <em>then</em> was going to last forever. This extended to such stuff as Frontpage, DDE, COM, RDO &hellip; you get the idea.</p>
-
-<p>For Java it&rsquo;s more vague. I think I never got the <em>hang</em> of it, and then I had a lot of &ldquo;<em>design pattern crap</em>&rdquo; thrown in my face, and my long-last impression was one of incredible, pointless verbosity. Last year though we had someone join our team who had done <em>RealWorkInJava &trade;</em>, and after talking to him it didn&rsquo;t seem all that bad. In particular, the JVM seemed like something worth knowing.</p>
-
-<p>I have pretty much <em>zero</em> experience with hosted languages. One of the reasons for this might be that I always want to know what&rsquo;s &ldquo;really happening underneath&rdquo;, and am deeply suspicious of situations when I <em>cannot</em> know (this is also why I prefer Ocaml/F# over Haskell, but  that&rsquo;s a whole other blog post).</p>
-
-<p><del>Add to this the fact that I&rsquo;ve always been curious about Clojure, to discover all its differences from Common Lisp on my own (there are several rants for and against it online, but there&rsquo;s only one way to find out for sure), and it&rsquo;s a natural outlet for exploration.</del></p>
-
-<p>Which brings me to the fourth point &hellip; I feel I&rsquo;ve seriously forgotten <em>a lot</em> of theory, both in Math and CS, and it&rsquo;s <em>frightening</em>. So I&rsquo;m hoping to weave that (<em>somehow</em>) into my Clojure exploration and kill many birds with one stone.</p>
-
-<p>So yeah, we&rsquo;ll find out how this all worked out, same time next year :)</p>
-
-<p><strong>Update (1/13): This is a bunch of crap</strong> I just realized I wrote a <a href="http://agam.github.io/blog/2014/01/05/resolutions/">similar post</a> last year and did <em>nothing</em> about it (well, ok, I <em>did</em> do the <em>r/dailyprogrammer</em> stuff, more or less), so scratch all of the above. I&rsquo;ll leave it up to remind myself of how foolish this is. I&rsquo;m guessing this will reoccur the same time next year :P. Perhaps the best way out is to make <em>no resolutions</em>.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-01-07T06:49:00+00:00" pubdate data-updated="true">Jan 7<sup>th</sup>, 2015</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/clojure/'>clojure</a>, <a class='category' href='/blog/categories/jvm/'>jvm</a>, <a class='category' href='/blog/categories/learning/'>learning</a>
 
 
 </div>

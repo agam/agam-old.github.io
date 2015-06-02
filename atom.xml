@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-05-29T19:34:09+00:00</updated>
+  <updated>2015-06-02T05:23:14+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,40 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[A counterpoint to RMS on Lisp Machines]]></title>
+    <link href="http://agam.github.io/blog/2015/06/02/a-counterpoint-to-rms-on-lisp-machines/"/>
+    <updated>2015-06-02T04:48:09+00:00</updated>
+    <id>http://agam.github.io/blog/2015/06/02/a-counterpoint-to-rms-on-lisp-machines</id>
+    <content type="html"><![CDATA[<p>You might have come across Richard Stallman&rsquo;s <a href="http://www.gnu.org/gnu/rms-lisp.html">brief history of Lisp Machines</a>, which was a speech he gave in 2002. I remember coming across it &mdash; being inspired by what inspired him, and being outraged at what outraged him.</p>
+
+<p>Lately, I&rsquo;m souring on the whole <em>romantic</em> view of the &ldquo;free software&rdquo; that I&rsquo;d held for about a decade, a distinctly &ldquo;NoGPL&rdquo; view, if I may coin that word. Another nail in the coffin was delivered by <a href="https://web.archive.org/web/20090901115039/http://danweinreb.org/blog/rebuttal-to-stallmans-story-about-the-formation-of-symbolics-and-lmi">this blog post</a> <sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>, which refutes much of the blame to Symbolics, and leaves Stallman looking IMO quite silly (if not petulant).</p>
+
+<p>Also &hellip;</p>
+
+<blockquote><p>And while I’m setting the record straight, the original (TECO-based) Emacs was created and designed by Guy L. Steele Jr. and David Moon. <strong>After they had it working, and it had become established as the standard text editor at the AI lab, Stallman took over its maintenance.</strong></p></blockquote>
+
+<p>&hellip; so much for RMS&rsquo;s <em>&ldquo;But, along the way, I wrote a text editor, Emacs &hellip;&rdquo;</em>.</p>
+<div class="footnotes">
+<hr/>
+<ol>
+<li id="fn:1">
+<p>The blog no longer exists (and sadly, Mr. Weinreb passed away in 2012), but thanks to <a href="https://archive.org/">archive.org</a>, it&rsquo;ll stay around.<a href="#fnref:1" rev="footnote">&#8617;</a></p></li>
+</ol>
+</div>
+
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Project Euler and learning programming]]></title>
+    <link href="http://agam.github.io/blog/2015/05/29/project-euler-and-learning-programming/"/>
+    <updated>2015-05-29T19:37:07+00:00</updated>
+    <id>http://agam.github.io/blog/2015/05/29/project-euler-and-learning-programming</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Euler 50: Consecutive Prime Sum]]></title>
@@ -2359,174 +2393,6 @@
 
 
 <p>Everything is wrapped up in the call to <code>(euler41)</code>.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Euler 40: Champernowne's Constant]]></title>
-    <link href="http://agam.github.io/blog/2015/03/21/euler-40-champernownes-constant/"/>
-    <updated>2015-03-21T19:34:12+00:00</updated>
-    <id>http://agam.github.io/blog/2015/03/21/euler-40-champernownes-constant</id>
-    <content type="html"><![CDATA[<p>I was too lazy to avoid the brute-force approach here, especially since it took less than a second to run. The following seems longer than it should be, partly because I left in some helper and debugging functions &hellip;</p>
-
-<p><em>Edit</em>: There is obviously a very nice paper-and-pen solution to this &mdash; the 10th place is &lsquo;1&rsquo; (for 10), then the 100th place is &lsquo;5&rsquo; (for 55), and so on &hellip;</p>
-
-<p><strong>Statutory Warning</strong>: <em>Spoilers Ahead</em></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*max-digits*</span> <span class="mi">2000000</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">digits</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">declare</span> <span class="p">(</span><span class="k">type</span> <span class="kt">fixnum</span> <span class="nv">n</span><span class="p">))</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">nreverse</span> <span class="p">(</span><span class="nb">loop</span>
-</span><span class='line'>               <span class="nv">for</span> <span class="nv">tmp</span> <span class="nb">=</span> <span class="nv">n</span> <span class="nv">then</span> <span class="p">(</span><span class="nb">floor</span> <span class="p">(</span><span class="nb">/</span> <span class="nv">tmp</span> <span class="mi">10</span><span class="p">))</span>
-</span><span class='line'>               <span class="nv">until</span> <span class="p">(</span><span class="nb">=</span> <span class="nv">tmp</span> <span class="mi">0</span><span class="p">)</span>
-</span><span class='line'>               <span class="nv">collect</span> <span class="p">(</span><span class="nb">mod</span> <span class="nv">tmp</span> <span class="mi">10</span><span class="p">))))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">set-digits</span> <span class="p">(</span><span class="nv">d</span> <span class="nv">start</span> <span class="nv">all-digits</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">loop</span>
-</span><span class='line'>     <span class="nv">for</span> <span class="nv">elem</span> <span class="nv">in</span> <span class="nv">d</span>
-</span><span class='line'>     <span class="nv">for</span> <span class="nv">idx</span> <span class="nb">=</span> <span class="nv">start</span> <span class="nv">then</span> <span class="p">(</span><span class="nb">1+</span> <span class="nv">idx</span><span class="p">)</span> <span class="nb">do</span>
-</span><span class='line'>       <span class="p">(</span><span class="nb">setf</span> <span class="p">(</span><span class="nb">aref</span> <span class="nv">all-digits</span> <span class="nv">idx</span><span class="p">)</span> <span class="nv">elem</span><span class="p">)))</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">;; Fills out the array of digits and returns an accessor function</span>
-</span><span class='line'><span class="c1">;; Note: the index increments by the length of the number of</span>
-</span><span class='line'><span class="c1">;; digits of the _previous_ number.</span>
-</span><span class='line'><span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">all-digits</span> <span class="p">(</span><span class="nb">make-array</span> <span class="p">(</span><span class="nb">list</span> <span class="vg">*max-digits*</span><span class="p">)</span> <span class="ss">:element-type</span> <span class="o">&#39;</span><span class="p">(</span><span class="nc">integer</span> <span class="mi">0</span> <span class="mi">9</span><span class="p">)</span> <span class="ss">:initial-element</span> <span class="mi">0</span><span class="p">)))</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">defun</span> <span class="nv">populate-digits</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">(</span><span class="k">progn</span>
-</span><span class='line'>      <span class="p">(</span><span class="nb">loop</span>
-</span><span class='line'>         <span class="nv">for</span> <span class="nv">num</span> <span class="nb">=</span> <span class="mi">1</span> <span class="nv">then</span> <span class="p">(</span><span class="nb">1+</span> <span class="nv">num</span><span class="p">)</span>
-</span><span class='line'>         <span class="nv">for</span> <span class="nv">d</span> <span class="nb">=</span> <span class="p">(</span><span class="nv">digits</span> <span class="nv">num</span><span class="p">)</span>
-</span><span class='line'>         <span class="nv">for</span> <span class="nv">i</span> <span class="nb">=</span> <span class="mi">0</span> <span class="nv">then</span> <span class="p">(</span><span class="nb">+</span> <span class="nv">i</span> <span class="p">(</span><span class="nb">length</span> <span class="p">(</span><span class="nv">digits</span> <span class="p">(</span><span class="nb">1-</span> <span class="nv">num</span><span class="p">))))</span>
-</span><span class='line'>         <span class="nv">while</span> <span class="p">(</span><span class="nb">&lt;</span> <span class="nv">i</span> <span class="nv">n</span><span class="p">)</span> <span class="nb">do</span>
-</span><span class='line'>           <span class="p">(</span><span class="nv">set-digits</span> <span class="nv">d</span> <span class="nv">i</span> <span class="nv">all-digits</span><span class="p">))</span>
-</span><span class='line'>    <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">idx</span><span class="p">)</span>
-</span><span class='line'>      <span class="p">(</span><span class="nb">aref</span> <span class="nv">all-digits</span> <span class="nv">idx</span><span class="p">)))))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">power-list</span> <span class="p">()</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">champer</span> <span class="p">(</span><span class="nv">populate-digits</span> <span class="mi">1000000</span><span class="p">)))</span>
-</span><span class='line'>    <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">p</span> <span class="nv">from</span> <span class="mi">0</span> <span class="nv">to</span> <span class="mi">6</span> <span class="nv">collect</span>
-</span><span class='line'>         <span class="p">(</span><span class="nb">funcall</span> <span class="nv">champer</span> <span class="p">(</span><span class="nb">1-</span> <span class="p">(</span><span class="nb">expt</span> <span class="mi">10</span> <span class="nv">p</span><span class="p">))))))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">euler40</span> <span class="p">()</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">apply</span> <span class="ss">&#39;*</span> <span class="p">(</span><span class="nv">power-list</span><span class="p">)))</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="c1">;; Useful debugging tool</span>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">scan-list</span> <span class="p">(</span><span class="nv">start</span> <span class="nv">end</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">champer</span> <span class="p">(</span><span class="nv">populate-digits</span><span class="p">)))</span>
-</span><span class='line'>    <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">i</span> <span class="nv">from</span> <span class="nv">start</span> <span class="nv">to</span> <span class="nv">end</span> <span class="nb">do</span>
-</span><span class='line'>         <span class="p">(</span><span class="nb">print</span> <span class="p">(</span><span class="nb">cons</span> <span class="nv">i</span> <span class="p">(</span><span class="nb">funcall</span> <span class="nv">champer</span> <span class="nv">i</span><span class="p">))))))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The &ldquo;final answer&rdquo; is given by <code>(euler40)</code>, and the intermediate digits themselves by <code>(power-list)</code>. I found <code>(scan-list)</code> useful to debug an embarassing off-by-one error in the loop.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Euler 39: Integer Right Triangles]]></title>
-    <link href="http://agam.github.io/blog/2015/03/20/euler-39-integer-right-triangles/"/>
-    <updated>2015-03-20T23:09:44+00:00</updated>
-    <id>http://agam.github.io/blog/2015/03/20/euler-39-integer-right-triangles</id>
-    <content type="html"><![CDATA[<p>Straightfoward, this. An interesting insight into speed difference between <code>SBCL</code> and <code>Clozure</code>: the former took <em>0.75 seconds</em> to run this, while the latter took about <em>4 seconds</em> (without the type annotations, <code>SBCL</code> takes <em>33 seconds</em>).</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">is-right-triangle</span> <span class="p">(</span><span class="nv">n1</span> <span class="nv">n2</span> <span class="nv">n3</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">declare</span> <span class="p">(</span><span class="k">type</span> <span class="kt">fixnum</span> <span class="nv">n1</span> <span class="nv">n2</span> <span class="nv">n3</span><span class="p">))</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">=</span> <span class="p">(</span><span class="nb">+</span> <span class="p">(</span><span class="nb">expt</span> <span class="nv">n1</span> <span class="mi">2</span><span class="p">)</span> <span class="p">(</span><span class="nb">expt</span> <span class="nv">n2</span> <span class="mi">2</span><span class="p">))</span> <span class="p">(</span><span class="nb">expt</span> <span class="nv">n3</span> <span class="mi">2</span><span class="p">)))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">triangle-solutions</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">declare</span> <span class="p">(</span><span class="k">type</span> <span class="kt">fixnum</span> <span class="nv">n</span><span class="p">))</span>
-</span><span class='line'>  <span class="c1">;; Largest side (hyp) can&#39;t be less than a third of the total</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">hyp</span> <span class="nv">from</span> <span class="p">(</span><span class="nb">floor</span> <span class="p">(</span><span class="nb">/</span> <span class="nv">n</span> <span class="mi">3</span><span class="p">))</span> <span class="nv">upto</span> <span class="p">(</span><span class="nb">-</span> <span class="nv">n</span> <span class="mi">2</span><span class="p">)</span>
-</span><span class='line'>     <span class="c1">;; Avoid repeating combinations, so WLOG let one side</span>
-</span><span class='line'>     <span class="c1">;; be greater than the other</span>
-</span><span class='line'>     <span class="nv">for</span> <span class="nv">sides-sum</span> <span class="nb">=</span> <span class="p">(</span><span class="nb">-</span> <span class="nv">n</span> <span class="nv">hyp</span><span class="p">)</span>
-</span><span class='line'>     <span class="nb">when</span> <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">side1</span> <span class="nv">from</span> <span class="p">(</span><span class="nb">ceiling</span> <span class="p">(</span><span class="nb">/</span> <span class="nv">sides-sum</span> <span class="mi">2</span><span class="p">))</span> <span class="nv">to</span> <span class="p">(</span><span class="nb">1-</span> <span class="nv">sides-sum</span><span class="p">)</span>
-</span><span class='line'>             <span class="nv">for</span> <span class="nv">side2</span> <span class="nb">=</span> <span class="p">(</span><span class="nb">-</span> <span class="nv">sides-sum</span> <span class="nv">side1</span><span class="p">)</span>
-</span><span class='line'>             <span class="nb">when</span> <span class="p">(</span><span class="nv">is-right-triangle</span> <span class="nv">side1</span> <span class="nv">side2</span> <span class="nv">hyp</span><span class="p">)</span>
-</span><span class='line'>             <span class="nv">collect</span> <span class="p">(</span><span class="nb">list</span> <span class="nv">side1</span> <span class="nv">side2</span> <span class="nv">hyp</span><span class="p">))</span>
-</span><span class='line'>     <span class="nv">collect</span> <span class="nv">it</span><span class="p">))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">max-triangle-solutions</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">declare</span> <span class="p">(</span><span class="k">type</span> <span class="kt">fixnum</span> <span class="nv">n</span><span class="p">))</span>
-</span><span class='line'>  <span class="c1">;; n cannot be less than 3</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">let*</span> <span class="p">((</span><span class="nv">solutions</span> <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">i</span> <span class="nv">from</span> <span class="mi">3</span> <span class="nv">to</span> <span class="nv">n</span>
-</span><span class='line'>                       <span class="nv">collect</span> <span class="p">(</span><span class="nb">length</span> <span class="p">(</span><span class="nv">triangle-solutions</span> <span class="nv">i</span><span class="p">))))</span>
-</span><span class='line'>         <span class="p">(</span><span class="nv">max-solution</span> <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">elem</span> <span class="nv">in</span> <span class="nv">solutions</span> <span class="nv">maximizing</span> <span class="nv">elem</span><span class="p">)))</span>
-</span><span class='line'>    <span class="p">(</span><span class="nb">cons</span> <span class="nv">max-solution</span> <span class="p">(</span><span class="nb">+</span> <span class="mi">3</span> <span class="p">(</span><span class="nb">position</span> <span class="nv">max-solution</span> <span class="nv">solutions</span><span class="p">)))))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The answer needed is given by <code>(max-triangle-solutions 1000)</code>, while any specific solution can be got by (e.g.) running <code>(triangle-solutions 120)</code> which yields <code>(((40 30 50)) ((45 24 51)) ((48 20 52)))</code></p>
 ]]></content>
   </entry>
   

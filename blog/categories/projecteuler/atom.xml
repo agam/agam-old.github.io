@@ -4,7 +4,7 @@
   <title><![CDATA[Category: projecteuler | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/projecteuler/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-05-29T19:34:09+00:00</updated>
+  <updated>2015-06-02T05:23:38+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,15 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Project Euler and learning programming]]></title>
+    <link href="http://agam.github.io/blog/2015/05/29/project-euler-and-learning-programming/"/>
+    <updated>2015-05-29T19:37:07+00:00</updated>
+    <id>http://agam.github.io/blog/2015/05/29/project-euler-and-learning-programming</id>
+    <content type="html"><![CDATA[
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Euler 50: Consecutive Prime Sum]]></title>
@@ -699,134 +708,6 @@ sum = sum + term;
   cout &lt;&lt; &ldquo;The final answer is : &rdquo; &lt;&lt; last_ten_digits &lt;&lt; endl;
 }
 ```</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Euler 47: Distinct Prime Factors]]></title>
-    <link href="http://agam.github.io/blog/2015/05/04/euler-47-distinct-prime-factors/"/>
-    <updated>2015-05-04T01:00:00+00:00</updated>
-    <id>http://agam.github.io/blog/2015/05/04/euler-47-distinct-prime-factors</id>
-    <content type="html"><![CDATA[<p>This one turned out to be very similar to the previous one (except for the small detail of iterating from the smallest prime upwards, instead of the other way round).</p>
-
-<p><strong>Statutory Warning</strong>: <em>Spoilers ahead</em></p>
-
-<p>```cpp
-class PrimeIterator {
-public:
-  PrimeIterator() : prime_index_(-1) {}</p>
-
-<p>  int getNextPrime() {</p>
-
-<pre><code>assert((prime_index_ + 1) &lt; primes_.size());
-return primes_[++prime_index_];
-</code></pre>
-
-<p>  }</p>
-
-<p>  bool hasMorePrimes() {</p>
-
-<pre><code>assert(prime_index_ &gt;= -1 &amp;&amp; (prime_index_ + 1) &lt;= primes_.size());
-return (prime_index_ + 1) &lt; primes_.size();
-</code></pre>
-
-<p>  }</p>
-
-<p>  void fillPrimes(int max) {</p>
-
-<pre><code>while (primes_.back() &lt;= max) {
-  addPrime();
-}
-// Reset to before the first element
-prime_index_ = -1;
-</code></pre>
-
-<p>  }</p>
-
-<p>private:
-  static void addPrime() {</p>
-
-<pre><code>assert(primes_.size() &gt; 0);
-int n = primes_.back();
-while (true) {
-  ++n;
-  bool is_prime = true;
-  for (const int&amp; p : primes_) {
-    if (n % p == 0) {
-      is_prime = false;
-      break;  // Try next number
-    }
-  }
-  if (is_prime) {
-    primes_.push_back(n);
-    return;
-  }
-}
-</code></pre>
-
-<p>  }</p>
-
-<p>  static vector<int> primes_;</p>
-
-<p>  int prime_index_;
-};</p>
-
-<p>vector<int> PrimeIterator::primes_ = {2};</p>
-
-<p>int getNumPrimeFactors(int n) {
-  int numPrimeFactors = 0;
-  PrimeIterator pit;
-  pit.fillPrimes(n);
-  while (n > 1 &amp;&amp; pit.hasMorePrimes()) {</p>
-
-<pre><code>int p = pit.getNextPrime();
-if (n % p == 0) {
-  while (n % p == 0) {
-    n /= p;
-  }
-  ++numPrimeFactors;
-}
-</code></pre>
-
-<p>  }
-  return numPrimeFactors;
-}</p>
-
-<p>int main() {
-  cout &lt;&lt; &ldquo;Euler #47 &hellip; \n&rdquo;;</p>
-
-<p>  int runLength = 0;
-  for (int n = 2; ; ++n) {</p>
-
-<pre><code>if (getNumPrimeFactors(n) == 4) {
-  ++runLength;
-} else {
-  runLength = 0;
-}
-if (runLength == 4) {
-  cout &lt;&lt; "Found a sequence of four numbers with four prime "
-       &lt;&lt; "factors starting at : " &lt;&lt; n - 3 &lt;&lt; endl;
-  return 0;
-}
-</code></pre>
-
-<p>  }
-}
-```</p>
-
-<p>Runs as follows:</p>
-
-<p>```sh
-$ time ./Test
-Euler #47 &hellip;
-Found a sequence of four numbers with four prime factors starting at : <redacted></p>
-
-<p>real    0m3.814s
-user    0m3.812s
-sys     0m0.000s
-```</p>
-
-<p>(Yep, a noticeable delay, but anything under 5 seconds is good for me &hellip;)</p>
 ]]></content>
   </entry>
   
