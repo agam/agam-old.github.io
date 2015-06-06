@@ -4,7 +4,7 @@
   <title><![CDATA[Category: linux | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-06-02T05:23:38+00:00</updated>
+  <updated>2015-06-06T02:49:31+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,50 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[FreeBSD and Linux: install paths]]></title>
+    <link href="http://agam.github.io/blog/2015/06/06/freebsd-and-linux-install-paths/"/>
+    <updated>2015-06-06T02:46:45+00:00</updated>
+    <id>http://agam.github.io/blog/2015/06/06/freebsd-and-linux-install-paths</id>
+    <content type="html"><![CDATA[<p>One of those <strong>WTF</strong> moments of unexplainable distro choices. This on an ubuntu box:</p>
+
+<p>```sh
+$ which netcat
+/bin/netcat</p>
+
+<p>$ ls -l /bin/netcat
+lrwxrwxrwx 1 root root 24 Oct 14  2013 /bin/netcat &ndash;> /etc/alternatives/netcat</p>
+
+<p>$ ls -l /etc/alternatives/netcat
+lrwxrwxrwx 1 root root 15 Oct 14  2013 /etc/alternatives/netcat &ndash;> /bin/nc.openbsd</p>
+
+<p>$ which nc
+/usr/bin/nc</p>
+
+<p>$ ls -l /usr/bin/nc
+lrwxrwxrwx 1 root root 7 Jun  4  2014 /usr/bin/nc &ndash;> /bin/nc</p>
+
+<p>$ ls -l /bin/nc
+lrwxrwxrwx 1 root root 20 Oct 14  2013 /bin/nc &ndash;> /etc/alternatives/nc</p>
+
+<p>$ ls -l /etc/alternatives/nc
+lrwxrwxrwx 1 root root 15 Oct 14  2013 /etc/alternatives/nc &ndash;> /bin/nc.openbsd
+```</p>
+
+<p>&hellip; whereas on FreeBSD:</p>
+
+<p>```sh
+% ls -l /usr/bin/nc
+-r-xr-xr-x  1 root  wheel  28008 Nov 11  2014 /usr/bin/nc</p>
+
+<p>% file /usr/bin/nc
+/usr/bin/nc: ELF 64-bit LSB executable, x86-64, version 1 (FreeBSD), dynamically linked (uses shared libs), for FreeBSD 10.1, stripped
+```</p>
+
+<p>Which would you rather remember?</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Getting into programming, for _real_ and for _free_]]></title>

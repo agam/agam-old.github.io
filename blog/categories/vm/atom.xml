@@ -4,7 +4,7 @@
   <title><![CDATA[Category: vm | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/vm/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-06-02T05:23:38+00:00</updated>
+  <updated>2015-06-06T02:49:31+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -28,7 +28,7 @@
 
 <p>So it makes sense to look at what this costs &hellip;</p>
 
-<p>{% img center <a href="http://farm3.staticflickr.com/2818/12124686505_6db70c0917_o_d.png">http://farm3.staticflickr.com/2818/12124686505_6db70c0917_o_d.png</a> %}</p>
+<p><img class="center <a" src="href="http://farm3.staticflickr.com/2818/12124686505_6db70c0917_o_d.png">http://farm3.staticflickr.com/2818/12124686505_6db70c0917_o_d.png</a>"></p>
 
 <p>For comparison, <a href="https://www.digitalocean.com/">Digital Ocean</a> has far less flexibility, but I just might switch to it, considering that I have absolutely no plans to ever host a user-facing service or do anything of that sort, on my VM (if I did, there really wouldn&rsquo;t be any point; you want those features, folks &mdash; network protection, scalability, all that jazz).</p>
 

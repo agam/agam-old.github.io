@@ -4,7 +4,7 @@
   <title><![CDATA[Category: factoring | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/factoring/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-06-02T05:23:38+00:00</updated>
+  <updated>2015-06-06T02:49:31+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -30,7 +30,7 @@
 
 <p>In comparison, Mathematica took little more than an hour. Unfortunately, it was not able to parallelize it (for a <em>real</em> comparison, the <a href="http://sourceforge.net/projects/msieve/files/msieve/Msieve%20v1.51/">Msieve code</a> would have to be ported over).</p>
 
-<p>{% img center <a href="http://farm6.staticflickr.com/5510/12309071334_575cda01f9_z_d.jpg">http://farm6.staticflickr.com/5510/12309071334_575cda01f9_z_d.jpg</a>  %}</p>
+<p><img class="center <a" src="href="http://farm6.staticflickr.com/5510/12309071334_575cda01f9_z_d.jpg">http://farm6.staticflickr.com/5510/12309071334_575cda01f9_z_d.jpg</a>" title="" ></p>
 
 <p><strong>Update:</strong> This has been much better documented on <a href="http://mathematica.stackexchange.com/questions/14964/time-approximation-of-decrypting-rsa-algorithm">this StackExchange thread</a>, which also links to <a href="http://reference.wolfram.com/mathematica/tutorial/SomeNotesOnInternalImplementation.html#12915">notes on internal implementation</a>, in case you&rsquo;re interested:</p>
 
