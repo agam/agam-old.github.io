@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-06-06T02:49:31+00:00</updated>
+  <updated>2015-06-10T06:58:15+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,242 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Trying out stack ...]]></title>
+    <link href="http://agam.github.io/blog/2015/06/10/trying-out-stack-dot-dot-dot/"/>
+    <updated>2015-06-10T05:01:24+00:00</updated>
+    <id>http://agam.github.io/blog/2015/06/10/trying-out-stack-dot-dot-dot</id>
+    <content type="html"><![CDATA[<p>Tried this out after <a href="https://www.fpcomplete.com/blog/2015/06/announcing-first-public-beta-stack">I read about it</a>. Note: the following was all done on a Macbook, but it should work similarly on Linux too.</p>
+
+<h2>Get Stack</h2>
+
+<p><a href="https://github.com/fpco/stack/releases/download/v0.0.0-beta/stack-0.0.0-x86_64-osx.gz">Download</a> it.</p>
+
+<p><code>gunzip</code> and copy to some directory in <code>$PATH</code></p>
+
+<h2>Use Stack</h2>
+
+<p>Create dummy <code>.hs</code> file.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="nf">main</span> <span class="ow">=</span> <span class="n">putStrLn</span> <span class="s">&quot;Hello World&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><em>Digression: first build</em></p>
+
+<p>You need <code>GHC</code> installed, and a file called <code>stack.yaml</code> in the local directory. But if you don&rsquo;t, no problem.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>stack ghc dummy.hs
+</span><span class='line'>No .cabal file found in directory /Users/agam/Documents/Haskell/Dummy/
+</span><span class='line'>Writing default config file to: /Users/agam/Documents/Haskell/Dummy/stack.yaml
+</span><span class='line'>Downloading lts-2.13 build plan ...
+</span><span class='line'>Downloaded lts-2.13 build plan.
+</span><span class='line'>Populating index cache, may take a moment ...
+</span><span class='line'>Updating package index hackage.haskell.org ...
+</span><span class='line'>Cloning package index ...
+</span><span class='line'>Done populating index cache.
+</span><span class='line'>Downloading ghc-7.8.4 ...
+</span><span class='line'>Downloaded ghc-7.8.4.
+</span><span class='line'>Unpacking GHC ...
+</span><span class='line'>Configuring GHC ...
+</span><span class='line'>Installing GHC ...
+</span><span class='line'>GHC installed.
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Run it once more to actually build it.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>stack ghc dummy.hs
+</span><span class='line'><span class="o">[</span><span class="m">1</span> of 1<span class="o">]</span> Compiling Main             <span class="o">(</span> dummy.hs, dummy.o <span class="o">)</span>
+</span><span class='line'>Linking dummy ...
+</span><span class='line'><span class="nv">$ </span>ls
+</span><span class='line'>stack.yaml dummy.o dummy.hs dummy.hi dummy
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Run the program</h2>
+
+<p>Just run the executable created:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>./dummy
+</span><span class='line'>Hello World
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Alternatively, combine steps 4 and 5</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>stack runghc dummy.hs
+</span><span class='line'>Hello World
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Libraries</h2>
+
+<p>(this is why we&rsquo;re <em>really</em> here, right?)</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>stack update
+</span><span class='line'>Updating package index hackage.haskell.org ...
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>What packages do we have ?</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>stack <span class="nb">exec</span> -- ghc-pkg list
+</span><span class='line'>/Users/agam/.stack/programs/x86_64-osx/ghc-7.8.4/lib/ghc-7.8.4/package.conf.d/
+</span><span class='line'>Cabal-1.18.1.5
+</span><span class='line'>array-0.5.0.0
+</span><span class='line'>base-4.7.0.2
+</span><span class='line'>bin-package-db-0.0.0.0
+</span><span class='line'>binary-0.7.1.0
+</span><span class='line'>bytestring-0.10.4.0
+</span><span class='line'>containers-0.5.5.1
+</span><span class='line'>deepseq-1.3.0.2
+</span><span class='line'>directory-1.2.1.0
+</span><span class='line'>filepath-1.3.0.2
+</span><span class='line'>ghc-7.8.4
+</span><span class='line'>ghc-prim-0.3.1.0
+</span><span class='line'>haskeline-0.7.1.2
+</span><span class='line'>haskell2010-1.1.2.0
+</span><span class='line'>haskell98-2.0.0.3
+</span><span class='line'>hoopl-3.10.0.1
+</span><span class='line'>hpc-0.6.0.1
+</span><span class='line'>integer-gmp-0.5.1.0
+</span><span class='line'>old-locale-1.0.0.6
+</span><span class='line'>old-time-1.1.0.2
+</span><span class='line'>pretty-1.1.1.1
+</span><span class='line'>process-1.2.0.0
+</span><span class='line'>rts-1.0
+</span><span class='line'>template-haskell-2.9.0.0
+</span><span class='line'>terminfo-0.4.0.0
+</span><span class='line'><span class="nb">time</span>-1.4.2
+</span><span class='line'>transformers-0.3.0.0
+</span><span class='line'>unix-2.7.0.1
+</span><span class='line'>xhtml-3000.2.1
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Get a new package using Stack</h2>
+
+<p>First, we need to <em>require</em> some new package. Change dummy code to (e.g.)</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="kr">import</span> <span class="nn">System.Random</span>
+</span><span class='line'><span class="kr">import</span> <span class="nn">Control.Monad</span> <span class="p">(</span><span class="nf">replicateM</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">main</span> <span class="ow">=</span> <span class="n">replicateM</span> <span class="mi">10</span> <span class="p">(</span><span class="n">randomIO</span> <span class="ow">::</span> <span class="kt">IO</span> <span class="kt">Float</span><span class="p">)</span> <span class="o">&gt;&gt;=</span> <span class="n">print</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Try to build it</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>stack ghc dummy.hs
+</span><span class='line'>
+</span><span class='line'>dummy.hs:1:8:
+</span><span class='line'>Could not find module ‘System.Random’
+</span><span class='line'>Use -v to see a list of the files searched <span class="k">for</span>.
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So let&rsquo;s get it then:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>stack deps random
+</span><span class='line'>random-1.1: downloading
+</span><span class='line'>random-1.1: configure
+</span><span class='line'>random-1.1: build
+</span><span class='line'>random-1.1: install
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&hellip; and then run it again:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>stack ghc dummy.hs
+</span><span class='line'><span class="o">[</span><span class="m">1</span> of 1<span class="o">]</span> Compiling Main             <span class="o">(</span> dummy.hs, dummy.o <span class="o">)</span>
+</span><span class='line'>Linking dummy ...
+</span><span class='line'><span class="nv">$ </span>./dummy
+</span><span class='line'><span class="o">[</span>0.4301154,0.9796305,4.801333e-2,0.6978437,0.45780963,0.21923387,0.33110678,0.2976914,5.8295727e-3,0.28221375<span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Not bad at all. Reminds me of the feeling I got after wading through the plethora of python package handling frameworks and discovering Anaconda. This is <em>finally</em> a newbie-friendly language; &ldquo;cabal hell&rdquo; is no more (!)</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[FreeBSD and Linux: install paths]]></title>
@@ -2264,92 +2500,6 @@
 <p>Recently I had to work with <code>IPython</code> and &hellip; it didn&rsquo;t seem so bad. So I&rsquo;ve decided to wipe the slate clean in its favor and re-evaluate it on its own terms. So much is different over the last decade that it seems like a good idea to start afresh anyway.</p>
 
 <p>The other place to consider the language is in my constant &ldquo;what language is best for beginners?&rdquo; contest &mdash; until now it was basically Go vs Racket, but I might include Python as a contender too. We&rsquo;ll see &hellip;</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Euler 42: Coded triangle numbers]]></title>
-    <link href="http://agam.github.io/blog/2015/03/23/euler-42-coded-triangle-numbers/"/>
-    <updated>2015-03-23T01:11:01+00:00</updated>
-    <id>http://agam.github.io/blog/2015/03/23/euler-42-coded-triangle-numbers</id>
-    <content type="html"><![CDATA[<p>Very straightforward, this one. And I don&rsquo;t need to feel bad that I did it the simple way. If you&rsquo;re wondering where <code>split-sequence-if</code> and <code>read-file</code> came from, the answer is <code>rutils</code>, which is a good general-purpose utility package, a sort of superset of <code>alexandria</code>, and just a <code>(ql:quickload 'rutils)</code> away. As before, the final answer is obtained by evaluating <code>(euler42)</code>.</p>
-
-<p><strong>Statutory Warning</strong>: <em>spoilers ahead</em></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="c1">;; If x = 0.5 * n * (n+1) is a triangle number, then there is an</span>
-</span><span class='line'><span class="c1">;; integral solution for n^2 + n - 2*x = 0.</span>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">quadratic-solution</span> <span class="p">(</span><span class="nv">a</span> <span class="nv">b</span> <span class="nv">c</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">det</span> <span class="p">(</span><span class="nb">sqrt</span> <span class="p">(</span><span class="nb">-</span> <span class="p">(</span><span class="nb">*</span> <span class="nv">b</span> <span class="nv">b</span><span class="p">)</span> <span class="p">(</span><span class="nb">*</span> <span class="mi">4</span> <span class="nv">a</span> <span class="nv">c</span><span class="p">))))</span>
-</span><span class='line'>        <span class="p">(</span><span class="nv">denom</span> <span class="p">(</span><span class="nb">*</span> <span class="mi">2</span> <span class="nv">a</span><span class="p">)))</span>
-</span><span class='line'>    <span class="p">(</span><span class="nb">cons</span> <span class="p">(</span><span class="nb">/</span> <span class="p">(</span><span class="nb">-</span> <span class="p">(</span><span class="nb">-</span> <span class="nv">b</span><span class="p">)</span> <span class="nv">det</span><span class="p">)</span> <span class="nv">denom</span><span class="p">)</span>
-</span><span class='line'>          <span class="p">(</span><span class="nb">/</span> <span class="p">(</span><span class="nb">+</span> <span class="p">(</span><span class="nb">-</span> <span class="nv">b</span><span class="p">)</span> <span class="nv">det</span><span class="p">)</span> <span class="nv">denom</span><span class="p">))))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">positive-int</span> <span class="p">(</span><span class="nv">num</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">and</span> <span class="p">(</span><span class="nb">integerp</span> <span class="nv">num</span><span class="p">)</span>
-</span><span class='line'>       <span class="p">(</span><span class="nb">plusp</span> <span class="nv">num</span><span class="p">)))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">is-triangle-number</span> <span class="p">(</span><span class="nv">num</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">soln</span> <span class="p">(</span><span class="nv">quadratic-solution</span> <span class="mi">1</span> <span class="mi">1</span> <span class="p">(</span><span class="nb">*</span> <span class="p">(</span><span class="nb">-</span> <span class="mi">2</span><span class="p">)</span> <span class="nv">num</span><span class="p">))))</span>
-</span><span class='line'>    <span class="p">(</span><span class="nb">or</span> <span class="p">(</span><span class="nv">positive-int</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">soln</span><span class="p">))</span>
-</span><span class='line'>        <span class="p">(</span><span class="nv">positive-int</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">soln</span><span class="p">)))))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">char-&gt;number</span> <span class="p">(</span><span class="nb">char</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">1+</span> <span class="p">(</span><span class="nb">-</span> <span class="p">(</span><span class="nb">char-code</span> <span class="nb">char</span><span class="p">)</span> <span class="p">(</span><span class="nb">char-code</span> <span class="sc">#\A</span><span class="p">))))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">is-triangle-word</span> <span class="p">(</span><span class="nv">word</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">value</span> <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nb">char</span> <span class="nv">across</span> <span class="nv">word</span>
-</span><span class='line'>                  <span class="nv">summing</span> <span class="p">(</span><span class="nv">char-&gt;number</span> <span class="nb">char</span><span class="p">))))</span>
-</span><span class='line'>    <span class="p">(</span><span class="nv">is-triangle-number</span> <span class="nv">value</span><span class="p">)))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">euler42</span> <span class="p">()</span>
-</span><span class='line'>  <span class="c1">;; Read in the file, split on the commas, remove the quotes</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">let*</span> <span class="p">((</span><span class="nv">file-text</span> <span class="p">(</span><span class="nv">read-file</span> <span class="s">&quot;/home/agam/Downloads/p042_words.txt&quot;</span><span class="p">))</span>
-</span><span class='line'>         <span class="p">(</span><span class="nv">words-with-quotes</span> <span class="p">(</span><span class="nv">split-sequence-if</span>
-</span><span class='line'>                             <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nb">char</span><span class="p">)</span> <span class="p">(</span><span class="nb">eq</span> <span class="nb">char</span> <span class="sc">#\,</span><span class="p">))</span>
-</span><span class='line'>                             <span class="nv">file-text</span><span class="p">))</span>
-</span><span class='line'>         <span class="p">(</span><span class="nv">words</span> <span class="p">(</span><span class="nb">mapcar</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">w</span><span class="p">)</span> <span class="p">(</span><span class="nb">remove</span> <span class="sc">#\&quot;</span> <span class="nv">w</span><span class="p">))</span>
-</span><span class='line'>                        <span class="nv">words-with-quotes</span><span class="p">)))</span>
-</span><span class='line'>    <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">w</span> <span class="nv">in</span> <span class="nv">words</span> <span class="nb">count</span>
-</span><span class='line'>         <span class="p">(</span><span class="nv">is-triangle-word</span> <span class="nv">w</span><span class="p">))))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
 ]]></content>
   </entry>
   
