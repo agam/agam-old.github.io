@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-06-10T06:58:15+00:00</updated>
+  <updated>2015-06-13T07:17:05+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -14,19 +14,95 @@
 
   
   <entry>
+    <title type="html"><![CDATA[FreeBSD on Google Compute Engine]]></title>
+    <link href="http://agam.github.io/blog/2015/06/13/freebsd-on-google-compute-engine/"/>
+    <updated>2015-06-13T05:31:14+00:00</updated>
+    <id>http://agam.github.io/blog/2015/06/13/freebsd-on-google-compute-engine</id>
+    <content type="html"><![CDATA[<p>I had tried running FreeBSD on Google Compute Engine previously, but <a href="blog/2014/12/14/trying-out-freebsd-and-failing-at-it/">given up</a>. Last week I was suddenly reminded of this, and after Googling around a bit, came across <a href="https://github.com/swills/FreeBSD-gcloud">this script</a> by Steve Wills <em>(Thanks, Steve!)</em> that automated the task of building a &ldquo;GCE-ready&rdquo; image on an existing FreeBSD system.</p>
+
+<p>Hooray! No, wait, I <em>don&rsquo;t</em> have an existing FreeBSD system; that&rsquo;s sort of what this is all about. This minor despondency was short-lived, since I had temporarily forgotten how we now live with computers within computers within computers (give or take a layer). So I installed the <a href="http://www.vmware.com/products/workstation">VMWare Workstation</a>, downloaded <a href="ftp://ftp.freebsd.org/pub/FreeBSD/releases/amd64/amd64/ISO-IMAGES/10.1/">the iso</a> for <code>10.1-RELEASE</code>, and booted it up.</p>
+
+<p>All you need is the Google Cloud SDK, which is available under the ports tree, so something like the following should suffice:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /usr/ports/net/google-cloud-sdk
+</span><span class='line'><span class="nv">$ </span>make install
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then grab the script and run it.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>curl https://raw.githubusercontent.com/swills/FreeBSD-gcloud/master/build_google_image.sh &gt; /tmp/swill-script.sh
+</span><span class='line'><span class="nv">$ </span>chmod a+x /tmp/swill-script.sh
+</span><span class='line'><span class="nv">$ </span>/tmp/swill-script.sh
+</span><span class='line'>components
+</span><span class='line'>base.txz                                      100% of   <span class="m">63</span> MB <span class="m">7041</span> kBps 00m09s
+</span><span class='line'>kernel.txz                                    100% of   <span class="m">84</span> MB <span class="m">3187</span> kBps 00m27s
+</span><span class='line'>Creating image
+</span><span class='line'>Creating filesystem
+</span><span class='line'>Installing base into image
+</span><span class='line'>Installing kernel into image
+</span><span class='line'>Setting up image
+</span><span class='line'>Finishing image
+</span><span class='line'>Creating partitioned file
+</span><span class='line'>Creating image tar
+</span><span class='line'>Now run:
+</span><span class='line'>
+</span><span class='line'>gcloud auth login
+</span><span class='line'>gsutil cp FreeBSD-10.1-RELEASE-amd64-20150612191810.tar.gz gs://swills-test-bucket
+</span><span class='line'>gcutil addimage freebsd-101-release-amd64-20150612191810 gs://swills-test-bucket/FreeBSD-10.1-RELEASE-amd64-20150612191810.tar.gz
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>As you might have noticed, the script ends with a helpful suggestion for the subsequent commands to run. Caveats:</p>
+
+<ul>
+<li>If you&rsquo;re doing all this within a VM like I was, you&rsquo;ll want to run <code>gcloud auth login --no-launch-browser</code></li>
+<li>You might need to run <code>gcloud config set project &lt;project ID&gt;</code> (that&rsquo;s project <em>ID</em>, not project <em>name</em>)</li>
+<li>(obviously) replace <code>swills-test-bucket</code> with your bucket (you can create one at the <a href="https://console.developers.google.com">cloud console</a> (Storage &ndash;> Cloud Storage &ndash;> Storage Browser)</li>
+</ul>
+
+
+<p>After this, a few clicks should get you a new instance (remember to select the custom image uploaded earlier), and SSHing into it should show you <code>/etc/motd</code> (which is still a plain old file, and not, you know, <a href="https://web.archive.org/web/20120107210839/http://deadmemes.net/2010/10/19/fear-and-loathing-in-debianubuntu-or-who-needs-etcmotd">this abomination</a>).</p>
+
+<p><strong>Enjoy!</strong></p>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Trying out stack ...]]></title>
     <link href="http://agam.github.io/blog/2015/06/10/trying-out-stack-dot-dot-dot/"/>
     <updated>2015-06-10T05:01:24+00:00</updated>
     <id>http://agam.github.io/blog/2015/06/10/trying-out-stack-dot-dot-dot</id>
     <content type="html"><![CDATA[<p>Tried this out after <a href="https://www.fpcomplete.com/blog/2015/06/announcing-first-public-beta-stack">I read about it</a>. Note: the following was all done on a Macbook, but it should work similarly on Linux too.</p>
 
-<h2>Get Stack</h2>
+<p><strong>Get Stack</strong></p>
 
 <p><a href="https://github.com/fpco/stack/releases/download/v0.0.0-beta/stack-0.0.0-x86_64-osx.gz">Download</a> it.</p>
 
 <p><code>gunzip</code> and copy to some directory in <code>$PATH</code></p>
 
-<h2>Use Stack</h2>
+<p><strong>Use Stack</strong></p>
 
 <p>Create dummy <code>.hs</code> file.</p>
 
@@ -87,7 +163,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<h2>Run the program</h2>
+<p><strong>Run the program</strong></p>
 
 <p>Just run the executable created:</p>
 
@@ -107,7 +183,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<h2>Libraries</h2>
+<p><strong>Libraries</strong></p>
 
 <p>(this is why we&rsquo;re <em>really</em> here, right?)</p>
 
@@ -185,7 +261,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<h2>Get a new package using Stack</h2>
+<p><strong>Get a new package using Stack</strong></p>
 
 <p>First, we need to <em>require</em> some new package. Change dummy code to (e.g.)</p>
 
@@ -2485,21 +2561,6 @@
 
 
 <p>As before, evaluating <code>(euler43)</code> shows the final solution (sum), along with the (six!) candidate numbers making up the sum. This took a whopping <code>4.3 hours</code> to churn through the 8.5 billion numbers. Maybe I need to create a new constraint for these problems: either pen-and-paper, or something <em>slow</em> (like Python ?! :P), so that brute force is never tempting again.</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[A second look at Python]]></title>
-    <link href="http://agam.github.io/blog/2015/03/25/a-second-look-at-python/"/>
-    <updated>2015-03-25T06:53:44+00:00</updated>
-    <id>http://agam.github.io/blog/2015/03/25/a-second-look-at-python</id>
-    <content type="html"><![CDATA[<p>The first time I <em>used</em> Python for something (it was a silly little script, IIRC) was about 12 years ago. I eventually gave it up in shock and horror the first time I encountered a critical error that turned out to be a <em>syntax error</em>.</p>
-
-<p>Over the years I&rsquo;ve had to mess with Python code on and off but it&rsquo;s always been something I&rsquo;ve done reluctantly, under the lingering effects of PTSD from the &ldquo;I can&rsquo;t tell how this program might fail&rdquo; experience.</p>
-
-<p>Recently I had to work with <code>IPython</code> and &hellip; it didn&rsquo;t seem so bad. So I&rsquo;ve decided to wipe the slate clean in its favor and re-evaluate it on its own terms. So much is different over the last decade that it seems like a good idea to start afresh anyway.</p>
-
-<p>The other place to consider the language is in my constant &ldquo;what language is best for beginners?&rdquo; contest &mdash; until now it was basically Go vs Racket, but I might include Python as a contender too. We&rsquo;ll see &hellip;</p>
 ]]></content>
   </entry>
   

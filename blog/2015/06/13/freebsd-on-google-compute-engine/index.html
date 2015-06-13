@@ -1,0 +1,255 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>FreeBSD on Google Compute Engine - Agam's Mashed-Up Pome</title>
+	<meta name="author" content="Agam">
+
+	
+	<meta name="description" content="I had tried running FreeBSD on Google Compute Engine previously, but given up. Last week I was suddenly reminded of this, and after Googling around a &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Agam's Mashed-Up Pome" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script async="true" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+
+</head>
+
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">Agam's Mashed-Up Pome</a></h1>
+<!-- DebugAgam: Uncomment if necessary!
+<nav id="main-nav"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:agam.github.io">
+			</form>
+		</div>
+	</div>
+</nav>
+-->
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		<a class="google" href="https://plus.google.com/+AgamBrahma?rel=author" title="Google+">Google+</a>
+		
+		
+		<a class="twitter" href="http://twitter.com/agambrahma" title="Twitter">Twitter</a>
+		
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+    
+	</div>
+        <!-- DebugAgam: uncomment if necessary!
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:agam.github.io">
+	</form>
+        -->
+</nav>
+
+</header>
+	
+		
+	
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">FreeBSD on Google Compute Engine</h2>
+	<div class="entry-content"><p>I had tried running FreeBSD on Google Compute Engine previously, but <a href="blog/2014/12/14/trying-out-freebsd-and-failing-at-it/">given up</a>. Last week I was suddenly reminded of this, and after Googling around a bit, came across <a href="https://github.com/swills/FreeBSD-gcloud">this script</a> by Steve Wills <em>(Thanks, Steve!)</em> that automated the task of building a &ldquo;GCE-ready&rdquo; image on an existing FreeBSD system.</p>
+
+<p>Hooray! No, wait, I <em>don&rsquo;t</em> have an existing FreeBSD system; that&rsquo;s sort of what this is all about. This minor despondency was short-lived, since I had temporarily forgotten how we now live with computers within computers within computers (give or take a layer). So I installed the <a href="http://www.vmware.com/products/workstation">VMWare Workstation</a>, downloaded <a href="ftp://ftp.freebsd.org/pub/FreeBSD/releases/amd64/amd64/ISO-IMAGES/10.1/">the iso</a> for <code>10.1-RELEASE</code>, and booted it up.</p>
+
+<p>All you need is the Google Cloud SDK, which is available under the ports tree, so something like the following should suffice:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /usr/ports/net/google-cloud-sdk
+</span><span class='line'><span class="nv">$ </span>make install
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then grab the script and run it.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>curl https://raw.githubusercontent.com/swills/FreeBSD-gcloud/master/build_google_image.sh &gt; /tmp/swill-script.sh
+</span><span class='line'><span class="nv">$ </span>chmod a+x /tmp/swill-script.sh
+</span><span class='line'><span class="nv">$ </span>/tmp/swill-script.sh
+</span><span class='line'>components
+</span><span class='line'>base.txz                                      100% of   <span class="m">63</span> MB <span class="m">7041</span> kBps 00m09s
+</span><span class='line'>kernel.txz                                    100% of   <span class="m">84</span> MB <span class="m">3187</span> kBps 00m27s
+</span><span class='line'>Creating image
+</span><span class='line'>Creating filesystem
+</span><span class='line'>Installing base into image
+</span><span class='line'>Installing kernel into image
+</span><span class='line'>Setting up image
+</span><span class='line'>Finishing image
+</span><span class='line'>Creating partitioned file
+</span><span class='line'>Creating image tar
+</span><span class='line'>Now run:
+</span><span class='line'>
+</span><span class='line'>gcloud auth login
+</span><span class='line'>gsutil cp FreeBSD-10.1-RELEASE-amd64-20150612191810.tar.gz gs://swills-test-bucket
+</span><span class='line'>gcutil addimage freebsd-101-release-amd64-20150612191810 gs://swills-test-bucket/FreeBSD-10.1-RELEASE-amd64-20150612191810.tar.gz
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>As you might have noticed, the script ends with a helpful suggestion for the subsequent commands to run. Caveats:</p>
+
+<ul>
+<li>If you&rsquo;re doing all this within a VM like I was, you&rsquo;ll want to run <code>gcloud auth login --no-launch-browser</code></li>
+<li>You might need to run <code>gcloud config set project &lt;project ID&gt;</code> (that&rsquo;s project <em>ID</em>, not project <em>name</em>)</li>
+<li>(obviously) replace <code>swills-test-bucket</code> with your bucket (you can create one at the <a href="https://console.developers.google.com">cloud console</a> (Storage &ndash;> Cloud Storage &ndash;> Storage Browser)</li>
+</ul>
+
+
+<p>After this, a few clicks should get you a new instance (remember to select the custom image uploaded earlier), and SSHing into it should show you <code>/etc/motd</code> (which is still a plain old file, and not, you know, <a href="https://web.archive.org/web/20120107210839/http://deadmemes.net/2010/10/19/fear-and-loathing-in-debianubuntu-or-who-needs-etcmotd">this abomination</a>).</p>
+
+<p><strong>Enjoy!</strong></p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-06-13T05:31:14+00:00" pubdate data-updated="true">Jun 13<sup>th</sup>, 2015</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/freebsd/'>freebsd</a>, <a class='category' href='/blog/categories/gce/'>gce</a>
+
+
+</div>
+	
+</div>
+</article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+		
+		
+		<a class="addthis_button_tweet"></a>
+		
+		
+		<a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+		
+		
+	</div>
+	
+</div>
+
+
+
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2015
+
+    Agam
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'agamamp';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://agam.github.io/blog/2015/06/13/freebsd-on-google-compute-engine/';
+        var disqus_url = 'http://agam.github.io/blog/2015/06/13/freebsd-on-google-compute-engine/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//go.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-16612682-4']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

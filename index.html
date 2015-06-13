@@ -7,7 +7,7 @@
 	<meta name="author" content="Agam">
 
 	
-	<meta name="description" content="Tried this out after I read about it. Note: the following was all done on a Macbook, but it should work similarly on Linux too. Get Stack Download &hellip;">
+	<meta name="description" content="I had tried running FreeBSD on Google Compute Engine previously, but given up. Last week I was suddenly reminded of this, and after Googling around &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -91,6 +91,114 @@
     <article class="post">
 	<h2 class="title">
 		
+		<a href="/blog/2015/06/13/freebsd-on-google-compute-engine/">
+		
+			FreeBSD on Google Compute Engine</a>
+	</h2>
+	<div class="entry-content">
+		<p>I had tried running FreeBSD on Google Compute Engine previously, but <a href="blog/2014/12/14/trying-out-freebsd-and-failing-at-it/">given up</a>. Last week I was suddenly reminded of this, and after Googling around a bit, came across <a href="https://github.com/swills/FreeBSD-gcloud">this script</a> by Steve Wills <em>(Thanks, Steve!)</em> that automated the task of building a &ldquo;GCE-ready&rdquo; image on an existing FreeBSD system.</p>
+
+<p>Hooray! No, wait, I <em>don&rsquo;t</em> have an existing FreeBSD system; that&rsquo;s sort of what this is all about. This minor despondency was short-lived, since I had temporarily forgotten how we now live with computers within computers within computers (give or take a layer). So I installed the <a href="http://www.vmware.com/products/workstation">VMWare Workstation</a>, downloaded <a href="ftp://ftp.freebsd.org/pub/FreeBSD/releases/amd64/amd64/ISO-IMAGES/10.1/">the iso</a> for <code>10.1-RELEASE</code>, and booted it up.</p>
+
+<p>All you need is the Google Cloud SDK, which is available under the ports tree, so something like the following should suffice:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /usr/ports/net/google-cloud-sdk
+</span><span class='line'><span class="nv">$ </span>make install
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then grab the script and run it.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>curl https://raw.githubusercontent.com/swills/FreeBSD-gcloud/master/build_google_image.sh &gt; /tmp/swill-script.sh
+</span><span class='line'><span class="nv">$ </span>chmod a+x /tmp/swill-script.sh
+</span><span class='line'><span class="nv">$ </span>/tmp/swill-script.sh
+</span><span class='line'>components
+</span><span class='line'>base.txz                                      100% of   <span class="m">63</span> MB <span class="m">7041</span> kBps 00m09s
+</span><span class='line'>kernel.txz                                    100% of   <span class="m">84</span> MB <span class="m">3187</span> kBps 00m27s
+</span><span class='line'>Creating image
+</span><span class='line'>Creating filesystem
+</span><span class='line'>Installing base into image
+</span><span class='line'>Installing kernel into image
+</span><span class='line'>Setting up image
+</span><span class='line'>Finishing image
+</span><span class='line'>Creating partitioned file
+</span><span class='line'>Creating image tar
+</span><span class='line'>Now run:
+</span><span class='line'>
+</span><span class='line'>gcloud auth login
+</span><span class='line'>gsutil cp FreeBSD-10.1-RELEASE-amd64-20150612191810.tar.gz gs://swills-test-bucket
+</span><span class='line'>gcutil addimage freebsd-101-release-amd64-20150612191810 gs://swills-test-bucket/FreeBSD-10.1-RELEASE-amd64-20150612191810.tar.gz
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>As you might have noticed, the script ends with a helpful suggestion for the subsequent commands to run. Caveats:</p>
+
+<ul>
+<li>If you&rsquo;re doing all this within a VM like I was, you&rsquo;ll want to run <code>gcloud auth login --no-launch-browser</code></li>
+<li>You might need to run <code>gcloud config set project &lt;project ID&gt;</code> (that&rsquo;s project <em>ID</em>, not project <em>name</em>)</li>
+<li>(obviously) replace <code>swills-test-bucket</code> with your bucket (you can create one at the <a href="https://console.developers.google.com">cloud console</a> (Storage &ndash;> Cloud Storage &ndash;> Storage Browser)</li>
+</ul>
+
+
+<p>After this, a few clicks should get you a new instance (remember to select the custom image uploaded earlier), and SSHing into it should show you <code>/etc/motd</code> (which is still a plain old file, and not, you know, <a href="https://web.archive.org/web/20120107210839/http://deadmemes.net/2010/10/19/fear-and-loathing-in-debianubuntu-or-who-needs-etcmotd">this abomination</a>).</p>
+
+<p><strong>Enjoy!</strong></p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-06-13T05:31:14+00:00" pubdate data-updated="true">Jun 13<sup>th</sup>, 2015</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/freebsd/'>freebsd</a>, <a class='category' href='/blog/categories/gce/'>gce</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
 		<a href="/blog/2015/06/10/trying-out-stack-dot-dot-dot/">
 		
 			Trying Out Stack &#8230;</a>
@@ -98,13 +206,13 @@
 	<div class="entry-content">
 		<p>Tried this out after <a href="https://www.fpcomplete.com/blog/2015/06/announcing-first-public-beta-stack">I read about it</a>. Note: the following was all done on a Macbook, but it should work similarly on Linux too.</p>
 
-<h2>Get Stack</h2>
+<p><strong>Get Stack</strong></p>
 
 <p><a href="https://github.com/fpco/stack/releases/download/v0.0.0-beta/stack-0.0.0-x86_64-osx.gz">Download</a> it.</p>
 
 <p><code>gunzip</code> and copy to some directory in <code>$PATH</code></p>
 
-<h2>Use Stack</h2>
+<p><strong>Use Stack</strong></p>
 
 <p>Create dummy <code>.hs</code> file.</p>
 
@@ -165,7 +273,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<h2>Run the program</h2>
+<p><strong>Run the program</strong></p>
 
 <p>Just run the executable created:</p>
 
@@ -185,7 +293,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<h2>Libraries</h2>
+<p><strong>Libraries</strong></p>
 
 <p>(this is why we&rsquo;re <em>really</em> here, right?)</p>
 
@@ -263,7 +371,7 @@
 </span></code></pre></td></tr></table></div></figure>
 
 
-<h2>Get a new package using Stack</h2>
+<p><strong>Get a new package using Stack</strong></p>
 
 <p>First, we need to <em>require</em> some new package. Change dummy code to (e.g.)</p>
 
@@ -1380,475 +1488,6 @@
 
 
 	<a class='category' href='/blog/categories/rants/'>rants</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2015/05/05/euler-49-prime-permutations/">
-		
-			Euler 49: Prime Permutations</a>
-	</h2>
-	<div class="entry-content">
-		<p>This one took way longer than expected. I initially misunderstood the question to require 4-digit numbers <em>unique digits</em> (because that&rsquo;s what the example has!) and I went crazy trying to figure out why the <em>only</em> answer I was getting was the example in the question. Anyway I later realized I&rsquo;d over-complicated my solution and I just needed to look at numbers between <code>1000</code> and <code>9999</code>. Given this, it&rsquo;s <em>absurd</em> to have a class called &ldquo;FourDigits&rdquo; (duh), but I figured there&rsquo;s no point hiding my initial mistake :)</p>
-
-<p>The code fragment below is bloated because I&rsquo;ve left in old code from my first attempt (the functions suffixed with <code>...Old</code>), and half the code here is dead code.</p>
-
-<p><strong>Statutory Warning</strong>: <em>Spoilers Ahead</em> (well, not really)</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-<span class='line-number'>72</span>
-<span class='line-number'>73</span>
-<span class='line-number'>74</span>
-<span class='line-number'>75</span>
-<span class='line-number'>76</span>
-<span class='line-number'>77</span>
-<span class='line-number'>78</span>
-<span class='line-number'>79</span>
-<span class='line-number'>80</span>
-<span class='line-number'>81</span>
-<span class='line-number'>82</span>
-<span class='line-number'>83</span>
-<span class='line-number'>84</span>
-<span class='line-number'>85</span>
-<span class='line-number'>86</span>
-<span class='line-number'>87</span>
-<span class='line-number'>88</span>
-<span class='line-number'>89</span>
-<span class='line-number'>90</span>
-<span class='line-number'>91</span>
-<span class='line-number'>92</span>
-<span class='line-number'>93</span>
-<span class='line-number'>94</span>
-<span class='line-number'>95</span>
-<span class='line-number'>96</span>
-<span class='line-number'>97</span>
-<span class='line-number'>98</span>
-<span class='line-number'>99</span>
-<span class='line-number'>100</span>
-<span class='line-number'>101</span>
-<span class='line-number'>102</span>
-<span class='line-number'>103</span>
-<span class='line-number'>104</span>
-<span class='line-number'>105</span>
-<span class='line-number'>106</span>
-<span class='line-number'>107</span>
-<span class='line-number'>108</span>
-<span class='line-number'>109</span>
-<span class='line-number'>110</span>
-<span class='line-number'>111</span>
-<span class='line-number'>112</span>
-<span class='line-number'>113</span>
-<span class='line-number'>114</span>
-<span class='line-number'>115</span>
-<span class='line-number'>116</span>
-<span class='line-number'>117</span>
-<span class='line-number'>118</span>
-<span class='line-number'>119</span>
-<span class='line-number'>120</span>
-<span class='line-number'>121</span>
-<span class='line-number'>122</span>
-<span class='line-number'>123</span>
-<span class='line-number'>124</span>
-<span class='line-number'>125</span>
-<span class='line-number'>126</span>
-<span class='line-number'>127</span>
-<span class='line-number'>128</span>
-<span class='line-number'>129</span>
-<span class='line-number'>130</span>
-<span class='line-number'>131</span>
-<span class='line-number'>132</span>
-<span class='line-number'>133</span>
-<span class='line-number'>134</span>
-<span class='line-number'>135</span>
-<span class='line-number'>136</span>
-<span class='line-number'>137</span>
-<span class='line-number'>138</span>
-<span class='line-number'>139</span>
-<span class='line-number'>140</span>
-<span class='line-number'>141</span>
-<span class='line-number'>142</span>
-<span class='line-number'>143</span>
-<span class='line-number'>144</span>
-<span class='line-number'>145</span>
-<span class='line-number'>146</span>
-<span class='line-number'>147</span>
-<span class='line-number'>148</span>
-<span class='line-number'>149</span>
-<span class='line-number'>150</span>
-<span class='line-number'>151</span>
-<span class='line-number'>152</span>
-<span class='line-number'>153</span>
-<span class='line-number'>154</span>
-<span class='line-number'>155</span>
-<span class='line-number'>156</span>
-<span class='line-number'>157</span>
-<span class='line-number'>158</span>
-<span class='line-number'>159</span>
-<span class='line-number'>160</span>
-<span class='line-number'>161</span>
-<span class='line-number'>162</span>
-<span class='line-number'>163</span>
-<span class='line-number'>164</span>
-<span class='line-number'>165</span>
-<span class='line-number'>166</span>
-<span class='line-number'>167</span>
-<span class='line-number'>168</span>
-<span class='line-number'>169</span>
-<span class='line-number'>170</span>
-<span class='line-number'>171</span>
-<span class='line-number'>172</span>
-<span class='line-number'>173</span>
-<span class='line-number'>174</span>
-<span class='line-number'>175</span>
-<span class='line-number'>176</span>
-<span class='line-number'>177</span>
-<span class='line-number'>178</span>
-<span class='line-number'>179</span>
-<span class='line-number'>180</span>
-<span class='line-number'>181</span>
-<span class='line-number'>182</span>
-<span class='line-number'>183</span>
-<span class='line-number'>184</span>
-<span class='line-number'>185</span>
-<span class='line-number'>186</span>
-<span class='line-number'>187</span>
-<span class='line-number'>188</span>
-<span class='line-number'>189</span>
-<span class='line-number'>190</span>
-<span class='line-number'>191</span>
-<span class='line-number'>192</span>
-<span class='line-number'>193</span>
-<span class='line-number'>194</span>
-</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="kt">bool</span> <span class="nf">IsPrime</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="c1">// Rule out even numbers</span>
-</span><span class='line'>  <span class="k">if</span> <span class="p">((</span><span class="n">n</span> <span class="o">&gt;</span> <span class="mi">2</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">n</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">))</span> <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="c1">// Check divisibility by odd numbers starting from 3, uptil the</span>
-</span><span class='line'>  <span class="c1">// square root of the number.</span>
-</span><span class='line'>  <span class="k">const</span> <span class="kt">int</span> <span class="n">lim</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
-</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">3</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">lim</span><span class="p">;</span> <span class="n">i</span><span class="o">+=</span><span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">%</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">bool</span> <span class="nf">HasArithmeticSequence</span><span class="p">(</span><span class="k">const</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">v</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="n">assert</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">);</span>
-</span><span class='line'>  <span class="c1">// Assumes sorted vector of ints</span>
-</span><span class='line'>  <span class="k">struct</span> <span class="n">diff</span> <span class="p">{</span>
-</span><span class='line'>    <span class="kt">int</span> <span class="n">n1</span><span class="p">,</span> <span class="n">n2</span><span class="p">,</span> <span class="n">d</span><span class="p">;</span>
-</span><span class='line'>  <span class="p">};</span>
-</span><span class='line'>  <span class="n">vector</span><span class="o">&lt;</span><span class="n">diff</span><span class="o">&gt;</span> <span class="n">diffs</span><span class="p">;</span>
-</span><span class='line'>  <span class="c1">// Get the diffs between all elements, then find two pairs with the</span>
-</span><span class='line'>  <span class="c1">// same diff (yes, N^2, but will do). The two pairs must share a</span>
-</span><span class='line'>  <span class="c1">// number, i.e. V_i + d = V_j, and V_j + d = V_k.</span>
-</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">v</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">v</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="o">++</span><span class="n">j</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>      <span class="n">assert</span><span class="p">(</span><span class="n">v</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
-</span><span class='line'>      <span class="n">diffs</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span> <span class="p">{</span> <span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="n">j</span><span class="p">],</span> <span class="n">v</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">-</span> <span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="p">}</span> <span class="p">);</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="n">std</span><span class="o">::</span><span class="n">sort</span><span class="p">(</span><span class="n">diffs</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">diffs</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span>
-</span><span class='line'>            <span class="p">[](</span><span class="k">const</span> <span class="n">diff</span><span class="o">&amp;</span> <span class="n">df1</span><span class="p">,</span> <span class="k">const</span> <span class="n">diff</span><span class="o">&amp;</span> <span class="n">df2</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>              <span class="k">return</span> <span class="n">df1</span><span class="p">.</span><span class="n">d</span> <span class="o">&lt;</span> <span class="n">df2</span><span class="p">.</span><span class="n">d</span><span class="p">;</span>
-</span><span class='line'>            <span class="p">});</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="c1">// Now that we have grouped elements by their difference, we can</span>
-</span><span class='line'>  <span class="c1">// analyze each &#39;cluster&#39; to find the pairs we want.</span>
-</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">diffs</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="c1">// Yes, it&#39;s inefficient, but ...</span>
-</span><span class='line'>    <span class="kt">int</span> <span class="n">d</span> <span class="o">=</span> <span class="n">diffs</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">d</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span> <span class="n">diffs</span><span class="p">[</span><span class="n">j</span><span class="p">].</span><span class="n">d</span> <span class="o">==</span> <span class="n">d</span><span class="p">;</span> <span class="o">++</span><span class="n">j</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">diffs</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">n2</span> <span class="o">==</span> <span class="n">diffs</span><span class="p">[</span><span class="n">j</span><span class="p">].</span><span class="n">n1</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Found arithmetic progression: &quot;</span>
-</span><span class='line'>             <span class="o">&lt;&lt;</span> <span class="n">diffs</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">n1</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; -&gt; &quot;</span>
-</span><span class='line'>             <span class="o">&lt;&lt;</span> <span class="n">diffs</span><span class="p">[</span><span class="n">i</span><span class="p">].</span><span class="n">n2</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; -&gt; &quot;</span>
-</span><span class='line'>             <span class="o">&lt;&lt;</span> <span class="n">diffs</span><span class="p">[</span><span class="n">j</span><span class="p">].</span><span class="n">n2</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
-</span><span class='line'>        <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">class</span> <span class="nc">FourDigitCombinator</span> <span class="p">{</span>
-</span><span class='line'><span class="k">public</span><span class="o">:</span>
-</span><span class='line'>  <span class="n">FourDigitCombinator</span><span class="p">()</span> <span class="o">:</span> <span class="n">digits_</span><span class="p">({</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">}),</span> <span class="n">number_</span><span class="p">(</span><span class="mi">1000</span><span class="p">)</span> <span class="p">{}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">string</span> <span class="n">GetDigitsOld</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">std</span><span class="o">::</span><span class="n">ostringstream</span> <span class="n">stream</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">kNumDigits</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>      <span class="n">stream</span> <span class="o">&lt;&lt;</span> <span class="n">digits_</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">stream</span><span class="p">.</span><span class="n">str</span><span class="p">();</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="kt">bool</span> <span class="n">NextOld</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">sanity_check</span><span class="p">();</span>
-</span><span class='line'>    <span class="c1">// See if there is a prior number that can be incremented</span>
-</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">kNumDigits</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="o">--</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>      <span class="c1">// The last digit can go up to kMaxDigit, the previous one up to</span>
-</span><span class='line'>      <span class="c1">// kMaxDigit - 1, and so on ...</span>
-</span><span class='line'>      <span class="k">const</span> <span class="kt">int</span> <span class="n">digitMax</span> <span class="o">=</span> <span class="n">kMaxDigit</span> <span class="o">-</span> <span class="n">kNumDigits</span> <span class="o">+</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
-</span><span class='line'>      <span class="kt">int</span> <span class="n">digitValue</span> <span class="o">=</span> <span class="n">digits_</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-</span><span class='line'>      <span class="n">assert</span><span class="p">(</span><span class="n">digitValue</span> <span class="o">&lt;=</span> <span class="n">digitMax</span><span class="p">);</span>
-</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">digitValue</span> <span class="o">==</span> <span class="n">digitMax</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="c1">// We&#39;ve hit the limit for this digit. If this is the first</span>
-</span><span class='line'>        <span class="c1">// digit, we&#39;ve reached the end.</span>
-</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>          <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>        <span class="c1">// Otherwise, fall through to the previous digit ...</span>
-</span><span class='line'>      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</span><span class='line'>        <span class="c1">// Increment, and reset subsequent digits, if any.</span>
-</span><span class='line'>        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">kNumDigits</span><span class="p">;</span> <span class="o">++</span><span class="n">j</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>          <span class="o">++</span><span class="n">digitValue</span><span class="p">;</span>
-</span><span class='line'>          <span class="n">digits_</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="n">digitValue</span><span class="p">;</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>        <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="n">assert</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>  <span class="c1">// We should not get here!</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="kt">bool</span> <span class="n">HasPrimePermutationsOld</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">array</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="n">kNumDigits</span><span class="o">&gt;</span> <span class="n">mutation</span> <span class="o">=</span> <span class="n">digits_</span><span class="p">;</span>
-</span><span class='line'>    <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">prime_mutations</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">do</span> <span class="p">{</span>
-</span><span class='line'>      <span class="c1">// Skip permutations with a leading zero.</span>
-</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">mutation</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="k">continue</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="c1">// Create the corresponding number</span>
-</span><span class='line'>      <span class="kt">int</span> <span class="n">number</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'>      <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">kNumDigits</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">number</span> <span class="o">=</span> <span class="n">number</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">+</span> <span class="n">mutation</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">IsPrime</span><span class="p">(</span><span class="n">number</span><span class="p">))</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">prime_mutations</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">number</span><span class="p">);</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>    <span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">next_permutation</span><span class="p">(</span><span class="n">mutation</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">mutation</span><span class="p">.</span><span class="n">end</span><span class="p">()));</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">if</span> <span class="p">((</span><span class="n">prime_mutations</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">HasArithmeticSequence</span><span class="p">(</span><span class="n">prime_mutations</span><span class="p">))</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">string</span> <span class="n">GetDigits</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">std</span><span class="o">::</span><span class="n">ostringstream</span> <span class="n">stream</span><span class="p">;</span>
-</span><span class='line'>    <span class="n">stream</span> <span class="o">&lt;&lt;</span> <span class="n">number_</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">stream</span><span class="p">.</span><span class="n">str</span><span class="p">();</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="kt">bool</span> <span class="n">Next</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">number_</span> <span class="o">&lt;</span> <span class="mi">9999</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>      <span class="o">++</span><span class="n">number_</span><span class="p">;</span>
-</span><span class='line'>      <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="kt">bool</span> <span class="n">HasPrimePermutations</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">array</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="n">kNumDigits</span><span class="o">&gt;</span> <span class="n">mutation</span><span class="p">;</span>
-</span><span class='line'>    <span class="n">assert</span><span class="p">(</span><span class="n">number_</span> <span class="o">&gt;=</span> <span class="mi">1000</span> <span class="o">&amp;&amp;</span> <span class="n">number_</span> <span class="o">&lt;=</span> <span class="mi">9999</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="c1">// Convert number into an array of digits ...</span>
-</span><span class='line'>    <span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="n">number_</span><span class="p">;</span>
-</span><span class='line'>    <span class="kt">int</span> <span class="n">digit_index</span> <span class="o">=</span> <span class="n">kNumDigits</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">while</span> <span class="p">(</span><span class="n">n</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>      <span class="n">mutation</span><span class="p">[</span><span class="n">digit_index</span><span class="o">--</span><span class="p">]</span> <span class="o">=</span> <span class="n">n</span> <span class="o">%</span> <span class="mi">10</span><span class="p">;</span>
-</span><span class='line'>      <span class="n">n</span> <span class="o">/=</span> <span class="mi">10</span><span class="p">;</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">prime_mutations</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">do</span> <span class="p">{</span>
-</span><span class='line'>      <span class="c1">// ... then convert the array of digits back into a number!</span>
-</span><span class='line'>      <span class="kt">int</span> <span class="n">num</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'>      <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">kNumDigits</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">num</span> <span class="o">=</span> <span class="n">num</span> <span class="o">*</span> <span class="mi">10</span> <span class="o">+</span> <span class="n">mutation</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>      <span class="n">assert</span><span class="p">(</span><span class="n">num</span> <span class="o">&gt;=</span> <span class="mi">1000</span> <span class="o">&amp;&amp;</span> <span class="n">num</span> <span class="o">&lt;=</span> <span class="mi">9999</span><span class="p">);</span>
-</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">IsPrime</span><span class="p">(</span><span class="n">num</span><span class="p">))</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">prime_mutations</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">num</span><span class="p">);</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>    <span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">next_permutation</span><span class="p">(</span><span class="n">mutation</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">mutation</span><span class="p">.</span><span class="n">end</span><span class="p">()));</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">if</span> <span class="p">((</span><span class="n">prime_mutations</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="mi">3</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">HasArithmeticSequence</span><span class="p">(</span><span class="n">prime_mutations</span><span class="p">))</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">private</span><span class="o">:</span>
-</span><span class='line'>  <span class="k">static</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">kNumDigits</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
-</span><span class='line'>  <span class="k">static</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">kMaxDigit</span> <span class="o">=</span> <span class="mi">9</span><span class="p">;</span>
-</span><span class='line'>  <span class="n">array</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span> <span class="n">kNumDigits</span><span class="o">&gt;</span> <span class="n">digits_</span><span class="p">;</span>
-</span><span class='line'>  <span class="kt">int</span> <span class="n">number_</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="kt">void</span> <span class="nf">sanity_check</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">kNumDigits</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>      <span class="n">assert</span><span class="p">(</span><span class="n">digits_</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="n">digits_</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]);</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="p">};</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>  <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Euler #49 ... </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">set</span><span class="o">&lt;</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">candidates</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="c1">// Go over all sets of four digits, and consider the permutations of</span>
-</span><span class='line'>  <span class="c1">// each to see if any group of three permutations is prime.</span>
-</span><span class='line'>  <span class="n">FourDigitCombinator</span> <span class="n">four_digits</span><span class="p">;</span>
-</span><span class='line'>  <span class="k">do</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">four_digits</span><span class="p">.</span><span class="n">HasPrimePermutations</span><span class="p">())</span> <span class="p">{</span>
-</span><span class='line'>      <span class="n">candidates</span><span class="p">.</span><span class="n">insert</span><span class="p">(</span><span class="n">four_digits</span><span class="p">.</span><span class="n">GetDigits</span><span class="p">());</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="n">four_digits</span><span class="p">.</span><span class="n">Next</span><span class="p">());</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="c1">// Debugging aid ... check if any combinations matched.</span>
-</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="k">const</span> <span class="k">auto</span><span class="o">&amp;</span> <span class="nl">c</span> <span class="p">:</span> <span class="n">candidates</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Debug: found : &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">c</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>And it runs as &hellip;</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span><span class="nb">time</span> ./Test
-</span><span class='line'>Euler <span class="c">#49 ...</span>
-</span><span class='line'>Found arithmetic progression: <span class="m">1487</span> -&gt; <span class="m">4817</span> -&gt; 8147
-</span><span class='line'>Found arithmetic progression: <span class="m">1487</span> -&gt; <span class="m">4817</span> -&gt; 8147
-</span><span class='line'>Found arithmetic progression: <span class="m">2969</span> -&gt; <span class="m">6299</span> -&gt; 9629
-</span><span class='line'>Found arithmetic progression: <span class="m">2969</span> -&gt; <span class="m">6299</span> -&gt; 9629
-</span><span class='line'>Debug: found : 1478
-</span><span class='line'>Debug: found : 1487
-</span><span class='line'>Debug: found : 2699
-</span><span class='line'>Debug: found : 2969
-</span><span class='line'>
-</span><span class='line'>real    0m0.019s
-</span><span class='line'>user    0m0.016s
-</span><span class='line'>sys     0m0.000s
-</span></code></pre></td></tr></table></div></figure>
-
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-05-05T06:39:11+00:00" pubdate data-updated="true">May 5<sup>th</sup>, 2015</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/cpp/'>cpp</a>, <a class='category' href='/blog/categories/projecteuler/'>projecteuler</a>
 
 
 </div>

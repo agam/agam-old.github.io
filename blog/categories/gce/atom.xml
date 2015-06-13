@@ -4,7 +4,7 @@
   <title><![CDATA[Category: gce | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/gce/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-06-10T06:58:15+00:00</updated>
+  <updated>2015-06-13T07:17:05+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,61 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[FreeBSD on Google Compute Engine]]></title>
+    <link href="http://agam.github.io/blog/2015/06/13/freebsd-on-google-compute-engine/"/>
+    <updated>2015-06-13T05:31:14+00:00</updated>
+    <id>http://agam.github.io/blog/2015/06/13/freebsd-on-google-compute-engine</id>
+    <content type="html"><![CDATA[<p>I had tried running FreeBSD on Google Compute Engine previously, but <a href="blog/2014/12/14/trying-out-freebsd-and-failing-at-it/">given up</a>. Last week I was suddenly reminded of this, and after Googling around a bit, came across <a href="https://github.com/swills/FreeBSD-gcloud">this script</a> by Steve Wills <em>(Thanks, Steve!)</em> that automated the task of building a &ldquo;GCE-ready&rdquo; image on an existing FreeBSD system.</p>
+
+<p>Hooray! No, wait, I <em>don&rsquo;t</em> have an existing FreeBSD system; that&rsquo;s sort of what this is all about. This minor despondency was short-lived, since I had temporarily forgotten how we now live with computers within computers within computers (give or take a layer). So I installed the <a href="http://www.vmware.com/products/workstation">VMWare Workstation</a>, downloaded <a href="ftp://ftp.freebsd.org/pub/FreeBSD/releases/amd64/amd64/ISO-IMAGES/10.1/">the iso</a> for <code>10.1-RELEASE</code>, and booted it up.</p>
+
+<p>All you need is the Google Cloud SDK, which is available under the ports tree, so something like the following should suffice:</p>
+
+<p><code>sh
+$ cd /usr/ports/net/google-cloud-sdk
+$ make install
+</code></p>
+
+<p>Then grab the script and run it.</p>
+
+<p>```sh
+$ curl <a href="https://raw.githubusercontent.com/swills/FreeBSD-gcloud/master/build_google_image.sh">https://raw.githubusercontent.com/swills/FreeBSD-gcloud/master/build_google_image.sh</a> > /tmp/swill-script.sh
+$ chmod a+x /tmp/swill-script.sh
+$ /tmp/swill-script.sh
+components
+base.txz                                      100% of   63 MB 7041 kBps 00m09s
+kernel.txz                                    100% of   84 MB 3187 kBps 00m27s
+Creating image
+Creating filesystem
+Installing base into image
+Installing kernel into image
+Setting up image
+Finishing image
+Creating partitioned file
+Creating image tar
+Now run:</p>
+
+<p>gcloud auth login
+gsutil cp FreeBSD-10.1-RELEASE-amd64-20150612191810.tar.gz gs://swills-test-bucket
+gcutil addimage freebsd-101-release-amd64-20150612191810 gs://swills-test-bucket/FreeBSD-10.1-RELEASE-amd64-20150612191810.tar.gz
+```</p>
+
+<p>As you might have noticed, the script ends with a helpful suggestion for the subsequent commands to run. Caveats:</p>
+
+<ul>
+<li>If you&rsquo;re doing all this within a VM like I was, you&rsquo;ll want to run <code>gcloud auth login --no-launch-browser</code></li>
+<li>You might need to run <code>gcloud config set project &lt;project ID&gt;</code> (that&rsquo;s project <em>ID</em>, not project <em>name</em>)</li>
+<li>(obviously) replace <code>swills-test-bucket</code> with your bucket (you can create one at the <a href="https://console.developers.google.com">cloud console</a> (Storage &ndash;> Cloud Storage &ndash;> Storage Browser)</li>
+</ul>
+
+
+<p>After this, a few clicks should get you a new instance (remember to select the custom image uploaded earlier), and SSHing into it should show you <code>/etc/motd</code> (which is still a plain old file, and not, you know, <a href="https://web.archive.org/web/20120107210839/http://deadmemes.net/2010/10/19/fear-and-loathing-in-debianubuntu-or-who-needs-etcmotd">this abomination</a>).</p>
+
+<p><strong>Enjoy!</strong></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Google cloud: sharing projects]]></title>
