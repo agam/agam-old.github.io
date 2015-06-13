@@ -8,13 +8,13 @@ categories: haskell
 
 Tried this out after [I read about it](https://www.fpcomplete.com/blog/2015/06/announcing-first-public-beta-stack). Note: the following was all done on a Macbook, but it should work similarly on Linux too.
 
-## Get Stack
+**Get Stack**
 
 [Download](https://github.com/fpco/stack/releases/download/v0.0.0-beta/stack-0.0.0-x86_64-osx.gz) it.
 
 `gunzip` and copy to some directory in `$PATH`
 
-## Use Stack
+**Use Stack**
 
 Create dummy `.hs` file.
 
@@ -54,7 +54,7 @@ $ ls
 stack.yaml dummy.o dummy.hs dummy.hi dummy
 ```
 
-## Run the program
+**Run the program**
 
 Just run the executable created:
 
@@ -70,7 +70,7 @@ $ stack runghc dummy.hs
 Hello World
 ```
 
-## Libraries
+**Libraries**
 
 (this is why we're _really_ here, right?)
 
@@ -115,7 +115,7 @@ unix-2.7.0.1
 xhtml-3000.2.1
 ```
 
-## Get a new package using Stack
+**Get a new package using Stack**
 
 First, we need to _require_ some new package. Change dummy code to (e.g.)
 
