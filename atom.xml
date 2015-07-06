@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-06-27T20:40:06+00:00</updated>
+  <updated>2015-07-06T08:02:25+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,81 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Pharo]]></title>
+    <link href="http://agam.github.io/blog/2015/07/06/pharo/"/>
+    <updated>2015-07-06T07:02:27+00:00</updated>
+    <id>http://agam.github.io/blog/2015/07/06/pharo</id>
+    <content type="html"><![CDATA[<p>A lot of thinking about <em>&ldquo;what&rsquo;s the best programming environment for beginners?&rdquo;</em> has led me to the one system I&rsquo;ve never explored (and only read about): <strong>Smalltalk</strong> &mdash; Or more precisely, a particular open-source implementation of Smalltalk, <em>Pharo</em>.</p>
+
+<p>(Clearly, I have very little credibility, since the pattern here is of me saying &ldquo;I&rsquo;m going to learn X&rdquo;, and they getting sidetracked by some Y)</p>
+
+<p>Like Common Lisp (and unlike Scheme or Haskell), Smalltalk is &ldquo;image-based&rdquo; rather than &ldquo;source-file-based&rdquo;, and again like Lisp the <em>&ldquo;ideal&rdquo;</em> it strives for is turtles all the way down, the turtles here being uniform objects instead of uniform s-expressions.</p>
+
+<p>When you start up the Pharo image for the first time after downloading it, one of windows is a <em>Workspace</em>, with various comments and notes, among which is the following innocuous looking line:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='smalltalk'><span class='line'><span class="nc">PharoTutorial</span> <span class="nf">go</span><span class="p">.</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Executing that line (selecting it and hitting <code>Cmd-D</code>, or right-clicking and selecting <code>Do It</code>) launches a engaging tutorial that &hellip; well .. you have to see it for yourself :) At the very end, you have the option of introspecting the tutorial itself, or creating your own. Here is a screenshot of that:</p>
+
+<p><img src="https://farm1.staticflickr.com/551/19272356888_495113dfc2_b_d.jpg"></p>
+
+<p>Download Pharo <a href="http://pharo.org/download">here</a>, and <strong>enjoy!!</strong></p>
+
+<p>P.S. just for fun, some <em>&ldquo;Pharo Zen&rdquo;</em>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='smalltalk'><span class='line'><span class="nc">Perfection</span> <span class="nf">can</span> <span class="nf">kill</span> <span class="nf">movement</span><span class="p">.</span>
+</span><span class='line'><span class="nc">Simple</span> <span class="nf">processes</span> <span class="nf">to</span> <span class="nf">support</span> <span class="nf">progress</span><span class="p">.</span>
+</span><span class='line'><span class="nc">Examples</span> <span class="nf">to</span> <span class="nf">learn</span> <span class="nf">from</span><span class="p">.</span>
+</span><span class='line'><span class="nc">Tests</span> <span class="nf">are</span> <span class="nf">important</span> <span class="nf">but</span> <span class="nf">can</span> <span class="nf">be</span> <span class="nf">changed</span><span class="p">.</span>
+</span><span class='line'><span class="nc">Classes</span> <span class="nf">structure</span> <span class="nf">our</span> <span class="nf">vocabulary</span><span class="p">.</span>
+</span><span class='line'><span class="nc">Fully</span> <span class="nf">dynamic</span> <span class="nf">and</span> <span class="nf">malleable</span><span class="p">.</span>
+</span><span class='line'><span class="nc">A</span> <span class="nf">system</span> <span class="nf">with</span> <span class="nf">robust</span> <span class="nf">abstractions</span> <span class="nf">that</span> <span class="nf">a</span> <span class="nf">single</span> <span class="nf">person</span> <span class="nf">can</span> <span class="nf">understand</span><span class="p">.</span>
+</span><span class='line'><span class="nc">Explicit</span> <span class="nf">is</span> <span class="nf">better</span> <span class="nf">than</span> <span class="nf">implicit</span><span class="p">.</span>
+</span><span class='line'><span class="nc">Simplicity</span> <span class="nf">is</span> <span class="nf">the</span> <span class="nf">ultimate</span> <span class="nf">elegance</span><span class="p">.</span>
+</span><span class='line'><span class="nc">Quality</span> <span class="nf">is</span> <span class="nf">an</span> <span class="nf">emerging</span> <span class="nf">property</span><span class="p">.</span>
+</span><span class='line'><span class="nc">Polymorphism</span> <span class="nf">is</span> <span class="nf">our</span> <span class="nf">esperanto</span><span class="p">.</span>
+</span><span class='line'><span class="nc">Messages</span> <span class="nf">are</span> <span class="nf">our</span> <span class="nf">vocabulary</span><span class="p">.</span>
+</span><span class='line'><span class="nc">Better</span> <span class="nf">a</span> <span class="nf">set</span> <span class="nf">of</span> <span class="nf">small</span> <span class="nf">polymorphic</span> <span class="nf">classes</span> <span class="nf">than</span> <span class="nf">a</span> <span class="nf">large</span> <span class="nf">ugly</span> <span class="nf">one</span><span class="p">.</span>
+</span><span class='line'><span class="nc">Communication</span> <span class="nf">is</span> <span class="nf">key</span><span class="p">.</span>
+</span><span class='line'><span class="nc">Learning</span> <span class="nf">from</span> <span class="nf">mistakes</span><span class="p">.</span>
+</span><span class='line'><span class="nc">Magic</span> <span class="nf">only</span> <span class="nf">at</span> <span class="nf">the</span> <span class="nf">right</span> <span class="nf">place</span><span class="p">.</span>
+</span><span class='line'><span class="nc">Objects</span> <span class="nf">all</span> <span class="nf">the</span> <span class="nf">way</span> <span class="nf">down</span><span class="p">.</span>
+</span><span class='line'><span class="nc">Abstraction</span> <span class="nf">and</span> <span class="nf">composition</span> <span class="nf">are</span> <span class="nf">our</span> <span class="nf">friends</span><span class="p">.</span>
+</span><span class='line'><span class="nc">One</span> <span class="nf">step</span> <span class="nf">at</span> <span class="nf">a</span> <span class="nf">time</span><span class="p">.</span>
+</span><span class='line'><span class="nc">There</span> <span class="nf">is</span> <span class="nf">no</span> <span class="nf">unimportant</span> <span class="nf">fix</span><span class="p">.</span>
+</span><span class='line'><span class="nc">Easy</span> <span class="nf">to</span> <span class="nf">understand,</span> <span class="nv">easy</span> <span class="nf">to</span> <span class="nf">learn</span> <span class="nf">from,</span> <span class="nv">easy</span> <span class="nf">to</span> <span class="nf">change</span><span class="p">.</span>
+</span><span class='line'><span class="nc">Beauty</span> <span class="nf">in</span> <span class="nf">the</span> <span class="nf">code,</span> <span class="nv">beauty</span> <span class="nf">in</span> <span class="nf">the</span> <span class="nf">comments</span><span class="p">.</span>
+</span></code></pre></td></tr></table></div></figure>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[FreeBSD on Google Compute Engine]]></title>
@@ -429,6 +504,8 @@
 <p>So while I really should continue, I should do so by learning more math, instead of banging away at bad implementations. When I looked around for options for these, I realized that (as in so many other things) we&rsquo;re spoilt for choice! Options abound, ranging from the &ldquo;Daily Programmer&rdquo; <a href="https://www.reddit.com/r/dailyprogrammer">subreddit</a>, to dedicated (<em>free!</em>) practice sites like <a href="https://www.codeeval.com/">CodeEval</a>, <a href="https://www.hackerrank.com/">HackerRank</a>, or <a href="http://coderbyte.com/">CoderByte</a>.</p>
 
 <p>Eventually I just picked one at random and decided to start doing roughly one problem a day (I picked <a href="https://www.hackerrank.com/">CodeWars</a>, which has an amusing &ldquo;dojo&rdquo; feel to it). We&rsquo;ll see how long it lasts :)</p>
+
+<p><strong>Edit</strong>: There is a bigger list of &ldquo;coding challenge&rdquo; sites <a href="http://codecondo.com/coding-challenges/">here</a>.</p>
 ]]></content>
   </entry>
   
@@ -2451,120 +2528,6 @@
 </span><span class='line'><span class="mi">43</span><span class="o">,</span><span class="mi">810</span><span class="o">,</span><span class="mi">864</span> <span class="nv">bytes</span> <span class="nv">for</span> <span class="mi">758</span><span class="o">,</span><span class="mi">452</span> <span class="nv">dynamic</span> <span class="nv">objects</span> <span class="p">(</span><span class="nv">space</span> <span class="nv">total.</span><span class="p">)</span>
 </span></code></pre></td></tr></table></div></figure>
 
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Euler 42: Pandigitals with sub-string divisibility]]></title>
-    <link href="http://agam.github.io/blog/2015/03/25/euler-42-pandigitals-with-sub-string-divisibility/"/>
-    <updated>2015-03-25T23:33:56+00:00</updated>
-    <id>http://agam.github.io/blog/2015/03/25/euler-42-pandigitals-with-sub-string-divisibility</id>
-    <content type="html"><![CDATA[<p>These brute force solutions are getting a bit worrying, but here is another one. (I keep promising myself to get out of my comfort zone, but (<em>unfortunately!</em>) code like this is too easy to write).</p>
-
-<p><strong>Statutory Warning</strong>: <em>Spoilers ahead</em></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="c1">;; For all 0-9 pandigital numbers, find the ones which have successive</span>
-</span><span class='line'><span class="c1">;; substrings of length 3 diisible by 2,3,...,17.</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*prime-divisors*</span> <span class="o">#(</span><span class="mi">17</span> <span class="mi">13</span> <span class="mi">11</span> <span class="mi">7</span> <span class="mi">5</span> <span class="mi">3</span> <span class="mi">2</span><span class="p">))</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">;; A number is 0-9 pandigital if it (a) is 10 digits long, and (b) has every digit from 0-9</span>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">is-pandigital</span> <span class="p">(</span><span class="nv">num</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">declare</span> <span class="p">(</span><span class="k">type</span> <span class="kt">fixnum</span> <span class="nv">num</span><span class="p">))</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">digits-seen</span> <span class="p">(</span><span class="nb">make-array</span> <span class="mi">10</span> <span class="ss">:element-type</span> <span class="ss">&#39;bit</span> <span class="ss">:initial-element</span> <span class="mi">0</span><span class="p">)))</span>
-</span><span class='line'>    <span class="p">(</span><span class="nb">do*</span> <span class="p">((</span><span class="nv">n</span> <span class="nv">num</span> <span class="p">(</span><span class="nb">floor</span> <span class="p">(</span><span class="nb">/</span> <span class="nv">n</span> <span class="mi">10</span><span class="p">)))</span>
-</span><span class='line'>          <span class="p">(</span><span class="nv">d</span> <span class="p">(</span><span class="nb">mod</span> <span class="nv">n</span> <span class="mi">10</span><span class="p">)</span> <span class="p">(</span><span class="nb">mod</span> <span class="nv">n</span> <span class="mi">10</span><span class="p">))</span>
-</span><span class='line'>          <span class="p">(</span><span class="nv">num-digits</span> <span class="mi">0</span> <span class="p">(</span><span class="nb">1+</span> <span class="nv">num-digits</span><span class="p">)))</span>
-</span><span class='line'>         <span class="p">((</span><span class="nb">=</span> <span class="nv">n</span> <span class="mi">0</span><span class="p">)</span> <span class="p">(</span><span class="nb">and</span> <span class="p">(</span><span class="nb">=</span> <span class="nv">num-digits</span> <span class="mi">10</span><span class="p">)</span>
-</span><span class='line'>                       <span class="p">(</span><span class="nb">every</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">x</span><span class="p">)</span> <span class="p">(</span><span class="nb">=</span> <span class="nv">x</span> <span class="mi">1</span><span class="p">))</span> <span class="nv">digits-seen</span><span class="p">)))</span>
-</span><span class='line'>      <span class="p">(</span><span class="nb">setf</span> <span class="p">(</span><span class="nb">bit</span> <span class="nv">digits-seen</span> <span class="nv">d</span><span class="p">)</span> <span class="mi">1</span><span class="p">))))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">check-divisibility</span> <span class="p">(</span><span class="nv">num</span> <span class="nv">div-index</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">=</span> <span class="mi">0</span> <span class="p">(</span><span class="nb">mod</span> <span class="nv">num</span> <span class="p">(</span><span class="nb">aref</span> <span class="vg">*prime-divisors*</span> <span class="nv">div-index</span><span class="p">))))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">get-three-digit-num</span> <span class="p">(</span><span class="nv">num</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">ones</span> <span class="p">(</span><span class="nb">mod</span> <span class="nv">num</span> <span class="mi">10</span><span class="p">))</span>
-</span><span class='line'>        <span class="p">(</span><span class="nv">tens</span> <span class="p">(</span><span class="nb">mod</span> <span class="p">(</span><span class="nb">floor</span> <span class="p">(</span><span class="nb">/</span> <span class="nv">num</span> <span class="mi">10</span><span class="p">))</span> <span class="mi">10</span><span class="p">))</span>
-</span><span class='line'>        <span class="p">(</span><span class="nv">hundreds</span> <span class="p">(</span><span class="nb">mod</span> <span class="p">(</span><span class="nb">floor</span> <span class="p">(</span><span class="nb">/</span> <span class="nv">num</span> <span class="mi">100</span><span class="p">))</span> <span class="mi">10</span><span class="p">)))</span>
-</span><span class='line'>    <span class="p">(</span><span class="nb">+</span> <span class="nv">ones</span>
-</span><span class='line'>       <span class="p">(</span><span class="nb">*</span> <span class="mi">10</span> <span class="nv">tens</span><span class="p">)</span>
-</span><span class='line'>       <span class="p">(</span><span class="nb">*</span> <span class="mi">100</span> <span class="nv">hundreds</span><span class="p">))))</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">;; Go backwards in groups of three digits and check divisibility</span>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">has-divisible-substrings</span> <span class="p">(</span><span class="nv">num</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">do*</span> <span class="p">((</span><span class="nv">n</span> <span class="nv">num</span> <span class="p">(</span><span class="nb">floor</span> <span class="p">(</span><span class="nb">/</span> <span class="nv">n</span> <span class="mi">10</span><span class="p">)))</span>
-</span><span class='line'>        <span class="p">(</span><span class="nv">div-index</span> <span class="mi">0</span> <span class="p">(</span><span class="nb">1+</span> <span class="nv">div-index</span><span class="p">))</span>
-</span><span class='line'>        <span class="p">(</span><span class="nv">dividend</span> <span class="p">(</span><span class="nv">get-three-digit-num</span> <span class="nv">n</span><span class="p">)</span> <span class="p">(</span><span class="nv">get-three-digit-num</span> <span class="nv">n</span><span class="p">))</span>
-</span><span class='line'>        <span class="p">(</span><span class="nv">div-p</span> <span class="p">(</span><span class="nv">check-divisibility</span> <span class="nv">dividend</span> <span class="nv">div-index</span><span class="p">)</span>
-</span><span class='line'>               <span class="p">(</span><span class="nb">and</span> <span class="nv">div-p</span> <span class="p">(</span><span class="nv">check-divisibility</span> <span class="nv">dividend</span> <span class="nv">div-index</span><span class="p">))))</span>
-</span><span class='line'>       <span class="p">((</span><span class="nb">&lt;</span> <span class="nv">n</span> <span class="mi">10000</span><span class="p">)</span> <span class="nv">div-p</span><span class="p">)))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">check-substring-pandigital-range</span> <span class="p">(</span><span class="nv">start</span> <span class="nv">end</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">declare</span> <span class="p">(</span><span class="k">type</span> <span class="kt">fixnum</span> <span class="nv">start</span> <span class="nv">end</span><span class="p">))</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">candidates</span> <span class="o">&#39;</span><span class="p">()))</span>
-</span><span class='line'>    <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">num</span> <span class="nv">from</span> <span class="nv">start</span> <span class="nv">to</span> <span class="nv">end</span> <span class="nb">do</span>
-</span><span class='line'>         <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">and</span> <span class="p">(</span><span class="nv">is-pandigital</span> <span class="nv">num</span><span class="p">)</span>
-</span><span class='line'>                  <span class="p">(</span><span class="nv">has-divisible-substrings</span> <span class="nv">num</span><span class="p">))</span>
-</span><span class='line'>             <span class="p">(</span><span class="nb">push</span> <span class="nv">num</span> <span class="nv">candidates</span><span class="p">)))</span>
-</span><span class='line'>    <span class="nv">candidates</span><span class="p">))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">euler43</span> <span class="p">()</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">candidates</span> <span class="p">(</span><span class="nv">check-substring-pandigital-range</span> <span class="mi">1234567890</span> <span class="mi">9876543210</span><span class="p">)))</span>
-</span><span class='line'>    <span class="p">(</span><span class="nb">print</span> <span class="nv">candidates</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">(</span><span class="nb">apply</span> <span class="nf">#&#39;</span><span class="nb">+</span> <span class="nv">candidates</span><span class="p">)))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>As before, evaluating <code>(euler43)</code> shows the final solution (sum), along with the (six!) candidate numbers making up the sum. This took a whopping <code>4.3 hours</code> to churn through the 8.5 billion numbers. Maybe I need to create a new constraint for these problems: either pen-and-paper, or something <em>slow</em> (like Python ?! :P), so that brute force is never tempting again.</p>
 ]]></content>
   </entry>
   

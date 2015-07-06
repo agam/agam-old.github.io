@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: smalltalk | Agam's Mashed-Up Pome]]></title>
+  <link href="http://agam.github.io/blog/categories/smalltalk/atom.xml" rel="self"/>
+  <link href="http://agam.github.io/"/>
+  <updated>2015-07-06T08:02:25+00:00</updated>
+  <id>http://agam.github.io/</id>
+  <author>
+    <name><![CDATA[Agam]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Pharo]]></title>
+    <link href="http://agam.github.io/blog/2015/07/06/pharo/"/>
+    <updated>2015-07-06T07:02:27+00:00</updated>
+    <id>http://agam.github.io/blog/2015/07/06/pharo</id>
+    <content type="html"><![CDATA[<p>A lot of thinking about <em>&ldquo;what&rsquo;s the best programming environment for beginners?&rdquo;</em> has led me to the one system I&rsquo;ve never explored (and only read about): <strong>Smalltalk</strong> &mdash; Or more precisely, a particular open-source implementation of Smalltalk, <em>Pharo</em>.</p>
+
+<p>(Clearly, I have very little credibility, since the pattern here is of me saying &ldquo;I&rsquo;m going to learn X&rdquo;, and they getting sidetracked by some Y)</p>
+
+<p>Like Common Lisp (and unlike Scheme or Haskell), Smalltalk is &ldquo;image-based&rdquo; rather than &ldquo;source-file-based&rdquo;, and again like Lisp the <em>&ldquo;ideal&rdquo;</em> it strives for is turtles all the way down, the turtles here being uniform objects instead of uniform s-expressions.</p>
+
+<p>When you start up the Pharo image for the first time after downloading it, one of windows is a <em>Workspace</em>, with various comments and notes, among which is the following innocuous looking line:</p>
+
+<p><code>smalltalk
+PharoTutorial go.
+</code></p>
+
+<p>Executing that line (selecting it and hitting <code>Cmd-D</code>, or right-clicking and selecting <code>Do It</code>) launches a engaging tutorial that &hellip; well .. you have to see it for yourself :) At the very end, you have the option of introspecting the tutorial itself, or creating your own. Here is a screenshot of that:</p>
+
+<p><img class="<a" src="href="https://farm1.staticflickr.com/551/19272356888_495113dfc2_b_d.jpg">https://farm1.staticflickr.com/551/19272356888_495113dfc2_b_d.jpg</a>"></p>
+
+<p>Download Pharo <a href="http://pharo.org/download">here</a>, and <strong>enjoy!!</strong></p>
+
+<p>P.S. just for fun, some <em>&ldquo;Pharo Zen&rdquo;</em>:</p>
+
+<p><code>
+Perfection can kill movement.
+Simple processes to support progress.
+Examples to learn from.
+Tests are important but can be changed.
+Classes structure our vocabulary.
+Fully dynamic and malleable.
+A system with robust abstractions that a single person can understand.
+Explicit is better than implicit.
+Simplicity is the ultimate elegance.
+Quality is an emerging property.
+Polymorphism is our esperanto.
+Messages are our vocabulary.
+Better a set of small polymorphic classes than a large ugly one.
+Communication is key.
+Learning from mistakes.
+Magic only at the right place.
+Objects all the way down.
+Abstraction and composition are our friends.
+One step at a time.
+There is no unimportant fix.
+Easy to understand, easy to learn from, easy to change.
+Beauty in the code, beauty in the comments.
+</code></p>
+]]></content>
+  </entry>
+  
+</feed>
