@@ -4,7 +4,7 @@
   <title><![CDATA[Category: macros | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/macros/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-07-26T04:19:56+00:00</updated>
+  <updated>2015-08-09T03:07:40+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -18,7 +18,7 @@
     <link href="http://agam.github.io/blog/2015/07/26/syntax-transformers/"/>
     <updated>2015-07-26T04:07:25+00:00</updated>
     <id>http://agam.github.io/blog/2015/07/26/syntax-transformers</id>
-    <content type="html"><![CDATA[<p>I&rsquo;ve seen <code>defmacro</code> before, and while the pros and cons of &ldquo;hygiene&rdquo; are contentious, I had never bothered to learn this before. So now I&rsquo;m working my way through Kent Dybvig&rsquo;s <a href="http://www.scheme.com/tspl4/">&ldquo;The Scheme Programming Language&rdquo;</a>, and I have to say, I like what I see. Here&rsquo;s an example I wrote today:</p>
+    <content type="html"><![CDATA[<p>I&rsquo;ve seen <code>defmacro</code> before, and while the pros and cons of &ldquo;hygiene&rdquo; are contentious, I had never bothered to learn macros in Scheme before. So now I&rsquo;m working my way through Kent Dybvig&rsquo;s <a href="http://www.scheme.com/tspl4/">&ldquo;The Scheme Programming Language&rdquo;</a>, and I have to say, I like what I see. Here&rsquo;s an example I wrote today:</p>
 
 <p>```scheme
 ;;; Exercise 3.1.3

@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-07-26T04:19:56+00:00</updated>
+  <updated>2015-08-09T03:07:40+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -14,11 +14,32 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Shokunin and Umami in software engineering ....]]></title>
+    <link href="http://agam.github.io/blog/2015/08/09/shokunin-and-umami-in-software-engineering-dot-dot-dot/"/>
+    <updated>2015-08-09T02:57:05+00:00</updated>
+    <id>http://agam.github.io/blog/2015/08/09/shokunin-and-umami-in-software-engineering-dot-dot-dot</id>
+    <content type="html"><![CDATA[<p>Saw a great movie yesterday, <a href="https://www.youtube.com/watch?v=M-aGPniFvS0">&ldquo;Jiro dreams of Sushi&rdquo;</a>, which is really all about the lifelong quest for perfection. Chef Jiro Ono has been making Sushi for seven decades, and is still trying to get better at it.</p>
+
+<p>Which is admirable, but how can lesser mortals as us draw some inspiration from it? What is the equivalent of being a <em>Shokunin</em><sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> in terms of programming (or realistically, in terms of software engineering)? What is the equivalent experience of <em>Umami</em><sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>?</p>
+<div class="footnotes">
+<hr/>
+<ol>
+<li id="fn:1">
+<p><em>The Japanese word shokunin is defined by both Japanese and Japanese-English dictionaries as ‘craftsman’ or ‘artisan,’ but such a literal description does not fully express the deeper meaning.  The Japanese apprentice is taught that shokunin means not only having technical skills, but also implies an attitude and social consciousness. … The shokunin has a social obligation to work his/her best for the general welfare of the people.  This obligation is both spiritual and material, in that no matter what it is, the shokunin’s responsibility is to fulfill the requirement.</em> &mdash; <a href="https://wilsonkhoo.wordpress.com/2013/02/23/jiro-dreams-of-sushi-what-it-means-to-be-shokunin/">Tasio Odate</a><a href="#fnref:1" rev="footnote">&#8617;</a></p></li>
+<li id="fn:2">
+<p><em>As the taste of umami itself is subtle and blends well with other tastes to expand and round out flavors, most people don&rsquo;t recognize umami when they encounter it, but it plays an important role making food taste delicious.</em> <a href="http://www.umamiinfo.com/2011/02/What-exactly-is-umami.php">(reference)</a><a href="#fnref:2" rev="footnote">&#8617;</a></p></li>
+</ol>
+</div>
+
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[Syntax transformers (!)]]></title>
     <link href="http://agam.github.io/blog/2015/07/26/syntax-transformers/"/>
     <updated>2015-07-26T04:07:25+00:00</updated>
     <id>http://agam.github.io/blog/2015/07/26/syntax-transformers</id>
-    <content type="html"><![CDATA[<p>I&rsquo;ve seen <code>defmacro</code> before, and while the pros and cons of &ldquo;hygiene&rdquo; are contentious, I had never bothered to learn this before. So now I&rsquo;m working my way through Kent Dybvig&rsquo;s <a href="http://www.scheme.com/tspl4/">&ldquo;The Scheme Programming Language&rdquo;</a>, and I have to say, I like what I see. Here&rsquo;s an example I wrote today:</p>
+    <content type="html"><![CDATA[<p>I&rsquo;ve seen <code>defmacro</code> before, and while the pros and cons of &ldquo;hygiene&rdquo; are contentious, I had never bothered to learn macros in Scheme before. So now I&rsquo;m working my way through Kent Dybvig&rsquo;s <a href="http://www.scheme.com/tspl4/">&ldquo;The Scheme Programming Language&rdquo;</a>, and I have to say, I like what I see. Here&rsquo;s an example I wrote today:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
 <span class='line-number'>2</span>
@@ -2373,65 +2394,6 @@
 </span><span class='line'>  <span class="p">}</span>
 </span><span class='line'><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[The return of the mainframes]]></title>
-    <link href="http://agam.github.io/blog/2015/04/24/the-return-of-the-mainframes/"/>
-    <updated>2015-04-24T07:22:01+00:00</updated>
-    <id>http://agam.github.io/blog/2015/04/24/the-return-of-the-mainframes</id>
-    <content type="html"><![CDATA[<p>Thomas Watson famously<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> mispredicted the rise of <em>Personal Computers</em> in 1943 (“I think there is a world market for maybe five computers”) — but substituting “cloud service providers” for “computers” might soon be more accurate.</p>
-
-<p>The “Personal Computing Revolution” happened for various reasons (plummeting costs of ever-faster microprocessors, various lucky accidents), but beyond the technology itself was (perhaps?) a utopian social vision where everyone would have computing power they owned, <em>that they controlled</em>.</p>
-
-<p>This is particularly clear in the writings<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup> and work of Alan Kay, who might have some claim to have invented the term<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>. His 1972 paper<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup> lays this vision out with an example of two children who use their <em>DynaBooks</em> to easily create a complex simulation that they play as a game and challenge each other, and learn from each other.</p>
-
-<p>Today, four decades later, we know that’s not what people use their wonderfully networked computers for. It’s porn<sup id="fnref:5"><a href="#fn:5" rel="footnote">5</a></sup>, essentially. And cat videos<sup id="fnref:6"><a href="#fn:6" rel="footnote">6</a></sup>.</p>
-
-<p>Lest I get too hypocritical here — yes, that’s what I used my early internet time for too. That and lots and lots and lots of video games.</p>
-
-<p>So it shouldn’t be <em>too</em> surprising that there’s little reason to keep this computing power <em>personal</em>, when it’s more efficient now to centralize it <em>and call it the “cloud”.</em> Your cat videos are faster, your porn is better, and you can catch up on all the daily minutiae of various people you’ll never meet in real life.</p>
-
-<p>A guy called David Noble wrote “Forces of Production: A Social History of Industrial Automation”<sup id="fnref:7"><a href="#fn:7" rel="footnote">7</a></sup> which has this quote:</p>
-
-<blockquote><p>… <strong>technology leads a double life</strong>, one which conforms to the intentions of designers and interests of power and another which contradicts them — proceeding behind the backs of their architects to yield unintended consequences and unintended possibilities … technologies rarely fulfill the fantasies of their creators.</p></blockquote>
-
-<p>Yes, this was written in 1986, and I’ll leave drawing present-day analogies out of this — but whenever you hear people trying to <em>change the world through technology</em>, be atleast a <em>little</em> skeptical.</p>
-
-<p>For a bit “heavier” discussion, see “The Social Meaning Of The Personal Computer: Or, <em>Why the Personal Computer Revolution Was No Revolution</em>”<sup id="fnref:8"><a href="#fn:8" rel="footnote">8</a></sup> by Bryan Pfaffenberger (more recent, in 2001<sup id="fnref:9"><a href="#fn:9" rel="footnote">9</a></sup>). A sample quote:</p>
-
-<blockquote><p>Contemporary theories about technical innovation lend some weight to the view that the myth of a personal computer revolution was promoted, perhaps rather cynically, to sell hardware. Several recent studies suggest that technological innovators not only try to manipulate technology when they create a new artifact; they also try to manipulate the <em>social</em> world for which the new artifact is intended … prefers to speak of the “heterogenous engineer”, a figure who creates <strong>not only a new technology, but also a new framework of social roles, meanings, and values within which the new artifact will be situated</strong>. That the founders of the personal computer industry found the myths of personal computing advantageous for such purposes cannot be doubted.</p></blockquote>
-
-<p>In a spirit of keeping this “fair and balanced” (!), all is not gloomy. There is an enormous DIY movement that has sprung up over the last decade, highly “tinkerable” machines such as the Arduino and the Raspberry Pi are huge successes, and lots of people really <em>do</em> want to know how computing systems <em>really</em> work<sup id="fnref:10"><a href="#fn:10" rel="footnote">10</a></sup> — but it’s always a bummer to swing from optimism to realism. <strong>The utopian vision of personal computing was probably just never meant to be.</strong></p>
-
-<p>Suggested alternative titles included: <em>The revenge of the mainframes</em>, <em>The mainframe strikes back</em>, etc. You get the point.</p>
-<div class="footnotes">
-<hr/>
-<ol>
-<li id="fn:1">
-<p>Or rather, <em>allegedly</em>, since <a href="http://en.wikipedia.org/wiki/Thomas_J._Watson#Famous_misquote">this is apocryphal</a>, and might really be attributed to Howard Aiken instead.<a href="#fnref:1" rev="footnote">&#8617;</a></p></li>
-<li id="fn:2">
-<p><a href="http://vpri.org/html/writings.php">http://vpri.org/html/writings.php</a><a href="#fnref:2" rev="footnote">&#8617;</a></p></li>
-<li id="fn:3">
-<p><a href="http://amturing.acm.org/award_winners/kay_3972189.cfm">http://amturing.acm.org/award_winners/kay_3972189.cfm</a><a href="#fnref:3" rev="footnote">&#8617;</a></p></li>
-<li id="fn:4">
-<p><a href="http://www.mprove.de/diplom/gui/kay72.html">A Personal Computer for Children of All Ages</a><a href="#fnref:4" rev="footnote">&#8617;</a></p></li>
-<li id="fn:5">
-<p><a href="http://www.dailyinfographic.com/the-stats-on-internet-pornography-infographic">http://www.dailyinfographic.com/the-stats-on-internet-pornography-infographic</a><a href="#fnref:5" rev="footnote">&#8617;</a></p></li>
-<li id="fn:6">
-<p><a href="http://www.reddit.com/r/estimation/comments/2fllbi/what_percentage_of_daily_internet_traffic_is_cats/">http://www.reddit.com/r/estimation/comments/2fllbi/what_percentage_of_daily_internet_traffic_is_cats/</a><a href="#fnref:6" rev="footnote">&#8617;</a></p></li>
-<li id="fn:7">
-<p><a href="http://www.amazon.com/Forces-Production-History-Industrial-Automation/dp/0195040465">http://www.amazon.com/Forces-Production-History-Industrial-Automation/dp/0195040465</a><a href="#fnref:7" rev="footnote">&#8617;</a></p></li>
-<li id="fn:8">
-<p>Original link long dead, but thanks to archive.org …  <a href="https://web.archive.org/web/20070109022206/http://pfaff.sts.virginia.edu/bphome/docs/pdf/social-meaning-personal-computer.pdf">https://web.archive.org/web/20070109022206/http://pfaff.sts.virginia.edu/bphome/docs/pdf/social-meaning-personal-computer.pdf</a><a href="#fnref:8" rev="footnote">&#8617;</a></p></li>
-<li id="fn:9">
-<p>Yes, that’s where I really got the Noble quote from, I didn’t really read the 1986 book, sorry :)<a href="#fnref:9" rev="footnote">&#8617;</a></p></li>
-<li id="fn:10">
-<p>And I’m looking forward to Maker Faire this year too!<a href="#fnref:10" rev="footnote">&#8617;</a></p></li>
-</ol>
-</div>
 
 ]]></content>
   </entry>
