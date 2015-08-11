@@ -4,7 +4,7 @@
   <title><![CDATA[Category: cloud | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/cloud/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-08-09T03:07:40+00:00</updated>
+  <updated>2015-08-11T22:04:44+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,30 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[A BigQuery example]]></title>
+    <link href="http://agam.github.io/blog/2015/08/11/a-bigquery-example/"/>
+    <updated>2015-08-11T21:55:30+00:00</updated>
+    <id>http://agam.github.io/blog/2015/08/11/a-bigquery-example</id>
+    <content type="html"><![CDATA[<p>I had read about BigQuery but hadn&rsquo;t had a chance to use the external product yet. This week I came across some article about Uber and taxis etc, and it had a link to recently released data by <a href="http://www.nyc.gov/html/tlc/html/about/statistics.shtml">The NYC Taxi and Limousine Commission</a>. In addition to directly downloading the data, or looking at it through <a href="https://data.cityofnewyork.us/data?agency=Taxi+and+Limousine+Commission+%28TLC%29&amp;cat=&amp;type=new_view&amp;browseSearch=&amp;scope">NYC OpenData</a>, you can also <a href="https://bigquery.cloud.google.com/table/nyc-tlc:yellow.trips_2015">play around with it using BigQuery</a>.</p>
+
+<p>So here&rsquo;s a sample I threw together:</p>
+
+<p><code>sql
+SELECT trip_distance, fare_amount, tip_amount, tolls_amount, round(100.0 * tip_amount / fare_amount) as tip_ratio
+FROM [nyc-tlc:yellow.trips_2015]
+WHERE fare_amount &gt; 50 AND trip_distance &gt; 15 AND passenger_count &gt; 8
+ORDER BY trip_distance DESC
+</code></p>
+
+<p>The screenshot shows the cached results, it took about 6 seconds to run (which is not bad, considering the dataset is about <em>10 Gigs</em> !!)</p>
+
+<p><img src="https://lh3.googleusercontent.com/rdJeePtMNq4uPKHvPWRNioZfZpQcqMe86rt-2M1bUAJJ=w1019-h665-no" alt="bigquery example" /></p>
+
+<p><em>(9 people went 27 miles, paid $95 and gave no tip!)</em></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[The return of the mainframes]]></title>

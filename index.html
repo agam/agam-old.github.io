@@ -7,7 +7,7 @@
 	<meta name="author" content="Agam">
 
 	
-	<meta name="description" content="Saw a great movie yesterday, &ldquo;Jiro dreams of Sushi&rdquo;, which is really all about the lifelong quest for perfection. Chef Jiro Ono has been &hellip;">
+	<meta name="description" content="I had read about BigQuery but hadn&rsquo;t had a chance to use the external product yet. This week I came across some article about Uber and taxis &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -86,6 +86,66 @@
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2015/08/11/a-bigquery-example/">
+		
+			A BigQuery Example</a>
+	</h2>
+	<div class="entry-content">
+		<p>I had read about BigQuery but hadn&rsquo;t had a chance to use the external product yet. This week I came across some article about Uber and taxis etc, and it had a link to recently released data by <a href="http://www.nyc.gov/html/tlc/html/about/statistics.shtml">The NYC Taxi and Limousine Commission</a>. In addition to directly downloading the data, or looking at it through <a href="https://data.cityofnewyork.us/data?agency=Taxi+and+Limousine+Commission+%28TLC%29&amp;cat=&amp;type=new_view&amp;browseSearch=&amp;scope">NYC OpenData</a>, you can also <a href="https://bigquery.cloud.google.com/table/nyc-tlc:yellow.trips_2015">play around with it using BigQuery</a>.</p>
+
+<p>So here&rsquo;s a sample I threw together:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">SELECT</span> <span class="n">trip_distance</span><span class="p">,</span> <span class="n">fare_amount</span><span class="p">,</span> <span class="n">tip_amount</span><span class="p">,</span> <span class="n">tolls_amount</span><span class="p">,</span> <span class="n">round</span><span class="p">(</span><span class="mi">100</span><span class="p">.</span><span class="mi">0</span> <span class="o">*</span> <span class="n">tip_amount</span> <span class="o">/</span> <span class="n">fare_amount</span><span class="p">)</span> <span class="k">as</span> <span class="n">tip_ratio</span>
+</span><span class='line'><span class="k">FROM</span> <span class="p">[</span><span class="n">nyc</span><span class="o">-</span><span class="n">tlc</span><span class="p">:</span><span class="n">yellow</span><span class="p">.</span><span class="n">trips_2015</span><span class="p">]</span>
+</span><span class='line'><span class="k">WHERE</span> <span class="n">fare_amount</span> <span class="o">&gt;</span> <span class="mi">50</span> <span class="k">AND</span> <span class="n">trip_distance</span> <span class="o">&gt;</span> <span class="mi">15</span> <span class="k">AND</span> <span class="n">passenger_count</span> <span class="o">&gt;</span> <span class="mi">8</span>
+</span><span class='line'><span class="k">ORDER</span> <span class="k">BY</span> <span class="n">trip_distance</span> <span class="k">DESC</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The screenshot shows the cached results, it took about 6 seconds to run (which is not bad, considering the dataset is about <em>10 Gigs</em> !!)</p>
+
+<p><img src="https://lh3.googleusercontent.com/rdJeePtMNq4uPKHvPWRNioZfZpQcqMe86rt-2M1bUAJJ=w1019-h665-no" alt="bigquery example" /></p>
+
+<p><em>(9 people went 27 miles, paid $95 and gave no tip!)</em></p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-08-11T21:55:30+00:00" pubdate data-updated="true">Aug 11<sup>th</sup>, 2015</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/cloud/'>cloud</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -949,286 +1009,6 @@
 
 
 	<a class='category' href='/blog/categories/projecteuler/'>projecteuler</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2015/05/29/euler-50-consecutive-prime-sum/">
-		
-			Euler 50: Consecutive Prime Sum</a>
-	</h2>
-	<div class="entry-content">
-		<p>I had posted a grotesque non-working solution to this <a href="/blog/2015/05/17/euler-50-a-non-working-solution/">previously</a>, so here is a grotesque <em>working</em> solution.</p>
-
-<p>Yes, it uses global variables and old-fashioned extra book-keeping, and the <code>main</code> function is just a step-wise procedural function, but it <em>works</em> and it&rsquo;s <em>correct</em>, so I&rsquo;m going to leave it as is.</p>
-
-<p><strong>Statutory warning</strong>: <em>Spoilers ahead</em></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-<span class='line-number'>72</span>
-<span class='line-number'>73</span>
-<span class='line-number'>74</span>
-<span class='line-number'>75</span>
-<span class='line-number'>76</span>
-<span class='line-number'>77</span>
-<span class='line-number'>78</span>
-<span class='line-number'>79</span>
-<span class='line-number'>80</span>
-<span class='line-number'>81</span>
-<span class='line-number'>82</span>
-<span class='line-number'>83</span>
-<span class='line-number'>84</span>
-<span class='line-number'>85</span>
-<span class='line-number'>86</span>
-<span class='line-number'>87</span>
-<span class='line-number'>88</span>
-<span class='line-number'>89</span>
-<span class='line-number'>90</span>
-<span class='line-number'>91</span>
-<span class='line-number'>92</span>
-<span class='line-number'>93</span>
-<span class='line-number'>94</span>
-<span class='line-number'>95</span>
-<span class='line-number'>96</span>
-<span class='line-number'>97</span>
-<span class='line-number'>98</span>
-<span class='line-number'>99</span>
-<span class='line-number'>100</span>
-<span class='line-number'>101</span>
-<span class='line-number'>102</span>
-<span class='line-number'>103</span>
-<span class='line-number'>104</span>
-<span class='line-number'>105</span>
-<span class='line-number'>106</span>
-<span class='line-number'>107</span>
-<span class='line-number'>108</span>
-<span class='line-number'>109</span>
-<span class='line-number'>110</span>
-<span class='line-number'>111</span>
-<span class='line-number'>112</span>
-<span class='line-number'>113</span>
-<span class='line-number'>114</span>
-<span class='line-number'>115</span>
-</pre></td><td class='code'><pre><code class='go'><span class='line'><span class="kd">const</span> <span class="nx">MAX_NUM</span> <span class="p">=</span> <span class="mi">1000000</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">type</span> <span class="nx">Number</span> <span class="kd">struct</span> <span class="p">{</span>
-</span><span class='line'>  <span class="nx">isPrime</span>              <span class="kt">bool</span>
-</span><span class='line'>  <span class="nx">maxPrimeSum</span>          <span class="kt">int</span>
-</span><span class='line'>  <span class="nx">maxConsecutivePrimes</span> <span class="kt">int</span>
-</span><span class='line'>  <span class="nx">previousPrimeIndex</span>   <span class="kt">int</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// Oh noez! A _global_ variable!</span>
-</span><span class='line'><span class="kd">var</span> <span class="nx">numbers</span> <span class="p">[]</span><span class="nx">Number</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">func</span> <span class="nx">markMultiples</span><span class="p">(</span><span class="nx">p</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">for</span> <span class="nx">n</span> <span class="o">:=</span> <span class="mi">2</span> <span class="o">*</span> <span class="nx">p</span><span class="p">;</span> <span class="nx">n</span> <span class="p">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">numbers</span><span class="p">);</span> <span class="nx">n</span> <span class="o">+=</span> <span class="nx">p</span> <span class="p">{</span>
-</span><span class='line'>      <span class="nx">numbers</span><span class="p">[</span><span class="nx">n</span><span class="p">].</span><span class="nx">isPrime</span> <span class="p">=</span> <span class="kc">false</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">func</span> <span class="nx">populatePrimes</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>  <span class="c1">// First mark all numbers as prime</span>
-</span><span class='line'>  <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">numbers</span><span class="p">);</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
-</span><span class='line'>      <span class="nx">numbers</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">isPrime</span> <span class="p">=</span> <span class="kc">true</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="c1">// Bootstrap our loop with the first prime, 2</span>
-</span><span class='line'>  <span class="nx">numbers</span><span class="p">[</span><span class="mi">0</span><span class="p">].</span><span class="nx">isPrime</span> <span class="p">=</span> <span class="kc">false</span>
-</span><span class='line'>  <span class="nx">numbers</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="nx">isPrime</span> <span class="p">=</span> <span class="kc">false</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nx">prevPrime</span> <span class="o">:=</span> <span class="mi">2</span>
-</span><span class='line'>  <span class="nx">numbers</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="nx">isPrime</span> <span class="p">=</span> <span class="kc">true</span>
-</span><span class='line'>  <span class="nx">numbers</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="nx">previousPrimeIndex</span> <span class="p">=</span> <span class="o">-</span><span class="mi">1</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="c1">// Straightforward sieve</span>
-</span><span class='line'>  <span class="nx">markMultiples</span><span class="p">(</span><span class="nx">prevPrime</span><span class="p">)</span>
-</span><span class='line'>  <span class="k">for</span> <span class="nx">p</span> <span class="o">:=</span> <span class="mi">3</span><span class="p">;</span> <span class="nx">p</span> <span class="p">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">numbers</span><span class="p">);</span> <span class="nx">p</span><span class="o">++</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">if</span> <span class="nx">numbers</span><span class="p">[</span><span class="nx">p</span><span class="p">].</span><span class="nx">isPrime</span> <span class="p">{</span>
-</span><span class='line'>          <span class="nx">numbers</span><span class="p">[</span><span class="nx">p</span><span class="p">].</span><span class="nx">previousPrimeIndex</span> <span class="p">=</span> <span class="nx">prevPrime</span>
-</span><span class='line'>          <span class="nx">prevPrime</span> <span class="p">=</span> <span class="nx">p</span>
-</span><span class='line'>          <span class="nx">markMultiples</span><span class="p">(</span><span class="nx">prevPrime</span><span class="p">)</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">func</span> <span class="nx">calculatePrimeSums</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>  <span class="c1">// Initialize first prime, then move out from there</span>
-</span><span class='line'>  <span class="nx">numbers</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="nx">maxPrimeSum</span> <span class="p">=</span> <span class="mi">2</span>
-</span><span class='line'>  <span class="nx">numbers</span><span class="p">[</span><span class="mi">2</span><span class="p">].</span><span class="nx">maxConsecutivePrimes</span> <span class="p">=</span> <span class="mi">1</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="c1">// As an upper limit for sums, what&#39;s the largest prime we have?</span>
-</span><span class='line'>  <span class="nx">largestPrime</span> <span class="o">:=</span> <span class="nx">MAX_NUM</span>
-</span><span class='line'>  <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="nx">MAX_NUM</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&gt;</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">--</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">if</span> <span class="nx">numbers</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">isPrime</span> <span class="p">{</span>
-</span><span class='line'>          <span class="nx">largestPrime</span> <span class="p">=</span> <span class="nx">i</span>
-</span><span class='line'>          <span class="k">break</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;The largest possible prime to sum to is : &quot;</span><span class="p">,</span> <span class="nx">largestPrime</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">3</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">numbers</span><span class="p">);</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">if</span> <span class="p">!</span><span class="nx">numbers</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">isPrime</span> <span class="p">{</span>
-</span><span class='line'>          <span class="k">continue</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="nx">sum</span> <span class="o">:=</span> <span class="mi">0</span>
-</span><span class='line'>      <span class="nx">numPrimesTried</span> <span class="o">:=</span> <span class="mi">0</span>
-</span><span class='line'>      <span class="nx">lastPrimeSum</span> <span class="o">:=</span> <span class="mi">0</span>
-</span><span class='line'>      <span class="nx">numPrimesInSum</span> <span class="o">:=</span> <span class="mi">0</span>
-</span><span class='line'>      <span class="c1">// Go back through the sequence of primes, until the</span>
-</span><span class='line'>      <span class="c1">// sum goes past the largest possible prime. Store the</span>
-</span><span class='line'>      <span class="c1">// last sum reached that _was_ a prime, and the number</span>
-</span><span class='line'>      <span class="c1">// of primes involved.</span>
-</span><span class='line'>      <span class="k">for</span> <span class="nx">p</span> <span class="o">:=</span> <span class="nx">i</span><span class="p">;</span> <span class="nx">p</span> <span class="p">&gt;</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">p</span> <span class="p">=</span> <span class="nx">numbers</span><span class="p">[</span><span class="nx">p</span><span class="p">].</span><span class="nx">previousPrimeIndex</span> <span class="p">{</span>
-</span><span class='line'>          <span class="k">if</span> <span class="p">!</span><span class="nx">numbers</span><span class="p">[</span><span class="nx">p</span><span class="p">].</span><span class="nx">isPrime</span> <span class="p">{</span>
-</span><span class='line'>              <span class="nb">panic</span><span class="p">(</span><span class="s">&quot;wtf&quot;</span><span class="p">)</span>
-</span><span class='line'>          <span class="p">}</span>
-</span><span class='line'>          <span class="nx">sum</span> <span class="o">+=</span> <span class="nx">p</span>
-</span><span class='line'>          <span class="nx">numPrimesTried</span><span class="o">++</span>
-</span><span class='line'>          <span class="k">if</span> <span class="nx">sum</span> <span class="p">&gt;</span> <span class="nx">largestPrime</span> <span class="p">{</span>
-</span><span class='line'>              <span class="c1">// Don&#39;t try any more primes!</span>
-</span><span class='line'>              <span class="k">break</span>
-</span><span class='line'>          <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</span><span class='line'>              <span class="c1">// Book keeping</span>
-</span><span class='line'>              <span class="k">if</span> <span class="nx">numbers</span><span class="p">[</span><span class="nx">sum</span><span class="p">].</span><span class="nx">isPrime</span> <span class="p">{</span>
-</span><span class='line'>                  <span class="nx">lastPrimeSum</span> <span class="p">=</span> <span class="nx">sum</span>
-</span><span class='line'>                  <span class="nx">numPrimesInSum</span> <span class="p">=</span> <span class="nx">numPrimesTried</span>
-</span><span class='line'>              <span class="p">}</span>
-</span><span class='line'>          <span class="p">}</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>      <span class="nx">numbers</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">maxPrimeSum</span> <span class="p">=</span> <span class="nx">lastPrimeSum</span>
-</span><span class='line'>      <span class="nx">numbers</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">maxConsecutivePrimes</span> <span class="p">=</span> <span class="nx">numPrimesInSum</span>
-</span><span class='line'>      <span class="c1">//     fmt.Println(&quot;max prime sum for &quot;, i, &quot; = &quot;, numbers[i].maxPrimeSum)</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">func</span> <span class="nx">findMaxPrimeSum</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>  <span class="c1">// Use the pre-calculated primes sums to figure out the maximum and print some summary info</span>
-</span><span class='line'>  <span class="nx">maxConsecutivePrimes</span> <span class="o">:=</span> <span class="mi">0</span>
-</span><span class='line'>  <span class="nx">maxPrimeSum</span> <span class="o">:=</span> <span class="mi">0</span>
-</span><span class='line'>  <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">MAX_NUM</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">if</span> <span class="nx">numbers</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">isPrime</span> <span class="p">{</span>
-</span><span class='line'>          <span class="k">if</span> <span class="nx">numbers</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">maxConsecutivePrimes</span> <span class="p">&gt;</span> <span class="nx">maxConsecutivePrimes</span> <span class="p">{</span>
-</span><span class='line'>              <span class="nx">maxConsecutivePrimes</span> <span class="p">=</span> <span class="nx">numbers</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">maxConsecutivePrimes</span>
-</span><span class='line'>              <span class="nx">maxPrimeSum</span> <span class="p">=</span> <span class="nx">numbers</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">maxPrimeSum</span>
-</span><span class='line'>              <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;max prime sum = &quot;</span><span class="p">,</span> <span class="nx">maxPrimeSum</span><span class="p">,</span> <span class="s">&quot;, with &quot;</span><span class="p">,</span> <span class="nx">maxConsecutivePrimes</span><span class="p">,</span> <span class="s">&quot; primes, ending in &quot;</span><span class="p">,</span> <span class="nx">i</span><span class="p">)</span>
-</span><span class='line'>          <span class="p">}</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>  <span class="nx">numbers</span> <span class="p">=</span> <span class="nb">make</span><span class="p">([]</span><span class="nx">Number</span><span class="p">,</span> <span class="nx">MAX_NUM</span><span class="p">)</span>
-</span><span class='line'>  <span class="nx">populatePrimes</span><span class="p">()</span>
-</span><span class='line'>  <span class="nx">calculatePrimeSums</span><span class="p">()</span>
-</span><span class='line'>  <span class="nx">findMaxPrimeSum</span><span class="p">()</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The best part? It ran in <code>0.363 seconds</code>!</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-05-29T19:24:32+00:00" pubdate data-updated="true">May 29<sup>th</sup>, 2015</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/golang/'>golang</a>, <a class='category' href='/blog/categories/projecteuler/'>projecteuler</a>
 
 
 </div>

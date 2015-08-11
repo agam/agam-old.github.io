@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-08-09T03:07:40+00:00</updated>
+  <updated>2015-08-11T22:04:44+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,34 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[A BigQuery example]]></title>
+    <link href="http://agam.github.io/blog/2015/08/11/a-bigquery-example/"/>
+    <updated>2015-08-11T21:55:30+00:00</updated>
+    <id>http://agam.github.io/blog/2015/08/11/a-bigquery-example</id>
+    <content type="html"><![CDATA[<p>I had read about BigQuery but hadn&rsquo;t had a chance to use the external product yet. This week I came across some article about Uber and taxis etc, and it had a link to recently released data by <a href="http://www.nyc.gov/html/tlc/html/about/statistics.shtml">The NYC Taxi and Limousine Commission</a>. In addition to directly downloading the data, or looking at it through <a href="https://data.cityofnewyork.us/data?agency=Taxi+and+Limousine+Commission+%28TLC%29&amp;cat=&amp;type=new_view&amp;browseSearch=&amp;scope">NYC OpenData</a>, you can also <a href="https://bigquery.cloud.google.com/table/nyc-tlc:yellow.trips_2015">play around with it using BigQuery</a>.</p>
+
+<p>So here&rsquo;s a sample I threw together:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='sql'><span class='line'><span class="k">SELECT</span> <span class="n">trip_distance</span><span class="p">,</span> <span class="n">fare_amount</span><span class="p">,</span> <span class="n">tip_amount</span><span class="p">,</span> <span class="n">tolls_amount</span><span class="p">,</span> <span class="n">round</span><span class="p">(</span><span class="mi">100</span><span class="p">.</span><span class="mi">0</span> <span class="o">*</span> <span class="n">tip_amount</span> <span class="o">/</span> <span class="n">fare_amount</span><span class="p">)</span> <span class="k">as</span> <span class="n">tip_ratio</span>
+</span><span class='line'><span class="k">FROM</span> <span class="p">[</span><span class="n">nyc</span><span class="o">-</span><span class="n">tlc</span><span class="p">:</span><span class="n">yellow</span><span class="p">.</span><span class="n">trips_2015</span><span class="p">]</span>
+</span><span class='line'><span class="k">WHERE</span> <span class="n">fare_amount</span> <span class="o">&gt;</span> <span class="mi">50</span> <span class="k">AND</span> <span class="n">trip_distance</span> <span class="o">&gt;</span> <span class="mi">15</span> <span class="k">AND</span> <span class="n">passenger_count</span> <span class="o">&gt;</span> <span class="mi">8</span>
+</span><span class='line'><span class="k">ORDER</span> <span class="k">BY</span> <span class="n">trip_distance</span> <span class="k">DESC</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The screenshot shows the cached results, it took about 6 seconds to run (which is not bad, considering the dataset is about <em>10 Gigs</em> !!)</p>
+
+<p><img src="https://lh3.googleusercontent.com/rdJeePtMNq4uPKHvPWRNioZfZpQcqMe86rt-2M1bUAJJ=w1019-h665-no" alt="bigquery example" /></p>
+
+<p><em>(9 people went 27 miles, paid $95 and gave no tip!)</em></p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Shokunin and Umami in software engineering ....]]></title>
@@ -2275,120 +2303,6 @@
 </span><span class='line'>      <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
 </span><span class='line'>    <span class="p">}</span>
 </span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">%</span> <span class="mi">100000</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>      <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Done testing &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">i</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Euler 44: Pentagonal Numbers]]></title>
-    <link href="http://agam.github.io/blog/2015/04/28/euler-44-pentagonal-numbers/"/>
-    <updated>2015-04-28T18:08:09+00:00</updated>
-    <id>http://agam.github.io/blog/2015/04/28/euler-44-pentagonal-numbers</id>
-    <content type="html"><![CDATA[<p>I said I&rsquo;d try to work out the next problem on paper, but I gave up and wrote a program for it again :(</p>
-
-<p>I honestly thought it would take a long time to run, with the final answer some grotesquely long number &hellip; but I was mistaken. ProjectEuler agrees with this assessment, since this happens to be officially categorized as among the <em>fifty easiest problems</em> (!)</p>
-
-<p>It took just <code>90ms</code> to run, which is simply too much of a tradeoff to pass up.</p>
-
-<p><strong>Statutory Warning</strong>: <em>Spoilers Ahead</em></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-</pre></td><td class='code'><pre><code class='c++'><span class='line'><span class="kt">uint64_t</span> <span class="nf">get_pentagonal</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="n">assert</span><span class="p">(</span><span class="n">n</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">);</span>
-</span><span class='line'>  <span class="k">return</span> <span class="n">n</span> <span class="o">*</span> <span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">bool</span> <span class="nf">is_pentagonal</span><span class="p">(</span><span class="kt">uint64_t</span> <span class="n">num</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="c1">// y = x * (3*x - 1) / 2</span>
-</span><span class='line'>  <span class="c1">// So x is an integral solution of 3x^2 + (-1)x + (-2y) = 0</span>
-</span><span class='line'>  <span class="c1">// ... or (1 + sqrt(1 + 24y))/6</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="kt">double</span> <span class="n">solution</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">24</span> <span class="o">*</span> <span class="n">num</span><span class="p">))</span> <span class="o">/</span> <span class="mf">6.0</span><span class="p">;</span>
-</span><span class='line'>  <span class="kt">double</span> <span class="n">dummy</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="c1">// Check if the solution is an integer</span>
-</span><span class='line'>  <span class="k">return</span> <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">modf</span><span class="p">(</span><span class="n">solution</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">dummy</span><span class="p">)</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">);</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">bool</span> <span class="nf">check_pentagonal</span><span class="p">(</span><span class="kt">int</span> <span class="n">i</span><span class="p">,</span> <span class="kt">int</span> <span class="n">j</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="n">assert</span><span class="p">(</span><span class="n">i</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">j</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">);</span>
-</span><span class='line'>  <span class="n">assert</span><span class="p">(</span><span class="n">j</span> <span class="o">&lt;</span> <span class="n">i</span><span class="p">);</span>
-</span><span class='line'>  <span class="kt">uint64_t</span> <span class="n">penta_i</span> <span class="o">=</span> <span class="n">get_pentagonal</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
-</span><span class='line'>  <span class="kt">uint64_t</span> <span class="n">penta_j</span> <span class="o">=</span> <span class="n">get_pentagonal</span><span class="p">(</span><span class="n">j</span><span class="p">);</span>
-</span><span class='line'>  <span class="kt">uint64_t</span> <span class="n">sum</span> <span class="o">=</span> <span class="n">penta_i</span> <span class="o">+</span> <span class="n">penta_j</span><span class="p">;</span>
-</span><span class='line'>  <span class="kt">uint64_t</span> <span class="n">diff</span> <span class="o">=</span> <span class="n">penta_i</span> <span class="o">-</span> <span class="n">penta_j</span><span class="p">;</span>
-</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="n">is_pentagonal</span><span class="p">(</span><span class="n">sum</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">is_pentagonal</span><span class="p">(</span><span class="n">diff</span><span class="p">))</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Found match for i = &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">i</span>
-</span><span class='line'>         <span class="o">&lt;&lt;</span> <span class="s">&quot; and j = &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">j</span>
-</span><span class='line'>         <span class="o">&lt;&lt;</span> <span class="s">&quot;, with diff = &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">diff</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
-</span><span class='line'>  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>  <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Euler # 44 ... </span><span class="se">\n\n</span><span class="s">&quot;</span><span class="p">;</span>
-</span><span class='line'>  <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">i</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="n">j</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">;</span> <span class="o">--</span><span class="n">j</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">check_pentagonal</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">))</span> <span class="p">{</span>
-</span><span class='line'>        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">%</span> <span class="mi">1000</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
 </span><span class='line'>      <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Done testing &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">i</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
 </span><span class='line'>    <span class="p">}</span>
 </span><span class='line'>  <span class="p">}</span>
