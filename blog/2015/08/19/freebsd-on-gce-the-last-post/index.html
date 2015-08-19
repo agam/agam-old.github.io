@@ -3,11 +3,13 @@
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Category: gce - Agam's Mashed-Up Pome</title>
+	<title>FreeBSD on GCE (the last post) - Agam's Mashed-Up Pome</title>
 	<meta name="author" content="Agam">
 
 	
-	<meta name="description" content="Category: gce">
+	<meta name="description" content="After one unsuccessful attempt and one hack-ey successful one, getting FreeBSD up and running on GCE is now a one-liner: 1
+2
+$ gcloud compute &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -85,139 +87,67 @@
 	
 		
 	
-	<div id="content" class="inner">
-	
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">FreeBSD on GCE (the Last Post)</h2>
+	<div class="entry-content"><p>After <a href="blog/2014/12/14/trying-out-freebsd-and-failing-at-it/">one unsuccessful attempt</a> and one <a href="blog/2015/06/13/freebsd-on-google-compute-engine/">hack-ey successful one</a>, getting FreeBSD up and running on GCE is now a one-liner:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>gcloud compute instances create pandora --image freebsd-10-2-release-amd64 --image-project<span class="o">=</span>freebsd-org-cloud-dev
+</span><span class='line'><span class="nv">$ </span>gcloud compute ssh agam@pandora
+</span></code></pre></td></tr></table></div></figure>
 
 
-	
-	
-	<section class="archives"><h1 class="year">2015</h1>
+<p>&hellip; and that&rsquo;s it. <strong>Kudos</strong> to whoever made this happen!</p>
+</div>
 
-<article>
-	<h2 class="title"><a href="/blog/2015/08/19/freebsd-on-gce-the-last-post/">FreeBSD on GCE (the last post)</a></h2>
-	<div class="meta">
-		<div class="date">Aug 19</div>
-		<div class="tags">
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-08-19T05:59:29+00:00" pubdate data-updated="true">Aug 19<sup>th</sup>, 2015</time></div>
+	<div class="tags">
 
 
 	<a class='category' href='/blog/categories/freebsd/'>freebsd</a>, <a class='category' href='/blog/categories/gce/'>gce</a>
 
 
 </div>
-	    
-	</div>
-</article>
 	
-
-	
-
-
-<article>
-	<h2 class="title"><a href="/blog/2015/06/13/freebsd-on-google-compute-engine/">FreeBSD on Google Compute Engine</a></h2>
-	<div class="meta">
-		<div class="date">Jun 13</div>
-		<div class="tags">
-
-
-	<a class='category' href='/blog/categories/freebsd/'>freebsd</a>, <a class='category' href='/blog/categories/gce/'>gce</a>
-
-
 </div>
-	    
-	</div>
 </article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+		
+		
+		<a class="addthis_button_tweet"></a>
+		
+		
+		<a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+		
+		
+	</div>
 	
-
-	
-
-
-	
-	
-		</section>
-	
-	<section class="archives"><h1 class="year">2014</h1>
-
-<article>
-	<h2 class="title"><a href="/blog/2014/12/23/google-cloud-sharing-projects/">Google cloud: sharing projects</a></h2>
-	<div class="meta">
-		<div class="date">Dec 23</div>
-		<div class="tags">
-
-
-	<a class='category' href='/blog/categories/gce/'>gce</a>
-
-
 </div>
-	    
-	</div>
-</article>
-	
-
-	
 
 
-<article>
-	<h2 class="title"><a href="/blog/2014/12/18/io-performance-is-that-really-an-ssd/">IO Performance (is that really an SSD?)</a></h2>
-	<div class="meta">
-		<div class="date">Dec 18</div>
-		<div class="tags">
 
-
-	<a class='category' href='/blog/categories/gce/'>gce</a>
-
-
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
 </div>
-	    
-	</div>
-</article>
-	
-
-	
-
-
-<article>
-	<h2 class="title"><a href="/blog/2014/12/14/trying-out-freebsd-and-failing-at-it/">Trying out FreeBSD (and failing at it)</a></h2>
-	<div class="meta">
-		<div class="date">Dec 14</div>
-		<div class="tags">
-
-
-	<a class='category' href='/blog/categories/freebsd/'>freebsd,</a>, <a class='category' href='/blog/categories/gce/'>gce</a>
-
-
-</div>
-	    
-	</div>
-</article>
-	
-
-	
-
-
-	
-	
-		</section>
-	
-	<section class="archives"><h1 class="year">2013</h1>
-
-<article>
-	<h2 class="title"><a href="/blog/2013/03/11/webserver-in-google-compute-engine/">Setting up a Haskell webserver to run in Google Compute Engine</a></h2>
-	<div class="meta">
-		<div class="date">Mar 11</div>
-		<div class="tags">
-
-
-	<a class='category' href='/blog/categories/gce/'>gce</a>, <a class='category' href='/blog/categories/haskell/'>haskell</a>, <a class='category' href='/blog/categories/http/'>http</a>, <a class='category' href='/blog/categories/yesod/'>yesod</a>
-
-
-</div>
-	    
-	</div>
-</article>
-	
-	</section>
-	
-
+</section>
 </div>
 	<footer id="footer" class="inner">Copyright &copy; 2015
 
@@ -237,7 +167,10 @@
       var disqus_shortname = 'agamamp';
       
         
-        var disqus_script = 'count.js';
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://agam.github.io/blog/2015/08/19/freebsd-on-gce-the-last-post/';
+        var disqus_url = 'http://agam.github.io/blog/2015/08/19/freebsd-on-gce-the-last-post/';
+        var disqus_script = 'embed.js';
       
     (function () {
       var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;

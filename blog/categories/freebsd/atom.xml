@@ -4,7 +4,7 @@
   <title><![CDATA[Category: freebsd | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/freebsd/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-08-11T22:04:44+00:00</updated>
+  <updated>2015-08-19T06:05:15+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,22 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[FreeBSD on GCE (the last post)]]></title>
+    <link href="http://agam.github.io/blog/2015/08/19/freebsd-on-gce-the-last-post/"/>
+    <updated>2015-08-19T05:59:29+00:00</updated>
+    <id>http://agam.github.io/blog/2015/08/19/freebsd-on-gce-the-last-post</id>
+    <content type="html"><![CDATA[<p>After <a href="blog/2014/12/14/trying-out-freebsd-and-failing-at-it/">one unsuccessful attempt</a> and one <a href="blog/2015/06/13/freebsd-on-google-compute-engine/">hack-ey successful one</a>, getting FreeBSD up and running on GCE is now a one-liner:</p>
+
+<p><code>sh
+$ gcloud compute instances create pandora --image freebsd-10-2-release-amd64 --image-project=freebsd-org-cloud-dev
+$ gcloud compute ssh agam@pandora
+</code></p>
+
+<p>&hellip; and that&rsquo;s it. <strong>Kudos</strong> to whoever made this happen!</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[FreeBSD on Google Compute Engine]]></title>

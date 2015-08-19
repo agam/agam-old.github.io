@@ -7,7 +7,9 @@
 	<meta name="author" content="Agam">
 
 	
-	<meta name="description" content="I had read about BigQuery but hadn&rsquo;t had a chance to use the external product yet. This week I came across some article about Uber and taxis &hellip;">
+	<meta name="description" content="After one unsuccessful attempt and one hack-ey successful one, getting FreeBSD up and running on GCE is now a one-liner: 1
+2
+$ gcloud compute &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -86,6 +88,56 @@
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2015/08/19/freebsd-on-gce-the-last-post/">
+		
+			FreeBSD on GCE (the Last Post)</a>
+	</h2>
+	<div class="entry-content">
+		<p>After <a href="blog/2014/12/14/trying-out-freebsd-and-failing-at-it/">one unsuccessful attempt</a> and one <a href="blog/2015/06/13/freebsd-on-google-compute-engine/">hack-ey successful one</a>, getting FreeBSD up and running on GCE is now a one-liner:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>gcloud compute instances create pandora --image freebsd-10-2-release-amd64 --image-project<span class="o">=</span>freebsd-org-cloud-dev
+</span><span class='line'><span class="nv">$ </span>gcloud compute ssh agam@pandora
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&hellip; and that&rsquo;s it. <strong>Kudos</strong> to whoever made this happen!</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-08-19T05:59:29+00:00" pubdate data-updated="true">Aug 19<sup>th</sup>, 2015</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/freebsd/'>freebsd</a>, <a class='category' href='/blog/categories/gce/'>gce</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -962,53 +1014,6 @@
 
 
 	<a class='category' href='/blog/categories/commentary/'>commentary</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2015/05/29/project-euler-and-learning-programming/">
-		
-			Moving on From Project Euler</a>
-	</h2>
-	<div class="entry-content">
-		<p>I started doing Project Euler problems occasionally with the assumption that it was a good way to either (1) learn a new language, or (2) as a healthy way to keep practicing programming. It turns out, however, that what I <em>really</em> end up doing is &ldquo;brute-forcing&rdquo; problems that are really <em>math</em> problems.</p>
-
-<p>So while I really should continue, I should do so by learning more math, instead of banging away at bad implementations. When I looked around for options for these, I realized that (as in so many other things) we&rsquo;re spoilt for choice! Options abound, ranging from the &ldquo;Daily Programmer&rdquo; <a href="https://www.reddit.com/r/dailyprogrammer">subreddit</a>, to dedicated (<em>free!</em>) practice sites like <a href="https://www.codeeval.com/">CodeEval</a>, <a href="https://www.hackerrank.com/">HackerRank</a>, or <a href="http://coderbyte.com/">CoderByte</a>.</p>
-
-<p>Eventually I just picked one at random and decided to start doing roughly one problem a day (I picked <a href="https://www.hackerrank.com/">CodeWars</a>, which has an amusing &ldquo;dojo&rdquo; feel to it). We&rsquo;ll see how long it lasts :)</p>
-
-<p><strong>Edit</strong>: There is a bigger list of &ldquo;coding challenge&rdquo; sites <a href="http://codecondo.com/coding-challenges/">here</a>.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-05-29T19:37:07+00:00" pubdate data-updated="true">May 29<sup>th</sup>, 2015</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/projecteuler/'>projecteuler</a>
 
 
 </div>
