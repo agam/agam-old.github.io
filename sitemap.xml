@@ -3,6 +3,12 @@
   
   
   <url>
+    <loc>http://agam.github.io/blog/2015/09/13/bubbles-and-busts-a-tale-of-two-snapshots/</loc>
+    <lastmod>2015-09-13T06:51:01+00:00</lastmod>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
     <loc>http://agam.github.io/blog/2015/08/19/freebsd-on-gce-the-last-post/</loc>
     <lastmod>2015-08-19T05:59:29+00:00</lastmod>
     <priority>0.8</priority>
@@ -917,119 +923,14 @@
   
   <url>
     <loc>http://agam.github.io/</loc>
-    <lastmod>2015-08-19T06:05:15+00:00</lastmod>
+    <lastmod>2015-09-16T08:03:46+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   
   <url>
     <loc>http://agam.github.io/blog/archives/</loc>
-    <lastmod>2015-08-19T06:05:15+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <url>
-    <loc>http://agam.github.io/blog/page/2/</loc>
-    <lastmod>2015-08-19T06:05:15+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <url>
-    <loc>http://agam.github.io/blog/page/3/</loc>
-    <lastmod>2015-08-19T06:05:15+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <url>
-    <loc>http://agam.github.io/blog/page/4/</loc>
-    <lastmod>2015-08-19T06:05:15+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <url>
-    <loc>http://agam.github.io/blog/page/5/</loc>
-    <lastmod>2015-08-19T06:05:15+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <url>
-    <loc>http://agam.github.io/blog/page/6/</loc>
-    <lastmod>2015-08-19T06:05:15+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <url>
-    <loc>http://agam.github.io/blog/page/7/</loc>
-    <lastmod>2015-08-19T06:05:15+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <url>
-    <loc>http://agam.github.io/blog/page/8/</loc>
-    <lastmod>2015-08-19T06:05:15+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <url>
-    <loc>http://agam.github.io/blog/page/9/</loc>
-    <lastmod>2015-08-19T06:05:15+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <url>
-    <loc>http://agam.github.io/blog/page/10/</loc>
-    <lastmod>2015-08-19T06:05:15+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <url>
-    <loc>http://agam.github.io/blog/page/11/</loc>
-    <lastmod>2015-08-19T06:05:15+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <url>
-    <loc>http://agam.github.io/blog/page/12/</loc>
-    <lastmod>2015-08-19T06:05:15+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <url>
-    <loc>http://agam.github.io/blog/page/13/</loc>
-    <lastmod>2015-08-19T06:05:15+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <url>
-    <loc>http://agam.github.io/blog/page/14/</loc>
-    <lastmod>2015-08-19T06:05:15+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <url>
-    <loc>http://agam.github.io/blog/page/15/</loc>
-    <lastmod>2015-08-19T06:05:15+00:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  
-  <url>
-    <loc>http://agam.github.io/blog/page/16/</loc>
-    <lastmod>2015-08-19T06:05:15+00:00</lastmod>
+    <lastmod>2015-09-16T08:03:46+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
