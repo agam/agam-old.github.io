@@ -7,17 +7,7 @@
 	<meta name="author" content="Agam">
 
 	
-	<meta name="description" content="May the brute force be with you. Here is another one (sorry for the over-engineered code). Statutory Warning: Spoilers ahead 1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11 &hellip;">
+	<meta name="description" content="This one turned out to be very similar to the previous one (except for the small detail of iterating from the smallest prime upwards, instead of the &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -96,6 +86,237 @@
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2015/05/04/euler-47-distinct-prime-factors/">
+		
+			Euler 47: Distinct Prime Factors</a>
+	</h2>
+	<div class="entry-content">
+		<p>This one turned out to be very similar to the previous one (except for the small detail of iterating from the smallest prime upwards, instead of the other way round).</p>
+
+<p><strong>Statutory Warning</strong>: <em>Spoilers ahead</em></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="k">class</span> <span class="nc">PrimeIterator</span> <span class="p">{</span>
+</span><span class='line'><span class="k">public</span><span class="o">:</span>
+</span><span class='line'>  <span class="n">PrimeIterator</span><span class="p">()</span> <span class="o">:</span> <span class="n">prime_index_</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kt">int</span> <span class="n">getNextPrime</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">assert</span><span class="p">((</span><span class="n">prime_index_</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">primes_</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">primes_</span><span class="p">[</span><span class="o">++</span><span class="n">prime_index_</span><span class="p">];</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kt">bool</span> <span class="n">hasMorePrimes</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">assert</span><span class="p">(</span><span class="n">prime_index_</span> <span class="o">&gt;=</span> <span class="o">-</span><span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="p">(</span><span class="n">prime_index_</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">primes_</span><span class="p">.</span><span class="n">size</span><span class="p">());</span>
+</span><span class='line'>    <span class="k">return</span> <span class="p">(</span><span class="n">prime_index_</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">primes_</span><span class="p">.</span><span class="n">size</span><span class="p">();</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kt">void</span> <span class="n">fillPrimes</span><span class="p">(</span><span class="kt">int</span> <span class="n">max</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">while</span> <span class="p">(</span><span class="n">primes_</span><span class="p">.</span><span class="n">back</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="n">max</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="n">addPrime</span><span class="p">();</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="c1">// Reset to before the first element</span>
+</span><span class='line'>    <span class="n">prime_index_</span> <span class="o">=</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">private</span><span class="o">:</span>
+</span><span class='line'>  <span class="k">static</span> <span class="kt">void</span> <span class="n">addPrime</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">assert</span><span class="p">(</span><span class="n">primes_</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">);</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="n">primes_</span><span class="p">.</span><span class="n">back</span><span class="p">();</span>
+</span><span class='line'>    <span class="k">while</span> <span class="p">(</span><span class="nb">true</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="o">++</span><span class="n">n</span><span class="p">;</span>
+</span><span class='line'>      <span class="kt">bool</span> <span class="n">is_prime</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+</span><span class='line'>      <span class="k">for</span> <span class="p">(</span><span class="k">const</span> <span class="kt">int</span><span class="o">&amp;</span> <span class="nl">p</span> <span class="p">:</span> <span class="n">primes_</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">%</span> <span class="n">p</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>          <span class="n">is_prime</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+</span><span class='line'>          <span class="k">break</span><span class="p">;</span>  <span class="c1">// Try next number</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">is_prime</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">primes_</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
+</span><span class='line'>        <span class="k">return</span><span class="p">;</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">static</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">primes_</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kt">int</span> <span class="n">prime_index_</span><span class="p">;</span>
+</span><span class='line'><span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">PrimeIterator</span><span class="o">::</span><span class="n">primes_</span> <span class="o">=</span> <span class="p">{</span><span class="mi">2</span><span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">getNumPrimeFactors</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="kt">int</span> <span class="n">numPrimeFactors</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">PrimeIterator</span> <span class="n">pit</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">pit</span><span class="p">.</span><span class="n">fillPrimes</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
+</span><span class='line'>  <span class="k">while</span> <span class="p">(</span><span class="n">n</span> <span class="o">&gt;</span> <span class="mi">1</span> <span class="o">&amp;&amp;</span> <span class="n">pit</span><span class="p">.</span><span class="n">hasMorePrimes</span><span class="p">())</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">p</span> <span class="o">=</span> <span class="n">pit</span><span class="p">.</span><span class="n">getNextPrime</span><span class="p">();</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">%</span> <span class="n">p</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">while</span> <span class="p">(</span><span class="n">n</span> <span class="o">%</span> <span class="n">p</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="n">n</span> <span class="o">/=</span> <span class="n">p</span><span class="p">;</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      <span class="o">++</span><span class="n">numPrimeFactors</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">return</span> <span class="n">numPrimeFactors</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Euler #47 ... </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kt">int</span> <span class="n">runLength</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="p">;</span> <span class="o">++</span><span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">getNumPrimeFactors</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="o">==</span> <span class="mi">4</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="o">++</span><span class="n">runLength</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>      <span class="n">runLength</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">runLength</span> <span class="o">==</span> <span class="mi">4</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Found a sequence of four numbers with four prime &quot;</span>
+</span><span class='line'>           <span class="o">&lt;&lt;</span> <span class="s">&quot;factors starting at : &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">3</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span><span class='line'>      <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Runs as follows:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span><span class="nb">time</span> ./Test
+</span><span class='line'>Euler <span class="c">#47 ...</span>
+</span><span class='line'>Found a sequence of four numbers with four prime factors starting at : &lt;redacted&gt;
+</span><span class='line'>
+</span><span class='line'>real    0m3.814s
+</span><span class='line'>user    0m3.812s
+</span><span class='line'>sys     0m0.000s
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>(Yep, a noticeable delay, but anything under 5 seconds is good for me &hellip;)</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-05-04T01:00:00+00:00" pubdate data-updated="true">May 4<sup>th</sup>, 2015</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/cpp/'>cpp</a>, <a class='category' href='/blog/categories/projecteuler/'>projecteuler</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -1232,150 +1453,6 @@
 
 
 <time datetime="2015-03-23T01:11:01+00:00" pubdate data-updated="true">Mar 23<sup>rd</sup>, 2015</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/lisp/'>lisp</a>, <a class='category' href='/blog/categories/projecteuler/'>projecteuler</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2015/03/22/euler-41-pandigital-primes/">
-		
-			Euler 41: Pandigital Primes</a>
-	</h2>
-	<div class="entry-content">
-		<p>Yet another <em>brute-force</em> solution, pushing the line a bit at <em>1991 seconds</em>. But hey, it works, and was quick to write, so &hellip;</p>
-
-<p><strong>Statutory Warning</strong>: <em>spoilers ahead</em></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*max-num-limit*</span> <span class="mi">1000000000</span><span class="p">)</span>
-</span><span class='line'><span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*all-numbers*</span> <span class="p">(</span><span class="nb">make-array</span> <span class="p">(</span><span class="nb">list</span> <span class="vg">*max-num-limit*</span><span class="p">)</span> <span class="ss">:element-type</span> <span class="ss">&#39;bit</span> <span class="ss">:initial-element</span> <span class="mi">1</span><span class="p">))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">mark-primes</span> <span class="p">(</span><span class="k">&amp;optional</span> <span class="p">(</span><span class="nv">n</span> <span class="vg">*max-num-limit*</span><span class="p">))</span>
-</span><span class='line'>  <span class="c1">;; 0 and 1 are not prime</span>
-</span><span class='line'>  <span class="p">(</span><span class="nv">mark-not-prime</span> <span class="mi">0</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nv">mark-not-prime</span> <span class="mi">1</span><span class="p">)</span>
-</span><span class='line'>  <span class="c1">;; Mark 2 as prime, then do the following:</span>
-</span><span class='line'>  <span class="c1">;; (1) Mark all multiples of the prime number,</span>
-</span><span class='line'>  <span class="c1">;; (2) Find next available prime number, mark it as prime,</span>
-</span><span class='line'>  <span class="c1">;; Repeat (1) until n</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">prime</span> <span class="mi">2</span><span class="p">))</span>
-</span><span class='line'>    <span class="p">(</span><span class="nb">loop</span> <span class="nv">while</span> <span class="p">(</span><span class="nb">&lt;</span> <span class="nv">prime</span> <span class="nv">n</span><span class="p">)</span> <span class="nb">do</span>
-</span><span class='line'>         <span class="p">(</span><span class="nv">mark-prime-multiples</span> <span class="nv">prime</span> <span class="nv">n</span><span class="p">)</span>
-</span><span class='line'>         <span class="p">(</span><span class="nb">setf</span> <span class="nv">prime</span> <span class="p">(</span><span class="nv">find-next-prime</span> <span class="nv">prime</span> <span class="nv">n</span><span class="p">)))))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">mark-not-prime</span> <span class="p">(</span><span class="nv">idx</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">setf</span> <span class="p">(</span><span class="nb">bit</span> <span class="vg">*all-numbers*</span> <span class="nv">idx</span><span class="p">)</span> <span class="mi">0</span><span class="p">))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">mark-prime-multiples</span> <span class="p">(</span><span class="nv">prime</span> <span class="nv">limit</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">do</span> <span class="p">((</span><span class="nv">i</span> <span class="p">(</span><span class="nb">*</span> <span class="nv">prime</span> <span class="mi">2</span><span class="p">)</span> <span class="p">(</span><span class="nb">+</span> <span class="nv">i</span> <span class="nv">prime</span><span class="p">)))</span>
-</span><span class='line'>      <span class="p">((</span><span class="nb">&gt;=</span> <span class="nv">i</span> <span class="nv">limit</span><span class="p">))</span>
-</span><span class='line'>    <span class="p">(</span><span class="nv">mark-not-prime</span> <span class="nv">i</span><span class="p">)))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">find-next-prime</span> <span class="p">(</span><span class="nv">prev-prime</span> <span class="nv">limit</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">do</span> <span class="p">((</span><span class="nv">i</span> <span class="p">(</span><span class="nb">1+</span> <span class="nv">prev-prime</span><span class="p">)</span> <span class="p">(</span><span class="nb">1+</span> <span class="nv">i</span><span class="p">)))</span>
-</span><span class='line'>      <span class="p">((</span><span class="nb">or</span> <span class="p">(</span><span class="nb">=</span> <span class="nv">i</span> <span class="nv">limit</span><span class="p">)</span> <span class="p">(</span><span class="nb">=</span> <span class="mi">1</span> <span class="p">(</span><span class="nb">bit</span> <span class="vg">*all-numbers*</span> <span class="nv">i</span><span class="p">)))</span> <span class="nv">i</span><span class="p">)))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">is-prime</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">=</span> <span class="mi">1</span> <span class="p">(</span><span class="nb">bit</span> <span class="vg">*all-numbers*</span> <span class="nv">n</span><span class="p">)))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">get-num-digits</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">ceiling</span> <span class="p">(</span><span class="nb">log</span> <span class="nv">n</span> <span class="mi">10</span><span class="p">)))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">is-pandigital</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">let*</span> <span class="p">((</span><span class="nv">num-digits</span> <span class="p">(</span><span class="nv">get-num-digits</span> <span class="nv">n</span><span class="p">))</span>
-</span><span class='line'>         <span class="p">(</span><span class="nv">digits</span> <span class="p">(</span><span class="nb">make-array</span> <span class="nv">num-digits</span> <span class="ss">:element-type</span> <span class="ss">&#39;bit</span> <span class="ss">:initial-element</span> <span class="mi">0</span><span class="p">)))</span>
-</span><span class='line'>    <span class="p">(</span><span class="nb">loop</span> <span class="nv">while</span> <span class="p">(</span><span class="nb">and</span> <span class="p">(</span><span class="nb">&gt;</span> <span class="nv">n</span> <span class="mi">0</span><span class="p">)</span>
-</span><span class='line'>                     <span class="p">(</span><span class="nb">&gt;</span> <span class="p">(</span><span class="nb">mod</span> <span class="nv">n</span> <span class="mi">10</span><span class="p">)</span> <span class="mi">0</span><span class="p">)</span>
-</span><span class='line'>                     <span class="p">(</span><span class="nb">&lt;=</span> <span class="p">(</span><span class="nb">mod</span> <span class="nv">n</span> <span class="mi">10</span><span class="p">)</span> <span class="nv">num-digits</span><span class="p">))</span> <span class="nb">do</span>
-</span><span class='line'>         <span class="p">(</span><span class="nb">setf</span> <span class="p">(</span><span class="nb">bit</span> <span class="nv">digits</span> <span class="p">(</span><span class="nb">1-</span> <span class="p">(</span><span class="nb">mod</span> <span class="nv">n</span> <span class="mi">10</span><span class="p">)))</span> <span class="mi">1</span><span class="p">)</span>
-</span><span class='line'>         <span class="p">(</span><span class="nb">setf</span> <span class="nv">n</span> <span class="p">(</span><span class="nb">floor</span> <span class="p">(</span><span class="nb">/</span> <span class="nv">n</span> <span class="mi">10</span><span class="p">))))</span>
-</span><span class='line'>    <span class="p">(</span><span class="nb">=</span> <span class="p">(</span><span class="nb">length</span> <span class="nv">digits</span><span class="p">)</span> <span class="p">(</span><span class="nb">count</span> <span class="mi">1</span> <span class="nv">digits</span><span class="p">))))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">euler41</span> <span class="p">()</span>
-</span><span class='line'>  <span class="p">(</span><span class="nv">mark-primes</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">do</span> <span class="p">((</span><span class="nv">n</span> <span class="mi">987654321</span> <span class="p">(</span><span class="nb">1-</span> <span class="nv">n</span><span class="p">)))</span>
-</span><span class='line'>      <span class="p">((</span><span class="nb">and</span> <span class="p">(</span><span class="nv">is-pandigital</span> <span class="nv">n</span><span class="p">)</span> <span class="p">(</span><span class="nv">is-prime</span> <span class="nv">n</span><span class="p">))</span> <span class="nv">n</span><span class="p">)))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Everything is wrapped up in the call to <code>(euler41)</code>.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-03-22T04:35:08+00:00" pubdate data-updated="true">Mar 22<sup>nd</sup>, 2015</time></div>
 	<div class="tags">
 
 

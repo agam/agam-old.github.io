@@ -4,7 +4,7 @@
   <title><![CDATA[Category: languages | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/languages/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-09-16T08:03:46+00:00</updated>
+  <updated>2015-09-18T05:12:36+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,24 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[The Field of Languages ...]]></title>
+    <link href="http://agam.github.io/blog/2015/09/18/the-field-of-languages-dot-dot-dot/"/>
+    <updated>2015-09-18T05:02:44+00:00</updated>
+    <id>http://agam.github.io/blog/2015/09/18/the-field-of-languages-dot-dot-dot</id>
+    <content type="html"><![CDATA[<p>Last year, I spent some time trying out Haskell, Ocaml, Clojure, Dart, Shen, and ClozureCL. I thought I was done surveying the field, but I had barely scratched the surface, and realizing this was quite depressing. There are entire <em>kinds</em> of language paradigms I have no experience of, such as:</p>
+
+<ul>
+<li><strong>Forth</strong>: All I&rsquo;ve done is read about people&rsquo;s experience with it, it has always seemed too alien to me.</li>
+<li><strong>Smalltalk</strong>: I installed Pharo and took the basic &ldquo;Prof. Stef&rdquo; tutorial, but then stopped before I could really try anything concrete.</li>
+<li><strong>APL/J</strong>: Never seemed like anything but line noise, but then I read <a href="https://scottlocklin.wordpress.com/2012/09/18/a-look-at-the-j-language-the-fine-line-between-genius-and-insanity/">this post on J</a> and saw <a href="https://www.youtube.com/watch?v=PlM9BXfu7UY">this video</a> on Dyalog, and I&rsquo;m curious about it</li>
+</ul>
+
+
+<p><em>&ldquo;The lyf so short, the craft so long to lerne&rdquo;</em> :(</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Minsky Turing Lecture: Part 1]]></title>
