@@ -7,7 +7,7 @@
 	<meta name="author" content="Agam">
 
 	
-	<meta name="description" content="Finished reading (browsing, really, after the first few chapters) through The Haskell Road to Logic, Maths and Programming1, and I am &hellip; &hellip;">
+	<meta name="description" content="Some of the most interesting (and frustrating!) problems are the ones which are obvious to you as a human being but quite unobvious how to put into &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -86,6 +86,381 @@
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2014/12/21/dailyprogrammer-stacking-sticks/">
+		
+			DailyProgrammer: Stacking Sticks</a>
+	</h2>
+	<div class="entry-content">
+		<p>Some of the most interesting (and frustrating!) problems are the ones which are <em>obvious</em> to you as a human being but quite <em>unobvious</em> how to put into code.</p>
+
+<p><a href="http://www.reddit.com/r/dailyprogrammer/comments/2oe0px/2014125_challenge_191_hard_tricky_stick_stacking/">This one</a> from <code>r/dailyprogrammer</code> is one of those. Given &ldquo;sticks&rdquo; on a plane, how do you order them so that they can be slid across one axis without touching each other (assuming the sticks don&rsquo;t cross each other to begin with) ?</p>
+
+<p>In this case that axis is the &ldquo;positive-Y&rdquo;, and it should be possible to come up with a simpler answer (since this is sort of a 2-D depth buffer), but for now this is my messy answer:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+<span class='line-number'>114</span>
+<span class='line-number'>115</span>
+<span class='line-number'>116</span>
+<span class='line-number'>117</span>
+<span class='line-number'>118</span>
+<span class='line-number'>119</span>
+<span class='line-number'>120</span>
+<span class='line-number'>121</span>
+<span class='line-number'>122</span>
+<span class='line-number'>123</span>
+<span class='line-number'>124</span>
+<span class='line-number'>125</span>
+<span class='line-number'>126</span>
+<span class='line-number'>127</span>
+<span class='line-number'>128</span>
+<span class='line-number'>129</span>
+<span class='line-number'>130</span>
+<span class='line-number'>131</span>
+<span class='line-number'>132</span>
+<span class='line-number'>133</span>
+<span class='line-number'>134</span>
+<span class='line-number'>135</span>
+<span class='line-number'>136</span>
+<span class='line-number'>137</span>
+<span class='line-number'>138</span>
+<span class='line-number'>139</span>
+<span class='line-number'>140</span>
+<span class='line-number'>141</span>
+<span class='line-number'>142</span>
+<span class='line-number'>143</span>
+<span class='line-number'>144</span>
+<span class='line-number'>145</span>
+<span class='line-number'>146</span>
+<span class='line-number'>147</span>
+<span class='line-number'>148</span>
+</pre></td><td class='code'><pre><code class='go'><span class='line'><span class="kn">package</span> <span class="nx">main</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="s">&quot;fmt&quot;</span>
+</span><span class='line'><span class="kn">import</span> <span class="s">&quot;math&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">type</span> <span class="nx">Stick</span> <span class="kd">struct</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">id</span>             <span class="kt">int</span>
+</span><span class='line'>  <span class="nx">x1</span><span class="p">,</span> <span class="nx">y1</span><span class="p">,</span> <span class="nx">x2</span><span class="p">,</span> <span class="nx">y2</span> <span class="kt">float64</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">type</span> <span class="nx">CompareResult</span> <span class="kt">int</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">const</span> <span class="p">(</span>
+</span><span class='line'>  <span class="nx">LessThan</span> <span class="nx">CompareResult</span> <span class="p">=</span> <span class="kc">iota</span>
+</span><span class='line'>  <span class="nx">EqualTo</span>
+</span><span class='line'>  <span class="nx">GreaterThan</span>
+</span><span class='line'><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">type</span> <span class="nx">Sticks</span> <span class="p">[]</span><span class="nx">Stick</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">func</span> <span class="p">(</span><span class="nx">s1</span> <span class="nx">Stick</span><span class="p">)</span> <span class="nx">Compare</span><span class="p">(</span><span class="nx">s2</span> <span class="nx">Stick</span><span class="p">)</span> <span class="nx">CompareResult</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">maxY1</span> <span class="o">:=</span> <span class="nx">math</span><span class="p">.</span><span class="nx">Max</span><span class="p">(</span><span class="nx">s1</span><span class="p">.</span><span class="nx">y1</span><span class="p">,</span> <span class="nx">s1</span><span class="p">.</span><span class="nx">y2</span><span class="p">)</span>
+</span><span class='line'>  <span class="nx">minY1</span> <span class="o">:=</span> <span class="nx">math</span><span class="p">.</span><span class="nx">Min</span><span class="p">(</span><span class="nx">s1</span><span class="p">.</span><span class="nx">y1</span><span class="p">,</span> <span class="nx">s1</span><span class="p">.</span><span class="nx">y2</span><span class="p">)</span>
+</span><span class='line'>  <span class="nx">maxY2</span> <span class="o">:=</span> <span class="nx">math</span><span class="p">.</span><span class="nx">Max</span><span class="p">(</span><span class="nx">s2</span><span class="p">.</span><span class="nx">y1</span><span class="p">,</span> <span class="nx">s2</span><span class="p">.</span><span class="nx">y2</span><span class="p">)</span>
+</span><span class='line'>  <span class="nx">minY2</span> <span class="o">:=</span> <span class="nx">math</span><span class="p">.</span><span class="nx">Min</span><span class="p">(</span><span class="nx">s2</span><span class="p">.</span><span class="nx">y1</span><span class="p">,</span> <span class="nx">s2</span><span class="p">.</span><span class="nx">y2</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">if</span> <span class="nx">minY2</span> <span class="p">&gt;</span> <span class="nx">maxY1</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">return</span> <span class="nx">LessThan</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">if</span> <span class="nx">minY1</span> <span class="p">&gt;</span> <span class="nx">maxY2</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">return</span> <span class="nx">GreaterThan</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// Inconclusive, we need to consider the x-values too</span>
+</span><span class='line'>  <span class="nx">maxX1</span> <span class="o">:=</span> <span class="nx">math</span><span class="p">.</span><span class="nx">Max</span><span class="p">(</span><span class="nx">s1</span><span class="p">.</span><span class="nx">x1</span><span class="p">,</span> <span class="nx">s1</span><span class="p">.</span><span class="nx">x2</span><span class="p">)</span>
+</span><span class='line'>  <span class="nx">minX1</span> <span class="o">:=</span> <span class="nx">math</span><span class="p">.</span><span class="nx">Min</span><span class="p">(</span><span class="nx">s1</span><span class="p">.</span><span class="nx">x1</span><span class="p">,</span> <span class="nx">s1</span><span class="p">.</span><span class="nx">x2</span><span class="p">)</span>
+</span><span class='line'>  <span class="nx">maxX2</span> <span class="o">:=</span> <span class="nx">math</span><span class="p">.</span><span class="nx">Max</span><span class="p">(</span><span class="nx">s2</span><span class="p">.</span><span class="nx">x1</span><span class="p">,</span> <span class="nx">s2</span><span class="p">.</span><span class="nx">x2</span><span class="p">)</span>
+</span><span class='line'>  <span class="nx">minX2</span> <span class="o">:=</span> <span class="nx">math</span><span class="p">.</span><span class="nx">Min</span><span class="p">(</span><span class="nx">s2</span><span class="p">.</span><span class="nx">x1</span><span class="p">,</span> <span class="nx">s2</span><span class="p">.</span><span class="nx">x2</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// The equality case : the lines should be &quot;exclusive&quot;</span>
+</span><span class='line'>  <span class="c1">// (otherwise, it means they are crossing!).</span>
+</span><span class='line'>  <span class="k">if</span> <span class="nx">minX1</span> <span class="p">&gt;</span> <span class="nx">maxX2</span> <span class="o">||</span> <span class="nx">minX2</span> <span class="p">&gt;</span> <span class="nx">maxX1</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">return</span> <span class="nx">EqualTo</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// Alright, there is clearly overlap, so we look at a bunch of</span>
+</span><span class='line'>  <span class="c1">// cases.</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// First, is one line wholly contained within the other? If</span>
+</span><span class='line'>  <span class="c1">// yes, we only need to check one point; the &quot;non-crossing&quot;</span>
+</span><span class='line'>  <span class="c1">// condition takes care of it being true for all points.</span>
+</span><span class='line'>  <span class="k">if</span> <span class="nx">maxX1</span> <span class="p">&gt;</span> <span class="nx">maxX2</span> <span class="o">&amp;&amp;</span> <span class="nx">minX1</span> <span class="p">&lt;</span> <span class="nx">minX2</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">if</span> <span class="nx">s2</span><span class="p">.</span><span class="nx">getY</span><span class="p">(</span><span class="nx">minX2</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="nx">s1</span><span class="p">.</span><span class="nx">getY</span><span class="p">(</span><span class="nx">minX2</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">return</span> <span class="nx">LessThan</span>
+</span><span class='line'>      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">return</span> <span class="nx">GreaterThan</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">if</span> <span class="nx">maxX1</span> <span class="p">&lt;</span> <span class="nx">maxX2</span> <span class="o">&amp;&amp;</span> <span class="nx">minX1</span> <span class="p">&gt;</span> <span class="nx">minX2</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">if</span> <span class="nx">s2</span><span class="p">.</span><span class="nx">getY</span><span class="p">(</span><span class="nx">minX1</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="nx">s1</span><span class="p">.</span><span class="nx">getY</span><span class="p">(</span><span class="nx">minX1</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">return</span> <span class="nx">LessThan</span>
+</span><span class='line'>      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">return</span> <span class="nx">GreaterThan</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// Lines partially overlap; so there are two cases to consider</span>
+</span><span class='line'>  <span class="k">if</span> <span class="nx">maxX1</span> <span class="o">&gt;=</span> <span class="nx">minX2</span> <span class="o">&amp;&amp;</span> <span class="nx">minX2</span> <span class="o">&gt;=</span> <span class="nx">minX1</span> <span class="p">{</span>
+</span><span class='line'>      <span class="c1">// The &quot;left&quot; portion of s2 overlaps the &quot;right&quot; portion of s1</span>
+</span><span class='line'>      <span class="k">if</span> <span class="nx">s2</span><span class="p">.</span><span class="nx">getY</span><span class="p">(</span><span class="nx">minX2</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="nx">s1</span><span class="p">.</span><span class="nx">getY</span><span class="p">(</span><span class="nx">minX2</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">return</span> <span class="nx">LessThan</span>
+</span><span class='line'>      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">return</span> <span class="nx">GreaterThan</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">if</span> <span class="nx">maxX2</span> <span class="o">&gt;=</span> <span class="nx">minX1</span> <span class="o">&amp;&amp;</span> <span class="nx">maxX1</span> <span class="o">&gt;=</span> <span class="nx">maxX2</span> <span class="p">{</span>
+</span><span class='line'>      <span class="c1">// vice-versa</span>
+</span><span class='line'>      <span class="k">if</span> <span class="nx">s2</span><span class="p">.</span><span class="nx">getY</span><span class="p">(</span><span class="nx">maxX2</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="nx">s1</span><span class="p">.</span><span class="nx">getY</span><span class="p">(</span><span class="nx">maxX2</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">return</span> <span class="nx">LessThan</span>
+</span><span class='line'>      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">return</span> <span class="nx">GreaterThan</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// We should have handled all the cases!</span>
+</span><span class='line'>  <span class="nb">panic</span><span class="p">(</span><span class="s">&quot;Wtf!!&quot;</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">func</span> <span class="p">(</span><span class="nx">s</span> <span class="nx">Stick</span><span class="p">)</span> <span class="nx">getY</span><span class="p">(</span><span class="nx">x</span> <span class="kt">float64</span><span class="p">)</span> <span class="kt">float64</span> <span class="p">{</span>
+</span><span class='line'>  <span class="c1">// Special case for vertical line</span>
+</span><span class='line'>  <span class="k">if</span> <span class="nx">s</span><span class="p">.</span><span class="nx">x1</span> <span class="o">==</span> <span class="nx">s</span><span class="p">.</span><span class="nx">x2</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">if</span> <span class="nx">x</span> <span class="o">==</span> <span class="nx">s</span><span class="p">.</span><span class="nx">x1</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">return</span> <span class="nx">s</span><span class="p">.</span><span class="nx">y1</span>
+</span><span class='line'>      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nb">panic</span><span class="p">(</span><span class="nx">fmt</span><span class="p">.</span><span class="nx">Sprintf</span><span class="p">(</span><span class="s">&quot;Incorrect x = %f for stick %+v&quot;</span><span class="p">,</span> <span class="nx">x</span><span class="p">,</span> <span class="nx">s</span><span class="p">))</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="c1">// For all other cases, use the slope of the line</span>
+</span><span class='line'>  <span class="nx">slope</span> <span class="o">:=</span> <span class="p">(</span><span class="nx">s</span><span class="p">.</span><span class="nx">y2</span> <span class="o">-</span> <span class="nx">s</span><span class="p">.</span><span class="nx">y1</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="nx">s</span><span class="p">.</span><span class="nx">x2</span> <span class="o">-</span> <span class="nx">s</span><span class="p">.</span><span class="nx">x1</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">return</span> <span class="nx">s</span><span class="p">.</span><span class="nx">y1</span> <span class="o">+</span> <span class="p">(</span><span class="nx">slope</span> <span class="o">*</span> <span class="p">(</span><span class="nx">x</span> <span class="o">-</span> <span class="nx">s</span><span class="p">.</span><span class="nx">x1</span><span class="p">))</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">ss</span> <span class="nx">Sticks</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">numSticks</span> <span class="kt">int</span>
+</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Scanln</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">numSticks</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">numSticks</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span><span class='line'>      <span class="kd">var</span> <span class="nx">id</span> <span class="kt">int</span>
+</span><span class='line'>      <span class="kd">var</span> <span class="nx">x1</span><span class="p">,</span> <span class="nx">y1</span><span class="p">,</span> <span class="nx">x2</span><span class="p">,</span> <span class="nx">y2</span> <span class="kt">float64</span>
+</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Scanf</span><span class="p">(</span><span class="s">&quot;%d:%f,%f,%f,%f\n&quot;</span><span class="p">,</span>
+</span><span class='line'>          <span class="o">&amp;</span><span class="nx">id</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">x1</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">y1</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">x2</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">y2</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">if</span> <span class="nx">i</span> <span class="o">!=</span> <span class="nx">id</span><span class="o">-</span><span class="mi">1</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nb">panic</span><span class="p">(</span><span class="s">&quot;WTF&quot;</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      <span class="nx">s</span> <span class="o">:=</span> <span class="nx">Stick</span><span class="p">{</span><span class="nx">id</span><span class="p">,</span> <span class="nx">x1</span><span class="p">,</span> <span class="nx">y1</span><span class="p">,</span> <span class="nx">x2</span><span class="p">,</span> <span class="nx">y2</span><span class="p">}</span>
+</span><span class='line'>      <span class="nx">ss</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">ss</span><span class="p">,</span> <span class="nx">s</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">ss</span><span class="p">.</span><span class="nx">TotalSort</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Here is the computed stick order :-\n&quot;</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">PrintSticks</span><span class="p">(</span><span class="nx">ss</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">func</span> <span class="nx">PrintSticks</span><span class="p">(</span><span class="nx">ss</span> <span class="nx">Sticks</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">for</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">s</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">ss</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">if</span> <span class="nx">i</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="nx">ss</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">s</span><span class="p">.</span><span class="nx">id</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;%d, &quot;</span><span class="p">,</span> <span class="nx">s</span><span class="p">.</span><span class="nx">id</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">func</span> <span class="p">(</span><span class="nx">ss</span> <span class="o">*</span><span class="nx">Sticks</span><span class="p">)</span> <span class="nx">TotalSort</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="o">*</span><span class="nx">ss</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">max</span> <span class="o">:=</span> <span class="nx">i</span>
+</span><span class='line'>      <span class="k">for</span> <span class="nx">j</span> <span class="o">:=</span> <span class="nx">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">j</span> <span class="p">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="o">*</span><span class="nx">ss</span><span class="p">);</span> <span class="nx">j</span><span class="o">++</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">if</span> <span class="p">(</span><span class="o">*</span><span class="nx">ss</span><span class="p">)[</span><span class="nx">max</span><span class="p">].</span><span class="nx">Compare</span><span class="p">((</span><span class="o">*</span><span class="nx">ss</span><span class="p">)[</span><span class="nx">j</span><span class="p">])</span> <span class="o">==</span> <span class="nx">LessThan</span> <span class="p">{</span>
+</span><span class='line'>              <span class="nx">max</span> <span class="p">=</span> <span class="nx">j</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      <span class="k">if</span> <span class="nx">max</span> <span class="o">!=</span> <span class="nx">i</span> <span class="p">{</span>
+</span><span class='line'>          <span class="p">(</span><span class="o">*</span><span class="nx">ss</span><span class="p">)[</span><span class="nx">i</span><span class="p">],</span> <span class="p">(</span><span class="o">*</span><span class="nx">ss</span><span class="p">)[</span><span class="nx">max</span><span class="p">]</span> <span class="p">=</span> <span class="p">(</span><span class="o">*</span><span class="nx">ss</span><span class="p">)[</span><span class="nx">max</span><span class="p">],</span> <span class="p">(</span><span class="o">*</span><span class="nx">ss</span><span class="p">)[</span><span class="nx">i</span><span class="p">]</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It runs as follows:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>cat sample-input2
+</span><span class='line'>5
+</span><span class='line'>1:3,3,8,1
+</span><span class='line'>2:11,2,15,2
+</span><span class='line'>3:6,3,12,4
+</span><span class='line'>4:10,5,10,10
+</span><span class='line'>5:9,11,18,12
+</span><span class='line'>
+</span><span class='line'><span class="nv">$ </span>cat sample-input2 <span class="p">|</span> go run sticks.go
+</span><span class='line'>Here is the computed stick order :-
+</span><span class='line'>
+</span><span class='line'>5, 4, 3, 2, 1
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Most of the &ldquo;action&rdquo; is in the <code>Compare()</code> function, but I also like how it&rsquo;s possible to define arbitrary &ldquo;receivers&rdquo; for functions in Go (e.g. used for <code>getY()</code> above)</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-12-21T20:15:51+00:00" pubdate data-updated="true">Dec 21<sup>st</sup>, 2014</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/alwaysbecoding/'>alwaysbecoding</a>, <a class='category' href='/blog/categories/golang/'>golang</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -1612,190 +1987,6 @@ Error: <code>The resource 'projects/algol-c/zones/us-central1-a/instances/myvm' 
 
 
 	<a class='category' href='/blog/categories/ello/'>ello</a>, <a class='category' href='/blog/categories/github/'>github</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2014/09/02/a-ridiculous-graph/">
-		
-			A Ridiculous Graph</a>
-	</h2>
-	<div class="entry-content">
-		<p>Following in the theme of the previous post, <a href="https://gist.github.com/agam/fe8983acccd455fd9510">here (see linked Gist)</a> is a concurrent graph. Again, this is not an efficient way to do something like this, it&rsquo;s just a fun example of showing something that&rsquo;s easy in Go but probably harder or more verbose in other languages.</p>
-
-<p>The basic idea here is that <em>every node is a goroutine</em>. So instead of using some structure like a matrix or an adjacency list to &ldquo;get a handle&rdquo; on all the nodes and their connections, you let the nodes take care of that themselves. Graph algorithms (trivial ones here are self-identification and depth calculation) are then constructed as interactions with the nodes, without an explicit traversal of vertices and edges.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-</pre></td><td class='code'><pre><code class='go'><span class='line'><span class="kd">func</span> <span class="nx">node_agent</span><span class="p">(</span><span class="nx">node</span> <span class="o">*</span><span class="nx">Node</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">for</span> <span class="p">{</span>
-</span><span class='line'>      <span class="nx">cmd</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="nx">node</span><span class="p">.</span><span class="nx">comm</span>
-</span><span class='line'>      <span class="k">switch</span> <span class="nx">cmd</span><span class="p">.</span><span class="nx">cmdtype</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">case</span> <span class="nx">NameCmd</span><span class="p">:</span>
-</span><span class='line'>          <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;I am &quot;</span><span class="p">,</span> <span class="nx">node</span><span class="p">.</span><span class="nx">name</span><span class="p">)</span>
-</span><span class='line'>      <span class="k">case</span> <span class="nx">PingCmd</span><span class="p">:</span>
-</span><span class='line'>          <span class="nx">cmd</span><span class="p">.</span><span class="nx">cmdchan</span> <span class="o">&lt;-</span> <span class="nx">PingCmd</span>
-</span><span class='line'>      <span class="k">case</span> <span class="nx">SetDepthCmd</span><span class="p">:</span>
-</span><span class='line'>          <span class="c1">// Ask all neighbors to modify depth, and pass</span>
-</span><span class='line'>          <span class="c1">// along the notification channel to them</span>
-</span><span class='line'>          <span class="nx">depth</span> <span class="o">:=</span> <span class="nx">cmd</span><span class="p">.</span><span class="nx">cmdarg</span>
-</span><span class='line'>          <span class="k">if</span> <span class="nx">node</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">depth</span> <span class="p">&gt;</span> <span class="mi">0</span> <span class="p">{</span>
-</span><span class='line'>              <span class="k">break</span>
-</span><span class='line'>          <span class="p">}</span>
-</span><span class='line'>          <span class="nx">node</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">depth</span> <span class="p">=</span> <span class="nx">depth</span>
-</span><span class='line'>          <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">ch</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">node</span><span class="p">.</span><span class="nx">neighbors</span> <span class="p">{</span>
-</span><span class='line'>              <span class="nx">ch</span> <span class="o">&lt;-</span> <span class="nx">Command</span><span class="p">{</span><span class="nx">SetDepthCmd</span><span class="p">,</span> <span class="nx">cmd</span><span class="p">.</span><span class="nx">cmdchan</span><span class="p">,</span> <span class="nx">depth</span> <span class="o">+</span> <span class="mi">1</span><span class="p">}</span>
-</span><span class='line'>          <span class="p">}</span>
-</span><span class='line'>          <span class="nx">cmd</span><span class="p">.</span><span class="nx">cmdchan</span> <span class="o">&lt;-</span> <span class="mi">1</span>
-</span><span class='line'>      <span class="k">case</span> <span class="nx">GetDepthCmd</span><span class="p">:</span>
-</span><span class='line'>          <span class="nx">cmd</span><span class="p">.</span><span class="nx">cmdchan</span> <span class="o">&lt;-</span> <span class="nx">node</span><span class="p">.</span><span class="nx">state</span><span class="p">.</span><span class="nx">depth</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The &ldquo;Hello world&rdquo; in this scenario is just finding out which nodes exist, which is something as follows:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-</pre></td><td class='code'><pre><code class='go'><span class='line'><span class="kd">func</span> <span class="nx">IsAlive</span><span class="p">(</span><span class="nx">node</span> <span class="o">*</span><span class="nx">Node</span><span class="p">)</span> <span class="kt">bool</span> <span class="p">{</span>
-</span><span class='line'>  <span class="c1">// Ping the node with a 10ms timeout</span>
-</span><span class='line'>  <span class="nx">pingchan</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">int</span><span class="p">)</span>
-</span><span class='line'>  <span class="nx">node</span><span class="p">.</span><span class="nx">comm</span> <span class="o">&lt;-</span> <span class="nx">Command</span><span class="p">{</span><span class="nx">PingCmd</span><span class="p">,</span> <span class="nx">pingchan</span><span class="p">,</span> <span class="mi">0</span><span class="p">}</span>
-</span><span class='line'>  <span class="k">select</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">case</span> <span class="o">&lt;-</span><span class="nx">pingchan</span><span class="p">:</span>
-</span><span class='line'>      <span class="k">return</span> <span class="kc">true</span>
-</span><span class='line'>  <span class="k">case</span> <span class="o">&lt;-</span><span class="nx">time</span><span class="p">.</span><span class="nx">After</span><span class="p">(</span><span class="mi">10</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Millisecond</span><span class="p">):</span>
-</span><span class='line'>      <span class="k">return</span> <span class="kc">false</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">func</span> <span class="nx">printGraph</span><span class="p">(</span><span class="nx">g</span> <span class="o">*</span><span class="nx">Graph</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Graph :&quot;</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">node</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">g</span><span class="p">.</span><span class="nx">nodes</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">if</span> <span class="nx">IsAlive</span><span class="p">(</span><span class="nx">node</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>          <span class="nx">node</span><span class="p">.</span><span class="nx">comm</span> <span class="o">&lt;-</span> <span class="nx">Command</span><span class="p">{</span><span class="nx">NameCmd</span><span class="p">,</span> <span class="kc">nil</span><span class="p">,</span> <span class="mi">0</span><span class="p">}</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>A slightly more complicated operation is finding the depth of all nodes relative to the root node:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class='go'><span class='line'><span class="kd">func</span> <span class="nx">calculateDepths</span><span class="p">(</span><span class="nx">g</span> <span class="o">*</span><span class="nx">Graph</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="c1">// Recursively trigger computation from root node</span>
-</span><span class='line'>  <span class="nx">notification</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">int</span><span class="p">)</span>
-</span><span class='line'>  <span class="nx">g</span><span class="p">.</span><span class="nx">nodes</span><span class="p">[</span><span class="s">&quot;root&quot;</span><span class="p">].</span><span class="nx">comm</span> <span class="o">&lt;-</span> <span class="nx">Command</span><span class="p">{</span><span class="nx">SetDepthCmd</span><span class="p">,</span> <span class="nx">notification</span><span class="p">,</span> <span class="mi">1</span><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">g</span><span class="p">.</span><span class="nx">nodes</span><span class="p">);</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
-</span><span class='line'>      <span class="c1">// Wait for every node to receive this atleast once</span>
-</span><span class='line'>      <span class="o">&lt;-</span><span class="nx">notification</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="c1">// Now check all the depths</span>
-</span><span class='line'>  <span class="nx">depthchan</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">int</span><span class="p">)</span>
-</span><span class='line'>  <span class="k">for</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">node</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">g</span><span class="p">.</span><span class="nx">nodes</span> <span class="p">{</span>
-</span><span class='line'>      <span class="nx">node</span><span class="p">.</span><span class="nx">comm</span> <span class="o">&lt;-</span> <span class="nx">Command</span><span class="p">{</span><span class="nx">GetDepthCmd</span><span class="p">,</span> <span class="nx">depthchan</span><span class="p">,</span> <span class="mi">0</span><span class="p">}</span>
-</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="s">&quot; =&gt; &quot;</span><span class="p">,</span> <span class="o">&lt;-</span><span class="nx">depthchan</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>This being Go, you can play around with the implementation <a href="http://play.golang.org/p/SBoF_FnsMu">in the playground</a>!</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-09-02T23:44:27+00:00" pubdate data-updated="true">Sep 2<sup>nd</sup>, 2014</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/concurrency/'>concurrency</a>, <a class='category' href='/blog/categories/golang/'>golang,</a>, <a class='category' href='/blog/categories/graph/'>graph,</a>
 
 
 </div>

@@ -7,7 +7,7 @@
 	<meta name="author" content="Agam">
 
 	
-	<meta name="description" content="This one turned out to be very similar to the previous one (except for the small detail of iterating from the smallest prime upwards, instead of the &hellip;">
+	<meta name="description" content="One of the simplest problems, that would be a one-liner in Python or Lisp. Decided to do it in C++ anyway, using the GMP library (verbose, but runs &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -86,6 +86,108 @@
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2015/05/04/euler-48-self-powers/">
+		
+			Euler 48: Self Powers</a>
+	</h2>
+	<div class="entry-content">
+		<p>One of the simplest problems, that would be a one-liner in Python or Lisp. Decided to do it in C++ anyway, using the <code>GMP</code> library (verbose, but runs in <code>4 ms</code>)</p>
+
+<p>For this to work, you&rsquo;ll need to add (e.g. for <code>CMake</code>) a line like <code>target_link_libraries(Test gmpxx gmp)</code>, and include <code>gmpxx.h</code>.</p>
+
+<p><strong>Statutory Warning</strong>: <em>Spoilers Ahead</em></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Euler #48 ... </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">const</span> <span class="kt">int</span> <span class="n">kNumTerms</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// GMP has a C++ interface, see the following link:</span>
+</span><span class='line'>  <span class="c1">// https://gmplib.org/manual/C_002b_002b-Interface-General.html</span>
+</span><span class='line'>  <span class="n">mpz_class</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// Loop from 1 to 1000</span>
+</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">kNumTerms</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">mpz_class</span> <span class="n">term</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// GMP exponentiation function, see documentation at:</span>
+</span><span class='line'>    <span class="c1">// https://gmplib.org/manual/Integer-Exponentiation.html</span>
+</span><span class='line'>    <span class="n">mpz_ui_pow_ui</span><span class="p">(</span><span class="n">term</span><span class="p">.</span><span class="kt">get_mpz_t</span><span class="p">(),</span> <span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="n">sum</span> <span class="o">=</span> <span class="n">sum</span> <span class="o">+</span> <span class="n">term</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">mpz_class</span> <span class="n">last_ten_digits</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// We&#39;re looking for sum modulo (10 ^ 10)</span>
+</span><span class='line'>  <span class="n">mpz_class</span> <span class="n">divisor</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">mpz_ui_pow_ui</span><span class="p">(</span><span class="n">divisor</span><span class="p">.</span><span class="kt">get_mpz_t</span><span class="p">(),</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">mpz_mod</span><span class="p">(</span><span class="n">last_ten_digits</span><span class="p">.</span><span class="kt">get_mpz_t</span><span class="p">(),</span> <span class="n">sum</span><span class="p">.</span><span class="kt">get_mpz_t</span><span class="p">(),</span> <span class="n">divisor</span><span class="p">.</span><span class="kt">get_mpz_t</span><span class="p">());</span>
+</span><span class='line'>  <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;The final answer is : &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">last_ten_digits</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-05-04T03:09:53+00:00" pubdate data-updated="true">May 4<sup>th</sup>, 2015</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/cpp/'>cpp</a>, <a class='category' href='/blog/categories/projecteuler/'>projecteuler</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -1339,124 +1441,6 @@
 
 
 	<a class='category' href='/blog/categories/python/'>python</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2015/03/23/euler-42-coded-triangle-numbers/">
-		
-			Euler 42: Coded Triangle Numbers</a>
-	</h2>
-	<div class="entry-content">
-		<p>Very straightforward, this one. And I don&rsquo;t need to feel bad that I did it the simple way. If you&rsquo;re wondering where <code>split-sequence-if</code> and <code>read-file</code> came from, the answer is <code>rutils</code>, which is a good general-purpose utility package, a sort of superset of <code>alexandria</code>, and just a <code>(ql:quickload 'rutils)</code> away. As before, the final answer is obtained by evaluating <code>(euler42)</code>.</p>
-
-<p><strong>Statutory Warning</strong>: <em>spoilers ahead</em></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="c1">;; If x = 0.5 * n * (n+1) is a triangle number, then there is an</span>
-</span><span class='line'><span class="c1">;; integral solution for n^2 + n - 2*x = 0.</span>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">quadratic-solution</span> <span class="p">(</span><span class="nv">a</span> <span class="nv">b</span> <span class="nv">c</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">det</span> <span class="p">(</span><span class="nb">sqrt</span> <span class="p">(</span><span class="nb">-</span> <span class="p">(</span><span class="nb">*</span> <span class="nv">b</span> <span class="nv">b</span><span class="p">)</span> <span class="p">(</span><span class="nb">*</span> <span class="mi">4</span> <span class="nv">a</span> <span class="nv">c</span><span class="p">))))</span>
-</span><span class='line'>        <span class="p">(</span><span class="nv">denom</span> <span class="p">(</span><span class="nb">*</span> <span class="mi">2</span> <span class="nv">a</span><span class="p">)))</span>
-</span><span class='line'>    <span class="p">(</span><span class="nb">cons</span> <span class="p">(</span><span class="nb">/</span> <span class="p">(</span><span class="nb">-</span> <span class="p">(</span><span class="nb">-</span> <span class="nv">b</span><span class="p">)</span> <span class="nv">det</span><span class="p">)</span> <span class="nv">denom</span><span class="p">)</span>
-</span><span class='line'>          <span class="p">(</span><span class="nb">/</span> <span class="p">(</span><span class="nb">+</span> <span class="p">(</span><span class="nb">-</span> <span class="nv">b</span><span class="p">)</span> <span class="nv">det</span><span class="p">)</span> <span class="nv">denom</span><span class="p">))))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">positive-int</span> <span class="p">(</span><span class="nv">num</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">and</span> <span class="p">(</span><span class="nb">integerp</span> <span class="nv">num</span><span class="p">)</span>
-</span><span class='line'>       <span class="p">(</span><span class="nb">plusp</span> <span class="nv">num</span><span class="p">)))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">is-triangle-number</span> <span class="p">(</span><span class="nv">num</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">soln</span> <span class="p">(</span><span class="nv">quadratic-solution</span> <span class="mi">1</span> <span class="mi">1</span> <span class="p">(</span><span class="nb">*</span> <span class="p">(</span><span class="nb">-</span> <span class="mi">2</span><span class="p">)</span> <span class="nv">num</span><span class="p">))))</span>
-</span><span class='line'>    <span class="p">(</span><span class="nb">or</span> <span class="p">(</span><span class="nv">positive-int</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">soln</span><span class="p">))</span>
-</span><span class='line'>        <span class="p">(</span><span class="nv">positive-int</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">soln</span><span class="p">)))))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">char-&gt;number</span> <span class="p">(</span><span class="nb">char</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">1+</span> <span class="p">(</span><span class="nb">-</span> <span class="p">(</span><span class="nb">char-code</span> <span class="nb">char</span><span class="p">)</span> <span class="p">(</span><span class="nb">char-code</span> <span class="sc">#\A</span><span class="p">))))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">is-triangle-word</span> <span class="p">(</span><span class="nv">word</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">value</span> <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nb">char</span> <span class="nv">across</span> <span class="nv">word</span>
-</span><span class='line'>                  <span class="nv">summing</span> <span class="p">(</span><span class="nv">char-&gt;number</span> <span class="nb">char</span><span class="p">))))</span>
-</span><span class='line'>    <span class="p">(</span><span class="nv">is-triangle-number</span> <span class="nv">value</span><span class="p">)))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">euler42</span> <span class="p">()</span>
-</span><span class='line'>  <span class="c1">;; Read in the file, split on the commas, remove the quotes</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">let*</span> <span class="p">((</span><span class="nv">file-text</span> <span class="p">(</span><span class="nv">read-file</span> <span class="s">&quot;/home/agam/Downloads/p042_words.txt&quot;</span><span class="p">))</span>
-</span><span class='line'>         <span class="p">(</span><span class="nv">words-with-quotes</span> <span class="p">(</span><span class="nv">split-sequence-if</span>
-</span><span class='line'>                             <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nb">char</span><span class="p">)</span> <span class="p">(</span><span class="nb">eq</span> <span class="nb">char</span> <span class="sc">#\,</span><span class="p">))</span>
-</span><span class='line'>                             <span class="nv">file-text</span><span class="p">))</span>
-</span><span class='line'>         <span class="p">(</span><span class="nv">words</span> <span class="p">(</span><span class="nb">mapcar</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">w</span><span class="p">)</span> <span class="p">(</span><span class="nb">remove</span> <span class="sc">#\&quot;</span> <span class="nv">w</span><span class="p">))</span>
-</span><span class='line'>                        <span class="nv">words-with-quotes</span><span class="p">)))</span>
-</span><span class='line'>    <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">w</span> <span class="nv">in</span> <span class="nv">words</span> <span class="nb">count</span>
-</span><span class='line'>         <span class="p">(</span><span class="nv">is-triangle-word</span> <span class="nv">w</span><span class="p">))))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-03-23T01:11:01+00:00" pubdate data-updated="true">Mar 23<sup>rd</sup>, 2015</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/lisp/'>lisp</a>, <a class='category' href='/blog/categories/projecteuler/'>projecteuler</a>
 
 
 </div>

@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-09-18T05:12:36+00:00</updated>
+  <updated>2015-09-28T05:50:47+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,19 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[On Mathematical Notation ...]]></title>
+    <link href="http://agam.github.io/blog/2015/09/28/on-mathematical-notation-dot-dot-dot/"/>
+    <updated>2015-09-28T05:32:17+00:00</updated>
+    <id>http://agam.github.io/blog/2015/09/28/on-mathematical-notation-dot-dot-dot</id>
+    <content type="html"><![CDATA[<p>I&rsquo;ve always had a vague lingering feeling about mathematical notation being at times inconsistent, excessive, duplicated, and so on. Some of it is of course due to me not knowing enough math, and not knowing math well enough, but some of it, I was recently relieved to find out, was a concern shared by people smarter than me too.</p>
+
+<p>Unfortunately, I&rsquo;m now <em>more</em> confused since the two solutions are (IMO) at odds with each other. Both share the common goal of replacing outdated notation by making it <em>&ldquo;executable&rdquo;</em>, and thus more precise, but the way they go about it is different.</p>
+
+<p>Or so it seems to me, at least. Perhaps someone out there can explain it better to me someday. The two people I came across are, (of course?) Ken Iverson and Gerald Sussman, and the two ideas can be experienced by reading <a href="http://www.jsoftware.com/papers/tot.htm"><em>&ldquo;Notation as a Tool of Thought&rdquo;</em></a>, and watching <a href="https://www.youtube.com/watch?v=arMH5GjBwUQ"><em>&ldquo;The Role of Programming in the Formulation of Ideas&rdquo;</em></a>. Enjoy.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[The Field of Languages ...]]></title>
@@ -1792,76 +1805,6 @@
 </span><span class='line'>real    0m0.019s
 </span><span class='line'>user    0m0.016s
 </span><span class='line'>sys     0m0.000s
-</span></code></pre></td></tr></table></div></figure>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Euler 48: Self powers]]></title>
-    <link href="http://agam.github.io/blog/2015/05/04/euler-48-self-powers/"/>
-    <updated>2015-05-04T03:09:53+00:00</updated>
-    <id>http://agam.github.io/blog/2015/05/04/euler-48-self-powers</id>
-    <content type="html"><![CDATA[<p>One of the simplest problems, that would be a one-liner in Python or Lisp. Decided to do it in C++ anyway, using the <code>GMP</code> library (verbose, but runs in <code>4 ms</code>)</p>
-
-<p>For this to work, you&rsquo;ll need to add (e.g. for <code>CMake</code>) a line like <code>target_link_libraries(Test gmpxx gmp)</code>, and include <code>gmpxx.h</code>.</p>
-
-<p><strong>Statutory Warning</strong>: <em>Spoilers Ahead</em></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-</pre></td><td class='code'><pre><code class='cpp'><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>  <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Euler #48 ... </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
-</span><span class='line'>  <span class="k">const</span> <span class="kt">int</span> <span class="n">kNumTerms</span> <span class="o">=</span> <span class="mi">1000</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="c1">// GMP has a C++ interface, see the following link:</span>
-</span><span class='line'>  <span class="c1">// https://gmplib.org/manual/C_002b_002b-Interface-General.html</span>
-</span><span class='line'>  <span class="n">mpz_class</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="c1">// Loop from 1 to 1000</span>
-</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">kNumTerms</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">mpz_class</span> <span class="n">term</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="c1">// GMP exponentiation function, see documentation at:</span>
-</span><span class='line'>    <span class="c1">// https://gmplib.org/manual/Integer-Exponentiation.html</span>
-</span><span class='line'>    <span class="n">mpz_ui_pow_ui</span><span class="p">(</span><span class="n">term</span><span class="p">.</span><span class="kt">get_mpz_t</span><span class="p">(),</span> <span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="n">sum</span> <span class="o">=</span> <span class="n">sum</span> <span class="o">+</span> <span class="n">term</span><span class="p">;</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">mpz_class</span> <span class="n">last_ten_digits</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="c1">// We&#39;re looking for sum modulo (10 ^ 10)</span>
-</span><span class='line'>  <span class="n">mpz_class</span> <span class="n">divisor</span><span class="p">;</span>
-</span><span class='line'>  <span class="n">mpz_ui_pow_ui</span><span class="p">(</span><span class="n">divisor</span><span class="p">.</span><span class="kt">get_mpz_t</span><span class="p">(),</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">);</span>
-</span><span class='line'>  <span class="n">mpz_mod</span><span class="p">(</span><span class="n">last_ten_digits</span><span class="p">.</span><span class="kt">get_mpz_t</span><span class="p">(),</span> <span class="n">sum</span><span class="p">.</span><span class="kt">get_mpz_t</span><span class="p">(),</span> <span class="n">divisor</span><span class="p">.</span><span class="kt">get_mpz_t</span><span class="p">());</span>
-</span><span class='line'>  <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;The final answer is : &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">last_ten_digits</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure>
 
 ]]></content>

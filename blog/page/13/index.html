@@ -7,7 +7,7 @@
 	<meta name="author" content="Agam">
 
 	
-	<meta name="description" content="It&rsquo;s that time of year again. I can&rsquo;t believe 2013 is already over. I thought about what possible resolutions I could make, but either &hellip;">
+	<meta name="description" content="I will confess that I initially thought this was a big joke, some April Fool&rsquo;s Day kind of thing. WTF is Urbit ? Supposedly it&rsquo;s an & &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -86,6 +86,175 @@
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2014/01/06/urbit/">
+		
+			Urbit</a>
+	</h2>
+	<div class="entry-content">
+		<p>I will confess that I initially thought this was a big joke, some April Fool&rsquo;s Day kind of thing.</p>
+
+<h2>WTF is Urbit ?</h2>
+
+<p>Supposedly it&rsquo;s an <em>&ldquo;operating function&rdquo;</em>. You could try reading the <a href="http://www.urbit.org/faq.html">FAQ</a> but it&rsquo;s pretty sparse right now. Don&rsquo;t let that stop you from playing around with it though.</p>
+
+<p>After watching the demo video (below), it seemed like something worth checking out.</p>
+
+<iframe src="//player.vimeo.com/video/75312418" width="500" height="281" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+
+
+<p>Even if it isn&rsquo;t really <em>useful</em>, there&rsquo;s something to be learnt from what is clearly a well-thought-out, complex piece of work.</p>
+
+<h2>Getting started</h2>
+
+<p>First, get some essential stuff.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>sudo apt-get install libgmp3-dev libsigsegv-dev openssl libssl-dev libncurses5-dev git make exuberant-ctags
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Then get the source and build it.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>git clone https://github.com/urbit/urbit.git
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Add to your <code>.bashrc</code> the equivalent of</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span><span class="nb">export </span><span class="nv">URBIT_HOME</span><span class="o">=</span>/home/agam/urbit/urb
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>and then</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span><span class="nb">cd </span>urbit
+</span><span class='line'><span class="nv">$ </span>make
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This will go on for a short while, and if all goes well, you should end up with a new <code>bin</code> subdirectory, with a single executable. Run it.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>bin/vere
+</span><span class='line'>vere: urbit home is /home/agam/urbit/urb
+</span><span class='line'>bin/vere: usage: <span class="o">[</span>-v<span class="o">]</span> <span class="o">[</span>-k stage<span class="o">]</span> computer
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Excellently terse. Get used to it. It&rsquo;s also not exactly up-to-date. We&rsquo;re going to use a different parameter.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>bin/vere -c frogstar
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Obviously, substitute some made-up-name instead of <code>frogstar</code> above. Now you should see something like</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>bin/vere -c frogstar
+</span><span class='line'>vere: urbit home is /home/agam/urbit/urb
+</span><span class='line'>loom: mapped 1024MB
+</span><span class='line'>loading /home/agam/urbit/urb/urbit.pill
+</span><span class='line'><span class="nb">time</span>: ~2014.1.6..07.34.20..58b0
+</span><span class='line'>ames: on localhost, UDP 44342.
+</span><span class='line'>http: live on 8080
+</span><span class='line'>generating 2048-bit RSA pair...
+</span><span class='line'>ames: czar zod.urbit.org: ip .198.199.112.32
+</span><span class='line'>saving passcode in /home/agam/.urbit/~fiddyn-lavpun.txt
+</span><span class='line'><span class="o">(</span><span class="k">for</span> real security, write it down and delete the file...<span class="o">)</span>
+</span><span class='line'><span class="p">;</span> ~zod <span class="p">|</span>Tianming<span class="p">|</span> is your neighbor
+</span><span class='line'><span class="p">;</span> ~zod <span class="p">|</span>Tianming<span class="p">|</span> is your neighbor
+</span><span class='line'>waiting...
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>and after half a minute of waiting, it should download a whole bunch of <code>hoon</code> files &hellip;</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>updating...
+</span><span class='line'>: /~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/main/1/bin/update/hoon
+</span><span class='line'>: /~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/main/1/bin/update/hoon
+</span><span class='line'>: /~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/main/1/bin/update/hoon
+</span><span class='line'>: /~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/main/1/bin/update/hoon
+</span><span class='line'>...
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Going off on an adventure!</h2>
+
+<p>At this point you should find yourself staring at the <em><code>Arvo</code> prompt</em></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>(which, it turns out, is also a REPL)</p>
+
+<p>That&rsquo;s all for now &hellip; more on Urbit later.</p>
+
+<p>Meanwhile, check out their website at <a href="http://www.urbit.org/">www.urbit.org</a> or explore <a href="https://github.com/urbit/urbit">the code on github</a> or follow them on twitter <a href="https://twitter.com/urbit_">@urbit_</a>.</p>
+
+<p>Happy <em>urbiting</em> !!</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-06T07:44:00+00:00" pubdate data-updated="true">Jan 6<sup>th</sup>, 2014</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/urbit/'>urbit</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -737,159 +906,6 @@ For each round of computation, print the percentage of votes for each candidate,
 
 
 	<a class='category' href='/blog/categories/octopress/'>octopress</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2013/11/26/moar-reddit-dailyprogramming-falling-sand/">
-		
-			Moar Reddit DailyProgramming: Falling Sand</a>
-	</h2>
-	<div class="entry-content">
-		<p>Another <a href="http://www.reddit.com/r/dailyprogrammer/comments/1rdtky/111113_challenge_142_easy_falling_sand/">easy challenge</a>.</p>
-
-<p>One thing I learnt while doing this: I had to test the program with standard
-input and had created a couple of files with sample input that I could pipe in.
-I wasted a lot of time debugging a spurious newline (!), so in the future I
-should remember to do the following:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nb">set </span><span class="nv">listchars</span><span class="o">=</span>eol:<span class="err">$</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>What this does is show you <code>$</code> wherever the file has <code>\n</code> in it, so you can use
-this to distinguish between &lsquo;real&rsquo; spaces and whitespace.</p>
-
-<div><script src='https://gist.github.com/7669304.js'></script>
-<noscript><pre><code>#include &lt;cmath&gt;
-#include &lt;cstdint&gt;
-#include &lt;cstdio&gt;
-#include &lt;cstdlib&gt;
-#include &lt;iostream&gt;
-#include &lt;limits&gt;
-#include &lt;string&gt;
-#include &lt;vector&gt;
-
-using namespace std;
-
-void PrintGrid(const vector&lt;vector&lt;char&gt;&gt;&amp; grid) {
-  for (int i = 0; i &lt; grid.size(); ++i) {
-    for (int j = 0; j &lt; grid.size(); ++j) {
-      cout &lt;&lt; grid[i][j];
-    }
-    cout &lt;&lt; endl;
-  }
-}
-
-bool GridFall(vector&lt;vector&lt;char&gt;&gt;* grid) {
-  bool changed = false;
-  // Skip row above ground
-  for (int i = grid-&gt;size() - 2; i &gt;= 0; --i) {
-    auto&amp; current_row = grid-&gt;at(i);
-    auto&amp; next_row = grid-&gt;at(i + 1);
-    for (int j = 0; j &lt; grid-&gt;size(); ++j) {
-      if (current_row[j] == '.' &amp;&amp; next_row[j] == ' ') {
-        changed = true;
-        current_row[j] = ' ';
-        next_row[j] = '.';
-      }
-    }
-  }
-  return changed;
-}
-
-int main() {
-  int grid_size;
-  cin &gt;&gt; grid_size;
-
-  vector&lt;vector&lt;char&gt;&gt; grid(grid_size);
-  char dummy_newline;
-  cin.get(dummy_newline);
-  cin &gt;&gt; noskipws;
-  for (int i = 0; i &lt; grid_size; ++i) {
-    for (int j = 0; j &lt; grid_size; ++j) {
-      char grid_char;
-      cin.get(grid_char);
-      grid[i].push_back(grid_char);
-    }
-    cin.get(dummy_newline);
-  }
-
-  do {
-    // Uncomment to view/debug transitory steps.
-    //cout &lt;&lt; &quot;Intermediate grid state :- &quot; &lt;&lt; endl;
-    //PrintGrid(grid);
-  } while (GridFall(&amp;grid));
-
-  PrintGrid(grid);
-
-  return 0;
-}
-
-/*
- * Input Description
- * On standard console input, you will be given an integer N which represents
- * the N x N grid of ASCII characters. This means there will be N-lines of
- * N-characters long. This is the starting grid of your simulated world: the
- * character ' ' (space) means an empty space, while '.' (dot) means sand, and
- * '#' (hash or pound) means stone. Once you parse this input, simulate the
- * world until all particles are settled (e.g. the sand has fallen and either
- * settled on the ground or on stone). &quot;Ground&quot; is defined as the solid surface
- * right below the last row.
- * Output Description
- * Print the end result of all particle positions using the input format for
- * particles.
- * Sample Inputs &amp; Outputs
- * Sample Input
- * 5
- * .....
- *   #  
- *   #    
- *
- *       .
- * Sample Output
- *   .  
- * . #  
- * #    
- *     .
- *  . ..
- */
-</code></pre></noscript></div>
-
-
-
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-11-26T17:33:00+00:00" pubdate data-updated="true">Nov 26<sup>th</sup>, 2013</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/alwaysbecoding/'>alwaysbecoding</a>, <a class='category' href='/blog/categories/reddit/'>reddit,</a>
 
 
 </div>
