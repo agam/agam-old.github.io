@@ -4,7 +4,7 @@
   <title><![CDATA[Category: simulation | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/simulation/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-09-28T05:50:47+00:00</updated>
+  <updated>2015-10-02T07:18:26+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -20,102 +20,7 @@
     <id>http://agam.github.io/blog/2014/07/25/simple-game-of-life</id>
     <content type="html"><![CDATA[<p>(Just for fun)</p>
 
-<p><div><script src='https://gist.github.com/a832613064f958641330.js'></script>
-<noscript><pre><code>(defpackage :game-of-life
-  (:use :cl))
-(in-package :game-of-life)
-
-(defparameter *board-size* 10)
-(defparameter *game-board* nil)
-
-(defparameter *space* #\ )
-(defparameter *life* #\#)
-
-(defun make-new-board ()
-  (make-array (list *board-size* *board-size*)
-	      :element-type '(mod 2)
-	      :initial-element 0))
-
-(defun start-game ()
-  (setf *game-board* (make-new-board)))
-
-
-(defun print-board ()
-  (dotimes (i *board-size*)
-    (dotimes (j *board-size*)
-      (if (= 0 (aref *game-board* i j))
-	  (princ *space*)
-	  (princ *life*)))
-    (terpri)))
-
-(defun add-life (x y)
-  (setf (aref *game-board* x y) 1))
-
-(defparameter *environment-radius* 1)
-
-(defun get-environment (x y)
-  &quot;Create a matrix of size 2*radius + 1, with the element
-itself implicitly at (radius,radius) set to 0&quot;
-  (let* ((env-size (1+ (* 2 *environment-radius*)))
-	 (env (make-array (list env-size env-size)
-			 :element-type '(mod 2)
-			 :initial-element 0)))
-    (dotimes (i env-size)
-      (dotimes (j env-size)
-	(let ((x-offset (+ x (- i *environment-radius*)))
-	      (y-offset (+ y (- j *environment-radius*))))
-	  (if (and (&gt; x-offset 0) (&lt; x-offset *board-size*)
-		   (&gt; y-offset 0) (&lt; y-offset *board-size*))
-	      (setf (aref env i j) (aref *game-board* x-offset y-offset))
-	      (setf (aref env i j) 0)))))
-    env))
-
-(defun count-living-neighbors (env)
-  (let* ((num 0)
-	 (env-size (1+ (* 2 *environment-radius*))))
-    (dotimes (i env-size)
-      (dotimes (j env-size)
-	(when (and (= 1 (aref env i j))
-		   (or (/= i *environment-radius*)
-		       (/= j *environment-radius*)))
-	  (incf num))))
-    num))
-
-(defparameter *birth-number* 3)
-(defparameter *lonely-number* 1)
-(defparameter *crowded-number* 4)
-
-(defun can-be-born (neighbors)
-  (= *birth-number* neighbors))
-
-(defun will-survive (neighbors)
-  (and (&gt; neighbors *lonely-number*)
-       (&lt; neighbors *crowded-number*)))
-
-(defun live-or-die (env)
-  (let ((current (aref env *environment-radius* *environment-radius*))
-	(living-neighbors (count-living-neighbors env)))
-    ;;(format t &quot;~%Debug: Current = ~S, num-neighbors = ~S&quot; current living-neighbors)
-    (if (= 0 current)
-	(can-be-born living-neighbors)
-	(will-survive living-neighbors))))
-
-(defun cell-representation (truth)
-  (if truth
-      1
-      0))
-
-(defun step-board ()
-  &quot;Iterate the board by one time step, growing or shrinking life as appropriate&quot;
-  (let ((next-board (make-new-board)))
-    (dotimes (i *board-size*)
-      (dotimes (j *board-size*)
-	(let* ((environment (get-environment i j))
-	       (next (cell-representation (live-or-die environment))))
-	  ;;(format t &quot;Debug: Cell: ~S, Environment: ~S, Next: ~S~%&quot; (aref *game-board* i j) environment next)
-	  (setf (aref next-board i j) next))))
-    (setf *game-board* next-board)))</code></pre></noscript></div>
-</p>
+<p>{% gist a832613064f958641330 %}</p>
 
 <p>Maybe I&rsquo;ll add a GUI and some tools later, but for now you have to do something like:</p>
 
@@ -165,70 +70,7 @@ itself implicitly at (radius,radius) set to 0&quot;
 
 <p>It&rsquo;s easy to try out patterns. Here are a few typical ones:</p>
 
-<p><div><script src='https://gist.github.com/527c5fa85b316c84e9ba.js'></script>
-<noscript><pre><code>
-;;; Useful helpers to add stuff to the board. Describe a pattern as a list.
-(defun add-life (x y)
-  (setf (aref *game-board* y x) 1))
-
-(defun draw-pattern (x y pattern)
-  &quot;Assuming 'pattern' is specified as a row-major set of 1s and 0s, replicates that on the board&quot;
-  (mapindex #'(lambda (row-num row)
-		(mapindex #'(lambda (col-num entry)
-			      (let ((x-eff (+ x col-num))
-				    (y-eff (+ y row-num)))
-				(when (and (&lt; x-eff *board-size*)
-					   (&lt; y-eff *board-size*))
-				  (setf (aref *game-board* y-eff x-eff) entry))))
-			  row))
-	    pattern))
-    
-
-;; Sample oscillating patterns
-(defun draw-blinker (x y)
-  (draw-pattern x y
-		'((1)
-		  (1)
-		  (1))))
-
-(defun draw-toad (x y)
-  (draw-pattern x y
-		'((0 1 1 1)
-		  (1 1 1 0))))
-
-(defun draw-beacon (x y)
-  (draw-pattern x y
-		'((1 1 0 0)
-		  (1 1 0 0)
-		  (0 0 1 1)
-		  (0 0 1 1))))
-
-;; Sample fixed patterns
-(defun draw-loaf (x y)
-  (draw-pattern x y
-		'((0 1 1 0)
-		  (1 0 0 1)
-		  (0 1 0 1)
-		  (0 0 1 0))))
-
-(defun draw-block (x y)
-  (draw-pattern x y
-		'((1 1)
-		  (1 1))))
-
-;; Sample moving pattern
-(defun draw-glider-moving-right (x y)
-  (draw-pattern x y
-		'((0 1 0)
-		  (0 0 1)
-		  (1 1 1))))
-
-(defun draw-glider-moving-left (x y)
-  (draw-pattern x y
-		'((0 1 0)
-		  (1 0 0)
-		  (1 1 1))))</code></pre></noscript></div>
-</p>
+<p>{% gist 527c5fa85b316c84e9ba %}</p>
 
 <p>Then you can do something like</p>
 

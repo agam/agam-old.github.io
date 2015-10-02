@@ -7,7 +7,7 @@
 	<meta name="author" content="Agam">
 
 	
-	<meta name="description" content="I&rsquo;ve always had a vague lingering feeling about mathematical notation being at times inconsistent, excessive, duplicated, and so on. Some of &hellip;">
+	<meta name="description" content="(Don&rsquo;t ask me why or how I got here, but &hellip;) I came across a very old (Nov 1980) post in a mailing list that might be related to our &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -86,6 +86,49 @@
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2015/10/02/types-as-constraints-dot-dot-dot/">
+		
+			Types as Constraints &#8230;</a>
+	</h2>
+	<div class="entry-content">
+		<p>(Don&rsquo;t ask me why or how I got here, but &hellip;) I came across a very old (Nov 1980) <a href="http://ml.cddddr.org/lisp-forum/msg00022.html">post in a mailing list</a> that might be related to our current confusion on the different interpretations of what <em>types</em> mean:</p>
+
+<blockquote><p> The second way is to keep careful tabs on what functions call this one and the way that they have to be changed to match changes in this function.  It is exactly this latter type of control (auditing function) that I mean should be included in NIL (or whatever).  I am not against extending the language any more than I am against GOTOs (which is not very much).</p></blockquote>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-10-02T07:13:54+00:00" pubdate data-updated="true">Oct 2<sup>nd</sup>, 2015</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/types/'>types</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -634,114 +677,6 @@
 
 
 	<a class='category' href='/blog/categories/pharo/'>pharo</a>, <a class='category' href='/blog/categories/smalltalk/'>smalltalk</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2015/06/13/freebsd-on-google-compute-engine/">
-		
-			FreeBSD on Google Compute Engine</a>
-	</h2>
-	<div class="entry-content">
-		<p>I had tried running FreeBSD on Google Compute Engine previously, but <a href="blog/2014/12/14/trying-out-freebsd-and-failing-at-it/">given up</a>. Last week I was suddenly reminded of this, and after Googling around a bit, came across <a href="https://github.com/swills/FreeBSD-gcloud">this script</a> by Steve Wills <em>(Thanks, Steve!)</em> that automated the task of building a &ldquo;GCE-ready&rdquo; image on an existing FreeBSD system.</p>
-
-<p>Hooray! No, wait, I <em>don&rsquo;t</em> have an existing FreeBSD system; that&rsquo;s sort of what this is all about. This minor despondency was short-lived, since I had temporarily forgotten how we now live with computers within computers within computers (give or take a layer). So I installed the <a href="http://www.vmware.com/products/workstation">VMWare Workstation</a>, downloaded <a href="ftp://ftp.freebsd.org/pub/FreeBSD/releases/amd64/amd64/ISO-IMAGES/10.1/">the iso</a> for <code>10.1-RELEASE</code>, and booted it up.</p>
-
-<p>All you need is the Google Cloud SDK, which is available under the ports tree, so something like the following should suffice:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span><span class="nb">cd</span> /usr/ports/net/google-cloud-sdk
-</span><span class='line'><span class="nv">$ </span>make install
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Then grab the script and run it.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>curl https://raw.githubusercontent.com/swills/FreeBSD-gcloud/master/build_google_image.sh &gt; /tmp/swill-script.sh
-</span><span class='line'><span class="nv">$ </span>chmod a+x /tmp/swill-script.sh
-</span><span class='line'><span class="nv">$ </span>/tmp/swill-script.sh
-</span><span class='line'>components
-</span><span class='line'>base.txz                                      100% of   <span class="m">63</span> MB <span class="m">7041</span> kBps 00m09s
-</span><span class='line'>kernel.txz                                    100% of   <span class="m">84</span> MB <span class="m">3187</span> kBps 00m27s
-</span><span class='line'>Creating image
-</span><span class='line'>Creating filesystem
-</span><span class='line'>Installing base into image
-</span><span class='line'>Installing kernel into image
-</span><span class='line'>Setting up image
-</span><span class='line'>Finishing image
-</span><span class='line'>Creating partitioned file
-</span><span class='line'>Creating image tar
-</span><span class='line'>Now run:
-</span><span class='line'>
-</span><span class='line'>gcloud auth login
-</span><span class='line'>gsutil cp FreeBSD-10.1-RELEASE-amd64-20150612191810.tar.gz gs://swills-test-bucket
-</span><span class='line'>gcutil addimage freebsd-101-release-amd64-20150612191810 gs://swills-test-bucket/FreeBSD-10.1-RELEASE-amd64-20150612191810.tar.gz
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>As you might have noticed, the script ends with a helpful suggestion for the subsequent commands to run. Caveats:</p>
-
-<ul>
-<li>If you&rsquo;re doing all this within a VM like I was, you&rsquo;ll want to run <code>gcloud auth login --no-launch-browser</code></li>
-<li>You might need to run <code>gcloud config set project &lt;project ID&gt;</code> (that&rsquo;s project <em>ID</em>, not project <em>name</em>)</li>
-<li>(obviously) replace <code>swills-test-bucket</code> with your bucket (you can create one at the <a href="https://console.developers.google.com">cloud console</a> (Storage &ndash;> Cloud Storage &ndash;> Storage Browser)</li>
-</ul>
-
-
-<p>After this, a few clicks should get you a new instance (remember to select the custom image uploaded earlier), and SSHing into it should show you <code>/etc/motd</code> (which is still a plain old file, and not, you know, <a href="https://web.archive.org/web/20120107210839/http://deadmemes.net/2010/10/19/fear-and-loathing-in-debianubuntu-or-who-needs-etcmotd">this abomination</a>).</p>
-
-<p><strong>Enjoy!</strong></p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-06-13T05:31:14+00:00" pubdate data-updated="true">Jun 13<sup>th</sup>, 2015</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/freebsd/'>freebsd</a>, <a class='category' href='/blog/categories/gce/'>gce</a>
 
 
 </div>
