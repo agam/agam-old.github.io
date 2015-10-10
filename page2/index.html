@@ -7,7 +7,7 @@
 	<meta name="author" content="Agam">
 
 	
-	<meta name="description" content="I had tried running FreeBSD on Google Compute Engine previously, but given up. Last week I was suddenly reminded of this, and after Googling around &hellip;">
+	<meta name="description" content="A lot of thinking about &ldquo;what&rsquo;s the best programming environment for beginners?&rdquo; has led me to the one system I&rsquo;ve never &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -86,6 +86,113 @@
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2015/07/06/pharo/">
+		
+			Pharo</a>
+	</h2>
+	<div class="entry-content">
+		<p>A lot of thinking about <em>&ldquo;what&rsquo;s the best programming environment for beginners?&rdquo;</em> has led me to the one system I&rsquo;ve never explored (and only read about): <strong>Smalltalk</strong> &mdash; Or more precisely, a particular open-source implementation of Smalltalk, <em>Pharo</em>.</p>
+
+<p>(Clearly, I have very little credibility, since the pattern here is of me saying &ldquo;I&rsquo;m going to learn X&rdquo;, and they getting sidetracked by some Y)</p>
+
+<p>Like Common Lisp (and unlike Scheme or Haskell), Smalltalk is &ldquo;image-based&rdquo; rather than &ldquo;source-file-based&rdquo;, and again like Lisp the <em>&ldquo;ideal&rdquo;</em> it strives for is turtles all the way down, the turtles here being uniform objects instead of uniform s-expressions.</p>
+
+<p>When you start up the Pharo image for the first time after downloading it, one of windows is a <em>Workspace</em>, with various comments and notes, among which is the following innocuous looking line:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='smalltalk'><span class='line'><span class="nc">PharoTutorial</span> <span class="nf">go</span><span class="p">.</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Executing that line (selecting it and hitting <code>Cmd-D</code>, or right-clicking and selecting <code>Do It</code>) launches a engaging tutorial that &hellip; well .. you have to see it for yourself :) At the very end, you have the option of introspecting the tutorial itself, or creating your own. Here is a screenshot of that:</p>
+
+<p><img src="https://farm1.staticflickr.com/551/19272356888_495113dfc2_b_d.jpg"></p>
+
+<p>Download Pharo <a href="http://pharo.org/download">here</a>, and <strong>enjoy!!</strong></p>
+
+<p>P.S. just for fun, some <em>&ldquo;Pharo Zen&rdquo;</em>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+</pre></td><td class='code'><pre><code class='smalltalk'><span class='line'><span class="nc">Perfection</span> <span class="nf">can</span> <span class="nf">kill</span> <span class="nf">movement</span><span class="p">.</span>
+</span><span class='line'><span class="nc">Simple</span> <span class="nf">processes</span> <span class="nf">to</span> <span class="nf">support</span> <span class="nf">progress</span><span class="p">.</span>
+</span><span class='line'><span class="nc">Examples</span> <span class="nf">to</span> <span class="nf">learn</span> <span class="nf">from</span><span class="p">.</span>
+</span><span class='line'><span class="nc">Tests</span> <span class="nf">are</span> <span class="nf">important</span> <span class="nf">but</span> <span class="nf">can</span> <span class="nf">be</span> <span class="nf">changed</span><span class="p">.</span>
+</span><span class='line'><span class="nc">Classes</span> <span class="nf">structure</span> <span class="nf">our</span> <span class="nf">vocabulary</span><span class="p">.</span>
+</span><span class='line'><span class="nc">Fully</span> <span class="nf">dynamic</span> <span class="nf">and</span> <span class="nf">malleable</span><span class="p">.</span>
+</span><span class='line'><span class="nc">A</span> <span class="nf">system</span> <span class="nf">with</span> <span class="nf">robust</span> <span class="nf">abstractions</span> <span class="nf">that</span> <span class="nf">a</span> <span class="nf">single</span> <span class="nf">person</span> <span class="nf">can</span> <span class="nf">understand</span><span class="p">.</span>
+</span><span class='line'><span class="nc">Explicit</span> <span class="nf">is</span> <span class="nf">better</span> <span class="nf">than</span> <span class="nf">implicit</span><span class="p">.</span>
+</span><span class='line'><span class="nc">Simplicity</span> <span class="nf">is</span> <span class="nf">the</span> <span class="nf">ultimate</span> <span class="nf">elegance</span><span class="p">.</span>
+</span><span class='line'><span class="nc">Quality</span> <span class="nf">is</span> <span class="nf">an</span> <span class="nf">emerging</span> <span class="nf">property</span><span class="p">.</span>
+</span><span class='line'><span class="nc">Polymorphism</span> <span class="nf">is</span> <span class="nf">our</span> <span class="nf">esperanto</span><span class="p">.</span>
+</span><span class='line'><span class="nc">Messages</span> <span class="nf">are</span> <span class="nf">our</span> <span class="nf">vocabulary</span><span class="p">.</span>
+</span><span class='line'><span class="nc">Better</span> <span class="nf">a</span> <span class="nf">set</span> <span class="nf">of</span> <span class="nf">small</span> <span class="nf">polymorphic</span> <span class="nf">classes</span> <span class="nf">than</span> <span class="nf">a</span> <span class="nf">large</span> <span class="nf">ugly</span> <span class="nf">one</span><span class="p">.</span>
+</span><span class='line'><span class="nc">Communication</span> <span class="nf">is</span> <span class="nf">key</span><span class="p">.</span>
+</span><span class='line'><span class="nc">Learning</span> <span class="nf">from</span> <span class="nf">mistakes</span><span class="p">.</span>
+</span><span class='line'><span class="nc">Magic</span> <span class="nf">only</span> <span class="nf">at</span> <span class="nf">the</span> <span class="nf">right</span> <span class="nf">place</span><span class="p">.</span>
+</span><span class='line'><span class="nc">Objects</span> <span class="nf">all</span> <span class="nf">the</span> <span class="nf">way</span> <span class="nf">down</span><span class="p">.</span>
+</span><span class='line'><span class="nc">Abstraction</span> <span class="nf">and</span> <span class="nf">composition</span> <span class="nf">are</span> <span class="nf">our</span> <span class="nf">friends</span><span class="p">.</span>
+</span><span class='line'><span class="nc">One</span> <span class="nf">step</span> <span class="nf">at</span> <span class="nf">a</span> <span class="nf">time</span><span class="p">.</span>
+</span><span class='line'><span class="nc">There</span> <span class="nf">is</span> <span class="nf">no</span> <span class="nf">unimportant</span> <span class="nf">fix</span><span class="p">.</span>
+</span><span class='line'><span class="nc">Easy</span> <span class="nf">to</span> <span class="nf">understand,</span> <span class="nv">easy</span> <span class="nf">to</span> <span class="nf">learn</span> <span class="nf">from,</span> <span class="nv">easy</span> <span class="nf">to</span> <span class="nf">change</span><span class="p">.</span>
+</span><span class='line'><span class="nc">Beauty</span> <span class="nf">in</span> <span class="nf">the</span> <span class="nf">code,</span> <span class="nv">beauty</span> <span class="nf">in</span> <span class="nf">the</span> <span class="nf">comments</span><span class="p">.</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-07-06T07:02:27+00:00" pubdate data-updated="true">Jul 6<sup>th</sup>, 2015</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/pharo/'>pharo</a>, <a class='category' href='/blog/categories/smalltalk/'>smalltalk</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -1433,67 +1540,6 @@
 
 
 	<a class='category' href='/blog/categories/cpp/'>cpp</a>, <a class='category' href='/blog/categories/projecteuler/'>projecteuler</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2015/05/16/in-search-of-lost-rants-dot-dot-dot/">
-		
-			In Search of Lost Rants &#8230;</a>
-	</h2>
-	<div class="entry-content">
-		<p>I love reading rants. Not random, trollish ones, you know, intended only to provoke flamewars &mdash; those are <em>tiresome</em> and (worse!) predictable. No, I like the heartfelt ones, filled with (seemingly) genuine disgust and grief.</p>
-
-<p>Last year I went meticulously through <em>every single post</em> by Erik Naggum (thanks to Zach Beane who took the trouble of curating them<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>), and found a wealth of quotes. I highly recommend it &mdash; consider it casual reading, a replacement for whatever you plan to read on your next commute, travel trip or vacation.</p>
-
-<p>Anyway, today I found another worthy rant-er, Mr. Adam Rosenberg. Yes, he has a blog with a bunch of interesting articles<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>, he is also a self-described &ldquo;industrial mathematician&rdquo;, and has written an unabashed defense of Ye Olde FORTRAN and C style as the once and future programming style<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>. But what made me <em>binge-read</em> his writing was his collection of rants<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup>.</p>
-
-<p>A good place to start is <a href="http://www.the-adam.com/adam/rantrave/computers.html">&ldquo;The Failure of the Digital Computer&rdquo;</a>, but obviously <em>YMMV</em>.</p>
-<div class="footnotes">
-<hr/>
-<ol>
-<li id="fn:1">
-<p>The <a href="http://xach.com/naggum/articles/">Erik Naggum Archive</a><a href="#fnref:1" rev="footnote">&#8617;</a></p></li>
-<li id="fn:2">
-<p><a href="http://www.the-adam.com/adam/index.html">The Adam N. Rosenberg web page</a><a href="#fnref:2" rev="footnote">&#8617;</a></p></li>
-<li id="fn:3">
-<p><a href="http://www.the-adam.com/adam/rantrave/st02.pdf">&ldquo;A Description of One Programmer&rsquo;s Programming Style&rdquo;</a><a href="#fnref:3" rev="footnote">&#8617;</a></p></li>
-<li id="fn:4">
-<p><a href="http://www.the-adam.com/adam/rantrave/">&ldquo;Rants and Raves&rdquo;</a><a href="#fnref:4" rev="footnote">&#8617;</a></p></li>
-</ol>
-</div>
-
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-05-16T06:20:14+00:00" pubdate data-updated="true">May 16<sup>th</sup>, 2015</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/rants/'>rants</a>
 
 
 </div>

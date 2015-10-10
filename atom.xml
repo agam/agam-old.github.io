@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-10-02T07:18:05+00:00</updated>
+  <updated>2015-10-10T07:31:33+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,49 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[A Tiny Taste of J]]></title>
+    <link href="http://agam.github.io/blog/2015/10/09/a-taste-of-j/"/>
+    <updated>2015-10-09T06:42:45+00:00</updated>
+    <id>http://agam.github.io/blog/2015/10/09/a-taste-of-j</id>
+    <content type="html"><![CDATA[<p>I recently stumbled across APL and J, as mentioned in a previous post, and began reading a bit of <a href="http://www.jsoftware.com/help/learning/contents.htm">an introductory book</a>.</p>
+
+<p>A couple of days ago, I came across this series of coding tasks on a blog called &ldquo;Programming Praxis&rdquo;, and I picked <a href="http://programmingpraxis.com/2015/10/06/the-iron-bar/">the most recent one</a> as an example to try out some J noobism.</p>
+
+<p>The example is simple but contrived (and <em>median</em> is a terrible name) &mdash; we basically have to write a function that that takes two arguments and either increments, decrements or does nothing, with the first argument. In J, like so many other tasks, this is essentially one line (12 characters, to be precise).</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>median =: [ + (* @: -)~</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To give some idea on what&rsquo;s going on here, this expression can be broken, first, into three parts: <code>[</code>, <code>+</code>, <code>(* @: -)~</code>. Let&rsquo;s start with the sub-expression within the parentheses: <code>* @: -</code>.</p>
+
+<p>Here, <code>*</code> is a <em>verb</em> (think: <em>&ldquo;function&rdquo;</em>) that returns 1, 0, or -1 depending on the sign of its argument. So <code>* 4</code> is <code>1</code>, <code>* _2</code> (that&rsquo;s how -2 is represented) is <code>_1</code>, <code>* 0</code> is <code>0</code>.</p>
+
+<p><code>-</code> is the only thing that does what you would expect: <code>4 - 3</code> is <code>1</code>, and so on.</p>
+
+<p><code>@:</code> is a <em>conjunction</em>, such that <code>f @: g</code> when applied to <em>x</em> has the effect of <em>f (g x)</em>.</p>
+
+<p><code>]</code> is a verb that when given two values, always selects the first of the two.</p>
+
+<p><code>~</code> is an <em>adverb</em> that reverses the order of arguments to its preceding verb. So while <code>%</code> applied to <em>x</em> and <em>y</em> yields <em>(x % y)</em>, <code>%~</code> applied to <em>x</em> and <em>y</em> yields <em>(y % x)</em>.</p>
+
+<p>Now things get a little tricky (but only a <em>little</em>; we&rsquo;re barely scratching the surface of J here). The expression for median can be seen as three verbs laid down together, and this is interpreted as a <em>&ldquo;train&rdquo;</em> of verbs, or more specifically in this case, a <em>&ldquo;dyadic fork&rdquo;</em>.</p>
+
+<p>Basically, <em>(f g h)</em> when applied to two values <em>x</em> and <em>y</em>, is equivalent to <em>g</em> applied to the result of <em>f</em> applied to <em>x</em> and <em>y</em>, and the result of <em>h</em> applied to <em>x</em> and <em>y</em>. Or, using infix notation,</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>x (f g h) y   is equivalent to    (x f y) g (x h y)</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The reason <em>x</em> and <em>y</em> aren&rsquo;t present in the definition of <em>median</em> is that it&rsquo;s defined using a &ldquo;tacit&rdquo; form rather than an &ldquo;explicit&rdquo; form (somewhat similar to &ldquo;point-free&rdquo; definitions in Haskell).</p>
+
+<p>Putting it all together now, when applied to two arguments, we get the equivalent of <code>(x [ y) + (* (y - x))</code>, which gives <code>x + 1</code> when <em>y > x</em>, <code>x + 0</code> when <em>y == x</em>, and <code>x + (-1)</code> when <em>y &lt; x</em>, which is what we want.</p>
+
+<p>If you like this sort of thing, head over to <a href="http://www.jsoftware.com/">jsoftware.com</a> for more.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Types as constraints ...]]></title>
@@ -1351,35 +1394,6 @@
 </span><span class='line'>  <span class="c1">// } while (left &lt; right);</span>
 </span><span class='line'><span class="p">}</span>
 </span></code></pre></td></tr></table></div></figure>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[In search of lost rants ...]]></title>
-    <link href="http://agam.github.io/blog/2015/05/16/in-search-of-lost-rants-dot-dot-dot/"/>
-    <updated>2015-05-16T06:20:14+00:00</updated>
-    <id>http://agam.github.io/blog/2015/05/16/in-search-of-lost-rants-dot-dot-dot</id>
-    <content type="html"><![CDATA[<p>I love reading rants. Not random, trollish ones, you know, intended only to provoke flamewars &mdash; those are <em>tiresome</em> and (worse!) predictable. No, I like the heartfelt ones, filled with (seemingly) genuine disgust and grief.</p>
-
-<p>Last year I went meticulously through <em>every single post</em> by Erik Naggum (thanks to Zach Beane who took the trouble of curating them<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>), and found a wealth of quotes. I highly recommend it &mdash; consider it casual reading, a replacement for whatever you plan to read on your next commute, travel trip or vacation.</p>
-
-<p>Anyway, today I found another worthy rant-er, Mr. Adam Rosenberg. Yes, he has a blog with a bunch of interesting articles<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>, he is also a self-described &ldquo;industrial mathematician&rdquo;, and has written an unabashed defense of Ye Olde FORTRAN and C style as the once and future programming style<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>. But what made me <em>binge-read</em> his writing was his collection of rants<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup>.</p>
-
-<p>A good place to start is <a href="http://www.the-adam.com/adam/rantrave/computers.html">&ldquo;The Failure of the Digital Computer&rdquo;</a>, but obviously <em>YMMV</em>.</p>
-<div class="footnotes">
-<hr/>
-<ol>
-<li id="fn:1">
-<p>The <a href="http://xach.com/naggum/articles/">Erik Naggum Archive</a><a href="#fnref:1" rev="footnote">&#8617;</a></p></li>
-<li id="fn:2">
-<p><a href="http://www.the-adam.com/adam/index.html">The Adam N. Rosenberg web page</a><a href="#fnref:2" rev="footnote">&#8617;</a></p></li>
-<li id="fn:3">
-<p><a href="http://www.the-adam.com/adam/rantrave/st02.pdf">&ldquo;A Description of One Programmer&rsquo;s Programming Style&rdquo;</a><a href="#fnref:3" rev="footnote">&#8617;</a></p></li>
-<li id="fn:4">
-<p><a href="http://www.the-adam.com/adam/rantrave/">&ldquo;Rants and Raves&rdquo;</a><a href="#fnref:4" rev="footnote">&#8617;</a></p></li>
-</ol>
-</div>
 
 ]]></content>
   </entry>

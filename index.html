@@ -7,7 +7,7 @@
 	<meta name="author" content="Agam">
 
 	
-	<meta name="description" content="(Don&rsquo;t ask me why or how I got here, but &hellip;) I came across a very old (Nov 1980) post in a mailing list that might be related to our &hellip;">
+	<meta name="description" content="I recently stumbled across APL and J, as mentioned in a previous post, and began reading a bit of an introductory book. A couple of days ago, I came &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -86,6 +86,81 @@
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2015/10/09/a-taste-of-j/">
+		
+			A Tiny Taste of J</a>
+	</h2>
+	<div class="entry-content">
+		<p>I recently stumbled across APL and J, as mentioned in a previous post, and began reading a bit of <a href="http://www.jsoftware.com/help/learning/contents.htm">an introductory book</a>.</p>
+
+<p>A couple of days ago, I came across this series of coding tasks on a blog called &ldquo;Programming Praxis&rdquo;, and I picked <a href="http://programmingpraxis.com/2015/10/06/the-iron-bar/">the most recent one</a> as an example to try out some J noobism.</p>
+
+<p>The example is simple but contrived (and <em>median</em> is a terrible name) &mdash; we basically have to write a function that that takes two arguments and either increments, decrements or does nothing, with the first argument. In J, like so many other tasks, this is essentially one line (12 characters, to be precise).</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>median =: [ + (* @: -)~</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To give some idea on what&rsquo;s going on here, this expression can be broken, first, into three parts: <code>[</code>, <code>+</code>, <code>(* @: -)~</code>. Let&rsquo;s start with the sub-expression within the parentheses: <code>* @: -</code>.</p>
+
+<p>Here, <code>*</code> is a <em>verb</em> (think: <em>&ldquo;function&rdquo;</em>) that returns 1, 0, or -1 depending on the sign of its argument. So <code>* 4</code> is <code>1</code>, <code>* _2</code> (that&rsquo;s how -2 is represented) is <code>_1</code>, <code>* 0</code> is <code>0</code>.</p>
+
+<p><code>-</code> is the only thing that does what you would expect: <code>4 - 3</code> is <code>1</code>, and so on.</p>
+
+<p><code>@:</code> is a <em>conjunction</em>, such that <code>f @: g</code> when applied to <em>x</em> has the effect of <em>f (g x)</em>.</p>
+
+<p><code>]</code> is a verb that when given two values, always selects the first of the two.</p>
+
+<p><code>~</code> is an <em>adverb</em> that reverses the order of arguments to its preceding verb. So while <code>%</code> applied to <em>x</em> and <em>y</em> yields <em>(x % y)</em>, <code>%~</code> applied to <em>x</em> and <em>y</em> yields <em>(y % x)</em>.</p>
+
+<p>Now things get a little tricky (but only a <em>little</em>; we&rsquo;re barely scratching the surface of J here). The expression for median can be seen as three verbs laid down together, and this is interpreted as a <em>&ldquo;train&rdquo;</em> of verbs, or more specifically in this case, a <em>&ldquo;dyadic fork&rdquo;</em>.</p>
+
+<p>Basically, <em>(f g h)</em> when applied to two values <em>x</em> and <em>y</em>, is equivalent to <em>g</em> applied to the result of <em>f</em> applied to <em>x</em> and <em>y</em>, and the result of <em>h</em> applied to <em>x</em> and <em>y</em>. Or, using infix notation,</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>x (f g h) y   is equivalent to    (x f y) g (x h y)</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The reason <em>x</em> and <em>y</em> aren&rsquo;t present in the definition of <em>median</em> is that it&rsquo;s defined using a &ldquo;tacit&rdquo; form rather than an &ldquo;explicit&rdquo; form (somewhat similar to &ldquo;point-free&rdquo; definitions in Haskell).</p>
+
+<p>Putting it all together now, when applied to two arguments, we get the equivalent of <code>(x [ y) + (* (y - x))</code>, which gives <code>x + 1</code> when <em>y > x</em>, <code>x + 0</code> when <em>y == x</em>, and <code>x + (-1)</code> when <em>y &lt; x</em>, which is what we want.</p>
+
+<p>If you like this sort of thing, head over to <a href="http://www.jsoftware.com/">jsoftware.com</a> for more.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-10-09T06:42:45+00:00" pubdate data-updated="true">Oct 9<sup>th</sup>, 2015</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/jlang/'>jlang</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -570,113 +645,6 @@
 
 
 	<a class='category' href='/blog/categories/programming/'>programming</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2015/07/06/pharo/">
-		
-			Pharo</a>
-	</h2>
-	<div class="entry-content">
-		<p>A lot of thinking about <em>&ldquo;what&rsquo;s the best programming environment for beginners?&rdquo;</em> has led me to the one system I&rsquo;ve never explored (and only read about): <strong>Smalltalk</strong> &mdash; Or more precisely, a particular open-source implementation of Smalltalk, <em>Pharo</em>.</p>
-
-<p>(Clearly, I have very little credibility, since the pattern here is of me saying &ldquo;I&rsquo;m going to learn X&rdquo;, and they getting sidetracked by some Y)</p>
-
-<p>Like Common Lisp (and unlike Scheme or Haskell), Smalltalk is &ldquo;image-based&rdquo; rather than &ldquo;source-file-based&rdquo;, and again like Lisp the <em>&ldquo;ideal&rdquo;</em> it strives for is turtles all the way down, the turtles here being uniform objects instead of uniform s-expressions.</p>
-
-<p>When you start up the Pharo image for the first time after downloading it, one of windows is a <em>Workspace</em>, with various comments and notes, among which is the following innocuous looking line:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='smalltalk'><span class='line'><span class="nc">PharoTutorial</span> <span class="nf">go</span><span class="p">.</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Executing that line (selecting it and hitting <code>Cmd-D</code>, or right-clicking and selecting <code>Do It</code>) launches a engaging tutorial that &hellip; well .. you have to see it for yourself :) At the very end, you have the option of introspecting the tutorial itself, or creating your own. Here is a screenshot of that:</p>
-
-<p><img src="https://farm1.staticflickr.com/551/19272356888_495113dfc2_b_d.jpg"></p>
-
-<p>Download Pharo <a href="http://pharo.org/download">here</a>, and <strong>enjoy!!</strong></p>
-
-<p>P.S. just for fun, some <em>&ldquo;Pharo Zen&rdquo;</em>:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-</pre></td><td class='code'><pre><code class='smalltalk'><span class='line'><span class="nc">Perfection</span> <span class="nf">can</span> <span class="nf">kill</span> <span class="nf">movement</span><span class="p">.</span>
-</span><span class='line'><span class="nc">Simple</span> <span class="nf">processes</span> <span class="nf">to</span> <span class="nf">support</span> <span class="nf">progress</span><span class="p">.</span>
-</span><span class='line'><span class="nc">Examples</span> <span class="nf">to</span> <span class="nf">learn</span> <span class="nf">from</span><span class="p">.</span>
-</span><span class='line'><span class="nc">Tests</span> <span class="nf">are</span> <span class="nf">important</span> <span class="nf">but</span> <span class="nf">can</span> <span class="nf">be</span> <span class="nf">changed</span><span class="p">.</span>
-</span><span class='line'><span class="nc">Classes</span> <span class="nf">structure</span> <span class="nf">our</span> <span class="nf">vocabulary</span><span class="p">.</span>
-</span><span class='line'><span class="nc">Fully</span> <span class="nf">dynamic</span> <span class="nf">and</span> <span class="nf">malleable</span><span class="p">.</span>
-</span><span class='line'><span class="nc">A</span> <span class="nf">system</span> <span class="nf">with</span> <span class="nf">robust</span> <span class="nf">abstractions</span> <span class="nf">that</span> <span class="nf">a</span> <span class="nf">single</span> <span class="nf">person</span> <span class="nf">can</span> <span class="nf">understand</span><span class="p">.</span>
-</span><span class='line'><span class="nc">Explicit</span> <span class="nf">is</span> <span class="nf">better</span> <span class="nf">than</span> <span class="nf">implicit</span><span class="p">.</span>
-</span><span class='line'><span class="nc">Simplicity</span> <span class="nf">is</span> <span class="nf">the</span> <span class="nf">ultimate</span> <span class="nf">elegance</span><span class="p">.</span>
-</span><span class='line'><span class="nc">Quality</span> <span class="nf">is</span> <span class="nf">an</span> <span class="nf">emerging</span> <span class="nf">property</span><span class="p">.</span>
-</span><span class='line'><span class="nc">Polymorphism</span> <span class="nf">is</span> <span class="nf">our</span> <span class="nf">esperanto</span><span class="p">.</span>
-</span><span class='line'><span class="nc">Messages</span> <span class="nf">are</span> <span class="nf">our</span> <span class="nf">vocabulary</span><span class="p">.</span>
-</span><span class='line'><span class="nc">Better</span> <span class="nf">a</span> <span class="nf">set</span> <span class="nf">of</span> <span class="nf">small</span> <span class="nf">polymorphic</span> <span class="nf">classes</span> <span class="nf">than</span> <span class="nf">a</span> <span class="nf">large</span> <span class="nf">ugly</span> <span class="nf">one</span><span class="p">.</span>
-</span><span class='line'><span class="nc">Communication</span> <span class="nf">is</span> <span class="nf">key</span><span class="p">.</span>
-</span><span class='line'><span class="nc">Learning</span> <span class="nf">from</span> <span class="nf">mistakes</span><span class="p">.</span>
-</span><span class='line'><span class="nc">Magic</span> <span class="nf">only</span> <span class="nf">at</span> <span class="nf">the</span> <span class="nf">right</span> <span class="nf">place</span><span class="p">.</span>
-</span><span class='line'><span class="nc">Objects</span> <span class="nf">all</span> <span class="nf">the</span> <span class="nf">way</span> <span class="nf">down</span><span class="p">.</span>
-</span><span class='line'><span class="nc">Abstraction</span> <span class="nf">and</span> <span class="nf">composition</span> <span class="nf">are</span> <span class="nf">our</span> <span class="nf">friends</span><span class="p">.</span>
-</span><span class='line'><span class="nc">One</span> <span class="nf">step</span> <span class="nf">at</span> <span class="nf">a</span> <span class="nf">time</span><span class="p">.</span>
-</span><span class='line'><span class="nc">There</span> <span class="nf">is</span> <span class="nf">no</span> <span class="nf">unimportant</span> <span class="nf">fix</span><span class="p">.</span>
-</span><span class='line'><span class="nc">Easy</span> <span class="nf">to</span> <span class="nf">understand,</span> <span class="nv">easy</span> <span class="nf">to</span> <span class="nf">learn</span> <span class="nf">from,</span> <span class="nv">easy</span> <span class="nf">to</span> <span class="nf">change</span><span class="p">.</span>
-</span><span class='line'><span class="nc">Beauty</span> <span class="nf">in</span> <span class="nf">the</span> <span class="nf">code,</span> <span class="nv">beauty</span> <span class="nf">in</span> <span class="nf">the</span> <span class="nf">comments</span><span class="p">.</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-07-06T07:02:27+00:00" pubdate data-updated="true">Jul 6<sup>th</sup>, 2015</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/pharo/'>pharo</a>, <a class='category' href='/blog/categories/smalltalk/'>smalltalk</a>
 
 
 </div>

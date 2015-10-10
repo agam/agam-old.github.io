@@ -4,7 +4,7 @@
   <title><![CDATA[Category: ellipses | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/ellipses/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-10-02T07:18:26+00:00</updated>
+  <updated>2015-10-10T07:31:33+00:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -52,15 +52,15 @@ popMatrix();
 
 <p>and got some funky looking images.</p>
 
-<p>{% img center <a href="http://farm4.staticflickr.com/3776/12162399443_14fd4eea37_z_d.jpg">http://farm4.staticflickr.com/3776/12162399443_14fd4eea37_z_d.jpg</a> %}</p>
+<p><img class="center <a" src="href="http://farm4.staticflickr.com/3776/12162399443_14fd4eea37_z_d.jpg">http://farm4.staticflickr.com/3776/12162399443_14fd4eea37_z_d.jpg</a>"></p>
 
-<p>{% img center <a href="http://farm8.staticflickr.com/7423/12162160705_5bc891cfa6_z_d.jpg">http://farm8.staticflickr.com/7423/12162160705_5bc891cfa6_z_d.jpg</a> %}</p>
+<p><img class="center <a" src="href="http://farm8.staticflickr.com/7423/12162160705_5bc891cfa6_z_d.jpg">http://farm8.staticflickr.com/7423/12162160705_5bc891cfa6_z_d.jpg</a>"></p>
 
-<p>{% img center <a href="http://farm8.staticflickr.com/7341/12162577004_ee1689e71f_z_d.jpg">http://farm8.staticflickr.com/7341/12162577004_ee1689e71f_z_d.jpg</a> %}</p>
+<p><img class="center <a" src="href="http://farm8.staticflickr.com/7341/12162577004_ee1689e71f_z_d.jpg">http://farm8.staticflickr.com/7341/12162577004_ee1689e71f_z_d.jpg</a>"></p>
 
-<p>{% img center <a href="http://farm4.staticflickr.com/3742/12162819596_176dc1a9d3_z_d.jpg">http://farm4.staticflickr.com/3742/12162819596_176dc1a9d3_z_d.jpg</a> %}</p>
+<p><img class="center <a" src="href="http://farm4.staticflickr.com/3742/12162819596_176dc1a9d3_z_d.jpg">http://farm4.staticflickr.com/3742/12162819596_176dc1a9d3_z_d.jpg</a>"></p>
 
-<p>{% img center <a href="http://farm6.staticflickr.com/5513/12162574864_10b7b887f3_z_d.jpg">http://farm6.staticflickr.com/5513/12162574864_10b7b887f3_z_d.jpg</a> %}</p>
+<p><img class="center <a" src="href="http://farm6.staticflickr.com/5513/12162574864_10b7b887f3_z_d.jpg">http://farm6.staticflickr.com/5513/12162574864_10b7b887f3_z_d.jpg</a>"></p>
 
 <p>Before you say <em>meh</em>, none of this is supposed to make you Michaelangelo. But it provides a kind of instant-gratification, since you can tweak your <em>sketch</em>, run it, tweak it again, run it again, and so on &hellip; which is rather hard to come by.</p>
 ]]></content>

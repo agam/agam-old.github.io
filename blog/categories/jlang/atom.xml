@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: jlang | Agam's Mashed-Up Pome]]></title>
+  <link href="http://agam.github.io/blog/categories/jlang/atom.xml" rel="self"/>
+  <link href="http://agam.github.io/"/>
+  <updated>2015-10-10T07:31:33+00:00</updated>
+  <id>http://agam.github.io/</id>
+  <author>
+    <name><![CDATA[Agam]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[A Tiny Taste of J]]></title>
+    <link href="http://agam.github.io/blog/2015/10/09/a-taste-of-j/"/>
+    <updated>2015-10-09T06:42:45+00:00</updated>
+    <id>http://agam.github.io/blog/2015/10/09/a-taste-of-j</id>
+    <content type="html"><![CDATA[<p>I recently stumbled across APL and J, as mentioned in a previous post, and began reading a bit of <a href="http://www.jsoftware.com/help/learning/contents.htm">an introductory book</a>.</p>
+
+<p>A couple of days ago, I came across this series of coding tasks on a blog called &ldquo;Programming Praxis&rdquo;, and I picked <a href="http://programmingpraxis.com/2015/10/06/the-iron-bar/">the most recent one</a> as an example to try out some J noobism.</p>
+
+<p>The example is simple but contrived (and <em>median</em> is a terrible name) &mdash; we basically have to write a function that that takes two arguments and either increments, decrements or does nothing, with the first argument. In J, like so many other tasks, this is essentially one line (12 characters, to be precise).</p>
+
+<p><code>
+median =: [ + (* @: -)~
+</code></p>
+
+<p>To give some idea on what&rsquo;s going on here, this expression can be broken, first, into three parts: <code>[</code>, <code>+</code>, <code>(* @: -)~</code>. Let&rsquo;s start with the sub-expression within the parentheses: <code>* @: -</code>.</p>
+
+<p>Here, <code>*</code> is a <em>verb</em> (think: <em>&ldquo;function&rdquo;</em>) that returns 1, 0, or -1 depending on the sign of its argument. So <code>* 4</code> is <code>1</code>, <code>* _2</code> (that&rsquo;s how -2 is represented) is <code>_1</code>, <code>* 0</code> is <code>0</code>.</p>
+
+<p><code>-</code> is the only thing that does what you would expect: <code>4 - 3</code> is <code>1</code>, and so on.</p>
+
+<p><code>@:</code> is a <em>conjunction</em>, such that <code>f @: g</code> when applied to <em>x</em> has the effect of <em>f (g x)</em>.</p>
+
+<p><code>]</code> is a verb that when given two values, always selects the first of the two.</p>
+
+<p><code>~</code> is an <em>adverb</em> that reverses the order of arguments to its preceding verb. So while <code>%</code> applied to <em>x</em> and <em>y</em> yields <em>(x % y)</em>, <code>%~</code> applied to <em>x</em> and <em>y</em> yields <em>(y % x)</em>.</p>
+
+<p>Now things get a little tricky (but only a <em>little</em>; we&rsquo;re barely scratching the surface of J here). The expression for median can be seen as three verbs laid down together, and this is interpreted as a <em>&ldquo;train&rdquo;</em> of verbs, or more specifically in this case, a <em>&ldquo;dyadic fork&rdquo;</em>.</p>
+
+<p>Basically, <em>(f g h)</em> when applied to two values <em>x</em> and <em>y</em>, is equivalent to <em>g</em> applied to the result of <em>f</em> applied to <em>x</em> and <em>y</em>, and the result of <em>h</em> applied to <em>x</em> and <em>y</em>. Or, using infix notation,</p>
+
+<p><code>
+x (f g h) y   is equivalent to    (x f y) g (x h y)
+</code></p>
+
+<p>The reason <em>x</em> and <em>y</em> aren&rsquo;t present in the definition of <em>median</em> is that it&rsquo;s defined using a &ldquo;tacit&rdquo; form rather than an &ldquo;explicit&rdquo; form (somewhat similar to &ldquo;point-free&rdquo; definitions in Haskell).</p>
+
+<p>Putting it all together now, when applied to two arguments, we get the equivalent of <code>(x [ y) + (* (y - x))</code>, which gives <code>x + 1</code> when <em>y > x</em>, <code>x + 0</code> when <em>y == x</em>, and <code>x + (-1)</code> when <em>y &lt; x</em>, which is what we want.</p>
+
+<p>If you like this sort of thing, head over to <a href="http://www.jsoftware.com/">jsoftware.com</a> for more.</p>
+]]></content>
+  </entry>
+  
+</feed>
