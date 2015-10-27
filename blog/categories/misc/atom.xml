@@ -4,7 +4,7 @@
   <title><![CDATA[Category: misc | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/misc/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-10-10T07:31:33+00:00</updated>
+  <updated>2015-10-26T21:34:22-07:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Static Types, Dynamic Types, is your type my type?]]></title>
-    <link href="http://agam.github.io/blog/2015/03/19/static-typing/"/>
-    <updated>2015-03-19T02:51:00+00:00</updated>
-    <id>http://agam.github.io/blog/2015/03/19/static-typing</id>
+    <link href="http://agam.github.io/blog/2015/03/18/static-typing/"/>
+    <updated>2015-03-18T19:51:00-07:00</updated>
+    <id>http://agam.github.io/blog/2015/03/18/static-typing</id>
     <content type="html"><![CDATA[<p>Numerous people smarter than me have weighed into the static vs dynamic typing debate, so I&rsquo;ll be brief: I won&rsquo;t pick sides because <em>there are no sides to pick</em>. Except for some <em>obvious</em> cases where there is little disagreement, the word &ldquo;type&rdquo; just happens to mean two very different things when putting forth arguments on the benefits of either <em>side</em>.</p>
 
 <p>Looking back now, the only language that I&rsquo;ve seen where the distinction I&rsquo;m talking about is made explicit, is SML. The <code>type</code> keyword is <em>different</em> from the <code>datatype</code> keyword. The benefits of static types are tied up with the former, whereas people defending dynamic typing are usually resisting an <em>overuse</em> of the latter (with a mass of confusion in the middle).</p>

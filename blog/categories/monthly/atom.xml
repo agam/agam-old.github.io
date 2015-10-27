@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+
+  <title><![CDATA[Category: monthly | Agam's Mashed-Up Pome]]></title>
+  <link href="http://agam.github.io/blog/categories/monthly/atom.xml" rel="self"/>
+  <link href="http://agam.github.io/"/>
+  <updated>2015-10-26T21:34:22-07:00</updated>
+  <id>http://agam.github.io/</id>
+  <author>
+    <name><![CDATA[Agam]]></name>
+    
+  </author>
+  <generator uri="http://octopress.org/">Octopress</generator>
+
+  
+  <entry>
+    <title type="html"><![CDATA[Monthly Programming summary]]></title>
+    <link href="http://agam.github.io/blog/2015/10/26/monthly-programming-summary/"/>
+    <updated>2015-10-26T20:23:36-07:00</updated>
+    <id>http://agam.github.io/blog/2015/10/26/monthly-programming-summary</id>
+    <content type="html"><![CDATA[<p>Here&rsquo;s the first installment in an experiment &mdash; writing a monthly roundup of a few things I read/saw/did this month that I found sort of interesting. I do something on my (general, non-programming-specific) <a href="http://abacusnoirform.com/">personal blog</a>, so I thought the same might be a useful exercise here too.</p>
+
+<p>In no particular order:</p>
+
+<ul>
+<li><p>The &ldquo;Balloon edition&rdquo; of BYTE magazine <a href="https://archive.org/stream/byte-magazine-1981-08/1981_08_BYTE_06-08_Smalltalk#page/n0/mode/2up">from 1981</a> &hellip; it&rsquo;s amazing how this stuff is <em>still</em> a revolutionary idea (also, the advertisements from three decades ago are hilarious)</p></li>
+<li><p>I read through Dijkstra&rsquo;s <a href="https://www.cs.utexas.edu/users/EWD/">notes</a> a while ago, here&rsquo;s <a href="https://www.vex.net/~trebla/ewd.html">someone else&rsquo;s curated version</a> of them.</p></li>
+<li><p>A Google Tech Talk from 2007 by Alex Wright, on <a href="https://www.youtube.com/watch?v=72nfrhXroo8"><em>&ldquo;The Web That Wasn&rsquo;t&rdquo;</em></a></p></li>
+</ul>
+
+
+<p>I&rsquo;ll leave you with this quote from Alan Kay:</p>
+
+<blockquote><p>Perhaps it was commercialization in the 1980s that killed off the next expected new thing. Our plan and our hope was that the next generation of kids would come along and do something better than Smalltalk around 1984 or so. We all thought that the next level of programming language would be much more strategic and even policy-oriented and would have much more knowledge about what it was trying to do. But a variety of different things conspired together, and that next generation actually didn’t show up. <strong>One could actually argue—as I sometimes do—that the success of commercial personal computing and operating systems has actually led to a considerable retrogression in many, many respects.</strong></p></blockquote>
+]]></content>
+  </entry>
+  
+</feed>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: processing, | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/processing/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-10-10T07:31:33+00:00</updated>
+  <updated>2015-10-26T21:34:22-07:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Fun with Processing: Spinning Ellipses]]></title>
     <link href="http://agam.github.io/blog/2014/01/27/fun-with-processing-spinning-ellipses/"/>
-    <updated>2014-01-27T00:11:00+00:00</updated>
+    <updated>2014-01-27T00:11:00-08:00</updated>
     <id>http://agam.github.io/blog/2014/01/27/fun-with-processing-spinning-ellipses</id>
     <content type="html"><![CDATA[<p><a href="http://www.processing.org/">Processing</a> is intended to be a &ldquo;creative coding&rdquo; tool for non-programmers. It runs on top of Java, which is good enough to get started. The performance-anxious folks might eventually prefer something like <a href="http://libcinder.org/">Cinder</a>, which has C++ libraries instead.</p>
 

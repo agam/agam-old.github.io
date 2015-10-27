@@ -4,7 +4,7 @@
   <title><![CDATA[Category: game | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/game/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-10-10T07:31:33+00:00</updated>
+  <updated>2015-10-26T21:34:22-07:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[These pretzels are making me thirsty!]]></title>
-    <link href="http://agam.github.io/blog/2015/01/10/these-pretzels-are-making-me-thirsty/"/>
-    <updated>2015-01-10T07:29:26+00:00</updated>
-    <id>http://agam.github.io/blog/2015/01/10/these-pretzels-are-making-me-thirsty</id>
+    <link href="http://agam.github.io/blog/2015/01/09/these-pretzels-are-making-me-thirsty/"/>
+    <updated>2015-01-09T23:29:26-08:00</updated>
+    <id>http://agam.github.io/blog/2015/01/09/these-pretzels-are-making-me-thirsty</id>
     <content type="html"><![CDATA[<p>All right, here&rsquo;s <em>another</em> one of the series of hypothetically pedagogical text games in Go. This one is based on the original <em>Bagels</em>, which I then appropriated as <em>Pretzels</em>.</p>
 
 <p>Here&rsquo;s the code:</p>
@@ -282,9 +282,9 @@ You MUST choose a number between 100 and 999, try again &hellip;</p>
   
   <entry>
     <title type="html"><![CDATA[Beginning 'basic' text games in Go: Rock, Paper, Scissors, Lizard, Spock]]></title>
-    <link href="http://agam.github.io/blog/2015/01/08/rock/"/>
-    <updated>2015-01-08T04:00:53+00:00</updated>
-    <id>http://agam.github.io/blog/2015/01/08/rock</id>
+    <link href="http://agam.github.io/blog/2015/01/07/rock/"/>
+    <updated>2015-01-07T20:00:53-08:00</updated>
+    <id>http://agam.github.io/blog/2015/01/07/rock</id>
     <content type="html"><![CDATA[<p>I&rsquo;ve been having some fun with the idea of simple text-based games in Go<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>. The original BASIC games book<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup> was not hard to find, and it was interesting to revisit it again.</p>
 
 <p>The first thing that stared me in the face was just how <em>bad</em> (and by &ldquo;bad&rdquo; I mean <em>incomprehensible</em>) most of the code was. In my nostalgia I had completely lost sight of this.</p>

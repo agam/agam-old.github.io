@@ -1,0 +1,551 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Daily programming: logs down the river - Agam's Mashed-Up Pome</title>
+	<meta name="author" content="Agam">
+
+	
+	<meta name="description" content="Found this problem from about a month ago. I did a sloppy job on this one &mdash; it&rsquo;s correct, but mostly straight-line &ldquo;C &ndash; style &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Agam's Mashed-Up Pome" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script async="true" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+
+</head>
+
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">Agam's Mashed-Up Pome</a></h1>
+<!-- DebugAgam: Uncomment if necessary!
+<nav id="main-nav"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:agam.github.io">
+			</form>
+		</div>
+	</div>
+</nav>
+-->
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		<a class="google" href="https://plus.google.com/+AgamBrahma?rel=author" title="Google+">Google+</a>
+		
+		
+		<a class="twitter" href="http://twitter.com/agambrahma" title="Twitter">Twitter</a>
+		
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+    
+	</div>
+        <!-- DebugAgam: uncomment if necessary!
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:agam.github.io">
+	</form>
+        -->
+</nav>
+
+</header>
+	
+		
+	
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">Daily Programming: Logs Down the River</h2>
+	<div class="entry-content"><p>Found <a href="http://www.reddit.com/r/dailyprogrammer/comments/2lljyq/11052014_challenge_187_hard_lumberjack_floating/">this problem</a> from about a month ago. I did a sloppy job on this one &mdash; it&rsquo;s correct, but mostly straight-line &ldquo;C &ndash; style&rdquo; code. I&rsquo;ll come up with a better way to do this later, <em>promise</em>. Meanwhile, here&rsquo;s the code.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+<span class='line-number'>114</span>
+<span class='line-number'>115</span>
+<span class='line-number'>116</span>
+<span class='line-number'>117</span>
+<span class='line-number'>118</span>
+<span class='line-number'>119</span>
+<span class='line-number'>120</span>
+<span class='line-number'>121</span>
+<span class='line-number'>122</span>
+<span class='line-number'>123</span>
+<span class='line-number'>124</span>
+<span class='line-number'>125</span>
+<span class='line-number'>126</span>
+<span class='line-number'>127</span>
+<span class='line-number'>128</span>
+<span class='line-number'>129</span>
+<span class='line-number'>130</span>
+<span class='line-number'>131</span>
+<span class='line-number'>132</span>
+<span class='line-number'>133</span>
+<span class='line-number'>134</span>
+<span class='line-number'>135</span>
+<span class='line-number'>136</span>
+<span class='line-number'>137</span>
+<span class='line-number'>138</span>
+<span class='line-number'>139</span>
+<span class='line-number'>140</span>
+<span class='line-number'>141</span>
+<span class='line-number'>142</span>
+<span class='line-number'>143</span>
+<span class='line-number'>144</span>
+<span class='line-number'>145</span>
+</pre></td><td class='code'><pre><code class='go'><span class='line'><span class="kn">package</span> <span class="nx">main</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="s">&quot;bufio&quot;</span>
+</span><span class='line'><span class="kn">import</span> <span class="s">&quot;fmt&quot;</span>
+</span><span class='line'><span class="kn">import</span> <span class="s">&quot;os&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">type</span> <span class="nx">nodelabel</span> <span class="kt">uint8</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">type</span> <span class="nx">link</span> <span class="kd">struct</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">next</span>      <span class="o">*</span><span class="nx">node</span>
+</span><span class='line'>  <span class="nx">available</span> <span class="kt">int</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">type</span> <span class="nx">node</span> <span class="kd">struct</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">label</span>    <span class="nx">nodelabel</span>
+</span><span class='line'>  <span class="nx">links</span>    <span class="p">[]</span><span class="nx">link</span>
+</span><span class='line'>  <span class="nx">hops</span>     <span class="kt">int</span>
+</span><span class='line'>  <span class="nx">capacity</span> <span class="kt">int</span>
+</span><span class='line'>  <span class="nx">isFinal</span>  <span class="kt">bool</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">type</span> <span class="nx">nodeset</span> <span class="kd">map</span><span class="p">[</span><span class="nx">nodelabel</span><span class="p">]</span><span class="o">*</span><span class="nx">node</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">nodes</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="nx">nodeset</span><span class="p">)</span>
+</span><span class='line'>  <span class="nx">scanner</span> <span class="o">:=</span> <span class="nx">bufio</span><span class="p">.</span><span class="nx">NewScanner</span><span class="p">(</span><span class="nx">os</span><span class="p">.</span><span class="nx">Stdin</span><span class="p">)</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">numNodes</span> <span class="kt">int</span>
+</span><span class='line'>  <span class="k">for</span> <span class="nx">scanner</span><span class="p">.</span><span class="nx">Scan</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">line</span> <span class="o">:=</span> <span class="nx">scanner</span><span class="p">.</span><span class="nx">Text</span><span class="p">()</span>
+</span><span class='line'>      <span class="k">if</span> <span class="nx">line</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">==</span> <span class="sc">&#39;#&#39;</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">continue</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      <span class="k">if</span> <span class="nx">numNodes</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nx">fmt</span><span class="p">.</span><span class="nx">Sscanln</span><span class="p">(</span><span class="nx">line</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">numNodes</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>          <span class="kd">var</span> <span class="nx">startNode</span><span class="p">,</span> <span class="nx">endNode</span> <span class="nx">nodelabel</span>
+</span><span class='line'>          <span class="kd">var</span> <span class="nx">capacity</span> <span class="kt">int</span>
+</span><span class='line'>          <span class="nx">fmt</span><span class="p">.</span><span class="nx">Sscanf</span><span class="p">(</span><span class="nx">line</span><span class="p">,</span> <span class="s">&quot;%c %c %d&quot;</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">startNode</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">endNode</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">capacity</span><span class="p">)</span>
+</span><span class='line'>          <span class="nx">n</span> <span class="o">:=</span> <span class="nx">nodes</span><span class="p">.</span><span class="nx">getNode</span><span class="p">(</span><span class="nx">startNode</span><span class="p">)</span>
+</span><span class='line'>          <span class="nx">next</span> <span class="o">:=</span> <span class="nx">nodes</span><span class="p">.</span><span class="nx">getNode</span><span class="p">(</span><span class="nx">endNode</span><span class="p">)</span>
+</span><span class='line'>          <span class="nx">l</span> <span class="o">:=</span> <span class="nx">link</span><span class="p">{</span><span class="nx">next</span><span class="p">:</span> <span class="nx">next</span><span class="p">,</span> <span class="nx">available</span><span class="p">:</span> <span class="nx">capacity</span><span class="p">}</span>
+</span><span class='line'>          <span class="nx">n</span><span class="p">.</span><span class="nx">links</span> <span class="p">=</span> <span class="nb">append</span><span class="p">(</span><span class="nx">n</span><span class="p">.</span><span class="nx">links</span><span class="p">,</span> <span class="nx">l</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="nx">finalNodeLabel</span> <span class="o">:=</span> <span class="nx">nodelabel</span><span class="p">(</span><span class="sc">&#39;A&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="nx">nodelabel</span><span class="p">(</span><span class="nx">numNodes</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">startNode</span> <span class="o">:=</span> <span class="nx">nodes</span><span class="p">.</span><span class="nx">getNode</span><span class="p">(</span><span class="sc">&#39;A&#39;</span><span class="p">)</span>
+</span><span class='line'>  <span class="nx">numLogs</span> <span class="o">:=</span> <span class="mi">0</span>
+</span><span class='line'>  <span class="k">for</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">nodes</span><span class="p">.</span><span class="nx">updateHopsAndCapacities</span><span class="p">(</span><span class="nx">finalNodeLabel</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="k">if</span> <span class="nx">startNode</span><span class="p">.</span><span class="nx">capacity</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">break</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      <span class="nx">path</span> <span class="o">:=</span> <span class="nx">startNode</span><span class="p">.</span><span class="nx">sendOneLog</span><span class="p">()</span>
+</span><span class='line'>      <span class="nx">numLogs</span><span class="o">++</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="c1">// Print out path (in reverse)</span>
+</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;Log #%d takes &quot;</span><span class="p">,</span> <span class="nx">numLogs</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="nb">len</span><span class="p">(</span><span class="nx">path</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&gt;</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span><span class="o">--</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;%c -&gt; &quot;</span><span class="p">,</span> <span class="nx">path</span><span class="p">[</span><span class="nx">i</span><span class="p">])</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;%c -- path of %d\n&quot;</span><span class="p">,</span> <span class="nx">path</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nb">len</span><span class="p">(</span><span class="nx">path</span><span class="p">))</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;River is now full. We could send %d logs\n&quot;</span><span class="p">,</span> <span class="nx">numLogs</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">func</span> <span class="p">(</span><span class="nx">nodes</span> <span class="nx">nodeset</span><span class="p">)</span> <span class="nx">updateHopsAndCapacities</span><span class="p">(</span><span class="nx">finalNodeLabel</span> <span class="nx">nodelabel</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">n</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">nodes</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">n</span><span class="p">.</span><span class="nx">hops</span> <span class="p">=</span> <span class="o">-</span><span class="mi">1</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">n</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">nodes</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">n</span><span class="p">.</span><span class="nx">computeHops</span><span class="p">(</span><span class="nx">finalNodeLabel</span><span class="p">)</span>
+</span><span class='line'>      <span class="nx">n</span><span class="p">.</span><span class="nx">capacity</span> <span class="p">=</span> <span class="mi">0</span>
+</span><span class='line'>      <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">l</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">n</span><span class="p">.</span><span class="nx">links</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nx">n</span><span class="p">.</span><span class="nx">capacity</span> <span class="o">+=</span> <span class="nx">l</span><span class="p">.</span><span class="nx">available</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">func</span> <span class="p">(</span><span class="nx">n</span> <span class="o">*</span><span class="nx">node</span><span class="p">)</span> <span class="nx">sendOneLog</span><span class="p">()</span> <span class="p">[]</span><span class="nx">nodelabel</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">if</span> <span class="nx">n</span><span class="p">.</span><span class="nx">isFinal</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">singlePath</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="nx">nodelabel</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>      <span class="nx">singlePath</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="p">=</span> <span class="nx">n</span><span class="p">.</span><span class="nx">label</span>
+</span><span class='line'>      <span class="k">return</span> <span class="nx">singlePath</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// Pick shortest path</span>
+</span><span class='line'>  <span class="nx">minHops</span> <span class="o">:=</span> <span class="o">-</span><span class="mi">1</span>
+</span><span class='line'>  <span class="kd">var</span> <span class="nx">nextLink</span> <span class="o">*</span><span class="nx">link</span>
+</span><span class='line'>  <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nb">len</span><span class="p">(</span><span class="nx">n</span><span class="p">.</span><span class="nx">links</span><span class="p">);</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">l</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">n</span><span class="p">.</span><span class="nx">links</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span>
+</span><span class='line'>      <span class="k">if</span> <span class="p">!</span><span class="nx">l</span><span class="p">.</span><span class="nx">next</span><span class="p">.</span><span class="nx">isFinal</span> <span class="o">&amp;&amp;</span> <span class="nx">l</span><span class="p">.</span><span class="nx">next</span><span class="p">.</span><span class="nx">capacity</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">continue</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      <span class="k">if</span> <span class="nx">minHops</span> <span class="p">&lt;</span> <span class="mi">0</span> <span class="o">||</span> <span class="p">(</span><span class="nx">l</span><span class="p">.</span><span class="nx">available</span> <span class="p">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nx">l</span><span class="p">.</span><span class="nx">next</span><span class="p">.</span><span class="nx">hops</span> <span class="p">&lt;</span> <span class="nx">minHops</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nx">minHops</span> <span class="p">=</span> <span class="nx">l</span><span class="p">.</span><span class="nx">next</span><span class="p">.</span><span class="nx">hops</span>
+</span><span class='line'>          <span class="nx">nextLink</span> <span class="p">=</span> <span class="nx">l</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">path</span> <span class="o">:=</span> <span class="nx">nextLink</span><span class="p">.</span><span class="nx">next</span><span class="p">.</span><span class="nx">sendOneLog</span><span class="p">()</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// Update current node and link</span>
+</span><span class='line'>  <span class="nx">n</span><span class="p">.</span><span class="nx">capacity</span><span class="o">--</span>
+</span><span class='line'>  <span class="nx">nextLink</span><span class="p">.</span><span class="nx">available</span><span class="o">--</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// TODO: avoid making a copy here (!)</span>
+</span><span class='line'>  <span class="nx">newPath</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="nx">nodelabel</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nx">path</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>  <span class="nb">copy</span><span class="p">(</span><span class="nx">newPath</span><span class="p">,</span> <span class="nx">path</span><span class="p">)</span>
+</span><span class='line'>  <span class="nx">newPath</span><span class="p">[</span><span class="nb">len</span><span class="p">(</span><span class="nx">path</span><span class="p">)]</span> <span class="p">=</span> <span class="nx">n</span><span class="p">.</span><span class="nx">label</span>
+</span><span class='line'>  <span class="k">return</span> <span class="nx">newPath</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">func</span> <span class="p">(</span><span class="nx">nodes</span> <span class="nx">nodeset</span><span class="p">)</span> <span class="nx">getNode</span><span class="p">(</span><span class="nx">r</span> <span class="nx">nodelabel</span><span class="p">)</span> <span class="o">*</span><span class="nx">node</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">n</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">nodes</span><span class="p">[</span><span class="nx">r</span><span class="p">]</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">!</span><span class="nx">ok</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">n</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">node</span><span class="p">{</span><span class="nx">label</span><span class="p">:</span> <span class="nx">r</span><span class="p">,</span> <span class="nx">isFinal</span><span class="p">:</span> <span class="kc">false</span><span class="p">}</span>
+</span><span class='line'>      <span class="nx">nodes</span><span class="p">[</span><span class="nx">r</span><span class="p">]</span> <span class="p">=</span> <span class="nx">n</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">return</span> <span class="nx">n</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">func</span> <span class="p">(</span><span class="nx">n</span> <span class="o">*</span><span class="nx">node</span><span class="p">)</span> <span class="nx">computeHops</span><span class="p">(</span><span class="nx">finish</span> <span class="nx">nodelabel</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">if</span> <span class="nx">n</span><span class="p">.</span><span class="nx">hops</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">return</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">if</span> <span class="nx">n</span><span class="p">.</span><span class="nx">label</span> <span class="o">==</span> <span class="nx">finish</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">n</span><span class="p">.</span><span class="nx">hops</span> <span class="p">=</span> <span class="mi">0</span>
+</span><span class='line'>      <span class="nx">n</span><span class="p">.</span><span class="nx">isFinal</span> <span class="p">=</span> <span class="kc">true</span>
+</span><span class='line'>      <span class="k">return</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="nx">minHops</span> <span class="o">:=</span> <span class="o">-</span><span class="mi">1</span>
+</span><span class='line'>  <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">l</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">n</span><span class="p">.</span><span class="nx">links</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">l</span><span class="p">.</span><span class="nx">next</span><span class="p">.</span><span class="nx">computeHops</span><span class="p">(</span><span class="nx">finish</span><span class="p">)</span>
+</span><span class='line'>      <span class="k">if</span> <span class="nx">l</span><span class="p">.</span><span class="nx">available</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">continue</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      <span class="k">if</span> <span class="nx">minHops</span> <span class="p">&lt;</span> <span class="mi">0</span> <span class="o">||</span>
+</span><span class='line'>          <span class="nx">l</span><span class="p">.</span><span class="nx">next</span><span class="p">.</span><span class="nx">hops</span> <span class="p">&lt;</span> <span class="nx">minHops</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nx">minHops</span> <span class="p">=</span> <span class="nx">l</span><span class="p">.</span><span class="nx">next</span><span class="p">.</span><span class="nx">hops</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="nx">n</span><span class="p">.</span><span class="nx">hops</span> <span class="p">=</span> <span class="nx">minHops</span> <span class="o">+</span> <span class="mi">1</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It was easy to read in a formatted text file, so I did that instead of storing the specified routes and weights as a data literal. Here is the input:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="c"># Format:</span>
+</span><span class='line'><span class="c"># Number of nodes on the first line</span>
+</span><span class='line'><span class="c"># Each subsequent line contains</span>
+</span><span class='line'><span class="c"># &lt;start node&gt; &lt;end node&gt; capacity</span>
+</span><span class='line'><span class="c"># Nodes are labelled starting with &#39;A&#39;</span>
+</span><span class='line'>9
+</span><span class='line'>A B 6
+</span><span class='line'>A C 2
+</span><span class='line'>B E 3
+</span><span class='line'>B D 3
+</span><span class='line'>D C 2
+</span><span class='line'>D F 1
+</span><span class='line'>C G 5
+</span><span class='line'>E H 1
+</span><span class='line'>E I 2
+</span><span class='line'>F H 1
+</span><span class='line'>G H 2
+</span><span class='line'>G I 2
+</span><span class='line'>H I 4
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>And here is how the program runs:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>cat /tmp/logroutes  <span class="p">|</span> go run src/reddit-prog/log-routes.go
+</span><span class='line'>
+</span><span class='line'>Log <span class="c">#1 takes A -&gt; B -&gt; E -&gt; I -- path of 4</span>
+</span><span class='line'>Log <span class="c">#2 takes A -&gt; B -&gt; E -&gt; I -- path of 4</span>
+</span><span class='line'>Log <span class="c">#3 takes A -&gt; C -&gt; G -&gt; I -- path of 4</span>
+</span><span class='line'>Log <span class="c">#4 takes A -&gt; C -&gt; G -&gt; I -- path of 4</span>
+</span><span class='line'>Log <span class="c">#5 takes A -&gt; B -&gt; E -&gt; H -&gt; I -- path of 5</span>
+</span><span class='line'>Log <span class="c">#6 takes A -&gt; B -&gt; D -&gt; F -&gt; H -&gt; I -- path of 6</span>
+</span><span class='line'>Log <span class="c">#7 takes A -&gt; B -&gt; D -&gt; C -&gt; G -&gt; H -&gt; I -- path of 7</span>
+</span><span class='line'>Log <span class="c">#8 takes A -&gt; B -&gt; D -&gt; C -&gt; G -&gt; H -&gt; I -- path of 7</span>
+</span><span class='line'>River is now full. We could send <span class="m">8</span> logs.
+</span></code></pre></td></tr></table></div></figure>
+
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-12-26T18:11:28-08:00" pubdate data-updated="true">Dec 26<sup>th</sup>, 2014</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/alwaysbecoding/'>alwaysbecoding</a>, <a class='category' href='/blog/categories/glang/'>glang</a>
+
+
+</div>
+	
+</div>
+</article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+		
+		
+		<a class="addthis_button_tweet"></a>
+		
+		
+		<a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+		
+		
+	</div>
+	
+</div>
+
+
+
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2015
+
+    Agam
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'agamamp';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://agam.github.io/blog/2014/12/26/daily-programming-logs-down-the-river/';
+        var disqus_url = 'http://agam.github.io/blog/2014/12/26/daily-programming-logs-down-the-river/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//go.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-16612682-4']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

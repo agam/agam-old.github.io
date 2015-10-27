@@ -4,7 +4,7 @@
   <title><![CDATA[Category: jlang | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/jlang/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-10-10T07:31:33+00:00</updated>
+  <updated>2015-10-26T21:34:22-07:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[A Tiny Taste of J]]></title>
-    <link href="http://agam.github.io/blog/2015/10/09/a-taste-of-j/"/>
-    <updated>2015-10-09T06:42:45+00:00</updated>
-    <id>http://agam.github.io/blog/2015/10/09/a-taste-of-j</id>
+    <link href="http://agam.github.io/blog/2015/10/08/a-taste-of-j/"/>
+    <updated>2015-10-08T23:42:45-07:00</updated>
+    <id>http://agam.github.io/blog/2015/10/08/a-taste-of-j</id>
     <content type="html"><![CDATA[<p>I recently stumbled across APL and J, as mentioned in a previous post, and began reading a bit of <a href="http://www.jsoftware.com/help/learning/contents.htm">an introductory book</a>.</p>
 
 <p>A couple of days ago, I came across this series of coding tasks on a blog called &ldquo;Programming Praxis&rdquo;, and I picked <a href="http://programmingpraxis.com/2015/10/06/the-iron-bar/">the most recent one</a> as an example to try out some J noobism.</p>

@@ -1,0 +1,222 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>A Tiny Taste of J - Agam's Mashed-Up Pome</title>
+	<meta name="author" content="Agam">
+
+	
+	<meta name="description" content="I recently stumbled across APL and J, as mentioned in a previous post, and began reading a bit of an introductory book. A couple of days ago, I came &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Agam's Mashed-Up Pome" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script async="true" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+
+</head>
+
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">Agam's Mashed-Up Pome</a></h1>
+<!-- DebugAgam: Uncomment if necessary!
+<nav id="main-nav"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:agam.github.io">
+			</form>
+		</div>
+	</div>
+</nav>
+-->
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		<a class="google" href="https://plus.google.com/+AgamBrahma?rel=author" title="Google+">Google+</a>
+		
+		
+		<a class="twitter" href="http://twitter.com/agambrahma" title="Twitter">Twitter</a>
+		
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+    
+	</div>
+        <!-- DebugAgam: uncomment if necessary!
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:agam.github.io">
+	</form>
+        -->
+</nav>
+
+</header>
+	
+		
+	
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">A Tiny Taste of J</h2>
+	<div class="entry-content"><p>I recently stumbled across APL and J, as mentioned in a previous post, and began reading a bit of <a href="http://www.jsoftware.com/help/learning/contents.htm">an introductory book</a>.</p>
+
+<p>A couple of days ago, I came across this series of coding tasks on a blog called &ldquo;Programming Praxis&rdquo;, and I picked <a href="http://programmingpraxis.com/2015/10/06/the-iron-bar/">the most recent one</a> as an example to try out some J noobism.</p>
+
+<p>The example is simple but contrived (and <em>median</em> is a terrible name) &mdash; we basically have to write a function that that takes two arguments and either increments, decrements or does nothing, with the first argument. In J, like so many other tasks, this is essentially one line (12 characters, to be precise).</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>median =: [ + (* @: -)~</span></code></pre></td></tr></table></div></figure>
+
+
+<p>To give some idea on what&rsquo;s going on here, this expression can be broken, first, into three parts: <code>[</code>, <code>+</code>, <code>(* @: -)~</code>. Let&rsquo;s start with the sub-expression within the parentheses: <code>* @: -</code>.</p>
+
+<p>Here, <code>*</code> is a <em>verb</em> (think: <em>&ldquo;function&rdquo;</em>) that returns 1, 0, or -1 depending on the sign of its argument. So <code>* 4</code> is <code>1</code>, <code>* _2</code> (that&rsquo;s how -2 is represented) is <code>_1</code>, <code>* 0</code> is <code>0</code>.</p>
+
+<p><code>-</code> is the only thing that does what you would expect: <code>4 - 3</code> is <code>1</code>, and so on.</p>
+
+<p><code>@:</code> is a <em>conjunction</em>, such that <code>f @: g</code> when applied to <em>x</em> has the effect of <em>f (g x)</em>.</p>
+
+<p><code>]</code> is a verb that when given two values, always selects the first of the two.</p>
+
+<p><code>~</code> is an <em>adverb</em> that reverses the order of arguments to its preceding verb. So while <code>%</code> applied to <em>x</em> and <em>y</em> yields <em>(x % y)</em>, <code>%~</code> applied to <em>x</em> and <em>y</em> yields <em>(y % x)</em>.</p>
+
+<p>Now things get a little tricky (but only a <em>little</em>; we&rsquo;re barely scratching the surface of J here). The expression for median can be seen as three verbs laid down together, and this is interpreted as a <em>&ldquo;train&rdquo;</em> of verbs, or more specifically in this case, a <em>&ldquo;dyadic fork&rdquo;</em>.</p>
+
+<p>Basically, <em>(f g h)</em> when applied to two values <em>x</em> and <em>y</em>, is equivalent to <em>g</em> applied to the result of <em>f</em> applied to <em>x</em> and <em>y</em>, and the result of <em>h</em> applied to <em>x</em> and <em>y</em>. Or, using infix notation,</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>x (f g h) y   is equivalent to    (x f y) g (x h y)</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The reason <em>x</em> and <em>y</em> aren&rsquo;t present in the definition of <em>median</em> is that it&rsquo;s defined using a &ldquo;tacit&rdquo; form rather than an &ldquo;explicit&rdquo; form (somewhat similar to &ldquo;point-free&rdquo; definitions in Haskell).</p>
+
+<p>Putting it all together now, when applied to two arguments, we get the equivalent of <code>(x [ y) + (* (y - x))</code>, which gives <code>x + 1</code> when <em>y > x</em>, <code>x + 0</code> when <em>y == x</em>, and <code>x + (-1)</code> when <em>y &lt; x</em>, which is what we want.</p>
+
+<p>If you like this sort of thing, head over to <a href="http://www.jsoftware.com/">jsoftware.com</a> for more.</p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-10-08T23:42:45-07:00" pubdate data-updated="true">Oct 8<sup>th</sup>, 2015</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/jlang/'>jlang</a>
+
+
+</div>
+	
+</div>
+</article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+		
+		
+		<a class="addthis_button_tweet"></a>
+		
+		
+		<a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+		
+		
+	</div>
+	
+</div>
+
+
+
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2015
+
+    Agam
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'agamamp';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://agam.github.io/blog/2015/10/08/a-taste-of-j/';
+        var disqus_url = 'http://agam.github.io/blog/2015/10/08/a-taste-of-j/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//go.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-16612682-4']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: alwaysbecoding, | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/alwaysbecoding/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-10-10T07:31:33+00:00</updated>
+  <updated>2015-10-26T21:34:22-07:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Programming Fun: Graph distances]]></title>
     <link href="http://agam.github.io/blog/2014/02/03/programming-fun-graph-distances/"/>
-    <updated>2014-02-03T23:12:00+00:00</updated>
+    <updated>2014-02-03T23:12:00-08:00</updated>
     <id>http://agam.github.io/blog/2014/02/03/programming-fun-graph-distances</id>
     <content type="html"><![CDATA[<p>Interesting <a href="http://www.reddit.com/r/dailyprogrammer/comments/1tiz4z/122313_challenge_140_intermediate_graph_radius/">problem</a>: given a graph, find out the <em>minimum distance between any two nodes</em>.</p>
 
@@ -111,7 +111,7 @@ int main(int argc, char* argv[]) {
   <entry>
     <title type="html"><![CDATA[Programming Fun: Ascii Tree]]></title>
     <link href="http://agam.github.io/blog/2014/01/29/programming-fun-ascii-tree/"/>
-    <updated>2014-01-29T02:11:00+00:00</updated>
+    <updated>2014-01-29T02:11:00-08:00</updated>
     <id>http://agam.github.io/blog/2014/01/29/programming-fun-ascii-tree</id>
     <content type="html"><![CDATA[<p>Another <a href="http://www.reddit.com/r/dailyprogrammer/comments/1t0r09/121613_challenge_145_easy_tree_generation/">easy problem</a> (I&rsquo;m not picking easy problems! I&rsquo;m just going in sequence!)</p>
 
@@ -193,7 +193,7 @@ int main(int argc, char* argv[]) {
   <entry>
     <title type="html"><![CDATA[Programming Fun: Adjacency Matrix]]></title>
     <link href="http://agam.github.io/blog/2014/01/27/programming-fun-adjacency-matrix/"/>
-    <updated>2014-01-27T03:55:00+00:00</updated>
+    <updated>2014-01-27T03:55:00-08:00</updated>
     <id>http://agam.github.io/blog/2014/01/27/programming-fun-adjacency-matrix</id>
     <content type="html"><![CDATA[<p>Another &ldquo;intermediate&rdquo; <a href="http://www.reddit.com/r/dailyprogrammer/comments/1t6dlf/121813_challenge_140_intermediate_adjacency_matrix/">problem</a> today.</p>
 
@@ -286,7 +286,7 @@ int main(int argc, char* argv[]) {
   <entry>
     <title type="html"><![CDATA[Programming Fun: Nuts and Bolts]]></title>
     <link href="http://agam.github.io/blog/2014/01/19/programming-fun-nuts-and-bolts/"/>
-    <updated>2014-01-19T00:39:00+00:00</updated>
+    <updated>2014-01-19T00:39:00-08:00</updated>
     <id>http://agam.github.io/blog/2014/01/19/programming-fun-nuts-and-bolts</id>
     <content type="html"><![CDATA[<p><a href="http://www.reddit.com/r/dailyprogrammer/comments/1sob1e/121113_challenge_144_easy_nuts_bolts/">This one</a> is <em>too easy</em> but included anyway for completeness (why not?)</p>
 
@@ -367,7 +367,7 @@ int main(int argc, char* argv[]) {
   <entry>
     <title type="html"><![CDATA[Programming Fun: Telephone Keypads]]></title>
     <link href="http://agam.github.io/blog/2014/01/18/programming-fun-telephone-keypads/"/>
-    <updated>2014-01-18T02:21:00+00:00</updated>
+    <updated>2014-01-18T02:21:00-08:00</updated>
     <id>http://agam.github.io/blog/2014/01/18/programming-fun-telephone-keypads</id>
     <content type="html"><![CDATA[<p><a href="http://www.reddit.com/r/dailyprogrammer/comments/1sody4/12113_challenge_139_intermediate_telephone_keypads/">This is a <em>medium</em> level problem</a>  with two levels of difficulty.</p>
 

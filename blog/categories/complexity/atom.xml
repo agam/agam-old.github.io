@@ -4,7 +4,7 @@
   <title><![CDATA[Category: complexity | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/complexity/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-10-10T07:31:33+00:00</updated>
+  <updated>2015-10-26T21:34:22-07:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[You say incidental, I say accidental ...]]></title>
-    <link href="http://agam.github.io/blog/2015/05/17/you-say-incidental/"/>
-    <updated>2015-05-17T03:02:15+00:00</updated>
-    <id>http://agam.github.io/blog/2015/05/17/you-say-incidental</id>
+    <link href="http://agam.github.io/blog/2015/05/16/you-say-incidental/"/>
+    <updated>2015-05-16T20:02:15-07:00</updated>
+    <id>http://agam.github.io/blog/2015/05/16/you-say-incidental</id>
     <content type="html"><![CDATA[<p>Completely out of context, but it makes a point. Well, <em>some</em> point.</p>
 
 <blockquote><p>Immutant is an integrated suite of Clojure libraries backed by Undertow for web, HornetQ for messaging, Infinispan for caching, Quartz for scheduling, and Narayana for transactions. Applications built with Immutant can optionally be deployed to a WildFly cluster for enhanced features. Its fundamental goal is to reduce the inherent incidental complexity in real world applications.</p></blockquote>

@@ -4,7 +4,7 @@
   <title><![CDATA[Category: math | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/math/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-10-10T07:31:33+00:00</updated>
+  <updated>2015-10-26T21:34:22-07:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[On Mathematical Notation ...]]></title>
-    <link href="http://agam.github.io/blog/2015/09/28/on-mathematical-notation-dot-dot-dot/"/>
-    <updated>2015-09-28T05:32:17+00:00</updated>
-    <id>http://agam.github.io/blog/2015/09/28/on-mathematical-notation-dot-dot-dot</id>
+    <link href="http://agam.github.io/blog/2015/09/27/on-mathematical-notation-dot-dot-dot/"/>
+    <updated>2015-09-27T22:32:17-07:00</updated>
+    <id>http://agam.github.io/blog/2015/09/27/on-mathematical-notation-dot-dot-dot</id>
     <content type="html"><![CDATA[<p>I&rsquo;ve always had a vague lingering feeling about mathematical notation being at times inconsistent, excessive, duplicated, and so on. Some of it is of course due to me not knowing enough math, and not knowing math well enough, but some of it, I was recently relieved to find out, was a concern shared by people smarter than me too.</p>
 
 <p>Unfortunately, I&rsquo;m now <em>more</em> confused since the two solutions are (IMO) at odds with each other. Both share the common goal of replacing outdated notation by making it <em>&ldquo;executable&rdquo;</em>, and thus more precise, but the way they go about it is different.</p>
@@ -28,9 +28,9 @@
   
   <entry>
     <title type="html"><![CDATA[Haskell/Math]]></title>
-    <link href="http://agam.github.io/blog/2014/11/12/haskell-slash-math/"/>
-    <updated>2014-11-12T02:05:43+00:00</updated>
-    <id>http://agam.github.io/blog/2014/11/12/haskell-slash-math</id>
+    <link href="http://agam.github.io/blog/2014/11/11/haskell-slash-math/"/>
+    <updated>2014-11-11T18:05:43-08:00</updated>
+    <id>http://agam.github.io/blog/2014/11/11/haskell-slash-math</id>
     <content type="html"><![CDATA[<p>I don&rsquo;t recall the very first articles I might have read about Haskell, but the first non-short text was Real World Haskell, which I went through the year it came out. I didn&rsquo;t write any code at that time (a mistake!)</p>
 
 <p>Then, a coupffle of years later, I thought I&rsquo;d try my hand at <a href="https://projecteuler.net/">Project Euler</a> with Haskell. I did the first 10-15 and then got bored.</p>

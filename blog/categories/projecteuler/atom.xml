@@ -4,7 +4,7 @@
   <title><![CDATA[Category: projecteuler | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/projecteuler/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-10-10T07:31:33+00:00</updated>
+  <updated>2015-10-26T21:34:22-07:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Moving on from Project Euler]]></title>
     <link href="http://agam.github.io/blog/2015/05/29/project-euler-and-learning-programming/"/>
-    <updated>2015-05-29T19:37:07+00:00</updated>
+    <updated>2015-05-29T12:37:07-07:00</updated>
     <id>http://agam.github.io/blog/2015/05/29/project-euler-and-learning-programming</id>
     <content type="html"><![CDATA[<p>I started doing Project Euler problems occasionally with the assumption that it was a good way to either (1) learn a new language, or (2) as a healthy way to keep practicing programming. It turns out, however, that what I <em>really</em> end up doing is &ldquo;brute-forcing&rdquo; problems that are really <em>math</em> problems.</p>
 
@@ -31,7 +31,7 @@
   <entry>
     <title type="html"><![CDATA[Euler 50: Consecutive Prime Sum]]></title>
     <link href="http://agam.github.io/blog/2015/05/29/euler-50-consecutive-prime-sum/"/>
-    <updated>2015-05-29T19:24:32+00:00</updated>
+    <updated>2015-05-29T12:24:32-07:00</updated>
     <id>http://agam.github.io/blog/2015/05/29/euler-50-consecutive-prime-sum</id>
     <content type="html"><![CDATA[<p>I had posted a grotesque non-working solution to this <a href="/blog/2015/05/17/euler-50-a-non-working-solution/">previously</a>, so here is a grotesque <em>working</em> solution.</p>
 
@@ -181,9 +181,9 @@ findMaxPrimeSum()
   
   <entry>
     <title type="html"><![CDATA[Euler 50: A non-working solution]]></title>
-    <link href="http://agam.github.io/blog/2015/05/17/euler-50-a-non-working-solution/"/>
-    <updated>2015-05-17T02:56:08+00:00</updated>
-    <id>http://agam.github.io/blog/2015/05/17/euler-50-a-non-working-solution</id>
+    <link href="http://agam.github.io/blog/2015/05/16/euler-50-a-non-working-solution/"/>
+    <updated>2015-05-16T19:56:08-07:00</updated>
+    <id>http://agam.github.io/blog/2015/05/16/euler-50-a-non-working-solution</id>
     <content type="html"><![CDATA[<p>It&rsquo;s worth pointing out things that don&rsquo;t work, roads that lead to dead ends, etc &mdash; so here is a brute force solution that has absolutely no chance of ever working. It&rsquo;s long and verbose because it&rsquo;s a <em>franken-solution</em>, made out of parts of previous solution concatenated together into a terrible mess. Posting it here before I destroy it. The forlorn <code>TODO</code> at the end proved over-optimistic &hellip;</p>
 
 <p>```c++
@@ -403,9 +403,9 @@ if (num_primes == 2) {
   
   <entry>
     <title type="html"><![CDATA[Euler 49: Prime Permutations]]></title>
-    <link href="http://agam.github.io/blog/2015/05/05/euler-49-prime-permutations/"/>
-    <updated>2015-05-05T06:39:11+00:00</updated>
-    <id>http://agam.github.io/blog/2015/05/05/euler-49-prime-permutations</id>
+    <link href="http://agam.github.io/blog/2015/05/04/euler-49-prime-permutations/"/>
+    <updated>2015-05-04T23:39:11-07:00</updated>
+    <id>http://agam.github.io/blog/2015/05/04/euler-49-prime-permutations</id>
     <content type="html"><![CDATA[<p>This one took way longer than expected. I initially misunderstood the question to require 4-digit numbers <em>unique digits</em> (because that&rsquo;s what the example has!) and I went crazy trying to figure out why the <em>only</em> answer I was getting was the example in the question. Anyway I later realized I&rsquo;d over-complicated my solution and I just needed to look at numbers between <code>1000</code> and <code>9999</code>. Given this, it&rsquo;s <em>absurd</em> to have a class called &ldquo;FourDigits&rdquo; (duh), but I figured there&rsquo;s no point hiding my initial mistake :)</p>
 
 <p>The code fragment below is bloated because I&rsquo;ve left in old code from my first attempt (the functions suffixed with <code>...Old</code>), and half the code here is dead code.</p>
@@ -673,9 +673,9 @@ sys     0m0.000s
   
   <entry>
     <title type="html"><![CDATA[Euler 48: Self powers]]></title>
-    <link href="http://agam.github.io/blog/2015/05/04/euler-48-self-powers/"/>
-    <updated>2015-05-04T03:09:53+00:00</updated>
-    <id>http://agam.github.io/blog/2015/05/04/euler-48-self-powers</id>
+    <link href="http://agam.github.io/blog/2015/05/03/euler-48-self-powers/"/>
+    <updated>2015-05-03T20:09:53-07:00</updated>
+    <id>http://agam.github.io/blog/2015/05/03/euler-48-self-powers</id>
     <content type="html"><![CDATA[<p>One of the simplest problems, that would be a one-liner in Python or Lisp. Decided to do it in C++ anyway, using the <code>GMP</code> library (verbose, but runs in <code>4 ms</code>)</p>
 
 <p>For this to work, you&rsquo;ll need to add (e.g. for <code>CMake</code>) a line like <code>target_link_libraries(Test gmpxx gmp)</code>, and include <code>gmpxx.h</code>.</p>

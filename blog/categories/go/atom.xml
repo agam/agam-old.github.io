@@ -4,7 +4,7 @@
   <title><![CDATA[Category: go | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/go/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-10-10T07:31:33+00:00</updated>
+  <updated>2015-10-26T21:34:22-07:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Appengine transition from Python to Go]]></title>
     <link href="http://agam.github.io/blog/2013/06/22/python-to-go/"/>
-    <updated>2013-06-22T00:00:00+00:00</updated>
+    <updated>2013-06-22T00:00:00-07:00</updated>
     <id>http://agam.github.io/blog/2013/06/22/python-to-go</id>
     <content type="html"><![CDATA[<p>Hadn&rsquo;t updated this blog for a few months, and neither the &ldquo;personal web site&rdquo; that I had started earlier. So, to try something new, I decided to port that appengine site from python to go (looking at the Github logs, I haven&rsquo;t updated that for 2 years !!)</p>
 
@@ -97,7 +97,7 @@ This request may thus take longer and use more CPU than a typical request for yo
   <entry>
     <title type="html"><![CDATA[Comparing 'Hello World' in Go]]></title>
     <link href="http://agam.github.io/blog/2013/03/12/hello-world-in-go-compared/"/>
-    <updated>2013-03-12T00:00:00+00:00</updated>
+    <updated>2013-03-12T00:00:00-07:00</updated>
     <id>http://agam.github.io/blog/2013/03/12/hello-world-in-go-compared</id>
     <content type="html"><![CDATA[<p>Since I looked at printing &ldquo;Hello World&rdquo; <a href="/posts/hello-world-comparison.html">in C and Haskell earlier</a>, I thought I would look at what <em><a href="http://golang.org/">Go</a></em> does diferently.</p>
 

@@ -1,0 +1,415 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Trying out stack ... - Agam's Mashed-Up Pome</title>
+	<meta name="author" content="Agam">
+
+	
+	<meta name="description" content="Tried this out after I read about it. Note: the following was all done on a Macbook, but it should work similarly on Linux too. Get Stack Download it &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Agam's Mashed-Up Pome" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script async="true" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+
+</head>
+
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">Agam's Mashed-Up Pome</a></h1>
+<!-- DebugAgam: Uncomment if necessary!
+<nav id="main-nav"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:agam.github.io">
+			</form>
+		</div>
+	</div>
+</nav>
+-->
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		<a class="google" href="https://plus.google.com/+AgamBrahma?rel=author" title="Google+">Google+</a>
+		
+		
+		<a class="twitter" href="http://twitter.com/agambrahma" title="Twitter">Twitter</a>
+		
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+    
+	</div>
+        <!-- DebugAgam: uncomment if necessary!
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:agam.github.io">
+	</form>
+        -->
+</nav>
+
+</header>
+	
+		
+	
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">Trying Out Stack ...</h2>
+	<div class="entry-content"><p>Tried this out after <a href="https://www.fpcomplete.com/blog/2015/06/announcing-first-public-beta-stack">I read about it</a>. Note: the following was all done on a Macbook, but it should work similarly on Linux too.</p>
+
+<p><strong>Get Stack</strong></p>
+
+<p><a href="https://github.com/fpco/stack/releases/download/v0.0.0-beta/stack-0.0.0-x86_64-osx.gz">Download</a> it.</p>
+
+<p><code>gunzip</code> and copy to some directory in <code>$PATH</code></p>
+
+<p><strong>Use Stack</strong></p>
+
+<p>Create dummy <code>.hs</code> file.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="nf">main</span> <span class="ow">=</span> <span class="n">putStrLn</span> <span class="s">&quot;Hello World&quot;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><em>Digression: first build</em></p>
+
+<p>You need <code>GHC</code> installed, and a file called <code>stack.yaml</code> in the local directory. But if you don&rsquo;t, no problem.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>stack ghc dummy.hs
+</span><span class='line'>No .cabal file found in directory /Users/agam/Documents/Haskell/Dummy/
+</span><span class='line'>Writing default config file to: /Users/agam/Documents/Haskell/Dummy/stack.yaml
+</span><span class='line'>Downloading lts-2.13 build plan ...
+</span><span class='line'>Downloaded lts-2.13 build plan.
+</span><span class='line'>Populating index cache, may take a moment ...
+</span><span class='line'>Updating package index hackage.haskell.org ...
+</span><span class='line'>Cloning package index ...
+</span><span class='line'>Done populating index cache.
+</span><span class='line'>Downloading ghc-7.8.4 ...
+</span><span class='line'>Downloaded ghc-7.8.4.
+</span><span class='line'>Unpacking GHC ...
+</span><span class='line'>Configuring GHC ...
+</span><span class='line'>Installing GHC ...
+</span><span class='line'>GHC installed.
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Run it once more to actually build it.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>stack ghc dummy.hs
+</span><span class='line'><span class="o">[</span><span class="m">1</span> of 1<span class="o">]</span> Compiling Main             <span class="o">(</span> dummy.hs, dummy.o <span class="o">)</span>
+</span><span class='line'>Linking dummy ...
+</span><span class='line'><span class="nv">$ </span>ls
+</span><span class='line'>stack.yaml dummy.o dummy.hs dummy.hi dummy
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>Run the program</strong></p>
+
+<p>Just run the executable created:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>./dummy
+</span><span class='line'>Hello World
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Alternatively, combine steps 4 and 5</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>stack runghc dummy.hs
+</span><span class='line'>Hello World
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>Libraries</strong></p>
+
+<p>(this is why we&rsquo;re <em>really</em> here, right?)</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>stack update
+</span><span class='line'>Updating package index hackage.haskell.org ...
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>What packages do we have ?</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>stack <span class="nb">exec</span> -- ghc-pkg list
+</span><span class='line'>/Users/agam/.stack/programs/x86_64-osx/ghc-7.8.4/lib/ghc-7.8.4/package.conf.d/
+</span><span class='line'>Cabal-1.18.1.5
+</span><span class='line'>array-0.5.0.0
+</span><span class='line'>base-4.7.0.2
+</span><span class='line'>bin-package-db-0.0.0.0
+</span><span class='line'>binary-0.7.1.0
+</span><span class='line'>bytestring-0.10.4.0
+</span><span class='line'>containers-0.5.5.1
+</span><span class='line'>deepseq-1.3.0.2
+</span><span class='line'>directory-1.2.1.0
+</span><span class='line'>filepath-1.3.0.2
+</span><span class='line'>ghc-7.8.4
+</span><span class='line'>ghc-prim-0.3.1.0
+</span><span class='line'>haskeline-0.7.1.2
+</span><span class='line'>haskell2010-1.1.2.0
+</span><span class='line'>haskell98-2.0.0.3
+</span><span class='line'>hoopl-3.10.0.1
+</span><span class='line'>hpc-0.6.0.1
+</span><span class='line'>integer-gmp-0.5.1.0
+</span><span class='line'>old-locale-1.0.0.6
+</span><span class='line'>old-time-1.1.0.2
+</span><span class='line'>pretty-1.1.1.1
+</span><span class='line'>process-1.2.0.0
+</span><span class='line'>rts-1.0
+</span><span class='line'>template-haskell-2.9.0.0
+</span><span class='line'>terminfo-0.4.0.0
+</span><span class='line'><span class="nb">time</span>-1.4.2
+</span><span class='line'>transformers-0.3.0.0
+</span><span class='line'>unix-2.7.0.1
+</span><span class='line'>xhtml-3000.2.1
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p><strong>Get a new package using Stack</strong></p>
+
+<p>First, we need to <em>require</em> some new package. Change dummy code to (e.g.)</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="kr">import</span> <span class="nn">System.Random</span>
+</span><span class='line'><span class="kr">import</span> <span class="nn">Control.Monad</span> <span class="p">(</span><span class="nf">replicateM</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">main</span> <span class="ow">=</span> <span class="n">replicateM</span> <span class="mi">10</span> <span class="p">(</span><span class="n">randomIO</span> <span class="ow">::</span> <span class="kt">IO</span> <span class="kt">Float</span><span class="p">)</span> <span class="o">&gt;&gt;=</span> <span class="n">print</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Try to build it</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>stack ghc dummy.hs
+</span><span class='line'>
+</span><span class='line'>dummy.hs:1:8:
+</span><span class='line'>Could not find module ‘System.Random’
+</span><span class='line'>Use -v to see a list of the files searched <span class="k">for</span>.
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So let&rsquo;s get it then:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>stack deps random
+</span><span class='line'>random-1.1: downloading
+</span><span class='line'>random-1.1: configure
+</span><span class='line'>random-1.1: build
+</span><span class='line'>random-1.1: install
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&hellip; and then run it again:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>stack ghc dummy.hs
+</span><span class='line'><span class="o">[</span><span class="m">1</span> of 1<span class="o">]</span> Compiling Main             <span class="o">(</span> dummy.hs, dummy.o <span class="o">)</span>
+</span><span class='line'>Linking dummy ...
+</span><span class='line'><span class="nv">$ </span>./dummy
+</span><span class='line'><span class="o">[</span>0.4301154,0.9796305,4.801333e-2,0.6978437,0.45780963,0.21923387,0.33110678,0.2976914,5.8295727e-3,0.28221375<span class="o">]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Not bad at all. Reminds me of the feeling I got after wading through the plethora of python package handling frameworks and discovering Anaconda. This is <em>finally</em> a newbie-friendly language; &ldquo;cabal hell&rdquo; is no more (!)</p>
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-06-09T22:01:24-07:00" pubdate data-updated="true">Jun 9<sup>th</sup>, 2015</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/haskell/'>haskell</a>
+
+
+</div>
+	
+</div>
+</article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+		
+		
+		<a class="addthis_button_tweet"></a>
+		
+		
+		<a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+		
+		
+	</div>
+	
+</div>
+
+
+
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2015
+
+    Agam
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'agamamp';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://agam.github.io/blog/2015/06/09/trying-out-stack-dot-dot-dot/';
+        var disqus_url = 'http://agam.github.io/blog/2015/06/09/trying-out-stack-dot-dot-dot/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//go.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-16612682-4']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

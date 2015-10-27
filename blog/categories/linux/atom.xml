@@ -4,7 +4,7 @@
   <title><![CDATA[Category: linux | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/linux/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-10-10T07:31:33+00:00</updated>
+  <updated>2015-10-26T21:34:22-07:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[FreeBSD and Linux: install paths]]></title>
-    <link href="http://agam.github.io/blog/2015/06/06/freebsd-and-linux-install-paths/"/>
-    <updated>2015-06-06T02:46:45+00:00</updated>
-    <id>http://agam.github.io/blog/2015/06/06/freebsd-and-linux-install-paths</id>
+    <link href="http://agam.github.io/blog/2015/06/05/freebsd-and-linux-install-paths/"/>
+    <updated>2015-06-05T19:46:45-07:00</updated>
+    <id>http://agam.github.io/blog/2015/06/05/freebsd-and-linux-install-paths</id>
     <content type="html"><![CDATA[<p>One of those <strong>WTF</strong> moments of unexplainable distro choices. This on an ubuntu box:</p>
 
 <p>```sh
@@ -60,7 +60,7 @@ lrwxrwxrwx 1 root root 15 Oct 14  2013 /etc/alternatives/nc &ndash;> /bin/nc.ope
   <entry>
     <title type="html"><![CDATA[Getting into programming, for _real_ and for _free_]]></title>
     <link href="http://agam.github.io/blog/2015/01/02/getting-into-programming/"/>
-    <updated>2015-01-02T23:17:08+00:00</updated>
+    <updated>2015-01-02T15:17:08-08:00</updated>
     <id>http://agam.github.io/blog/2015/01/02/getting-into-programming</id>
     <content type="html"><![CDATA[<p>I saw an ad for Codecademy<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> in the footer of some web page, and immediately had mixed reactions. I&rsquo;m all for making programming a basic skill alongside reading and writing, but the focus of these &ldquo;bootcamps&rdquo;<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup> seems to be <em>vocational web development</em><sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>.</p>
 
@@ -125,7 +125,7 @@ lrwxrwxrwx 1 root root 15 Oct 14  2013 /etc/alternatives/nc &ndash;> /bin/nc.ope
   <entry>
     <title type="html"><![CDATA[Switching to KDE]]></title>
     <link href="http://agam.github.io/blog/2013/08/14/switching-to-kde/"/>
-    <updated>2013-08-14T00:00:00+00:00</updated>
+    <updated>2013-08-14T00:00:00-07:00</updated>
     <id>http://agam.github.io/blog/2013/08/14/switching-to-kde</id>
     <content type="html"><![CDATA[<p>I have been using <a href="http://xmonad.org/">Xmonad</a> for almost a couple of years, mostly because I wanted a tiling window manager that would maximize screen space and allow fast window and desktop switching on my linux laptop.</p>
 

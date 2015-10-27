@@ -1,0 +1,265 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Euler 42: Coded triangle numbers - Agam's Mashed-Up Pome</title>
+	<meta name="author" content="Agam">
+
+	
+	<meta name="description" content="Very straightforward, this one. And I don&rsquo;t need to feel bad that I did it the simple way. If you&rsquo;re wondering where split-sequence-if &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Agam's Mashed-Up Pome" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script async="true" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+
+</head>
+
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">Agam's Mashed-Up Pome</a></h1>
+<!-- DebugAgam: Uncomment if necessary!
+<nav id="main-nav"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:agam.github.io">
+			</form>
+		</div>
+	</div>
+</nav>
+-->
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		<a class="google" href="https://plus.google.com/+AgamBrahma?rel=author" title="Google+">Google+</a>
+		
+		
+		<a class="twitter" href="http://twitter.com/agambrahma" title="Twitter">Twitter</a>
+		
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+    
+	</div>
+        <!-- DebugAgam: uncomment if necessary!
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:agam.github.io">
+	</form>
+        -->
+</nav>
+
+</header>
+	
+		
+	
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">Euler 42: Coded Triangle Numbers</h2>
+	<div class="entry-content"><p>Very straightforward, this one. And I don&rsquo;t need to feel bad that I did it the simple way. If you&rsquo;re wondering where <code>split-sequence-if</code> and <code>read-file</code> came from, the answer is <code>rutils</code>, which is a good general-purpose utility package, a sort of superset of <code>alexandria</code>, and just a <code>(ql:quickload 'rutils)</code> away. As before, the final answer is obtained by evaluating <code>(euler42)</code>.</p>
+
+<p><strong>Statutory Warning</strong>: <em>spoilers ahead</em></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="c1">;; If x = 0.5 * n * (n+1) is a triangle number, then there is an</span>
+</span><span class='line'><span class="c1">;; integral solution for n^2 + n - 2*x = 0.</span>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">quadratic-solution</span> <span class="p">(</span><span class="nv">a</span> <span class="nv">b</span> <span class="nv">c</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">det</span> <span class="p">(</span><span class="nb">sqrt</span> <span class="p">(</span><span class="nb">-</span> <span class="p">(</span><span class="nb">*</span> <span class="nv">b</span> <span class="nv">b</span><span class="p">)</span> <span class="p">(</span><span class="nb">*</span> <span class="mi">4</span> <span class="nv">a</span> <span class="nv">c</span><span class="p">))))</span>
+</span><span class='line'>        <span class="p">(</span><span class="nv">denom</span> <span class="p">(</span><span class="nb">*</span> <span class="mi">2</span> <span class="nv">a</span><span class="p">)))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nb">cons</span> <span class="p">(</span><span class="nb">/</span> <span class="p">(</span><span class="nb">-</span> <span class="p">(</span><span class="nb">-</span> <span class="nv">b</span><span class="p">)</span> <span class="nv">det</span><span class="p">)</span> <span class="nv">denom</span><span class="p">)</span>
+</span><span class='line'>          <span class="p">(</span><span class="nb">/</span> <span class="p">(</span><span class="nb">+</span> <span class="p">(</span><span class="nb">-</span> <span class="nv">b</span><span class="p">)</span> <span class="nv">det</span><span class="p">)</span> <span class="nv">denom</span><span class="p">))))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">positive-int</span> <span class="p">(</span><span class="nv">num</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">and</span> <span class="p">(</span><span class="nb">integerp</span> <span class="nv">num</span><span class="p">)</span>
+</span><span class='line'>       <span class="p">(</span><span class="nb">plusp</span> <span class="nv">num</span><span class="p">)))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">is-triangle-number</span> <span class="p">(</span><span class="nv">num</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">soln</span> <span class="p">(</span><span class="nv">quadratic-solution</span> <span class="mi">1</span> <span class="mi">1</span> <span class="p">(</span><span class="nb">*</span> <span class="p">(</span><span class="nb">-</span> <span class="mi">2</span><span class="p">)</span> <span class="nv">num</span><span class="p">))))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nb">or</span> <span class="p">(</span><span class="nv">positive-int</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">soln</span><span class="p">))</span>
+</span><span class='line'>        <span class="p">(</span><span class="nv">positive-int</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">soln</span><span class="p">)))))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">char-&gt;number</span> <span class="p">(</span><span class="nb">char</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">1+</span> <span class="p">(</span><span class="nb">-</span> <span class="p">(</span><span class="nb">char-code</span> <span class="nb">char</span><span class="p">)</span> <span class="p">(</span><span class="nb">char-code</span> <span class="sc">#\A</span><span class="p">))))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">is-triangle-word</span> <span class="p">(</span><span class="nv">word</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">value</span> <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nb">char</span> <span class="nv">across</span> <span class="nv">word</span>
+</span><span class='line'>                  <span class="nv">summing</span> <span class="p">(</span><span class="nv">char-&gt;number</span> <span class="nb">char</span><span class="p">))))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nv">is-triangle-number</span> <span class="nv">value</span><span class="p">)))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">euler42</span> <span class="p">()</span>
+</span><span class='line'>  <span class="c1">;; Read in the file, split on the commas, remove the quotes</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">let*</span> <span class="p">((</span><span class="nv">file-text</span> <span class="p">(</span><span class="nv">read-file</span> <span class="s">&quot;/home/agam/Downloads/p042_words.txt&quot;</span><span class="p">))</span>
+</span><span class='line'>         <span class="p">(</span><span class="nv">words-with-quotes</span> <span class="p">(</span><span class="nv">split-sequence-if</span>
+</span><span class='line'>                             <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nb">char</span><span class="p">)</span> <span class="p">(</span><span class="nb">eq</span> <span class="nb">char</span> <span class="sc">#\,</span><span class="p">))</span>
+</span><span class='line'>                             <span class="nv">file-text</span><span class="p">))</span>
+</span><span class='line'>         <span class="p">(</span><span class="nv">words</span> <span class="p">(</span><span class="nb">mapcar</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">w</span><span class="p">)</span> <span class="p">(</span><span class="nb">remove</span> <span class="sc">#\&quot;</span> <span class="nv">w</span><span class="p">))</span>
+</span><span class='line'>                        <span class="nv">words-with-quotes</span><span class="p">)))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">w</span> <span class="nv">in</span> <span class="nv">words</span> <span class="nb">count</span>
+</span><span class='line'>         <span class="p">(</span><span class="nv">is-triangle-word</span> <span class="nv">w</span><span class="p">))))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-03-22T18:11:01-07:00" pubdate data-updated="true">Mar 22<sup>nd</sup>, 2015</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/lisp/'>lisp</a>, <a class='category' href='/blog/categories/projecteuler/'>projecteuler</a>
+
+
+</div>
+	
+</div>
+</article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+		
+		
+		<a class="addthis_button_tweet"></a>
+		
+		
+		<a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+		
+		
+	</div>
+	
+</div>
+
+
+
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2015
+
+    Agam
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'agamamp';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://agam.github.io/blog/2015/03/22/euler-42-coded-triangle-numbers/';
+        var disqus_url = 'http://agam.github.io/blog/2015/03/22/euler-42-coded-triangle-numbers/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//go.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-16612682-4']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

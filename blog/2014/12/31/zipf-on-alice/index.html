@@ -1,0 +1,537 @@
+
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Zipf on Alice - Agam's Mashed-Up Pome</title>
+	<meta name="author" content="Agam">
+
+	
+	<meta name="description" content="I just encountered Zipf&rsquo;s Law1 for the first time, and wanted to confirm it for myself. So I got a copy of Alice in Wonderland2, removed the &hellip;">
+	
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+	<link href="/atom.xml" rel="alternate" title="Agam's Mashed-Up Pome" type="application/atom+xml">
+	<link rel="canonical" href="">
+	<link href="/favicon.png" rel="shortcut icon">
+	<link href="/stylesheets/screen.css" media="screen, projection" rel="stylesheet" type="text/css">
+	<!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+	<script async="true" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<!--Fonts from Google"s Web font directory at http://google.com/webfonts -->
+<link href="http://fonts.googleapis.com/css?family=PT+Serif:regular,italic,bold,bolditalic" rel="stylesheet" type="text/css">
+<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+<link href='http://fonts.googleapis.com/css?family=Fjalla+One' rel='stylesheet' type='text/css'>
+
+</head>
+
+
+<body>
+	<header id="header" class="inner"><h1><a href="/">Agam's Mashed-Up Pome</a></h1>
+<!-- DebugAgam: Uncomment if necessary!
+<nav id="main-nav"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+</ul>
+</nav>
+<nav id="mobile-nav">
+	<div class="alignleft menu">
+		<a class="button">Menu</a>
+		<div class="container"><ul class="main">
+	<li><a href="/">Blog</a></li>
+	<li><a href="/blog/archives">Archives</a></li>
+</ul>
+</div>
+	</div>
+	<div class="alignright search">
+		<a class="button"></a>
+		<div class="container">
+			<form action="http://google.com/search" method="get">
+				<input type="text" name="q" results="0">
+				<input type="hidden" name="q" value="site:agam.github.io">
+			</form>
+		</div>
+	</div>
+</nav>
+-->
+<nav id="sub-nav" class="alignright">
+	<div class="social">
+		
+		
+		<a class="google" href="https://plus.google.com/+AgamBrahma?rel=author" title="Google+">Google+</a>
+		
+		
+		<a class="twitter" href="http://twitter.com/agambrahma" title="Twitter">Twitter</a>
+		
+		
+    
+		
+		
+		
+		
+		
+		<a class="rss" href="/atom.xml" title="RSS">RSS</a>
+		
+    
+	</div>
+        <!-- DebugAgam: uncomment if necessary!
+	<form class="search" action="http://google.com/search" method="get">
+		<input class="alignright" type="text" name="q" results="0">
+		<input type="hidden" name="q" value="site:agam.github.io">
+	</form>
+        -->
+</nav>
+
+</header>
+	
+		
+	
+	<div id="content" class="inner"><article class="post">
+	<h2 class="title">Zipf on Alice</h2>
+	<div class="entry-content"><p>I just encountered <em>Zipf&rsquo;s Law</em><sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> for the first time, and wanted to confirm it for myself. So I got a copy of Alice in Wonderland<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>, removed the metadata header, and ran it through this quick Go program.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+<span class='line-number'>114</span>
+<span class='line-number'>115</span>
+</pre></td><td class='code'><pre><code class='go'><span class='line'><span class="kn">package</span> <span class="nx">main</span>
+</span><span class='line'>
+</span><span class='line'><span class="kn">import</span> <span class="s">&quot;fmt&quot;</span>
+</span><span class='line'><span class="kn">import</span> <span class="s">&quot;os&quot;</span>
+</span><span class='line'><span class="kn">import</span> <span class="s">&quot;bufio&quot;</span>
+</span><span class='line'><span class="kn">import</span> <span class="s">&quot;strings&quot;</span>
+</span><span class='line'><span class="kn">import</span> <span class="s">&quot;unicode&quot;</span>
+</span><span class='line'><span class="kn">import</span> <span class="s">&quot;sort&quot;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">type</span> <span class="nx">wordFrequencyMap</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">int</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">func</span> <span class="nx">updateFrequencies</span><span class="p">(</span><span class="nx">line</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">wm</span> <span class="nx">wordFrequencyMap</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="c1">// Skip chapter titles</span>
+</span><span class='line'>  <span class="k">if</span> <span class="nx">strings</span><span class="p">.</span><span class="nx">Contains</span><span class="p">(</span><span class="nx">line</span><span class="p">,</span> <span class="s">&quot;CHAPTER&quot;</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">return</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="nx">scanner</span> <span class="o">:=</span> <span class="nx">bufio</span><span class="p">.</span><span class="nx">NewScanner</span><span class="p">(</span><span class="nx">strings</span><span class="p">.</span><span class="nx">NewReader</span><span class="p">(</span><span class="nx">line</span><span class="p">))</span>
+</span><span class='line'>  <span class="nx">scanner</span><span class="p">.</span><span class="nx">Split</span><span class="p">(</span><span class="nx">bufio</span><span class="p">.</span><span class="nx">ScanWords</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">for</span> <span class="nx">scanner</span><span class="p">.</span><span class="nx">Scan</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>      <span class="c1">// Might need to break word down further if punctuation exists</span>
+</span><span class='line'>      <span class="nx">word</span> <span class="o">:=</span> <span class="nx">strings</span><span class="p">.</span><span class="nx">ToLower</span><span class="p">(</span><span class="nx">scanner</span><span class="p">.</span><span class="nx">Text</span><span class="p">())</span>
+</span><span class='line'>      <span class="nx">nextWord</span> <span class="o">:=</span> <span class="s">&quot;&quot;</span>
+</span><span class='line'>      <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="kt">rune</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">word</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">if</span> <span class="p">!</span><span class="nx">unicode</span><span class="p">.</span><span class="nx">IsLetter</span><span class="p">(</span><span class="kt">rune</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>              <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nx">nextWord</span><span class="p">)</span> <span class="p">&gt;</span> <span class="mi">0</span> <span class="p">{</span>
+</span><span class='line'>                  <span class="nx">wm</span><span class="p">[</span><span class="nx">nextWord</span><span class="p">]</span><span class="o">++</span>
+</span><span class='line'>              <span class="p">}</span>
+</span><span class='line'>              <span class="nx">nextWord</span> <span class="p">=</span> <span class="s">&quot;&quot;</span>
+</span><span class='line'>          <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>              <span class="nx">nextWord</span> <span class="o">+=</span> <span class="nb">string</span><span class="p">(</span><span class="kt">rune</span><span class="p">)</span>
+</span><span class='line'>          <span class="p">}</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nx">nextWord</span><span class="p">)</span> <span class="p">&gt;</span> <span class="mi">0</span> <span class="p">{</span>
+</span><span class='line'>          <span class="nx">wm</span><span class="p">[</span><span class="nx">nextWord</span><span class="p">]</span><span class="o">++</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">// Boilerplate to get sorting of keys by value to work</span>
+</span><span class='line'><span class="kd">type</span> <span class="nx">Pair</span> <span class="kd">struct</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">k</span> <span class="kt">string</span>
+</span><span class='line'>  <span class="nx">v</span> <span class="kt">int</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">type</span> <span class="nx">PairList</span> <span class="p">[]</span><span class="nx">Pair</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">func</span> <span class="p">(</span><span class="nx">p</span> <span class="nx">PairList</span><span class="p">)</span> <span class="nx">Swap</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">j</span> <span class="kt">int</span><span class="p">)</span>      <span class="p">{</span> <span class="nx">p</span><span class="p">[</span><span class="nx">i</span><span class="p">],</span> <span class="nx">p</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="p">=</span> <span class="nx">p</span><span class="p">[</span><span class="nx">j</span><span class="p">],</span> <span class="nx">p</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="p">}</span>
+</span><span class='line'><span class="kd">func</span> <span class="p">(</span><span class="nx">p</span> <span class="nx">PairList</span><span class="p">)</span> <span class="nx">Len</span><span class="p">()</span> <span class="kt">int</span>           <span class="p">{</span> <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="nx">p</span><span class="p">)</span> <span class="p">}</span>
+</span><span class='line'><span class="kd">func</span> <span class="p">(</span><span class="nx">p</span> <span class="nx">PairList</span><span class="p">)</span> <span class="nx">Less</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="nx">j</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">bool</span> <span class="p">{</span> <span class="k">return</span> <span class="nx">p</span><span class="p">[</span><span class="nx">i</span><span class="p">].</span><span class="nx">v</span> <span class="p">&lt;</span> <span class="nx">p</span><span class="p">[</span><span class="nx">j</span><span class="p">].</span><span class="nx">v</span> <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">func</span> <span class="nx">showStats</span><span class="p">(</span><span class="nx">wm</span> <span class="nx">wordFrequencyMap</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Statistics on the text\n&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Number of words found: &quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nx">wm</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">numWordsTotal</span> <span class="o">:=</span> <span class="mi">0</span>
+</span><span class='line'>  <span class="nx">numTopWords</span> <span class="o">:=</span> <span class="mi">0</span>
+</span><span class='line'>  <span class="nx">numBotWords</span> <span class="o">:=</span> <span class="mi">0</span>
+</span><span class='line'>  <span class="nx">freqProdTop</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">int</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+</span><span class='line'>  <span class="nx">freqProdBot</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">int</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+</span><span class='line'>  <span class="nx">pl</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="nx">PairList</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nx">wm</span><span class="p">))</span>
+</span><span class='line'>  <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span>
+</span><span class='line'>  <span class="k">for</span> <span class="nx">k</span><span class="p">,</span> <span class="nx">v</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">wm</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">pl</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="p">=</span> <span class="nx">Pair</span><span class="p">{</span><span class="nx">k</span><span class="p">,</span> <span class="nx">v</span><span class="p">}</span>
+</span><span class='line'>      <span class="nx">i</span><span class="o">++</span>
+</span><span class='line'>      <span class="nx">numWordsTotal</span> <span class="o">+=</span> <span class="nx">v</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="nx">sort</span><span class="p">.</span><span class="nx">Sort</span><span class="p">(</span><span class="nx">sort</span><span class="p">.</span><span class="nx">Reverse</span><span class="p">(</span><span class="nx">pl</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">i</span> <span class="p">=</span> <span class="mi">0</span>
+</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;\nThe top 100 words are :- &quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">p</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">pl</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">if</span> <span class="nx">i</span> <span class="o">&gt;=</span> <span class="mi">100</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">break</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;%30s -&gt; %6d\n&quot;</span><span class="p">,</span> <span class="nx">p</span><span class="p">.</span><span class="nx">k</span><span class="p">,</span> <span class="nx">p</span><span class="p">.</span><span class="nx">v</span><span class="p">)</span>
+</span><span class='line'>      <span class="nx">freqProdTop</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="p">=</span> <span class="nx">p</span><span class="p">.</span><span class="nx">v</span> <span class="o">*</span> <span class="p">(</span><span class="nx">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>      <span class="nx">i</span><span class="o">++</span>
+</span><span class='line'>      <span class="nx">numTopWords</span> <span class="o">+=</span> <span class="nx">p</span><span class="p">.</span><span class="nx">v</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">sort</span><span class="p">.</span><span class="nx">Sort</span><span class="p">(</span><span class="nx">pl</span><span class="p">)</span>
+</span><span class='line'>  <span class="nx">i</span> <span class="p">=</span> <span class="mi">0</span>
+</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;\nThe bottom 100 words are :-&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">p</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">pl</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">if</span> <span class="nx">i</span> <span class="o">&gt;=</span> <span class="mi">100</span> <span class="p">{</span>
+</span><span class='line'>          <span class="k">break</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;%30s -&gt; %6d\n&quot;</span><span class="p">,</span> <span class="nx">p</span><span class="p">.</span><span class="nx">k</span><span class="p">,</span> <span class="nx">p</span><span class="p">.</span><span class="nx">v</span><span class="p">)</span>
+</span><span class='line'>      <span class="nx">freqProdBot</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="p">=</span> <span class="nx">p</span><span class="p">.</span><span class="nx">v</span> <span class="o">*</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="nx">wm</span><span class="p">)</span> <span class="o">-</span> <span class="nx">i</span><span class="p">)</span>
+</span><span class='line'>      <span class="nx">i</span><span class="o">++</span>
+</span><span class='line'>      <span class="nx">numBotWords</span> <span class="o">+=</span> <span class="nx">p</span><span class="p">.</span><span class="nx">v</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;\n\nFrequency products of top words :- &quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">elem</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">freqProdTop</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;%4d &quot;</span><span class="p">,</span> <span class="nx">elem</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;\n\nFrequency product of bottom words :-&quot;</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">elem</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">freqProdBot</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;%4d &quot;</span><span class="p">,</span> <span class="nx">elem</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;\n\nTotal occurrences = &quot;</span><span class="p">,</span> <span class="nx">numWordsTotal</span><span class="p">)</span>
+</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Top words accounted for &quot;</span><span class="p">,</span> <span class="nx">numTopWords</span><span class="p">)</span>
+</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Bottom words accounted for &quot;</span><span class="p">,</span> <span class="nx">numBotWords</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="nx">wm</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="nx">wordFrequencyMap</span><span class="p">)</span>
+</span><span class='line'>  <span class="nx">scanner</span> <span class="o">:=</span> <span class="nx">bufio</span><span class="p">.</span><span class="nx">NewScanner</span><span class="p">(</span><span class="nx">os</span><span class="p">.</span><span class="nx">Stdin</span><span class="p">)</span>
+</span><span class='line'>  <span class="k">for</span> <span class="nx">scanner</span><span class="p">.</span><span class="nx">Scan</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>      <span class="nx">line</span> <span class="o">:=</span> <span class="nx">scanner</span><span class="p">.</span><span class="nx">Text</span><span class="p">()</span>
+</span><span class='line'>      <span class="nx">updateFrequencies</span><span class="p">(</span><span class="nx">line</span><span class="p">,</span> <span class="nx">wm</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="nx">showStats</span><span class="p">(</span><span class="nx">wm</span><span class="p">)</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Yes, it&rsquo;s not written <em>super-efficiently</em>, but it runs <em>in a third of a second</em>, so I don&rsquo;t care; it&rsquo;s verbose but took less than five minutes to write, and is fairly straightforward.</p>
+
+<p>Anyway, it runs as follows:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>cat ~/Downloads/alice-in-wonderland.txt <span class="p">|</span> go run word-frequency.go &gt; /tmp/log
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>with output that looks like:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>Statistics on the text
+</span><span class='line'>
+</span><span class='line'>Number of words found:  1793
+</span><span class='line'>
+</span><span class='line'>The top <span class="m">100</span> words are :-
+</span><span class='line'>                           the -&gt;    667
+</span><span class='line'>                           and -&gt;    467
+</span><span class='line'>                            to -&gt;    415
+</span><span class='line'>                             a -&gt;    351
+</span><span class='line'>                           she -&gt;    350
+</span><span class='line'>                            it -&gt;    343
+</span><span class='line'>                             i -&gt;    331
+</span><span class='line'>                            of -&gt;    247
+</span><span class='line'>                           was -&gt;    214
+</span><span class='line'>                            in -&gt;    188
+</span><span class='line'>                         alice -&gt;    187
+</span><span class='line'>...
+</span><span class='line'>                         mouse -&gt;     42
+</span><span class='line'>...
+</span><span class='line'>                        rabbit -&gt;     26
+</span><span class='line'>...
+</span><span class='line'>                   caterpillar -&gt;     26
+</span><span class='line'>...
+</span><span class='line'>&lt;omitted selectively&gt;
+</span><span class='line'>
+</span><span class='line'>The bottom <span class="m">100</span> words are :-
+</span><span class='line'>                          dish -&gt;      1
+</span><span class='line'>                      inclined -&gt;      1
+</span><span class='line'>                          beak -&gt;      1
+</span><span class='line'>                      wandered -&gt;      1
+</span><span class='line'>                        master -&gt;      1
+</span><span class='line'>                        seldom -&gt;      1
+</span><span class='line'>                     naturedly -&gt;      1
+</span><span class='line'>...
+</span><span class='line'>&lt;rest omitted&gt;
+</span><span class='line'>
+</span><span class='line'>Frequency products of top words :-
+</span><span class='line'> <span class="m">667</span>  <span class="m">934</span> <span class="m">1245</span> <span class="m">1404</span> <span class="m">1750</span> <span class="m">2058</span> <span class="m">2317</span> <span class="m">1976</span> <span class="m">1926</span> <span class="m">1880</span> <span class="m">2057</span> <span class="m">2232</span> <span class="m">2171</span> <span class="m">2254</span> <span class="m">2205</span> <span class="m">2128</span> <span class="m">1632</span> <span class="m">1728</span> <span class="m">1824</span> <span class="m">1900</span> <span class="m">1953</span> <span class="m">2002</span> <span class="m">1932</span> <span class="m">1992</span> <span class="m">1975</span> <span class="m">2054</span> <span class="m">2133</span> <span class="m">2184</span> <span class="m">2204</span> <span class="m">2250</span> <span class="m">2263</span> <span class="m">2304</span> <span class="m">2211</span> <span class="m">2142</span> <span class="m">2100</span> <span class="m">2088</span> <span class="m">2146</span> <span class="m">2166</span> <span class="m">2223</span> <span class="m">2160</span> <span class="m">2214</span> <span class="m">2226</span> <span class="m">2236</span> <span class="m">2288</span> <span class="m">2295</span> <span class="m">2300</span> <span class="m">2256</span> <span class="m">2208</span> <span class="m">2254</span> <span class="m">2250</span> <span class="m">2295</span> <span class="m">2288</span> <span class="m">2226</span> <span class="m">2268</span> <span class="m">2310</span> <span class="m">2352</span> <span class="m">2337</span> <span class="m">2320</span> <span class="m">2301</span> <span class="m">2340</span> <span class="m">2318</span> <span class="m">2294</span> <span class="m">2331</span> <span class="m">2368</span> <span class="m">2340</span> <span class="m">2376</span> <span class="m">2278</span> <span class="m">2312</span> <span class="m">2346</span> <span class="m">2380</span> <span class="m">2414</span> <span class="m">2304</span> <span class="m">2336</span> <span class="m">2368</span> <span class="m">2325</span> <span class="m">2280</span> <span class="m">2310</span> <span class="m">2262</span> <span class="m">2291</span> <span class="m">2320</span> <span class="m">2268</span> <span class="m">2296</span> <span class="m">2324</span> <span class="m">2268</span> <span class="m">2295</span> <span class="m">2322</span> <span class="m">2349</span> <span class="m">2288</span> <span class="m">2314</span> <span class="m">2340</span> <span class="m">2366</span> <span class="m">2392</span> <span class="m">2418</span> <span class="m">2350</span> <span class="m">2375</span> <span class="m">2304</span> <span class="m">2328</span> <span class="m">2352</span> <span class="m">2376</span> <span class="m">2400</span>
+</span><span class='line'>
+</span><span class='line'>Frequency product of bottom words :-
+</span><span class='line'><span class="m">1793</span> <span class="m">1792</span> <span class="m">1791</span> <span class="m">1790</span> <span class="m">1789</span> <span class="m">1788</span> <span class="m">1787</span> <span class="m">1786</span> <span class="m">1785</span> <span class="m">1784</span> <span class="m">1783</span> <span class="m">1782</span> <span class="m">1781</span> <span class="m">1780</span> <span class="m">1779</span> <span class="m">1778</span> <span class="m">1777</span> <span class="m">1776</span> <span class="m">1775</span> <span class="m">1774</span> <span class="m">1773</span> <span class="m">1772</span> <span class="m">1771</span> <span class="m">1770</span> <span class="m">1769</span> <span class="m">1768</span> <span class="m">1767</span> <span class="m">1766</span> <span class="m">1765</span> <span class="m">1764</span> <span class="m">1763</span> <span class="m">1762</span> <span class="m">1761</span> <span class="m">1760</span> <span class="m">1759</span> <span class="m">1758</span> <span class="m">1757</span> <span class="m">1756</span> <span class="m">1755</span> <span class="m">1754</span> <span class="m">1753</span> <span class="m">1752</span> <span class="m">1751</span> <span class="m">1750</span> <span class="m">1749</span> <span class="m">1748</span> <span class="m">1747</span> <span class="m">1746</span> <span class="m">1745</span> <span class="m">1744</span> <span class="m">1743</span> <span class="m">1742</span> <span class="m">1741</span> <span class="m">1740</span> <span class="m">1739</span> <span class="m">1738</span> <span class="m">1737</span> <span class="m">1736</span> <span class="m">1735</span> <span class="m">1734</span> <span class="m">1733</span> <span class="m">1732</span> <span class="m">1731</span> <span class="m">1730</span> <span class="m">1729</span> <span class="m">1728</span> <span class="m">1727</span> <span class="m">1726</span> <span class="m">1725</span> <span class="m">1724</span> <span class="m">1723</span> <span class="m">1722</span> <span class="m">1721</span> <span class="m">1720</span> <span class="m">1719</span> <span class="m">1718</span> <span class="m">1717</span> <span class="m">1716</span> <span class="m">1715</span> <span class="m">1714</span> <span class="m">1713</span> <span class="m">1712</span> <span class="m">1711</span> <span class="m">1710</span> <span class="m">1709</span> <span class="m">1708</span> <span class="m">1707</span> <span class="m">1706</span> <span class="m">1705</span> <span class="m">1704</span> <span class="m">1703</span> <span class="m">1702</span> <span class="m">1701</span> <span class="m">1700</span> <span class="m">1699</span> <span class="m">1698</span> <span class="m">1697</span> <span class="m">1696</span> <span class="m">1695</span> <span class="m">1694</span>
+</span><span class='line'>
+</span><span class='line'>Total <span class="nv">occurrences</span> <span class="o">=</span>  13812
+</span><span class='line'>Top words accounted <span class="k">for</span>  8469
+</span><span class='line'>Bottom words accounted <span class="k">for</span>  100
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Except for the first four words (<em>the</em>, <em>and</em>, <em>to</em>, <em>a</em>), the rest do appear to bear a product in (roughly) the same range, i.e. the frequency of a word is more or less inversely proportional to its rank.</p>
+<div class="footnotes">
+<hr/>
+<ol>
+<li id="fn:1">
+<p>As in <a href="http://en.wikipedia.org/wiki/Zipf%27s_law">this Wikipedia article</a>, though he meant it <a href="http://www.amazon.com/Human-Behavior-Principle-Least-Effort/dp/161427312X">more generally</a> than <em>merely</em> linguistics.<a href="#fnref:1" rev="footnote">&#8617;</a></p></li>
+<li id="fn:2">
+<p>From <a href="http://www.gutenberg.org/ebooks/11">Gutenberg</a><a href="#fnref:2" rev="footnote">&#8617;</a></p></li>
+</ol>
+</div>
+
+</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-12-31T18:08:08-08:00" pubdate data-updated="true">Dec 31<sup>st</sup>, 2014</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/golang/'>golang</a>, <a class='category' href='/blog/categories/nlp/'>nlp</a>
+
+
+</div>
+	
+</div>
+</article>
+
+	<div class="share">
+	<div class="addthis_toolbox addthis_default_style ">
+		
+		
+		<a class="addthis_button_tweet"></a>
+		
+		
+		<a class="addthis_button_google_plusone" g:plusone:size="medium"></a>
+		
+		
+	</div>
+	
+</div>
+
+
+
+<section id="comment">
+    <h2 class="title">Comments</h2>
+    <div id="disqus_thread" aria-live="polite"><noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+</section>
+</div>
+	<footer id="footer" class="inner">Copyright &copy; 2015
+
+    Agam
+
+</footer>
+	<script src="/javascripts/slash.js"></script>
+<script src="/javascripts/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+	$('.fancybox').fancybox();
+})(jQuery);
+</script> <!-- Delete or comment this line to disable Fancybox -->
+
+
+<script type="text/javascript">
+      var disqus_shortname = 'agamamp';
+      
+        
+        // var disqus_developer = 1;
+        var disqus_identifier = 'http://agam.github.io/blog/2014/12/31/zipf-on-alice/';
+        var disqus_url = 'http://agam.github.io/blog/2014/12/31/zipf-on-alice/';
+        var disqus_script = 'embed.js';
+      
+    (function () {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//go.disqus.com/' + disqus_script;
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    }());
+</script>
+
+
+
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-16612682-4']);
+		_gaq.push(['_trackPageview']);
+
+		(function() {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+
+
+
+</body>
+</html>

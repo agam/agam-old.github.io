@@ -7,7 +7,7 @@
 	<meta name="author" content="Agam">
 
 	
-	<meta name="description" content="I love reading rants. Not random, trollish ones, you know, intended only to provoke flamewars &mdash; those are tiresome and (worse!) predictable. &hellip;">
+	<meta name="description" content="It&rsquo;s worth pointing out things that don&rsquo;t work, roads that lead to dead ends, etc &mdash; so here is a brute force solution that has &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -91,7 +91,399 @@
     <article class="post">
 	<h2 class="title">
 		
-		<a href="/blog/2015/05/16/in-search-of-lost-rants-dot-dot-dot/">
+		<a href="/blog/2015/05/16/euler-50-a-non-working-solution/">
+		
+			Euler 50: A Non-working Solution</a>
+	</h2>
+	<div class="entry-content">
+		<p>It&rsquo;s worth pointing out things that don&rsquo;t work, roads that lead to dead ends, etc &mdash; so here is a brute force solution that has absolutely no chance of ever working. It&rsquo;s long and verbose because it&rsquo;s a <em>franken-solution</em>, made out of parts of previous solution concatenated together into a terrible mess. Posting it here before I destroy it. The forlorn <code>TODO</code> at the end proved over-optimistic &hellip;</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+<span class='line-number'>114</span>
+<span class='line-number'>115</span>
+<span class='line-number'>116</span>
+<span class='line-number'>117</span>
+<span class='line-number'>118</span>
+<span class='line-number'>119</span>
+<span class='line-number'>120</span>
+<span class='line-number'>121</span>
+<span class='line-number'>122</span>
+<span class='line-number'>123</span>
+<span class='line-number'>124</span>
+<span class='line-number'>125</span>
+<span class='line-number'>126</span>
+<span class='line-number'>127</span>
+<span class='line-number'>128</span>
+<span class='line-number'>129</span>
+<span class='line-number'>130</span>
+<span class='line-number'>131</span>
+<span class='line-number'>132</span>
+<span class='line-number'>133</span>
+<span class='line-number'>134</span>
+<span class='line-number'>135</span>
+<span class='line-number'>136</span>
+<span class='line-number'>137</span>
+<span class='line-number'>138</span>
+<span class='line-number'>139</span>
+<span class='line-number'>140</span>
+<span class='line-number'>141</span>
+<span class='line-number'>142</span>
+<span class='line-number'>143</span>
+<span class='line-number'>144</span>
+<span class='line-number'>145</span>
+<span class='line-number'>146</span>
+<span class='line-number'>147</span>
+<span class='line-number'>148</span>
+<span class='line-number'>149</span>
+<span class='line-number'>150</span>
+<span class='line-number'>151</span>
+<span class='line-number'>152</span>
+<span class='line-number'>153</span>
+<span class='line-number'>154</span>
+<span class='line-number'>155</span>
+<span class='line-number'>156</span>
+<span class='line-number'>157</span>
+<span class='line-number'>158</span>
+<span class='line-number'>159</span>
+<span class='line-number'>160</span>
+<span class='line-number'>161</span>
+<span class='line-number'>162</span>
+<span class='line-number'>163</span>
+<span class='line-number'>164</span>
+<span class='line-number'>165</span>
+<span class='line-number'>166</span>
+<span class='line-number'>167</span>
+<span class='line-number'>168</span>
+<span class='line-number'>169</span>
+<span class='line-number'>170</span>
+<span class='line-number'>171</span>
+<span class='line-number'>172</span>
+<span class='line-number'>173</span>
+<span class='line-number'>174</span>
+</pre></td><td class='code'><pre><code class='c++'><span class='line'><span class="k">static</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">kMaxNum</span> <span class="o">=</span> <span class="mi">1000000</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">void</span> <span class="nf">PopulatePrimes</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;*</span> <span class="n">numbers</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;*</span> <span class="n">prime_indices</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="c1">// Start off with all numbers marked prime.</span>
+</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">numbers</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">();</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">numbers</span><span class="o">-&gt;</span><span class="n">at</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kt">int</span> <span class="n">prime_index</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">while</span> <span class="p">(</span><span class="nb">true</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// Store the prime index for future reference</span>
+</span><span class='line'>    <span class="n">prime_indices</span><span class="o">-&gt;</span><span class="n">push_back</span><span class="p">(</span><span class="n">prime_index</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">numbers</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">prime_index</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">break</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// Mark the multiples as not prime</span>
+</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">prime_index</span> <span class="o">*</span> <span class="mi">2</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">numbers</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span> <span class="o">+=</span> <span class="n">prime_index</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="n">numbers</span><span class="o">-&gt;</span><span class="n">at</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// Repeat with the next prime number</span>
+</span><span class='line'>    <span class="k">do</span> <span class="p">{</span>
+</span><span class='line'>      <span class="o">++</span><span class="n">prime_index</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="n">prime_index</span> <span class="o">&lt;</span> <span class="n">numbers</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">numbers</span><span class="o">-&gt;</span><span class="n">at</span><span class="p">(</span><span class="n">prime_index</span><span class="p">));</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">prime_index</span> <span class="o">==</span> <span class="n">numbers</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">())</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">break</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">void</span> <span class="nf">sanity_check_primes</span><span class="p">(</span><span class="k">const</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;&amp;</span> <span class="n">numbers</span><span class="p">,</span>
+</span><span class='line'>                         <span class="k">const</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">prime_indices</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">auto</span> <span class="n">check_prime</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="n">numbers</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">prime_indices</span><span class="p">](</span><span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">is_prime</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">is_prime</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="n">assert</span><span class="p">(</span><span class="n">numbers</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">==</span> <span class="nb">true</span><span class="p">);</span>
+</span><span class='line'>      <span class="n">assert</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">find</span><span class="p">(</span><span class="n">prime_indices</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">prime_indices</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">n</span><span class="p">)</span> <span class="o">!=</span>
+</span><span class='line'>             <span class="n">prime_indices</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+</span><span class='line'>    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>      <span class="n">assert</span><span class="p">(</span><span class="n">numbers</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">==</span> <span class="nb">false</span><span class="p">);</span>
+</span><span class='line'>      <span class="n">assert</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">find</span><span class="p">(</span><span class="n">prime_indices</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">prime_indices</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">n</span><span class="p">)</span> <span class="o">==</span>
+</span><span class='line'>             <span class="n">prime_indices</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">check_prime</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="nb">true</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">check_prime</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="nb">true</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">check_prime</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="nb">true</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">check_prime</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="nb">false</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">check_prime</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="nb">false</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">class</span> <span class="nc">CombinationIterator</span> <span class="p">{</span>
+</span><span class='line'><span class="k">public</span><span class="o">:</span>
+</span><span class='line'>  <span class="n">CombinationIterator</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="kt">int</span> <span class="n">m</span><span class="p">)</span> <span class="o">:</span> <span class="n">n_</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="n">m_</span><span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">comb_</span><span class="p">.</span><span class="n">reserve</span><span class="p">(</span><span class="n">m</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">m</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="n">comb_</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">const</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">GetCombination</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">comb_</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kt">bool</span> <span class="n">Next</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// The last digit can go up to n, the next-to-last up to n-1, and</span>
+</span><span class='line'>    <span class="c1">// so on. The very first sequence is {0, 1, ..., m-1}, and the</span>
+</span><span class='line'>    <span class="c1">// very last is {n-m+1, ..., n-1, n}.</span>
+</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">m_</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="o">--</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="kt">int</span> <span class="n">max</span> <span class="o">=</span> <span class="n">n_</span> <span class="o">+</span> <span class="n">i</span> <span class="o">-</span> <span class="n">m_</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>      <span class="kt">int</span> <span class="n">val</span> <span class="o">=</span> <span class="n">comb_</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+</span><span class='line'>      <span class="c1">// cout &lt;&lt; &quot;Debug: i = &quot; &lt;&lt; i &lt;&lt; &quot;, val = &quot; &lt;&lt; val &lt;&lt; &quot;, max = &quot; &lt;&lt; max &lt;&lt; endl;</span>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">val</span> <span class="o">&lt;</span> <span class="n">max</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="c1">// Increment this position, and update subsequent indices if</span>
+</span><span class='line'>        <span class="c1">// necessary.</span>
+</span><span class='line'>        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">m_</span><span class="p">;</span> <span class="o">++</span><span class="n">j</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>          <span class="n">comb_</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="o">++</span><span class="n">val</span><span class="p">;</span>
+</span><span class='line'>        <span class="p">}</span>
+</span><span class='line'>        <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="c1">// If we&#39;re at the beginning, we&#39;re done.</span>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>        <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>      <span class="c1">// Otherwise, fallthrough to the previous index.</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="n">assert</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>  <span class="c1">// Should not reach here!</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="k">private</span><span class="o">:</span>
+</span><span class='line'>  <span class="k">const</span> <span class="kt">int</span> <span class="n">n_</span><span class="p">,</span> <span class="n">m_</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">comb_</span><span class="p">;</span>
+</span><span class='line'><span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">void</span> <span class="nf">sanity_check_combinator</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">CombinationIterator</span> <span class="n">cit</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
+</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">const</span> <span class="k">auto</span><span class="o">&amp;</span> <span class="n">v</span> <span class="o">=</span> <span class="n">cit</span><span class="p">.</span><span class="n">GetCombination</span><span class="p">();</span>
+</span><span class='line'>    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Debug (&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">v</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;) : &quot;</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="nl">n</span> <span class="p">:</span> <span class="n">v</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">n</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;  &quot;</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span><span class='line'>    <span class="n">assert</span><span class="p">(</span><span class="n">cit</span><span class="p">.</span><span class="n">Next</span><span class="p">());</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">enum</span> <span class="k">class</span> <span class="nc">Cardinality</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">Zero</span><span class="p">,</span> <span class="n">One</span><span class="p">,</span> <span class="n">More</span>
+</span><span class='line'><span class="p">};</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">Cardinality</span> <span class="nf">GetPrimeSum</span><span class="p">(</span><span class="kt">int</span> <span class="n">num_summands</span><span class="p">,</span>
+</span><span class='line'>                        <span class="k">const</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;&amp;</span> <span class="n">numbers</span><span class="p">,</span>
+</span><span class='line'>                        <span class="k">const</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">prime_indices</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="c1">// Try all possible combinations of adding prime numbers</span>
+</span><span class='line'>  <span class="c1">// together. Either exhaust all combinations, in which case return</span>
+</span><span class='line'>  <span class="c1">// Zero or One. The moment two are found, return More.</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kt">int</span> <span class="n">num_primes</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">CombinationIterator</span> <span class="n">cit</span><span class="p">(</span><span class="n">numbers</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span> <span class="n">num_summands</span><span class="p">);</span>
+</span><span class='line'>  <span class="k">do</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">const</span> <span class="k">auto</span><span class="o">&amp;</span> <span class="n">pv</span> <span class="o">=</span> <span class="n">cit</span><span class="p">.</span><span class="n">GetCombination</span><span class="p">();</span>
+</span><span class='line'>    <span class="kt">int</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="nl">p</span> <span class="p">:</span> <span class="n">pv</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="n">sum</span> <span class="o">+=</span> <span class="n">p</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>    <span class="c1">// Check if the primes add up to a prime</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">sum</span> <span class="o">&lt;</span> <span class="n">numbers</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="n">numbers</span><span class="p">[</span><span class="n">sum</span><span class="p">])</span> <span class="p">{</span>
+</span><span class='line'>      <span class="o">++</span><span class="n">num_primes</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">num_primes</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">return</span> <span class="n">Cardinality</span><span class="o">::</span><span class="n">More</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="n">cit</span><span class="p">.</span><span class="n">Next</span><span class="p">());</span>
+</span><span class='line'>  <span class="n">assert</span><span class="p">(</span><span class="n">num_primes</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">num_primes</span> <span class="o">==</span> <span class="mi">1</span><span class="p">);</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="n">num_primes</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">Cardinality</span><span class="o">::</span><span class="n">One</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">Cardinality</span><span class="o">::</span><span class="n">Zero</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="n">os</span><span class="p">,</span> <span class="k">const</span> <span class="n">Cardinality</span><span class="o">&amp;</span> <span class="n">c</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">os</span> <span class="o">&lt;&lt;</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">underlying_type</span><span class="o">&lt;</span><span class="n">Cardinality</span><span class="o">&gt;::</span><span class="n">type</span><span class="o">&gt;</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
+</span><span class='line'>  <span class="k">return</span> <span class="n">os</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Euler #50 ... </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="c1">// Get the prime numbers upto 1 million</span>
+</span><span class='line'>  <span class="n">vector</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span> <span class="n">numbers</span><span class="p">(</span><span class="n">kMaxNum</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">prime_indices</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">PopulatePrimes</span><span class="p">(</span><span class="o">&amp;</span><span class="n">numbers</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">prime_indices</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">sanity_check_primes</span><span class="p">(</span><span class="n">numbers</span><span class="p">,</span> <span class="n">prime_indices</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Debug: number of primes  = &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">prime_indices</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">sanity_check_combinator</span><span class="p">();</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Debug : &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">GetPrimeSum</span><span class="p">(</span><span class="mi">10000</span><span class="p">,</span> <span class="n">numbers</span><span class="p">,</span> <span class="n">prime_indices</span><span class="p">);</span>
+</span><span class='line'>  <span class="c1">// TODO(agam): Uncomment and continue ...</span>
+</span><span class='line'>  <span class="c1">// int left = 0;</span>
+</span><span class='line'>  <span class="c1">// int right = 500;  /// random round number</span>
+</span><span class='line'>  <span class="c1">// do {</span>
+</span><span class='line'>  <span class="c1">//   Cardinality left_c = GetPrimeSum(left, numbers, prime_indices);</span>
+</span><span class='line'>  <span class="c1">//   Cardinality right_c = GetPrimeSum(right, numbers, prime_indices);</span>
+</span><span class='line'>  <span class="c1">// } while (left &lt; right);</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-05-16T19:56:08-07:00" pubdate data-updated="true">May 16<sup>th</sup>, 2015</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/cpp/'>cpp</a>, <a class='category' href='/blog/categories/projecteuler/'>projecteuler</a>
+
+
+</div>
+	
+</div>
+</article>
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2015/05/15/in-search-of-lost-rants-dot-dot-dot/">
 		
 			In Search of Lost Rants &#8230;</a>
 	</h2>
@@ -136,7 +528,7 @@
   
 
 
-<time datetime="2015-05-16T06:20:14+00:00" pubdate data-updated="true">May 16<sup>th</sup>, 2015</time></div>
+<time datetime="2015-05-15T23:20:14-07:00" pubdate data-updated="true">May 15<sup>th</sup>, 2015</time></div>
 	<div class="tags">
 
 
@@ -152,7 +544,7 @@
     <article class="post">
 	<h2 class="title">
 		
-		<a href="/blog/2015/05/05/euler-49-prime-permutations/">
+		<a href="/blog/2015/05/04/euler-49-prime-permutations/">
 		
 			Euler 49: Prime Permutations</a>
 	</h2>
@@ -605,7 +997,7 @@
   
 
 
-<time datetime="2015-05-05T06:39:11+00:00" pubdate data-updated="true">May 5<sup>th</sup>, 2015</time></div>
+<time datetime="2015-05-04T23:39:11-07:00" pubdate data-updated="true">May 4<sup>th</sup>, 2015</time></div>
 	<div class="tags">
 
 
@@ -621,7 +1013,7 @@
     <article class="post">
 	<h2 class="title">
 		
-		<a href="/blog/2015/05/04/euler-48-self-powers/">
+		<a href="/blog/2015/05/03/euler-48-self-powers/">
 		
 			Euler 48: Self Powers</a>
 	</h2>
@@ -707,7 +1099,7 @@
   
 
 
-<time datetime="2015-05-04T03:09:53+00:00" pubdate data-updated="true">May 4<sup>th</sup>, 2015</time></div>
+<time datetime="2015-05-03T20:09:53-07:00" pubdate data-updated="true">May 3<sup>rd</sup>, 2015</time></div>
 	<div class="tags">
 
 
@@ -723,7 +1115,7 @@
     <article class="post">
 	<h2 class="title">
 		
-		<a href="/blog/2015/05/04/euler-47-distinct-prime-factors/">
+		<a href="/blog/2015/05/03/euler-47-distinct-prime-factors/">
 		
 			Euler 47: Distinct Prime Factors</a>
 	</h2>
@@ -938,7 +1330,7 @@
   
 
 
-<time datetime="2015-05-04T01:00:00+00:00" pubdate data-updated="true">May 4<sup>th</sup>, 2015</time></div>
+<time datetime="2015-05-03T18:00:00-07:00" pubdate data-updated="true">May 3<sup>rd</sup>, 2015</time></div>
 	<div class="tags">
 
 
@@ -1169,7 +1561,7 @@
   
 
 
-<time datetime="2015-05-03T23:46:24+00:00" pubdate data-updated="true">May 3<sup>rd</sup>, 2015</time></div>
+<time datetime="2015-05-03T16:46:24-07:00" pubdate data-updated="true">May 3<sup>rd</sup>, 2015</time></div>
 	<div class="tags">
 
 
@@ -1313,7 +1705,7 @@
   
 
 
-<time datetime="2015-04-28T19:41:00+00:00" pubdate data-updated="true">Apr 28<sup>th</sup>, 2015</time></div>
+<time datetime="2015-04-28T12:41:00-07:00" pubdate data-updated="true">Apr 28<sup>th</sup>, 2015</time></div>
 	<div class="tags">
 
 
@@ -1459,7 +1851,7 @@
   
 
 
-<time datetime="2015-04-28T18:08:09+00:00" pubdate data-updated="true">Apr 28<sup>th</sup>, 2015</time></div>
+<time datetime="2015-04-28T11:08:09-07:00" pubdate data-updated="true">Apr 28<sup>th</sup>, 2015</time></div>
 	<div class="tags">
 
 
@@ -1550,7 +1942,7 @@
   
 
 
-<time datetime="2015-04-24T07:22:01+00:00" pubdate data-updated="true">Apr 24<sup>th</sup>, 2015</time></div>
+<time datetime="2015-04-24T00:22:01-07:00" pubdate data-updated="true">Apr 24<sup>th</sup>, 2015</time></div>
 	<div class="tags">
 
 
@@ -1566,7 +1958,7 @@
     <article class="post">
 	<h2 class="title">
 		
-		<a href="/blog/2015/04/18/the-compiler-whisperer-dot-dot-dot/">
+		<a href="/blog/2015/04/17/the-compiler-whisperer-dot-dot-dot/">
 		
 			The Compiler Whisperer &#8230;</a>
 	</h2>
@@ -1595,189 +1987,11 @@
   
 
 
-<time datetime="2015-04-18T01:42:18+00:00" pubdate data-updated="true">Apr 18<sup>th</sup>, 2015</time></div>
+<time datetime="2015-04-17T18:42:18-07:00" pubdate data-updated="true">Apr 17<sup>th</sup>, 2015</time></div>
 	<div class="tags">
 
 
 	<a class='category' href='/blog/categories/compiler/'>compiler</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2015/04/10/fooling-around-with-array-memory-dot-dot-dot/">
-		
-			Fooling Around With Array Memory &#8230;</a>
-	</h2>
-	<div class="entry-content">
-		<p>Something I saved in a scratch buffer once &hellip;</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="nb">*</span> <span class="p">(</span><span class="nb">room</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">Dynamic</span> <span class="nv">space</span> <span class="nv">usage</span> <span class="nv">is:</span> <span class="mi">43</span><span class="o">,</span><span class="mi">629</span><span class="o">,</span><span class="mi">232</span> <span class="nv">bytes.</span>
-</span><span class='line'><span class="nv">Read-only</span> <span class="nv">space</span> <span class="nv">usage</span> <span class="nv">is:</span> <span class="mi">6</span><span class="o">,</span><span class="mi">736</span> <span class="nv">bytes.</span>
-</span><span class='line'><span class="nv">Static</span> <span class="nv">space</span> <span class="nv">usage</span> <span class="nv">is:</span> <span class="mi">4</span><span class="o">,</span><span class="mi">000</span> <span class="nv">bytes.</span>
-</span><span class='line'><span class="nv">Control</span> <span class="nv">stack</span> <span class="nv">usage</span> <span class="nv">is:</span> <span class="mi">2</span><span class="o">,</span><span class="mi">976</span> <span class="nv">bytes.</span>
-</span><span class='line'><span class="nv">Binding</span> <span class="nv">stack</span> <span class="nv">usage</span> <span class="nv">is:</span> <span class="mi">800</span> <span class="nv">bytes.</span>
-</span><span class='line'><span class="nv">Control</span> <span class="nb">and</span> <span class="nv">binding</span> <span class="nv">stack</span> <span class="nv">usage</span> <span class="nv">is</span> <span class="nv">for</span> <span class="k">the</span> <span class="nv">current</span> <span class="nv">thread</span> <span class="nv">only.</span>
-</span><span class='line'><span class="nv">Garbage</span> <span class="nv">collection</span> <span class="nv">is</span> <span class="nv">currently</span> <span class="nv">enabled.</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">Breakdown</span> <span class="nv">for</span> <span class="nv">dynamic</span> <span class="nv">space:</span>
-</span><span class='line'><span class="mi">13</span><span class="o">,</span><span class="mi">392</span><span class="o">,</span><span class="mi">016</span> <span class="nv">bytes</span> <span class="nv">for</span> <span class="mi">12</span><span class="o">,</span><span class="mi">550</span> <span class="nv">code</span> <span class="nv">objects.</span>
-</span><span class='line'><span class="mi">7</span><span class="o">,</span><span class="mi">629</span><span class="o">,</span><span class="mi">616</span> <span class="nv">bytes</span> <span class="nv">for</span> <span class="mi">87</span><span class="o">,</span><span class="mi">920</span> <span class="nv">instance</span> <span class="nv">objects.</span>
-</span><span class='line'><span class="mi">7</span><span class="o">,</span><span class="mi">108</span><span class="o">,</span><span class="mi">736</span> <span class="nv">bytes</span> <span class="nv">for</span> <span class="mi">444</span><span class="o">,</span><span class="mi">296</span> <span class="nb">cons</span> <span class="nv">objects.</span>
-</span><span class='line'><span class="mi">7</span><span class="o">,</span><span class="mi">093</span><span class="o">,</span><span class="mi">664</span> <span class="nv">bytes</span> <span class="nv">for</span> <span class="mi">59</span><span class="o">,</span><span class="mi">224</span> <span class="kt">simple-vector</span> <span class="nv">objects.</span>
-</span><span class='line'><span class="mi">2</span><span class="o">,</span><span class="mi">268</span><span class="o">,</span><span class="mi">928</span> <span class="nv">bytes</span> <span class="nv">for</span> <span class="mi">35</span><span class="o">,</span><span class="mi">452</span> <span class="nc">symbol</span> <span class="nv">objects.</span>
-</span><span class='line'><span class="mi">6</span><span class="o">,</span><span class="mi">136</span><span class="o">,</span><span class="mi">272</span> <span class="nv">bytes</span> <span class="nv">for</span> <span class="mi">115</span><span class="o">,</span><span class="mi">793</span> <span class="nv">other</span> <span class="nv">objects.</span>
-</span><span class='line'><span class="mi">43</span><span class="o">,</span><span class="mi">629</span><span class="o">,</span><span class="mi">232</span> <span class="nv">bytes</span> <span class="nv">for</span> <span class="mi">755</span><span class="o">,</span><span class="mi">235</span> <span class="nv">dynamic</span> <span class="nv">objects</span> <span class="p">(</span><span class="nv">space</span> <span class="nv">total.</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="nb">*</span> <span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*a*</span> <span class="p">(</span><span class="nb">make-array</span> <span class="o">&#39;</span><span class="p">(</span><span class="mi">3000</span> <span class="mi">3000</span><span class="p">)</span> <span class="ss">:element-type</span> <span class="o">&#39;</span><span class="p">(</span><span class="kt">unsigned-byte</span> <span class="mi">8</span><span class="p">)</span> <span class="ss">:initial-element</span> <span class="mi">0</span><span class="p">))</span>
-</span><span class='line'>
-</span><span class='line'><span class="vg">*A*</span>
-</span><span class='line'><span class="nb">*</span> <span class="p">(</span><span class="nb">room</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">Dynamic</span> <span class="nv">space</span> <span class="nv">usage</span> <span class="nv">is:</span> <span class="mi">52</span><span class="o">,</span><span class="mi">662</span><span class="o">,</span><span class="mi">000</span> <span class="nv">bytes.</span>
-</span><span class='line'><span class="nv">Read-only</span> <span class="nv">space</span> <span class="nv">usage</span> <span class="nv">is:</span> <span class="mi">6</span><span class="o">,</span><span class="mi">736</span> <span class="nv">bytes.</span>
-</span><span class='line'><span class="nv">Static</span> <span class="nv">space</span> <span class="nv">usage</span> <span class="nv">is:</span> <span class="mi">4</span><span class="o">,</span><span class="mi">000</span> <span class="nv">bytes.</span>
-</span><span class='line'><span class="nv">Control</span> <span class="nv">stack</span> <span class="nv">usage</span> <span class="nv">is:</span> <span class="mi">2</span><span class="o">,</span><span class="mi">976</span> <span class="nv">bytes.</span>
-</span><span class='line'><span class="nv">Binding</span> <span class="nv">stack</span> <span class="nv">usage</span> <span class="nv">is:</span> <span class="mi">800</span> <span class="nv">bytes.</span>
-</span><span class='line'><span class="nv">Control</span> <span class="nb">and</span> <span class="nv">binding</span> <span class="nv">stack</span> <span class="nv">usage</span> <span class="nv">is</span> <span class="nv">for</span> <span class="k">the</span> <span class="nv">current</span> <span class="nv">thread</span> <span class="nv">only.</span>
-</span><span class='line'><span class="nv">Garbage</span> <span class="nv">collection</span> <span class="nv">is</span> <span class="nv">currently</span> <span class="nv">enabled.</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">Breakdown</span> <span class="nv">for</span> <span class="nv">dynamic</span> <span class="nv">space:</span>
-</span><span class='line'><span class="mi">13</span><span class="o">,</span><span class="mi">392</span><span class="o">,</span><span class="mi">016</span> <span class="nv">bytes</span> <span class="nv">for</span> <span class="mi">12</span><span class="o">,</span><span class="mi">550</span> <span class="nv">code</span> <span class="nv">objects.</span>
-</span><span class='line'><span class="mi">9</span><span class="o">,</span><span class="mi">221</span><span class="o">,</span><span class="mi">424</span> <span class="nv">bytes</span> <span class="nv">for</span> <span class="mi">1</span><span class="o">,</span><span class="mi">914</span> <span class="nv">simple-array-unsigned-byte-8</span> <span class="nv">objects.</span>
-</span><span class='line'><span class="mi">7</span><span class="o">,</span><span class="mi">644</span><span class="o">,</span><span class="mi">768</span> <span class="nv">bytes</span> <span class="nv">for</span> <span class="mi">88</span><span class="o">,</span><span class="mi">074</span> <span class="nv">instance</span> <span class="nv">objects.</span>
-</span><span class='line'><span class="mi">7</span><span class="o">,</span><span class="mi">123</span><span class="o">,</span><span class="mi">088</span> <span class="nv">bytes</span> <span class="nv">for</span> <span class="mi">445</span><span class="o">,</span><span class="mi">193</span> <span class="nb">cons</span> <span class="nv">objects.</span>
-</span><span class='line'><span class="mi">7</span><span class="o">,</span><span class="mi">096</span><span class="o">,</span><span class="mi">224</span> <span class="nv">bytes</span> <span class="nv">for</span> <span class="mi">59</span><span class="o">,</span><span class="mi">245</span> <span class="kt">simple-vector</span> <span class="nv">objects.</span>
-</span><span class='line'><span class="mi">8</span><span class="o">,</span><span class="mi">217</span><span class="o">,</span><span class="mi">248</span> <span class="nv">bytes</span> <span class="nv">for</span> <span class="mi">149</span><span class="o">,</span><span class="mi">969</span> <span class="nv">other</span> <span class="nv">objects.</span>
-</span><span class='line'><span class="mi">52</span><span class="o">,</span><span class="mi">694</span><span class="o">,</span><span class="mi">768</span> <span class="nv">bytes</span> <span class="nv">for</span> <span class="mi">756</span><span class="o">,</span><span class="mi">945</span> <span class="nv">dynamic</span> <span class="nv">objects</span> <span class="p">(</span><span class="nv">space</span> <span class="nv">total.</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'><span class="nb">*</span> <span class="p">(</span><span class="nv">gc</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="no">NIL</span>
-</span><span class='line'><span class="nb">*</span> <span class="p">(</span><span class="nb">room</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">Dynamic</span> <span class="nv">space</span> <span class="nv">usage</span> <span class="nv">is:</span> <span class="mi">43</span><span class="o">,</span><span class="mi">810</span><span class="o">,</span><span class="mi">864</span> <span class="nv">bytes.</span>
-</span><span class='line'><span class="nv">Read-only</span> <span class="nv">space</span> <span class="nv">usage</span> <span class="nv">is:</span> <span class="mi">6</span><span class="o">,</span><span class="mi">736</span> <span class="nv">bytes.</span>
-</span><span class='line'><span class="nv">Static</span> <span class="nv">space</span> <span class="nv">usage</span> <span class="nv">is:</span> <span class="mi">4</span><span class="o">,</span><span class="mi">000</span> <span class="nv">bytes.</span>
-</span><span class='line'><span class="nv">Control</span> <span class="nv">stack</span> <span class="nv">usage</span> <span class="nv">is:</span> <span class="mi">2</span><span class="o">,</span><span class="mi">976</span> <span class="nv">bytes.</span>
-</span><span class='line'><span class="nv">Binding</span> <span class="nv">stack</span> <span class="nv">usage</span> <span class="nv">is:</span> <span class="mi">800</span> <span class="nv">bytes.</span>
-</span><span class='line'><span class="nv">Control</span> <span class="nb">and</span> <span class="nv">binding</span> <span class="nv">stack</span> <span class="nv">usage</span> <span class="nv">is</span> <span class="nv">for</span> <span class="k">the</span> <span class="nv">current</span> <span class="nv">thread</span> <span class="nv">only.</span>
-</span><span class='line'><span class="nv">Garbage</span> <span class="nv">collection</span> <span class="nv">is</span> <span class="nv">currently</span> <span class="nv">enabled.</span>
-</span><span class='line'>
-</span><span class='line'><span class="nv">Breakdown</span> <span class="nv">for</span> <span class="nv">dynamic</span> <span class="nv">space:</span>
-</span><span class='line'><span class="mi">13</span><span class="o">,</span><span class="mi">392</span><span class="o">,</span><span class="mi">016</span> <span class="nv">bytes</span> <span class="nv">for</span> <span class="mi">12</span><span class="o">,</span><span class="mi">550</span> <span class="nv">code</span> <span class="nv">objects.</span>
-</span><span class='line'><span class="mi">7</span><span class="o">,</span><span class="mi">687</span><span class="o">,</span><span class="mi">200</span> <span class="nv">bytes</span> <span class="nv">for</span> <span class="mi">88</span><span class="o">,</span><span class="mi">515</span> <span class="nv">instance</span> <span class="nv">objects.</span>
-</span><span class='line'><span class="mi">7</span><span class="o">,</span><span class="mi">144</span><span class="o">,</span><span class="mi">528</span> <span class="nv">bytes</span> <span class="nv">for</span> <span class="mi">59</span><span class="o">,</span><span class="mi">470</span> <span class="kt">simple-vector</span> <span class="nv">objects.</span>
-</span><span class='line'><span class="mi">7</span><span class="o">,</span><span class="mi">134</span><span class="o">,</span><span class="mi">528</span> <span class="nv">bytes</span> <span class="nv">for</span> <span class="mi">445</span><span class="o">,</span><span class="mi">908</span> <span class="nb">cons</span> <span class="nv">objects.</span>
-</span><span class='line'><span class="mi">2</span><span class="o">,</span><span class="mi">269</span><span class="o">,</span><span class="mi">312</span> <span class="nv">bytes</span> <span class="nv">for</span> <span class="mi">35</span><span class="o">,</span><span class="mi">458</span> <span class="nc">symbol</span> <span class="nv">objects.</span>
-</span><span class='line'><span class="mi">6</span><span class="o">,</span><span class="mi">183</span><span class="o">,</span><span class="mi">280</span> <span class="nv">bytes</span> <span class="nv">for</span> <span class="mi">116</span><span class="o">,</span><span class="mi">551</span> <span class="nv">other</span> <span class="nv">objects.</span>
-</span><span class='line'><span class="mi">43</span><span class="o">,</span><span class="mi">810</span><span class="o">,</span><span class="mi">864</span> <span class="nv">bytes</span> <span class="nv">for</span> <span class="mi">758</span><span class="o">,</span><span class="mi">452</span> <span class="nv">dynamic</span> <span class="nv">objects</span> <span class="p">(</span><span class="nv">space</span> <span class="nv">total.</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-04-10T23:42:23+00:00" pubdate data-updated="true">Apr 10<sup>th</sup>, 2015</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/lisp/'>lisp</a>
 
 
 </div>

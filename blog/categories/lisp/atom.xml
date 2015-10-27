@@ -4,7 +4,7 @@
   <title><![CDATA[Category: lisp | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/lisp/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-10-10T07:31:33+00:00</updated>
+  <updated>2015-10-26T21:34:22-07:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Fooling around with array memory ...]]></title>
     <link href="http://agam.github.io/blog/2015/04/10/fooling-around-with-array-memory-dot-dot-dot/"/>
-    <updated>2015-04-10T23:42:23+00:00</updated>
+    <updated>2015-04-10T16:42:23-07:00</updated>
     <id>http://agam.github.io/blog/2015/04/10/fooling-around-with-array-memory-dot-dot-dot</id>
     <content type="html"><![CDATA[<p>Something I saved in a scratch buffer once &hellip;</p>
 
@@ -96,7 +96,7 @@ Garbage collection is currently enabled.</p>
   <entry>
     <title type="html"><![CDATA[Euler 42: Pandigitals with sub-string divisibility]]></title>
     <link href="http://agam.github.io/blog/2015/03/25/euler-42-pandigitals-with-sub-string-divisibility/"/>
-    <updated>2015-03-25T23:33:56+00:00</updated>
+    <updated>2015-03-25T16:33:56-07:00</updated>
     <id>http://agam.github.io/blog/2015/03/25/euler-42-pandigitals-with-sub-string-divisibility</id>
     <content type="html"><![CDATA[<p>These brute force solutions are getting a bit worrying, but here is another one. (I keep promising myself to get out of my comfort zone, but (<em>unfortunately!</em>) code like this is too easy to write).</p>
 
@@ -171,9 +171,9 @@ candidates))
   
   <entry>
     <title type="html"><![CDATA[Euler 42: Coded triangle numbers]]></title>
-    <link href="http://agam.github.io/blog/2015/03/23/euler-42-coded-triangle-numbers/"/>
-    <updated>2015-03-23T01:11:01+00:00</updated>
-    <id>http://agam.github.io/blog/2015/03/23/euler-42-coded-triangle-numbers</id>
+    <link href="http://agam.github.io/blog/2015/03/22/euler-42-coded-triangle-numbers/"/>
+    <updated>2015-03-22T18:11:01-07:00</updated>
+    <id>http://agam.github.io/blog/2015/03/22/euler-42-coded-triangle-numbers</id>
     <content type="html"><![CDATA[<p>Very straightforward, this one. And I don&rsquo;t need to feel bad that I did it the simple way. If you&rsquo;re wondering where <code>split-sequence-if</code> and <code>read-file</code> came from, the answer is <code>rutils</code>, which is a good general-purpose utility package, a sort of superset of <code>alexandria</code>, and just a <code>(ql:quickload 'rutils)</code> away. As before, the final answer is obtained by evaluating <code>(euler42)</code>.</p>
 
 <p><strong>Statutory Warning</strong>: <em>spoilers ahead</em></p>
@@ -231,9 +231,9 @@ candidates))
   
   <entry>
     <title type="html"><![CDATA[Euler 41: Pandigital primes]]></title>
-    <link href="http://agam.github.io/blog/2015/03/22/euler-41-pandigital-primes/"/>
-    <updated>2015-03-22T04:35:08+00:00</updated>
-    <id>http://agam.github.io/blog/2015/03/22/euler-41-pandigital-primes</id>
+    <link href="http://agam.github.io/blog/2015/03/21/euler-41-pandigital-primes/"/>
+    <updated>2015-03-21T21:35:08-07:00</updated>
+    <id>http://agam.github.io/blog/2015/03/21/euler-41-pandigital-primes</id>
     <content type="html"><![CDATA[<p>Yet another <em>brute-force</em> solution, pushing the line a bit at <em>1991 seconds</em>. But hey, it works, and was quick to write, so &hellip;</p>
 
 <p><strong>Statutory Warning</strong>: <em>spoilers ahead</em></p>
@@ -307,7 +307,7 @@ candidates))
   <entry>
     <title type="html"><![CDATA[Euler 40: Champernowne's Constant]]></title>
     <link href="http://agam.github.io/blog/2015/03/21/euler-40-champernownes-constant/"/>
-    <updated>2015-03-21T19:34:12+00:00</updated>
+    <updated>2015-03-21T12:34:12-07:00</updated>
     <id>http://agam.github.io/blog/2015/03/21/euler-40-champernownes-constant</id>
     <content type="html"><![CDATA[<p>I was too lazy to avoid the brute-force approach here, especially since it took less than a second to run. The following seems longer than it should be, partly because I left in some helper and debugging functions &hellip;</p>
 

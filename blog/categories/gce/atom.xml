@@ -4,7 +4,7 @@
   <title><![CDATA[Category: gce | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/gce/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-10-10T07:31:33+00:00</updated>
+  <updated>2015-10-26T21:34:22-07:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[FreeBSD on GCE (the last post)]]></title>
-    <link href="http://agam.github.io/blog/2015/08/19/freebsd-on-gce-the-last-post/"/>
-    <updated>2015-08-19T05:59:29+00:00</updated>
-    <id>http://agam.github.io/blog/2015/08/19/freebsd-on-gce-the-last-post</id>
+    <link href="http://agam.github.io/blog/2015/08/18/freebsd-on-gce-the-last-post/"/>
+    <updated>2015-08-18T22:59:29-07:00</updated>
+    <id>http://agam.github.io/blog/2015/08/18/freebsd-on-gce-the-last-post</id>
     <content type="html"><![CDATA[<p>After <a href="blog/2014/12/14/trying-out-freebsd-and-failing-at-it/">one unsuccessful attempt</a> and one <a href="blog/2015/06/13/freebsd-on-google-compute-engine/">hack-ey successful one</a>, getting FreeBSD up and running on GCE is now a one-liner:</p>
 
 <p><code>sh
@@ -31,9 +31,9 @@ $ gcloud compute ssh agam@pandora
   
   <entry>
     <title type="html"><![CDATA[FreeBSD on Google Compute Engine]]></title>
-    <link href="http://agam.github.io/blog/2015/06/13/freebsd-on-google-compute-engine/"/>
-    <updated>2015-06-13T05:31:14+00:00</updated>
-    <id>http://agam.github.io/blog/2015/06/13/freebsd-on-google-compute-engine</id>
+    <link href="http://agam.github.io/blog/2015/06/12/freebsd-on-google-compute-engine/"/>
+    <updated>2015-06-12T22:31:14-07:00</updated>
+    <id>http://agam.github.io/blog/2015/06/12/freebsd-on-google-compute-engine</id>
     <content type="html"><![CDATA[<p>I had tried running FreeBSD on Google Compute Engine previously, but <a href="blog/2014/12/14/trying-out-freebsd-and-failing-at-it/">given up</a>. Last week I was suddenly reminded of this, and after Googling around a bit, came across <a href="https://github.com/swills/FreeBSD-gcloud">this script</a> by Steve Wills <em>(Thanks, Steve!)</em> that automated the task of building a &ldquo;GCE-ready&rdquo; image on an existing FreeBSD system.</p>
 
 <p>Hooray! No, wait, I <em>don&rsquo;t</em> have an existing FreeBSD system; that&rsquo;s sort of what this is all about. This minor despondency was short-lived, since I had temporarily forgotten how we now live with computers within computers within computers (give or take a layer). So I installed the <a href="http://www.vmware.com/products/workstation">VMWare Workstation</a>, downloaded <a href="ftp://ftp.freebsd.org/pub/FreeBSD/releases/amd64/amd64/ISO-IMAGES/10.1/">the iso</a> for <code>10.1-RELEASE</code>, and booted it up.</p>
@@ -87,7 +87,7 @@ gcutil addimage freebsd-101-release-amd64-20150612191810 gs://swills-test-bucket
   <entry>
     <title type="html"><![CDATA[Google cloud: sharing projects]]></title>
     <link href="http://agam.github.io/blog/2014/12/23/google-cloud-sharing-projects/"/>
-    <updated>2014-12-23T22:44:16+00:00</updated>
+    <updated>2014-12-23T14:44:16-08:00</updated>
     <id>http://agam.github.io/blog/2014/12/23/google-cloud-sharing-projects</id>
     <content type="html"><![CDATA[<p>In the past (and yes, for some things, in the present too<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>) a few Google products have had UI with ambiguous workflows, or where it wasn&rsquo;t clear if or how to accomplish something.</p>
 
@@ -141,9 +141,9 @@ $ gcloud config set compute/zone us-central1-a</p>
   
   <entry>
     <title type="html"><![CDATA[IO Performance (is that really an SSD?)]]></title>
-    <link href="http://agam.github.io/blog/2014/12/18/io-performance-is-that-really-an-ssd/"/>
-    <updated>2014-12-18T04:25:20+00:00</updated>
-    <id>http://agam.github.io/blog/2014/12/18/io-performance-is-that-really-an-ssd</id>
+    <link href="http://agam.github.io/blog/2014/12/17/io-performance-is-that-really-an-ssd/"/>
+    <updated>2014-12-17T20:25:20-08:00</updated>
+    <id>http://agam.github.io/blog/2014/12/17/io-performance-is-that-really-an-ssd</id>
     <content type="html"><![CDATA[<p>I created a new VM in Google Compute Engine a few days ago, and assigned it an SSD disk, and then began wondering <em>if it was really an SSD disk</em>.</p>
 
 <p>(<em>Digression</em>: I never appreciated the difference an SSD makes until the first time a Macbook Air awoke from sleep <em>instantly</em>. From that moment onwards, the time taken for my desktop at home to show its login screen has <em>always</em> felt irritatingly long)</p>
@@ -221,7 +221,7 @@ min/avg/max/mdev = 0.2/2.3/8.2/0.6 ms
   <entry>
     <title type="html"><![CDATA[Trying out FreeBSD (and failing at it)]]></title>
     <link href="http://agam.github.io/blog/2014/12/14/trying-out-freebsd-and-failing-at-it/"/>
-    <updated>2014-12-14T22:00:13+00:00</updated>
+    <updated>2014-12-14T14:00:13-08:00</updated>
     <id>http://agam.github.io/blog/2014/12/14/trying-out-freebsd-and-failing-at-it</id>
     <content type="html"><![CDATA[<p>Wait, what? Why?! No reason, really. I saw the new FreeBSD book<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> lying around in someone&rsquo;s office, and separately I was reminded of the week I spent getting Gentoo up and running a decade ago, and decided I missed all that and wanted to repeat a similar experience.</p>
 

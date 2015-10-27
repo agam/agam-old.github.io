@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-10-10T07:31:33+00:00</updated>
+  <updated>2015-10-26T21:34:22-07:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -14,10 +14,32 @@
 
   
   <entry>
+    <title type="html"><![CDATA[Monthly Programming summary]]></title>
+    <link href="http://agam.github.io/blog/2015/10/26/monthly-programming-summary/"/>
+    <updated>2015-10-26T20:23:36-07:00</updated>
+    <id>http://agam.github.io/blog/2015/10/26/monthly-programming-summary</id>
+    <content type="html"><![CDATA[<p>Here&rsquo;s the first installment in an experiment &mdash; writing a monthly roundup of a few things I read/saw/did this month that I found sort of interesting. I do something on my (general, non-programming-specific) <a href="http://abacusnoirform.com/">personal blog</a>, so I thought the same might be a useful exercise here too.</p>
+
+<p>In no particular order:</p>
+
+<ul>
+<li><p>The &ldquo;Balloon edition&rdquo; of BYTE magazine <a href="https://archive.org/stream/byte-magazine-1981-08/1981_08_BYTE_06-08_Smalltalk#page/n0/mode/2up">from 1981</a> &hellip; it&rsquo;s amazing how this stuff is <em>still</em> a revolutionary idea (also, the advertisements from three decades ago are hilarious)</p></li>
+<li><p>I read through Dijkstra&rsquo;s <a href="https://www.cs.utexas.edu/users/EWD/">notes</a> a while ago, here&rsquo;s <a href="https://www.vex.net/~trebla/ewd.html">someone else&rsquo;s curated version</a> of them.</p></li>
+<li><p>A Google Tech Talk from 2007 by Alex Wright, on <a href="https://www.youtube.com/watch?v=72nfrhXroo8"><em>&ldquo;The Web That Wasn&rsquo;t&rdquo;</em></a></p></li>
+</ul>
+
+
+<p>I&rsquo;ll leave you with this quote from Alan Kay:</p>
+
+<blockquote><p>Perhaps it was commercialization in the 1980s that killed off the next expected new thing. Our plan and our hope was that the next generation of kids would come along and do something better than Smalltalk around 1984 or so. We all thought that the next level of programming language would be much more strategic and even policy-oriented and would have much more knowledge about what it was trying to do. But a variety of different things conspired together, and that next generation actually didn’t show up. <strong>One could actually argue—as I sometimes do—that the success of commercial personal computing and operating systems has actually led to a considerable retrogression in many, many respects.</strong></p></blockquote>
+]]></content>
+  </entry>
+  
+  <entry>
     <title type="html"><![CDATA[A Tiny Taste of J]]></title>
-    <link href="http://agam.github.io/blog/2015/10/09/a-taste-of-j/"/>
-    <updated>2015-10-09T06:42:45+00:00</updated>
-    <id>http://agam.github.io/blog/2015/10/09/a-taste-of-j</id>
+    <link href="http://agam.github.io/blog/2015/10/08/a-taste-of-j/"/>
+    <updated>2015-10-08T23:42:45-07:00</updated>
+    <id>http://agam.github.io/blog/2015/10/08/a-taste-of-j</id>
     <content type="html"><![CDATA[<p>I recently stumbled across APL and J, as mentioned in a previous post, and began reading a bit of <a href="http://www.jsoftware.com/help/learning/contents.htm">an introductory book</a>.</p>
 
 <p>A couple of days ago, I came across this series of coding tasks on a blog called &ldquo;Programming Praxis&rdquo;, and I picked <a href="http://programmingpraxis.com/2015/10/06/the-iron-bar/">the most recent one</a> as an example to try out some J noobism.</p>
@@ -59,7 +81,7 @@
   <entry>
     <title type="html"><![CDATA[Types as constraints ...]]></title>
     <link href="http://agam.github.io/blog/2015/10/02/types-as-constraints-dot-dot-dot/"/>
-    <updated>2015-10-02T07:13:54+00:00</updated>
+    <updated>2015-10-02T00:13:54-07:00</updated>
     <id>http://agam.github.io/blog/2015/10/02/types-as-constraints-dot-dot-dot</id>
     <content type="html"><![CDATA[<p>(Don&rsquo;t ask me why or how I got here, but &hellip;) I came across a very old (Nov 1980) <a href="http://ml.cddddr.org/lisp-forum/msg00022.html">post in a mailing list</a> that might be related to our current confusion on the different interpretations of what <em>types</em> mean:</p>
 
@@ -69,9 +91,9 @@
   
   <entry>
     <title type="html"><![CDATA[On Mathematical Notation ...]]></title>
-    <link href="http://agam.github.io/blog/2015/09/28/on-mathematical-notation-dot-dot-dot/"/>
-    <updated>2015-09-28T05:32:17+00:00</updated>
-    <id>http://agam.github.io/blog/2015/09/28/on-mathematical-notation-dot-dot-dot</id>
+    <link href="http://agam.github.io/blog/2015/09/27/on-mathematical-notation-dot-dot-dot/"/>
+    <updated>2015-09-27T22:32:17-07:00</updated>
+    <id>http://agam.github.io/blog/2015/09/27/on-mathematical-notation-dot-dot-dot</id>
     <content type="html"><![CDATA[<p>I&rsquo;ve always had a vague lingering feeling about mathematical notation being at times inconsistent, excessive, duplicated, and so on. Some of it is of course due to me not knowing enough math, and not knowing math well enough, but some of it, I was recently relieved to find out, was a concern shared by people smarter than me too.</p>
 
 <p>Unfortunately, I&rsquo;m now <em>more</em> confused since the two solutions are (IMO) at odds with each other. Both share the common goal of replacing outdated notation by making it <em>&ldquo;executable&rdquo;</em>, and thus more precise, but the way they go about it is different.</p>
@@ -82,9 +104,9 @@
   
   <entry>
     <title type="html"><![CDATA[The Field of Languages ...]]></title>
-    <link href="http://agam.github.io/blog/2015/09/18/the-field-of-languages-dot-dot-dot/"/>
-    <updated>2015-09-18T05:02:44+00:00</updated>
-    <id>http://agam.github.io/blog/2015/09/18/the-field-of-languages-dot-dot-dot</id>
+    <link href="http://agam.github.io/blog/2015/09/17/the-field-of-languages-dot-dot-dot/"/>
+    <updated>2015-09-17T22:02:44-07:00</updated>
+    <id>http://agam.github.io/blog/2015/09/17/the-field-of-languages-dot-dot-dot</id>
     <content type="html"><![CDATA[<p>Last year, I spent some time trying out Haskell, Ocaml, Clojure, Dart, Shen, and ClozureCL. I thought I was done surveying the field, but I had barely scratched the surface, and realizing this was quite depressing. There are entire <em>kinds</em> of language paradigms I have no experience of, such as:</p>
 
 <ul>
@@ -100,9 +122,9 @@
   
   <entry>
     <title type="html"><![CDATA[Internet Ironies and Idiosyncrasies]]></title>
-    <link href="http://agam.github.io/blog/2015/09/13/bubbles-and-busts-a-tale-of-two-snapshots/"/>
-    <updated>2015-09-13T06:51:01+00:00</updated>
-    <id>http://agam.github.io/blog/2015/09/13/bubbles-and-busts-a-tale-of-two-snapshots</id>
+    <link href="http://agam.github.io/blog/2015/09/12/bubbles-and-busts-a-tale-of-two-snapshots/"/>
+    <updated>2015-09-12T23:51:01-07:00</updated>
+    <id>http://agam.github.io/blog/2015/09/12/bubbles-and-busts-a-tale-of-two-snapshots</id>
     <content type="html"><![CDATA[<p>A couple of snippets dug up from the past &hellip;</p>
 
 <h2>The Anatomy of a Search Engine</h2>
@@ -129,9 +151,9 @@
   
   <entry>
     <title type="html"><![CDATA[FreeBSD on GCE (the last post)]]></title>
-    <link href="http://agam.github.io/blog/2015/08/19/freebsd-on-gce-the-last-post/"/>
-    <updated>2015-08-19T05:59:29+00:00</updated>
-    <id>http://agam.github.io/blog/2015/08/19/freebsd-on-gce-the-last-post</id>
+    <link href="http://agam.github.io/blog/2015/08/18/freebsd-on-gce-the-last-post/"/>
+    <updated>2015-08-18T22:59:29-07:00</updated>
+    <id>http://agam.github.io/blog/2015/08/18/freebsd-on-gce-the-last-post</id>
     <content type="html"><![CDATA[<p>After <a href="blog/2014/12/14/trying-out-freebsd-and-failing-at-it/">one unsuccessful attempt</a> and one <a href="blog/2015/06/13/freebsd-on-google-compute-engine/">hack-ey successful one</a>, getting FreeBSD up and running on GCE is now a one-liner:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -148,7 +170,7 @@
   <entry>
     <title type="html"><![CDATA[A BigQuery example]]></title>
     <link href="http://agam.github.io/blog/2015/08/11/a-bigquery-example/"/>
-    <updated>2015-08-11T21:55:30+00:00</updated>
+    <updated>2015-08-11T14:55:30-07:00</updated>
     <id>http://agam.github.io/blog/2015/08/11/a-bigquery-example</id>
     <content type="html"><![CDATA[<p>I had read about BigQuery but hadn&rsquo;t had a chance to use the external product yet. This week I came across some article about Uber and taxis etc, and it had a link to recently released data by <a href="http://www.nyc.gov/html/tlc/html/about/statistics.shtml">The NYC Taxi and Limousine Commission</a>. In addition to directly downloading the data, or looking at it through <a href="https://data.cityofnewyork.us/data?agency=Taxi+and+Limousine+Commission+%28TLC%29&amp;cat=&amp;type=new_view&amp;browseSearch=&amp;scope">NYC OpenData</a>, you can also <a href="https://bigquery.cloud.google.com/table/nyc-tlc:yellow.trips_2015">play around with it using BigQuery</a>.</p>
 
@@ -175,9 +197,9 @@
   
   <entry>
     <title type="html"><![CDATA[Shokunin and Umami in software engineering ....]]></title>
-    <link href="http://agam.github.io/blog/2015/08/09/shokunin-and-umami-in-software-engineering-dot-dot-dot/"/>
-    <updated>2015-08-09T02:57:05+00:00</updated>
-    <id>http://agam.github.io/blog/2015/08/09/shokunin-and-umami-in-software-engineering-dot-dot-dot</id>
+    <link href="http://agam.github.io/blog/2015/08/08/shokunin-and-umami-in-software-engineering-dot-dot-dot/"/>
+    <updated>2015-08-08T19:57:05-07:00</updated>
+    <id>http://agam.github.io/blog/2015/08/08/shokunin-and-umami-in-software-engineering-dot-dot-dot</id>
     <content type="html"><![CDATA[<p>Saw a great movie yesterday, <a href="https://www.youtube.com/watch?v=M-aGPniFvS0">&ldquo;Jiro dreams of Sushi&rdquo;</a>, which is really all about the lifelong quest for perfection. Chef Jiro Ono has been making Sushi for seven decades, and is still trying to get better at it.</p>
 
 <p>Which is admirable, but how can lesser mortals as us draw some inspiration from it? What is the equivalent of being a <em>Shokunin</em><sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> in terms of programming (or realistically, in terms of software engineering)? What is the equivalent experience of <em>Umami</em><sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>?</p>
@@ -196,9 +218,9 @@
   
   <entry>
     <title type="html"><![CDATA[Syntax transformers (!)]]></title>
-    <link href="http://agam.github.io/blog/2015/07/26/syntax-transformers/"/>
-    <updated>2015-07-26T04:07:25+00:00</updated>
-    <id>http://agam.github.io/blog/2015/07/26/syntax-transformers</id>
+    <link href="http://agam.github.io/blog/2015/07/25/syntax-transformers/"/>
+    <updated>2015-07-25T21:07:25-07:00</updated>
+    <id>http://agam.github.io/blog/2015/07/25/syntax-transformers</id>
     <content type="html"><![CDATA[<p>I&rsquo;ve seen <code>defmacro</code> before, and while the pros and cons of &ldquo;hygiene&rdquo; are contentious, I had never bothered to learn macros in Scheme before. So now I&rsquo;m working my way through Kent Dybvig&rsquo;s <a href="http://www.scheme.com/tspl4/">&ldquo;The Scheme Programming Language&rdquo;</a>, and I have to say, I like what I see. Here&rsquo;s an example I wrote today:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -237,9 +259,9 @@
   
   <entry>
     <title type="html"><![CDATA[On the lost unity of programming ...]]></title>
-    <link href="http://agam.github.io/blog/2015/07/18/on-the-lost-unity-of-programming-dot-dot-dot/"/>
-    <updated>2015-07-18T04:06:01+00:00</updated>
-    <id>http://agam.github.io/blog/2015/07/18/on-the-lost-unity-of-programming-dot-dot-dot</id>
+    <link href="http://agam.github.io/blog/2015/07/17/on-the-lost-unity-of-programming-dot-dot-dot/"/>
+    <updated>2015-07-17T21:06:01-07:00</updated>
+    <id>http://agam.github.io/blog/2015/07/17/on-the-lost-unity-of-programming-dot-dot-dot</id>
     <content type="html"><![CDATA[<p>An excerpt from <a href="http://www.amazon.com/Concepts-Techniques-Models-Computer-Programming/dp/0262220695">&ldquo;Concepts, Techniques, and Models of Computer Programming&rdquo;</a> by Van Roy and Haridi:</p>
 
 <blockquote><p>Despite many efforts to introduce a scientific foundation, programming is almost always taught as a craft. It is usually taught in the context of one (or a few) programming languages (e.g., Java, complemented with Haskell, Scheme, or Prolog). The historical accidents of the particular languages chosen are interwoven together so closely with the fundamental concepts that the two cannot be separated. There is a confusion between tools and concepts. What’s more, different schools of thought have developed, based on different ways of viewing programming, called “paradigms”: object-oriented, logic, functional, etc. Each school of thought has its own science. <strong>The unity of programming as a single discipline has been lost.</strong></p></blockquote>
@@ -261,7 +283,7 @@
   <entry>
     <title type="html"><![CDATA[Pharo]]></title>
     <link href="http://agam.github.io/blog/2015/07/06/pharo/"/>
-    <updated>2015-07-06T07:02:27+00:00</updated>
+    <updated>2015-07-06T00:02:27-07:00</updated>
     <id>http://agam.github.io/blog/2015/07/06/pharo</id>
     <content type="html"><![CDATA[<p>A lot of thinking about <em>&ldquo;what&rsquo;s the best programming environment for beginners?&rdquo;</em> has led me to the one system I&rsquo;ve never explored (and only read about): <strong>Smalltalk</strong> &mdash; Or more precisely, a particular open-source implementation of Smalltalk, <em>Pharo</em>.</p>
 
@@ -335,9 +357,9 @@
   
   <entry>
     <title type="html"><![CDATA[FreeBSD on Google Compute Engine]]></title>
-    <link href="http://agam.github.io/blog/2015/06/13/freebsd-on-google-compute-engine/"/>
-    <updated>2015-06-13T05:31:14+00:00</updated>
-    <id>http://agam.github.io/blog/2015/06/13/freebsd-on-google-compute-engine</id>
+    <link href="http://agam.github.io/blog/2015/06/12/freebsd-on-google-compute-engine/"/>
+    <updated>2015-06-12T22:31:14-07:00</updated>
+    <id>http://agam.github.io/blog/2015/06/12/freebsd-on-google-compute-engine</id>
     <content type="html"><![CDATA[<p>I had tried running FreeBSD on Google Compute Engine previously, but <a href="blog/2014/12/14/trying-out-freebsd-and-failing-at-it/">given up</a>. Last week I was suddenly reminded of this, and after Googling around a bit, came across <a href="https://github.com/swills/FreeBSD-gcloud">this script</a> by Steve Wills <em>(Thanks, Steve!)</em> that automated the task of building a &ldquo;GCE-ready&rdquo; image on an existing FreeBSD system.</p>
 
 <p>Hooray! No, wait, I <em>don&rsquo;t</em> have an existing FreeBSD system; that&rsquo;s sort of what this is all about. This minor despondency was short-lived, since I had temporarily forgotten how we now live with computers within computers within computers (give or take a layer). So I installed the <a href="http://www.vmware.com/products/workstation">VMWare Workstation</a>, downloaded <a href="ftp://ftp.freebsd.org/pub/FreeBSD/releases/amd64/amd64/ISO-IMAGES/10.1/">the iso</a> for <code>10.1-RELEASE</code>, and booted it up.</p>
@@ -411,9 +433,9 @@
   
   <entry>
     <title type="html"><![CDATA[Trying out stack ...]]></title>
-    <link href="http://agam.github.io/blog/2015/06/10/trying-out-stack-dot-dot-dot/"/>
-    <updated>2015-06-10T05:01:24+00:00</updated>
-    <id>http://agam.github.io/blog/2015/06/10/trying-out-stack-dot-dot-dot</id>
+    <link href="http://agam.github.io/blog/2015/06/09/trying-out-stack-dot-dot-dot/"/>
+    <updated>2015-06-09T22:01:24-07:00</updated>
+    <id>http://agam.github.io/blog/2015/06/09/trying-out-stack-dot-dot-dot</id>
     <content type="html"><![CDATA[<p>Tried this out after <a href="https://www.fpcomplete.com/blog/2015/06/announcing-first-public-beta-stack">I read about it</a>. Note: the following was all done on a Macbook, but it should work similarly on Linux too.</p>
 
 <p><strong>Get Stack</strong></p>
@@ -647,9 +669,9 @@
   
   <entry>
     <title type="html"><![CDATA[FreeBSD and Linux: install paths]]></title>
-    <link href="http://agam.github.io/blog/2015/06/06/freebsd-and-linux-install-paths/"/>
-    <updated>2015-06-06T02:46:45+00:00</updated>
-    <id>http://agam.github.io/blog/2015/06/06/freebsd-and-linux-install-paths</id>
+    <link href="http://agam.github.io/blog/2015/06/05/freebsd-and-linux-install-paths/"/>
+    <updated>2015-06-05T19:46:45-07:00</updated>
+    <id>http://agam.github.io/blog/2015/06/05/freebsd-and-linux-install-paths</id>
     <content type="html"><![CDATA[<p>One of those <strong>WTF</strong> moments of unexplainable distro choices. This on an ubuntu box:</p>
 
 <figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
@@ -716,9 +738,9 @@
   
   <entry>
     <title type="html"><![CDATA[A counterpoint to RMS on Lisp Machines]]></title>
-    <link href="http://agam.github.io/blog/2015/06/02/a-counterpoint-to-rms-on-lisp-machines/"/>
-    <updated>2015-06-02T04:48:09+00:00</updated>
-    <id>http://agam.github.io/blog/2015/06/02/a-counterpoint-to-rms-on-lisp-machines</id>
+    <link href="http://agam.github.io/blog/2015/06/01/a-counterpoint-to-rms-on-lisp-machines/"/>
+    <updated>2015-06-01T21:48:09-07:00</updated>
+    <id>http://agam.github.io/blog/2015/06/01/a-counterpoint-to-rms-on-lisp-machines</id>
     <content type="html"><![CDATA[<p>You might have come across Richard Stallman&rsquo;s <a href="http://www.gnu.org/gnu/rms-lisp.html">brief history of Lisp Machines</a>, which was a speech he gave in 2002. I remember coming across it &mdash; being inspired by what inspired him, and being outraged at what outraged him.</p>
 
 <p>Lately, I&rsquo;m souring on the whole <em>romantic</em> view of the &ldquo;free software&rdquo; that I&rsquo;d held for about a decade, a distinctly &ldquo;NoGPL&rdquo; view, if I may coin that word. Another nail in the coffin was delivered by <a href="https://web.archive.org/web/20090901115039/http://danweinreb.org/blog/rebuttal-to-stallmans-story-about-the-formation-of-symbolics-and-lmi">this blog post</a> <sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>, which refutes much of the blame to Symbolics, and leaves Stallman looking IMO quite silly (if not petulant).</p>
@@ -742,7 +764,7 @@
   <entry>
     <title type="html"><![CDATA[Moving on from Project Euler]]></title>
     <link href="http://agam.github.io/blog/2015/05/29/project-euler-and-learning-programming/"/>
-    <updated>2015-05-29T19:37:07+00:00</updated>
+    <updated>2015-05-29T12:37:07-07:00</updated>
     <id>http://agam.github.io/blog/2015/05/29/project-euler-and-learning-programming</id>
     <content type="html"><![CDATA[<p>I started doing Project Euler problems occasionally with the assumption that it was a good way to either (1) learn a new language, or (2) as a healthy way to keep practicing programming. It turns out, however, that what I <em>really</em> end up doing is &ldquo;brute-forcing&rdquo; problems that are really <em>math</em> problems.</p>
 
@@ -757,7 +779,7 @@
   <entry>
     <title type="html"><![CDATA[Euler 50: Consecutive Prime Sum]]></title>
     <link href="http://agam.github.io/blog/2015/05/29/euler-50-consecutive-prime-sum/"/>
-    <updated>2015-05-29T19:24:32+00:00</updated>
+    <updated>2015-05-29T12:24:32-07:00</updated>
     <id>http://agam.github.io/blog/2015/05/29/euler-50-consecutive-prime-sum</id>
     <content type="html"><![CDATA[<p>I had posted a grotesque non-working solution to this <a href="http://agam.github.io/blog/2015/05/17/euler-50-a-non-working-solution/">previously</a>, so here is a grotesque <em>working</em> solution.</p>
 
@@ -1005,7 +1027,7 @@
   <entry>
     <title type="html"><![CDATA[On the Internet of thing-like-things ...]]></title>
     <link href="http://agam.github.io/blog/2015/05/17/on-the-internet-of-thing-like-things-dot-dot-dot/"/>
-    <updated>2015-05-17T07:16:24+00:00</updated>
+    <updated>2015-05-17T00:16:24-07:00</updated>
     <id>http://agam.github.io/blog/2015/05/17/on-the-internet-of-thing-like-things-dot-dot-dot</id>
     <content type="html"><![CDATA[<p>Went to Maker Faire, had my mind blown <em>(as usual)</em>, and then came across this quote<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> by Cory Doctorow:</p>
 
@@ -1023,9 +1045,9 @@
   
   <entry>
     <title type="html"><![CDATA[You say incidental, I say accidental ...]]></title>
-    <link href="http://agam.github.io/blog/2015/05/17/you-say-incidental/"/>
-    <updated>2015-05-17T03:02:15+00:00</updated>
-    <id>http://agam.github.io/blog/2015/05/17/you-say-incidental</id>
+    <link href="http://agam.github.io/blog/2015/05/16/you-say-incidental/"/>
+    <updated>2015-05-16T20:02:15-07:00</updated>
+    <id>http://agam.github.io/blog/2015/05/16/you-say-incidental</id>
     <content type="html"><![CDATA[<p>Completely out of context, but it makes a point. Well, <em>some</em> point.</p>
 
 <blockquote><p>Immutant is an integrated suite of Clojure libraries backed by Undertow for web, HornetQ for messaging, Infinispan for caching, Quartz for scheduling, and Narayana for transactions. Applications built with Immutant can optionally be deployed to a WildFly cluster for enhanced features. Its fundamental goal is to reduce the inherent incidental complexity in real world applications.</p></blockquote>
@@ -1035,366 +1057,6 @@
 <p>You can imagine a sort of automatic generator, that can spit out stuff like this:</p>
 
 <blockquote><p>FooMeister is an integrated suite of HipsterLang libraries backed by SuperBar for web, WooHoo for messaging, YellowDamn for cachine, RedFever for scheduling, and OrangeMayhem for transactions. Applications build with FooMeister can optionally be deployed to a Brouhaha cluster for enhanced features. Its fundamental goal is to reduce the inherent incidental complexity in real world applications.</p></blockquote>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Euler 50: A non-working solution]]></title>
-    <link href="http://agam.github.io/blog/2015/05/17/euler-50-a-non-working-solution/"/>
-    <updated>2015-05-17T02:56:08+00:00</updated>
-    <id>http://agam.github.io/blog/2015/05/17/euler-50-a-non-working-solution</id>
-    <content type="html"><![CDATA[<p>It&rsquo;s worth pointing out things that don&rsquo;t work, roads that lead to dead ends, etc &mdash; so here is a brute force solution that has absolutely no chance of ever working. It&rsquo;s long and verbose because it&rsquo;s a <em>franken-solution</em>, made out of parts of previous solution concatenated together into a terrible mess. Posting it here before I destroy it. The forlorn <code>TODO</code> at the end proved over-optimistic &hellip;</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-<span class='line-number'>72</span>
-<span class='line-number'>73</span>
-<span class='line-number'>74</span>
-<span class='line-number'>75</span>
-<span class='line-number'>76</span>
-<span class='line-number'>77</span>
-<span class='line-number'>78</span>
-<span class='line-number'>79</span>
-<span class='line-number'>80</span>
-<span class='line-number'>81</span>
-<span class='line-number'>82</span>
-<span class='line-number'>83</span>
-<span class='line-number'>84</span>
-<span class='line-number'>85</span>
-<span class='line-number'>86</span>
-<span class='line-number'>87</span>
-<span class='line-number'>88</span>
-<span class='line-number'>89</span>
-<span class='line-number'>90</span>
-<span class='line-number'>91</span>
-<span class='line-number'>92</span>
-<span class='line-number'>93</span>
-<span class='line-number'>94</span>
-<span class='line-number'>95</span>
-<span class='line-number'>96</span>
-<span class='line-number'>97</span>
-<span class='line-number'>98</span>
-<span class='line-number'>99</span>
-<span class='line-number'>100</span>
-<span class='line-number'>101</span>
-<span class='line-number'>102</span>
-<span class='line-number'>103</span>
-<span class='line-number'>104</span>
-<span class='line-number'>105</span>
-<span class='line-number'>106</span>
-<span class='line-number'>107</span>
-<span class='line-number'>108</span>
-<span class='line-number'>109</span>
-<span class='line-number'>110</span>
-<span class='line-number'>111</span>
-<span class='line-number'>112</span>
-<span class='line-number'>113</span>
-<span class='line-number'>114</span>
-<span class='line-number'>115</span>
-<span class='line-number'>116</span>
-<span class='line-number'>117</span>
-<span class='line-number'>118</span>
-<span class='line-number'>119</span>
-<span class='line-number'>120</span>
-<span class='line-number'>121</span>
-<span class='line-number'>122</span>
-<span class='line-number'>123</span>
-<span class='line-number'>124</span>
-<span class='line-number'>125</span>
-<span class='line-number'>126</span>
-<span class='line-number'>127</span>
-<span class='line-number'>128</span>
-<span class='line-number'>129</span>
-<span class='line-number'>130</span>
-<span class='line-number'>131</span>
-<span class='line-number'>132</span>
-<span class='line-number'>133</span>
-<span class='line-number'>134</span>
-<span class='line-number'>135</span>
-<span class='line-number'>136</span>
-<span class='line-number'>137</span>
-<span class='line-number'>138</span>
-<span class='line-number'>139</span>
-<span class='line-number'>140</span>
-<span class='line-number'>141</span>
-<span class='line-number'>142</span>
-<span class='line-number'>143</span>
-<span class='line-number'>144</span>
-<span class='line-number'>145</span>
-<span class='line-number'>146</span>
-<span class='line-number'>147</span>
-<span class='line-number'>148</span>
-<span class='line-number'>149</span>
-<span class='line-number'>150</span>
-<span class='line-number'>151</span>
-<span class='line-number'>152</span>
-<span class='line-number'>153</span>
-<span class='line-number'>154</span>
-<span class='line-number'>155</span>
-<span class='line-number'>156</span>
-<span class='line-number'>157</span>
-<span class='line-number'>158</span>
-<span class='line-number'>159</span>
-<span class='line-number'>160</span>
-<span class='line-number'>161</span>
-<span class='line-number'>162</span>
-<span class='line-number'>163</span>
-<span class='line-number'>164</span>
-<span class='line-number'>165</span>
-<span class='line-number'>166</span>
-<span class='line-number'>167</span>
-<span class='line-number'>168</span>
-<span class='line-number'>169</span>
-<span class='line-number'>170</span>
-<span class='line-number'>171</span>
-<span class='line-number'>172</span>
-<span class='line-number'>173</span>
-<span class='line-number'>174</span>
-</pre></td><td class='code'><pre><code class='c++'><span class='line'><span class="k">static</span> <span class="k">const</span> <span class="kt">int</span> <span class="n">kMaxNum</span> <span class="o">=</span> <span class="mi">1000000</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">void</span> <span class="nf">PopulatePrimes</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;*</span> <span class="n">numbers</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;*</span> <span class="n">prime_indices</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="c1">// Start off with all numbers marked prime.</span>
-</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">numbers</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">();</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">numbers</span><span class="o">-&gt;</span><span class="n">at</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="kt">int</span> <span class="n">prime_index</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
-</span><span class='line'>  <span class="k">while</span> <span class="p">(</span><span class="nb">true</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="c1">// Store the prime index for future reference</span>
-</span><span class='line'>    <span class="n">prime_indices</span><span class="o">-&gt;</span><span class="n">push_back</span><span class="p">(</span><span class="n">prime_index</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">numbers</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">prime_index</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">break</span><span class="p">;</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="c1">// Mark the multiples as not prime</span>
-</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">prime_index</span> <span class="o">*</span> <span class="mi">2</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">numbers</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span> <span class="o">+=</span> <span class="n">prime_index</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>      <span class="n">numbers</span><span class="o">-&gt;</span><span class="n">at</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="c1">// Repeat with the next prime number</span>
-</span><span class='line'>    <span class="k">do</span> <span class="p">{</span>
-</span><span class='line'>      <span class="o">++</span><span class="n">prime_index</span><span class="p">;</span>
-</span><span class='line'>    <span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="n">prime_index</span> <span class="o">&lt;</span> <span class="n">numbers</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">numbers</span><span class="o">-&gt;</span><span class="n">at</span><span class="p">(</span><span class="n">prime_index</span><span class="p">));</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">prime_index</span> <span class="o">==</span> <span class="n">numbers</span><span class="o">-&gt;</span><span class="n">size</span><span class="p">())</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">break</span><span class="p">;</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">void</span> <span class="nf">sanity_check_primes</span><span class="p">(</span><span class="k">const</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;&amp;</span> <span class="n">numbers</span><span class="p">,</span>
-</span><span class='line'>                         <span class="k">const</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">prime_indices</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">auto</span> <span class="n">check_prime</span> <span class="o">=</span> <span class="p">[</span><span class="o">&amp;</span><span class="n">numbers</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">prime_indices</span><span class="p">](</span><span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">is_prime</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">is_prime</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>      <span class="n">assert</span><span class="p">(</span><span class="n">numbers</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">==</span> <span class="nb">true</span><span class="p">);</span>
-</span><span class='line'>      <span class="n">assert</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">find</span><span class="p">(</span><span class="n">prime_indices</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">prime_indices</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">n</span><span class="p">)</span> <span class="o">!=</span>
-</span><span class='line'>             <span class="n">prime_indices</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
-</span><span class='line'>    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</span><span class='line'>      <span class="n">assert</span><span class="p">(</span><span class="n">numbers</span><span class="p">[</span><span class="n">n</span><span class="p">]</span> <span class="o">==</span> <span class="nb">false</span><span class="p">);</span>
-</span><span class='line'>      <span class="n">assert</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">find</span><span class="p">(</span><span class="n">prime_indices</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">prime_indices</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="n">n</span><span class="p">)</span> <span class="o">==</span>
-</span><span class='line'>             <span class="n">prime_indices</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>  <span class="p">};</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">check_prime</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="nb">true</span><span class="p">);</span>
-</span><span class='line'>  <span class="n">check_prime</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="nb">true</span><span class="p">);</span>
-</span><span class='line'>  <span class="n">check_prime</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="nb">true</span><span class="p">);</span>
-</span><span class='line'>  <span class="n">check_prime</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="nb">false</span><span class="p">);</span>
-</span><span class='line'>  <span class="n">check_prime</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="nb">false</span><span class="p">);</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">class</span> <span class="nc">CombinationIterator</span> <span class="p">{</span>
-</span><span class='line'><span class="k">public</span><span class="o">:</span>
-</span><span class='line'>  <span class="n">CombinationIterator</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">,</span> <span class="kt">int</span> <span class="n">m</span><span class="p">)</span> <span class="o">:</span> <span class="n">n_</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="n">m_</span><span class="p">(</span><span class="n">m</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">comb_</span><span class="p">.</span><span class="n">reserve</span><span class="p">(</span><span class="n">m</span><span class="p">);</span>
-</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">m</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>      <span class="n">comb_</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">const</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">GetCombination</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">comb_</span><span class="p">;</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="kt">bool</span> <span class="n">Next</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>    <span class="c1">// The last digit can go up to n, the next-to-last up to n-1, and</span>
-</span><span class='line'>    <span class="c1">// so on. The very first sequence is {0, 1, ..., m-1}, and the</span>
-</span><span class='line'>    <span class="c1">// very last is {n-m+1, ..., n-1, n}.</span>
-</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">m_</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="o">--</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>      <span class="kt">int</span> <span class="n">max</span> <span class="o">=</span> <span class="n">n_</span> <span class="o">+</span> <span class="n">i</span> <span class="o">-</span> <span class="n">m_</span> <span class="o">+</span> <span class="mi">1</span><span class="p">;</span>
-</span><span class='line'>      <span class="kt">int</span> <span class="n">val</span> <span class="o">=</span> <span class="n">comb_</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
-</span><span class='line'>      <span class="c1">// cout &lt;&lt; &quot;Debug: i = &quot; &lt;&lt; i &lt;&lt; &quot;, val = &quot; &lt;&lt; val &lt;&lt; &quot;, max = &quot; &lt;&lt; max &lt;&lt; endl;</span>
-</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">val</span> <span class="o">&lt;</span> <span class="n">max</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="c1">// Increment this position, and update subsequent indices if</span>
-</span><span class='line'>        <span class="c1">// necessary.</span>
-</span><span class='line'>        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">m_</span><span class="p">;</span> <span class="o">++</span><span class="n">j</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>          <span class="n">comb_</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">=</span> <span class="o">++</span><span class="n">val</span><span class="p">;</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>        <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="c1">// If we&#39;re at the beginning, we&#39;re done.</span>
-</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="c1">// Otherwise, fallthrough to the previous index.</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="n">assert</span><span class="p">(</span><span class="nb">false</span><span class="p">);</span>  <span class="c1">// Should not reach here!</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="k">private</span><span class="o">:</span>
-</span><span class='line'>  <span class="k">const</span> <span class="kt">int</span> <span class="n">n_</span><span class="p">,</span> <span class="n">m_</span><span class="p">;</span>
-</span><span class='line'>  <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">comb_</span><span class="p">;</span>
-</span><span class='line'><span class="p">};</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">void</span> <span class="nf">sanity_check_combinator</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>  <span class="n">CombinationIterator</span> <span class="n">cit</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">4</span><span class="p">);</span>
-</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">const</span> <span class="k">auto</span><span class="o">&amp;</span> <span class="n">v</span> <span class="o">=</span> <span class="n">cit</span><span class="p">.</span><span class="n">GetCombination</span><span class="p">();</span>
-</span><span class='line'>    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Debug (&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">v</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;) : &quot;</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="nl">n</span> <span class="p">:</span> <span class="n">v</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>      <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">n</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;  &quot;</span><span class="p">;</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
-</span><span class='line'>    <span class="n">assert</span><span class="p">(</span><span class="n">cit</span><span class="p">.</span><span class="n">Next</span><span class="p">());</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">enum</span> <span class="k">class</span> <span class="nc">Cardinality</span> <span class="p">{</span>
-</span><span class='line'>  <span class="n">Zero</span><span class="p">,</span> <span class="n">One</span><span class="p">,</span> <span class="n">More</span>
-</span><span class='line'><span class="p">};</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">Cardinality</span> <span class="nf">GetPrimeSum</span><span class="p">(</span><span class="kt">int</span> <span class="n">num_summands</span><span class="p">,</span>
-</span><span class='line'>                        <span class="k">const</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;&amp;</span> <span class="n">numbers</span><span class="p">,</span>
-</span><span class='line'>                        <span class="k">const</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">prime_indices</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="c1">// Try all possible combinations of adding prime numbers</span>
-</span><span class='line'>  <span class="c1">// together. Either exhaust all combinations, in which case return</span>
-</span><span class='line'>  <span class="c1">// Zero or One. The moment two are found, return More.</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="kt">int</span> <span class="n">num_primes</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'>  <span class="n">CombinationIterator</span> <span class="n">cit</span><span class="p">(</span><span class="n">numbers</span><span class="p">.</span><span class="n">size</span><span class="p">(),</span> <span class="n">num_summands</span><span class="p">);</span>
-</span><span class='line'>  <span class="k">do</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">const</span> <span class="k">auto</span><span class="o">&amp;</span> <span class="n">pv</span> <span class="o">=</span> <span class="n">cit</span><span class="p">.</span><span class="n">GetCombination</span><span class="p">();</span>
-</span><span class='line'>    <span class="kt">int</span> <span class="n">sum</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="nl">p</span> <span class="p">:</span> <span class="n">pv</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>      <span class="n">sum</span> <span class="o">+=</span> <span class="n">p</span><span class="p">;</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>    <span class="c1">// Check if the primes add up to a prime</span>
-</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">sum</span> <span class="o">&lt;</span> <span class="n">numbers</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&amp;&amp;</span> <span class="n">numbers</span><span class="p">[</span><span class="n">sum</span><span class="p">])</span> <span class="p">{</span>
-</span><span class='line'>      <span class="o">++</span><span class="n">num_primes</span><span class="p">;</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">num_primes</span> <span class="o">==</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">return</span> <span class="n">Cardinality</span><span class="o">::</span><span class="n">More</span><span class="p">;</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="n">cit</span><span class="p">.</span><span class="n">Next</span><span class="p">());</span>
-</span><span class='line'>  <span class="n">assert</span><span class="p">(</span><span class="n">num_primes</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">||</span> <span class="n">num_primes</span> <span class="o">==</span> <span class="mi">1</span><span class="p">);</span>
-</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="n">num_primes</span> <span class="o">==</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">Cardinality</span><span class="o">::</span><span class="n">One</span><span class="p">;</span>
-</span><span class='line'>  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">Cardinality</span><span class="o">::</span><span class="n">Zero</span><span class="p">;</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="n">os</span><span class="p">,</span> <span class="k">const</span> <span class="n">Cardinality</span><span class="o">&amp;</span> <span class="n">c</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="n">os</span> <span class="o">&lt;&lt;</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">underlying_type</span><span class="o">&lt;</span><span class="n">Cardinality</span><span class="o">&gt;::</span><span class="n">type</span><span class="o">&gt;</span><span class="p">(</span><span class="n">c</span><span class="p">);</span>
-</span><span class='line'>  <span class="k">return</span> <span class="n">os</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">int</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>  <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Euler #50 ... </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="c1">// Get the prime numbers upto 1 million</span>
-</span><span class='line'>  <span class="n">vector</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span> <span class="n">numbers</span><span class="p">(</span><span class="n">kMaxNum</span><span class="p">);</span>
-</span><span class='line'>  <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">prime_indices</span><span class="p">;</span>
-</span><span class='line'>  <span class="n">PopulatePrimes</span><span class="p">(</span><span class="o">&amp;</span><span class="n">numbers</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">prime_indices</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">sanity_check_primes</span><span class="p">(</span><span class="n">numbers</span><span class="p">,</span> <span class="n">prime_indices</span><span class="p">);</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Debug: number of primes  = &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">prime_indices</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
-</span><span class='line'>  <span class="n">sanity_check_combinator</span><span class="p">();</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Debug : &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">GetPrimeSum</span><span class="p">(</span><span class="mi">10000</span><span class="p">,</span> <span class="n">numbers</span><span class="p">,</span> <span class="n">prime_indices</span><span class="p">);</span>
-</span><span class='line'>  <span class="c1">// TODO(agam): Uncomment and continue ...</span>
-</span><span class='line'>  <span class="c1">// int left = 0;</span>
-</span><span class='line'>  <span class="c1">// int right = 500;  /// random round number</span>
-</span><span class='line'>  <span class="c1">// do {</span>
-</span><span class='line'>  <span class="c1">//   Cardinality left_c = GetPrimeSum(left, numbers, prime_indices);</span>
-</span><span class='line'>  <span class="c1">//   Cardinality right_c = GetPrimeSum(right, numbers, prime_indices);</span>
-</span><span class='line'>  <span class="c1">// } while (left &lt; right);</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
 ]]></content>
   </entry>
   

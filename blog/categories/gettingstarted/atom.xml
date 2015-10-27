@@ -4,7 +4,7 @@
   <title><![CDATA[Category: gettingstarted | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/gettingstarted/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-10-10T07:31:33+00:00</updated>
+  <updated>2015-10-26T21:34:22-07:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Rethinking the suggested beginning language]]></title>
-    <link href="http://agam.github.io/blog/2015/02/06/rethinking-the-suggested-beginning-language/"/>
-    <updated>2015-02-06T07:01:14+00:00</updated>
-    <id>http://agam.github.io/blog/2015/02/06/rethinking-the-suggested-beginning-language</id>
+    <link href="http://agam.github.io/blog/2015/02/05/rethinking-the-suggested-beginning-language/"/>
+    <updated>2015-02-05T23:01:14-08:00</updated>
+    <id>http://agam.github.io/blog/2015/02/05/rethinking-the-suggested-beginning-language</id>
     <content type="html"><![CDATA[<p>I was all gung-ho about recommending <strong>Go</strong> as the ideal starting point for <em>everyone</em>, and abstract driving force behind this was a supposed combination of the ease and power of <strong>Python</strong> and <strong>C</strong> respectively, both of which can individually make a case for being the <em>right</em> place to start.</p>
 
 <p>This depended on two things:</p>
@@ -42,9 +42,9 @@
   
   <entry>
     <title type="html"><![CDATA[Failure to get started? :)]]></title>
-    <link href="http://agam.github.io/blog/2015/02/06/failure-to-get-started/"/>
-    <updated>2015-02-06T04:15:51+00:00</updated>
-    <id>http://agam.github.io/blog/2015/02/06/failure-to-get-started</id>
+    <link href="http://agam.github.io/blog/2015/02/05/failure-to-get-started/"/>
+    <updated>2015-02-05T20:15:51-08:00</updated>
+    <id>http://agam.github.io/blog/2015/02/05/failure-to-get-started</id>
     <content type="html"><![CDATA[<p>For the last month, I&rsquo;ve been trying out various programming languages, as a sort of extended &ldquo;Programming Language Zoo&rdquo; experience. My inability to like any one of them and commit to it is depressing, but I made a few Gists out of the initial steps I followed for each of them, so hopefully a less indecisive person who knows what they want to do might benefit.</p>
 
 <p>Some of these are different implementations of a language; a couple of these are specific libraries within a language and meant for OSX; the rest are all targeted for a Linux machine, assuming an Emacs editor/interface.</p>
@@ -647,7 +647,7 @@ _Note_: Dart now [runs on App Engine](https://www.dartlang.org/server/google-clo
   <entry>
     <title type="html"><![CDATA[Up and Running: Scala, Sbt, Ensime]]></title>
     <link href="http://agam.github.io/blog/2014/07/30/up-and-running-with-scala/"/>
-    <updated>2014-07-30T19:31:30+00:00</updated>
+    <updated>2014-07-30T12:31:30-07:00</updated>
     <id>http://agam.github.io/blog/2014/07/30/up-and-running-with-scala</id>
     <content type="html"><![CDATA[<p>The &ldquo;Getting started&rdquo; section of the &ldquo;Functional Programming with Scala&rdquo; course mentions using Eclipse to build the first &lsquo;hello world&rsquo; kind of project, but if you&rsquo;d rather not get out of your Emacs comfort zone, there is a different way to do the same (credits to numerous online sources).</p>
 
@@ -723,7 +723,7 @@ Hello World
   <entry>
     <title type="html"><![CDATA[Getting started with clojure: Part 1]]></title>
     <link href="http://agam.github.io/blog/2014/01/29/getting-started-with-clojure-part-1/"/>
-    <updated>2014-01-29T18:04:00+00:00</updated>
+    <updated>2014-01-29T18:04:00-08:00</updated>
     <id>http://agam.github.io/blog/2014/01/29/getting-started-with-clojure-part-1</id>
     <content type="html"><![CDATA[<p>(Just a personal log so I don&rsquo;t forget some basic steps here. There may or may not be a Part 2)</p>
 

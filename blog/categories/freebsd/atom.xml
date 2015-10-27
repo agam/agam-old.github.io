@@ -4,7 +4,7 @@
   <title><![CDATA[Category: freebsd | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/freebsd/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-10-10T07:31:33+00:00</updated>
+  <updated>2015-10-26T21:34:22-07:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[FreeBSD on GCE (the last post)]]></title>
-    <link href="http://agam.github.io/blog/2015/08/19/freebsd-on-gce-the-last-post/"/>
-    <updated>2015-08-19T05:59:29+00:00</updated>
-    <id>http://agam.github.io/blog/2015/08/19/freebsd-on-gce-the-last-post</id>
+    <link href="http://agam.github.io/blog/2015/08/18/freebsd-on-gce-the-last-post/"/>
+    <updated>2015-08-18T22:59:29-07:00</updated>
+    <id>http://agam.github.io/blog/2015/08/18/freebsd-on-gce-the-last-post</id>
     <content type="html"><![CDATA[<p>After <a href="blog/2014/12/14/trying-out-freebsd-and-failing-at-it/">one unsuccessful attempt</a> and one <a href="blog/2015/06/13/freebsd-on-google-compute-engine/">hack-ey successful one</a>, getting FreeBSD up and running on GCE is now a one-liner:</p>
 
 <p><code>sh
@@ -31,9 +31,9 @@ $ gcloud compute ssh agam@pandora
   
   <entry>
     <title type="html"><![CDATA[FreeBSD on Google Compute Engine]]></title>
-    <link href="http://agam.github.io/blog/2015/06/13/freebsd-on-google-compute-engine/"/>
-    <updated>2015-06-13T05:31:14+00:00</updated>
-    <id>http://agam.github.io/blog/2015/06/13/freebsd-on-google-compute-engine</id>
+    <link href="http://agam.github.io/blog/2015/06/12/freebsd-on-google-compute-engine/"/>
+    <updated>2015-06-12T22:31:14-07:00</updated>
+    <id>http://agam.github.io/blog/2015/06/12/freebsd-on-google-compute-engine</id>
     <content type="html"><![CDATA[<p>I had tried running FreeBSD on Google Compute Engine previously, but <a href="blog/2014/12/14/trying-out-freebsd-and-failing-at-it/">given up</a>. Last week I was suddenly reminded of this, and after Googling around a bit, came across <a href="https://github.com/swills/FreeBSD-gcloud">this script</a> by Steve Wills <em>(Thanks, Steve!)</em> that automated the task of building a &ldquo;GCE-ready&rdquo; image on an existing FreeBSD system.</p>
 
 <p>Hooray! No, wait, I <em>don&rsquo;t</em> have an existing FreeBSD system; that&rsquo;s sort of what this is all about. This minor despondency was short-lived, since I had temporarily forgotten how we now live with computers within computers within computers (give or take a layer). So I installed the <a href="http://www.vmware.com/products/workstation">VMWare Workstation</a>, downloaded <a href="ftp://ftp.freebsd.org/pub/FreeBSD/releases/amd64/amd64/ISO-IMAGES/10.1/">the iso</a> for <code>10.1-RELEASE</code>, and booted it up.</p>
@@ -86,9 +86,9 @@ gcutil addimage freebsd-101-release-amd64-20150612191810 gs://swills-test-bucket
   
   <entry>
     <title type="html"><![CDATA[FreeBSD and Linux: install paths]]></title>
-    <link href="http://agam.github.io/blog/2015/06/06/freebsd-and-linux-install-paths/"/>
-    <updated>2015-06-06T02:46:45+00:00</updated>
-    <id>http://agam.github.io/blog/2015/06/06/freebsd-and-linux-install-paths</id>
+    <link href="http://agam.github.io/blog/2015/06/05/freebsd-and-linux-install-paths/"/>
+    <updated>2015-06-05T19:46:45-07:00</updated>
+    <id>http://agam.github.io/blog/2015/06/05/freebsd-and-linux-install-paths</id>
     <content type="html"><![CDATA[<p>One of those <strong>WTF</strong> moments of unexplainable distro choices. This on an ubuntu box:</p>
 
 <p>```sh

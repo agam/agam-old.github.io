@@ -4,7 +4,7 @@
   <title><![CDATA[Category: chromebook | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/chromebook/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-10-10T07:31:33+00:00</updated>
+  <updated>2015-10-26T21:34:22-07:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Augmenting my Chromebook with a VM]]></title>
     <link href="http://agam.github.io/blog/2013/12/14/augmenting-my-chromebook-with-a-vm/"/>
-    <updated>2013-12-14T17:14:00+00:00</updated>
+    <updated>2013-12-14T17:14:00-08:00</updated>
     <id>http://agam.github.io/blog/2013/12/14/augmenting-my-chromebook-with-a-vm</id>
     <content type="html"><![CDATA[<p>I had tried this out about a year ago, creating a small VM instance on Google Compute Engine. But a maintenance window occurred, my VM died, and that was that. I cleaned up and walked away.</p>
 

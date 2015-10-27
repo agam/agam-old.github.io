@@ -4,7 +4,7 @@
   <title><![CDATA[Category: python | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/python/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-10-10T07:31:33+00:00</updated>
+  <updated>2015-10-26T21:34:22-07:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[A second look at Python]]></title>
-    <link href="http://agam.github.io/blog/2015/03/25/a-second-look-at-python/"/>
-    <updated>2015-03-25T06:53:44+00:00</updated>
-    <id>http://agam.github.io/blog/2015/03/25/a-second-look-at-python</id>
+    <link href="http://agam.github.io/blog/2015/03/24/a-second-look-at-python/"/>
+    <updated>2015-03-24T23:53:44-07:00</updated>
+    <id>http://agam.github.io/blog/2015/03/24/a-second-look-at-python</id>
     <content type="html"><![CDATA[<p>The first time I <em>used</em> Python for something (it was a silly little script, IIRC) was about 12 years ago. I eventually gave it up in shock and horror the first time I encountered a critical error that turned out to be a <em>syntax error</em>.</p>
 
 <p>Over the years I&rsquo;ve had to mess with Python code on and off but it&rsquo;s always been something I&rsquo;ve done reluctantly, under the lingering effects of PTSD from the &ldquo;I can&rsquo;t tell how this program might fail&rdquo; experience.</p>
@@ -31,7 +31,7 @@
   <entry>
     <title type="html"><![CDATA[Appengine transition from Python to Go]]></title>
     <link href="http://agam.github.io/blog/2013/06/22/python-to-go/"/>
-    <updated>2013-06-22T00:00:00+00:00</updated>
+    <updated>2013-06-22T00:00:00-07:00</updated>
     <id>http://agam.github.io/blog/2013/06/22/python-to-go</id>
     <content type="html"><![CDATA[<p>Hadn&rsquo;t updated this blog for a few months, and neither the &ldquo;personal web site&rdquo; that I had started earlier. So, to try something new, I decided to port that appengine site from python to go (looking at the Github logs, I haven&rsquo;t updated that for 2 years !!)</p>
 

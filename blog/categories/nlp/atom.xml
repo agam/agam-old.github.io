@@ -4,7 +4,7 @@
   <title><![CDATA[Category: nlp | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/nlp/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-10-10T07:31:33+00:00</updated>
+  <updated>2015-10-26T21:34:22-07:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Zipf on Alice]]></title>
-    <link href="http://agam.github.io/blog/2015/01/01/zipf-on-alice/"/>
-    <updated>2015-01-01T02:08:08+00:00</updated>
-    <id>http://agam.github.io/blog/2015/01/01/zipf-on-alice</id>
+    <link href="http://agam.github.io/blog/2014/12/31/zipf-on-alice/"/>
+    <updated>2014-12-31T18:08:08-08:00</updated>
+    <id>http://agam.github.io/blog/2014/12/31/zipf-on-alice</id>
     <content type="html"><![CDATA[<p>I just encountered <em>Zipf&rsquo;s Law</em><sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> for the first time, and wanted to confirm it for myself. So I got a copy of Alice in Wonderland<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>, removed the metadata header, and ran it through this quick Go program.</p>
 
 <p>```go

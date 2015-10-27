@@ -4,7 +4,7 @@
   <title><![CDATA[Category: factoring | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/factoring/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-10-10T07:31:33+00:00</updated>
+  <updated>2015-10-26T21:34:22-07:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[How fast can you factor ?]]></title>
     <link href="http://agam.github.io/blog/2014/02/04/how-fast-can-you-factor/"/>
-    <updated>2014-02-04T18:52:00+00:00</updated>
+    <updated>2014-02-04T18:52:00-08:00</updated>
     <id>http://agam.github.io/blog/2014/02/04/how-fast-can-you-factor</id>
     <content type="html"><![CDATA[<p>For no other reason than <em>because it&rsquo;s there</em>, here is the result of asking Mathematica to factor <a href="http://en.wikipedia.org/wiki/RSA_numbers#RSA-100">RSA 100</a>.</p>
 

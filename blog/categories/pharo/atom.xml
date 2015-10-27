@@ -4,7 +4,7 @@
   <title><![CDATA[Category: pharo | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/pharo/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-10-10T07:31:33+00:00</updated>
+  <updated>2015-10-26T21:34:22-07:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -16,7 +16,7 @@
   <entry>
     <title type="html"><![CDATA[Pharo]]></title>
     <link href="http://agam.github.io/blog/2015/07/06/pharo/"/>
-    <updated>2015-07-06T07:02:27+00:00</updated>
+    <updated>2015-07-06T00:02:27-07:00</updated>
     <id>http://agam.github.io/blog/2015/07/06/pharo</id>
     <content type="html"><![CDATA[<p>A lot of thinking about <em>&ldquo;what&rsquo;s the best programming environment for beginners?&rdquo;</em> has led me to the one system I&rsquo;ve never explored (and only read about): <strong>Smalltalk</strong> &mdash; Or more precisely, a particular open-source implementation of Smalltalk, <em>Pharo</em>.</p>
 

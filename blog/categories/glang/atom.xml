@@ -4,7 +4,7 @@
   <title><![CDATA[Category: glang | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/glang/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-10-10T07:31:33+00:00</updated>
+  <updated>2015-10-26T21:34:22-07:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -15,9 +15,9 @@
   
   <entry>
     <title type="html"><![CDATA[Daily programming: logs down the river]]></title>
-    <link href="http://agam.github.io/blog/2014/12/27/daily-programming-logs-down-the-river/"/>
-    <updated>2014-12-27T02:11:28+00:00</updated>
-    <id>http://agam.github.io/blog/2014/12/27/daily-programming-logs-down-the-river</id>
+    <link href="http://agam.github.io/blog/2014/12/26/daily-programming-logs-down-the-river/"/>
+    <updated>2014-12-26T18:11:28-08:00</updated>
+    <id>http://agam.github.io/blog/2014/12/26/daily-programming-logs-down-the-river</id>
     <content type="html"><![CDATA[<p>Found <a href="http://www.reddit.com/r/dailyprogrammer/comments/2lljyq/11052014_challenge_187_hard_lumberjack_floating/">this problem</a> from about a month ago. I did a sloppy job on this one &mdash; it&rsquo;s correct, but mostly straight-line &ldquo;C &ndash; style&rdquo; code. I&rsquo;ll come up with a better way to do this later, <em>promise</em>. Meanwhile, here&rsquo;s the code.</p>
 
 <p>```go
