@@ -4,7 +4,7 @@
   <title><![CDATA[Category: monthly | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/monthly/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-10-26T22:46:40-07:00</updated>
+  <updated>2015-11-27T13:32:37-08:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -14,7 +14,34 @@
 
   
   <entry>
-    <title type="html"><![CDATA[Monthly Programming summary]]></title>
+    <title type="html"><![CDATA[Monthly Programming summary: November 2015]]></title>
+    <link href="http://agam.github.io/blog/2015/11/27/monthly-programming-summary-november-2015/"/>
+    <updated>2015-11-27T13:09:15-08:00</updated>
+    <id>http://agam.github.io/blog/2015/11/27/monthly-programming-summary-november-2015</id>
+    <content type="html"><![CDATA[<p>A second installment of &ldquo;interesting stuff I came across this month&rdquo; &hellip;</p>
+
+<ul>
+<li>A 1972 article in Rolling Stone magazine by Stewart Brand: <a href="http://www.wheels.org/spacewar/stone/rolling_stone.html"><em>&ldquo;Fanatic Life and Symbolic Death Among the Computer Bums&rdquo;</em></a>. If only the present had corresponded a little closer to the imagined future of the past, eh? :)</li>
+</ul>
+
+
+<blockquote><p>The hackers are the technicians of this science &ndash; <em>“It’s a term of derision and also the ultimate compliment.”</em> They are the ones who translate human demands into code that the machines can understand and act on. They are legion. <strong>Fanatics with a potent new toy</strong>. A mobile new-found elite, with its own apparat, language and character, its own legends and humor. Those magnificent men with their flying machines, scouting a leading edge of technology which has an odd softness to it; outlaw country, where rules are not decree or routine so much as the starker demands of what’s possible.</p></blockquote>
+
+<ul>
+<li><p>An excellent blog that was forced offline by vociferous commentors, but lives on in the depths of the Wayback Machine: <a href="http://web.archive.org/web/20140107054458/http://yinwang0.wordpress.com/"><em>&ldquo;Surely I am Joking&rdquo;</em></a> by Yin Wang. <em>All</em> the posts are good, my favorites are the ones on the downsides of &ldquo;pure&rdquo; FP and &ldquo;pure&rdquo; OOP (and <a href="http://web.archive.org/web/20140116155929/http://yinwang0.wordpress.com/2013/11/09/oop-fp">how the two are similar!</a>), the one on <a href="http://web.archive.org/web/20131127131340/http://yinwang0.wordpress.com/2012/09/16/what-is-a-program/"><em>&ldquo;what is a program?&rdquo;</em></a>, and the one on the <a href="http://web.archive.org/web/20140103011845/http://yinwang0.wordpress.com/2013/04/05/database/"><em>&ldquo;dark age of programming&rdquo;</em></a>.</p></li>
+<li><p>A 1987 article in <em>&ldquo;Computer Language&rdquo;</em> magazine: <a href="http://bit-player.org/wp-content/extras/bph-publications/CompLang-1987-04-Hayes-mutant-lisps.pdf"><em>&ldquo;Mutant languages from the LISP lab&rdquo;</em></a> &mdash; just for fun, and an insight into the pre-Common Lisp era.</p></li>
+<li><p>A humorous blog entry from 2009: <a href="http://james-iry.blogspot.com/2009/05/brief-incomplete-and-mostly-wrong.html"><em>&ldquo;A Brief, Incomplete, and Mostly Wrong History of Programming Languages&rdquo;</em></a>, with a self-explanatory title.</p></li>
+</ul>
+
+
+<p>And finally, a &ldquo;quote-of-the-month&rdquo;. This one is short and succinct <em>Perlisism</em>:</p>
+
+<blockquote><p><strong>Computer Science is embarrassed by the computer.</strong></p></blockquote>
+]]></content>
+  </entry>
+  
+  <entry>
+    <title type="html"><![CDATA[Monthly Programming summary: October 2015]]></title>
     <link href="http://agam.github.io/blog/2015/10/26/monthly-programming-summary/"/>
     <updated>2015-10-26T20:23:36-07:00</updated>
     <id>http://agam.github.io/blog/2015/10/26/monthly-programming-summary</id>
