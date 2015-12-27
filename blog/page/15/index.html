@@ -7,9 +7,8 @@
 	<meta name="author" content="Agam">
 
 	
-	<meta name="description" content="Get acquainted with Processing &mdash; it&rsquo;s quite low performance, but really quick to use.
-Write a book (perhaps during NaNoWriMo ?
-Try my &hellip;">
+	<meta name="description" content="I used to have two giant monitors to work with, and reduced them to one since I
+found myself frequently moving my neck from side to side. I got rid &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -88,6 +87,93 @@ Try my &hellip;">
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2013/11/06/typewriter-mode/">
+		
+			Using Typewriter Mode, ALWAYS</a>
+	</h2>
+	<div class="entry-content">
+		<p>I used to have two giant monitors to work with, and reduced them to one since I
+found myself frequently moving my neck from side to side.</p>
+
+<p>I got rid of one of them, and felt much better after that &mdash; but now I was still
+moving my neck up and down. When editing large source files (wait, why are these
+files large to begin with ? That&rsquo;s a different conversation!), you do end up
+tracking the cursor on each find, on each scroll.</p>
+
+<p>The solution is obvious &mdash; as far as possible, keep the horizontal location of
+the cursor fixed.</p>
+
+<p>I&rsquo;m sure what the Emacs equivalent of this is, but if you use the <a href="http://www.sbf5.com/~cduan/technical/vi/">One True
+Editor</a>, try typing <code>:help scrolloff</code> right now; you should see this:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>                 *'scrolloff'* *'so'*
+</span><span class='line'>'scrolloff' 'so'  number  (default 0)
+</span><span class='line'>      global
+</span><span class='line'>      {not in Vi}
+</span><span class='line'>Minimal number of screen lines to keep above and below the cursor.
+</span><span class='line'>This will make some context visible around where you are working.  If
+</span><span class='line'>you set it to a very large value (999) the cursor line will always be
+</span><span class='line'>in the middle of the window (except at the start or end of the file or
+</span><span class='line'>when long lines wrap).
+</span><span class='line'>For scrolling horizontally see 'sidescrolloff'.
+</span><span class='line'>NOTE: This option is set to 0 when 'compatible' is set.</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So you can add this to your <code>.vimrc</code> later, but try it out right now. Type</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>:set scrolloff=999</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&hellip; and scroll around a bit.</p>
+
+<p>Enjoy.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-11-06T00:00:00-08:00" pubdate data-updated="true">Nov 6<sup>th</sup>, 2013</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/editor/'>editor</a>, <a class='category' href='/blog/categories/vim/'>vim</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -2156,369 +2242,6 @@ answer that question)</p>
 
 
 	<a class='category' href='/blog/categories/commandline/'>commandline</a>, <a class='category' href='/blog/categories/notes/'>notes</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2013/06/26/data-structures-haskell-vs-cpp/">
-		
-			Comparison of Data Structures in C++ and Haskell</a>
-	</h2>
-	<div class="entry-content">
-		<p>Once again, just to satisfy my curiosity, I want to do a tiny comparison of a basic feature in both languages, trying to see how data structures are implemented. Ok, I&rsquo;m fairly certain how it works for in C++, I&rsquo;m really just curious about Haskell.</p>
-
-<h2>C++ version</h2>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-</pre></td><td class='code'><pre><code class='c'><span class='line'><span class="cp">#include &lt;iostream&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;memory&gt;</span>
-</span><span class='line'><span class="cp">#include &lt;vector&gt;</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">struct</span> <span class="n">BinaryNode</span> <span class="p">{</span>
-</span><span class='line'>  <span class="kt">int</span> <span class="n">val</span><span class="p">;</span>
-</span><span class='line'>  <span class="n">BinaryNode</span> <span class="o">*</span><span class="n">leftchild</span><span class="p">,</span> <span class="o">*</span><span class="n">rightchild</span><span class="p">;</span>
-</span><span class='line'>  <span class="n">BinaryNode</span><span class="p">(</span><span class="kt">int</span> <span class="n">v</span><span class="p">,</span> <span class="n">BinaryNode</span><span class="o">*</span> <span class="n">lc</span> <span class="o">=</span> <span class="n">nullptr</span><span class="p">,</span> <span class="n">BinaryNode</span><span class="o">*</span> <span class="n">rc</span> <span class="o">=</span> <span class="n">nullptr</span><span class="p">)</span>
-</span><span class='line'>    <span class="o">:</span> <span class="n">val</span><span class="p">(</span><span class="n">v</span><span class="p">),</span> <span class="n">leftchild</span><span class="p">(</span><span class="n">lc</span><span class="p">),</span> <span class="n">rightchild</span><span class="p">(</span><span class="n">rc</span><span class="p">)</span> <span class="p">{}</span>
-</span><span class='line'><span class="p">};</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">struct</span> <span class="n">NaryNode</span> <span class="p">{</span>
-</span><span class='line'>  <span class="kt">int</span> <span class="n">val</span><span class="p">;</span>
-</span><span class='line'>  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">NaryNode</span><span class="o">*&gt;</span> <span class="n">children</span><span class="p">;</span>
-</span><span class='line'>  <span class="n">NaryNode</span><span class="p">(</span><span class="kt">int</span> <span class="n">v</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">NaryNode</span><span class="o">*&gt;&amp;</span> <span class="n">c</span><span class="p">)</span> <span class="o">:</span> <span class="n">val</span><span class="p">(</span><span class="n">v</span><span class="p">),</span> <span class="n">children</span><span class="p">(</span><span class="n">c</span><span class="p">)</span> <span class="p">{}</span>
-</span><span class='line'><span class="p">};</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">int</span> <span class="nf">binarySum</span><span class="p">(</span><span class="n">BinaryNode</span><span class="o">*</span> <span class="n">node</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="n">node</span> <span class="o">==</span> <span class="n">nullptr</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="k">return</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">val</span> <span class="o">+</span> <span class="n">binarySum</span><span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">leftchild</span><span class="p">)</span> <span class="o">+</span> <span class="n">binarySum</span><span class="p">(</span><span class="n">node</span><span class="o">-&gt;</span><span class="n">rightchild</span><span class="p">);</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">int</span> <span class="nf">narySum</span><span class="p">(</span><span class="n">NaryNode</span><span class="o">*</span> <span class="n">node</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="n">node</span> <span class="o">==</span> <span class="n">nullptr</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="kt">int</span> <span class="n">sum</span> <span class="o">=</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">val</span><span class="p">;</span>
-</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="k">const</span> <span class="k">auto</span> <span class="nl">it</span> <span class="p">:</span> <span class="n">node</span><span class="o">-&gt;</span><span class="n">children</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">sum</span> <span class="o">+=</span> <span class="n">narySum</span><span class="p">(</span><span class="n">it</span><span class="p">);</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="k">return</span> <span class="n">sum</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">// Create dummy binary and n-ary trees and print out their sum</span>
-</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>  <span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">BinaryNode</span><span class="o">&gt;</span> <span class="n">bnode1</span><span class="p">(</span><span class="n">new</span> <span class="n">BinaryNode</span><span class="p">(</span><span class="mi">4</span><span class="p">));</span>
-</span><span class='line'>  <span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">BinaryNode</span><span class="o">&gt;</span> <span class="n">bnode2</span><span class="p">(</span><span class="n">new</span> <span class="n">BinaryNode</span><span class="p">(</span><span class="mi">5</span><span class="p">));</span>
-</span><span class='line'>  <span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">BinaryNode</span><span class="o">&gt;</span> <span class="n">broot</span><span class="p">(</span><span class="n">new</span> <span class="n">BinaryNode</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">bnode1</span><span class="p">.</span><span class="n">get</span><span class="p">(),</span> <span class="n">bnode2</span><span class="p">.</span><span class="n">get</span><span class="p">()));</span>
-</span><span class='line'>  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;BinarySum = &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">binarySum</span><span class="p">(</span><span class="n">broot</span><span class="p">.</span><span class="n">get</span><span class="p">())</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">NaryNode</span><span class="o">*&gt;</span> <span class="n">children</span><span class="p">;</span>
-</span><span class='line'>  <span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">NaryNode</span><span class="o">&gt;</span> <span class="n">nnode1</span><span class="p">(</span><span class="n">new</span> <span class="n">NaryNode</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">children</span><span class="p">));</span>
-</span><span class='line'>  <span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">NaryNode</span><span class="o">&gt;</span> <span class="n">nnode2</span><span class="p">(</span><span class="n">new</span> <span class="n">NaryNode</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">children</span><span class="p">));</span>
-</span><span class='line'>  <span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">NaryNode</span><span class="o">&gt;</span> <span class="n">nnode3</span><span class="p">(</span><span class="n">new</span> <span class="n">NaryNode</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="n">children</span><span class="p">));</span>
-</span><span class='line'>  <span class="n">children</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">nnode1</span><span class="p">.</span><span class="n">get</span><span class="p">());</span>
-</span><span class='line'>  <span class="n">children</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">nnode2</span><span class="p">.</span><span class="n">get</span><span class="p">());</span>
-</span><span class='line'>  <span class="n">children</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">nnode3</span><span class="p">.</span><span class="n">get</span><span class="p">());</span>
-</span><span class='line'>  <span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">NaryNode</span><span class="o">&gt;</span> <span class="n">nroot</span><span class="p">(</span><span class="n">new</span> <span class="n">NaryNode</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">children</span><span class="p">));</span>
-</span><span class='line'>  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;NarySum = &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">narySum</span><span class="p">(</span><span class="n">nroot</span><span class="p">.</span><span class="n">get</span><span class="p">())</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Assembly highlights:</p>
-
-<p>Uploaded the full file as a <a href="https://gist.github.com/agam/5872178">Gist</a> (it&rsquo;s 6437 lines long, we aren&rsquo;t in <em>Hello World</em> territory any more; on the other hand, this program would have been much longer in C.</p>
-
-<p>The function <code>_Z9binarySumP10BinaryNode</code> is defined near the top, and the function <code>_Z7narySumP8NaryNode</code> right under it.</p>
-
-<p>The assembly code follows along almost exactly as the C++ code above (of course all the struct offsets are &ldquo;just added&rdquo; and you don&rsquo;t see the members being accessed directly).</p>
-
-<p>The recursion is more obviously visible for the first function, where you see a pattern of &ldquo;call the function&rdquo;, &ldquo;call the function again&rdquo; and then add the node value to it. For the second function, you can see calls to <code>vector&lt;NaryNode&gt;::begin()</code> and <code>vector&lt;NaryNode&gt;::end()</code> at the beginning of the loop, and the test &lsquo;n&rsquo; jump and the recursive call in the middle of the body.</p>
-
-<p>It is useful also to see how <code>main()</code> works here, you can see three calls to the <code>BinaryNode</code> constructor (<code>_ZN10BinaryNodeC1EiPS_S0_</code>), and then similar stuff for the <code>NaryNode</code> objects. At the end are multiple calls to the destructors (similar to <code>callq _ZNSt10unique_ptrI8NaryNodeSt14default_deleteIS0_EED1Ev</code>).</p>
-
-<p>Most of the rest of the code is the definition of these functions (vector begin/end and unique_ptr delete etc.)</p>
-
-<p>Note: I found a better way to show the assembly &lt;&ndash;> source correspondence, in an interactive way: <a href="http://gcc.godbolt.org/">GCC Explorer</a> and I&rsquo;ll use that next time, it&rsquo;s just way more convenient. Also, I&rsquo;ve been showing unoptimized assembly, which is <em>just noise</em>, will refer to <code>-O2</code> next time.</p>
-
-<h2>Haskell version</h2>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="kr">data</span> <span class="kt">BinaryTree</span> <span class="n">a</span> <span class="ow">=</span> <span class="kt">BinaryLeaf</span> <span class="n">a</span> <span class="o">|</span> <span class="kt">BinaryBranch</span> <span class="p">(</span><span class="kt">BinaryTree</span> <span class="n">a</span><span class="p">)</span> <span class="p">(</span><span class="kt">BinaryTree</span> <span class="n">a</span><span class="p">)</span>
-</span><span class='line'><span class="kr">data</span> <span class="kt">NaryTree</span> <span class="n">a</span> <span class="ow">=</span> <span class="kt">NaryLeaf</span> <span class="n">a</span> <span class="o">|</span> <span class="kt">NaryBranch</span> <span class="p">[</span><span class="kt">NaryTree</span> <span class="n">a</span><span class="p">]</span>
-</span><span class='line'>
-</span><span class='line'><span class="nf">binarySum</span> <span class="ow">::</span> <span class="p">(</span><span class="kt">Num</span> <span class="n">a</span><span class="p">)</span> <span class="ow">=&gt;</span> <span class="p">(</span><span class="kt">BinaryTree</span> <span class="n">a</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="n">a</span>
-</span><span class='line'><span class="nf">binarySum</span> <span class="p">(</span><span class="kt">BinaryLeaf</span> <span class="n">x</span><span class="p">)</span> <span class="ow">=</span> <span class="n">x</span>
-</span><span class='line'><span class="nf">binarySum</span> <span class="p">(</span><span class="kt">BinaryBranch</span> <span class="n">a</span> <span class="n">b</span><span class="p">)</span> <span class="ow">=</span>  <span class="p">(</span><span class="n">binarySum</span> <span class="n">a</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="n">binarySum</span> <span class="n">b</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="nf">narySum</span> <span class="ow">::</span> <span class="p">(</span><span class="kt">Num</span> <span class="n">a</span><span class="p">)</span> <span class="ow">=&gt;</span> <span class="kt">NaryTree</span> <span class="n">a</span> <span class="ow">-&gt;</span> <span class="n">a</span>
-</span><span class='line'><span class="nf">narySum</span> <span class="p">(</span><span class="kt">NaryLeaf</span> <span class="n">x</span><span class="p">)</span> <span class="ow">=</span> <span class="n">x</span>
-</span><span class='line'><span class="nf">narySum</span> <span class="p">(</span><span class="kt">NaryBranch</span> <span class="n">b</span><span class="p">)</span> <span class="ow">=</span> <span class="n">foldl</span> <span class="p">(</span><span class="nf">\</span><span class="n">acc</span> <span class="n">x</span> <span class="ow">-&gt;</span> <span class="n">acc</span> <span class="o">+</span> <span class="p">(</span><span class="n">narySum</span> <span class="n">x</span><span class="p">))</span> <span class="mi">0</span> <span class="n">b</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">--Create dummy binary and n-ary trees and print out their sum</span>
-</span><span class='line'><span class="nf">main</span> <span class="ow">=</span> <span class="kr">let</span> <span class="n">bt</span> <span class="ow">=</span> <span class="kt">BinaryBranch</span> <span class="p">(</span><span class="kt">BinaryLeaf</span> <span class="mi">4</span><span class="p">)</span> <span class="p">(</span><span class="kt">BinaryLeaf</span> <span class="mi">5</span><span class="p">)</span>
-</span><span class='line'>           <span class="n">nt</span> <span class="ow">=</span> <span class="kt">NaryBranch</span> <span class="p">((</span><span class="kt">NaryLeaf</span> <span class="mi">4</span><span class="p">)</span> <span class="kt">:</span> <span class="p">(</span><span class="kt">NaryLeaf</span> <span class="mi">5</span><span class="p">)</span> <span class="kt">:</span> <span class="p">(</span><span class="kt">NaryLeaf</span> <span class="mi">6</span><span class="p">)</span> <span class="kt">:</span> <span class="kt">[]</span><span class="p">)</span>
-</span><span class='line'>       <span class="kr">in</span> <span class="kr">do</span>
-</span><span class='line'>          <span class="n">putStrLn</span> <span class="p">(</span><span class="s">&quot;BinarySum = &quot;</span> <span class="o">++</span> <span class="n">show</span><span class="p">(</span><span class="n">binarySum</span> <span class="n">bt</span><span class="p">))</span>
-</span><span class='line'>          <span class="n">putStrLn</span> <span class="p">(</span><span class="s">&quot;NarySum = &quot;</span> <span class="o">++</span> <span class="n">show</span><span class="p">(</span><span class="n">narySum</span> <span class="n">nt</span><span class="p">))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Assembly highlights:</p>
-
-<p>Uploaded the <a href="https://gist.github.com/agam/5974455">full file (core) as a Gist</a></p>
-
-<p><code>main</code> is present as <code>main1</code> near the bottom, which has two calls to <code>Handle.Text.hPutStr2</code></p>
-
-<p>The binary sum is unpacked quite straightforwardly :&ndash;</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="nf">main_</span><span class="o">$</span><span class="n">sbinarySum</span> <span class="ow">=</span>
-</span><span class='line'>  <span class="nf">\</span> <span class="p">(</span><span class="n">ds_dBk</span> <span class="ow">::</span> <span class="kt">BinaryTree</span> <span class="kt">Type</span><span class="o">.</span><span class="kt">Integer</span><span class="p">)</span> <span class="ow">-&gt;</span>
-</span><span class='line'>    <span class="kr">case</span> <span class="n">ds_dBk</span> <span class="kr">of</span> <span class="kr">_</span> <span class="p">{</span>
-</span><span class='line'>      <span class="kt">BinaryLeaf</span> <span class="n">x_aaA</span> <span class="ow">-&gt;</span> <span class="n">x_aaA</span><span class="p">;</span>
-</span><span class='line'>      <span class="kt">BinaryBranch</span> <span class="n">a_aaB</span> <span class="n">b_aaC</span> <span class="ow">-&gt;</span>
-</span><span class='line'>        <span class="kt">Type</span><span class="o">.</span><span class="n">plusInteger</span>
-</span><span class='line'>          <span class="p">(</span><span class="n">main_</span><span class="o">$</span><span class="n">sbinarySum</span> <span class="n">a_aaB</span><span class="p">)</span> <span class="p">(</span><span class="n">main_</span><span class="o">$</span><span class="n">sbinarySum</span> <span class="n">b_aaC</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>whereas the nary sum is less so :&ndash;</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="nf">main_</span><span class="o">$</span><span class="n">snarySum</span> <span class="ow">=</span>
-</span><span class='line'>  <span class="nf">\</span> <span class="p">(</span><span class="n">ds_dtA</span> <span class="ow">::</span> <span class="kt">NaryTree</span> <span class="kt">Type</span><span class="o">.</span><span class="kt">Integer</span><span class="p">)</span> <span class="ow">-&gt;</span>
-</span><span class='line'>    <span class="kr">case</span> <span class="n">ds_dtA</span> <span class="kr">of</span> <span class="kr">_</span> <span class="p">{</span>
-</span><span class='line'>      <span class="kt">NaryLeaf</span> <span class="n">x_aad</span> <span class="ow">-&gt;</span> <span class="n">x_aad</span><span class="p">;</span>
-</span><span class='line'>      <span class="kt">NaryBranch</span> <span class="n">b_aae</span> <span class="ow">-&gt;</span> <span class="n">lgo_r1MR</span> <span class="n">lvl_r1MQ</span> <span class="n">b_aae</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="nf">lgo_r1MR</span> <span class="ow">=</span>
-</span><span class='line'>  <span class="nf">\</span> <span class="p">(</span><span class="n">z_atM</span> <span class="ow">::</span> <span class="kt">Type</span><span class="o">.</span><span class="kt">Integer</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">(</span><span class="n">ds_atN</span> <span class="ow">::</span> <span class="p">[</span><span class="kt">NaryTree</span> <span class="kt">Type</span><span class="o">.</span><span class="kt">Integer</span><span class="p">])</span> <span class="ow">-&gt;</span>
-</span><span class='line'>    <span class="kr">case</span> <span class="n">ds_atN</span> <span class="kr">of</span> <span class="kr">_</span> <span class="p">{</span>
-</span><span class='line'>      <span class="kt">[]</span> <span class="ow">-&gt;</span> <span class="n">z_atM</span><span class="p">;</span>
-</span><span class='line'>      <span class="kt">:</span> <span class="n">x_atS</span> <span class="n">xs_atT</span> <span class="ow">-&gt;</span>
-</span><span class='line'>        <span class="n">lgo_r1MR</span>
-</span><span class='line'>          <span class="p">(</span><span class="kt">Type</span><span class="o">.</span><span class="n">plusInteger</span> <span class="n">z_atM</span> <span class="p">(</span><span class="n">main_</span><span class="o">$</span><span class="n">snarySum</span> <span class="n">x_atS</span><span class="p">))</span>
-</span><span class='line'>          <span class="n">xs_atT</span>
-</span><span class='line'>    <span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>with the second function being defined for iteration. I uploaded a gist with the <a href="https://gist.github.com/agam/5974501">assembly output</a>, which is of course tedious and quite spaghetti-like.</p>
-
-<p>Here is an example of the nary leaf:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-</pre></td><td class='code'><pre><code class='nasm'><span class='line'><span class="nf">.globl</span> <span class="nv">Main_NaryLeaf_closure</span>
-</span><span class='line'><span class="nf">.type</span> <span class="nv">Main_NaryLeaf_closure</span><span class="p">,</span> <span class="err">@</span><span class="nv">object</span>
-</span><span class='line'><span class="nl">Main_NaryLeaf_closure:</span>
-</span><span class='line'>  <span class="nf">.quad</span>   <span class="nv">Main_NaryLeaf_info</span>
-</span><span class='line'><span class="nf">.text</span>
-</span><span class='line'>  <span class="nf">.align</span> <span class="mi">8</span>
-</span><span class='line'>  <span class="nf">.quad</span>   <span class="mi">4294967301</span>
-</span><span class='line'>  <span class="nf">.quad</span>   <span class="mi">0</span>
-</span><span class='line'>  <span class="nf">.quad</span>   <span class="mi">15</span>
-</span><span class='line'><span class="nl">Main_NaryLeaf_info:</span>
-</span><span class='line'><span class="nl">.LcBb:</span>
-</span><span class='line'>  <span class="nf">addq</span> <span class="kc">$</span><span class="mi">16</span><span class="p">,</span><span class="o">%</span><span class="nv">r12</span>
-</span><span class='line'>  <span class="nf">cmpq</span> <span class="mi">144</span><span class="p">(</span><span class="o">%</span><span class="nv">r13</span><span class="p">),</span><span class="o">%</span><span class="nv">r12</span>
-</span><span class='line'>  <span class="nf">ja</span> <span class="nv">.LcBg</span>
-</span><span class='line'>  <span class="nf">movq</span> <span class="kc">$</span><span class="nv">Main_NaryLeaf_con_info</span><span class="p">,</span><span class="o">-</span><span class="mi">8</span><span class="p">(</span><span class="o">%</span><span class="nv">r12</span><span class="p">)</span>
-</span><span class='line'>  <span class="nf">movq</span> <span class="o">%</span><span class="nv">r14</span><span class="p">,</span><span class="mi">0</span><span class="p">(</span><span class="o">%</span><span class="nv">r12</span><span class="p">)</span>
-</span><span class='line'>  <span class="nf">leaq</span> <span class="o">-</span><span class="mi">7</span><span class="p">(</span><span class="o">%</span><span class="nv">r12</span><span class="p">),</span><span class="o">%</span><span class="nb">rbx</span>
-</span><span class='line'>  <span class="nf">jmp</span> <span class="o">*</span><span class="mi">0</span><span class="p">(</span><span class="o">%</span><span class="nb">rbp</span><span class="p">)</span>
-</span><span class='line'><span class="nl">.LcBg:</span>
-</span><span class='line'>  <span class="nf">movq</span> <span class="kc">$</span><span class="mi">16</span><span class="p">,</span><span class="mi">192</span><span class="p">(</span><span class="o">%</span><span class="nv">r13</span><span class="p">)</span>
-</span><span class='line'><span class="nl">.LcBe:</span>
-</span><span class='line'>  <span class="nf">movl</span> <span class="kc">$</span><span class="nv">Main_NaryLeaf_closure</span><span class="p">,</span><span class="o">%</span><span class="nb">ebx</span>
-</span><span class='line'>  <span class="nf">jmp</span> <span class="o">*-</span><span class="mi">8</span><span class="p">(</span><span class="o">%</span><span class="nv">r13</span><span class="p">)</span>
-</span><span class='line'>  <span class="nf">.size</span> <span class="nv">Main_NaryLeaf_info</span><span class="p">,</span> <span class="nv">.</span><span class="o">-</span><span class="nv">Main_NaryLeaf_info</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Running time</h2>
-
-<p>Pretty much on par here:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span><span class="nb">time</span> ./cpptree
-</span><span class='line'><span class="nv">BinarySum</span> <span class="o">=</span> 9
-</span><span class='line'><span class="nv">NarySum</span> <span class="o">=</span> 15
-</span><span class='line'>
-</span><span class='line'>real  0m0.005s
-</span><span class='line'>user  0m0.000s
-</span><span class='line'>
-</span><span class='line'><span class="nv">$ </span><span class="nb">time</span> ./haskelltree
-</span><span class='line'><span class="nv">BinarySum</span> <span class="o">=</span> 9
-</span><span class='line'><span class="nv">NarySum</span> <span class="o">=</span> 15
-</span><span class='line'>
-</span><span class='line'>real  0m0.004s
-</span><span class='line'>user  0m0.000s
-</span><span class='line'>sys   0m0.000s
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Fast compilation, comparable run-time, shorter code &hellip; we&rsquo;re talking serious competition here :)</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-06-26T00:00:00-07:00" pubdate data-updated="true">Jun 26<sup>th</sup>, 2013</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/c-plus-plus/'>c++</a>, <a class='category' href='/blog/categories/haskell/'>haskell</a>
 
 
 </div>

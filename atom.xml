@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-11-27T13:32:37-08:00</updated>
+  <updated>2015-12-26T22:05:27-08:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,33 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Monthly Programming summary: December 2015]]></title>
+    <link href="http://agam.github.io/blog/2015/12/26/monthly-programming-summary-december-2015/"/>
+    <updated>2015-12-26T20:46:30-08:00</updated>
+    <id>http://agam.github.io/blog/2015/12/26/monthly-programming-summary-december-2015</id>
+    <content type="html"><![CDATA[<p>A second installment of &ldquo;interesting stuff I came across this month&rdquo; &hellip;</p>
+
+<p>(<em>Aside:</em> I shouldn&rsquo;t call this a &ldquo;programming&rdquo; summary, but I can&rsquo;t think of anything better &mdash; it&rsquo;s more of a &ldquo;math + science + computers&rdquo; newsletter)</p>
+
+<ul>
+<li><p>The highlight of the last month for me was the realization of the dream of an ultra-cheap computer, the <a href="https://www.raspberrypi.org/blog/raspberry-pi-zero/">Raspberry Pi Zero</a>, which is cheaper than several drinks at Starbucks.</p></li>
+<li><p>Yes, ants displaying &ldquo;collective intelligence&rdquo; is old stuff (I first encountered a reference to it in the pages of <em>Godel, Escher, Bach</em>), but <a href="http://www.kurzweilai.net/army-ants-living-bridges-suggest-collective-intelligence">this article</a> is something else altogether, showing how &ldquo;living bridges&rdquo; are dynamically adjusted by the constituent ants, in response to foraaging needs.</p></li>
+<li><p><em>&ldquo;Get Lamp&rdquo;</em> (<a href="https://www.youtube.com/watch?v=UwZxUGmqSOo">link to trailer</a>) is an interesting documentary on the history of interactive text-based fiction, mostly adventure games. If you&rsquo;ve ever telneted to a MUD, you will like this.</p></li>
+<li><p>I lap up everything by Bret Victor, and hope for him to turn out as the Alan Kay of our time. <a href="https://medium.com/re-form/the-utopian-ui-architect-34dead42a28#.emrat4pnv">This</a> is aanother recent piece where he insists we haven&rsquo;t really <em>used</em> computers well at all.</p></li>
+<li><p>Finally, <a href="http://www.popularmechanics.com/military/weapons/a18343/the-cannons-on-the-b-29-bomber-were-a-mid-century-engineering-masterpiece/">this Popular Mechanics article</a> blew me away &mdash; before there were &ldquo;real&rdquo; computers, the B-29 Superfortress had high-tech computing <em>way</em> ahead of its time, to remotely operate its gun turrets. Obligatory youtube video below:</p></li>
+</ul>
+
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/nskFayhBcy0" frameborder="0" allowfullscreen></iframe>
+
+
+<p>This month&rsquo;s QOTM is from Bret Victor&rsquo;s piece above:</p>
+
+<blockquote><p>Now we’re staring at computer screens and moving our hands on a keyboard, but it’s basically the same thing. <strong>We’re computer users thinking paper thoughts.”</strong></p></blockquote>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Monthly Programming summary: November 2015]]></title>
@@ -1049,25 +1076,6 @@
 
 
 <p>The best part? It ran in <code>0.363 seconds</code>!</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[On the Internet of thing-like-things ...]]></title>
-    <link href="http://agam.github.io/blog/2015/05/17/on-the-internet-of-thing-like-things-dot-dot-dot/"/>
-    <updated>2015-05-17T00:16:24-07:00</updated>
-    <id>http://agam.github.io/blog/2015/05/17/on-the-internet-of-thing-like-things-dot-dot-dot</id>
-    <content type="html"><![CDATA[<p>Went to Maker Faire, had my mind blown <em>(as usual)</em>, and then came across this quote<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> by Cory Doctorow:</p>
-
-<blockquote><p>So today we have marketing departments who say things like ‘[…] Make me a computer that doesn’t run every program, just a program that does this specialized task, like streaming audio, or routing packets, or playing Xbox games’ […] But that’s not what we do when we turn a computer into an appliance. We’re not making a computer that runs only the “appliance” app; we’re making a computer that can run every program, but which uses some combination of rootkits, spyware, and code-signing to prevent the user from knowing which processes are running, from installing her own software, and from terminating processes that she doesn’t want. <strong>In other words, an appliance is not a stripped-down computer — it is a fully functional computer with spyware on it out of the box.</strong></p></blockquote>
-<div class="footnotes">
-<hr/>
-<ol>
-<li id="fn:1">
-<p>28th Chaos Communication Congress in Berlin (<a href="https://www.youtube.com/watch?v=HUEvRyemKSg&amp;feature=youtu.be">Youtube link</a>)<a href="#fnref:1" rev="footnote">&#8617;</a></p></li>
-</ol>
-</div>
-
 ]]></content>
   </entry>
   
