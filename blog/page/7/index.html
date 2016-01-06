@@ -7,7 +7,7 @@
 	<meta name="author" content="Agam">
 
 	
-	<meta name="description" content="Picking up where I left off, apparently 2 years ago !! :( To avoid a procrastination excuse, I decided to skip the step of adding it to the github &hellip;">
+	<meta name="description" content="This one seemed simple but turned out to be a good showcase for a short haskell program (I&rsquo;m sure it can be shorter but IMHO that would &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -86,6 +86,176 @@
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2015/01/31/euler-22-scoring-names/">
+		
+			Euler 22: Scoring Names ?</a>
+	</h2>
+	<div class="entry-content">
+		<p>This one seemed simple but turned out to be a good showcase for a short haskell program (I&rsquo;m sure it can be shorter but IMHO that would probably approach <em>Perl-ness</em>)</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="kr">import</span> <span class="k">qualified</span> <span class="nn">Data.Char</span> <span class="k">as</span> <span class="n">C</span>
+</span><span class='line'><span class="kr">import</span> <span class="k">qualified</span> <span class="nn">Data.List</span> <span class="k">as</span> <span class="n">L</span>
+</span><span class='line'><span class="kr">import</span> <span class="k">qualified</span> <span class="nn">Debug.Trace</span> <span class="k">as</span> <span class="n">T</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">charValue</span> <span class="n">c</span> <span class="ow">=</span> <span class="kt">C</span><span class="o">.</span><span class="n">ord</span> <span class="p">(</span><span class="kt">C</span><span class="o">.</span><span class="n">toUpper</span> <span class="n">c</span><span class="p">)</span> <span class="o">-</span> <span class="kt">C</span><span class="o">.</span><span class="n">ord</span> <span class="n">&#39;A&#39;</span> <span class="o">+</span> <span class="mi">1</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">nameValue</span> <span class="n">n</span> <span class="ow">=</span> <span class="n">sum</span> <span class="o">$</span> <span class="n">map</span> <span class="n">charValue</span> <span class="n">n</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">nameProduct</span> <span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">index</span><span class="p">)</span> <span class="ow">=</span> <span class="n">index</span> <span class="o">*</span> <span class="n">nameValue</span> <span class="n">name</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">splitString</span> <span class="n">c</span> <span class="n">s</span> <span class="ow">=</span>
+</span><span class='line'>  <span class="kr">case</span> <span class="n">break</span> <span class="p">(</span><span class="o">==</span> <span class="n">c</span><span class="p">)</span> <span class="n">s</span> <span class="kr">of</span>
+</span><span class='line'>       <span class="p">(</span><span class="kt">[]</span><span class="p">,</span> <span class="kr">_</span><span class="kt">:</span><span class="n">xs</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">xs</span><span class="p">]</span>
+</span><span class='line'>       <span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="kr">_</span><span class="kt">:</span><span class="n">xs</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">y</span><span class="p">]</span> <span class="o">++</span> <span class="n">splitString</span> <span class="n">c</span> <span class="n">xs</span>
+</span><span class='line'>       <span class="p">(</span><span class="n">xs</span><span class="p">,</span> <span class="kt">[]</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="n">xs</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">getNameSum</span> <span class="n">f</span> <span class="ow">=</span>
+</span><span class='line'>     <span class="kr">let</span> <span class="n">w</span> <span class="ow">=</span> <span class="n">splitString</span> <span class="n">&#39;</span><span class="p">,</span><span class="n">&#39;</span> <span class="o">$</span> <span class="n">filter</span> <span class="p">(</span><span class="o">/=</span> <span class="n">&#39;</span><span class="nf">\</span><span class="s">&quot;&#39;) f</span>
+</span><span class='line'><span class="s">     in</span>
+</span><span class='line'><span class="s">        T.traceShow (length w)</span>
+</span><span class='line'><span class="s">        sum $ map nameProduct $ zip (L.sort w) [1 .. ]</span>
+</span><span class='line'>
+</span><span class='line'><span class="s">getNames fileName =</span>
+</span><span class='line'><span class="s">  do</span>
+</span><span class='line'><span class="s">     f &lt;- readFile fileName</span>
+</span><span class='line'><span class="s">     return $ getNameSum f</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I left the `traceShow&#8217; in there to give an example of the debugging I relied upon. Other than that, it was enjoyable, and I really do appreciate how much longer this would have been in most other languages.</p>
+
+<p><strong>Notes:</strong></p>
+
+<ul>
+<li><p>I skipped the part about <em>sorting</em> the input and spent a long time (<em>unnecessarily!</em>) complaining about the <em>black-boxness</em> of the &ldquo;IO&rdquo;</p></li>
+<li><p>I suspected the initial version had an off-by-one error; luckily <code>awk</code> was on hand to sanity check the number of words:</p></li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>cat /tmp/p022_names.txt <span class="p">|</span> tr <span class="s1">&#39;,&#39;</span> <span class="s1">&#39; &#39;</span> <span class="p">|</span> tr <span class="s1">&#39;&quot;&#39;</span> <span class="s1">&#39; &#39;</span> <span class="p">|</span> tr -s <span class="s2">&quot; &quot;</span> <span class="p">|</span> awk <span class="s1">&#39;BEGIN { RS = &quot; &quot; }; END { print NR }&#39;</span>
+</span><span class='line'>5163
+</span></code></pre></td></tr></table></div></figure>
+
+
+<ul>
+<li>Just to dump it out there, the <em>other</em> way of checking the soundness of the logic:</li>
+</ul>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">char-value</span> <span class="p">(</span><span class="nv">c</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">1+</span> <span class="p">(</span><span class="nb">-</span> <span class="p">(</span><span class="nb">char-code</span> <span class="nv">c</span><span class="p">)</span>
+</span><span class='line'>   <span class="p">(</span><span class="nb">char-code</span> <span class="sc">#\A</span><span class="p">))))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">string-value</span> <span class="p">(</span><span class="nv">str</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">c</span> <span class="nv">across</span> <span class="p">(</span><span class="nb">string-upcase</span> <span class="nv">str</span><span class="p">)</span>
+</span><span class='line'>       <span class="nv">sum</span> <span class="p">(</span><span class="nv">char-value</span> <span class="nv">c</span><span class="p">)))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">name-product</span> <span class="p">(</span><span class="nv">name</span> <span class="nv">index</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">*</span> <span class="nv">index</span>
+</span><span class='line'>     <span class="p">(</span><span class="nv">string-value</span> <span class="nv">name</span><span class="p">)))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">range</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">i</span> <span class="nv">from</span> <span class="mi">1</span> <span class="nv">to</span> <span class="nv">n</span>
+</span><span class='line'>     <span class="nv">collect</span> <span class="nv">i</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">sum-names</span> <span class="p">(</span><span class="nv">names</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">reduce</span> <span class="nf">#&#39;</span><span class="nb">+</span>
+</span><span class='line'>    <span class="p">(</span><span class="nb">mapcar</span> <span class="nf">#&#39;</span><span class="nv">name-product</span>
+</span><span class='line'>        <span class="nv">names</span>
+</span><span class='line'>        <span class="p">(</span><span class="nv">range</span> <span class="p">(</span><span class="nb">length</span> <span class="nv">names</span><span class="p">)))))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&hellip; used (e.g.) as <code>(sum-names (list "foo" "bar"))</code></p>
+
+<ul>
+<li>For some reason, the code-formatter for Jekyll (<code>pygments</code>) is completely thrown off by the Haskell source above. Perhaps this post have been in &ldquo;literate code&rdquo;. Most likely it would have been procrastinated out of existence if attempted that way.</li>
+</ul>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-01-31T21:01:13-08:00" pubdate data-updated="true">Jan 31<sup>st</sup>, 2015</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/haskell/'>haskell</a>, <a class='category' href='/blog/categories/projecteuler/'>projecteuler</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -7271,153 +7441,6 @@ After this, evaluating <code>amicables 10000</code> took <code>23.71</code> seco
 </div>
 </article>
 
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2015/01/06/lisp-performance-check-up/">
-		
-			Lisp Performance Check-up</a>
-	</h2>
-	<div class="entry-content">
-		<p>Came across <a href="https://github.com/pixie-lang/pixie">pixie-lang</a>, and it had this bit about &ldquo;<em>the loop compiles down to six instructions!</em>&rdquo;</p>
-
-<p>So I decided to go and satisfy my curiosity about just how many instructions a loop like this <em>should</em> be expected to compile down to.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="nv">CL-USER&gt;</span> <span class="p">(</span><span class="nb">defun</span> <span class="nv">add-fn</span> <span class="p">(</span><span class="nv">args</span><span class="p">)</span>
-</span><span class='line'>           <span class="p">(</span><span class="nb">reduce</span> <span class="nf">#&#39;</span><span class="nb">+</span> <span class="nv">args</span><span class="p">))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>which obviously runs as</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="nv">CL-USER&gt;</span> <span class="p">(</span><span class="nv">add-fn</span> <span class="o">&#39;</span><span class="p">(</span><span class="mi">3</span> <span class="mi">4</span> <span class="mi">5</span><span class="p">))</span>
-</span><span class='line'><span class="mi">12</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Now, a look at what&rsquo;s going on &ldquo;under the hood&rdquo;</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="nv">CL-USER&gt;</span> <span class="p">(</span><span class="nb">disassemble</span> <span class="nf">#&#39;</span><span class="nv">add-fn</span><span class="p">)</span>
-</span><span class='line'><span class="c1">; disassembly for ADD-FN</span>
-</span><span class='line'><span class="c1">; Size: 42 bytes. Origin: #x1004FBC3F8</span>
-</span><span class='line'><span class="c1">; 3F8:       498B4C2460       MOV RCX, [R12+96]               ; thread.binding-stack-pointer</span>
-</span><span class='line'>                                                              <span class="c1">; no-arg-parsing entry point</span>
-</span><span class='line'><span class="c1">; 3FD:       48894DF8         MOV [RBP-8], RCX</span>
-</span><span class='line'><span class="c1">; 401:       488B1598FFFFFF   MOV RDX, [RIP-104]              ; #&lt;FUNCTION +&gt;</span>
-</span><span class='line'><span class="c1">; 408:       488BFE           MOV RDI, RSI</span>
-</span><span class='line'><span class="c1">; 40B:       488B0596FFFFFF   MOV RAX, [RIP-106]              ; #&lt;FDEFINITION for REDUCE&gt;</span>
-</span><span class='line'><span class="c1">; 412:       B904000000       MOV ECX, 4</span>
-</span><span class='line'><span class="c1">; 417:       FF7508           PUSH QWORD PTR [RBP+8]</span>
-</span><span class='line'><span class="c1">; 41A:       FF6009           JMP QWORD PTR [RAX+9]</span>
-</span><span class='line'><span class="c1">; 41D:       CC0A             BREAK 10                        ; error trap</span>
-</span><span class='line'><span class="c1">; 41F:       02               BYTE #X02</span>
-</span><span class='line'><span class="c1">; 420:       19               BYTE #X19                       ; INVALID-ARG-COUNT-ERROR</span>
-</span><span class='line'><span class="c1">; 421:       9A               BYTE #X9A                       ; RCX</span>
-</span><span class='line'><span class="no">NIL</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Ok, let&rsquo;s see if we can slightly improve that</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="nv">CL-USER&gt;</span> <span class="p">(</span><span class="nb">defun</span> <span class="nv">add-fn</span> <span class="p">(</span><span class="nv">args</span><span class="p">)</span>
-</span><span class='line'>           <span class="p">(</span><span class="k">declare</span> <span class="p">(</span><span class="k">optimize</span> <span class="p">(</span><span class="nv">speed</span> <span class="mi">3</span><span class="p">)</span> <span class="p">(</span><span class="nv">safety</span> <span class="mi">0</span><span class="p">)))</span>
-</span><span class='line'>           <span class="p">(</span><span class="nb">reduce</span> <span class="nf">#&#39;</span><span class="nb">+</span> <span class="nv">args</span><span class="p">))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="nv">CL-USER&gt;</span> <span class="p">(</span><span class="nb">disassemble</span> <span class="nf">#&#39;</span><span class="nv">add-fn</span><span class="p">)</span>
-</span><span class='line'><span class="c1">; disassembly for ADD-FN</span>
-</span><span class='line'><span class="c1">; Size: 25 bytes. Origin: #x10051BDB12</span>
-</span><span class='line'><span class="c1">; 12:       488B15A7FFFFFF   MOV RDX, [RIP-89]                ; #&lt;FUNCTION +&gt;</span>
-</span><span class='line'>                                                              <span class="c1">; no-arg-parsing entry point</span>
-</span><span class='line'><span class="c1">; 19:       488B05A8FFFFFF   MOV RAX, [RIP-88]                ; #&lt;FDEFINITION for REDUCE&gt;</span>
-</span><span class='line'><span class="c1">; 20:       B904000000       MOV ECX, 4</span>
-</span><span class='line'><span class="c1">; 25:       FF7508           PUSH QWORD PTR [RBP+8]</span>
-</span><span class='line'><span class="c1">; 28:       FF6009           JMP QWORD PTR [RAX+9]</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Pretty sweet, eh? <em>You don&rsquo;t get that kind of feedback every day</em>.</p>
-
-<p>This was all run on 64-bit SBCL:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="nv">CL-USER&gt;</span> <span class="p">(</span><span class="nb">lisp-implementation-type</span><span class="p">)</span>
-</span><span class='line'><span class="s">&quot;SBCL&quot;</span>
-</span><span class='line'><span class="nv">CL-USER&gt;</span> <span class="p">(</span><span class="nb">lisp-implementation-version</span><span class="p">)</span>
-</span><span class='line'><span class="s">&quot;1.2.7&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-01-06T22:22:09-08:00" pubdate data-updated="true">Jan 6<sup>th</sup>, 2015</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/lisp/'>lisp</a>, <a class='category' href='/blog/categories/sbcl/'>sbcl</a>
-
-
-</div>
-	
-</div>
-</article>
-
 <nav id="pagenavi">
     
         
@@ -7430,7 +7453,7 @@ After this, evaluating <code>amicables 10000</code> took <code>23.71</code> seco
     <div class="center"><a href="/blog/archives">Blog Archives</a></div>
 </nav>
 </div>
-	<footer id="footer" class="inner">Copyright &copy; 2015
+	<footer id="footer" class="inner">Copyright &copy; 2016
 
     Agam
 

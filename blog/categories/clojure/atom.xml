@@ -4,7 +4,7 @@
   <title><![CDATA[Category: clojure | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/clojure/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2015-12-26T22:05:27-08:00</updated>
+  <updated>2016-01-06T13:21:43-08:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,83 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Clojure from the ground up]]></title>
+    <link href="http://agam.github.io/blog/2016/01/06/clojure-from-the-ground-up/"/>
+    <updated>2016-01-06T13:14:57-08:00</updated>
+    <id>http://agam.github.io/blog/2016/01/06/clojure-from-the-ground-up</id>
+    <content type="html"><![CDATA[<p>It&rsquo;s time for the same old new year resolution again: going to stop randomly skimming new languages and focus on something in depth.</p>
+
+<p>This time, without loss of generality (hopefully!), I picked Clojure (<em>again ?</em>).</p>
+
+<p>Found this nice series of posts called <a href="https://aphyr.com/posts/301-clojure-from-the-ground-up-welcome"><em>&ldquo;Clojure from the ground up&rdquo;</em></a>.</p>
+
+<p>The best part is that unlike other random free tutorials online, this one has exercises.</p>
+
+<p>For example, <a href="https://aphyr.com/posts/306-clojure-from-the-ground-up-state">the post that introduces concurrency primitives</a> asks us to write our own <code>future</code> macro.</p>
+
+<p>I came up with this kludge:</p>
+
+<p><code>``clojure
+(defmacro my-future [&amp; body]
+ </code>(let [p# (promise)]</p>
+
+<pre><code>(.start (Thread.
+  (fn [] (let [f# (fn [] ~@body)
+               r# (f#)]
+           (deliver p# r#)))))
+           p#))
+</code></pre>
+
+<p>```</p>
+
+<p>The expansion looks like this:</p>
+
+<p>```clojure
+clojure-noob.core> (pprint (macroexpand &lsquo;(my-future (Thread/sleep 5000) (prn &ldquo;Hey &hellip; &rdquo;))))
+(let*
+  [p<strong>9904</strong>auto__ (clojure.core/promise)]
+  (.start</p>
+
+<pre><code>(java.lang.Thread.
+  (clojure.core/fn
+   []
+   (clojure.core/let
+    [f__9905__auto__
+      (clojure.core/fn [] (Thread/sleep 5000) (prn "Hey ... "))
+      r__9906__auto__ (f__9905__auto__)]
+    (clojure.core/deliver p__9904__auto__ r__9906__auto__)))))
+    p__9904__auto__)
+</code></pre>
+
+<p>nil
+```</p>
+
+<p>And it seems to work:</p>
+
+<p>```clojure
+clojure-noob.core> (def x (my-future (Thread/sleep 5000) (prn &ldquo;Hey &hellip; &rdquo;)))</p>
+
+<h1>&lsquo;clojure-noob.core/x</h1>
+
+<p>clojure-noob.core> (pprint x)</p>
+
+<h1>&lt;Promise@6a1dc62: :not-delivered></h1>
+
+<p>nil
+&ldquo;Hey &hellip; &rdquo;
+clojure-noob.core>
+clojure-noob.core> (pprint x)</p>
+
+<h1>&lt;Promise@6a1dc62: nil></h1>
+
+<p>nil
+```</p>
+
+<p>Here&rsquo;s hoping to fun times ahead (and a <em>happy new year</em> to you too!)</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Stuff I'd like to learn in 2015]]></title>
