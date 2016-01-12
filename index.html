@@ -7,7 +7,7 @@
 	<meta name="author" content="Agam">
 
 	
-	<meta name="description" content="It&rsquo;s time for the same old new year resolution again: going to stop randomly skimming new languages and focus on something in depth. This time &hellip;">
+	<meta name="description" content="Since I&rsquo;m warming up to Clojure this year, why not get started with the &ldquo;dailyprogrammer&rdquo; subreddit again? So here&rsquo;s a ( &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -86,6 +86,115 @@
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2016/01/11/daily-programming-simple-list-stuff/">
+		
+			Daily Programming: Simple List Stuff</a>
+	</h2>
+	<div class="entry-content">
+		<p>Since I&rsquo;m warming up to Clojure this year, why not get started with the &ldquo;dailyprogrammer&rdquo; subreddit again?</p>
+
+<p>So here&rsquo;s a (noobish) solution to <a href="https://www.reddit.com/r/dailyprogrammer/comments/40h9pd/20160111_challenge_249_easy_playing_the_stock/">this problem</a>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="kd">ns </span><span class="nv">dailyprog.core</span>
+</span><span class='line'>  <span class="p">(</span><span class="ss">:gen-class</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="ss">:require</span> <span class="p">[</span><span class="nv">clojure.string</span> <span class="ss">:as</span> <span class="nv">str</span><span class="p">]))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="kd">defn </span><span class="nv">input-&gt;float</span>
+</span><span class='line'>  <span class="p">[</span><span class="nv">input</span><span class="p">]</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">map </span><span class="o">#</span><span class="p">(</span><span class="nf">Float/parseFloat</span> <span class="nv">%</span><span class="p">)</span> <span class="p">(</span><span class="nf">str/split</span> <span class="nv">input</span> <span class="o">#</span><span class="s">&quot; &quot;</span><span class="p">)))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="kd">defn </span><span class="nv">difference</span>
+</span><span class='line'>  <span class="s">&quot;Given a list of prices, a price in the list and its index, return the best price to sell it at&quot;</span>
+</span><span class='line'>  <span class="p">[</span><span class="nv">lst</span> <span class="nb">index </span><span class="nv">buy-price</span><span class="p">]</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">max-sell-price</span> <span class="p">(</span><span class="nb">apply max </span><span class="p">(</span><span class="nb">drop index </span><span class="nv">lst</span><span class="p">))]</span>
+</span><span class='line'>    <span class="p">{</span><span class="ss">:buy-price</span> <span class="nv">buy-price</span>
+</span><span class='line'>    <span class="ss">:sell-price</span> <span class="nv">max-sell-price</span>
+</span><span class='line'>    <span class="ss">:difference</span> <span class="p">(</span><span class="nb">- </span><span class="nv">max-sell-price</span> <span class="nv">buy-price</span><span class="p">)}))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="kd">defn </span><span class="nv">difference-vector</span>
+</span><span class='line'>  <span class="p">[</span><span class="nv">lst</span><span class="p">]</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">map-indexed</span> <span class="p">(</span><span class="nb">partial difference </span><span class="nv">lst</span><span class="p">)</span> <span class="nv">lst</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="kd">defn </span><span class="nv">-main</span>
+</span><span class='line'>  <span class="p">[</span><span class="o">&amp;</span> <span class="nv">args</span><span class="p">]</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">println</span><span class="p">(</span><span class="nf">-&gt;&gt;</span> <span class="p">(</span><span class="nb">slurp </span><span class="p">(</span><span class="nb">first </span><span class="nv">args</span><span class="p">))</span>
+</span><span class='line'>                <span class="nv">input-&gt;float</span>
+</span><span class='line'>                <span class="nv">difference-vector</span>
+</span><span class='line'>                <span class="p">(</span><span class="nb">apply max-key </span><span class="ss">:difference</span><span class="p">))))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>and it runs like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>&gt; lein run /tmp/challenge-input
+</span><span class='line'><span class="o">{</span>:buy-price 8.03, :sell-price 10.02, :difference 1.9900007247924805<span class="o">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2016-01-11T22:36:12-08:00" pubdate data-updated="true">Jan 11<sup>th</sup>, 2016</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/alwaysbecoding/'>alwaysbecoding</a>, <a class='category' href='/blog/categories/clojure/'>clojure</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -655,56 +764,6 @@
 
 
 	<a class='category' href='/blog/categories/google/'>google</a>, <a class='category' href='/blog/categories/web/'>web</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2015/08/18/freebsd-on-gce-the-last-post/">
-		
-			FreeBSD on GCE (the Last Post)</a>
-	</h2>
-	<div class="entry-content">
-		<p>After <a href="blog/2014/12/14/trying-out-freebsd-and-failing-at-it/">one unsuccessful attempt</a> and one <a href="blog/2015/06/13/freebsd-on-google-compute-engine/">hack-ey successful one</a>, getting FreeBSD up and running on GCE is now a one-liner:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>gcloud compute instances create pandora --image freebsd-10-2-release-amd64 --image-project<span class="o">=</span>freebsd-org-cloud-dev
-</span><span class='line'><span class="nv">$ </span>gcloud compute ssh agam@pandora
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>&hellip; and that&rsquo;s it. <strong>Kudos</strong> to whoever made this happen!</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-08-18T22:59:29-07:00" pubdate data-updated="true">Aug 18<sup>th</sup>, 2015</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/freebsd/'>freebsd</a>, <a class='category' href='/blog/categories/gce/'>gce</a>
 
 
 </div>

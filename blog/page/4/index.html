@@ -7,7 +7,20 @@
 	<meta name="author" content="Agam">
 
 	
-	<meta name="description" content="I said I&rsquo;d try to work out the next problem on paper, but I gave up and wrote a program for it again :( I honestly thought it would take a &hellip;">
+	<meta name="description" content="While we&rsquo;re doing brute force solutions, here&rsquo;s another one &hellip; Statutory Warning: Spoilers Ahead 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14 &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -86,6 +99,150 @@
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2015/04/28/euler-44-triangle/">
+		
+			Euler 45: Triangle, Pengagonal, Hexagonal Numbers</a>
+	</h2>
+	<div class="entry-content">
+		<p>While we&rsquo;re doing brute force solutions, here&rsquo;s another one &hellip;</p>
+
+<p><strong>Statutory Warning</strong>: <em>Spoilers Ahead</em></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+</pre></td><td class='code'><pre><code class='c++'><span class='line'><span class="kt">uint64_t</span> <span class="nf">get_triangle</span><span class="p">(</span><span class="kt">uint64_t</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">return</span> <span class="n">n</span> <span class="o">*</span> <span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">bool</span> <span class="nf">is_pentagonal</span><span class="p">(</span><span class="kt">uint64_t</span> <span class="n">num</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="c1">// y = x * (3*x - 1) / 2</span>
+</span><span class='line'>  <span class="c1">// So x is an integral solution of 3x^2 + (-1)x + (-2y) = 0</span>
+</span><span class='line'>  <span class="c1">// ... or (1 + sqrt(1 + 24y))/6</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kt">double</span> <span class="n">solution</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">24</span> <span class="o">*</span> <span class="n">num</span><span class="p">))</span> <span class="o">/</span> <span class="mf">6.0</span><span class="p">;</span>
+</span><span class='line'>  <span class="kt">double</span> <span class="n">dummy</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">return</span> <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">modf</span><span class="p">(</span><span class="n">solution</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">dummy</span><span class="p">)</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">bool</span> <span class="nf">is_hexagonal</span><span class="p">(</span><span class="kt">uint64_t</span> <span class="n">num</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="c1">// y = x * (2*x - 1)</span>
+</span><span class='line'>  <span class="c1">// So x is an integral solution of 2x^2 + (-1)x + (-y) = 0</span>
+</span><span class='line'>  <span class="c1">// ... or (1 + sqrt(1 + 8y))/4</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="kt">double</span> <span class="n">solution</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">sqrt</span><span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">8</span> <span class="o">*</span> <span class="n">num</span><span class="p">))</span> <span class="o">/</span> <span class="mf">4.0</span><span class="p">;</span>
+</span><span class='line'>  <span class="kt">double</span> <span class="n">dummy</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">return</span> <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">modf</span><span class="p">(</span><span class="n">solution</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">dummy</span><span class="p">)</span> <span class="o">==</span> <span class="mf">0.0</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">void</span> <span class="nf">sanity_check</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="kt">uint64_t</span> <span class="n">t285</span> <span class="o">=</span> <span class="n">get_triangle</span><span class="p">(</span><span class="mi">285</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">assert</span><span class="p">(</span><span class="n">t285</span> <span class="o">==</span> <span class="mi">40755</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">assert</span><span class="p">(</span><span class="n">is_pentagonal</span><span class="p">(</span><span class="n">t285</span><span class="p">));</span>
+</span><span class='line'>  <span class="n">assert</span><span class="p">(</span><span class="n">is_hexagonal</span><span class="p">(</span><span class="n">t285</span><span class="p">));</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Euler # 45 ... </span><span class="se">\n\n</span><span class="s">&quot;</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="n">sanity_check</span><span class="p">();</span>
+</span><span class='line'>  <span class="c1">// We already now that T_285 is pentagonal and hexagonal, so start</span>
+</span><span class='line'>  <span class="c1">// from the next index;</span>
+</span><span class='line'>  <span class="kt">uint64_t</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">286</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">for</span> <span class="p">(;</span> <span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="kt">uint64_t</span> <span class="n">num</span> <span class="o">=</span> <span class="n">get_triangle</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">is_pentagonal</span><span class="p">(</span><span class="n">num</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="n">is_hexagonal</span><span class="p">(</span><span class="n">num</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>      <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Found triangle# &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">i</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;  (&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">num</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;)&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span><span class='line'>      <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">%</span> <span class="mi">100000</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Done testing &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">i</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-04-28T12:41:00-07:00" pubdate data-updated="true">Apr 28<sup>th</sup>, 2015</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/cpp/'>cpp</a>, <a class='category' href='/blog/categories/projecteuler/'>projecteuler</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -1129,100 +1286,6 @@
 
 
 <time datetime="2015-03-21T12:34:12-07:00" pubdate data-updated="true">Mar 21<sup>st</sup>, 2015</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/lisp/'>lisp</a>, <a class='category' href='/blog/categories/projecteuler/'>projecteuler</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2015/03/20/euler-39-integer-right-triangles/">
-		
-			Euler 39: Integer Right Triangles</a>
-	</h2>
-	<div class="entry-content">
-		<p>Straightfoward, this. An interesting insight into speed difference between <code>SBCL</code> and <code>Clozure</code>: the former took <em>0.75 seconds</em> to run this, while the latter took about <em>4 seconds</em> (without the type annotations, <code>SBCL</code> takes <em>33 seconds</em>).</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">is-right-triangle</span> <span class="p">(</span><span class="nv">n1</span> <span class="nv">n2</span> <span class="nv">n3</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">declare</span> <span class="p">(</span><span class="k">type</span> <span class="kt">fixnum</span> <span class="nv">n1</span> <span class="nv">n2</span> <span class="nv">n3</span><span class="p">))</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">=</span> <span class="p">(</span><span class="nb">+</span> <span class="p">(</span><span class="nb">expt</span> <span class="nv">n1</span> <span class="mi">2</span><span class="p">)</span> <span class="p">(</span><span class="nb">expt</span> <span class="nv">n2</span> <span class="mi">2</span><span class="p">))</span> <span class="p">(</span><span class="nb">expt</span> <span class="nv">n3</span> <span class="mi">2</span><span class="p">)))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">triangle-solutions</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">declare</span> <span class="p">(</span><span class="k">type</span> <span class="kt">fixnum</span> <span class="nv">n</span><span class="p">))</span>
-</span><span class='line'>  <span class="c1">;; Largest side (hyp) can&#39;t be less than a third of the total</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">hyp</span> <span class="nv">from</span> <span class="p">(</span><span class="nb">floor</span> <span class="p">(</span><span class="nb">/</span> <span class="nv">n</span> <span class="mi">3</span><span class="p">))</span> <span class="nv">upto</span> <span class="p">(</span><span class="nb">-</span> <span class="nv">n</span> <span class="mi">2</span><span class="p">)</span>
-</span><span class='line'>     <span class="c1">;; Avoid repeating combinations, so WLOG let one side</span>
-</span><span class='line'>     <span class="c1">;; be greater than the other</span>
-</span><span class='line'>     <span class="nv">for</span> <span class="nv">sides-sum</span> <span class="nb">=</span> <span class="p">(</span><span class="nb">-</span> <span class="nv">n</span> <span class="nv">hyp</span><span class="p">)</span>
-</span><span class='line'>     <span class="nb">when</span> <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">side1</span> <span class="nv">from</span> <span class="p">(</span><span class="nb">ceiling</span> <span class="p">(</span><span class="nb">/</span> <span class="nv">sides-sum</span> <span class="mi">2</span><span class="p">))</span> <span class="nv">to</span> <span class="p">(</span><span class="nb">1-</span> <span class="nv">sides-sum</span><span class="p">)</span>
-</span><span class='line'>             <span class="nv">for</span> <span class="nv">side2</span> <span class="nb">=</span> <span class="p">(</span><span class="nb">-</span> <span class="nv">sides-sum</span> <span class="nv">side1</span><span class="p">)</span>
-</span><span class='line'>             <span class="nb">when</span> <span class="p">(</span><span class="nv">is-right-triangle</span> <span class="nv">side1</span> <span class="nv">side2</span> <span class="nv">hyp</span><span class="p">)</span>
-</span><span class='line'>             <span class="nv">collect</span> <span class="p">(</span><span class="nb">list</span> <span class="nv">side1</span> <span class="nv">side2</span> <span class="nv">hyp</span><span class="p">))</span>
-</span><span class='line'>     <span class="nv">collect</span> <span class="nv">it</span><span class="p">))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">max-triangle-solutions</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">declare</span> <span class="p">(</span><span class="k">type</span> <span class="kt">fixnum</span> <span class="nv">n</span><span class="p">))</span>
-</span><span class='line'>  <span class="c1">;; n cannot be less than 3</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">let*</span> <span class="p">((</span><span class="nv">solutions</span> <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">i</span> <span class="nv">from</span> <span class="mi">3</span> <span class="nv">to</span> <span class="nv">n</span>
-</span><span class='line'>                       <span class="nv">collect</span> <span class="p">(</span><span class="nb">length</span> <span class="p">(</span><span class="nv">triangle-solutions</span> <span class="nv">i</span><span class="p">))))</span>
-</span><span class='line'>         <span class="p">(</span><span class="nv">max-solution</span> <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">elem</span> <span class="nv">in</span> <span class="nv">solutions</span> <span class="nv">maximizing</span> <span class="nv">elem</span><span class="p">)))</span>
-</span><span class='line'>    <span class="p">(</span><span class="nb">cons</span> <span class="nv">max-solution</span> <span class="p">(</span><span class="nb">+</span> <span class="mi">3</span> <span class="p">(</span><span class="nb">position</span> <span class="nv">max-solution</span> <span class="nv">solutions</span><span class="p">)))))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The answer needed is given by <code>(max-triangle-solutions 1000)</code>, while any specific solution can be got by (e.g.) running <code>(triangle-solutions 120)</code> which yields <code>(((40 30 50)) ((45 24 51)) ((48 20 52)))</code></p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-03-20T16:09:44-07:00" pubdate data-updated="true">Mar 20<sup>th</sup>, 2015</time></div>
 	<div class="tags">
 
 

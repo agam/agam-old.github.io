@@ -4,7 +4,7 @@
   <title><![CDATA[Category: clojure | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/clojure/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2016-01-06T13:21:43-08:00</updated>
+  <updated>2016-01-11T22:46:03-08:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,59 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Daily programming: simple list stuff]]></title>
+    <link href="http://agam.github.io/blog/2016/01/11/daily-programming-simple-list-stuff/"/>
+    <updated>2016-01-11T22:36:12-08:00</updated>
+    <id>http://agam.github.io/blog/2016/01/11/daily-programming-simple-list-stuff</id>
+    <content type="html"><![CDATA[<p>Since I&rsquo;m warming up to Clojure this year, why not get started with the &ldquo;dailyprogrammer&rdquo; subreddit again?</p>
+
+<p>So here&rsquo;s a (noobish) solution to <a href="https://www.reddit.com/r/dailyprogrammer/comments/40h9pd/20160111_challenge_249_easy_playing_the_stock/">this problem</a>:</p>
+
+<p>```clojure
+(ns dailyprog.core
+  (:gen-class)
+  (:require [clojure.string :as str]))</p>
+
+<p>(defn input->float
+  [input]
+  (map #(Float/parseFloat %) (str/split input #&ldquo; &rdquo;)))</p>
+
+<p>(defn difference
+  &ldquo;Given a list of prices, a price in the list and its index, return the best price to sell it at&rdquo;
+  [lst index buy-price]
+  (let [max-sell-price (apply max (drop index lst))]</p>
+
+<pre><code>{:buy-price buy-price
+:sell-price max-sell-price
+:difference (- max-sell-price buy-price)}))
+</code></pre>
+
+<p>(defn difference-vector
+  [lst]
+  (map-indexed (partial difference lst) lst))</p>
+
+<p>(defn -main
+  [&amp; args]
+  (println(&ndash;>> (slurp (first args))</p>
+
+<pre><code>            input-&gt;float
+            difference-vector
+            (apply max-key :difference))))
+</code></pre>
+
+<p>```</p>
+
+<p>and it runs like this:</p>
+
+<p>```sh</p>
+
+<blockquote><p>lein run /tmp/challenge-input
+{:buy-price 8.03, :sell-price 10.02, :difference 1.9900007247924805}
+```</p></blockquote>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Clojure from the ground up]]></title>
