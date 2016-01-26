@@ -7,7 +7,9 @@
 	<meta name="author" content="Agam">
 
 	
-	<meta name="description" content="Ok, I&rsquo;ve been talked back off the ledge. Perhaps I over-reacted a bit when I fled to Tumblr and then to Wordpress. I will undo some of that &hellip;">
+	<meta name="description" content="(Just for fun) (defpackage :game-of-life (:use :cl))
+(in-package :game-of-life) (defparameter *board-size* 10)
+(defparameter *game-board* nil) ( &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -86,6 +88,271 @@
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2014/07/25/simple-game-of-life/">
+		
+			Simple Game of Life</a>
+	</h2>
+	<div class="entry-content">
+		<p>(Just for fun)</p>
+
+<div><script src='https://gist.github.com/a832613064f958641330.js'></script>
+<noscript><pre><code>(defpackage :game-of-life
+  (:use :cl))
+(in-package :game-of-life)
+
+(defparameter *board-size* 10)
+(defparameter *game-board* nil)
+
+(defparameter *space* #\ )
+(defparameter *life* #\#)
+
+(defun make-new-board ()
+  (make-array (list *board-size* *board-size*)
+          :element-type '(mod 2)
+          :initial-element 0))
+
+(defun start-game ()
+  (setf *game-board* (make-new-board)))
+
+
+(defun print-board ()
+  (dotimes (i *board-size*)
+    (dotimes (j *board-size*)
+      (if (= 0 (aref *game-board* i j))
+      (princ *space*)
+      (princ *life*)))
+    (terpri)))
+
+(defun add-life (x y)
+  (setf (aref *game-board* x y) 1))
+
+(defparameter *environment-radius* 1)
+
+(defun get-environment (x y)
+  &quot;Create a matrix of size 2*radius + 1, with the element
+itself implicitly at (radius,radius) set to 0&quot;
+  (let* ((env-size (1+ (* 2 *environment-radius*)))
+     (env (make-array (list env-size env-size)
+             :element-type '(mod 2)
+             :initial-element 0)))
+    (dotimes (i env-size)
+      (dotimes (j env-size)
+    (let ((x-offset (+ x (- i *environment-radius*)))
+          (y-offset (+ y (- j *environment-radius*))))
+      (if (and (&gt; x-offset 0) (&lt; x-offset *board-size*)
+           (&gt; y-offset 0) (&lt; y-offset *board-size*))
+          (setf (aref env i j) (aref *game-board* x-offset y-offset))
+          (setf (aref env i j) 0)))))
+    env))
+
+(defun count-living-neighbors (env)
+  (let* ((num 0)
+     (env-size (1+ (* 2 *environment-radius*))))
+    (dotimes (i env-size)
+      (dotimes (j env-size)
+    (when (and (= 1 (aref env i j))
+           (or (/= i *environment-radius*)
+               (/= j *environment-radius*)))
+      (incf num))))
+    num))
+
+(defparameter *birth-number* 3)
+(defparameter *lonely-number* 1)
+(defparameter *crowded-number* 4)
+
+(defun can-be-born (neighbors)
+  (= *birth-number* neighbors))
+
+(defun will-survive (neighbors)
+  (and (&gt; neighbors *lonely-number*)
+       (&lt; neighbors *crowded-number*)))
+
+(defun live-or-die (env)
+  (let ((current (aref env *environment-radius* *environment-radius*))
+    (living-neighbors (count-living-neighbors env)))
+    ;;(format t &quot;~%Debug: Current = ~S, num-neighbors = ~S&quot; current living-neighbors)
+    (if (= 0 current)
+    (can-be-born living-neighbors)
+    (will-survive living-neighbors))))
+
+(defun cell-representation (truth)
+  (if truth
+      1
+      0))
+
+(defun step-board ()
+  &quot;Iterate the board by one time step, growing or shrinking life as appropriate&quot;
+  (let ((next-board (make-new-board)))
+    (dotimes (i *board-size*)
+      (dotimes (j *board-size*)
+    (let* ((environment (get-environment i j))
+           (next (cell-representation (live-or-die environment))))
+      ;;(format t &quot;Debug: Cell: ~S, Environment: ~S, Next: ~S~%&quot; (aref *game-board* i j) environment next)
+      (setf (aref next-board i j) next))))
+    (setf *game-board* next-board)))</code></pre></noscript></div>
+
+
+<p>Maybe I&rsquo;ll add a GUI and some tools later, but for now you have to do something like:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>(start-game)
+</span><span class='line'>(add-life 4 5)
+</span><span class='line'>(add-life 5 5)
+</span><span class='line'>(add-life 6 5)
+</span><span class='line'>(print-board)
+</span><span class='line'>(step-board)
+</span><span class='line'>(print-board)</span></code></pre></td></tr></table></div></figure>
+
+
+<p>which should show</p>
+
+<pre>
+
+
+
+    #
+    #
+    #
+
+
+
+</pre>
+
+
+<p>followed by</p>
+
+<pre>
+
+
+
+    ###
+
+
+
+
+
+</pre>
+
+
+<p>and so on &hellip;</p>
+
+<p><em>Update:</em></p>
+
+<p>It&rsquo;s easy to try out patterns. Here are a few typical ones:</p>
+
+<div><script src='https://gist.github.com/527c5fa85b316c84e9ba.js'></script>
+<noscript><pre><code>
+;;; Useful helpers to add stuff to the board. Describe a pattern as a list.
+(defun add-life (x y)
+  (setf (aref *game-board* y x) 1))
+
+(defun draw-pattern (x y pattern)
+  &quot;Assuming 'pattern' is specified as a row-major set of 1s and 0s, replicates that on the board&quot;
+  (mapindex #'(lambda (row-num row)
+        (mapindex #'(lambda (col-num entry)
+                  (let ((x-eff (+ x col-num))
+                    (y-eff (+ y row-num)))
+                (when (and (&lt; x-eff *board-size*)
+                       (&lt; y-eff *board-size*))
+                  (setf (aref *game-board* y-eff x-eff) entry))))
+              row))
+        pattern))
+    
+
+;; Sample oscillating patterns
+(defun draw-blinker (x y)
+  (draw-pattern x y
+        '((1)
+          (1)
+          (1))))
+
+(defun draw-toad (x y)
+  (draw-pattern x y
+        '((0 1 1 1)
+          (1 1 1 0))))
+
+(defun draw-beacon (x y)
+  (draw-pattern x y
+        '((1 1 0 0)
+          (1 1 0 0)
+          (0 0 1 1)
+          (0 0 1 1))))
+
+;; Sample fixed patterns
+(defun draw-loaf (x y)
+  (draw-pattern x y
+        '((0 1 1 0)
+          (1 0 0 1)
+          (0 1 0 1)
+          (0 0 1 0))))
+
+(defun draw-block (x y)
+  (draw-pattern x y
+        '((1 1)
+          (1 1))))
+
+;; Sample moving pattern
+(defun draw-glider-moving-right (x y)
+  (draw-pattern x y
+        '((0 1 0)
+          (0 0 1)
+          (1 1 1))))
+
+(defun draw-glider-moving-left (x y)
+  (draw-pattern x y
+        '((0 1 0)
+          (1 0 0)
+          (1 1 1))))</code></pre></noscript></div>
+
+
+<p>Then you can do something like</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>(loop repeat 5 do (print-board) (step-board))</span></code></pre></td></tr></table></div></figure>
+
+
+<p>and watch a few iterations. Of course, this is probably better implemented as a mobile app, I suppose. But yeah, still fun. Try out a <a href="http://wwwhomes.uni-bielefeld.de/achim/moving.html">few other spaceships</a> if you like &hellip;</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-07-25T13:10:46-07:00" pubdate data-updated="true">Jul 25<sup>th</sup>, 2014</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/lisp/'>lisp,</a>, <a class='category' href='/blog/categories/simulation/'>simulation</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -1225,63 +1492,6 @@ If we extrapolate today&rsquo;s trend, his mathematical education will be conduc
 
 
 	<a class='category' href='/blog/categories/education/'>education,</a>, <a class='category' href='/blog/categories/lecture/'>lecture,</a>, <a class='category' href='/blog/categories/mathematics/'>mathematics,</a>, <a class='category' href='/blog/categories/minsky/'>minsky,</a>, <a class='category' href='/blog/categories/programming/'>programming,</a>, <a class='category' href='/blog/categories/turing/'>turing</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2014/02/01/playing-with-the-exponential-curve/">
-		
-			Playing With the Exponential Curve</a>
-	</h2>
-	<div class="entry-content">
-		<p>I remember hearing about the <a href="http://britton.disted.camosun.bc.ca/jbchessgrain.htm">apocryphal story</a> about doubling grains of rice on a chessboard. I even tried writing powers of 2 (which at my age then just meant adding <code>2+2</code> then <code>4+4</code> etc).</p>
-
-<p><img class="center" src="http://britton.disted.camosun.bc.ca/firdau1.jpg"></p>
-
-<p>This is obviously the <a href="http://www.wolframalpha.com/input/?i=e+%5E+x"><code>e^x</code></a> curve, but when you normally see it drawn its self-similarity is not obvious. Mathematica&rsquo;s <code>Manipulate</code> function can help in this regard &hellip;</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>Manipulate[ListPlot[Table[Power[2, i], {i, 1, n}]], {n, 1, 64}]</span></code></pre></td></tr></table></div></figure>
-
-
-<p><img class="center" src="http://farm3.staticflickr.com/2853/12244178256_251f9fcfae_d.jpg">
-<img class="center" src="http://farm6.staticflickr.com/5496/12243600435_e6faac3bbb_d.jpg">
-<img class="center" src="http://farm6.staticflickr.com/5547/12244178226_2258c2c2ce_d.jpg">
-<img class="center" src="http://farm3.staticflickr.com/2882/12243785163_3822d7299b_d.jpg">
-<img class="center" src="http://farm8.staticflickr.com/7332/12243785183_6243378edf_d.jpg"></p>
-
-<p>These are screenshots for increasing values of <code>n</code>: Note how they all look the same (except for the first one, where the curve is just starting out), over several orders of magnitude!</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-02-01T06:35:00-08:00" pubdate data-updated="true">Feb 1<sup>st</sup>, 2014</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/exponential/'>exponential</a>, <a class='category' href='/blog/categories/manipulate/'>manipulate,</a>, <a class='category' href='/blog/categories/mathematica/'>mathematica,</a>
 
 
 </div>

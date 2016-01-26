@@ -7,7 +7,7 @@
 	<meta name="author" content="Agam">
 
 	
-	<meta name="description" content="I started doing Project Euler problems occasionally with the assumption that it was a good way to either (1) learn a new language, or (2) as a &hellip;">
+	<meta name="description" content="You might have come across Richard Stallman&rsquo;s brief history of Lisp Machines, which was a speech he gave in 2002. I remember coming across it &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -86,6 +86,63 @@
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2015/06/01/a-counterpoint-to-rms-on-lisp-machines/">
+		
+			A Counterpoint to RMS on Lisp Machines</a>
+	</h2>
+	<div class="entry-content">
+		<p>You might have come across Richard Stallman&rsquo;s <a href="http://www.gnu.org/gnu/rms-lisp.html">brief history of Lisp Machines</a>, which was a speech he gave in 2002. I remember coming across it &mdash; being inspired by what inspired him, and being outraged at what outraged him.</p>
+
+<p>Lately, I&rsquo;m souring on the whole <em>romantic</em> view of the &ldquo;free software&rdquo; that I&rsquo;d held for about a decade, a distinctly &ldquo;NoGPL&rdquo; view, if I may coin that word. Another nail in the coffin was delivered by <a href="https://web.archive.org/web/20090901115039/http://danweinreb.org/blog/rebuttal-to-stallmans-story-about-the-formation-of-symbolics-and-lmi">this blog post</a> <sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>, which refutes much of the blame to Symbolics, and leaves Stallman looking IMO quite silly (if not petulant).</p>
+
+<p>Also &hellip;</p>
+
+<blockquote><p>And while I’m setting the record straight, the original (TECO-based) Emacs was created and designed by Guy L. Steele Jr. and David Moon. <strong>After they had it working, and it had become established as the standard text editor at the AI lab, Stallman took over its maintenance.</strong></p></blockquote>
+
+<p>&hellip; so much for RMS&rsquo;s <em>&ldquo;But, along the way, I wrote a text editor, Emacs &hellip;&rdquo;</em>.</p>
+<div class="footnotes">
+<hr/>
+<ol>
+<li id="fn:1">
+<p>The blog no longer exists (and sadly, Mr. Weinreb passed away in 2012), but thanks to <a href="https://archive.org/">archive.org</a>, it&rsquo;ll stay around.<a href="#fnref:1" rev="footnote">&#8617;</a></p></li>
+</ol>
+</div>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-06-01T21:48:09-07:00" pubdate data-updated="true">Jun 1<sup>st</sup>, 2015</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/commentary/'>commentary</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -1758,237 +1815,6 @@
 
 
 <time datetime="2015-05-03T18:00:00-07:00" pubdate data-updated="true">May 3<sup>rd</sup>, 2015</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/cpp/'>cpp</a>, <a class='category' href='/blog/categories/projecteuler/'>projecteuler</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2015/05/03/euler-46-goldbacks-other-conjecture/">
-		
-			Euler 46: Goldbach&#8217;s Other Conjecture</a>
-	</h2>
-	<div class="entry-content">
-		<p>May the brute force be with you. Here is another one (sorry for the over-engineered code).</p>
-
-<p><strong>Statutory Warning</strong>: <em>Spoilers ahead</em></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-<span class='line-number'>72</span>
-<span class='line-number'>73</span>
-<span class='line-number'>74</span>
-<span class='line-number'>75</span>
-<span class='line-number'>76</span>
-<span class='line-number'>77</span>
-<span class='line-number'>78</span>
-<span class='line-number'>79</span>
-<span class='line-number'>80</span>
-<span class='line-number'>81</span>
-<span class='line-number'>82</span>
-</pre></td><td class='code'><pre><code class='c++'><span class='line'><span class="k">class</span> <span class="nc">PrimeIterator</span> <span class="p">{</span>
-</span><span class='line'><span class="k">public</span><span class="o">:</span>
-</span><span class='line'>  <span class="n">PrimeIterator</span><span class="p">()</span> <span class="o">:</span> <span class="n">prime_index_</span><span class="p">(</span><span class="n">primes_</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="kt">int</span> <span class="n">getNextPrime</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">assert</span><span class="p">(</span><span class="n">prime_index_</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">);</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">primes_</span><span class="p">[</span><span class="o">--</span><span class="n">prime_index_</span><span class="p">];</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="kt">bool</span> <span class="n">hasMorePrimes</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">return</span> <span class="n">prime_index_</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">;</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="kt">void</span> <span class="n">fillPrimes</span><span class="p">(</span><span class="kt">int</span> <span class="n">max</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">while</span> <span class="p">(</span><span class="n">primes_</span><span class="p">.</span><span class="n">back</span><span class="p">()</span> <span class="o">&lt;=</span> <span class="n">max</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>      <span class="n">addPrime</span><span class="p">();</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="c1">// Reset to the last element</span>
-</span><span class='line'>    <span class="n">prime_index_</span> <span class="o">=</span> <span class="n">primes_</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="k">private</span><span class="o">:</span>
-</span><span class='line'>  <span class="k">static</span> <span class="kt">void</span> <span class="n">addPrime</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>    <span class="n">assert</span><span class="p">(</span><span class="n">primes_</span><span class="p">.</span><span class="n">size</span><span class="p">()</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">);</span>
-</span><span class='line'>    <span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="n">primes_</span><span class="p">.</span><span class="n">back</span><span class="p">();</span>
-</span><span class='line'>    <span class="k">while</span> <span class="p">(</span><span class="nb">true</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>      <span class="o">++</span><span class="n">n</span><span class="p">;</span>
-</span><span class='line'>      <span class="kt">bool</span> <span class="n">is_prime</span> <span class="o">=</span> <span class="nb">true</span><span class="p">;</span>
-</span><span class='line'>      <span class="k">for</span> <span class="p">(</span><span class="k">const</span> <span class="kt">int</span><span class="o">&amp;</span> <span class="nl">p</span> <span class="p">:</span> <span class="n">primes_</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="k">if</span> <span class="p">(</span><span class="n">n</span> <span class="o">%</span> <span class="n">p</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>          <span class="n">is_prime</span> <span class="o">=</span> <span class="nb">false</span><span class="p">;</span>
-</span><span class='line'>          <span class="k">break</span><span class="p">;</span>  <span class="c1">// Try next number</span>
-</span><span class='line'>        <span class="p">}</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">is_prime</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>        <span class="n">primes_</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
-</span><span class='line'>        <span class="k">return</span><span class="p">;</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">static</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">primes_</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="kt">int</span> <span class="n">prime_index_</span><span class="p">;</span>
-</span><span class='line'><span class="p">};</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">PrimeIterator</span><span class="o">::</span><span class="n">primes_</span> <span class="o">=</span> <span class="p">{</span><span class="mi">2</span><span class="p">};</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">bool</span> <span class="nf">goldbachDecompositionExists</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="n">assert</span><span class="p">(</span><span class="n">n</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">1</span><span class="p">);</span>
-</span><span class='line'>  <span class="c1">// n = p + 2*m^2</span>
-</span><span class='line'>  <span class="c1">// Since 2*m^2 is always even, and n is odd, p must be odd too (so p has to be 3 or greater)</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="c1">// Use a generator to get more primes on demand.</span>
-</span><span class='line'>  <span class="n">PrimeIterator</span> <span class="n">pit</span><span class="p">;</span>
-</span><span class='line'>  <span class="n">pit</span><span class="p">.</span><span class="n">fillPrimes</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
-</span><span class='line'>  <span class="k">while</span> <span class="p">(</span><span class="n">pit</span><span class="p">.</span><span class="n">hasMorePrimes</span><span class="p">())</span> <span class="p">{</span>
-</span><span class='line'>    <span class="kt">int</span> <span class="n">p</span> <span class="o">=</span> <span class="n">pit</span><span class="p">.</span><span class="n">getNextPrime</span><span class="p">();</span>
-</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">p</span> <span class="o">==</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>      <span class="c1">// If n is a prime, then n = p + 2*(0*0)</span>
-</span><span class='line'>      <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>    <span class="kt">double</span> <span class="n">sq</span> <span class="o">=</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="n">p</span><span class="p">)</span><span class="o">/</span><span class="mf">2.0</span><span class="p">;</span>
-</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">sqrt</span><span class="p">(</span><span class="n">sq</span><span class="p">)</span> <span class="o">==</span> <span class="n">floor</span><span class="p">(</span><span class="n">sqrt</span><span class="p">(</span><span class="n">sq</span><span class="p">)))</span> <span class="p">{</span>
-</span><span class='line'>      <span class="c1">// n = p + 2*sqrt(sq)</span>
-</span><span class='line'>      <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>  <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Euler #46 ... </span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="c1">// Loop over odd composite numbers ...</span>
-</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">9</span><span class="p">;</span> <span class="p">;</span> <span class="n">i</span><span class="o">+=</span> <span class="mi">2</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">goldbachDecompositionExists</span><span class="p">(</span><span class="n">i</span><span class="p">))</span> <span class="p">{</span>
-</span><span class='line'>      <span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Failed at &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">i</span> <span class="o">&lt;&lt;</span> <span class="n">endl</span><span class="p">;</span>
-</span><span class='line'>      <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="p">;</span>
-</span><span class='line'>    <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Runs as follows:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span><span class="nb">time</span> ./Test
-</span><span class='line'>Euler <span class="c">#46 ...</span>
-</span><span class='line'>Failed at &lt;redacted&gt;
-</span><span class='line'>
-</span><span class='line'>real    0m0.007s
-</span><span class='line'>user    0m0.004s
-</span><span class='line'>sys     0m0.000s
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-05-03T16:46:24-07:00" pubdate data-updated="true">May 3<sup>rd</sup>, 2015</time></div>
 	<div class="tags">
 
 

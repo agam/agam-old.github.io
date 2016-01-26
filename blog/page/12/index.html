@@ -7,7 +7,7 @@
 	<meta name="author" content="Agam">
 
 	
-	<meta name="description" content="You don&rsquo;t have to be chained to Monaco if you don&rsquo;t like it. I changed it to Inconsolata, which is as simply as downloading it (click on &hellip;">
+	<meta name="description" content="I remember hearing about the apocryphal story about doubling grains of rice on a chessboard. I even tried writing powers of 2 (which at my age then &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -86,6 +86,63 @@
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2014/02/01/playing-with-the-exponential-curve/">
+		
+			Playing With the Exponential Curve</a>
+	</h2>
+	<div class="entry-content">
+		<p>I remember hearing about the <a href="http://britton.disted.camosun.bc.ca/jbchessgrain.htm">apocryphal story</a> about doubling grains of rice on a chessboard. I even tried writing powers of 2 (which at my age then just meant adding <code>2+2</code> then <code>4+4</code> etc).</p>
+
+<p><img class="center" src="http://britton.disted.camosun.bc.ca/firdau1.jpg"></p>
+
+<p>This is obviously the <a href="http://www.wolframalpha.com/input/?i=e+%5E+x"><code>e^x</code></a> curve, but when you normally see it drawn its self-similarity is not obvious. Mathematica&rsquo;s <code>Manipulate</code> function can help in this regard &hellip;</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Manipulate[ListPlot[Table[Power[2, i], {i, 1, n}]], {n, 1, 64}]</span></code></pre></td></tr></table></div></figure>
+
+
+<p><img class="center" src="http://farm3.staticflickr.com/2853/12244178256_251f9fcfae_d.jpg">
+<img class="center" src="http://farm6.staticflickr.com/5496/12243600435_e6faac3bbb_d.jpg">
+<img class="center" src="http://farm6.staticflickr.com/5547/12244178226_2258c2c2ce_d.jpg">
+<img class="center" src="http://farm3.staticflickr.com/2882/12243785163_3822d7299b_d.jpg">
+<img class="center" src="http://farm8.staticflickr.com/7332/12243785183_6243378edf_d.jpg"></p>
+
+<p>These are screenshots for increasing values of <code>n</code>: Note how they all look the same (except for the first one, where the curve is just starting out), over several orders of magnitude!</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-02-01T06:35:00-08:00" pubdate data-updated="true">Feb 1<sup>st</sup>, 2014</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/exponential/'>exponential</a>, <a class='category' href='/blog/categories/manipulate/'>manipulate,</a>, <a class='category' href='/blog/categories/mathematica/'>mathematica,</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -1063,140 +1120,6 @@ It remains to be seen whether a syntax with explicit delimiters is reactionary, 
 
 
 	<a class='category' href='/blog/categories/cloud/'>cloud,</a>, <a class='category' href='/blog/categories/vm/'>vm</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2014/01/19/programming-fun-nuts-and-bolts/">
-		
-			Programming Fun: Nuts and Bolts</a>
-	</h2>
-	<div class="entry-content">
-		<p><a href="http://www.reddit.com/r/dailyprogrammer/comments/1sob1e/121113_challenge_144_easy_nuts_bolts/">This one</a> is <em>too easy</em> but included anyway for completeness (why not?)</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>Input Description
-</span><span class='line'>-----------------
-</span><span class='line'>
-</span><span class='line'>The first line of input will be an integer N, which is for the number of rows
-</span><span class='line'>in each list. Each list has N-lines of two space-delimited strings: the first
-</span><span class='line'>string will be the unique item name (without spaces), the second string will be
-</span><span class='line'>the price (in whole-integer cents). The second list, following the same format,
-</span><span class='line'>will have the same unique item-names, but with the correct price. Note that the
-</span><span class='line'>lists may not be in the same order!
-</span><span class='line'>
-</span><span class='line'>Output Description
-</span><span class='line'>------------------
-</span><span class='line'>
-</span><span class='line'>For each item that has had its price changed, print a row with the item name
-</span><span class='line'>and the price difference (in cents). Print the sign of the change (e.g. '+' for
-</span><span class='line'>a growth in price, or '-' for a loss in price). Order does not matter for
-</span><span class='line'>output.
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<div><script src='https://gist.github.com/8498879.js'></script>
-<noscript><pre><code>#include &lt;cassert&gt;
-#include &lt;cmath&gt;
-#include &lt;cstdint&gt;
-#include &lt;cstdio&gt;
-#include &lt;cstdlib&gt;
-#include &lt;algorithm&gt;
-#include &lt;array&gt;
-#include &lt;fstream&gt;
-#include &lt;iomanip&gt;
-#include &lt;iostream&gt;
-#include &lt;limits&gt;
-#include &lt;map&gt;
-#include &lt;memory&gt;
-#include &lt;string&gt;
-#include &lt;vector&gt;
-#include &lt;queue&gt;
-#include &lt;unordered_map&gt;
-
-using namespace std;
-
-typedef unordered_map&lt;string, int&gt; Inventory;
-
-void ReadInventory(int number_items, Inventory* inventory) {
-  for (int i = 0; i &lt; number_items; ++i) {
-    string item;
-    int quantity;
-    cin &gt;&gt; item &gt;&gt; quantity;
-    inventory-&gt;insert(make_pair(item, quantity));
-  }
-}
-
-int main(int argc, char* argv[]) {
-  int number_items;
-  cin &gt;&gt; number_items;
-
-  Inventory before, after;
-  ReadInventory(number_items, &amp;before);
-  ReadInventory(number_items, &amp;after);
-
-  for (const auto&amp; it : before) {
-    assert(after.find(it.first) != after.end());
-    int diff_quantity = after[it.first] - it.second;
-    if (diff_quantity != 0) {
-      cout &lt;&lt; it.first &lt;&lt; &quot; &quot; &lt;&lt; showpos &lt;&lt; diff_quantity &lt;&lt; endl;
-    }
-  }
-}
-
-</code></pre></noscript></div>
-
-
-
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-01-19T00:39:00-08:00" pubdate data-updated="true">Jan 19<sup>th</sup>, 2014</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/alwaysbecoding/'>alwaysbecoding,</a>, <a class='category' href='/blog/categories/reddit/'>reddit</a>
 
 
 </div>

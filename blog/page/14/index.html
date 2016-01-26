@@ -7,7 +7,7 @@
 	<meta name="author" content="Agam">
 
 	
-	<meta name="description" content="This one might actually make for a medium level interview question (assuming the problem can be successfully communicated) Here is the problem (also &hellip;">
+	<meta name="description" content="Don&rsquo;t blame the messenger. I just saw this and it&rsquo;s hilarious. Gilad Bracha is one of my new heroes now :) Watch this video and unless &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -86,6 +86,51 @@
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2013/12/24/fp-takedown/">
+		
+			FP Takedown</a>
+	</h2>
+	<div class="entry-content">
+		<p>Don&rsquo;t blame the messenger. I just saw this and it&rsquo;s hilarious. Gilad Bracha is one of my new heroes now :)</p>
+
+<p>Watch <a href="http://www.infoq.com/presentations/functional-pros-cons">this video</a> and unless you&rsquo;re an overly sensitive haskell zealot, you&rsquo;ll find some humor here. There&rsquo;s a lot of hype-busting and sacred-cow-killing.</p>
+
+<p>Of course, he&rsquo;s no stranger to controversial programming views (<a href="http://gbracha.blogspot.com/2011/01/maybe-monads-might-not-matter.html">&ldquo;Maybe Monads Might Not Matter&rdquo;</a>, <a href="http://gbracha.blogspot.com/2011/06/types-are-anti-modular.html">&ldquo;Types are anti modular&rdquo;</a>, <a href="http://gbracha.blogspot.com/2009/11/objects-are-not-hash-tables.html">&ldquo;Objects are not hash tables&rdquo;</a>, and <a href="http://gbracha.blogspot.com/2009/12/chased-by-ones-own-tail.html">&ldquo;Chased by One&rsquo;s Own Tail&rdquo;</a>), so you might enjoy reading his blog after watching the video!</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2013-12-24T06:22:00-08:00" pubdate data-updated="true">Dec 24<sup>th</sup>, 2013</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/functional/'>functional</a>, <a class='category' href='/blog/categories/programming/'>programming</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -1149,121 +1194,6 @@ int main(int argc, char **argv) {
 
 
 <time datetime="2013-11-26T14:50:00-08:00" pubdate data-updated="true">Nov 26<sup>th</sup>, 2013</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/alwaysbecoding/'>alwaysbecoding</a>, <a class='category' href='/blog/categories/reddit/'>reddit,</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2013/11/19/reddit-dailyprogrammer-getting-started/">
-		
-			Reddit DailyProgrammer Getting Started</a>
-	</h2>
-	<div class="entry-content">
-		<p>In the vein of &ldquo;Always Be Coding&rdquo;, I stumbled across this subreddit: <a href="http://www.reddit.com/r/dailyprogrammer/">&ldquo;Daily
-Programmer&rdquo;</a>, and then decided to do
-the &lsquo;easy&rsquo; <a href="http://www.reddit.com/r/dailyprogrammer/comments/1qwkdz/111113_challenge_141_easy_checksums/">question on the
-top</a></p>
-
-<p>Here&rsquo;s the gist (problem in comments at the bottom).</p>
-
-<div><script src='https://gist.github.com/7556916.js'></script>
-<noscript><pre><code>#include &lt;stdint.h&gt;                                                                                                                                                      
-        
-#include &lt;iostream&gt;
-#include &lt;limits&gt;
-#include &lt;string&gt;
-#include &lt;vector&gt;
-        
-using namespace std;
-        
-void cin_discard_newline() {
-  cin.ignore(numeric_limits&lt;streamsize&gt;::max(), '\n');
-}       
-        
-uint16_t fletcher_checksum(const string&amp; word) {
-  uint8_t count0 = 0, count1 = 0; 
-  for (int i = 0; i &lt; word.size(); ++i) {
-    unsigned char c = word[i];
-    count0 = (count0 + c) % 255;
-    count1 = (count1 + count0) % 255;
-  }     
-  return (count1 &lt;&lt; 8) | count0;
-}       
-        
-int main() {
-  // Read in number of lines
-  int num_lines;
-  cin &gt;&gt; num_lines;
-  cin_discard_newline();
-  cout &lt;&lt; hex;
-  vector&lt;string&gt; lines;
-  for (int i = 0; i &lt; num_lines; ++i) {
-    string line;
-    getline(cin, line);
-    lines.push_back(line);
-  }     
-        
-  for (int i = 0; i &lt; num_lines; ++i) {
-    cout &lt;&lt; i + 1 &lt;&lt; &quot; &quot; &lt;&lt; fletcher_checksum(lines[i]) &lt;&lt; endl;
-  }     
-}       
-        
-/*      
- * http://www.reddit.com/r/dailyprogrammer/comments/1qwkdz/111113_challenge_141_easy_checksums/
- *      
- * Formal Inputs &amp; Outputs
- * Input Description
- * On standard console input, you will first be given an integer N which ranges
- * inclusively from 1 to 256. After this line, you will receive N-lines of ASCII
- * text. This text will only contain regular printable characters, and will all
- * be on a single line of input.
- * Output Description
- * For each line of input, print the index (starting from 1) and the 16-bit
- * Fletcher's checksum as a 4-digit hexadecimal number.
- * Sample Inputs &amp; Outputs
- * Sample Input
- * 3    
- * Fletcher
- * Sally sells seashells by the seashore.
- * Les chaussettes de l'archi-duchesse, sont-elles seches ou archi-seches ?
- * Sample Output
- * 1 D330
- * 2 D23E
- * 3 404D
- */     </code></pre></noscript></div>
-
-
-
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-11-19T18:57:00-08:00" pubdate data-updated="true">Nov 19<sup>th</sup>, 2013</time></div>
 	<div class="tags">
 
 

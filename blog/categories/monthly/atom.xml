@@ -4,7 +4,7 @@
   <title><![CDATA[Category: monthly | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/monthly/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2016-01-11T22:46:03-08:00</updated>
+  <updated>2016-01-25T23:25:42-08:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,41 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Monthly Programming summary: January 2016]]></title>
+    <link href="http://agam.github.io/blog/2016/01/25/monthly-programming-summary-january-2016/"/>
+    <updated>2016-01-25T23:22:06-08:00</updated>
+    <id>http://agam.github.io/blog/2016/01/25/monthly-programming-summary-january-2016</id>
+    <content type="html"><![CDATA[<p>Again, this isn’t really restricted to <em>Programming</em> per se, but more generally “computer-related stuff”. Next time, I’ll pick a better name. Until then, here are a few interesting links I came across last month, in no  particular order:</p>
+
+<ul>
+<li>The Handbook of Lisp Functions (cover page below): a <a href="http://www.softwarepreservation.org/projects/LISP/mblisp/Handbook_of_LISP_Functions.pdf">technical report</a> from <em>1961</em>.</li>
+</ul>
+
+
+<p><img class="<a" src="href="https://doc-14-48-docs.googleusercontent.com/docs/securesc/o7m1hv4d96s4jtg9a81aobcff174890t/49eh1go9f5v2i53agksqnv1ghn4m8mj9/1453780800000/03675759775475626385/03675759775475626385/0B7bvhABhpDqmMmRPQmRvWXpkZTg">https://doc-14-48-docs.googleusercontent.com/docs/securesc/o7m1hv4d96s4jtg9a81aobcff174890t/49eh1go9f5v2i53agksqnv1ghn4m8mj9/1453780800000/03675759775475626385/03675759775475626385/0B7bvhABhpDqmMmRPQmRvWXpkZTg</a>"></p>
+
+<ul>
+<li><p>Digression on learning new languages: Ugh, I’m too embarassed to even write this. I keep changing my mind about what I like more. I thought this was going to be “the year of Clojure” for me, but then <a href="http://www.amazon.com/Dart-Programming-Language-Gilad-Bracha/dp/0321927702#">Gilad Bracha’s book</a> came out and now I’m torn again (Can I have them <em>both</em>? Maybe, but I fear I don’t have that kind of time anymore :P)</p></li>
+<li><p>Busting the myths behind MicroKernels: <a href="http://blog.darknedgy.net/technology/2016/01/01/0/"><em>”Microkernels are slow and Elvis didn’t do no drugs”</em></a></p></li>
+<li><p>Here is a paper from 1982 (<a href="http://www.smecc.org/The%20Architecture%20%20of%20the%20Burroughs%20B-5000.htm"><em>”The Architecture of the Burroughs B5000 &ndash; 20 Years Later and Still Ahead of the Times?”</em></a>), which was <em>even then</em> lamenting the sorry state of hardware, and only seems quaint now (as in <em>”why would you do things different?”</em>)</p></li>
+<li><p>Various ways to make Clojure programming more productive: <a href="http://dev.solita.fi/2014/03/18/pimp-my-repl.html"><em>”Pimp My REPL”</em></a></p></li>
+<li><p>I had a bunch of entertaining blog posts by Crista Lopez in the past (e.g. <a href="http://tagide.com/blog/fiction/jedi-masters/"><em>”Jedi Masters”</em></a>), but was blown away by this set of slides. You’re a programmer, you want to be a programmer for life, you <em>have</em> to read this: <a href="http://gotocon.com/dl/goto-aar-2013/slides/CristinaVideiraLopes_ExercisesInStyle.pdf"><em>”Exercises in Programming Style”</em></a>. And if you really like it, <a href="http://www.amazon.com/Exercises-Programming-Style-Cristina-Videira/dp/1482227371">get the book</a>.</p></li>
+<li><p>Came across this intriguing indie film trailer (<a href="https://vimeo.com/147111732"><em>”TraceRoute”</em></a>), though I haven’t gotten around to seeing the movie yet (the writer/protagonist navigates “… the ghosts of nerddom’s past present and future …”). Dunno, added it to my “to watch” list.</p></li>
+<li><p>Obviously, the X-Files is back. If you like this sort of stuff, the first episode <a href="http://www.fox.com/watch/607308867569/7756658688">is free to watch</a> on Fox. Go watch it :)</p></li>
+<li><p>A couple of articles for “historical interest”. The first is the New York Times reporting on … <a href="http://www.nytimes.com/1996/01/22/business/the-new-york-times-introduces-a-web-site.html">the opening of its web site, in 1996!</a>. But really, you skip ahead to the very last line for your dose of irony-or-tragedy: <em>“The market is booming for newspapers on the World Wide Web”</em>. Ouch.</p></li>
+<li><p>The second is hilarious, from even further back (<a href="http://www.nytimes.com/1984/12/25/science/value-of-windowing-is-questioned.html"><em>”Value of Windowing is Questioned”</em></a>, 1984!!), and here the Times speculates on the dubious value of a graphical user interface. The opening line asks: <em>“Does anyone do windows any more?”</em>, and the article concludes by predicting “doom” for the upcoming new OS by Microsoft. I thought I’d see if the author had time to reflect on his past predictions, so I looked through the newspaper’s archives, but it looks like he stopped writing technology articles in 1987 and switched to Food and Travel. Anyway.</p></li>
+</ul>
+
+
+<p>Here’s a “quote of the month” for you:</p>
+
+<blockquote><p>Science is much more ‘sloppy’ and ‘irrational’ than its methodological image.</p></blockquote>
+
+<p>(Paul Feyerabend, <em>Against Method</em>, and I meant to refer to the so-called science of computers)</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Monthly Programming summary: December 2015]]></title>
