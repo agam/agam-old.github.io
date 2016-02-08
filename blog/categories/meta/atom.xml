@@ -4,7 +4,7 @@
   <title><![CDATA[Category: meta | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/meta/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2016-01-25T23:25:42-08:00</updated>
+  <updated>2016-02-08T15:55:21-08:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,19 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Considering moving away from a static blog ...]]></title>
+    <link href="http://agam.github.io/blog/2016/02/08/considering-moving-away-from-a-static-blog-dot-dot-dot/"/>
+    <updated>2016-02-08T15:44:10-08:00</updated>
+    <id>http://agam.github.io/blog/2016/02/08/considering-moving-away-from-a-static-blog-dot-dot-dot</id>
+    <content type="html"><![CDATA[<p>This blog has been my longest continuous online presence (beginning as a <em>Hakyll</em> blog in 2012 before switching to <em>Jekyll</em> (well, <em>Octopress</em>) about a year later). I liked the whole &ldquo;edit in markdown in a terminal and use <code>git</code> for everything&rdquo; flow.</p>
+
+<p>Unfortunately, time is scarcer now, my free time is less structured, and I often find myself away from an actual terminal, though equipped with a capable smartphone. For my <a href="https://abacusnoirform.wordpress.com">more-general-purpose blog</a>, I used Wordpress and it&rsquo;s worked out pretty well so far, because I can &ldquo;write on the go&rdquo;, and I&rsquo;d like to be able to do the same for this blog too.</p>
+
+<p>So I haven&rsquo;t decided exactly how and when to migrate (because hey, I do want to keep what I have) to a &ldquo;dynamic blog&rdquo; (funny phrase, that), but I definitely want to do it sometime this year.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Languages/ecosystems to explore in 2015]]></title>

@@ -7,7 +7,7 @@
 	<meta name="author" content="Agam">
 
 	
-	<meta name="description" content="Pretty dumb naive solution. Statutory Warning: Spoilers ahead 1
+	<meta name="description" content="Hmm .. this is almost too straightforward to post, but here goes &hellip; Statutory Warning: Spoilers ahead 1
 2
 3
 4
@@ -22,23 +22,7 @@
 13
 14
 15
-16
-17
-18
-19
-20
-21
-22
-23
-24
-25
-26
-27
-28
-29
-30
-31
-32 &hellip;">
+16 &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -117,6 +101,183 @@
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2015/03/04/euler-33-curious-fractions/">
+		
+			Euler 33: Curious Fractions</a>
+	</h2>
+	<div class="entry-content">
+		<p>Hmm .. this is almost too straightforward to post, but here goes &hellip;</p>
+
+<p><strong>Statutory Warning</strong>: <em>Spoilers ahead</em></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+</pre></td><td class='code'><pre><code class='c++'><span class='line'><span class="k">using</span> <span class="n">std</span><span class="o">::</span><span class="n">pair</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">pair</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">getDigits</span><span class="p">(</span><span class="kt">int</span> <span class="n">num</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">return</span> <span class="n">std</span><span class="o">::</span><span class="n">make_pair</span><span class="p">(</span><span class="n">num</span> <span class="o">/</span> <span class="mi">10</span><span class="p">,</span> <span class="n">num</span> <span class="o">%</span> <span class="mi">10</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="n">gcd</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">assert</span><span class="p">(</span><span class="n">b</span> <span class="o">&lt;=</span> <span class="n">a</span><span class="p">);</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="n">b</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">a</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="n">gcd</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="n">a</span> <span class="o">%</span> <span class="n">b</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">pair</span><span class="o">&lt;</span><span class="kt">int</span><span class="p">,</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">getReducedForm</span><span class="p">(</span><span class="kt">int</span> <span class="n">num</span><span class="p">,</span> <span class="kt">int</span> <span class="n">den</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="kt">int</span> <span class="n">g</span> <span class="o">=</span> <span class="n">gcd</span><span class="p">(</span><span class="n">den</span><span class="p">,</span> <span class="n">num</span><span class="p">);</span>
+</span><span class='line'>  <span class="k">return</span> <span class="n">std</span><span class="o">::</span><span class="n">make_pair</span><span class="p">(</span><span class="n">num</span> <span class="o">/</span> <span class="n">g</span><span class="p">,</span> <span class="n">den</span> <span class="o">/</span> <span class="n">g</span><span class="p">);</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">bool</span> <span class="n">isCuriousFraction</span><span class="p">(</span><span class="kt">int</span> <span class="n">num</span><span class="p">,</span> <span class="kt">int</span> <span class="n">den</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="c1">// If (1) the numbers share digits, and (2) they can be reduced,</span>
+</span><span class='line'>  <span class="c1">// then they form a &#39;curious fraction&#39;</span>
+</span><span class='line'>  <span class="k">auto</span> <span class="n">reducedForm</span> <span class="o">=</span> <span class="n">getReducedForm</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">den</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">auto</span> <span class="n">n</span> <span class="o">=</span> <span class="n">getDigits</span><span class="p">(</span><span class="n">num</span><span class="p">);</span>
+</span><span class='line'>  <span class="k">auto</span> <span class="n">d</span> <span class="o">=</span> <span class="n">getDigits</span><span class="p">(</span><span class="n">den</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">if</span> <span class="p">((</span><span class="n">n</span><span class="p">.</span><span class="n">second</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">d</span><span class="p">.</span><span class="n">second</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="o">||</span> <span class="n">n</span><span class="p">.</span><span class="n">first</span> <span class="o">&gt;</span> <span class="n">d</span><span class="p">.</span><span class="n">second</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">auto</span> <span class="n">curiousForm</span> <span class="o">=</span> <span class="n">getReducedForm</span><span class="p">(</span><span class="n">n</span><span class="p">.</span><span class="n">first</span><span class="p">,</span> <span class="n">d</span><span class="p">.</span><span class="n">second</span><span class="p">);</span>
+</span><span class='line'>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="n">n</span><span class="p">.</span><span class="n">second</span> <span class="o">==</span> <span class="n">d</span><span class="p">.</span><span class="n">first</span> <span class="o">&amp;&amp;</span> <span class="n">curiousForm</span> <span class="o">==</span> <span class="n">reducedForm</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="kt">int</span> <span class="n">numProduct</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">denProduct</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+</span><span class='line'>  <span class="c1">// Go through all pairs of two-digit numbers, where one is smaller than the other.</span>
+</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">den</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span> <span class="n">den</span> <span class="o">&lt;</span> <span class="mi">100</span><span class="p">;</span> <span class="o">++</span><span class="n">den</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">num</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span> <span class="n">num</span> <span class="o">&lt;</span> <span class="n">den</span><span class="p">;</span> <span class="o">++</span><span class="n">num</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">if</span> <span class="p">(</span><span class="n">isCuriousFraction</span><span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">den</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Debug: found &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">num</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; / &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">den</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">numProduct</span> <span class="o">*=</span> <span class="n">num</span><span class="p">;</span>
+</span><span class='line'>  <span class="n">denProduct</span> <span class="o">*=</span> <span class="n">den</span><span class="p">;</span>
+</span><span class='line'>      <span class="p">}</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="c1">// For lowest common terms, divide both by GCD</span>
+</span><span class='line'>  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Denominator of product = &quot;</span>
+</span><span class='line'>            <span class="o">&lt;&lt;</span> <span class="n">denProduct</span> <span class="o">/</span> <span class="n">gcd</span><span class="p">(</span><span class="n">denProduct</span><span class="p">,</span> <span class="n">numProduct</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&hellip; and runs as follows</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>Debug: found <span class="m">16</span> / 64
+</span><span class='line'>Debug: found <span class="m">26</span> / 65
+</span><span class='line'>Debug: found <span class="m">19</span> / 95
+</span><span class='line'>Debug: found <span class="m">49</span> / 98
+</span><span class='line'>Denominator of <span class="nv">product</span> <span class="o">=</span> &lt;redacted&gt;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>(<em>Sigh</em> &hellip; yes, its <em>longer</em> than some of the previous solutions, but it really didn&rsquo;t take me long to write it &hellip; I think I&rsquo;m developing a renewed appreciation for C++)</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-03-04T10:52:31-08:00" pubdate data-updated="true">Mar 4<sup>th</sup>, 2015</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/cpp/'>cpp</a>, <a class='category' href='/blog/categories/projecteuler/'>projecteuler</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -1916,65 +2077,6 @@
 
 
 	<a class='category' href='/blog/categories/lisp/'>lisp</a>, <a class='category' href='/blog/categories/ocaml/'>ocaml</a>, <a class='category' href='/blog/categories/projecteuler/'>projecteuler</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2015/02/05/rethinking-the-suggested-beginning-language/">
-		
-			Rethinking the Suggested Beginning Language</a>
-	</h2>
-	<div class="entry-content">
-		<p>I was all gung-ho about recommending <strong>Go</strong> as the ideal starting point for <em>everyone</em>, and abstract driving force behind this was a supposed combination of the ease and power of <strong>Python</strong> and <strong>C</strong> respectively, both of which can individually make a case for being the <em>right</em> place to start.</p>
-
-<p>This depended on two things:</p>
-
-<ul>
-<li>Leave it to the student to figure out the editor/IDE/tooling, and</li>
-<li>Don&rsquo;t worry about GUIs in the beginning (it&rsquo;s ok to focus on a text interface alone).</li>
-</ul>
-
-
-<p>Unfortunately, when I discuss this with other people (yes, an unscientific small sample), these seem like dumb assumptions. The accepted wisdom seems to be that</p>
-
-<ul>
-<li>IDEs are <em>very</em> important, and</li>
-<li>GUIs and web apps <em>have</em> to be the primary focus.</li>
-</ul>
-
-
-<p>So now I&rsquo;m confused all over again. I really, <em>really</em> don&rsquo;t want to return to Javascript. Perhaps <strong>Dart</strong> would fit the bill? The default eclipse-ish editor is pretty self-contained and is easy to download and get up and running on all platforms. The syntax is a bit <em>meh</em>, but that&rsquo;s just my current ignorance. I don&rsquo;t know. Maybe there <em>isn&rsquo;t</em> any such thing as a good beginner programming language.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-02-05T23:01:14-08:00" pubdate data-updated="true">Feb 5<sup>th</sup>, 2015</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/gettingstarted/'>gettingstarted</a>
 
 
 </div>

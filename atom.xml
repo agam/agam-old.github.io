@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2016-01-25T23:25:42-08:00</updated>
+  <updated>2016-02-08T15:54:59-08:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,19 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Considering moving away from a static blog ...]]></title>
+    <link href="http://agam.github.io/blog/2016/02/08/considering-moving-away-from-a-static-blog-dot-dot-dot/"/>
+    <updated>2016-02-08T15:44:10-08:00</updated>
+    <id>http://agam.github.io/blog/2016/02/08/considering-moving-away-from-a-static-blog-dot-dot-dot</id>
+    <content type="html"><![CDATA[<p>This blog has been my longest continuous online presence (beginning as a <em>Hakyll</em> blog in 2012 before switching to <em>Jekyll</em> (well, <em>Octopress</em>) about a year later). I liked the whole &ldquo;edit in markdown in a terminal and use <code>git</code> for everything&rdquo; flow.</p>
+
+<p>Unfortunately, time is scarcer now, my free time is less structured, and I often find myself away from an actual terminal, though equipped with a capable smartphone. For my <a href="https://abacusnoirform.wordpress.com">more-general-purpose blog</a>, I used Wordpress and it&rsquo;s worked out pretty well so far, because I can &ldquo;write on the go&rdquo;, and I&rsquo;d like to be able to do the same for this blog too.</p>
+
+<p>So I haven&rsquo;t decided exactly how and when to migrate (because hey, I do want to keep what I have) to a &ldquo;dynamic blog&rdquo; (funny phrase, that), but I definitely want to do it sometime this year.</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Monthly Programming summary: January 2016]]></title>
@@ -927,75 +940,6 @@
 
 
 <p>Not bad at all. Reminds me of the feeling I got after wading through the plethora of python package handling frameworks and discovering Anaconda. This is <em>finally</em> a newbie-friendly language; &ldquo;cabal hell&rdquo; is no more (!)</p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[FreeBSD and Linux: install paths]]></title>
-    <link href="http://agam.github.io/blog/2015/06/05/freebsd-and-linux-install-paths/"/>
-    <updated>2015-06-05T19:46:45-07:00</updated>
-    <id>http://agam.github.io/blog/2015/06/05/freebsd-and-linux-install-paths</id>
-    <content type="html"><![CDATA[<p>One of those <strong>WTF</strong> moments of unexplainable distro choices. This on an ubuntu box:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>which netcat
-</span><span class='line'>/bin/netcat
-</span><span class='line'>
-</span><span class='line'><span class="nv">$ </span>ls -l /bin/netcat
-</span><span class='line'>lrwxrwxrwx <span class="m">1</span> root root <span class="m">24</span> Oct <span class="m">14</span>  <span class="m">2013</span> /bin/netcat -&gt; /etc/alternatives/netcat
-</span><span class='line'>
-</span><span class='line'><span class="nv">$ </span>ls -l /etc/alternatives/netcat
-</span><span class='line'>lrwxrwxrwx <span class="m">1</span> root root <span class="m">15</span> Oct <span class="m">14</span>  <span class="m">2013</span> /etc/alternatives/netcat -&gt; /bin/nc.openbsd
-</span><span class='line'>
-</span><span class='line'><span class="nv">$ </span>which nc
-</span><span class='line'>/usr/bin/nc
-</span><span class='line'>
-</span><span class='line'><span class="nv">$ </span>ls -l /usr/bin/nc
-</span><span class='line'>lrwxrwxrwx <span class="m">1</span> root root <span class="m">7</span> Jun  <span class="m">4</span>  <span class="m">2014</span> /usr/bin/nc -&gt; /bin/nc
-</span><span class='line'>
-</span><span class='line'><span class="nv">$ </span>ls -l /bin/nc
-</span><span class='line'>lrwxrwxrwx <span class="m">1</span> root root <span class="m">20</span> Oct <span class="m">14</span>  <span class="m">2013</span> /bin/nc -&gt; /etc/alternatives/nc
-</span><span class='line'>
-</span><span class='line'><span class="nv">$ </span>ls -l /etc/alternatives/nc
-</span><span class='line'>lrwxrwxrwx <span class="m">1</span> root root <span class="m">15</span> Oct <span class="m">14</span>  <span class="m">2013</span> /etc/alternatives/nc -&gt; /bin/nc.openbsd
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>&hellip; whereas on FreeBSD:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>% ls -l /usr/bin/nc
-</span><span class='line'>-r-xr-xr-x  <span class="m">1</span> root  wheel  <span class="m">28008</span> Nov <span class="m">11</span>  <span class="m">2014</span> /usr/bin/nc
-</span><span class='line'>
-</span><span class='line'>% file /usr/bin/nc
-</span><span class='line'>/usr/bin/nc: ELF 64-bit LSB executable, x86-64, version <span class="m">1</span> <span class="o">(</span>FreeBSD<span class="o">)</span>, dynamically linked <span class="o">(</span>uses shared libs<span class="o">)</span>, <span class="k">for</span> FreeBSD 10.1, stripped
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Which would you rather remember?</p>
 ]]></content>
   </entry>
   

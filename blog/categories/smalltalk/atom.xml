@@ -4,7 +4,7 @@
   <title><![CDATA[Category: smalltalk | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/smalltalk/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2016-01-25T23:25:42-08:00</updated>
+  <updated>2016-02-08T15:55:21-08:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -32,7 +32,7 @@ PharoTutorial go.
 
 <p>Executing that line (selecting it and hitting <code>Cmd-D</code>, or right-clicking and selecting <code>Do It</code>) launches a engaging tutorial that &hellip; well .. you have to see it for yourself :) At the very end, you have the option of introspecting the tutorial itself, or creating your own. Here is a screenshot of that:</p>
 
-<p><img class="<a" src="href="https://farm1.staticflickr.com/551/19272356888_495113dfc2_b_d.jpg">https://farm1.staticflickr.com/551/19272356888_495113dfc2_b_d.jpg</a>"></p>
+<p>{% img <a href="https://farm1.staticflickr.com/551/19272356888_495113dfc2_b_d.jpg">https://farm1.staticflickr.com/551/19272356888_495113dfc2_b_d.jpg</a> %}</p>
 
 <p>Download Pharo <a href="http://pharo.org/download">here</a>, and <strong>enjoy!!</strong></p>
 

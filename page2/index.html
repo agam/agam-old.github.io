@@ -7,7 +7,7 @@
 	<meta name="author" content="Agam">
 
 	
-	<meta name="description" content="A couple of snippets dug up from the past &hellip; The Anatomy of a Search Engine (original here, emphasis mine, presented without comment) &hellip;">
+	<meta name="description" content="Last year, I spent some time trying out Haskell, Ocaml, Clojure, Dart, Shen, and ClozureCL. I thought I was done surveying the field, but I had &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -86,6 +86,56 @@
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2015/09/17/the-field-of-languages-dot-dot-dot/">
+		
+			The Field of Languages &#8230;</a>
+	</h2>
+	<div class="entry-content">
+		<p>Last year, I spent some time trying out Haskell, Ocaml, Clojure, Dart, Shen, and ClozureCL. I thought I was done surveying the field, but I had barely scratched the surface, and realizing this was quite depressing. There are entire <em>kinds</em> of language paradigms I have no experience of, such as:</p>
+
+<ul>
+<li><strong>Forth</strong>: All I&rsquo;ve done is read about people&rsquo;s experience with it, it has always seemed too alien to me.</li>
+<li><strong>Smalltalk</strong>: I installed Pharo and took the basic &ldquo;Prof. Stef&rdquo; tutorial, but then stopped before I could really try anything concrete.</li>
+<li><strong>APL/J</strong>: Never seemed like anything but line noise, but then I read <a href="https://scottlocklin.wordpress.com/2012/09/18/a-look-at-the-j-language-the-fine-line-between-genius-and-insanity/">this post on J</a> and saw <a href="https://www.youtube.com/watch?v=PlM9BXfu7UY">this video</a> on Dyalog, and I&rsquo;m curious about it</li>
+</ul>
+
+
+<p><em>&ldquo;The lyf so short, the craft so long to lerne&rdquo;</em> :(</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-09-17T22:02:44-07:00" pubdate data-updated="true">Sep 17<sup>th</sup>, 2015</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/languages/'>languages</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -915,107 +965,6 @@
 
 
 	<a class='category' href='/blog/categories/haskell/'>haskell</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2015/06/05/freebsd-and-linux-install-paths/">
-		
-			FreeBSD and Linux: Install Paths</a>
-	</h2>
-	<div class="entry-content">
-		<p>One of those <strong>WTF</strong> moments of unexplainable distro choices. This on an ubuntu box:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>which netcat
-</span><span class='line'>/bin/netcat
-</span><span class='line'>
-</span><span class='line'><span class="nv">$ </span>ls -l /bin/netcat
-</span><span class='line'>lrwxrwxrwx <span class="m">1</span> root root <span class="m">24</span> Oct <span class="m">14</span>  <span class="m">2013</span> /bin/netcat -&gt; /etc/alternatives/netcat
-</span><span class='line'>
-</span><span class='line'><span class="nv">$ </span>ls -l /etc/alternatives/netcat
-</span><span class='line'>lrwxrwxrwx <span class="m">1</span> root root <span class="m">15</span> Oct <span class="m">14</span>  <span class="m">2013</span> /etc/alternatives/netcat -&gt; /bin/nc.openbsd
-</span><span class='line'>
-</span><span class='line'><span class="nv">$ </span>which nc
-</span><span class='line'>/usr/bin/nc
-</span><span class='line'>
-</span><span class='line'><span class="nv">$ </span>ls -l /usr/bin/nc
-</span><span class='line'>lrwxrwxrwx <span class="m">1</span> root root <span class="m">7</span> Jun  <span class="m">4</span>  <span class="m">2014</span> /usr/bin/nc -&gt; /bin/nc
-</span><span class='line'>
-</span><span class='line'><span class="nv">$ </span>ls -l /bin/nc
-</span><span class='line'>lrwxrwxrwx <span class="m">1</span> root root <span class="m">20</span> Oct <span class="m">14</span>  <span class="m">2013</span> /bin/nc -&gt; /etc/alternatives/nc
-</span><span class='line'>
-</span><span class='line'><span class="nv">$ </span>ls -l /etc/alternatives/nc
-</span><span class='line'>lrwxrwxrwx <span class="m">1</span> root root <span class="m">15</span> Oct <span class="m">14</span>  <span class="m">2013</span> /etc/alternatives/nc -&gt; /bin/nc.openbsd
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>&hellip; whereas on FreeBSD:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>% ls -l /usr/bin/nc
-</span><span class='line'>-r-xr-xr-x  <span class="m">1</span> root  wheel  <span class="m">28008</span> Nov <span class="m">11</span>  <span class="m">2014</span> /usr/bin/nc
-</span><span class='line'>
-</span><span class='line'>% file /usr/bin/nc
-</span><span class='line'>/usr/bin/nc: ELF 64-bit LSB executable, x86-64, version <span class="m">1</span> <span class="o">(</span>FreeBSD<span class="o">)</span>, dynamically linked <span class="o">(</span>uses shared libs<span class="o">)</span>, <span class="k">for</span> FreeBSD 10.1, stripped
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Which would you rather remember?</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-06-05T19:46:45-07:00" pubdate data-updated="true">Jun 5<sup>th</sup>, 2015</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/freebsd/'>freebsd</a>, <a class='category' href='/blog/categories/linux/'>linux</a>
 
 
 </div>
