@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2016-02-08T15:54:59-08:00</updated>
+  <updated>2016-02-26T23:58:14-08:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,50 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Monthly Prog/Math/Sci summary: February 2016]]></title>
+    <link href="http://agam.github.io/blog/2016/02/26/monthly-prog-slash-math-slash-sci-summary-february-2016/"/>
+    <updated>2016-02-26T23:57:08-08:00</updated>
+    <id>http://agam.github.io/blog/2016/02/26/monthly-prog-slash-math-slash-sci-summary-february-2016</id>
+    <content type="html"><![CDATA[<p>I said I’d pick a better name, but I couldn’t, so I picked a <em>different</em> name instead. Anyway, here is February’s badly curated list:</p>
+
+<ul>
+<li>You may have come across <a href="http://www.templeos.org">TempleOS</a>, one of those crazy things made by crazy people, and it looks like <a href="http://web.archive.org/web/20060702135534/http://www.losethos.com/"><em>“LoseThos”</em></a> was a predecessor (<strong>note</strong>: that it is available at all is due to the ever-amazing “Wayback Machine”)</li>
+</ul>
+
+
+<blockquote><p><strong>You used to buy a computer to program. They didn&rsquo;t do much else</strong>. LoseThos is intended for hobbiest programmers. A working knowledge of C programming is required. It more or less runs on least common denominator PC hardware without networking or the Internet. It is retro in some respects, having no security. As a programmer, I like having full access to my machine &mdash; being able to turn-off interrupts or do direct disk block access. It is highly textual, so things can be scripted.  It boots fast, and you can power-off whenever you feel like, but just don&rsquo;t do it during disk writes.</p></blockquote>
+
+<ul>
+<li><p>Someone pointed me to the <a href="https://lab.open.wolframcloud.com/app/">“Wolfram Programming Lab”</a> … I’ve only looked at it superficially, but it might be a good alternative to <em>Scratch</em>, as an initial introduction to programming that “makes things happen”</p></li>
+<li><p>This is a theme that I like to share and re-share: Anil Dash talks about <a href="https://www.youtube.com/watch?v=9KKMnoTTHJk">“The Web We Lost”</a> (tl;dr: <strong>the internet we have is not the internet we were promised</strong>)</p></li>
+<li><p>I was no fan of Robert Martin, perhaps because I wrongly associated him with excessive “bureaucracy” in software engineering, but it’s clear I was wrong, because <a href="http://www.infoq.com/presentations/history-future-programming-languages"><em>this</em></a> is a <em>great</em> talk, and is one of the few people (other than, say, Alan Kay), who’ve made this connection between the changes in the “culture” of software development and its “popularization”.</p></li>
+<li><p><a href="https://www.youtube.com/watch?v=K13_sWm_gZw">This talk</a> by John McCarthy wasn’t particularly interesting, except for a choice quote that’s sure to offend certain “GPL fundamentalists” out there:</p></li>
+</ul>
+
+
+<blockquote><p>I think that <strong>Richard Stallman who has been a hero in many respects, has been a negative force in his view that anything/everything should be free and no one should have to pay for anything unless Stallman would think of a mechanism</strong> … where my daughter who is a professional writer would still be able to make money.</p></blockquote>
+
+<ul>
+<li><p>Daniel Spiewak talks about <a href="http://www.infoq.com/presentations/post-functional-scala-clojure-haskell">“Living in a Post-Functional World”</a>. I thought this would be meh, but turned out to be very insightful, and also indicates how close FP and OO really are. More to the point, <strong>since modularity is non-negotiable, any solution to the problem of modularity drags in OO-ish stuff into an FP language</strong>.</p></li>
+<li><p>Someone (thanks, @Beobachter!) suggested using <a href="http://learn.getgrav.org/basics/what-is-grav"><em>Grav</em></a>, an intermediate alternative to a fully-static blog (what I have right now), and a fully-dynamic one (e.g. Wordpress), but I’ve been too lazy to investigate how to make the switch.</p></li>
+<li><p>Here is a (very, very humorous!) piece in The Register, <a href="http://www.theregister.co.uk/2016/01/13/stob_remember_the_monoids/"><em>”Learn you Func Prog on five minute quick!”</em></a></p></li>
+</ul>
+
+
+<blockquote><p>The object-oriented era of coding is at last drawing to an inevitable and shameful close. We can – and we must! – all join hands and skip gaily into a brave new world, where sloppy state and careless side effects are excised without ruth.</p>
+
+<p>Now every program, from humble Android applet to mighty engine-pollution-test-falsifier, must slough off ridiculous trappings and clumsy complexities of objectivity, and float elegantly forwards down the shiny new functional pipeline – the one, true alimentary canal of code to concurrent computing paradise.</p></blockquote>
+
+<p>And so on.</p>
+
+<ul>
+<li>Finally, Gilad Bracha’s <a href="http://www.amazon.com/Dart-Programming-Language-Gilad-Bracha/dp/0321927702?tag=duckduckgo-osx-20">new book</a> is very enticing; I’ve placed it on my “soon-to-read-unless-I’m-lying-to-myself-about-my-available-free-time” list, and so should you.</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Considering moving away from a static blog ...]]></title>
@@ -704,242 +748,6 @@
 <p>After this, a few clicks should get you a new instance (remember to select the custom image uploaded earlier), and SSHing into it should show you <code>/etc/motd</code> (which is still a plain old file, and not, you know, <a href="https://web.archive.org/web/20120107210839/http://deadmemes.net/2010/10/19/fear-and-loathing-in-debianubuntu-or-who-needs-etcmotd">this abomination</a>).</p>
 
 <p><strong>Enjoy!</strong></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Trying out stack ...]]></title>
-    <link href="http://agam.github.io/blog/2015/06/09/trying-out-stack-dot-dot-dot/"/>
-    <updated>2015-06-09T22:01:24-07:00</updated>
-    <id>http://agam.github.io/blog/2015/06/09/trying-out-stack-dot-dot-dot</id>
-    <content type="html"><![CDATA[<p>Tried this out after <a href="https://www.fpcomplete.com/blog/2015/06/announcing-first-public-beta-stack">I read about it</a>. Note: the following was all done on a Macbook, but it should work similarly on Linux too.</p>
-
-<p><strong>Get Stack</strong></p>
-
-<p><a href="https://github.com/fpco/stack/releases/download/v0.0.0-beta/stack-0.0.0-x86_64-osx.gz">Download</a> it.</p>
-
-<p><code>gunzip</code> and copy to some directory in <code>$PATH</code></p>
-
-<p><strong>Use Stack</strong></p>
-
-<p>Create dummy <code>.hs</code> file.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="nf">main</span> <span class="ow">=</span> <span class="n">putStrLn</span> <span class="s">&quot;Hello World&quot;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><em>Digression: first build</em></p>
-
-<p>You need <code>GHC</code> installed, and a file called <code>stack.yaml</code> in the local directory. But if you don&rsquo;t, no problem.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>stack ghc dummy.hs
-</span><span class='line'>No .cabal file found in directory /Users/agam/Documents/Haskell/Dummy/
-</span><span class='line'>Writing default config file to: /Users/agam/Documents/Haskell/Dummy/stack.yaml
-</span><span class='line'>Downloading lts-2.13 build plan ...
-</span><span class='line'>Downloaded lts-2.13 build plan.
-</span><span class='line'>Populating index cache, may take a moment ...
-</span><span class='line'>Updating package index hackage.haskell.org ...
-</span><span class='line'>Cloning package index ...
-</span><span class='line'>Done populating index cache.
-</span><span class='line'>Downloading ghc-7.8.4 ...
-</span><span class='line'>Downloaded ghc-7.8.4.
-</span><span class='line'>Unpacking GHC ...
-</span><span class='line'>Configuring GHC ...
-</span><span class='line'>Installing GHC ...
-</span><span class='line'>GHC installed.
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Run it once more to actually build it.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>stack ghc dummy.hs
-</span><span class='line'><span class="o">[</span><span class="m">1</span> of 1<span class="o">]</span> Compiling Main             <span class="o">(</span> dummy.hs, dummy.o <span class="o">)</span>
-</span><span class='line'>Linking dummy ...
-</span><span class='line'><span class="nv">$ </span>ls
-</span><span class='line'>stack.yaml dummy.o dummy.hs dummy.hi dummy
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><strong>Run the program</strong></p>
-
-<p>Just run the executable created:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>./dummy
-</span><span class='line'>Hello World
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Alternatively, combine steps 4 and 5</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>stack runghc dummy.hs
-</span><span class='line'>Hello World
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><strong>Libraries</strong></p>
-
-<p>(this is why we&rsquo;re <em>really</em> here, right?)</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>stack update
-</span><span class='line'>Updating package index hackage.haskell.org ...
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>What packages do we have ?</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>stack <span class="nb">exec</span> -- ghc-pkg list
-</span><span class='line'>/Users/agam/.stack/programs/x86_64-osx/ghc-7.8.4/lib/ghc-7.8.4/package.conf.d/
-</span><span class='line'>Cabal-1.18.1.5
-</span><span class='line'>array-0.5.0.0
-</span><span class='line'>base-4.7.0.2
-</span><span class='line'>bin-package-db-0.0.0.0
-</span><span class='line'>binary-0.7.1.0
-</span><span class='line'>bytestring-0.10.4.0
-</span><span class='line'>containers-0.5.5.1
-</span><span class='line'>deepseq-1.3.0.2
-</span><span class='line'>directory-1.2.1.0
-</span><span class='line'>filepath-1.3.0.2
-</span><span class='line'>ghc-7.8.4
-</span><span class='line'>ghc-prim-0.3.1.0
-</span><span class='line'>haskeline-0.7.1.2
-</span><span class='line'>haskell2010-1.1.2.0
-</span><span class='line'>haskell98-2.0.0.3
-</span><span class='line'>hoopl-3.10.0.1
-</span><span class='line'>hpc-0.6.0.1
-</span><span class='line'>integer-gmp-0.5.1.0
-</span><span class='line'>old-locale-1.0.0.6
-</span><span class='line'>old-time-1.1.0.2
-</span><span class='line'>pretty-1.1.1.1
-</span><span class='line'>process-1.2.0.0
-</span><span class='line'>rts-1.0
-</span><span class='line'>template-haskell-2.9.0.0
-</span><span class='line'>terminfo-0.4.0.0
-</span><span class='line'><span class="nb">time</span>-1.4.2
-</span><span class='line'>transformers-0.3.0.0
-</span><span class='line'>unix-2.7.0.1
-</span><span class='line'>xhtml-3000.2.1
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p><strong>Get a new package using Stack</strong></p>
-
-<p>First, we need to <em>require</em> some new package. Change dummy code to (e.g.)</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="kr">import</span> <span class="nn">System.Random</span>
-</span><span class='line'><span class="kr">import</span> <span class="nn">Control.Monad</span> <span class="p">(</span><span class="nf">replicateM</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="nf">main</span> <span class="ow">=</span> <span class="n">replicateM</span> <span class="mi">10</span> <span class="p">(</span><span class="n">randomIO</span> <span class="ow">::</span> <span class="kt">IO</span> <span class="kt">Float</span><span class="p">)</span> <span class="o">&gt;&gt;=</span> <span class="n">print</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Try to build it</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>stack ghc dummy.hs
-</span><span class='line'>
-</span><span class='line'>dummy.hs:1:8:
-</span><span class='line'>Could not find module ‘System.Random’
-</span><span class='line'>Use -v to see a list of the files searched <span class="k">for</span>.
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>So let&rsquo;s get it then:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>stack deps random
-</span><span class='line'>random-1.1: downloading
-</span><span class='line'>random-1.1: configure
-</span><span class='line'>random-1.1: build
-</span><span class='line'>random-1.1: install
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>&hellip; and then run it again:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>stack ghc dummy.hs
-</span><span class='line'><span class="o">[</span><span class="m">1</span> of 1<span class="o">]</span> Compiling Main             <span class="o">(</span> dummy.hs, dummy.o <span class="o">)</span>
-</span><span class='line'>Linking dummy ...
-</span><span class='line'><span class="nv">$ </span>./dummy
-</span><span class='line'><span class="o">[</span>0.4301154,0.9796305,4.801333e-2,0.6978437,0.45780963,0.21923387,0.33110678,0.2976914,5.8295727e-3,0.28221375<span class="o">]</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Not bad at all. Reminds me of the feeling I got after wading through the plethora of python package handling frameworks and discovering Anaconda. This is <em>finally</em> a newbie-friendly language; &ldquo;cabal hell&rdquo; is no more (!)</p>
 ]]></content>
   </entry>
   

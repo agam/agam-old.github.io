@@ -7,7 +7,7 @@
 	<meta name="author" content="Agam">
 
 	
-	<meta name="description" content="I was all gung-ho about recommending Go as the ideal starting point for everyone, and abstract driving force behind this was a supposed combination &hellip;">
+	<meta name="description" content="(The fact that this turned out to be a long story is ridiculous, but perhaps it&rsquo;ll be useful to someone else) The idea here is intuitive: &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -86,6 +86,334 @@
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2015/02/07/euler-24-permutations/">
+		
+			Euler 24: Permutations, a Long Story</a>
+	</h2>
+	<div class="entry-content">
+		<p>(The fact that this turned out to be a long story is <em>ridiculous</em>, but perhaps it&rsquo;ll be useful to someone else)</p>
+
+<p>The idea here is intuitive: given say <code>0</code>, <code>1</code> and <code>2</code>, we can immediately come up with the following orderings:</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>012
+</span><span class='line'>021
+</span><span class='line'>102
+</span><span class='line'>120
+</span><span class='line'>201
+</span><span class='line'>210</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The problem here is to find the millionth permutation of <code>0</code>, <code>1</code>, <code>2</code>, <code>3</code>, <code>4</code>, <code>5</code>, <code>6</code>, <code>7</code>, <code>8</code>, <code>9</code>.</p>
+
+<p>The first way is to <em>cheat</em> and work it out with pen-and-paper, upon which you soon realize that there are cycles for each set of numbers. E.g. for two numbers we would have 2 possible orderings (<code>01</code> and <code>10</code>), for three we have the ones shown above, etc, and this is because for <code>n</code> numbers we have <code>n!</code> combinations. Right, that&rsquo;s obvious. But the next step is to see that <em>within</em> each block of <code>n!</code>, there are <code>n</code> blocks of size <code>(n-1)!</code>, where the first digit is the same, which means we have a straightforward way of reducing the problem of size <code>n</code> to a problem of size <code>n-1</code>.</p>
+
+<p>As an example, to find the fifth permutation in the example above, we would see that it involves two cycles of two digits each, and then halfway through a single cycle. So we can come up with the first digit being <code>2</code>, and the next digit being the second of the remaining digits (i.e. <code>1</code>), and we&rsquo;re finally left with <code>0</code>.</p>
+
+<p>(<strong>Note</strong>: Argh &hellip; This sentence is wrong! But I didn&rsquo;t realize that until later)</p>
+
+<p>So I wrote the code for this, and I used Ocaml because I&rsquo;m a complete n00b at it.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+</pre></td><td class='code'><pre><code class='ocaml'><span class='line'><span class="k">let</span> <span class="k">rec</span> <span class="n">fact</span> <span class="n">n</span> <span class="o">=</span>
+</span><span class='line'>  <span class="k">if</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">then</span> <span class="mi">1</span>
+</span><span class='line'>  <span class="k">else</span> <span class="n">n</span> <span class="o">*</span> <span class="n">fact</span> <span class="o">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">let</span> <span class="n">perm_total</span> <span class="o">=</span> <span class="mi">1_000_000</span><span class="o">;;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">let</span> <span class="n">get_perm</span> <span class="n">total</span> <span class="n">index</span> <span class="o">=</span>
+</span><span class='line'>  <span class="k">let</span> <span class="n">fact_index</span> <span class="o">=</span> <span class="n">fact</span> <span class="n">index</span> <span class="k">in</span>
+</span><span class='line'>  <span class="n">total</span> <span class="o">/</span> <span class="o">(</span><span class="n">fact_index</span><span class="o">),</span> <span class="n">total</span> <span class="ow">mod</span> <span class="n">fact_index</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">let</span> <span class="k">rec</span> <span class="n">get_all_perms</span> <span class="n">total</span> <span class="n">index_size</span> <span class="o">=</span>
+</span><span class='line'>  <span class="k">let</span> <span class="k">rec</span> <span class="n">get_next_perm</span> <span class="n">total</span> <span class="n">index_size</span> <span class="n">perm_list</span> <span class="o">=</span>
+</span><span class='line'>    <span class="k">if</span> <span class="n">index_size</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">then</span> <span class="n">perm_list</span>
+</span><span class='line'>    <span class="k">else</span> <span class="k">match</span> <span class="n">get_perm</span> <span class="n">total</span> <span class="n">index_size</span> <span class="k">with</span>
+</span><span class='line'>   <span class="o">|</span> <span class="n">p</span><span class="o">,</span> <span class="n">new_total</span> <span class="o">-&gt;</span> <span class="n">get_next_perm</span> <span class="n">new_total</span> <span class="o">(</span><span class="n">index_size</span> <span class="o">-</span> <span class="mi">1</span><span class="o">)</span> <span class="o">(</span><span class="n">p</span> <span class="o">::</span> <span class="n">perm_list</span><span class="o">)</span>
+</span><span class='line'>  <span class="k">in</span> <span class="nn">List</span><span class="p">.</span><span class="n">rev</span> <span class="o">(</span><span class="n">get_next_perm</span> <span class="n">total</span> <span class="n">index_size</span> <span class="bp">[]</span><span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">let</span> <span class="k">rec</span> <span class="n">digits_list</span> <span class="n">n</span> <span class="n">lst</span> <span class="o">=</span>
+</span><span class='line'>  <span class="k">if</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">then</span> <span class="o">(</span><span class="mi">0</span> <span class="o">::</span> <span class="n">lst</span><span class="o">)</span>
+</span><span class='line'>  <span class="k">else</span> <span class="n">digits_list</span> <span class="o">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="o">)</span> <span class="o">(</span><span class="n">n</span> <span class="o">::</span> <span class="n">lst</span><span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">let</span> <span class="n">remove_digit</span> <span class="n">digit</span> <span class="n">lst</span> <span class="o">=</span>
+</span><span class='line'>  <span class="nn">List</span><span class="p">.</span><span class="n">filter</span> <span class="o">(</span><span class="k">fun</span> <span class="n">x</span> <span class="o">-&gt;</span> <span class="n">x</span> <span class="o">&lt;&gt;</span> <span class="n">digit</span><span class="o">)</span> <span class="n">lst</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">let</span> <span class="k">rec</span> <span class="n">get_next_perm_digit</span> <span class="n">perm_list</span> <span class="n">digit_list</span> <span class="n">pdlist</span> <span class="o">=</span>
+</span><span class='line'>  <span class="k">if</span> <span class="nn">List</span><span class="p">.</span><span class="n">length</span> <span class="n">perm_list</span> <span class="o">=</span> <span class="mi">0</span> <span class="k">then</span> <span class="n">pdlist</span>
+</span><span class='line'>  <span class="k">else</span> <span class="k">let</span> <span class="n">p</span> <span class="o">=</span> <span class="nn">List</span><span class="p">.</span><span class="n">hd</span> <span class="n">perm_list</span> <span class="k">in</span>
+</span><span class='line'>       <span class="k">let</span> <span class="n">d</span> <span class="o">=</span> <span class="nn">List</span><span class="p">.</span><span class="n">nth</span> <span class="n">digit_list</span> <span class="n">p</span> <span class="k">in</span>
+</span><span class='line'>       <span class="n">get_next_perm_digit</span> <span class="o">(</span><span class="nn">List</span><span class="p">.</span><span class="n">tl</span> <span class="n">perm_list</span><span class="o">)</span> <span class="o">(</span><span class="n">remove_digit</span> <span class="n">d</span> <span class="n">digit_list</span><span class="o">)</span> <span class="o">(</span><span class="n">d</span> <span class="o">::</span> <span class="n">pdlist</span><span class="o">)</span>
+</span><span class='line'>  
+</span><span class='line'><span class="k">let</span> <span class="k">rec</span> <span class="n">get_perm_digits</span> <span class="n">perm_list</span> <span class="o">=</span>
+</span><span class='line'>  <span class="k">let</span> <span class="n">digits</span> <span class="o">=</span> <span class="n">digits_list</span> <span class="o">(</span><span class="nn">List</span><span class="p">.</span><span class="n">length</span> <span class="n">perm_list</span><span class="o">)</span> <span class="bp">[]</span> <span class="k">in</span>
+</span><span class='line'>  <span class="nn">List</span><span class="p">.</span><span class="n">rev</span> <span class="o">(</span><span class="n">get_next_perm_digit</span> <span class="n">perm_list</span> <span class="n">digits</span> <span class="bp">[]</span><span class="o">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">let</span> <span class="n">euler24</span> <span class="o">=</span> <span class="n">get_perm_digits</span> <span class="o">(</span><span class="n">get_all_perms</span> <span class="n">perm_total</span> <span class="mi">9</span><span class="o">);;</span>  
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Yes, the names are terrible. Many of the started out as nested functions which I pulled into the top-level to test separately. Anyway, the point is &hellip; the answer was <strong>wrong</strong>.</p>
+
+<p>Ok, I thought, I must&rsquo;ve screwed up in the <em>Ocaml-ness</em> of my solution. So I rewrote it thusly:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">fact</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">=</span> <span class="nv">n</span> <span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>      <span class="mi">1</span>
+</span><span class='line'>      <span class="p">(</span><span class="nb">*</span> <span class="nv">n</span> <span class="p">(</span><span class="nv">fact</span> <span class="p">(</span><span class="nb">1-</span> <span class="nv">n</span><span class="p">)))))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*total*</span> <span class="mi">1000000</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">get-perm</span> <span class="p">(</span><span class="nv">total</span> <span class="nv">index</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">f</span> <span class="p">(</span><span class="nv">fact</span> <span class="nv">index</span><span class="p">)))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nb">truncate</span> <span class="nv">total</span> <span class="nv">f</span><span class="p">)))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">get-next-perm</span> <span class="p">(</span><span class="nv">total</span> <span class="nv">index-size</span> <span class="nv">perm-list</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">=</span> <span class="nv">index-size</span> <span class="mi">0</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">(</span><span class="nb">cons</span> <span class="mi">0</span> <span class="nv">perm-list</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">(</span><span class="nb">multiple-value-bind</span> <span class="p">(</span><span class="nv">p</span> <span class="nv">new_total</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">(</span><span class="nv">get-perm</span> <span class="nv">total</span> <span class="nv">index-size</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nv">get-next-perm</span> <span class="nv">new_total</span> <span class="p">(</span><span class="nb">1-</span> <span class="nv">index-size</span><span class="p">)</span> <span class="p">(</span><span class="nb">cons</span> <span class="nv">p</span> <span class="nv">perm-list</span><span class="p">)))))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">get-all-perms</span> <span class="p">(</span><span class="nv">total</span> <span class="nv">index-size</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">reverse</span> <span class="p">(</span><span class="nv">get-next-perm</span> <span class="nv">total</span> <span class="nv">index-size</span> <span class="o">&#39;</span><span class="p">())))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">digits-list</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">i</span> <span class="nv">from</span> <span class="mi">0</span> <span class="nv">to</span> <span class="nv">n</span>
+</span><span class='line'>       <span class="nv">collect</span> <span class="nv">i</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">get-next-perm-digit</span> <span class="p">(</span><span class="nv">perm-list</span> <span class="nv">digit-list</span> <span class="nv">p-d-list</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">null</span> <span class="nv">perm-list</span><span class="p">)</span>
+</span><span class='line'>      <span class="nv">p-d-list</span>
+</span><span class='line'>      <span class="p">(</span><span class="k">let*</span> <span class="p">((</span><span class="nv">p</span> <span class="p">(</span><span class="nb">first</span> <span class="nv">perm-list</span><span class="p">))</span>
+</span><span class='line'>       <span class="p">(</span><span class="nv">d</span> <span class="p">(</span><span class="nb">nth</span> <span class="nv">p</span> <span class="nv">digit-list</span><span class="p">)))</span>
+</span><span class='line'>  <span class="p">(</span><span class="nv">get-next-perm-digit</span> <span class="p">(</span><span class="nb">rest</span> <span class="nv">perm-list</span><span class="p">)</span>
+</span><span class='line'>               <span class="p">(</span><span class="nb">remove</span> <span class="nv">d</span> <span class="nv">digit-list</span><span class="p">)</span>
+</span><span class='line'>               <span class="p">(</span><span class="nb">cons</span> <span class="nv">d</span> <span class="nv">p-d-list</span><span class="p">)))))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">get-perm-digits</span> <span class="p">(</span><span class="nv">perm-list</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">digits</span> <span class="p">(</span><span class="nv">digits-list</span> <span class="p">(</span><span class="nb">1-</span> <span class="p">(</span><span class="nb">length</span> <span class="nv">perm-list</span><span class="p">)))))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nb">reverse</span> <span class="p">(</span><span class="nv">get-next-perm-digit</span> <span class="nv">perm-list</span> <span class="nv">digits</span> <span class="o">&#39;</span><span class="p">()))))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">euler-24</span> <span class="p">()</span>
+</span><span class='line'>  <span class="p">(</span><span class="nv">get-perm-digits</span> <span class="p">(</span><span class="nv">get-all-perms</span> <span class="vg">*total*</span> <span class="mi">9</span><span class="p">)))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The <em>same</em> answer popped out &mdash; which means I was successful at my translation &mdash; but it was still the wrong answer. In the initial few seconds of denial, I refreshed the Project Euler page and tried again. No luck.</p>
+
+<p>Now it was time for desperate measures, so I came up with this brute force solution:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">list-&gt;number</span> <span class="p">(</span><span class="nb">list</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">reduce</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">x</span> <span class="nv">y</span><span class="p">)</span> <span class="p">(</span><span class="nb">+</span> <span class="p">(</span><span class="nb">*</span> <span class="nv">x</span> <span class="mi">10</span><span class="p">)</span> <span class="nv">y</span><span class="p">))</span> <span class="nb">list</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">number-&gt;list</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">do</span> <span class="p">((</span><span class="nv">tempn</span> <span class="nv">n</span> <span class="p">(</span><span class="nb">floor</span> <span class="p">(</span><span class="nb">/</span> <span class="nv">tempn</span> <span class="mi">10</span><span class="p">)))</span>
+</span><span class='line'>       <span class="p">(</span><span class="nv">digits</span> <span class="o">&#39;</span><span class="p">()</span> <span class="p">(</span><span class="nb">cons</span> <span class="p">(</span><span class="nb">mod</span> <span class="nv">tempn</span> <span class="mi">10</span><span class="p">)</span> <span class="nv">digits</span><span class="p">)))</span>
+</span><span class='line'>      <span class="p">((</span><span class="nb">=</span> <span class="nv">tempn</span> <span class="mi">0</span><span class="p">)</span> <span class="nv">digits</span><span class="p">)))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">has-digits</span> <span class="p">(</span><span class="nv">n</span> <span class="nv">digit-list</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">nlist</span> <span class="p">(</span><span class="nv">number-&gt;list</span> <span class="nv">n</span><span class="p">)))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nb">not</span> <span class="p">(</span><span class="nb">set-difference</span> <span class="nv">digit-list</span> <span class="nv">nlist</span><span class="p">))))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">brute-force-next-permutation</span> <span class="p">(</span><span class="nv">digit-list</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">n</span> <span class="p">(</span><span class="nv">list-&gt;number</span> <span class="nv">digit-list</span><span class="p">)))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nb">do</span> <span class="p">((</span><span class="nv">trynum</span> <span class="p">(</span><span class="nb">1+</span> <span class="nv">n</span><span class="p">)</span> <span class="p">(</span><span class="nb">1+</span> <span class="nv">trynum</span><span class="p">)))</span>
+</span><span class='line'>  <span class="p">((</span><span class="nv">has-digits</span> <span class="nv">trynum</span> <span class="nv">digit-list</span><span class="p">)</span> <span class="p">(</span><span class="nv">number-&gt;list</span> <span class="nv">trynum</span><span class="p">))</span>
+</span><span class='line'>      <span class="p">(</span><span class="nb">format</span> <span class="no">t</span> <span class="s">&quot;Trying ~A~%&quot;</span> <span class="nv">trynum</span><span class="p">))))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&hellip;. which wasn&rsquo;t <em>quite</em> right either, since it skipped the leading zero in our lists. This one seemed to work:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">add-num</span> <span class="p">(</span><span class="nv">digit-list</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">sum</span> <span class="p">(</span><span class="nb">1+</span> <span class="p">(</span><span class="nb">first</span> <span class="nv">digit-list</span><span class="p">))))</span>
+</span><span class='line'>    <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">&lt;</span> <span class="nv">sum</span> <span class="mi">10</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">cons</span> <span class="nv">sum</span> <span class="p">(</span><span class="nb">rest</span> <span class="nv">digit-list</span><span class="p">))</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">cons</span> <span class="p">(</span><span class="nb">mod</span> <span class="nv">sum</span> <span class="mi">10</span><span class="p">)</span> <span class="p">(</span><span class="nv">add-num</span> <span class="p">(</span><span class="nb">rest</span> <span class="nv">digit-list</span><span class="p">))))))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">next-number</span> <span class="p">(</span><span class="nv">digit-list</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">revlist</span> <span class="p">(</span><span class="nb">reverse</span> <span class="nv">digit-list</span><span class="p">)))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nb">nreverse</span> <span class="p">(</span><span class="nv">add-num</span> <span class="nv">revlist</span><span class="p">))))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">brute-force-next-permutation</span> <span class="p">(</span><span class="nv">digit-list</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">do</span> <span class="p">((</span><span class="nv">trynum</span> <span class="p">(</span><span class="nv">next-number</span> <span class="nv">digit-list</span><span class="p">)</span> <span class="p">(</span><span class="nv">next-number</span> <span class="nv">trynum</span><span class="p">)))</span>
+</span><span class='line'>      <span class="p">((</span><span class="nb">not</span> <span class="p">(</span><span class="nb">set-difference</span> <span class="nv">digit-list</span> <span class="nv">trynum</span><span class="p">))</span> <span class="nv">trynum</span><span class="p">)))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">brute-force-nth-permutation</span> <span class="p">(</span><span class="nv">digit-list</span> <span class="nv">n</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">do</span> <span class="p">((</span><span class="nv">i</span> <span class="mi">1</span> <span class="p">(</span><span class="nb">1+</span> <span class="nv">i</span><span class="p">))</span>
+</span><span class='line'>       <span class="p">(</span><span class="nv">trynum</span> <span class="nv">digit-list</span> <span class="p">(</span><span class="nv">brute-force-next-permutation</span> <span class="nv">trynum</span><span class="p">)))</span>
+</span><span class='line'>      <span class="p">((</span><span class="nb">=</span> <span class="nv">i</span> <span class="nv">n</span><span class="p">)</span> <span class="nv">trynum</span><span class="p">)))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>So I set that running with <code>(brute-force-nth-permutation '(0 1 2 3 4 5 6 7 8 9) 1000000)</code>, and it looked like it was clearly going to take a while.</p>
+
+<p>At this point I was really depressed, since I couldn&rsquo;t figure out <em>what</em> was wrong with the initial approach which was so <em>straightforward</em> &hellip; and then I realized that <strong>I was probably off by one</strong>.</p>
+
+<p>So I took the answer submitted earlier, and entered the <em>next</em> permutation. Nope. Ok, what about the <em>previous</em> one? That worked!</p>
+
+<p>(<strong>Note</strong>: To circle back to the &lsquo;trivial&rsquo; example at the top of the post: I didn&rsquo;t catch myself talking about the fifth permutation as being 0,1,2,3,4,5 &mdash; so I was really talking about the <em>sixth</em> permutation &hellip;)</p>
+
+<p>Later, the (inefficient) brute-force computation terminated in <code>1668</code> seconds, and happily, the answers matched. I tried the previous code with a small modification:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">euler-24</span> <span class="p">()</span>
+</span><span class='line'>  <span class="p">(</span><span class="nv">get-perm-digits</span> <span class="p">(</span><span class="nv">get-all-perms</span> <span class="p">(</span><span class="nb">1-</span> <span class="vg">*total*</span><span class="p">)</span> <span class="mi">9</span><span class="p">)))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&hellip; and it gave the same answer (and obviously, so did the Ocaml version). So a happy ending to this story, but a painful reminder of the fact that <strong>there are only two hard problems in computer science: naming, caching, and off-by-one errors.</strong></p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-02-07T23:48:20-08:00" pubdate data-updated="true">Feb 7<sup>th</sup>, 2015</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/lisp/'>lisp</a>, <a class='category' href='/blog/categories/ocaml/'>ocaml</a>, <a class='category' href='/blog/categories/projecteuler/'>projecteuler</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -6335,1025 +6663,6 @@ After this, evaluating <code>amicables 10000</code> took <code>23.71</code> seco
 
 
 <time datetime="2015-01-13T14:33:18-08:00" pubdate data-updated="true">Jan 13<sup>th</sup>, 2015</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/games/'>games</a>, <a class='category' href='/blog/categories/golang/'>golang</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2015/01/11/simple-subtraction-dot-dot-dot-and-gambling/">
-		
-			Simple Subtraction &#8230; And Gambling</a>
-	</h2>
-	<div class="entry-content">
-		<p>Continuing on the theme of the last two posts, here are two more examples, here are <em>two more</em>. The first is a simple change-counting program, which might fit the bill for a &ldquo;first program&rdquo;, and the second is a game of craps (not too interactive, unfortunately; all you do is place a bet &mdash; I did at least add a delay for the dice throw to make it seem less &hellip; er &hellip; automated).</p>
-
-<h3>Change: Go Source</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-<span class='line-number'>72</span>
-<span class='line-number'>73</span>
-<span class='line-number'>74</span>
-<span class='line-number'>75</span>
-<span class='line-number'>76</span>
-<span class='line-number'>77</span>
-<span class='line-number'>78</span>
-<span class='line-number'>79</span>
-<span class='line-number'>80</span>
-<span class='line-number'>81</span>
-<span class='line-number'>82</span>
-<span class='line-number'>83</span>
-<span class='line-number'>84</span>
-<span class='line-number'>85</span>
-<span class='line-number'>86</span>
-<span class='line-number'>87</span>
-<span class='line-number'>88</span>
-<span class='line-number'>89</span>
-<span class='line-number'>90</span>
-<span class='line-number'>91</span>
-<span class='line-number'>92</span>
-<span class='line-number'>93</span>
-<span class='line-number'>94</span>
-</pre></td><td class='code'><pre><code class='go'><span class='line'><span class="kn">package</span> <span class="nx">main</span>
-</span><span class='line'>
-</span><span class='line'><span class="kn">import</span> <span class="p">(</span>
-</span><span class='line'>  <span class="s">&quot;fmt&quot;</span>
-</span><span class='line'>  <span class="s">&quot;math&quot;</span>
-</span><span class='line'>  <span class="s">&quot;strings&quot;</span>
-</span><span class='line'><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">type</span> <span class="nx">moneyUnit</span> <span class="kd">struct</span> <span class="p">{</span>
-</span><span class='line'>  <span class="nx">name</span>  <span class="kt">string</span>
-</span><span class='line'>  <span class="nx">value</span> <span class="kt">int</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">var</span> <span class="nx">moneyUnits</span> <span class="p">=</span> <span class="p">[]</span><span class="nx">moneyUnit</span><span class="p">{</span>
-</span><span class='line'>  <span class="p">{</span><span class="s">&quot;Hundred Dollar Bill&quot;</span><span class="p">,</span> <span class="mi">100</span> <span class="o">*</span> <span class="mi">100</span><span class="p">},</span>
-</span><span class='line'>  <span class="p">{</span><span class="s">&quot;Fifty Dollar Bill&quot;</span><span class="p">,</span> <span class="mi">50</span> <span class="o">*</span> <span class="mi">100</span><span class="p">},</span>
-</span><span class='line'>  <span class="p">{</span><span class="s">&quot;Twenty Dollar Bill&quot;</span><span class="p">,</span> <span class="mi">20</span> <span class="o">*</span> <span class="mi">100</span><span class="p">},</span>
-</span><span class='line'>  <span class="p">{</span><span class="s">&quot;Ten Dollar Bill&quot;</span><span class="p">,</span> <span class="mi">10</span> <span class="o">*</span> <span class="mi">100</span><span class="p">},</span>
-</span><span class='line'>  <span class="p">{</span><span class="s">&quot;Five Dollar Bill&quot;</span><span class="p">,</span> <span class="mi">5</span> <span class="o">*</span> <span class="mi">100</span><span class="p">},</span>
-</span><span class='line'>  <span class="p">{</span><span class="s">&quot;One Dollar Bill&quot;</span><span class="p">,</span> <span class="mi">100</span><span class="p">},</span>
-</span><span class='line'>  <span class="p">{</span><span class="s">&quot;One-Half Dollar&quot;</span><span class="p">,</span> <span class="mi">50</span><span class="p">},</span>
-</span><span class='line'>  <span class="p">{</span><span class="s">&quot;Quarter&quot;</span><span class="p">,</span> <span class="mi">25</span><span class="p">},</span>
-</span><span class='line'>  <span class="p">{</span><span class="s">&quot;Dime&quot;</span><span class="p">,</span> <span class="mi">10</span><span class="p">},</span>
-</span><span class='line'>  <span class="p">{</span><span class="s">&quot;Nickel&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">},</span>
-</span><span class='line'>  <span class="p">{</span><span class="s">&quot;Penny&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">},</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">func</span> <span class="nx">showUsage</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;\n         The Change-Maker   &quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;----------------------------------\n&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;I&#39;ll help you calculate the change for any item purchased.\n&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">func</span> <span class="nx">getMoney</span><span class="p">(</span><span class="nx">prompt</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">float64</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">for</span> <span class="p">{</span>
-</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;%s : $&quot;</span><span class="p">,</span> <span class="nx">prompt</span><span class="p">)</span>
-</span><span class='line'>      <span class="kd">var</span> <span class="nx">answer</span> <span class="kt">float64</span>
-</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Scan</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">answer</span><span class="p">)</span>
-</span><span class='line'>      <span class="nx">pennies</span> <span class="o">:=</span> <span class="nx">answer</span> <span class="o">*</span> <span class="mi">100</span>
-</span><span class='line'>      <span class="nx">roundPennies</span> <span class="o">:=</span> <span class="nx">math</span><span class="p">.</span><span class="nx">Ceil</span><span class="p">(</span><span class="nx">pennies</span><span class="p">)</span>
-</span><span class='line'>      <span class="k">if</span> <span class="nx">roundPennies</span><span class="o">-</span><span class="nx">pennies</span> <span class="p">&gt;</span> <span class="mf">1e-4</span> <span class="p">{</span>
-</span><span class='line'>          <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Error: please enter $XXXX.XX (i.e. up to two decimal places!)&quot;</span><span class="p">)</span>
-</span><span class='line'>      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</span><span class='line'>          <span class="k">return</span> <span class="nx">answer</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">func</span> <span class="nx">deductChange</span><span class="p">(</span><span class="nx">pennies</span><span class="p">,</span> <span class="nx">unit</span> <span class="kt">int</span><span class="p">)</span> <span class="p">(</span><span class="nx">numUnits</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">remaining</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">if</span> <span class="nx">pennies</span><span class="o">%</span><span class="nx">unit</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">return</span> <span class="nx">pennies</span> <span class="o">/</span> <span class="nx">unit</span><span class="p">,</span> <span class="mi">0</span>
-</span><span class='line'>  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</span><span class='line'>      <span class="nx">numUnits</span> <span class="p">=</span> <span class="nx">pennies</span> <span class="o">/</span> <span class="nx">unit</span>
-</span><span class='line'>      <span class="nx">remaining</span> <span class="p">=</span> <span class="nx">pennies</span> <span class="o">-</span> <span class="nx">numUnits</span><span class="o">*</span><span class="nx">unit</span>
-</span><span class='line'>      <span class="k">return</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">func</span> <span class="nx">showChange</span><span class="p">(</span><span class="nx">pennies</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">u</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">moneyUnits</span> <span class="p">{</span>
-</span><span class='line'>      <span class="kd">var</span> <span class="nx">numUnits</span> <span class="kt">int</span>
-</span><span class='line'>      <span class="nx">numUnits</span><span class="p">,</span> <span class="nx">pennies</span> <span class="p">=</span> <span class="nx">deductChange</span><span class="p">(</span><span class="nx">pennies</span><span class="p">,</span> <span class="nx">u</span><span class="p">.</span><span class="nx">value</span><span class="p">)</span>
-</span><span class='line'>      <span class="k">if</span> <span class="nx">numUnits</span> <span class="p">&gt;</span> <span class="mi">0</span> <span class="p">{</span>
-</span><span class='line'>          <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;%5d  %s(s)\n&quot;</span><span class="p">,</span> <span class="nx">numUnits</span><span class="p">,</span> <span class="nx">u</span><span class="p">.</span><span class="nx">name</span><span class="p">)</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="k">if</span> <span class="nx">pennies</span> <span class="o">!=</span> <span class="mi">0</span> <span class="p">{</span>
-</span><span class='line'>      <span class="nb">panic</span><span class="p">(</span><span class="s">&quot;wtf&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>  <span class="nx">showUsage</span><span class="p">()</span>
-</span><span class='line'>  <span class="k">for</span> <span class="p">{</span>
-</span><span class='line'>      <span class="nx">cost</span> <span class="o">:=</span> <span class="nx">getMoney</span><span class="p">(</span><span class="s">&quot;Cost of item?&quot;</span><span class="p">)</span>
-</span><span class='line'>      <span class="nx">payment</span> <span class="o">:=</span> <span class="nx">getMoney</span><span class="p">(</span><span class="s">&quot;Amount of payment?&quot;</span><span class="p">)</span>
-</span><span class='line'>      <span class="k">if</span> <span class="nx">payment</span> <span class="o">==</span> <span class="nx">cost</span> <span class="p">{</span>
-</span><span class='line'>          <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Aha! you don&#39;t need any change!\n&quot;</span><span class="p">)</span>
-</span><span class='line'>      <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="nx">payment</span><span class="o">-</span><span class="nx">cost</span> <span class="p">&gt;</span> <span class="mi">0</span> <span class="p">{</span>
-</span><span class='line'>          <span class="nx">showChange</span><span class="p">(</span><span class="nb">int</span><span class="p">((</span><span class="nx">payment</span> <span class="o">-</span> <span class="nx">cost</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="p">))</span>
-</span><span class='line'>      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</span><span class='line'>          <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;\nHey! you need to pay me some more for that!&quot;</span><span class="p">)</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;\nAnother item? (enter &#39;y&#39; or &#39;n&#39;): &quot;</span><span class="p">)</span>
-</span><span class='line'>      <span class="kd">var</span> <span class="nx">another</span> <span class="kt">string</span>
-</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Scan</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">another</span><span class="p">)</span>
-</span><span class='line'>      <span class="k">if</span> <span class="nx">strings</span><span class="p">.</span><span class="nx">ToLower</span><span class="p">(</span><span class="nx">another</span><span class="p">)</span> <span class="o">==</span> <span class="s">&quot;n&quot;</span> <span class="p">{</span>
-</span><span class='line'>          <span class="k">break</span>
-</span><span class='line'>      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</span><span class='line'>          <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">()</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;\n\nThank you, come again!\n\n&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Change: Basic Source</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-</pre></td><td class='code'><pre><code class='basic'><span class='line'><span class="nl">2</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="kr">TAB</span><span class="p">(</span><span class="il">33</span><span class="p">);</span><span class="s2">&quot;CHANGE&quot;</span>
-</span><span class='line'><span class="nl">4</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="kr">TAB</span><span class="p">(</span><span class="il">15</span><span class="p">);</span><span class="s2">&quot;CREATIVE COMPUTING  MORRISTOWN, NEW JERSEY&quot;</span>
-</span><span class='line'><span class="nl">5</span><span class="w"> </span><span class="kr">PRINT</span><span class="o">:</span><span class="kr">PRINT</span><span class="o">:</span><span class="kr">PRINT</span>
-</span><span class='line'><span class="nl">6</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;I, YOUR FRIENDLY MICROCOMPUTER, WILL DETERMINE&quot;</span>
-</span><span class='line'><span class="nl">8</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;THE CORRECT CHANGE FOR ITEMS COSTING UP TO $100.&quot;</span>
-</span><span class='line'><span class="nl">9</span><span class="w"> </span><span class="kr">PRINT</span><span class="o">:</span><span class="kr">PRINT</span>
-</span><span class='line'><span class="nl">10</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;COST OF ITEM&quot;</span><span class="p">;</span><span class="o">:</span><span class="kr">INPUT</span><span class="w"> </span><span class="nl">A:</span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;AMOUNT OF PAYMENT&quot;</span><span class="p">;</span><span class="o">:</span><span class="kr">INPUT</span><span class="w"> </span><span class="vg">P</span>
-</span><span class='line'><span class="nl">20</span><span class="w"> </span><span class="vg">C</span><span class="o">=</span><span class="vg">P</span><span class="o">-</span><span class="nl">A:</span><span class="vg">M</span><span class="o">=</span><span class="nl">C:</span><span class="kr">IF</span><span class="w"> </span><span class="vg">C</span><span class="o">&lt;&gt;</span><span class="il">0</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">90</span>
-</span><span class='line'><span class="nl">25</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;CORRECT AMOUNT, THANK YOU.&quot;</span>
-</span><span class='line'><span class="nl">30</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">400</span>
-</span><span class='line'><span class="nl">90</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">C</span><span class="o">&gt;</span><span class="il">0</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">120</span>
-</span><span class='line'><span class="nl">95</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;SORRY, YOU HAVE SHORT-CHANGED ME $&quot;</span><span class="p">;</span><span class="vg">A</span><span class="o">-</span><span class="vg">P</span>
-</span><span class='line'><span class="nl">100</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">10</span>
-</span><span class='line'><span class="nl">120</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;YOUR CHANGE, $&quot;</span><span class="p">;</span><span class="vg">C</span>
-</span><span class='line'><span class="nl">130</span><span class="w"> </span><span class="vg">D</span><span class="o">=</span><span class="kr">INT</span><span class="p">(</span><span class="vg">C</span><span class="o">/</span><span class="il">10</span><span class="p">)</span>
-</span><span class='line'><span class="nl">140</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">D</span><span class="o">=</span><span class="il">0</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">155</span>
-</span><span class='line'><span class="nl">150</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="vg">D</span><span class="p">;</span><span class="s2">&quot;TEN DOLLAR BILL(S)&quot;</span>
-</span><span class='line'><span class="nl">155</span><span class="w"> </span><span class="vg">C</span><span class="o">=</span><span class="vg">M</span><span class="o">-</span><span class="p">(</span><span class="vg">D</span><span class="o">*</span><span class="il">10</span><span class="p">)</span>
-</span><span class='line'><span class="nl">160</span><span class="w"> </span><span class="vg">E</span><span class="o">=</span><span class="kr">INT</span><span class="p">(</span><span class="vg">C</span><span class="o">/</span><span class="il">5</span><span class="p">)</span>
-</span><span class='line'><span class="nl">170</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">E</span><span class="o">=</span><span class="il">0</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">185</span>
-</span><span class='line'><span class="nl">180</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="vg">E</span><span class="p">;</span><span class="s2">&quot;FIVE DOLLARS BILL(S)&quot;</span>
-</span><span class='line'><span class="nl">185</span><span class="w"> </span><span class="vg">C</span><span class="o">=</span><span class="vg">M</span><span class="o">-</span><span class="p">(</span><span class="vg">D</span><span class="o">*</span><span class="il">10</span><span class="o">+</span><span class="vg">E</span><span class="o">*</span><span class="il">5</span><span class="p">)</span>
-</span><span class='line'><span class="nl">190</span><span class="w"> </span><span class="vg">F</span><span class="o">=</span><span class="kr">INT</span><span class="p">(</span><span class="vg">C</span><span class="p">)</span>
-</span><span class='line'><span class="nl">200</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">F</span><span class="o">=</span><span class="il">0</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">215</span>
-</span><span class='line'><span class="nl">210</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="vg">F</span><span class="p">;</span><span class="s2">&quot;ONE DOLLAR BILL(S)&quot;</span>
-</span><span class='line'><span class="nl">215</span><span class="w"> </span><span class="vg">C</span><span class="o">=</span><span class="vg">M</span><span class="o">-</span><span class="p">(</span><span class="vg">D</span><span class="o">*</span><span class="il">10</span><span class="o">+</span><span class="vg">E</span><span class="o">*</span><span class="il">5</span><span class="o">+</span><span class="vg">F</span><span class="p">)</span>
-</span><span class='line'><span class="nl">220</span><span class="w"> </span><span class="vg">C</span><span class="o">=</span><span class="vg">C</span><span class="o">*</span><span class="il">100</span>
-</span><span class='line'><span class="nl">225</span><span class="w"> </span><span class="vg">N</span><span class="o">=</span><span class="vg">C</span>
-</span><span class='line'><span class="nl">230</span><span class="w"> </span><span class="vg">G</span><span class="o">=</span><span class="kr">INT</span><span class="p">(</span><span class="vg">C</span><span class="o">/</span><span class="il">50</span><span class="p">)</span>
-</span><span class='line'><span class="nl">240</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">G</span><span class="o">=</span><span class="il">0</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">255</span>
-</span><span class='line'><span class="nl">250</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="vg">G</span><span class="p">;</span><span class="s2">&quot;ONE HALF DOLLAR(S)&quot;</span>
-</span><span class='line'><span class="nl">255</span><span class="w"> </span><span class="vg">C</span><span class="o">=</span><span class="vg">N</span><span class="o">-</span><span class="p">(</span><span class="vg">G</span><span class="o">*</span><span class="il">50</span><span class="p">)</span>
-</span><span class='line'><span class="nl">260</span><span class="w"> </span><span class="vg">H</span><span class="o">=</span><span class="kr">INT</span><span class="p">(</span><span class="vg">C</span><span class="o">/</span><span class="il">25</span><span class="p">)</span>
-</span><span class='line'><span class="nl">270</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">H</span><span class="o">=</span><span class="il">0</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">285</span>
-</span><span class='line'><span class="nl">280</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="vg">H</span><span class="p">;</span><span class="s2">&quot;QUARTER(S)&quot;</span>
-</span><span class='line'><span class="nl">285</span><span class="w"> </span><span class="vg">C</span><span class="o">=</span><span class="vg">N</span><span class="o">-</span><span class="p">(</span><span class="vg">G</span><span class="o">*</span><span class="il">50</span><span class="o">+</span><span class="vg">H</span><span class="o">*</span><span class="il">25</span><span class="p">)</span>
-</span><span class='line'><span class="nl">290</span><span class="w"> </span><span class="vg">I</span><span class="o">=</span><span class="kr">INT</span><span class="p">(</span><span class="vg">C</span><span class="o">/</span><span class="il">10</span><span class="p">)</span>
-</span><span class='line'><span class="nl">300</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">I</span><span class="o">=</span><span class="il">0</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">315</span>
-</span><span class='line'><span class="nl">310</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="vg">I</span><span class="p">;</span><span class="s2">&quot;DIME(S)&quot;</span>
-</span><span class='line'><span class="nl">315</span><span class="w"> </span><span class="vg">C</span><span class="o">=</span><span class="vg">N</span><span class="o">-</span><span class="p">(</span><span class="vg">G</span><span class="o">*</span><span class="il">50</span><span class="o">+</span><span class="vg">H</span><span class="o">*</span><span class="il">25</span><span class="o">+</span><span class="vg">I</span><span class="o">*</span><span class="il">10</span><span class="p">)</span>
-</span><span class='line'><span class="nl">320</span><span class="w"> </span><span class="vg">J</span><span class="o">=</span><span class="kr">INT</span><span class="p">(</span><span class="vg">C</span><span class="o">/</span><span class="il">5</span><span class="p">)</span>
-</span><span class='line'><span class="nl">330</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">J</span><span class="o">=</span><span class="il">0</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">345</span>
-</span><span class='line'><span class="nl">340</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="vg">J</span><span class="p">;</span><span class="s2">&quot;NICKEL(S)&quot;</span>
-</span><span class='line'><span class="nl">345</span><span class="w"> </span><span class="vg">C</span><span class="o">=</span><span class="vg">N</span><span class="o">-</span><span class="p">(</span><span class="vg">G</span><span class="o">*</span><span class="il">50</span><span class="o">+</span><span class="vg">H</span><span class="o">*</span><span class="il">25</span><span class="o">+</span><span class="vg">I</span><span class="o">*</span><span class="il">10</span><span class="o">+</span><span class="vg">J</span><span class="o">*</span><span class="il">5</span><span class="p">)</span>
-</span><span class='line'><span class="nl">350</span><span class="w"> </span><span class="vg">K</span><span class="o">=</span><span class="kr">INT</span><span class="p">(</span><span class="vg">C</span><span class="o">+</span><span class="mf">.5</span><span class="p">)</span>
-</span><span class='line'><span class="nl">360</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">K</span><span class="o">=</span><span class="il">0</span><span class="w"> </span><span class="kr">THEN</span><span class="w"> </span><span class="il">380</span>
-</span><span class='line'><span class="nl">370</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="vg">K</span><span class="p">;</span><span class="s2">&quot;PENNY(S)&quot;</span>
-</span><span class='line'><span class="nl">380</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;THANK YOU, COME AGAIN.&quot;</span>
-</span><span class='line'><span class="nl">390</span><span class="w"> </span><span class="kr">PRINT</span><span class="o">:</span><span class="kr">PRINT</span>
-</span><span class='line'><span class="nl">400</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">10</span>
-</span><span class='line'><span class="nl">410</span><span class="w"> </span><span class="kr">END</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Change: Gameplay</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>go run change.go
-</span><span class='line'>
-</span><span class='line'>         The Change-Maker
-</span><span class='line'>       ----------------------------------
-</span><span class='line'>
-</span><span class='line'>I<span class="s1">&#39;ll help you calculate the change for any item purchased.</span>
-</span><span class='line'>
-</span><span class='line'><span class="s1">Cost of item? : $4.56</span>
-</span><span class='line'><span class="s1">Amount of payment? : $20</span>
-</span><span class='line'><span class="s1">1  Ten Dollar Bill(s)</span>
-</span><span class='line'><span class="s1">1  Five Dollar Bill(s)</span>
-</span><span class='line'><span class="s1">1  Quarter(s)</span>
-</span><span class='line'><span class="s1">1  Dime(s)</span>
-</span><span class='line'><span class="s1">1  Nickel(s)</span>
-</span><span class='line'><span class="s1">4  Penny(s)</span>
-</span><span class='line'>
-</span><span class='line'><span class="s1">Another item? (enter &#39;</span>y<span class="s1">&#39; or &#39;</span>n<span class="s1">&#39;): y</span>
-</span><span class='line'>
-</span><span class='line'><span class="s1">Cost of item? : $56.43</span>
-</span><span class='line'><span class="s1">Amount of payment? : $525.50</span>
-</span><span class='line'><span class="s1">4  Hundred Dollar Bill(s)</span>
-</span><span class='line'><span class="s1">1  Fifty Dollar Bill(s)</span>
-</span><span class='line'><span class="s1">1  Ten Dollar Bill(s)</span>
-</span><span class='line'><span class="s1">1  Five Dollar Bill(s)</span>
-</span><span class='line'><span class="s1">4  One Dollar Bill(s)</span>
-</span><span class='line'><span class="s1">1  Nickel(s)</span>
-</span><span class='line'><span class="s1">2  Penny(s)</span>
-</span><span class='line'>
-</span><span class='line'><span class="s1">Another item? (enter &#39;</span>y<span class="s1">&#39; or &#39;</span>n<span class="err">&#39;</span><span class="o">)</span>: n
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>Thank you, come again!
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Craps: Go Source</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-<span class='line-number'>72</span>
-<span class='line-number'>73</span>
-<span class='line-number'>74</span>
-<span class='line-number'>75</span>
-<span class='line-number'>76</span>
-<span class='line-number'>77</span>
-<span class='line-number'>78</span>
-<span class='line-number'>79</span>
-<span class='line-number'>80</span>
-<span class='line-number'>81</span>
-<span class='line-number'>82</span>
-<span class='line-number'>83</span>
-<span class='line-number'>84</span>
-<span class='line-number'>85</span>
-<span class='line-number'>86</span>
-<span class='line-number'>87</span>
-<span class='line-number'>88</span>
-<span class='line-number'>89</span>
-<span class='line-number'>90</span>
-<span class='line-number'>91</span>
-<span class='line-number'>92</span>
-<span class='line-number'>93</span>
-<span class='line-number'>94</span>
-<span class='line-number'>95</span>
-<span class='line-number'>96</span>
-<span class='line-number'>97</span>
-<span class='line-number'>98</span>
-<span class='line-number'>99</span>
-<span class='line-number'>100</span>
-<span class='line-number'>101</span>
-<span class='line-number'>102</span>
-<span class='line-number'>103</span>
-<span class='line-number'>104</span>
-<span class='line-number'>105</span>
-<span class='line-number'>106</span>
-<span class='line-number'>107</span>
-<span class='line-number'>108</span>
-<span class='line-number'>109</span>
-<span class='line-number'>110</span>
-<span class='line-number'>111</span>
-<span class='line-number'>112</span>
-<span class='line-number'>113</span>
-<span class='line-number'>114</span>
-<span class='line-number'>115</span>
-<span class='line-number'>116</span>
-<span class='line-number'>117</span>
-<span class='line-number'>118</span>
-<span class='line-number'>119</span>
-<span class='line-number'>120</span>
-<span class='line-number'>121</span>
-<span class='line-number'>122</span>
-<span class='line-number'>123</span>
-<span class='line-number'>124</span>
-<span class='line-number'>125</span>
-<span class='line-number'>126</span>
-<span class='line-number'>127</span>
-<span class='line-number'>128</span>
-<span class='line-number'>129</span>
-<span class='line-number'>130</span>
-<span class='line-number'>131</span>
-<span class='line-number'>132</span>
-<span class='line-number'>133</span>
-<span class='line-number'>134</span>
-<span class='line-number'>135</span>
-<span class='line-number'>136</span>
-<span class='line-number'>137</span>
-<span class='line-number'>138</span>
-<span class='line-number'>139</span>
-<span class='line-number'>140</span>
-<span class='line-number'>141</span>
-<span class='line-number'>142</span>
-<span class='line-number'>143</span>
-<span class='line-number'>144</span>
-<span class='line-number'>145</span>
-<span class='line-number'>146</span>
-<span class='line-number'>147</span>
-<span class='line-number'>148</span>
-<span class='line-number'>149</span>
-<span class='line-number'>150</span>
-<span class='line-number'>151</span>
-<span class='line-number'>152</span>
-<span class='line-number'>153</span>
-<span class='line-number'>154</span>
-<span class='line-number'>155</span>
-<span class='line-number'>156</span>
-<span class='line-number'>157</span>
-<span class='line-number'>158</span>
-<span class='line-number'>159</span>
-<span class='line-number'>160</span>
-<span class='line-number'>161</span>
-<span class='line-number'>162</span>
-<span class='line-number'>163</span>
-<span class='line-number'>164</span>
-<span class='line-number'>165</span>
-<span class='line-number'>166</span>
-<span class='line-number'>167</span>
-<span class='line-number'>168</span>
-<span class='line-number'>169</span>
-</pre></td><td class='code'><pre><code class='go'><span class='line'><span class="kn">package</span> <span class="nx">main</span>
-</span><span class='line'>
-</span><span class='line'><span class="kn">import</span> <span class="p">(</span>
-</span><span class='line'>  <span class="s">&quot;fmt&quot;</span>
-</span><span class='line'>  <span class="s">&quot;math/rand&quot;</span>
-</span><span class='line'>  <span class="s">&quot;strings&quot;</span>
-</span><span class='line'>  <span class="s">&quot;time&quot;</span>
-</span><span class='line'><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">const</span> <span class="p">(</span>
-</span><span class='line'>  <span class="nx">playerStartingMoney</span> <span class="p">=</span> <span class="mi">100</span>
-</span><span class='line'>  <span class="nx">minimumBetAmount</span>    <span class="p">=</span> <span class="mi">5</span>
-</span><span class='line'>  <span class="nx">diceThrowDelayMs</span>    <span class="p">=</span> <span class="mi">300</span>
-</span><span class='line'>  <span class="nx">pointBreakThrow</span>     <span class="p">=</span> <span class="mi">7</span>
-</span><span class='line'><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">const</span> <span class="p">(</span>
-</span><span class='line'>  <span class="nx">rollerPlayer</span> <span class="p">=</span> <span class="kc">iota</span>
-</span><span class='line'>  <span class="nx">rollerComputer</span>
-</span><span class='line'><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">const</span> <span class="p">(</span>
-</span><span class='line'>  <span class="nx">winStr</span>       <span class="p">=</span> <span class="s">&quot;... and Win!&quot;</span>
-</span><span class='line'>  <span class="nx">loseStr</span>      <span class="p">=</span> <span class="s">&quot;... and Lose!&quot;</span>
-</span><span class='line'>  <span class="nx">rollAgainStr</span> <span class="p">=</span> <span class="s">&quot;... roll again ...&quot;</span>
-</span><span class='line'><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">var</span> <span class="nx">winningThrows</span> <span class="p">=</span> <span class="kd">map</span><span class="p">[</span><span class="kt">int</span><span class="p">]</span><span class="kt">bool</span><span class="p">{</span>
-</span><span class='line'>  <span class="mi">7</span><span class="p">:</span>  <span class="kc">true</span><span class="p">,</span>
-</span><span class='line'>  <span class="mi">11</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">var</span> <span class="nx">losingThrows</span> <span class="p">=</span> <span class="kd">map</span><span class="p">[</span><span class="kt">int</span><span class="p">]</span><span class="kt">bool</span><span class="p">{</span>
-</span><span class='line'>  <span class="mi">2</span><span class="p">:</span>  <span class="kc">true</span><span class="p">,</span>
-</span><span class='line'>  <span class="mi">3</span><span class="p">:</span>  <span class="kc">true</span><span class="p">,</span>
-</span><span class='line'>  <span class="mi">12</span><span class="p">:</span> <span class="kc">true</span><span class="p">,</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">func</span> <span class="nx">showUsage</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;See rules? enter &#39;y&#39; or &#39;n&#39; : &quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="kd">var</span> <span class="nx">choice</span> <span class="kt">string</span>
-</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Scan</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">choice</span><span class="p">)</span>
-</span><span class='line'>  <span class="k">if</span> <span class="nx">strings</span><span class="p">.</span><span class="nx">ToLower</span><span class="p">(</span><span class="nx">choice</span><span class="p">)</span> <span class="o">==</span> <span class="s">&quot;n&quot;</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">return</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;\n       Welcome to CRAPS!    &quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;----------------------------------------&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;\nHere are the rules:&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;- You roll a pair of dice and add up the score for each turn&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;- rolling a 7 or 11 on the first roll wins&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;- rolling a 2, 3 or 12 on the first roll loses&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;- any other number becomes your &#39;point&#39;, and you continue to roll&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;    - if you subsequently roll your &#39;point&#39; again, you win&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;    - if you roll a 7, you lose&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;- When one of us loses, we switch dice&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;- You start with $100, and have to bet a minimum of $5 per turn&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;- You get the first turn&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;- To stop betting, just enter $0 as your bet amount&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;\n\nThat&#39;s it, let&#39;s go!\n\n&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">func</span> <span class="nx">getBetMoney</span><span class="p">(</span><span class="nx">total</span> <span class="kt">int</span><span class="p">)</span> <span class="p">(</span><span class="nx">bet</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">for</span> <span class="p">{</span>
-</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;\nYou have $%d, how much would you like to bet? $&quot;</span><span class="p">,</span> <span class="nx">total</span><span class="p">)</span>
-</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Scan</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">bet</span><span class="p">)</span>
-</span><span class='line'>      <span class="k">if</span> <span class="nx">bet</span> <span class="p">&gt;</span> <span class="nx">total</span> <span class="p">{</span>
-</span><span class='line'>          <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Hey, you can&#39;t bet more than you have!&quot;</span><span class="p">)</span>
-</span><span class='line'>      <span class="p">}</span> <span class="k">else</span> <span class="k">if</span> <span class="nx">bet</span> <span class="p">&gt;</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="nx">bet</span> <span class="p">&lt;</span> <span class="nx">minimumBetAmount</span> <span class="p">{</span>
-</span><span class='line'>          <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;Sorry buddy, you gotta place at least $%d on the table.\n&quot;</span><span class="p">,</span> <span class="nx">minimumBetAmount</span><span class="p">)</span>
-</span><span class='line'>      <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</span><span class='line'>          <span class="k">return</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">func</span> <span class="nx">getDice</span><span class="p">(</span><span class="nx">subject</span> <span class="kt">string</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
-</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;%s roll &quot;</span><span class="p">,</span> <span class="nx">subject</span><span class="p">)</span>
-</span><span class='line'>  <span class="nx">time</span><span class="p">.</span><span class="nx">Sleep</span><span class="p">(</span><span class="nx">diceThrowDelayMs</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Millisecond</span><span class="p">)</span>
-</span><span class='line'>  <span class="nx">dice1</span> <span class="o">:=</span> <span class="mi">1</span> <span class="o">+</span> <span class="nx">rand</span><span class="p">.</span><span class="nx">Intn</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
-</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;%d &quot;</span><span class="p">,</span> <span class="nx">dice1</span><span class="p">)</span>
-</span><span class='line'>  <span class="nx">time</span><span class="p">.</span><span class="nx">Sleep</span><span class="p">(</span><span class="nx">diceThrowDelayMs</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Millisecond</span><span class="p">)</span>
-</span><span class='line'>  <span class="nx">dice2</span> <span class="o">:=</span> <span class="mi">1</span> <span class="o">+</span> <span class="nx">rand</span><span class="p">.</span><span class="nx">Intn</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
-</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;and %d &quot;</span><span class="p">,</span> <span class="nx">dice2</span><span class="p">)</span>
-</span><span class='line'>  <span class="nx">time</span><span class="p">.</span><span class="nx">Sleep</span><span class="p">(</span><span class="nx">diceThrowDelayMs</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Millisecond</span><span class="p">)</span>
-</span><span class='line'>  <span class="k">return</span> <span class="nx">dice1</span> <span class="o">+</span> <span class="nx">dice2</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">func</span> <span class="nx">playRound</span><span class="p">(</span><span class="nx">roller</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">bool</span> <span class="p">{</span>
-</span><span class='line'>  <span class="nx">subject</span> <span class="o">:=</span> <span class="s">&quot;I&quot;</span>
-</span><span class='line'>  <span class="nx">possessive</span> <span class="o">:=</span> <span class="s">&quot;My&quot;</span>
-</span><span class='line'>  <span class="k">if</span> <span class="nx">roller</span> <span class="o">==</span> <span class="nx">rollerPlayer</span> <span class="p">{</span>
-</span><span class='line'>      <span class="nx">subject</span> <span class="p">=</span> <span class="s">&quot;You&quot;</span>
-</span><span class='line'>      <span class="nx">possessive</span> <span class="p">=</span> <span class="s">&quot;Your&quot;</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nx">firstThrow</span> <span class="o">:=</span> <span class="nx">getDice</span><span class="p">(</span><span class="nx">subject</span><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="k">if</span> <span class="nx">winningThrows</span><span class="p">[</span><span class="nx">firstThrow</span><span class="p">]</span> <span class="p">{</span>
-</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">winStr</span><span class="p">)</span>
-</span><span class='line'>      <span class="k">return</span> <span class="kc">true</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="k">if</span> <span class="nx">losingThrows</span><span class="p">[</span><span class="nx">firstThrow</span><span class="p">]</span> <span class="p">{</span>
-</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">loseStr</span><span class="p">)</span>
-</span><span class='line'>      <span class="k">return</span> <span class="kc">false</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;so %s point is %d\n&quot;</span><span class="p">,</span> <span class="nx">possessive</span><span class="p">,</span> <span class="nx">firstThrow</span><span class="p">)</span>
-</span><span class='line'>  <span class="k">for</span> <span class="p">{</span>
-</span><span class='line'>      <span class="nx">throw</span> <span class="o">:=</span> <span class="nx">getDice</span><span class="p">(</span><span class="nx">subject</span><span class="p">)</span>
-</span><span class='line'>      <span class="k">if</span> <span class="nx">throw</span> <span class="o">==</span> <span class="nx">firstThrow</span> <span class="p">{</span>
-</span><span class='line'>          <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;and make %s point!\n&quot;</span><span class="p">,</span> <span class="nx">possessive</span><span class="p">)</span>
-</span><span class='line'>          <span class="k">return</span> <span class="kc">true</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>      <span class="k">if</span> <span class="nx">throw</span> <span class="o">==</span> <span class="nx">pointBreakThrow</span> <span class="p">{</span>
-</span><span class='line'>          <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">loseStr</span><span class="p">)</span>
-</span><span class='line'>          <span class="k">return</span> <span class="kc">false</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">rollAgainStr</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">func</span> <span class="nx">updateMoney</span><span class="p">(</span><span class="nx">won</span> <span class="kt">bool</span><span class="p">,</span> <span class="nx">total</span><span class="p">,</span> <span class="nx">bet</span> <span class="kt">int</span><span class="p">)</span> <span class="p">(</span><span class="nx">newTotal</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">if</span> <span class="nx">won</span> <span class="p">{</span>
-</span><span class='line'>      <span class="nx">newTotal</span> <span class="p">=</span> <span class="nx">total</span> <span class="o">+</span> <span class="nx">bet</span>
-</span><span class='line'>  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</span><span class='line'>      <span class="nx">newTotal</span> <span class="p">=</span> <span class="nx">total</span> <span class="o">-</span> <span class="nx">bet</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="k">return</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">func</span> <span class="nx">showQuitMessage</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;\nAh I wish I could quit this easily ... farewell, young gambler!\n&quot;</span><span class="p">)</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>  <span class="nx">showUsage</span><span class="p">()</span>
-</span><span class='line'>  <span class="nx">rand</span><span class="p">.</span><span class="nx">Seed</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Now</span><span class="p">().</span><span class="nx">Unix</span><span class="p">())</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nx">playerMoney</span> <span class="o">:=</span> <span class="nx">playerStartingMoney</span>
-</span><span class='line'>  <span class="k">for</span> <span class="p">{</span>
-</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;\n\nOk, your turn now\n&quot;</span><span class="p">)</span>
-</span><span class='line'>      <span class="k">for</span> <span class="p">{</span>
-</span><span class='line'>          <span class="nx">bet</span> <span class="o">:=</span> <span class="nx">getBetMoney</span><span class="p">(</span><span class="nx">playerMoney</span><span class="p">)</span>
-</span><span class='line'>          <span class="k">if</span> <span class="nx">bet</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
-</span><span class='line'>              <span class="nx">showQuitMessage</span><span class="p">()</span>
-</span><span class='line'>              <span class="k">return</span>
-</span><span class='line'>          <span class="p">}</span>
-</span><span class='line'>          <span class="nx">playerWon</span> <span class="o">:=</span> <span class="nx">playRound</span><span class="p">(</span><span class="nx">rollerPlayer</span><span class="p">)</span>
-</span><span class='line'>          <span class="nx">playerMoney</span> <span class="p">=</span> <span class="nx">updateMoney</span><span class="p">(</span><span class="nx">playerWon</span><span class="p">,</span> <span class="nx">playerMoney</span><span class="p">,</span> <span class="nx">bet</span><span class="p">)</span>
-</span><span class='line'>          <span class="k">if</span> <span class="p">!</span><span class="nx">playerWon</span> <span class="p">{</span>
-</span><span class='line'>              <span class="k">break</span>
-</span><span class='line'>          <span class="p">}</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;\n\nOk, my turn now\n&quot;</span><span class="p">)</span>
-</span><span class='line'>      <span class="k">for</span> <span class="p">{</span>
-</span><span class='line'>          <span class="nx">bet</span> <span class="o">:=</span> <span class="nx">getBetMoney</span><span class="p">(</span><span class="nx">playerMoney</span><span class="p">)</span>
-</span><span class='line'>          <span class="k">if</span> <span class="nx">bet</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
-</span><span class='line'>              <span class="nx">showQuitMessage</span><span class="p">()</span>
-</span><span class='line'>              <span class="k">return</span>
-</span><span class='line'>          <span class="p">}</span>
-</span><span class='line'>          <span class="nx">computerWon</span> <span class="o">:=</span> <span class="nx">playRound</span><span class="p">(</span><span class="nx">rollerComputer</span><span class="p">)</span>
-</span><span class='line'>          <span class="nx">playerMoney</span> <span class="p">=</span> <span class="nx">updateMoney</span><span class="p">(!</span><span class="nx">computerWon</span><span class="p">,</span> <span class="nx">playerMoney</span><span class="p">,</span> <span class="nx">bet</span><span class="p">)</span>
-</span><span class='line'>          <span class="k">if</span> <span class="p">!</span><span class="nx">computerWon</span> <span class="p">{</span>
-</span><span class='line'>              <span class="k">break</span>
-</span><span class='line'>          <span class="p">}</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Craps: Basic Source</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-<span class='line-number'>72</span>
-<span class='line-number'>73</span>
-<span class='line-number'>74</span>
-<span class='line-number'>75</span>
-<span class='line-number'>76</span>
-<span class='line-number'>77</span>
-<span class='line-number'>78</span>
-<span class='line-number'>79</span>
-<span class='line-number'>80</span>
-<span class='line-number'>81</span>
-<span class='line-number'>82</span>
-</pre></td><td class='code'><pre><code class='basic'><span class='line'><span class="nl">5</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="kr">TAB</span><span class="p">(</span><span class="il">33</span><span class="p">);</span><span class="s2">&quot;CRAPS&quot;</span>
-</span><span class='line'><span class="nl">10</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="kr">TAB</span><span class="p">(</span><span class="il">15</span><span class="p">);</span><span class="s2">&quot;CREATIVE COMPUTING  MORRISTOWN, NEW JERSEY&quot;</span>
-</span><span class='line'><span class="nl">12</span><span class="w"> </span><span class="kr">PRINT</span><span class="o">:</span><span class="kr">PRINT</span><span class="o">:</span><span class="kr">PRINT</span>
-</span><span class='line'><span class="nl">15</span><span class="w"> </span><span class="kd">LET</span><span class="w"> </span><span class="vg">R</span><span class="o">=</span><span class="il">0</span>
-</span><span class='line'><span class="nl">20</span><span class="w"> </span><span class="kr">PRINT</span><span class="s2">&quot;2,3,12 ARE LOSERS; 4,5,6,8,9,10 ARE POINTS; 7,11 ARE NATURAL WINNERS.&quot;</span>
-</span><span class='line'><span class="nl">21</span><span class="w"> </span><span class="kd">LET</span><span class="w"> </span><span class="vg">T</span><span class="o">=</span><span class="il">1</span>
-</span><span class='line'><span class="nl">22</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;PICK A NUMBER AND INPUT TO ROLL DICE&quot;</span><span class="p">;</span>
-</span><span class='line'><span class="nl">23</span><span class="w"> </span><span class="kr">INPUT</span><span class="w"> </span><span class="vg">Z</span>
-</span><span class='line'><span class="nl">24</span><span class="w"> </span><span class="kd">LET</span><span class="w"> </span><span class="vg">X</span><span class="o">=</span><span class="p">(</span><span class="kr">RND</span><span class="p">(</span><span class="il">0</span><span class="p">))</span>
-</span><span class='line'><span class="nl">25</span><span class="w"> </span><span class="kd">LET</span><span class="w"> </span><span class="vg">T</span><span class="w"> </span><span class="o">=</span><span class="vg">T</span><span class="o">+</span><span class="il">1</span>
-</span><span class='line'><span class="nl">26</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">T</span><span class="o">&lt;=</span><span class="vg">Z</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">24</span>
-</span><span class='line'><span class="nl">27</span><span class="w"> </span><span class="kr">PRINT</span><span class="s2">&quot;INPUT THE AMOUNT OF YOUR WAGER.&quot;</span><span class="p">;</span>
-</span><span class='line'><span class="nl">28</span><span class="w"> </span><span class="kr">INPUT</span><span class="w"> </span><span class="vg">F</span>
-</span><span class='line'><span class="nl">30</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;I WILL NOW THROW THE DICE&quot;</span>
-</span><span class='line'><span class="nl">40</span><span class="w"> </span><span class="kd">LET</span><span class="w"> </span><span class="vg">E</span><span class="o">=</span><span class="kr">INT</span><span class="p">(</span><span class="il">7</span><span class="o">*</span><span class="kr">RND</span><span class="p">(</span><span class="il">1</span><span class="p">))</span>
-</span><span class='line'><span class="nl">41</span><span class="w"> </span><span class="kd">LET</span><span class="w"> </span><span class="vg">S</span><span class="o">=</span><span class="kr">INT</span><span class="p">(</span><span class="il">7</span><span class="o">*</span><span class="kr">RND</span><span class="p">(</span><span class="il">1</span><span class="p">))</span>
-</span><span class='line'><span class="nl">42</span><span class="w"> </span><span class="kd">LET</span><span class="w"> </span><span class="vg">X</span><span class="o">=</span><span class="vg">E</span><span class="o">+</span><span class="vg">S</span>
-</span><span class='line'><span class="nl">50</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">X</span><span class="o">=</span><span class="il">7</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">180</span>
-</span><span class='line'><span class="nl">55</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">X</span><span class="o">=</span><span class="il">11</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">180</span>
-</span><span class='line'><span class="nl">60</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">X</span><span class="o">=</span><span class="il">1</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">40</span>
-</span><span class='line'><span class="nl">62</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">X</span><span class="o">=</span><span class="il">2</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">195</span>
-</span><span class='line'><span class="nl">65</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">X</span><span class="o">=</span><span class="il">0</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">40</span>
-</span><span class='line'><span class="nl">70</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">X</span><span class="o">=</span><span class="il">2</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">200</span>
-</span><span class='line'><span class="nl">80</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">X</span><span class="o">=</span><span class="il">3</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">200</span>
-</span><span class='line'><span class="nl">90</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">X</span><span class="o">=</span><span class="il">12</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">200</span>
-</span><span class='line'><span class="nl">125</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">X</span><span class="o">=</span><span class="il">5</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">220</span>
-</span><span class='line'><span class="nl">130</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">X</span><span class="w"> </span><span class="o">=</span><span class="il">6</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">220</span>
-</span><span class='line'><span class="nl">140</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">X</span><span class="o">=</span><span class="il">8</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">220</span>
-</span><span class='line'><span class="nl">150</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">X</span><span class="o">=</span><span class="il">9</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">220</span>
-</span><span class='line'><span class="nl">160</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">X</span><span class="w"> </span><span class="o">=</span><span class="il">10</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">220</span>
-</span><span class='line'><span class="nl">170</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">X</span><span class="o">=</span><span class="il">4</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">220</span>
-</span><span class='line'><span class="nl">180</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="vg">X</span><span class="w"> </span><span class="s2">&quot;- NATURAL....A WINNER!!!!&quot;</span>
-</span><span class='line'><span class="nl">185</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="vg">X</span><span class="s2">&quot;PAYS EVEN MONEY, YOU WIN&quot;</span><span class="vg">F</span><span class="s2">&quot;DOLLARS&quot;</span>
-</span><span class='line'><span class="nl">190</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">210</span>
-</span><span class='line'><span class="nl">195</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="vg">X</span><span class="s2">&quot;- SNAKE EYES....YOU LOSE.&quot;</span>
-</span><span class='line'><span class="nl">196</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;YOU LOSE&quot;</span><span class="vg">F</span><span class="w"> </span><span class="s2">&quot;DOLLARS.&quot;</span>
-</span><span class='line'><span class="nl">197</span><span class="w"> </span><span class="kd">LET</span><span class="w"> </span><span class="vg">F</span><span class="o">=</span><span class="il">0</span><span class="o">-</span><span class="vg">F</span>
-</span><span class='line'><span class="nl">198</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">210</span>
-</span><span class='line'><span class="nl">200</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="vg">X</span><span class="w"> </span><span class="s2">&quot; - CRAPS...YOU LOSE.&quot;</span>
-</span><span class='line'><span class="nl">205</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;YOU LOSE&quot;</span><span class="vg">F</span><span class="s2">&quot;DOLLARS.&quot;</span>
-</span><span class='line'><span class="nl">206</span><span class="w"> </span><span class="kd">LET</span><span class="w"> </span><span class="vg">F</span><span class="o">=</span><span class="il">0</span><span class="o">-</span><span class="vg">F</span>
-</span><span class='line'><span class="nl">210</span><span class="w"> </span><span class="kd">LET</span><span class="w"> </span><span class="vg">R</span><span class="o">=</span><span class="w"> </span><span class="vg">R</span><span class="o">+</span><span class="vg">F</span>
-</span><span class='line'><span class="nl">211</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">320</span>
-</span><span class='line'><span class="nl">220</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="vg">X</span><span class="w"> </span><span class="s2">&quot;IS THE POINT. I WILL ROLL AGAIN&quot;</span>
-</span><span class='line'><span class="nl">230</span><span class="w"> </span><span class="kd">LET</span><span class="w"> </span><span class="vg">H</span><span class="o">=</span><span class="kr">INT</span><span class="p">(</span><span class="il">7</span><span class="o">*</span><span class="kr">RND</span><span class="p">(</span><span class="il">1</span><span class="p">))</span>
-</span><span class='line'><span class="nl">231</span><span class="w"> </span><span class="kd">LET</span><span class="w"> </span><span class="vg">Q</span><span class="o">=</span><span class="kr">INT</span><span class="p">(</span><span class="il">7</span><span class="o">*</span><span class="kr">RND</span><span class="p">(</span><span class="il">1</span><span class="p">))</span>
-</span><span class='line'><span class="nl">232</span><span class="w"> </span><span class="kd">LET</span><span class="w"> </span><span class="vg">O</span><span class="o">=</span><span class="vg">H</span><span class="o">+</span><span class="vg">Q</span>
-</span><span class='line'><span class="nl">240</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">O</span><span class="o">=</span><span class="il">1</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">230</span>
-</span><span class='line'><span class="nl">250</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">O</span><span class="o">=</span><span class="il">7</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">290</span>
-</span><span class='line'><span class="nl">255</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">O</span><span class="o">=</span><span class="il">0</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">230</span>
-</span><span class='line'><span class="nl">260</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">O</span><span class="o">=</span><span class="vg">X</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">310</span>
-</span><span class='line'><span class="nl">270</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="vg">O</span><span class="w"> </span><span class="s2">&quot; - NO POINT. I WILL ROLL AGAIN&quot;</span>
-</span><span class='line'><span class="nl">280</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">230</span>
-</span><span class='line'><span class="nl">290</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="vg">O</span><span class="w"> </span><span class="s2">&quot;- CRAPS. YOU LOSE.&quot;</span>
-</span><span class='line'><span class="nl">291</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;YOU LOSE $&quot;</span><span class="vg">F</span>
-</span><span class='line'><span class="nl">292</span><span class="w"> </span><span class="vg">F</span><span class="o">=</span><span class="il">0</span><span class="o">-</span><span class="vg">F</span>
-</span><span class='line'><span class="nl">293</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">210</span>
-</span><span class='line'><span class="nl">300</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">320</span>
-</span><span class='line'><span class="nl">310</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="vg">X</span><span class="s2">&quot;- A WINNER.........CONGRATS!!!!!!!!&quot;</span>
-</span><span class='line'><span class="nl">311</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="vg">X</span><span class="w"> </span><span class="s2">&quot;AT 2 TO 1 ODDS PAYS YOU...LET ME SEE...&quot;</span><span class="il">2</span><span class="o">*</span><span class="vg">F</span><span class="s2">&quot;DOLLARS&quot;</span>
-</span><span class='line'><span class="nl">312</span><span class="w"> </span><span class="kd">LET</span><span class="w"> </span><span class="vg">F</span><span class="o">=</span><span class="il">2</span><span class="o">*</span><span class="vg">F</span>
-</span><span class='line'><span class="nl">313</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">210</span>
-</span><span class='line'><span class="nl">320</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot; IF YOU WANT TO PLAY AGAIN PRINT 5 IF NOT PRINT 2&quot;</span><span class="p">;</span>
-</span><span class='line'><span class="nl">330</span><span class="w"> </span><span class="kr">INPUT</span><span class="w"> </span><span class="vg">M</span>
-</span><span class='line'><span class="nl">331</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">R</span><span class="o">&lt;</span><span class="il">0</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">334</span>
-</span><span class='line'><span class="nl">332</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">R</span><span class="o">&gt;</span><span class="il">0</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">336</span>
-</span><span class='line'><span class="nl">333</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">R</span><span class="o">=</span><span class="il">0</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">338</span>
-</span><span class='line'><span class="nl">334</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;YOU ARE NOW UNDER $&quot;</span><span class="p">;</span><span class="o">-</span><span class="vg">R</span>
-</span><span class='line'><span class="nl">335</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">340</span>
-</span><span class='line'><span class="nl">336</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;YOU ARE NOW AHEAD $&quot;</span><span class="p">;</span><span class="vg">R</span>
-</span><span class='line'><span class="nl">337</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">340</span>
-</span><span class='line'><span class="nl">338</span><span class="w"> </span><span class="kr">PRINT</span><span class="w"> </span><span class="s2">&quot;YOU ARE NOW EVEN AT 0&quot;</span>
-</span><span class='line'><span class="nl">340</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">M</span><span class="o">=</span><span class="il">5</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">27</span>
-</span><span class='line'><span class="nl">341</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">R</span><span class="o">&lt;</span><span class="il">0</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">350</span>
-</span><span class='line'><span class="nl">342</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">R</span><span class="o">&gt;</span><span class="il">0</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">353</span>
-</span><span class='line'><span class="nl">343</span><span class="w"> </span><span class="kr">IF</span><span class="w"> </span><span class="vg">R</span><span class="o">=</span><span class="il">0</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">355</span>
-</span><span class='line'><span class="nl">350</span><span class="w"> </span><span class="kr">PRINT</span><span class="s2">&quot;TOO BAD, YOU ARE IN THE HOLE. COME AGAIN.&quot;</span>
-</span><span class='line'><span class="nl">351</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">360</span>
-</span><span class='line'><span class="nl">353</span><span class="w"> </span><span class="kr">PRINT</span><span class="s2">&quot;CONGRATULATIONS---YOU CAME OUT A WINNER. COME AGAIN!&quot;</span>
-</span><span class='line'><span class="nl">354</span><span class="w"> </span><span class="kr">GOTO</span><span class="w"> </span><span class="nl">360</span>
-</span><span class='line'><span class="nl">355</span><span class="w"> </span><span class="kr">PRINT</span><span class="s2">&quot;CONGRATULATIONS---YOU CAME OUT EVEN, NOT BAD FOR AN AMATEUR&quot;</span>
-</span><span class='line'><span class="nl">360</span><span class="w"> </span><span class="kr">END</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h3>Craps: Gameplay</h3>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>go run craps.go
-</span><span class='line'>See rules? enter <span class="s1">&#39;y&#39;</span> or <span class="s1">&#39;n&#39;</span> : y
-</span><span class='line'>
-</span><span class='line'>       Welcome to CRAPS!
-</span><span class='line'>     ----------------------------------------
-</span><span class='line'>
-</span><span class='line'>Here are the rules:
-</span><span class='line'>- You roll a pair of dice and add up the score <span class="k">for</span> each turn
-</span><span class='line'>- rolling a <span class="m">7</span> or <span class="m">11</span> on the first roll wins
-</span><span class='line'>- rolling a 2, <span class="m">3</span> or <span class="m">12</span> on the first roll loses
-</span><span class='line'>- any other number becomes your <span class="s1">&#39;point&#39;</span>, and you <span class="k">continue</span> to roll
-</span><span class='line'>    - <span class="k">if</span> you subsequently roll your <span class="s1">&#39;point&#39;</span> again, you win
-</span><span class='line'>    - <span class="k">if</span> you roll a 7, you lose
-</span><span class='line'>- When one of us loses, we switch dice
-</span><span class='line'>- You start with <span class="nv">$100</span>, and have to bet a minimum of <span class="nv">$5</span> per turn
-</span><span class='line'>- You get the first turn
-</span><span class='line'>- To stop betting, just enter <span class="nv">$0</span> as your bet amount
-</span><span class='line'>
-</span><span class='line'>
-</span><span class='line'>That<span class="s1">&#39;s it, let&#39;</span>s go!
-</span><span class='line'>
-</span><span class='line'>Ok, your turn now
-</span><span class='line'>
-</span><span class='line'>You have <span class="nv">$100</span>, how much would you like to bet? <span class="nv">$10</span>
-</span><span class='line'>You roll <span class="m">2</span> and <span class="m">3</span> so Your point is 5
-</span><span class='line'>You roll <span class="m">6</span> and <span class="m">5</span> ... roll again ...
-</span><span class='line'>You roll <span class="m">1</span> and <span class="m">5</span> ... roll again ...
-</span><span class='line'>You roll <span class="m">4</span> and <span class="m">6</span> ... roll again ...
-</span><span class='line'>You roll <span class="m">6</span> and <span class="m">5</span> ... roll again ...
-</span><span class='line'>You roll <span class="m">1</span> and <span class="m">5</span> ... roll again ...
-</span><span class='line'>You roll <span class="m">2</span> and <span class="m">2</span> ... roll again ...
-</span><span class='line'>You roll <span class="m">2</span> and <span class="m">3</span> and make Your point!
-</span><span class='line'>
-</span><span class='line'>You have <span class="nv">$110</span>, how much would you like to bet? <span class="nv">$20</span>
-</span><span class='line'>You roll <span class="m">3</span> and <span class="m">2</span> so Your point is 5
-</span><span class='line'>You roll <span class="m">2</span> and <span class="m">4</span> ... roll again ...
-</span><span class='line'>You roll <span class="m">6</span> and <span class="m">4</span> ... roll again ...
-</span><span class='line'>You roll <span class="m">3</span> and <span class="m">1</span> ... roll again ...
-</span><span class='line'>You roll <span class="m">4</span> and <span class="m">3</span> ... and Lose!
-</span><span class='line'>
-</span><span class='line'>Ok, my turn now
-</span><span class='line'>
-</span><span class='line'>You have <span class="nv">$90</span>, how much would you like to bet? <span class="nv">$0</span>
-</span><span class='line'>
-</span><span class='line'>Ah I wish I could quit this easily ... farewell, young gambler!
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Coming next: a different kind of gambling game (Blackjack?) and a slightly more involved two-player game (Battleship?)</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-01-11T15:01:57-08:00" pubdate data-updated="true">Jan 11<sup>th</sup>, 2015</time></div>
 	<div class="tags">
 
 

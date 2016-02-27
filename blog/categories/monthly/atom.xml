@@ -4,7 +4,7 @@
   <title><![CDATA[Category: monthly | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/monthly/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2016-02-08T15:55:21-08:00</updated>
+  <updated>2016-02-26T23:58:14-08:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,50 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Monthly Prog/Math/Sci summary: February 2016]]></title>
+    <link href="http://agam.github.io/blog/2016/02/26/monthly-prog-slash-math-slash-sci-summary-february-2016/"/>
+    <updated>2016-02-26T23:57:08-08:00</updated>
+    <id>http://agam.github.io/blog/2016/02/26/monthly-prog-slash-math-slash-sci-summary-february-2016</id>
+    <content type="html"><![CDATA[<p>I said I’d pick a better name, but I couldn’t, so I picked a <em>different</em> name instead. Anyway, here is February’s badly curated list:</p>
+
+<ul>
+<li>You may have come across <a href="http://www.templeos.org">TempleOS</a>, one of those crazy things made by crazy people, and it looks like <a href="http://web.archive.org/web/20060702135534/http://www.losethos.com/"><em>“LoseThos”</em></a> was a predecessor (<strong>note</strong>: that it is available at all is due to the ever-amazing “Wayback Machine”)</li>
+</ul>
+
+
+<blockquote><p><strong>You used to buy a computer to program. They didn&rsquo;t do much else</strong>. LoseThos is intended for hobbiest programmers. A working knowledge of C programming is required. It more or less runs on least common denominator PC hardware without networking or the Internet. It is retro in some respects, having no security. As a programmer, I like having full access to my machine &mdash; being able to turn-off interrupts or do direct disk block access. It is highly textual, so things can be scripted.  It boots fast, and you can power-off whenever you feel like, but just don&rsquo;t do it during disk writes.</p></blockquote>
+
+<ul>
+<li><p>Someone pointed me to the <a href="https://lab.open.wolframcloud.com/app/">“Wolfram Programming Lab”</a> … I’ve only looked at it superficially, but it might be a good alternative to <em>Scratch</em>, as an initial introduction to programming that “makes things happen”</p></li>
+<li><p>This is a theme that I like to share and re-share: Anil Dash talks about <a href="https://www.youtube.com/watch?v=9KKMnoTTHJk">“The Web We Lost”</a> (tl;dr: <strong>the internet we have is not the internet we were promised</strong>)</p></li>
+<li><p>I was no fan of Robert Martin, perhaps because I wrongly associated him with excessive “bureaucracy” in software engineering, but it’s clear I was wrong, because <a href="http://www.infoq.com/presentations/history-future-programming-languages"><em>this</em></a> is a <em>great</em> talk, and is one of the few people (other than, say, Alan Kay), who’ve made this connection between the changes in the “culture” of software development and its “popularization”.</p></li>
+<li><p><a href="https://www.youtube.com/watch?v=K13_sWm_gZw">This talk</a> by John McCarthy wasn’t particularly interesting, except for a choice quote that’s sure to offend certain “GPL fundamentalists” out there:</p></li>
+</ul>
+
+
+<blockquote><p>I think that <strong>Richard Stallman who has been a hero in many respects, has been a negative force in his view that anything/everything should be free and no one should have to pay for anything unless Stallman would think of a mechanism</strong> … where my daughter who is a professional writer would still be able to make money.</p></blockquote>
+
+<ul>
+<li><p>Daniel Spiewak talks about <a href="http://www.infoq.com/presentations/post-functional-scala-clojure-haskell">“Living in a Post-Functional World”</a>. I thought this would be meh, but turned out to be very insightful, and also indicates how close FP and OO really are. More to the point, <strong>since modularity is non-negotiable, any solution to the problem of modularity drags in OO-ish stuff into an FP language</strong>.</p></li>
+<li><p>Someone (thanks, @Beobachter!) suggested using <a href="http://learn.getgrav.org/basics/what-is-grav"><em>Grav</em></a>, an intermediate alternative to a fully-static blog (what I have right now), and a fully-dynamic one (e.g. Wordpress), but I’ve been too lazy to investigate how to make the switch.</p></li>
+<li><p>Here is a (very, very humorous!) piece in The Register, <a href="http://www.theregister.co.uk/2016/01/13/stob_remember_the_monoids/"><em>”Learn you Func Prog on five minute quick!”</em></a></p></li>
+</ul>
+
+
+<blockquote><p>The object-oriented era of coding is at last drawing to an inevitable and shameful close. We can – and we must! – all join hands and skip gaily into a brave new world, where sloppy state and careless side effects are excised without ruth.</p>
+
+<p>Now every program, from humble Android applet to mighty engine-pollution-test-falsifier, must slough off ridiculous trappings and clumsy complexities of objectivity, and float elegantly forwards down the shiny new functional pipeline – the one, true alimentary canal of code to concurrent computing paradise.</p></blockquote>
+
+<p>And so on.</p>
+
+<ul>
+<li>Finally, Gilad Bracha’s <a href="http://www.amazon.com/Dart-Programming-Language-Gilad-Bracha/dp/0321927702?tag=duckduckgo-osx-20">new book</a> is very enticing; I’ve placed it on my “soon-to-read-unless-I’m-lying-to-myself-about-my-available-free-time” list, and so should you.</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Monthly Programming summary: January 2016]]></title>
@@ -25,7 +69,7 @@
 </ul>
 
 
-<p>{% img <a href="https://doc-14-48-docs.googleusercontent.com/docs/securesc/o7m1hv4d96s4jtg9a81aobcff174890t/49eh1go9f5v2i53agksqnv1ghn4m8mj9/1453780800000/03675759775475626385/03675759775475626385/0B7bvhABhpDqmMmRPQmRvWXpkZTg">https://doc-14-48-docs.googleusercontent.com/docs/securesc/o7m1hv4d96s4jtg9a81aobcff174890t/49eh1go9f5v2i53agksqnv1ghn4m8mj9/1453780800000/03675759775475626385/03675759775475626385/0B7bvhABhpDqmMmRPQmRvWXpkZTg</a> %}</p>
+<p><img class="<a" src="href="https://doc-14-48-docs.googleusercontent.com/docs/securesc/o7m1hv4d96s4jtg9a81aobcff174890t/49eh1go9f5v2i53agksqnv1ghn4m8mj9/1453780800000/03675759775475626385/03675759775475626385/0B7bvhABhpDqmMmRPQmRvWXpkZTg">https://doc-14-48-docs.googleusercontent.com/docs/securesc/o7m1hv4d96s4jtg9a81aobcff174890t/49eh1go9f5v2i53agksqnv1ghn4m8mj9/1453780800000/03675759775475626385/03675759775475626385/0B7bvhABhpDqmMmRPQmRvWXpkZTg</a>"></p>
 
 <ul>
 <li><p>Digression on learning new languages: Ugh, I’m too embarassed to even write this. I keep changing my mind about what I like more. I thought this was going to be “the year of Clojure” for me, but then <a href="http://www.amazon.com/Dart-Programming-Language-Gilad-Bracha/dp/0321927702#">Gilad Bracha’s book</a> came out and now I’m torn again (Can I have them <em>both</em>? Maybe, but I fear I don’t have that kind of time anymore :P)</p></li>
