@@ -7,14 +7,21 @@
 	<meta name="author" content="Agam">
 
 	
-	<meta name="description" content="Grumble &hellip; I&rsquo;m missing the tougher problems we saw earlier. This is another easy one. Statutory Warning: Spoilers ahead 1
+	<meta name="description" content="The easy solutions continue (or, I&rsquo;ve just gotten used to C++ for these) Statutory Warning: Spoilers ahead 1
 2
 3
 4
 5
 6
 7
-8 &hellip;">
+8
+9
+10
+11
+12
+13
+14
+15 &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -93,6 +100,210 @@
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2015/03/04/euler-35-circular-primes/">
+		
+			Euler 35: Circular Primes</a>
+	</h2>
+	<div class="entry-content">
+		<p>The easy solutions continue (or, I&rsquo;ve just gotten used to C++ for these)</p>
+
+<p><strong>Statutory Warning</strong>: <em>Spoilers ahead</em></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+</pre></td><td class='code'><pre><code class='c++'><span class='line'><span class="c1">// Euler 35: A number is a circular prime if all the _rotations_ of</span>
+</span><span class='line'><span class="c1">// its digits are prime numbers.</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">using</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="k">const</span> <span class="kt">int</span> <span class="n">kMaxNumbers</span> <span class="o">=</span> <span class="mi">1000000</span><span class="p">;</span>
+</span><span class='line'><span class="k">typedef</span> <span class="n">std</span><span class="o">::</span><span class="n">bitset</span><span class="o">&lt;</span><span class="n">kMaxNumbers</span><span class="o">&gt;</span> <span class="n">AllNumbers</span><span class="p">;</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">void</span> <span class="nf">markMultiples</span><span class="p">(</span><span class="n">AllNumbers</span><span class="o">*</span> <span class="n">v</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">const</span> <span class="kt">int</span> <span class="n">kStart</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">n</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">if</span> <span class="p">(</span><span class="n">kStart</span> <span class="o">&gt;=</span> <span class="n">kMaxNumbers</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="k">return</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">kStart</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">kMaxNumbers</span><span class="p">;</span> <span class="n">i</span> <span class="o">+=</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">v</span><span class="o">-&gt;</span><span class="n">set</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="nb">false</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">void</span> <span class="nf">markPrimes</span><span class="p">(</span><span class="n">AllNumbers</span><span class="o">*</span> <span class="n">v</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">v</span><span class="o">-&gt;</span><span class="n">set</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">false</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">v</span><span class="o">-&gt;</span><span class="n">set</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">false</span><span class="p">);</span>
+</span><span class='line'>  <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">while</span> <span class="p">(</span><span class="nb">true</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">markMultiples</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+</span><span class='line'>    <span class="o">++</span><span class="n">i</span><span class="p">;</span>
+</span><span class='line'>    <span class="k">for</span> <span class="p">(;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">kMaxNumbers</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">v</span><span class="o">-&gt;</span><span class="n">test</span><span class="p">(</span><span class="n">i</span><span class="p">);</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{}</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="n">kMaxNumbers</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">return</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">getDigits</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">v</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">while</span> <span class="p">(</span><span class="n">n</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">v</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">n</span> <span class="o">%</span> <span class="mi">10</span><span class="p">);</span>
+</span><span class='line'>    <span class="n">n</span> <span class="o">/=</span> <span class="mi">10</span><span class="p">;</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">return</span> <span class="n">v</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="n">getNumber</span><span class="p">(</span><span class="k">const</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;&amp;</span> <span class="n">v</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="kt">int</span> <span class="n">n</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">v</span><span class="p">.</span><span class="n">size</span><span class="p">()</span><span class="o">-</span><span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&gt;=</span><span class="mi">0</span><span class="p">;</span> <span class="o">--</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">n</span> <span class="o">=</span> <span class="n">n</span><span class="o">*</span><span class="mi">10</span> <span class="o">+</span> <span class="n">v</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">return</span> <span class="n">n</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">getRotatedNumbers</span><span class="p">(</span><span class="kt">int</span> <span class="n">n</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>  <span class="k">auto</span> <span class="n">v</span> <span class="o">=</span> <span class="n">getDigits</span><span class="p">(</span><span class="n">n</span><span class="p">);</span>
+</span><span class='line'>  <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">numbers</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">v</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">numbers</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">getNumber</span><span class="p">(</span><span class="n">v</span><span class="p">));</span>
+</span><span class='line'>    <span class="n">std</span><span class="o">::</span><span class="n">rotate</span><span class="p">(</span><span class="n">v</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">v</span><span class="p">.</span><span class="n">end</span><span class="p">()</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">v</span><span class="p">.</span><span class="n">end</span><span class="p">());</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="k">return</span> <span class="n">numbers</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span><span class='line'>
+</span><span class='line'><span class="kt">int</span> <span class="n">main</span><span class="p">()</span> <span class="p">{</span>
+</span><span class='line'>  <span class="n">AllNumbers</span> <span class="n">v</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">kMaxNumbers</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="n">v</span><span class="p">.</span><span class="n">set</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="nb">true</span><span class="p">);</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="n">markPrimes</span><span class="p">(</span><span class="o">&amp;</span><span class="n">v</span><span class="p">);</span>
+</span><span class='line'>  <span class="kt">int</span> <span class="n">numCircularPrimes</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+</span><span class='line'>  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">kMaxNumbers</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+</span><span class='line'>    <span class="c1">// Fail early</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">v</span><span class="p">.</span><span class="n">test</span><span class="p">(</span><span class="n">i</span><span class="p">))</span> <span class="p">{</span>
+</span><span class='line'>      <span class="k">continue</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>    <span class="n">vector</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">ps</span> <span class="o">=</span> <span class="n">getRotatedNumbers</span><span class="p">(</span><span class="n">i</span><span class="p">);</span>
+</span><span class='line'>    <span class="k">if</span> <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">all_of</span><span class="p">(</span><span class="n">ps</span><span class="p">.</span><span class="n">begin</span><span class="p">(),</span> <span class="n">ps</span><span class="p">.</span><span class="n">end</span><span class="p">(),</span> <span class="p">[</span><span class="o">&amp;</span><span class="n">v</span><span class="p">](</span><span class="kt">int</span> <span class="n">p</span><span class="p">){</span><span class="k">return</span> <span class="n">v</span><span class="p">.</span><span class="n">test</span><span class="p">(</span><span class="n">p</span><span class="p">);}))</span> <span class="p">{</span>
+</span><span class='line'>      <span class="o">++</span><span class="n">numCircularPrimes</span><span class="p">;</span>
+</span><span class='line'>    <span class="p">}</span>
+</span><span class='line'>  <span class="p">}</span>
+</span><span class='line'>  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Number of circular primes = &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">numCircularPrimes</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">endl</span><span class="p">;</span>
+</span><span class='line'><span class="p">}</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>It runs in <code>335 milliseconds</code> &mdash; though I&rsquo;m not sure if it is a high or a low number.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-03-04T15:49:53-08:00" pubdate data-updated="true">Mar 4<sup>th</sup>, 2015</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/cpp/'>cpp</a>, <a class='category' href='/blog/categories/projecteuler/'>projecteuler</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -1659,255 +1870,6 @@
 
 
 <time datetime="2015-02-11T10:07:38-08:00" pubdate data-updated="true">Feb 11<sup>th</sup>, 2015</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/lisp/'>lisp</a>, <a class='category' href='/blog/categories/projecteuler/'>projecteuler</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2015/02/10/euler-25-fibonacci-digits/">
-		
-			Euler 25: Fibonacci Digits</a>
-	</h2>
-	<div class="entry-content">
-		<p><strong>Statutory Warning</strong>: spoilers ahead</p>
-
-<p><em>Problem: find the first fibonacci number with 1000 digits</em></p>
-
-<p>First though: hah, I can get the Nth fibonacci number in O(1) time!</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">fib</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">inv-sq-5</span> <span class="p">(</span><span class="nb">/</span> <span class="mi">1</span> <span class="p">(</span><span class="nb">sqrt</span> <span class="mi">5</span><span class="p">)))</span>
-</span><span class='line'>  <span class="p">(</span><span class="nv">phi</span> <span class="p">(</span><span class="nb">/</span> <span class="p">(</span><span class="nb">1+</span> <span class="p">(</span><span class="nb">sqrt</span> <span class="mi">5</span><span class="p">))</span> <span class="mi">2</span><span class="p">)))</span>
-</span><span class='line'>    <span class="p">(</span><span class="nb">floor</span> <span class="p">(</span><span class="nb">+</span> <span class="mf">0.5</span> <span class="p">(</span><span class="nb">*</span> <span class="nv">inv-sq-5</span> <span class="p">(</span><span class="nb">expt</span> <span class="nv">phi</span> <span class="nv">n</span><span class="p">))))))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">digits</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">round</span> <span class="p">(</span><span class="nb">1+</span> <span class="p">(</span><span class="nb">log</span> <span class="nv">n</span> <span class="mi">10</span><span class="p">))))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">log-fib-10</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">log-10</span> <span class="p">(</span><span class="nb">log</span> <span class="mi">10</span><span class="p">))</span>
-</span><span class='line'>  <span class="p">(</span><span class="nv">log-phi</span> <span class="p">(</span><span class="nb">log</span> <span class="p">(</span><span class="nb">/</span> <span class="p">(</span><span class="nb">1+</span> <span class="p">(</span><span class="nb">sqrt</span> <span class="mi">5</span><span class="p">))</span> <span class="mi">2</span><span class="p">)))</span>
-</span><span class='line'>  <span class="p">(</span><span class="nv">log-k</span> <span class="p">(</span><span class="nb">log</span> <span class="p">(</span><span class="nb">/</span> <span class="mi">1</span> <span class="p">(</span><span class="nb">sqrt</span> <span class="mi">5</span><span class="p">)))))</span>
-</span><span class='line'>    <span class="p">(</span><span class="nb">*</span> <span class="nv">log-10</span> <span class="p">(</span><span class="nb">+</span> <span class="nv">log-k</span> <span class="p">(</span><span class="nb">*</span> <span class="nv">n</span> <span class="nv">log-phi</span><span class="p">)))))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Nope, floating point numbers don&rsquo;t go beyond 308 digits or so</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="nv">CL-USER&gt;</span> <span class="nv">most-positive-double-float</span>
-</span><span class='line'><span class="mf">1.7976931348623157d308</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Perhaps there was a clever way to workaround this, but I wasn&rsquo;t feeling clever enough at the time. So, back to brute force.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">fib</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">cond</span> <span class="p">((</span><span class="nb">=</span> <span class="nv">n</span> <span class="mi">0</span><span class="p">)</span> <span class="mi">0</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">((</span><span class="nb">=</span> <span class="nv">n</span> <span class="mi">1</span><span class="p">)</span> <span class="mi">1</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="no">t</span> <span class="p">(</span><span class="nb">+</span> <span class="p">(</span><span class="nv">fib</span> <span class="p">(</span><span class="nb">-</span> <span class="nv">n</span> <span class="mi">1</span><span class="p">))</span> <span class="p">(</span><span class="nv">fib</span> <span class="p">(</span><span class="nb">-</span> <span class="nv">n</span> <span class="mi">2</span><span class="p">))))))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Well, this just takes <em>too long</em> (<code>(fib 40)</code> takes <code>3.883</code> seconds, and that has just 9 digits, so forget about anything bigger). Next step: memoization.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">memo-table</span> <span class="p">(</span><span class="nb">make-hash-table</span><span class="p">)))</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">defun</span> <span class="nv">memo-fib</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">(</span><span class="nb">multiple-value-bind</span> <span class="p">(</span><span class="nv">hash-val</span> <span class="nv">exists</span><span class="p">)</span> <span class="p">(</span><span class="nb">gethash</span> <span class="nv">n</span> <span class="nv">memo-table</span><span class="p">)</span>
-</span><span class='line'>      <span class="p">(</span><span class="k">if</span> <span class="nv">exists</span>
-</span><span class='line'>    <span class="nv">hash-val</span>
-</span><span class='line'>    <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">new-val</span> <span class="p">(</span><span class="nb">cond</span> <span class="p">((</span><span class="nb">=</span> <span class="nv">n</span> <span class="mi">0</span><span class="p">)</span> <span class="mi">0</span><span class="p">)</span>
-</span><span class='line'>                         <span class="p">((</span><span class="nb">=</span> <span class="nv">n</span> <span class="mi">1</span><span class="p">)</span> <span class="mi">1</span><span class="p">)</span>
-</span><span class='line'>                         <span class="p">(</span><span class="no">t</span> <span class="p">(</span><span class="nb">+</span> <span class="p">(</span><span class="nv">memo-fib</span> <span class="p">(</span><span class="nb">-</span> <span class="nv">n</span> <span class="mi">1</span><span class="p">))</span> <span class="p">(</span><span class="nv">memo-fib</span> <span class="p">(</span><span class="nb">-</span> <span class="nv">n</span> <span class="mi">2</span><span class="p">)))))))</span>
-</span><span class='line'>      <span class="p">(</span><span class="nb">setf</span> <span class="p">(</span><span class="nb">gethash</span> <span class="nv">n</span> <span class="nv">memo-table</span><span class="p">)</span> <span class="nv">new-val</span><span class="p">)</span>
-</span><span class='line'>      <span class="nv">new-val</span><span class="p">)))))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">digits-num</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">length</span> <span class="p">(</span><span class="nb">princ-to-string</span> <span class="nv">n</span><span class="p">)))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>(yeah just to be even less clever, I get the digits by seeing the length of the string representation of the number &hellip; works)</p>
-
-<p><code>(memo-fib 40)</code> is instantaneous, so is <code>(memo-fib 1000)</code>, and <code>(memo-fib 10000)</code> takes <code>3 ms</code>, so this should do it.</p>
-
-<p>I used this to manually guess my way around and found the answer. Woohoo!</p>
-
-<p>But this last part felt a bit &hellip; dirty, so before quitting this problem, I decided to automate it this way:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">bin-search-range</span> <span class="p">(</span><span class="nv">fn</span> <span class="nv">target</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">do*</span> <span class="p">((</span><span class="nv">i</span> <span class="mi">1</span> <span class="p">(</span><span class="nb">*</span> <span class="mi">2</span> <span class="nv">i</span><span class="p">))</span>
-</span><span class='line'>       <span class="p">(</span><span class="nv">val</span> <span class="p">(</span><span class="nb">funcall</span> <span class="nv">fn</span> <span class="mi">1</span><span class="p">)</span> <span class="p">(</span><span class="nb">funcall</span> <span class="nv">fn</span> <span class="nv">i</span><span class="p">)))</span>
-</span><span class='line'>       <span class="p">((</span><span class="nb">&gt;=</span> <span class="nv">val</span> <span class="nv">target</span><span class="p">)</span> <span class="p">(</span><span class="nb">values</span> <span class="nv">i</span> <span class="p">(</span><span class="nb">/</span> <span class="nv">i</span> <span class="mi">2</span><span class="p">)))</span>
-</span><span class='line'>    <span class="p">(</span><span class="nb">format</span> <span class="no">t</span> <span class="s">&quot;Debug: Trying (~A, ~A)~%&quot;</span> <span class="nv">i</span> <span class="nv">val</span><span class="p">)))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">bin-search</span> <span class="p">(</span><span class="nv">fn</span> <span class="nv">low</span> <span class="nv">high</span> <span class="nv">target</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">let*</span> <span class="p">((</span><span class="nv">mid</span> <span class="p">(</span><span class="nb">round</span> <span class="p">(</span><span class="nb">/</span> <span class="p">(</span><span class="nb">+</span> <span class="nv">low</span> <span class="nv">high</span><span class="p">)</span> <span class="mi">2</span><span class="p">)))</span>
-</span><span class='line'>   <span class="p">(</span><span class="nv">mid-val</span> <span class="p">(</span><span class="nb">funcall</span> <span class="nv">fn</span> <span class="nv">mid</span><span class="p">)))</span>
-</span><span class='line'>    <span class="p">(</span><span class="nb">format</span> <span class="no">t</span> <span class="s">&quot;Debug: Searching b/w (~A, ~A), found (~A, ~A)~%&quot;</span> <span class="nv">low</span> <span class="nv">high</span> <span class="nv">mid</span> <span class="nv">mid-val</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">(</span><span class="nb">cond</span> <span class="p">((</span><span class="nb">=</span> <span class="nv">high</span> <span class="nv">mid</span><span class="p">)</span> <span class="nv">mid</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">((</span><span class="nb">&gt;=</span> <span class="nv">mid-val</span> <span class="nv">target</span><span class="p">)</span> <span class="p">(</span><span class="nv">bin-search</span> <span class="nv">fn</span> <span class="nv">low</span> <span class="nv">mid</span> <span class="nv">target</span><span class="p">))</span>
-</span><span class='line'>    <span class="p">((</span><span class="nb">&lt;</span> <span class="nv">mid-val</span> <span class="nv">target</span><span class="p">)</span> <span class="p">(</span><span class="nv">bin-search</span> <span class="nv">fn</span> <span class="nv">mid</span> <span class="nv">high</span> <span class="nv">target</span><span class="p">)))))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">solve</span> <span class="p">(</span><span class="nv">fn</span> <span class="nv">target</span><span class="p">)</span>
-</span><span class='line'>  <span class="s">&quot;Two-phase search; first, exponentially increase argument until target is exceeded, then begin binary search with last argument&quot;</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">multiple-value-bind</span> <span class="p">(</span><span class="nv">high</span> <span class="nv">low</span><span class="p">)</span> <span class="p">(</span><span class="nv">bin-search-range</span> <span class="nv">fn</span> <span class="nv">target</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">(</span><span class="nv">bin-search</span> <span class="nv">fn</span> <span class="nv">low</span> <span class="nv">high</span> <span class="nv">target</span><span class="p">)))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">target-function</span> <span class="p">(</span><span class="nv">n</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nv">digits-num</span> <span class="p">(</span><span class="nv">memo-fib</span> <span class="nv">n</span><span class="p">)))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">euler-25</span> <span class="p">()</span>
-</span><span class='line'>  <span class="p">(</span><span class="nv">solve</span> <span class="nf">#&#39;</span><span class="nv">target-function</span> <span class="mi">1000</span><span class="p">))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Yes, it does work. I left in my original debug statements (BTW the initial version had not one but <em>two</em> off-by-one errors! I learn slowly &hellip;), so the working is illustrated as follows:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="nv">CL-USER&gt;</span> <span class="p">(</span><span class="nv">euler-25</span><span class="p">)</span>
-</span><span class='line'><span class="nv">Debug:</span> <span class="nv">Trying</span> <span class="p">(</span><span class="mi">1</span><span class="o">,</span> <span class="mi">1</span><span class="p">)</span>
-</span><span class='line'><span class="nv">Debug:</span> <span class="nv">Trying</span> <span class="p">(</span><span class="mi">2</span><span class="o">,</span> <span class="mi">1</span><span class="p">)</span>
-</span><span class='line'><span class="nv">Debug:</span> <span class="nv">Trying</span> <span class="p">(</span><span class="mi">4</span><span class="o">,</span> <span class="mi">1</span><span class="p">)</span>
-</span><span class='line'><span class="nv">Debug:</span> <span class="nv">Trying</span> <span class="p">(</span><span class="mi">8</span><span class="o">,</span> <span class="mi">2</span><span class="p">)</span>
-</span><span class='line'><span class="nv">Debug:</span> <span class="nv">Trying</span> <span class="p">(</span><span class="mi">16</span><span class="o">,</span> <span class="mi">3</span><span class="p">)</span>
-</span><span class='line'><span class="nv">Debug:</span> <span class="nv">Trying</span> <span class="p">(</span><span class="mi">32</span><span class="o">,</span> <span class="mi">7</span><span class="p">)</span>
-</span><span class='line'><span class="nv">Debug:</span> <span class="nv">Trying</span> <span class="p">(</span><span class="mi">64</span><span class="o">,</span> <span class="mi">14</span><span class="p">)</span>
-</span><span class='line'><span class="nv">Debug:</span> <span class="nv">Trying</span> <span class="p">(</span><span class="mi">128</span><span class="o">,</span> <span class="mi">27</span><span class="p">)</span>
-</span><span class='line'><span class="nv">Debug:</span> <span class="nv">Trying</span> <span class="p">(</span><span class="mi">256</span><span class="o">,</span> <span class="mi">54</span><span class="p">)</span>
-</span><span class='line'><span class="nv">Debug:</span> <span class="nv">Trying</span> <span class="p">(</span><span class="mi">512</span><span class="o">,</span> <span class="mi">107</span><span class="p">)</span>
-</span><span class='line'><span class="nv">Debug:</span> <span class="nv">Trying</span> <span class="p">(</span><span class="mi">1024</span><span class="o">,</span> <span class="mi">214</span><span class="p">)</span>
-</span><span class='line'><span class="nv">Debug:</span> <span class="nv">Trying</span> <span class="p">(</span><span class="mi">2048</span><span class="o">,</span> <span class="mi">428</span><span class="p">)</span>
-</span><span class='line'><span class="nv">Debug:</span> <span class="nv">Trying</span> <span class="p">(</span><span class="mi">4096</span><span class="o">,</span> <span class="mi">856</span><span class="p">)</span>
-</span><span class='line'><span class="nv">Debug:</span> <span class="nv">Searching</span> <span class="nv">b/w</span> <span class="p">(</span><span class="mi">4096</span><span class="o">,</span> <span class="mi">8192</span><span class="p">)</span><span class="o">,</span> <span class="nv">found</span> <span class="p">(</span><span class="mi">6144</span><span class="o">,</span> <span class="mi">1284</span><span class="p">)</span>
-</span><span class='line'><span class="nv">Debug:</span> <span class="nv">Searching</span> <span class="nv">b/w</span> <span class="p">(</span><span class="mi">4096</span><span class="o">,</span> <span class="mi">6144</span><span class="p">)</span><span class="o">,</span> <span class="nv">found</span> <span class="p">(</span><span class="mi">5120</span><span class="o">,</span> <span class="mi">1070</span><span class="p">)</span>
-</span><span class='line'><span class="nv">Debug:</span> <span class="nv">Searching</span> <span class="nv">b/w</span> <span class="p">(</span><span class="mi">4096</span><span class="o">,</span> <span class="mi">5120</span><span class="p">)</span><span class="o">,</span> <span class="nv">found</span> <span class="p">(</span><span class="mi">4608</span><span class="o">,</span> <span class="mi">963</span><span class="p">)</span>
-</span><span class='line'><span class="nv">Debug:</span> <span class="nv">Searching</span> <span class="nv">b/w</span> <span class="p">(</span><span class="mi">4608</span><span class="o">,</span> <span class="mi">5120</span><span class="p">)</span><span class="o">,</span> <span class="nv">found</span> <span class="p">(</span><span class="mi">4864</span><span class="o">,</span> <span class="mi">1017</span><span class="p">)</span>
-</span><span class='line'><span class="nv">Debug:</span> <span class="nv">Searching</span> <span class="nv">b/w</span> <span class="p">(</span><span class="mi">4608</span><span class="o">,</span> <span class="mi">4864</span><span class="p">)</span><span class="o">,</span> <span class="nv">found</span> <span class="p">(</span><span class="mi">4736</span><span class="o">,</span> <span class="mi">990</span><span class="p">)</span>
-</span><span class='line'><span class="nv">Debug:</span> <span class="nv">Searching</span> <span class="nv">b/w</span> <span class="p">(</span><span class="mi">4736</span><span class="o">,</span> <span class="mi">4864</span><span class="p">)</span><span class="o">,</span> <span class="nv">found</span> <span class="p">(</span><span class="mi">4800</span><span class="o">,</span> <span class="mi">1003</span><span class="p">)</span>
-</span><span class='line'><span class="nv">Debug:</span> <span class="nv">Searching</span> <span class="nv">b/w</span> <span class="p">(</span><span class="mi">4736</span><span class="o">,</span> <span class="mi">4800</span><span class="p">)</span><span class="o">,</span> <span class="nv">found</span> <span class="p">(</span><span class="mi">4768</span><span class="o">,</span> <span class="mi">997</span><span class="p">)</span>
-</span><span class='line'><span class="nv">Debug:</span> <span class="nv">Searching</span> <span class="nv">b/w</span> <span class="p">(</span><span class="mi">4768</span><span class="o">,</span> <span class="mi">4800</span><span class="p">)</span><span class="o">,</span> <span class="nv">found</span> <span class="p">(</span><span class="mi">4784</span><span class="o">,</span> <span class="mi">1000</span><span class="p">)</span>
-</span><span class='line'><span class="nv">Debug:</span> <span class="nv">Searching</span> <span class="nv">b/w</span> <span class="p">(</span><span class="mi">4768</span><span class="o">,</span> <span class="mi">4784</span><span class="p">)</span><span class="o">,</span> <span class="nv">found</span> <span class="p">(</span><span class="mi">4776</span><span class="o">,</span> <span class="mi">998</span><span class="p">)</span>
-</span><span class='line'><span class="nv">Debug:</span> <span class="nv">Searching</span> <span class="nv">b/w</span> <span class="p">(</span><span class="mi">4776</span><span class="o">,</span> <span class="mi">4784</span><span class="p">)</span><span class="o">,</span> <span class="nv">found</span> <span class="p">(</span><span class="mi">4780</span><span class="o">,</span> <span class="mi">999</span><span class="p">)</span>
-</span><span class='line'><span class="nv">Debug:</span> <span class="nv">Searching</span> <span class="nv">b/w</span> <span class="p">(</span><span class="mi">4780</span><span class="o">,</span> <span class="mi">4784</span><span class="p">)</span><span class="o">,</span> <span class="nv">found</span> <span class="p">(</span><span class="mi">4782</span><span class="o">,</span> <span class="mi">1000</span><span class="p">)</span>
-</span><span class='line'><span class="nv">Debug:</span> <span class="nv">Searching</span> <span class="nv">b/w</span> <span class="p">(</span><span class="mi">4780</span><span class="o">,</span> <span class="mi">4782</span><span class="p">)</span><span class="o">,</span> <span class="nv">found</span> <span class="p">(</span><span class="mi">4781</span><span class="o">,</span> <span class="mi">999</span><span class="p">)</span>
-</span><span class='line'><span class="nv">Debug:</span> <span class="nv">Searching</span> <span class="nv">b/w</span> <span class="p">(</span><span class="mi">4781</span><span class="o">,</span> <span class="mi">4782</span><span class="p">)</span><span class="o">,</span> <span class="nv">found</span> <span class="p">(</span><span class="mi">4782</span><span class="o">,</span> <span class="mi">1000</span><span class="p">)</span>
-</span><span class='line'><span class="mi">4782</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The whole thing took <code>6 ms</code>. Not bad, eh?</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-02-10T10:43:52-08:00" pubdate data-updated="true">Feb 10<sup>th</sup>, 2015</time></div>
 	<div class="tags">
 
 

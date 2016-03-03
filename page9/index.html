@@ -7,7 +7,7 @@
 	<meta name="author" content="Agam">
 
 	
-	<meta name="description" content="Some of the most interesting (and frustrating!) problems are the ones which are obvious to you as a human being but quite unobvious how to put into &hellip;">
+	<meta name="description" content="In the past (and yes, for some things, in the present too1) a few Google products have had UI with ambiguous workflows, or where it wasn&rsquo;t &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -86,6 +86,104 @@
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2014/12/23/google-cloud-sharing-projects/">
+		
+			Google Cloud: Sharing Projects</a>
+	</h2>
+	<div class="entry-content">
+		<p>In the past (and yes, for some things, in the present too<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>) a few Google products have had UI with ambiguous workflows, or where it wasn&rsquo;t clear if or how to accomplish something.</p>
+
+<p>So check this out; I found it <em>magical</em><sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>, you can easily try this with multiple Google accounts. In the cloud console<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>, click on your project, then &ldquo;Permissions&rdquo; in the top left, and &ldquo;Add Member&rdquo;.</p>
+
+<p>Enter the account, and then select the &ldquo;sharing level&rdquo; of the new account (with the <em>same</em> semantics as, say, Google Docs &mdash; you either <em>own</em>, <em>edit</em>, or <em>view</em>) and confirm.</p>
+
+<p>Log in from the other account, go to the project, view a VM, click &ldquo;SSH&rdquo; and <em>Boom</em>, just like that, <strong>everything works</strong>!</p>
+
+<p>This gist<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup> shows all the steps that were needed!</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="c"># Download the command-line utilities</span>
+</span><span class='line'><span class="nv">$ </span>curl https://sdk.cloud.google.com <span class="p">|</span> bash
+</span><span class='line'>
+</span><span class='line'><span class="c">## Authenticate</span>
+</span><span class='line'><span class="nv">$ </span>gcloud auth login
+</span><span class='line'>
+</span><span class='line'><span class="c">## Sanity check</span>
+</span><span class='line'><span class="nv">$ </span>gcloud info
+</span><span class='line'>
+</span><span class='line'><span class="c">## One-time configuration to avoid specifying command-line flags</span>
+</span><span class='line'><span class="nv">$ </span>gcloud config <span class="nb">set </span>project <span class="s2">&quot;&lt;project_id&gt;&quot;</span>
+</span><span class='line'><span class="nv">$ </span>gcloud config <span class="nb">set </span>compute/zone us-central1-a
+</span><span class='line'>
+</span><span class='line'><span class="c">## Login!</span>
+</span><span class='line'><span class="nv">$ </span>gcloud compute ssh agam@myvm
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+<div class="footnotes">
+<hr/>
+<ol>
+<li id="fn:1">
+<p>No comment<a href="#fnref:1" rev="footnote">&#8617;</a></p></li>
+<li id="fn:2">
+<p>Ok, maybe everyone expects this and everything else works this well too, but it&rsquo;s still <em>wow</em><a href="#fnref:2" rev="footnote">&#8617;</a></p></li>
+<li id="fn:3">
+<p><a href="https://console.developers.google.com/">https://console.developers.google.com/</a><a href="#fnref:3" rev="footnote">&#8617;</a></p></li>
+<li id="fn:4">
+<p><a href="https://gist.github.com/agam/9f3207a7cdcd72745748">https://gist.github.com/agam/9f3207a7cdcd72745748</a><a href="#fnref:4" rev="footnote">&#8617;</a></p></li>
+</ol>
+</div>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-12-23T14:44:16-08:00" pubdate data-updated="true">Dec 23<sup>rd</sup>, 2014</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/gce/'>gce</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -1933,60 +2031,6 @@ Error: <code>The resource 'projects/algol-c/zones/us-central1-a/instances/myvm' 
 
 
 	<a class='category' href='/blog/categories/haskell/'>haskell,</a>, <a class='category' href='/blog/categories/math/'>math</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2014/11/05/moving-to-ello/">
-		
-			Moving to Ello</a>
-	</h2>
-	<div class="entry-content">
-		<p>Yeah it&rsquo;s been pretty <em>dry</em> over here lately. Looks like the last post was on September 2, over <em>two months ago</em>. Many reasons, one of which is that I&rsquo;m too lazy <em>even for Github pages</em>. Yes, I frequently cannot even be bothered to do something as simple as <code>rake new_post["Why I procrastinate endlessly: 20 reasons"]</code>.</p>
-
-<p>Why, I ask myself, did I start using Jekyll/Octopress/GithubPages anyway?</p>
-
-<ol>
-<li><p>The &ldquo;cool factor&rdquo;. Don&rsquo;t care anymore.</p></li>
-<li><p>Ease of use and maintenance. True, it&rsquo;s better than Wordpress, but this is a low bar.</p></li>
-<li><p>Using markdown in posts. This was <em>the</em> big reason, in hindsight. Three years ago there was <em>no</em> other way to do this. Today, even Wordpress supports markdown out of the box.</p></li>
-</ol>
-
-
-<p>Given all this, I don&rsquo;t see a reason (other than good code formatting) why I shouldn&rsquo;t just stay in <a href="https://ello.co/agamb">Ello</a> instead.</p>
-
-<p><em>Update</em>: Nah, I really want to be able to separate the &ldquo;code-related&rdquo; stuff from other stuff to talk about. So this blog stays &hellip;</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-11-05T14:57:30-08:00" pubdate data-updated="true">Nov 5<sup>th</sup>, 2014</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/ello/'>ello</a>, <a class='category' href='/blog/categories/github/'>github</a>
 
 
 </div>
