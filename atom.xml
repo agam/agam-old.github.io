@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2016-03-03T02:17:22-08:00</updated>
+  <updated>2016-03-11T12:09:45-08:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,207 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Some badly written code]]></title>
+    <link href="http://agam.github.io/blog/2016/03/11/some-badly-written-code/"/>
+    <updated>2016-03-11T12:00:43-08:00</updated>
+    <id>http://agam.github.io/blog/2016/03/11/some-badly-written-code</id>
+    <content type="html"><![CDATA[<p>Heh, didn&rsquo;t know what else to title this sort of scrapbook/notebook entry. Basically I hadn’t looked at Codewars for a long time, so I went back and tried the next “Kata”.</p>
+
+<p><em>Problem:</em> Given two integers m, n (1 &lt;= m &lt;= n) we want to find all integers between m and n whose sum of squared divisors is itself a square.</p>
+
+<p>(E.g. 42 has divisors: 1,2,3,6,7,14,21,42, the squares of which are 1,4,9,3649,196,441,1764, and sum to 2500, which is a square)</p>
+
+<p>I wrote my trivial solution, tried it and the submission failed because it timed out. So I hacked away, and uglified my solution, until it was using “memoized” divisors.</p>
+
+<p>I ran it locally and it seemed faster, then I submitted it, and … it timed out again. I gave up, and moved on. I guess the lesson to be learnt is that it&rsquo;s always easy to code yourself into a corner?</p>
+
+<p><em>Solution:</em></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="kr">module</span> <span class="nn">Codewars.G964.Sumdivsq</span> <span class="kr">where</span>
+</span><span class='line'>
+</span><span class='line'><span class="kr">import</span> <span class="nn">Data.List</span>
+</span><span class='line'><span class="kr">import</span> <span class="nn">Data.Map</span> <span class="k">as</span> <span class="n">M</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">intSqrt</span> <span class="ow">::</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="kt">Int</span>
+</span><span class='line'><span class="nf">intSqrt</span> <span class="ow">=</span> <span class="n">floor</span> <span class="o">.</span> <span class="n">sqrt</span> <span class="o">.</span> <span class="n">fromIntegral</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">isSquare</span> <span class="ow">::</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="kt">Bool</span>
+</span><span class='line'><span class="nf">isSquare</span> <span class="n">x</span> <span class="ow">=</span> <span class="n">x</span> <span class="o">==</span> <span class="p">(</span><span class="n">intSqrt</span> <span class="n">x</span><span class="p">)</span><span class="o">^</span><span class="mi">2</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">sumSq</span> <span class="ow">::</span> <span class="p">[</span><span class="kt">Int</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="kt">Int</span>
+</span><span class='line'><span class="nf">sumSq</span> <span class="n">list</span> <span class="ow">=</span> <span class="n">sum</span> <span class="p">[</span><span class="n">x</span><span class="o">^</span><span class="mi">2</span> <span class="o">|</span> <span class="n">x</span> <span class="ow">&lt;-</span> <span class="n">list</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">multiply</span> <span class="ow">::</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="kt">Int</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="kt">Int</span><span class="p">]</span>
+</span><span class='line'><span class="nf">multiply</span> <span class="n">factor</span> <span class="n">oldDivlist</span> <span class="ow">=</span> <span class="n">factor</span> <span class="kt">:</span> <span class="n">oldDivlist</span> <span class="o">++</span> <span class="p">(</span><span class="kt">Data</span><span class="o">.</span><span class="kt">List</span><span class="o">.</span><span class="n">map</span> <span class="p">(</span><span class="o">*</span> <span class="n">factor</span><span class="p">)</span> <span class="n">oldDivlist</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">divisorHelper</span> <span class="ow">::</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="kt">Map</span> <span class="kt">Int</span> <span class="p">[</span><span class="kt">Int</span><span class="p">])</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="kt">Int</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="kt">Map</span> <span class="kt">Int</span> <span class="p">[</span><span class="kt">Int</span><span class="p">],</span> <span class="p">[</span><span class="kt">Int</span><span class="p">])</span>
+</span><span class='line'><span class="nf">divisorHelper</span> <span class="n">n</span> <span class="n">lower</span> <span class="n">upper</span> <span class="n">knownDivs</span> <span class="n">listDivs</span> <span class="ow">=</span>
+</span><span class='line'>  <span class="kr">if</span> <span class="n">lower</span> <span class="o">&gt;</span> <span class="n">upper</span>
+</span><span class='line'>  <span class="kr">then</span> <span class="p">(</span><span class="kt">M</span><span class="o">.</span><span class="n">insert</span> <span class="n">n</span> <span class="n">listDivs</span> <span class="n">knownDivs</span><span class="p">,</span> <span class="n">listDivs</span><span class="p">)</span>
+</span><span class='line'>  <span class="kr">else</span>
+</span><span class='line'>    <span class="kr">let</span> <span class="n">otherDiv</span> <span class="ow">=</span> <span class="n">n</span> <span class="p">`</span><span class="n">div</span><span class="p">`</span> <span class="n">lower</span>
+</span><span class='line'>    <span class="kr">in</span>
+</span><span class='line'>      <span class="kr">if</span> <span class="p">(</span><span class="n">n</span> <span class="p">`</span><span class="n">rem</span><span class="p">`</span> <span class="n">lower</span> <span class="o">/=</span> <span class="mi">0</span><span class="p">)</span>
+</span><span class='line'>      <span class="kr">then</span>
+</span><span class='line'>        <span class="c1">-- Keep going till we can divide</span>
+</span><span class='line'>        <span class="n">divisorHelper</span> <span class="n">n</span> <span class="p">(</span><span class="n">lower</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="n">upper</span> <span class="n">knownDivs</span> <span class="n">listDivs</span>
+</span><span class='line'>      <span class="kr">else</span>
+</span><span class='line'>        <span class="kr">if</span> <span class="n">otherDiv</span> <span class="o">==</span> <span class="n">lower</span>
+</span><span class='line'>        <span class="kr">then</span>
+</span><span class='line'>          <span class="c1">-- Special case: we reach a square divisor</span>
+</span><span class='line'>          <span class="p">(</span><span class="kt">M</span><span class="o">.</span><span class="n">insert</span> <span class="n">n</span> <span class="p">(</span><span class="n">lower</span> <span class="kt">:</span> <span class="n">listDivs</span><span class="p">)</span> <span class="n">knownDivs</span><span class="p">,</span> <span class="n">lower</span> <span class="kt">:</span> <span class="n">listDivs</span><span class="p">)</span>
+</span><span class='line'>          <span class="c1">-- Ok, we need to know if we&#39;ve seen the bigger number before</span>
+</span><span class='line'>        <span class="kr">else</span> <span class="kr">case</span> <span class="kt">M</span><span class="o">.</span><span class="n">lookup</span> <span class="n">otherDiv</span> <span class="n">knownDivs</span> <span class="kr">of</span>
+</span><span class='line'>          <span class="kt">Just</span> <span class="n">oldDivlist</span> <span class="ow">-&gt;</span>
+</span><span class='line'>            <span class="c1">-- We&#39;re done!</span>
+</span><span class='line'>            <span class="kr">let</span> <span class="n">newDivlist</span> <span class="ow">=</span> <span class="n">nub</span> <span class="o">$</span> <span class="p">(</span><span class="n">lower</span> <span class="kt">:</span> <span class="n">listDivs</span><span class="p">)</span> <span class="o">++</span> <span class="p">(</span><span class="n">multiply</span> <span class="n">lower</span> <span class="n">oldDivlist</span><span class="p">)</span>
+</span><span class='line'>            <span class="kr">in</span>
+</span><span class='line'>              <span class="p">(</span><span class="kt">M</span><span class="o">.</span><span class="n">insert</span> <span class="n">n</span> <span class="n">newDivlist</span> <span class="n">knownDivs</span><span class="p">,</span> <span class="n">newDivlist</span><span class="p">)</span>
+</span><span class='line'>          <span class="kt">Nothing</span> <span class="ow">-&gt;</span> <span class="n">divisorHelper</span> <span class="n">n</span> <span class="p">(</span><span class="n">lower</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="p">(</span><span class="n">otherDiv</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="n">knownDivs</span> <span class="p">(</span><span class="n">lower</span> <span class="kt">:</span> <span class="n">otherDiv</span> <span class="kt">:</span> <span class="n">listDivs</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="nf">divisors</span> <span class="ow">::</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="kt">Map</span> <span class="kt">Int</span> <span class="p">[</span><span class="kt">Int</span><span class="p">])</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="kt">Map</span> <span class="kt">Int</span> <span class="p">[</span><span class="kt">Int</span><span class="p">],</span> <span class="p">[</span><span class="kt">Int</span><span class="p">])</span>
+</span><span class='line'><span class="nf">divisors</span> <span class="n">n</span> <span class="n">knownDivs</span> <span class="ow">=</span> <span class="n">divisorHelper</span> <span class="n">n</span> <span class="mi">1</span> <span class="n">n</span> <span class="n">knownDivs</span> <span class="kt">[]</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">listSquaredHelper</span> <span class="ow">::</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="kt">Map</span> <span class="kt">Int</span> <span class="p">[</span><span class="kt">Int</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="p">[(</span><span class="kt">Int</span><span class="p">,</span> <span class="kt">Int</span><span class="p">)]</span> <span class="ow">-&gt;</span> <span class="p">[(</span><span class="kt">Int</span><span class="p">,</span> <span class="kt">Int</span><span class="p">)]</span>
+</span><span class='line'><span class="nf">listSquaredHelper</span> <span class="n">lower</span> <span class="n">upper</span> <span class="n">knownDivs</span> <span class="n">sqList</span> <span class="ow">=</span>
+</span><span class='line'>  <span class="kr">if</span> <span class="n">lower</span> <span class="o">&gt;</span> <span class="n">upper</span>
+</span><span class='line'>  <span class="kr">then</span>
+</span><span class='line'>    <span class="n">sqList</span>
+</span><span class='line'>  <span class="kr">else</span>
+</span><span class='line'>    <span class="kr">let</span> <span class="p">(</span><span class="n">newKnownDivs</span><span class="p">,</span> <span class="n">divs</span><span class="p">)</span> <span class="ow">=</span> <span class="n">divisors</span> <span class="n">lower</span> <span class="n">knownDivs</span>
+</span><span class='line'>        <span class="n">s</span> <span class="ow">=</span> <span class="n">sumSq</span> <span class="n">divs</span>
+</span><span class='line'>    <span class="kr">in</span>
+</span><span class='line'>      <span class="kr">if</span> <span class="n">isSquare</span> <span class="n">s</span>
+</span><span class='line'>      <span class="kr">then</span>
+</span><span class='line'>        <span class="n">listSquaredHelper</span> <span class="p">(</span><span class="n">lower</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="n">upper</span> <span class="n">newKnownDivs</span>  <span class="p">((</span><span class="n">lower</span><span class="p">,</span><span class="n">s</span><span class="p">)</span><span class="kt">:</span><span class="n">sqList</span><span class="p">)</span>
+</span><span class='line'>      <span class="kr">else</span>
+</span><span class='line'>        <span class="n">listSquaredHelper</span> <span class="p">(</span><span class="n">lower</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="n">upper</span> <span class="n">newKnownDivs</span> <span class="n">sqList</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">listSquared</span> <span class="ow">::</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="p">[(</span><span class="kt">Int</span><span class="p">,</span> <span class="kt">Int</span><span class="p">)]</span>
+</span><span class='line'><span class="nf">listSquared</span> <span class="n">m</span> <span class="n">n</span> <span class="ow">=</span> <span class="n">reverse</span> <span class="o">$</span> <span class="n">listSquaredHelper</span> <span class="n">m</span> <span class="n">n</span> <span class="kt">M</span><span class="o">.</span><span class="n">empty</span> <span class="kt">[]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I clearly have a long way to go in understanding the “why” of Haskell performance. My initial solution was much, uh &hellip; simpler. I didn&rsquo;t save it but I translated that into Clojure, which looks something like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="kd">ns </span><span class="nv">sumdivsq.core</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="kd">defn </span><span class="nv">is-square</span>
+</span><span class='line'>  <span class="p">[</span><span class="nv">n</span><span class="p">]</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">== </span><span class="nv">n</span> <span class="p">(</span><span class="nf">Math/pow</span> <span class="p">(</span><span class="nb">int </span><span class="p">(</span><span class="nf">Math/sqrt</span> <span class="nv">n</span><span class="p">))</span> <span class="mi">2</span><span class="p">)))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="kd">defn </span><span class="nv">sum-sq</span>
+</span><span class='line'>  <span class="p">[</span><span class="nv">lst</span><span class="p">]</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">int </span><span class="p">(</span><span class="nb">reduce + </span><span class="p">(</span><span class="nb">map </span><span class="o">#</span><span class="p">(</span><span class="nf">Math/pow</span> <span class="nv">%</span> <span class="mi">2</span><span class="p">)</span> <span class="nv">lst</span><span class="p">))))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="kd">defn </span><span class="nv">divisors</span>
+</span><span class='line'>  <span class="p">[</span><span class="nv">n</span><span class="p">]</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">== </span><span class="nv">n</span> <span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</span><span class='line'>    <span class="p">(</span><span class="nb">conj </span><span class="p">(</span><span class="nb">filter </span><span class="o">#</span><span class="p">(</span><span class="nb">== </span><span class="mi">0</span> <span class="p">(</span><span class="nf">mod</span> <span class="nv">n</span> <span class="nv">%</span><span class="p">))</span> <span class="p">(</span><span class="nb">range </span><span class="mi">1</span> <span class="p">(</span><span class="nb">inc </span><span class="p">(</span><span class="nb">/ </span><span class="nv">n</span> <span class="mi">2</span><span class="p">))))</span> <span class="nv">n</span><span class="p">)))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="kd">defn </span><span class="nv">list-squared</span>
+</span><span class='line'>  <span class="p">[</span><span class="nv">m</span> <span class="nv">n</span><span class="p">]</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">letfn</span> <span class="p">[(</span><span class="nf">lfh</span> <span class="p">[</span><span class="nv">n</span><span class="p">]</span>
+</span><span class='line'>            <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">ssq</span> <span class="p">(</span><span class="nf">sum-sq</span> <span class="p">(</span><span class="nf">divisors</span> <span class="nv">n</span><span class="p">))]</span>
+</span><span class='line'>              <span class="p">(</span><span class="nb">when </span><span class="p">(</span><span class="nf">is-square</span> <span class="nv">ssq</span><span class="p">)</span>
+</span><span class='line'>                <span class="p">[</span><span class="nv">n</span>, <span class="nv">ssq</span><span class="p">])))]</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">keep</span> <span class="o">#</span><span class="p">(</span><span class="nf">lfh</span> <span class="nv">%</span><span class="p">)</span> <span class="p">(</span><span class="nb">range </span><span class="nv">m</span> <span class="nv">n</span><span class="p">))))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Certainly <em>looks</em> very nice, and it passed all the tests, but I was too impatient to begin optimizing it, and left this one behind too &hellip;</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Object Thinking]]></title>
@@ -767,81 +968,6 @@
 <p>&hellip;</p>
 
 <blockquote><p>When software became merchandise, the opportunity vanished of teaching software development as a craft and as artistry. The literature became frozen. It’s extremely rare today to stumble across someone who is familiar with the same source code as you are. If all remnants of literature disappeared, you’d expect that eventually all respect for it—as an art form, as a craft, as an activity worthy of human attention—would disappear. And so we’ve seen with software: <strong>The focus is on architecture, specifications, design documents, and graphical design languages. Code as code is looked down on</strong>: The lowest rank in the software development chain is &ldquo;coder&#8221;—right alongside QA drone and doc writer.</p></blockquote>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Pharo]]></title>
-    <link href="http://agam.github.io/blog/2015/07/06/pharo/"/>
-    <updated>2015-07-06T00:02:27-07:00</updated>
-    <id>http://agam.github.io/blog/2015/07/06/pharo</id>
-    <content type="html"><![CDATA[<p>A lot of thinking about <em>&ldquo;what&rsquo;s the best programming environment for beginners?&rdquo;</em> has led me to the one system I&rsquo;ve never explored (and only read about): <strong>Smalltalk</strong> &mdash; Or more precisely, a particular open-source implementation of Smalltalk, <em>Pharo</em>.</p>
-
-<p>(Clearly, I have very little credibility, since the pattern here is of me saying &ldquo;I&rsquo;m going to learn X&rdquo;, and they getting sidetracked by some Y)</p>
-
-<p>Like Common Lisp (and unlike Scheme or Haskell), Smalltalk is &ldquo;image-based&rdquo; rather than &ldquo;source-file-based&rdquo;, and again like Lisp the <em>&ldquo;ideal&rdquo;</em> it strives for is turtles all the way down, the turtles here being uniform objects instead of uniform s-expressions.</p>
-
-<p>When you start up the Pharo image for the first time after downloading it, one of windows is a <em>Workspace</em>, with various comments and notes, among which is the following innocuous looking line:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='smalltalk'><span class='line'><span class="nc">PharoTutorial</span> <span class="nf">go</span><span class="p">.</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Executing that line (selecting it and hitting <code>Cmd-D</code>, or right-clicking and selecting <code>Do It</code>) launches a engaging tutorial that &hellip; well .. you have to see it for yourself :) At the very end, you have the option of introspecting the tutorial itself, or creating your own. Here is a screenshot of that:</p>
-
-<p><img src="https://farm1.staticflickr.com/551/19272356888_495113dfc2_b_d.jpg"></p>
-
-<p>Download Pharo <a href="http://pharo.org/download">here</a>, and <strong>enjoy!!</strong></p>
-
-<p>P.S. just for fun, some <em>&ldquo;Pharo Zen&rdquo;</em>:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-</pre></td><td class='code'><pre><code class='smalltalk'><span class='line'><span class="nc">Perfection</span> <span class="nf">can</span> <span class="nf">kill</span> <span class="nf">movement</span><span class="p">.</span>
-</span><span class='line'><span class="nc">Simple</span> <span class="nf">processes</span> <span class="nf">to</span> <span class="nf">support</span> <span class="nf">progress</span><span class="p">.</span>
-</span><span class='line'><span class="nc">Examples</span> <span class="nf">to</span> <span class="nf">learn</span> <span class="nf">from</span><span class="p">.</span>
-</span><span class='line'><span class="nc">Tests</span> <span class="nf">are</span> <span class="nf">important</span> <span class="nf">but</span> <span class="nf">can</span> <span class="nf">be</span> <span class="nf">changed</span><span class="p">.</span>
-</span><span class='line'><span class="nc">Classes</span> <span class="nf">structure</span> <span class="nf">our</span> <span class="nf">vocabulary</span><span class="p">.</span>
-</span><span class='line'><span class="nc">Fully</span> <span class="nf">dynamic</span> <span class="nf">and</span> <span class="nf">malleable</span><span class="p">.</span>
-</span><span class='line'><span class="nc">A</span> <span class="nf">system</span> <span class="nf">with</span> <span class="nf">robust</span> <span class="nf">abstractions</span> <span class="nf">that</span> <span class="nf">a</span> <span class="nf">single</span> <span class="nf">person</span> <span class="nf">can</span> <span class="nf">understand</span><span class="p">.</span>
-</span><span class='line'><span class="nc">Explicit</span> <span class="nf">is</span> <span class="nf">better</span> <span class="nf">than</span> <span class="nf">implicit</span><span class="p">.</span>
-</span><span class='line'><span class="nc">Simplicity</span> <span class="nf">is</span> <span class="nf">the</span> <span class="nf">ultimate</span> <span class="nf">elegance</span><span class="p">.</span>
-</span><span class='line'><span class="nc">Quality</span> <span class="nf">is</span> <span class="nf">an</span> <span class="nf">emerging</span> <span class="nf">property</span><span class="p">.</span>
-</span><span class='line'><span class="nc">Polymorphism</span> <span class="nf">is</span> <span class="nf">our</span> <span class="nf">esperanto</span><span class="p">.</span>
-</span><span class='line'><span class="nc">Messages</span> <span class="nf">are</span> <span class="nf">our</span> <span class="nf">vocabulary</span><span class="p">.</span>
-</span><span class='line'><span class="nc">Better</span> <span class="nf">a</span> <span class="nf">set</span> <span class="nf">of</span> <span class="nf">small</span> <span class="nf">polymorphic</span> <span class="nf">classes</span> <span class="nf">than</span> <span class="nf">a</span> <span class="nf">large</span> <span class="nf">ugly</span> <span class="nf">one</span><span class="p">.</span>
-</span><span class='line'><span class="nc">Communication</span> <span class="nf">is</span> <span class="nf">key</span><span class="p">.</span>
-</span><span class='line'><span class="nc">Learning</span> <span class="nf">from</span> <span class="nf">mistakes</span><span class="p">.</span>
-</span><span class='line'><span class="nc">Magic</span> <span class="nf">only</span> <span class="nf">at</span> <span class="nf">the</span> <span class="nf">right</span> <span class="nf">place</span><span class="p">.</span>
-</span><span class='line'><span class="nc">Objects</span> <span class="nf">all</span> <span class="nf">the</span> <span class="nf">way</span> <span class="nf">down</span><span class="p">.</span>
-</span><span class='line'><span class="nc">Abstraction</span> <span class="nf">and</span> <span class="nf">composition</span> <span class="nf">are</span> <span class="nf">our</span> <span class="nf">friends</span><span class="p">.</span>
-</span><span class='line'><span class="nc">One</span> <span class="nf">step</span> <span class="nf">at</span> <span class="nf">a</span> <span class="nf">time</span><span class="p">.</span>
-</span><span class='line'><span class="nc">There</span> <span class="nf">is</span> <span class="nf">no</span> <span class="nf">unimportant</span> <span class="nf">fix</span><span class="p">.</span>
-</span><span class='line'><span class="nc">Easy</span> <span class="nf">to</span> <span class="nf">understand,</span> <span class="nv">easy</span> <span class="nf">to</span> <span class="nf">learn</span> <span class="nf">from,</span> <span class="nv">easy</span> <span class="nf">to</span> <span class="nf">change</span><span class="p">.</span>
-</span><span class='line'><span class="nc">Beauty</span> <span class="nf">in</span> <span class="nf">the</span> <span class="nf">code,</span> <span class="nv">beauty</span> <span class="nf">in</span> <span class="nf">the</span> <span class="nf">comments</span><span class="p">.</span>
-</span></code></pre></td></tr></table></div></figure>
-
 ]]></content>
   </entry>
   

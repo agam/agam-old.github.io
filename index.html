@@ -7,7 +7,7 @@
 	<meta name="author" content="Agam">
 
 	
-	<meta name="description" content="I picked up &ldquo;Object Thinking&rdquo; by David West recently, which is an unusual computer programming text, in that it devotes much (most?) of &hellip;">
+	<meta name="description" content="Heh, didn&rsquo;t know what else to title this sort of scrapbook/notebook entry. Basically I hadn’t looked at Codewars for a long time, so I went &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -86,6 +86,239 @@
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2016/03/11/some-badly-written-code/">
+		
+			Some Badly Written Code</a>
+	</h2>
+	<div class="entry-content">
+		<p>Heh, didn&rsquo;t know what else to title this sort of scrapbook/notebook entry. Basically I hadn’t looked at Codewars for a long time, so I went back and tried the next “Kata”.</p>
+
+<p><em>Problem:</em> Given two integers m, n (1 &lt;= m &lt;= n) we want to find all integers between m and n whose sum of squared divisors is itself a square.</p>
+
+<p>(E.g. 42 has divisors: 1,2,3,6,7,14,21,42, the squares of which are 1,4,9,3649,196,441,1764, and sum to 2500, which is a square)</p>
+
+<p>I wrote my trivial solution, tried it and the submission failed because it timed out. So I hacked away, and uglified my solution, until it was using “memoized” divisors.</p>
+
+<p>I ran it locally and it seemed faster, then I submitted it, and … it timed out again. I gave up, and moved on. I guess the lesson to be learnt is that it&rsquo;s always easy to code yourself into a corner?</p>
+
+<p><em>Solution:</em></p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="kr">module</span> <span class="nn">Codewars.G964.Sumdivsq</span> <span class="kr">where</span>
+</span><span class='line'>
+</span><span class='line'><span class="kr">import</span> <span class="nn">Data.List</span>
+</span><span class='line'><span class="kr">import</span> <span class="nn">Data.Map</span> <span class="k">as</span> <span class="n">M</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">intSqrt</span> <span class="ow">::</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="kt">Int</span>
+</span><span class='line'><span class="nf">intSqrt</span> <span class="ow">=</span> <span class="n">floor</span> <span class="o">.</span> <span class="n">sqrt</span> <span class="o">.</span> <span class="n">fromIntegral</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">isSquare</span> <span class="ow">::</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="kt">Bool</span>
+</span><span class='line'><span class="nf">isSquare</span> <span class="n">x</span> <span class="ow">=</span> <span class="n">x</span> <span class="o">==</span> <span class="p">(</span><span class="n">intSqrt</span> <span class="n">x</span><span class="p">)</span><span class="o">^</span><span class="mi">2</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">sumSq</span> <span class="ow">::</span> <span class="p">[</span><span class="kt">Int</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="kt">Int</span>
+</span><span class='line'><span class="nf">sumSq</span> <span class="n">list</span> <span class="ow">=</span> <span class="n">sum</span> <span class="p">[</span><span class="n">x</span><span class="o">^</span><span class="mi">2</span> <span class="o">|</span> <span class="n">x</span> <span class="ow">&lt;-</span> <span class="n">list</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">multiply</span> <span class="ow">::</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="kt">Int</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="kt">Int</span><span class="p">]</span>
+</span><span class='line'><span class="nf">multiply</span> <span class="n">factor</span> <span class="n">oldDivlist</span> <span class="ow">=</span> <span class="n">factor</span> <span class="kt">:</span> <span class="n">oldDivlist</span> <span class="o">++</span> <span class="p">(</span><span class="kt">Data</span><span class="o">.</span><span class="kt">List</span><span class="o">.</span><span class="n">map</span> <span class="p">(</span><span class="o">*</span> <span class="n">factor</span><span class="p">)</span> <span class="n">oldDivlist</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">divisorHelper</span> <span class="ow">::</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="kt">Map</span> <span class="kt">Int</span> <span class="p">[</span><span class="kt">Int</span><span class="p">])</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="kt">Int</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="kt">Map</span> <span class="kt">Int</span> <span class="p">[</span><span class="kt">Int</span><span class="p">],</span> <span class="p">[</span><span class="kt">Int</span><span class="p">])</span>
+</span><span class='line'><span class="nf">divisorHelper</span> <span class="n">n</span> <span class="n">lower</span> <span class="n">upper</span> <span class="n">knownDivs</span> <span class="n">listDivs</span> <span class="ow">=</span>
+</span><span class='line'>  <span class="kr">if</span> <span class="n">lower</span> <span class="o">&gt;</span> <span class="n">upper</span>
+</span><span class='line'>  <span class="kr">then</span> <span class="p">(</span><span class="kt">M</span><span class="o">.</span><span class="n">insert</span> <span class="n">n</span> <span class="n">listDivs</span> <span class="n">knownDivs</span><span class="p">,</span> <span class="n">listDivs</span><span class="p">)</span>
+</span><span class='line'>  <span class="kr">else</span>
+</span><span class='line'>    <span class="kr">let</span> <span class="n">otherDiv</span> <span class="ow">=</span> <span class="n">n</span> <span class="p">`</span><span class="n">div</span><span class="p">`</span> <span class="n">lower</span>
+</span><span class='line'>    <span class="kr">in</span>
+</span><span class='line'>      <span class="kr">if</span> <span class="p">(</span><span class="n">n</span> <span class="p">`</span><span class="n">rem</span><span class="p">`</span> <span class="n">lower</span> <span class="o">/=</span> <span class="mi">0</span><span class="p">)</span>
+</span><span class='line'>      <span class="kr">then</span>
+</span><span class='line'>        <span class="c1">-- Keep going till we can divide</span>
+</span><span class='line'>        <span class="n">divisorHelper</span> <span class="n">n</span> <span class="p">(</span><span class="n">lower</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="n">upper</span> <span class="n">knownDivs</span> <span class="n">listDivs</span>
+</span><span class='line'>      <span class="kr">else</span>
+</span><span class='line'>        <span class="kr">if</span> <span class="n">otherDiv</span> <span class="o">==</span> <span class="n">lower</span>
+</span><span class='line'>        <span class="kr">then</span>
+</span><span class='line'>          <span class="c1">-- Special case: we reach a square divisor</span>
+</span><span class='line'>          <span class="p">(</span><span class="kt">M</span><span class="o">.</span><span class="n">insert</span> <span class="n">n</span> <span class="p">(</span><span class="n">lower</span> <span class="kt">:</span> <span class="n">listDivs</span><span class="p">)</span> <span class="n">knownDivs</span><span class="p">,</span> <span class="n">lower</span> <span class="kt">:</span> <span class="n">listDivs</span><span class="p">)</span>
+</span><span class='line'>          <span class="c1">-- Ok, we need to know if we&#39;ve seen the bigger number before</span>
+</span><span class='line'>        <span class="kr">else</span> <span class="kr">case</span> <span class="kt">M</span><span class="o">.</span><span class="n">lookup</span> <span class="n">otherDiv</span> <span class="n">knownDivs</span> <span class="kr">of</span>
+</span><span class='line'>          <span class="kt">Just</span> <span class="n">oldDivlist</span> <span class="ow">-&gt;</span>
+</span><span class='line'>            <span class="c1">-- We&#39;re done!</span>
+</span><span class='line'>            <span class="kr">let</span> <span class="n">newDivlist</span> <span class="ow">=</span> <span class="n">nub</span> <span class="o">$</span> <span class="p">(</span><span class="n">lower</span> <span class="kt">:</span> <span class="n">listDivs</span><span class="p">)</span> <span class="o">++</span> <span class="p">(</span><span class="n">multiply</span> <span class="n">lower</span> <span class="n">oldDivlist</span><span class="p">)</span>
+</span><span class='line'>            <span class="kr">in</span>
+</span><span class='line'>              <span class="p">(</span><span class="kt">M</span><span class="o">.</span><span class="n">insert</span> <span class="n">n</span> <span class="n">newDivlist</span> <span class="n">knownDivs</span><span class="p">,</span> <span class="n">newDivlist</span><span class="p">)</span>
+</span><span class='line'>          <span class="kt">Nothing</span> <span class="ow">-&gt;</span> <span class="n">divisorHelper</span> <span class="n">n</span> <span class="p">(</span><span class="n">lower</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="p">(</span><span class="n">otherDiv</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="n">knownDivs</span> <span class="p">(</span><span class="n">lower</span> <span class="kt">:</span> <span class="n">otherDiv</span> <span class="kt">:</span> <span class="n">listDivs</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="nf">divisors</span> <span class="ow">::</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="kt">Map</span> <span class="kt">Int</span> <span class="p">[</span><span class="kt">Int</span><span class="p">])</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="kt">Map</span> <span class="kt">Int</span> <span class="p">[</span><span class="kt">Int</span><span class="p">],</span> <span class="p">[</span><span class="kt">Int</span><span class="p">])</span>
+</span><span class='line'><span class="nf">divisors</span> <span class="n">n</span> <span class="n">knownDivs</span> <span class="ow">=</span> <span class="n">divisorHelper</span> <span class="n">n</span> <span class="mi">1</span> <span class="n">n</span> <span class="n">knownDivs</span> <span class="kt">[]</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">listSquaredHelper</span> <span class="ow">::</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="kt">Map</span> <span class="kt">Int</span> <span class="p">[</span><span class="kt">Int</span><span class="p">]</span> <span class="ow">-&gt;</span> <span class="p">[(</span><span class="kt">Int</span><span class="p">,</span> <span class="kt">Int</span><span class="p">)]</span> <span class="ow">-&gt;</span> <span class="p">[(</span><span class="kt">Int</span><span class="p">,</span> <span class="kt">Int</span><span class="p">)]</span>
+</span><span class='line'><span class="nf">listSquaredHelper</span> <span class="n">lower</span> <span class="n">upper</span> <span class="n">knownDivs</span> <span class="n">sqList</span> <span class="ow">=</span>
+</span><span class='line'>  <span class="kr">if</span> <span class="n">lower</span> <span class="o">&gt;</span> <span class="n">upper</span>
+</span><span class='line'>  <span class="kr">then</span>
+</span><span class='line'>    <span class="n">sqList</span>
+</span><span class='line'>  <span class="kr">else</span>
+</span><span class='line'>    <span class="kr">let</span> <span class="p">(</span><span class="n">newKnownDivs</span><span class="p">,</span> <span class="n">divs</span><span class="p">)</span> <span class="ow">=</span> <span class="n">divisors</span> <span class="n">lower</span> <span class="n">knownDivs</span>
+</span><span class='line'>        <span class="n">s</span> <span class="ow">=</span> <span class="n">sumSq</span> <span class="n">divs</span>
+</span><span class='line'>    <span class="kr">in</span>
+</span><span class='line'>      <span class="kr">if</span> <span class="n">isSquare</span> <span class="n">s</span>
+</span><span class='line'>      <span class="kr">then</span>
+</span><span class='line'>        <span class="n">listSquaredHelper</span> <span class="p">(</span><span class="n">lower</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="n">upper</span> <span class="n">newKnownDivs</span>  <span class="p">((</span><span class="n">lower</span><span class="p">,</span><span class="n">s</span><span class="p">)</span><span class="kt">:</span><span class="n">sqList</span><span class="p">)</span>
+</span><span class='line'>      <span class="kr">else</span>
+</span><span class='line'>        <span class="n">listSquaredHelper</span> <span class="p">(</span><span class="n">lower</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="n">upper</span> <span class="n">newKnownDivs</span> <span class="n">sqList</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">listSquared</span> <span class="ow">::</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="p">[(</span><span class="kt">Int</span><span class="p">,</span> <span class="kt">Int</span><span class="p">)]</span>
+</span><span class='line'><span class="nf">listSquared</span> <span class="n">m</span> <span class="n">n</span> <span class="ow">=</span> <span class="n">reverse</span> <span class="o">$</span> <span class="n">listSquaredHelper</span> <span class="n">m</span> <span class="n">n</span> <span class="kt">M</span><span class="o">.</span><span class="n">empty</span> <span class="kt">[]</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I clearly have a long way to go in understanding the “why” of Haskell performance. My initial solution was much, uh &hellip; simpler. I didn&rsquo;t save it but I translated that into Clojure, which looks something like this:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+</pre></td><td class='code'><pre><code class='clojure'><span class='line'><span class="p">(</span><span class="kd">ns </span><span class="nv">sumdivsq.core</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="kd">defn </span><span class="nv">is-square</span>
+</span><span class='line'>  <span class="p">[</span><span class="nv">n</span><span class="p">]</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">== </span><span class="nv">n</span> <span class="p">(</span><span class="nf">Math/pow</span> <span class="p">(</span><span class="nb">int </span><span class="p">(</span><span class="nf">Math/sqrt</span> <span class="nv">n</span><span class="p">))</span> <span class="mi">2</span><span class="p">)))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="kd">defn </span><span class="nv">sum-sq</span>
+</span><span class='line'>  <span class="p">[</span><span class="nv">lst</span><span class="p">]</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">int </span><span class="p">(</span><span class="nb">reduce + </span><span class="p">(</span><span class="nb">map </span><span class="o">#</span><span class="p">(</span><span class="nf">Math/pow</span> <span class="nv">%</span> <span class="mi">2</span><span class="p">)</span> <span class="nv">lst</span><span class="p">))))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="kd">defn </span><span class="nv">divisors</span>
+</span><span class='line'>  <span class="p">[</span><span class="nv">n</span><span class="p">]</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">if </span><span class="p">(</span><span class="nb">== </span><span class="nv">n</span> <span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>    <span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</span><span class='line'>    <span class="p">(</span><span class="nb">conj </span><span class="p">(</span><span class="nb">filter </span><span class="o">#</span><span class="p">(</span><span class="nb">== </span><span class="mi">0</span> <span class="p">(</span><span class="nf">mod</span> <span class="nv">n</span> <span class="nv">%</span><span class="p">))</span> <span class="p">(</span><span class="nb">range </span><span class="mi">1</span> <span class="p">(</span><span class="nb">inc </span><span class="p">(</span><span class="nb">/ </span><span class="nv">n</span> <span class="mi">2</span><span class="p">))))</span> <span class="nv">n</span><span class="p">)))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="kd">defn </span><span class="nv">list-squared</span>
+</span><span class='line'>  <span class="p">[</span><span class="nv">m</span> <span class="nv">n</span><span class="p">]</span>
+</span><span class='line'>  <span class="p">(</span><span class="nf">letfn</span> <span class="p">[(</span><span class="nf">lfh</span> <span class="p">[</span><span class="nv">n</span><span class="p">]</span>
+</span><span class='line'>            <span class="p">(</span><span class="k">let </span><span class="p">[</span><span class="nv">ssq</span> <span class="p">(</span><span class="nf">sum-sq</span> <span class="p">(</span><span class="nf">divisors</span> <span class="nv">n</span><span class="p">))]</span>
+</span><span class='line'>              <span class="p">(</span><span class="nb">when </span><span class="p">(</span><span class="nf">is-square</span> <span class="nv">ssq</span><span class="p">)</span>
+</span><span class='line'>                <span class="p">[</span><span class="nv">n</span>, <span class="nv">ssq</span><span class="p">])))]</span>
+</span><span class='line'>    <span class="p">(</span><span class="nf">keep</span> <span class="o">#</span><span class="p">(</span><span class="nf">lfh</span> <span class="nv">%</span><span class="p">)</span> <span class="p">(</span><span class="nb">range </span><span class="nv">m</span> <span class="nv">n</span><span class="p">))))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Certainly <em>looks</em> very nice, and it passed all the tests, but I was too impatient to begin optimizing it, and left this one behind too &hellip;</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2016-03-11T12:00:43-08:00" pubdate data-updated="true">Mar 11<sup>th</sup>, 2016</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/clojure/'>clojure</a>, <a class='category' href='/blog/categories/haskell/'>haskell</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -880,81 +1113,6 @@
 
 
 	<a class='category' href='/blog/categories/monthly/'>monthly</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2015/10/08/a-taste-of-j/">
-		
-			A Tiny Taste of J</a>
-	</h2>
-	<div class="entry-content">
-		<p>I recently stumbled across APL and J, as mentioned in a previous post, and began reading a bit of <a href="http://www.jsoftware.com/help/learning/contents.htm">an introductory book</a>.</p>
-
-<p>A couple of days ago, I came across this series of coding tasks on a blog called &ldquo;Programming Praxis&rdquo;, and I picked <a href="http://programmingpraxis.com/2015/10/06/the-iron-bar/">the most recent one</a> as an example to try out some J noobism.</p>
-
-<p>The example is simple but contrived (and <em>median</em> is a terrible name) &mdash; we basically have to write a function that that takes two arguments and either increments, decrements or does nothing, with the first argument. In J, like so many other tasks, this is essentially one line (12 characters, to be precise).</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>median =: [ + (* @: -)~</span></code></pre></td></tr></table></div></figure>
-
-
-<p>To give some idea on what&rsquo;s going on here, this expression can be broken, first, into three parts: <code>[</code>, <code>+</code>, <code>(* @: -)~</code>. Let&rsquo;s start with the sub-expression within the parentheses: <code>* @: -</code>.</p>
-
-<p>Here, <code>*</code> is a <em>verb</em> (think: <em>&ldquo;function&rdquo;</em>) that returns 1, 0, or -1 depending on the sign of its argument. So <code>* 4</code> is <code>1</code>, <code>* _2</code> (that&rsquo;s how -2 is represented) is <code>_1</code>, <code>* 0</code> is <code>0</code>.</p>
-
-<p><code>-</code> is the only thing that does what you would expect: <code>4 - 3</code> is <code>1</code>, and so on.</p>
-
-<p><code>@:</code> is a <em>conjunction</em>, such that <code>f @: g</code> when applied to <em>x</em> has the effect of <em>f (g x)</em>.</p>
-
-<p><code>]</code> is a verb that when given two values, always selects the first of the two.</p>
-
-<p><code>~</code> is an <em>adverb</em> that reverses the order of arguments to its preceding verb. So while <code>%</code> applied to <em>x</em> and <em>y</em> yields <em>(x % y)</em>, <code>%~</code> applied to <em>x</em> and <em>y</em> yields <em>(y % x)</em>.</p>
-
-<p>Now things get a little tricky (but only a <em>little</em>; we&rsquo;re barely scratching the surface of J here). The expression for median can be seen as three verbs laid down together, and this is interpreted as a <em>&ldquo;train&rdquo;</em> of verbs, or more specifically in this case, a <em>&ldquo;dyadic fork&rdquo;</em>.</p>
-
-<p>Basically, <em>(f g h)</em> when applied to two values <em>x</em> and <em>y</em>, is equivalent to <em>g</em> applied to the result of <em>f</em> applied to <em>x</em> and <em>y</em>, and the result of <em>h</em> applied to <em>x</em> and <em>y</em>. Or, using infix notation,</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>x (f g h) y   is equivalent to    (x f y) g (x h y)</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The reason <em>x</em> and <em>y</em> aren&rsquo;t present in the definition of <em>median</em> is that it&rsquo;s defined using a &ldquo;tacit&rdquo; form rather than an &ldquo;explicit&rdquo; form (somewhat similar to &ldquo;point-free&rdquo; definitions in Haskell).</p>
-
-<p>Putting it all together now, when applied to two arguments, we get the equivalent of <code>(x [ y) + (* (y - x))</code>, which gives <code>x + 1</code> when <em>y > x</em>, <code>x + 0</code> when <em>y == x</em>, and <code>x + (-1)</code> when <em>y &lt; x</em>, which is what we want.</p>
-
-<p>If you like this sort of thing, head over to <a href="http://www.jsoftware.com/">jsoftware.com</a> for more.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-10-08T23:42:45-07:00" pubdate data-updated="true">Oct 8<sup>th</sup>, 2015</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/jlang/'>jlang</a>
 
 
 </div>

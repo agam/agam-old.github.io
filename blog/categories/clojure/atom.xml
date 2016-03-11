@@ -4,7 +4,7 @@
   <title><![CDATA[Category: clojure | Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/blog/categories/clojure/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2016-03-03T02:17:22-08:00</updated>
+  <updated>2016-03-11T12:09:45-08:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,133 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Some badly written code]]></title>
+    <link href="http://agam.github.io/blog/2016/03/11/some-badly-written-code/"/>
+    <updated>2016-03-11T12:00:43-08:00</updated>
+    <id>http://agam.github.io/blog/2016/03/11/some-badly-written-code</id>
+    <content type="html"><![CDATA[<p>Heh, didn&rsquo;t know what else to title this sort of scrapbook/notebook entry. Basically I hadn’t looked at Codewars for a long time, so I went back and tried the next “Kata”.</p>
+
+<p><em>Problem:</em> Given two integers m, n (1 &lt;= m &lt;= n) we want to find all integers between m and n whose sum of squared divisors is itself a square.</p>
+
+<p>(E.g. 42 has divisors: 1,2,3,6,7,14,21,42, the squares of which are 1,4,9,3649,196,441,1764, and sum to 2500, which is a square)</p>
+
+<p>I wrote my trivial solution, tried it and the submission failed because it timed out. So I hacked away, and uglified my solution, until it was using “memoized” divisors.</p>
+
+<p>I ran it locally and it seemed faster, then I submitted it, and … it timed out again. I gave up, and moved on. I guess the lesson to be learnt is that it&rsquo;s always easy to code yourself into a corner?</p>
+
+<p><em>Solution:</em></p>
+
+<p>```haskell
+module Codewars.G964.Sumdivsq where</p>
+
+<p>import Data.List
+import Data.Map as M</p>
+
+<p>intSqrt :: Int &ndash;> Int
+intSqrt = floor . sqrt . fromIntegral</p>
+
+<p>isSquare :: Int &ndash;> Bool
+isSquare x = x == (intSqrt x)<sup>2</sup></p>
+
+<p>sumSq :: [Int] &ndash;> Int
+sumSq list = sum [x<sup>2</sup> | x &lt;&ndash; list]</p>
+
+<p>multiply :: Int &ndash;> [Int] &ndash;> [Int]
+multiply factor oldDivlist = factor : oldDivlist ++ (Data.List.map (* factor) oldDivlist)</p>
+
+<p>divisorHelper :: Int &ndash;> Int &ndash;> Int &ndash;> (Map Int [Int]) &ndash;> [Int] &ndash;> (Map Int [Int], [Int])
+divisorHelper n lower upper knownDivs listDivs =
+  if lower > upper
+  then (M.insert n listDivs knownDivs, listDivs)
+  else</p>
+
+<pre><code>let otherDiv = n `div` lower
+in
+  if (n `rem` lower /= 0)
+  then
+    -- Keep going till we can divide
+    divisorHelper n (lower+1) upper knownDivs listDivs
+  else
+    if otherDiv == lower
+    then
+      -- Special case: we reach a square divisor
+      (M.insert n (lower : listDivs) knownDivs, lower : listDivs)
+      -- Ok, we need to know if we've seen the bigger number before
+    else case M.lookup otherDiv knownDivs of
+      Just oldDivlist -&gt;
+        -- We're done!
+        let newDivlist = nub $ (lower : listDivs) ++ (multiply lower oldDivlist)
+        in
+          (M.insert n newDivlist knownDivs, newDivlist)
+      Nothing -&gt; divisorHelper n (lower+1) (otherDiv-1) knownDivs (lower : otherDiv : listDivs)
+</code></pre>
+
+<p>divisors :: Int &ndash;> (Map Int [Int]) &ndash;> (Map Int [Int], [Int])
+divisors n knownDivs = divisorHelper n 1 n knownDivs []</p>
+
+<p>listSquaredHelper :: Int &ndash;> Int &ndash;> Map Int [Int] &ndash;> [(Int, Int)] &ndash;> [(Int, Int)]
+listSquaredHelper lower upper knownDivs sqList =
+  if lower > upper
+  then</p>
+
+<pre><code>sqList
+</code></pre>
+
+<p>  else</p>
+
+<pre><code>let (newKnownDivs, divs) = divisors lower knownDivs
+    s = sumSq divs
+in
+  if isSquare s
+  then
+    listSquaredHelper (lower+1) upper newKnownDivs  ((lower,s):sqList)
+  else
+    listSquaredHelper (lower+1) upper newKnownDivs sqList
+</code></pre>
+
+<p>listSquared :: Int &ndash;> Int &ndash;> [(Int, Int)]
+listSquared m n = reverse $ listSquaredHelper m n M.empty []</p>
+
+<p>```</p>
+
+<p>I clearly have a long way to go in understanding the “why” of Haskell performance. My initial solution was much, uh &hellip; simpler. I didn&rsquo;t save it but I translated that into Clojure, which looks something like this:</p>
+
+<p>```clojure
+(ns sumdivsq.core)</p>
+
+<p>(defn is-square
+  [n]
+  (== n (Math/pow (int (Math/sqrt n)) 2)))</p>
+
+<p>(defn sum-sq
+  [lst]
+  (int (reduce + (map #(Math/pow % 2) lst))))</p>
+
+<p>(defn divisors
+  [n]
+  (if (== n 1)</p>
+
+<pre><code>[1]
+(conj (filter #(== 0 (mod n %)) (range 1 (inc (/ n 2)))) n)))
+</code></pre>
+
+<p>(defn list-squared
+  [m n]
+  (letfn [(lfh [n]</p>
+
+<pre><code>        (let [ssq (sum-sq (divisors n))]
+          (when (is-square ssq)
+            [n, ssq])))]
+(keep #(lfh %) (range m n))))
+</code></pre>
+
+<p>```</p>
+
+<p>Certainly <em>looks</em> very nice, and it passed all the tests, but I was too impatient to begin optimizing it, and left this one behind too &hellip;</p>
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Daily programming: simple list stuff]]></title>

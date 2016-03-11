@@ -7,7 +7,7 @@
 	<meta name="author" content="Agam">
 
 	
-	<meta name="description" content="This one took way longer than expected. I initially misunderstood the question to require 4-digit numbers unique digits (because that&rsquo;s what &hellip;">
+	<meta name="description" content="I love reading rants. Not random, trollish ones, you know, intended only to provoke flamewars &mdash; those are tiresome and (worse!) predictable. &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -86,6 +86,67 @@
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2015/05/15/in-search-of-lost-rants-dot-dot-dot/">
+		
+			In Search of Lost Rants &#8230;</a>
+	</h2>
+	<div class="entry-content">
+		<p>I love reading rants. Not random, trollish ones, you know, intended only to provoke flamewars &mdash; those are <em>tiresome</em> and (worse!) predictable. No, I like the heartfelt ones, filled with (seemingly) genuine disgust and grief.</p>
+
+<p>Last year I went meticulously through <em>every single post</em> by Erik Naggum (thanks to Zach Beane who took the trouble of curating them<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>), and found a wealth of quotes. I highly recommend it &mdash; consider it casual reading, a replacement for whatever you plan to read on your next commute, travel trip or vacation.</p>
+
+<p>Anyway, today I found another worthy rant-er, Mr. Adam Rosenberg. Yes, he has a blog with a bunch of interesting articles<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>, he is also a self-described &ldquo;industrial mathematician&rdquo;, and has written an unabashed defense of Ye Olde FORTRAN and C style as the once and future programming style<sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>. But what made me <em>binge-read</em> his writing was his collection of rants<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup>.</p>
+
+<p>A good place to start is <a href="http://www.the-adam.com/adam/rantrave/computers.html">&ldquo;The Failure of the Digital Computer&rdquo;</a>, but obviously <em>YMMV</em>.</p>
+<div class="footnotes">
+<hr/>
+<ol>
+<li id="fn:1">
+<p>The <a href="http://xach.com/naggum/articles/">Erik Naggum Archive</a><a href="#fnref:1" rev="footnote">&#8617;</a></p></li>
+<li id="fn:2">
+<p><a href="http://www.the-adam.com/adam/index.html">The Adam N. Rosenberg web page</a><a href="#fnref:2" rev="footnote">&#8617;</a></p></li>
+<li id="fn:3">
+<p><a href="http://www.the-adam.com/adam/rantrave/st02.pdf">&ldquo;A Description of One Programmer&rsquo;s Programming Style&rdquo;</a><a href="#fnref:3" rev="footnote">&#8617;</a></p></li>
+<li id="fn:4">
+<p><a href="http://www.the-adam.com/adam/rantrave/">&ldquo;Rants and Raves&rdquo;</a><a href="#fnref:4" rev="footnote">&#8617;</a></p></li>
+</ol>
+</div>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-05-15T23:20:14-07:00" pubdate data-updated="true">May 15<sup>th</sup>, 2015</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/rants/'>rants</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -1717,152 +1778,6 @@
 
 
 	<a class='category' href='/blog/categories/lisp/'>lisp</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2015/03/25/euler-42-pandigitals-with-sub-string-divisibility/">
-		
-			Euler 42: Pandigitals With Sub-string Divisibility</a>
-	</h2>
-	<div class="entry-content">
-		<p>These brute force solutions are getting a bit worrying, but here is another one. (I keep promising myself to get out of my comfort zone, but (<em>unfortunately!</em>) code like this is too easy to write).</p>
-
-<p><strong>Statutory Warning</strong>: <em>Spoilers ahead</em></p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-</pre></td><td class='code'><pre><code class='lisp'><span class='line'><span class="c1">;; For all 0-9 pandigital numbers, find the ones which have successive</span>
-</span><span class='line'><span class="c1">;; substrings of length 3 diisible by 2,3,...,17.</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defparameter</span> <span class="vg">*prime-divisors*</span> <span class="o">#(</span><span class="mi">17</span> <span class="mi">13</span> <span class="mi">11</span> <span class="mi">7</span> <span class="mi">5</span> <span class="mi">3</span> <span class="mi">2</span><span class="p">))</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">;; A number is 0-9 pandigital if it (a) is 10 digits long, and (b) has every digit from 0-9</span>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">is-pandigital</span> <span class="p">(</span><span class="nv">num</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">declare</span> <span class="p">(</span><span class="k">type</span> <span class="kt">fixnum</span> <span class="nv">num</span><span class="p">))</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">digits-seen</span> <span class="p">(</span><span class="nb">make-array</span> <span class="mi">10</span> <span class="ss">:element-type</span> <span class="ss">&#39;bit</span> <span class="ss">:initial-element</span> <span class="mi">0</span><span class="p">)))</span>
-</span><span class='line'>    <span class="p">(</span><span class="nb">do*</span> <span class="p">((</span><span class="nv">n</span> <span class="nv">num</span> <span class="p">(</span><span class="nb">floor</span> <span class="p">(</span><span class="nb">/</span> <span class="nv">n</span> <span class="mi">10</span><span class="p">)))</span>
-</span><span class='line'>          <span class="p">(</span><span class="nv">d</span> <span class="p">(</span><span class="nb">mod</span> <span class="nv">n</span> <span class="mi">10</span><span class="p">)</span> <span class="p">(</span><span class="nb">mod</span> <span class="nv">n</span> <span class="mi">10</span><span class="p">))</span>
-</span><span class='line'>          <span class="p">(</span><span class="nv">num-digits</span> <span class="mi">0</span> <span class="p">(</span><span class="nb">1+</span> <span class="nv">num-digits</span><span class="p">)))</span>
-</span><span class='line'>         <span class="p">((</span><span class="nb">=</span> <span class="nv">n</span> <span class="mi">0</span><span class="p">)</span> <span class="p">(</span><span class="nb">and</span> <span class="p">(</span><span class="nb">=</span> <span class="nv">num-digits</span> <span class="mi">10</span><span class="p">)</span>
-</span><span class='line'>                       <span class="p">(</span><span class="nb">every</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">x</span><span class="p">)</span> <span class="p">(</span><span class="nb">=</span> <span class="nv">x</span> <span class="mi">1</span><span class="p">))</span> <span class="nv">digits-seen</span><span class="p">)))</span>
-</span><span class='line'>      <span class="p">(</span><span class="nb">setf</span> <span class="p">(</span><span class="nb">bit</span> <span class="nv">digits-seen</span> <span class="nv">d</span><span class="p">)</span> <span class="mi">1</span><span class="p">))))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">check-divisibility</span> <span class="p">(</span><span class="nv">num</span> <span class="nv">div-index</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">=</span> <span class="mi">0</span> <span class="p">(</span><span class="nb">mod</span> <span class="nv">num</span> <span class="p">(</span><span class="nb">aref</span> <span class="vg">*prime-divisors*</span> <span class="nv">div-index</span><span class="p">))))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">get-three-digit-num</span> <span class="p">(</span><span class="nv">num</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">ones</span> <span class="p">(</span><span class="nb">mod</span> <span class="nv">num</span> <span class="mi">10</span><span class="p">))</span>
-</span><span class='line'>        <span class="p">(</span><span class="nv">tens</span> <span class="p">(</span><span class="nb">mod</span> <span class="p">(</span><span class="nb">floor</span> <span class="p">(</span><span class="nb">/</span> <span class="nv">num</span> <span class="mi">10</span><span class="p">))</span> <span class="mi">10</span><span class="p">))</span>
-</span><span class='line'>        <span class="p">(</span><span class="nv">hundreds</span> <span class="p">(</span><span class="nb">mod</span> <span class="p">(</span><span class="nb">floor</span> <span class="p">(</span><span class="nb">/</span> <span class="nv">num</span> <span class="mi">100</span><span class="p">))</span> <span class="mi">10</span><span class="p">)))</span>
-</span><span class='line'>    <span class="p">(</span><span class="nb">+</span> <span class="nv">ones</span>
-</span><span class='line'>       <span class="p">(</span><span class="nb">*</span> <span class="mi">10</span> <span class="nv">tens</span><span class="p">)</span>
-</span><span class='line'>       <span class="p">(</span><span class="nb">*</span> <span class="mi">100</span> <span class="nv">hundreds</span><span class="p">))))</span>
-</span><span class='line'>
-</span><span class='line'><span class="c1">;; Go backwards in groups of three digits and check divisibility</span>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">has-divisible-substrings</span> <span class="p">(</span><span class="nv">num</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="nb">do*</span> <span class="p">((</span><span class="nv">n</span> <span class="nv">num</span> <span class="p">(</span><span class="nb">floor</span> <span class="p">(</span><span class="nb">/</span> <span class="nv">n</span> <span class="mi">10</span><span class="p">)))</span>
-</span><span class='line'>        <span class="p">(</span><span class="nv">div-index</span> <span class="mi">0</span> <span class="p">(</span><span class="nb">1+</span> <span class="nv">div-index</span><span class="p">))</span>
-</span><span class='line'>        <span class="p">(</span><span class="nv">dividend</span> <span class="p">(</span><span class="nv">get-three-digit-num</span> <span class="nv">n</span><span class="p">)</span> <span class="p">(</span><span class="nv">get-three-digit-num</span> <span class="nv">n</span><span class="p">))</span>
-</span><span class='line'>        <span class="p">(</span><span class="nv">div-p</span> <span class="p">(</span><span class="nv">check-divisibility</span> <span class="nv">dividend</span> <span class="nv">div-index</span><span class="p">)</span>
-</span><span class='line'>               <span class="p">(</span><span class="nb">and</span> <span class="nv">div-p</span> <span class="p">(</span><span class="nv">check-divisibility</span> <span class="nv">dividend</span> <span class="nv">div-index</span><span class="p">))))</span>
-</span><span class='line'>       <span class="p">((</span><span class="nb">&lt;</span> <span class="nv">n</span> <span class="mi">10000</span><span class="p">)</span> <span class="nv">div-p</span><span class="p">)))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">check-substring-pandigital-range</span> <span class="p">(</span><span class="nv">start</span> <span class="nv">end</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">declare</span> <span class="p">(</span><span class="k">type</span> <span class="kt">fixnum</span> <span class="nv">start</span> <span class="nv">end</span><span class="p">))</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">candidates</span> <span class="o">&#39;</span><span class="p">()))</span>
-</span><span class='line'>    <span class="p">(</span><span class="nb">loop</span> <span class="nv">for</span> <span class="nv">num</span> <span class="nv">from</span> <span class="nv">start</span> <span class="nv">to</span> <span class="nv">end</span> <span class="nb">do</span>
-</span><span class='line'>         <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">and</span> <span class="p">(</span><span class="nv">is-pandigital</span> <span class="nv">num</span><span class="p">)</span>
-</span><span class='line'>                  <span class="p">(</span><span class="nv">has-divisible-substrings</span> <span class="nv">num</span><span class="p">))</span>
-</span><span class='line'>             <span class="p">(</span><span class="nb">push</span> <span class="nv">num</span> <span class="nv">candidates</span><span class="p">)))</span>
-</span><span class='line'>    <span class="nv">candidates</span><span class="p">))</span>
-</span><span class='line'>
-</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">euler43</span> <span class="p">()</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">candidates</span> <span class="p">(</span><span class="nv">check-substring-pandigital-range</span> <span class="mi">1234567890</span> <span class="mi">9876543210</span><span class="p">)))</span>
-</span><span class='line'>    <span class="p">(</span><span class="nb">print</span> <span class="nv">candidates</span><span class="p">)</span>
-</span><span class='line'>    <span class="p">(</span><span class="nb">apply</span> <span class="nf">#&#39;</span><span class="nb">+</span> <span class="nv">candidates</span><span class="p">)))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>As before, evaluating <code>(euler43)</code> shows the final solution (sum), along with the (six!) candidate numbers making up the sum. This took a whopping <code>4.3 hours</code> to churn through the 8.5 billion numbers. Maybe I need to create a new constraint for these problems: either pen-and-paper, or something <em>slow</em> (like Python ?! :P), so that brute force is never tempting again.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-03-25T16:33:56-07:00" pubdate data-updated="true">Mar 25<sup>th</sup>, 2015</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/lisp/'>lisp</a>, <a class='category' href='/blog/categories/projecteuler/'>projecteuler</a>
 
 
 </div>

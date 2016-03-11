@@ -7,7 +7,28 @@
 	<meta name="author" content="Agam">
 
 	
-	<meta name="description" content="Processing is intended to be a &ldquo;creative coding&rdquo; tool for non-programmers. It runs on top of Java, which is good enough to get started. &hellip;">
+	<meta name="description" content="Another &ldquo;intermediate&rdquo; problem today. 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+Input Description
+-----------------
+On standard &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -86,6 +107,150 @@
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2014/01/27/programming-fun-adjacency-matrix/">
+		
+			Programming Fun: Adjacency Matrix</a>
+	</h2>
+	<div class="entry-content">
+		<p>Another &ldquo;intermediate&rdquo; <a href="http://www.reddit.com/r/dailyprogrammer/comments/1t6dlf/121813_challenge_140_intermediate_adjacency_matrix/">problem</a> today.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Input Description
+</span><span class='line'>-----------------
+</span><span class='line'>On standard console input, you will be first given a line with two space-delimited integers N and M. N is the number of nodes / vertices in the graph, while M is the number of following lines of edge-node data. A line of edge-node data is a space-delimited set of integers, with the special "-&gt;" symbol indicating an edge. This symbol shows the edge-relationship between the set of left-sided integers and the right-sided integers. This symbol will only have one element to its left, or one element to its right. These lines of data will also never have duplicate information; you do not have to handle re-definitions of the same edges.
+</span><span class='line'>
+</span><span class='line'>An example of data that maps the node 1 to the nodes 2 and 3 is as follows:
+</span><span class='line'>1 -&gt; 2 3
+</span><span class='line'>
+</span><span class='line'>Another example where multiple nodes points to the same node:
+</span><span class='line'>3 8 -&gt; 2
+</span><span class='line'>
+</span><span class='line'>You can expect input to sometimes create cycles and self-references in the graph. The following is valid:
+</span><span class='line'>2 -&gt; 2 3
+</span><span class='line'>3 -&gt; 2
+</span><span class='line'>
+</span><span class='line'>Note that there is no order in the given integers; thus "1 -&gt; 2 3" is the same as "1 -&gt; 3 2".
+</span><span class='line'>
+</span><span class='line'>Output Description
+</span><span class='line'>-----------------
+</span><span class='line'>Print the N x N adjacency matrix as a series of 0's (no-edge) and 1's (edge).</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Since the C++ Standard Library doesn&rsquo;t have a built-in matrix library (or maybe it does and I&rsquo;m unaware of it), I just used a vector of size <code>M * N</code> to stand in for an <code>M * N</code> matrix.</p>
+
+<div><script src='https://gist.github.com/8643006.js'></script>
+<noscript><pre><code>#include &lt;cassert&gt;
+#include &lt;cmath&gt;
+#include &lt;cstdint&gt;
+#include &lt;cstdio&gt;
+#include &lt;cstdlib&gt;
+#include &lt;algorithm&gt;
+#include &lt;array&gt;
+#include &lt;fstream&gt;
+#include &lt;iomanip&gt;
+#include &lt;iostream&gt;
+#include &lt;limits&gt;
+#include &lt;map&gt;
+#include &lt;memory&gt;
+#include &lt;sstream&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+#include &lt;unordered_map&gt;
+
+using namespace std;
+
+const static char* kRelationshipMarker = &quot;-&gt;&quot;;
+
+int main(int argc, char* argv[]) {
+  int number_nodes, number_relationships;
+  string line;
+  getline(cin, line);
+  istringstream is(line);
+  is &gt;&gt; number_nodes &gt;&gt; number_relationships;
+
+  vector&lt;int&gt; connections;
+  connections.assign(number_nodes * number_nodes, 0);
+
+  for (int i = 0; i &lt; number_relationships; ++i) {
+    getline(cin, line);
+    int connectee;
+    string marker;
+    istringstream ris(line);
+    ris &gt;&gt; connectee;
+    ris &gt;&gt; marker;
+    assert(marker == kRelationshipMarker);
+    int connected_node;
+    while (ris &gt;&gt; connected_node) {
+      connections[connectee * number_nodes + connected_node] = 1;
+    }
+  }
+
+  for (int i = 0; i &lt; number_nodes; ++i) {
+    for (int j = 0; j &lt; number_nodes; ++j) {
+      cout &lt;&lt; connections[i * number_nodes + j];
+    }
+    cout &lt;&lt; endl;
+  }
+}
+
+</code></pre></noscript></div>
+
+
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-27T03:55:00-08:00" pubdate data-updated="true">Jan 27<sup>th</sup>, 2014</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/alwaysbecoding/'>alwaysbecoding,</a>, <a class='category' href='/blog/categories/reddit/'>reddit</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -1375,510 +1540,6 @@ int main() {
 
 
 	<a class='category' href='/blog/categories/alwaysbecoding/'>alwaysbecoding,</a>, <a class='category' href='/blog/categories/reddit/'>reddit</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2014/01/07/urbit-hoon/">
-		
-			Urbit: Hoon</a>
-	</h2>
-	<div class="entry-content">
-		<p>First off, just in case you closed your shell, terminal, screen session, whatever: you can easily resume your Arvo session</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>agam@myvm:~/urbit<span class="nv">$ </span>bin/vere frogstar
-</span><span class='line'>vere: urbit home is /home/agam/urbit/urb
-</span><span class='line'>loom: loaded 11MB
-</span><span class='line'>init: gc: 2.361.752 bytes live
-</span><span class='line'><span class="nb">time</span>: ~2014.1.7..09.04.14..a902
-</span><span class='line'>ames: on localhost, UDP 57882.
-</span><span class='line'>http: live on 8080
-</span><span class='line'>rest: checkpoint to event 7.319
-</span><span class='line'>rest: old 0v1i.p6o91, new 0v1k.b3ul0
-</span><span class='line'>loaded passcode from /home/agam/.urbit/~fiddyn-lavpun.txt
-</span><span class='line'>rest: replaying through event 7323
-</span><span class='line'>---------------- playback starting----------------
-</span><span class='line'>.....
-</span><span class='line'>---------------- playback <span class="nb">complete</span>----------------
-</span><span class='line'>save: gc: <span class="m">28</span> bytes shed<span class="p">;</span> 2.361.836 bytes live
-</span><span class='line'>
-</span><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt;
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>(hmm &hellip; &ldquo;<em>playback complete</em>&rdquo; ?? Yeah apparently everything you ever do is known forever, but that makes my head hurt right now so I won&rsquo;t try too hard to understand it just yet)</p>
-
-<p>Alright, continuing on &hellip;</p>
-
-<h2>Fun at the REPL</h2>
-
-<p>If you remember from <a href="http://agam.github.io/blog/2014/01/06/urbit/">earlier on</a>, we were dropped into a REPL.</p>
-
-<p>Being a REPL means we can do stuff like</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt; <span class="o">(</span>add <span class="m">4</span> 5<span class="o">)</span>
-</span><span class='line'>9
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>and</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt; <span class="o">=</span>a 17
-</span><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt; <span class="o">(</span>add <span class="m">14</span> a<span class="o">)</span>
-</span><span class='line'>31
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>and also</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt; <span class="o">(</span>mul <span class="m">6</span> 7<span class="o">)</span>
-</span><span class='line'>42
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>or</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt; <span class="o">(</span>mul <span class="m">5</span> <span class="o">(</span>add <span class="m">4</span> 7<span class="o">))</span>
-</span><span class='line'>55
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>If you look at some of the <code>hoon</code> files that were downloaded at the initial setup, you might intuit that they are executable-ish.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>+ /~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try/1/bin/reverse/hoon
-</span><span class='line'>...
-</span><span class='line'>+ /~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try/1/bin/fib/hoon
-</span><span class='line'>...
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>and more.</p>
-
-<p>These can be run (&ldquo;evaluated&rdquo; !!) at the command line. E.g. for <code>fib/hoon</code>:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt; :fib 0
-</span><span class='line'>1
-</span><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt; :fib 1
-</span><span class='line'>1
-</span><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt; :fib 2
-</span><span class='line'>2
-</span><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt; :fib 3
-</span><span class='line'>3
-</span><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt; :fib 4
-</span><span class='line'>5
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Or for <code>zero/hoon</code>:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt; :zero
-</span><span class='line'><span class="m">0</span>                             ::  0, ~zod
-</span><span class='line'><span class="m">0</span>                             ::  1, ~nec
-</span><span class='line'><span class="m">0</span>                             ::  2, ~bud
-</span><span class='line'><span class="m">0</span>                             ::  3, ~wes
-</span><span class='line'><span class="m">0</span>                             ::  4, ~sev
-</span><span class='line'><span class="m">0</span>                             ::  5, ~per
-</span><span class='line'><span class="m">0</span>                             ::  6, ~sut
-</span><span class='line'><span class="m">0</span>                             ::  7, ~let
-</span><span class='line'><span class="m">0</span>                             ::  8, ~ful
-</span><span class='line'>...
-</span><span class='line'><span class="m">0</span>                             ::  252, ~pec
-</span><span class='line'><span class="m">0</span>                             ::  253, ~nel
-</span><span class='line'><span class="m">0</span>                             ::  254, ~nev
-</span><span class='line'><span class="m">0</span>                             ::  255, ~fes
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>which is just 256 zeros &hellip; but you get the idea.</p>
-
-<h2>Hoon files</h2>
-
-<p>(More on what <code>hoon</code> really is and how to parse it later (it has to be later because I don&rsquo;t know WTF it is right now))</p>
-
-<p>As another example, let&rsquo;s examine <code>cat/hoon</code> (which fulfills a purpose similar to the Unix <code>cat</code> you&rsquo;re familiar with)</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt; :cat /<span class="o">=</span><span class="nv">main</span><span class="o">=</span>/toy/cat/hoon
-</span><span class='line'>~ /cx/~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/main/~2014.1.7..09.24.24..4de6/toy/cat/hoon
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>The &ldquo;real&rdquo; file is at a location <em>and</em> a date! Yes, seriously. Running it again &hellip;</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt; :cat /<span class="o">=</span><span class="nv">main</span><span class="o">=</span>/toy/cat/hoon
-</span><span class='line'>~ /cx/~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/main/~2014.1.7..09.25.22..9bed/toy/cat/hoon
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>&hellip; will give a different path.</p>
-
-<p>So far so good. What does the file actually contain ?</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt; :cat /<span class="o">=</span><span class="nv">main</span><span class="o">=</span>/bin/cat/hoon
-</span><span class='line'><span class="s1">&#39;!:&#39;</span>
-</span><span class='line'><span class="s1">&#39;::  /=main=/toy/cat/hoon&#39;</span>
-</span><span class='line'><span class="s1">&#39;::&#39;</span>
-</span><span class='line'><span class="s1">&#39;|=  *&#39;</span>
-</span><span class='line'><span class="s1">&#39;|=  ape=(list path)&#39;</span>
-</span><span class='line'><span class="s1">&#39;:_  ~&#39;</span>
-</span><span class='line'><span class="s1">&#39;:_  ~&#39;</span>
-</span><span class='line'><span class="s1">&#39;^-  gift&#39;</span>
-</span><span class='line'><span class="s1">&#39;:+  %mu  [%atom %t]&#39;</span>
-</span><span class='line'><span class="s1">&#39;=-  |-  ^-  (list ,@t)&#39;</span>
-</span><span class='line'><span class="s1">&#39;    ?~(foz ~ (weld i.foz $(foz t.foz)))&#39;</span>
-</span><span class='line'><span class="s1">&#39;^=  foz&#39;</span>
-</span><span class='line'><span class="s1">&#39;=|  foz=(list (list ,@t))&#39;</span>
-</span><span class='line'><span class="s1">&#39;|-  ^+  foz&#39;</span>
-</span><span class='line'><span class="s1">&#39;?~  ape  ~&#39;</span>
-</span><span class='line'><span class="s1">&#39;[(lore ((hard ,@) .^(%cx i.ape))) $(ape t.ape)]&#39;</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>&ldquo;Yikes&rdquo; is an appropriate response at this point.</p>
-
-<p>BTW in case you were wondering: yes, right now Urbit <em>is</em> hosted on top of Unix (<strong>Arvo</strong> is written in <strong>Hoon</strong>, which is written in <strong>Nock</strong>, which is written in <strong>C</strong>), so you should see the exact same contents if you run</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>cat wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/main/bin/cat.hoon
-</span></code></pre></td></tr></table></div></figure>
-
-
-<h2>Setting up a destroyer</h2>
-
-<p>So I asked the nice folks at <a href="mailto:urbit@urbit.org">urbit</a> nicely and they sent me a (nice?) pair of destroyers (which if nothing else, should shorten the prompt by 75% or so).</p>
-
-<p>You&rsquo;ll receive a <em>ship</em> and its <em>ticket</em>, and then run</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt; :begin ~todbyt-nathes
-</span><span class='line'>
-</span><span class='line'>Launching ~todbyt-nathes, one of 4.278.124.800 Urbit destroyers...
-</span><span class='line'>
-</span><span class='line'>            If I did not build <span class="k">for</span> myself
-</span><span class='line'>            <span class="k">for</span> whom should I build?
-</span><span class='line'>
-</span><span class='line'>                  -- Bunting, _Chomei at Toyama_
-</span><span class='line'>
-</span><span class='line'>Let<span class="s1">&#39;s configure your identity.  Warning - it&#39;</span>s nontrivial to
-</span><span class='line'>change this data once you<span class="err">&#39;</span>ve sent it to the server.  If you enter
-</span><span class='line'>something wrong, hit ^D to cancel, <span class="k">then</span> run the program again.
-</span><span class='line'>
-</span><span class='line'>Your ticket: &lt;Enter your ticket here&gt;
-</span><span class='line'>
-</span><span class='line'>Enter a passphrase or other unusual text.  You <span class="o">(</span>or your enemies<span class="o">)</span>
-</span><span class='line'>can regenerate your ship from this entropy.
-</span><span class='line'>
-</span><span class='line'>Entropy: **********
-</span><span class='line'>Entropy check: ~nildyl-hocmun
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Customization follows. This would normally be boring boilerplate, but I&rsquo;ve chosen to reproduce it here since some if it is entertaining.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>What language would your ship rather speak?  Enter it as a
-</span><span class='line'>two-letter <span class="o">(</span>ISO 639-1<span class="o">)</span> code, like <span class="s2">&quot;en&quot;</span> <span class="k">for</span> English.  Whatever
-</span><span class='line'>language you pick, it<span class="s1">&#39;ll all be English now, but in future</span>
-</span><span class='line'><span class="s1">we&#39;</span>ll be more sensitive to your needs.
-</span><span class='line'>
-</span><span class='line'>Language: en
-</span><span class='line'>
-</span><span class='line'>Okay, we<span class="err">&#39;</span>ll be speaking English.
-</span></code></pre></td></tr></table></div></figure>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>Please <span class="k">select</span> one of the pre-chosen forms:
-</span><span class='line'>
-</span><span class='line'>  %lady   female-identified individual
-</span><span class='line'>  %lord   male-identified individual
-</span><span class='line'>  %punk   opaque handle
-</span><span class='line'>  %anon   totally anonymous
-</span><span class='line'>
-</span><span class='line'>Form: %lord
-</span><span class='line'>
-</span><span class='line'>You<span class="s1">&#39;ve selected a personal identity.  For a %lord or a %lady,</span>
-</span><span class='line'><span class="s1">please use your real name only.  If you&#39;</span>d prefer a fictitious
-</span><span class='line'>handle, you can hit ^D and start over as a %punk.  Or you can
-</span><span class='line'>use %anon and go by your ship name alone.
-</span></code></pre></td></tr></table></div></figure>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>As a real person, we<span class="s1">&#39;re going to ask you for a little bit of</span>
-</span><span class='line'><span class="s1">personal information - not enough to compromise your privacy,</span>
-</span><span class='line'><span class="s1">just enough to make everyone on Urbit feel like a neighbor.</span>
-</span><span class='line'>
-</span><span class='line'><span class="s1">What we&#39;</span>re going to ask you <span class="k">for</span> is information that<span class="s1">&#39;s (a)</span>
-</span><span class='line'><span class="s1">public (would be obvious, or at least easy to guess, for</span>
-</span><span class='line'><span class="s1">someone who met you in person); (b) durable (doesn&#39;</span>t change
-</span><span class='line'>often<span class="o">)</span><span class="p">;</span> and <span class="o">(</span>c<span class="o">)</span> relevant <span class="o">(</span>helps you connect with friends<span class="o">)</span>.
-</span><span class='line'>
-</span><span class='line'>For example, we<span class="s1">&#39;ll ask for the year (not day) you were born,</span>
-</span><span class='line'><span class="s1">because your age is easy to guess in person, doesn&#39;</span>t change,
-</span><span class='line'>and has a big effect on how people perceive you.
-</span></code></pre></td></tr></table></div></figure>
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>Year you were born: &lt;Enter your year of birth here&gt;
-</span><span class='line'>
-</span><span class='line'>Where are you?  This is totally optional, but we<span class="err">&#39;</span>d like to
-</span><span class='line'>know your vague general location.  You can enter nothing at
-</span><span class='line'>all, just a country code, or country and postal code.
-</span><span class='line'>
-</span><span class='line'>Location: us/&lt;Enter your zipcode here&gt;
-</span><span class='line'>
-</span><span class='line'>Please tell us your name - and please make it a real name.
-</span><span class='line'>Pseudonyms are totally cool, but please use %punk.  Middle
-</span><span class='line'>name and nickname are optional.  Ünicode is encouraged.
-</span><span class='line'>
-</span><span class='line'>First name: &lt;Enter your name here&gt;
-</span><span class='line'>Middle name <span class="o">(</span>or blank<span class="o">)</span>:
-</span><span class='line'>Nickname/handle <span class="o">(</span>or blank<span class="o">)</span>: agam
-</span><span class='line'>Last name: &lt;Enter your name here&gt;
-</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>One basic human instinct is the urge to form political tribes.
-</span><span class='line'>In a network that fights this need, these tribes form anyway and
-</span><span class='line'>they form badly.  Urbit designs them into the infrastructure.
-</span><span class='line'>Inspired by the Qing Dynasty, you<span class="s1">&#39;ll align yourself with one of</span>
-</span><span class='line'><span class="s1">five colored &quot;banners&quot; - %red, %blue, %orange, %black or %white.</span>
-</span><span class='line'>
-</span><span class='line'><span class="s1">Political discourse across tribal boundaries is almost always an</span>
-</span><span class='line'><span class="s1">antisocial act - less communication, than symbolic violence.  In</span>
-</span><span class='line'><span class="s1">Urbit, messages marked political stay within your own banner;</span>
-</span><span class='line'><span class="s1">your friends in other banners simply won&#39;</span>t see them.  Between
-</span><span class='line'>banners, politics doesn<span class="s1">&#39;t erode apolitical relationships; inside</span>
-</span><span class='line'><span class="s1">each banner, political discourse is harmonious and productive.</span>
-</span><span class='line'>
-</span><span class='line'><span class="s1">Pick a banner by the adjective you feel best describes you:</span>
-</span><span class='line'>
-</span><span class='line'><span class="s1">%red     far left: radical, anarchist</span>
-</span><span class='line'><span class="s1">%blue    center-left: moderate, liberal</span>
-</span><span class='line'><span class="s1">%orange  center-right: conservative, libertarian</span>
-</span><span class='line'><span class="s1">%black   far right: traditionalist, reactionary</span>
-</span><span class='line'>
-</span><span class='line'><span class="s1">Or if digital agitation isn&#39;</span>t your cup of tea, choose %white, and
-</span><span class='line'>your Urbit experience will remain politics-free.
-</span><span class='line'>
-</span><span class='line'>Banner: %white
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>At this point, it got stuck &hellip;</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>generating 2048-bit RSA key...
-</span><span class='line'>ames: czar zod.urbit.org: ip .198.199.112.32
-</span><span class='line'><span class="p">;</span> ~doznec ~doznec not responding still trying
-</span><span class='line'>waiting on ~doznec/ta
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>&hellip; so I hit <code>Ctrl-D</code> and ran it again.</p>
-
-<p>Still nothing. I guess I&rsquo;ll continue the next post once I get this working (!)</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-01-07T09:50:00-08:00" pubdate data-updated="true">Jan 7<sup>th</sup>, 2014</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/hoon/'>hoon</a>, <a class='category' href='/blog/categories/urbit/'>urbit,</a>
 
 
 </div>

@@ -7,7 +7,7 @@
 	<meta name="author" content="Agam">
 
 	
-	<meta name="description" content="Here&rsquo;s another daily programming problem: 1
+	<meta name="description" content="First off, just in case you closed your shell, terminal, screen session, whatever: you can easily resume your Arvo session 1
 2
 3
 4
@@ -17,14 +17,7 @@
 8
 9
 10
-11
-12
-13
-14
-15
-16
-Input Description
------------------ On standard console input &hellip;">
+11 &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -103,6 +96,510 @@ Input Description
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2014/01/07/urbit-hoon/">
+		
+			Urbit: Hoon</a>
+	</h2>
+	<div class="entry-content">
+		<p>First off, just in case you closed your shell, terminal, screen session, whatever: you can easily resume your Arvo session</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>agam@myvm:~/urbit<span class="nv">$ </span>bin/vere frogstar
+</span><span class='line'>vere: urbit home is /home/agam/urbit/urb
+</span><span class='line'>loom: loaded 11MB
+</span><span class='line'>init: gc: 2.361.752 bytes live
+</span><span class='line'><span class="nb">time</span>: ~2014.1.7..09.04.14..a902
+</span><span class='line'>ames: on localhost, UDP 57882.
+</span><span class='line'>http: live on 8080
+</span><span class='line'>rest: checkpoint to event 7.319
+</span><span class='line'>rest: old 0v1i.p6o91, new 0v1k.b3ul0
+</span><span class='line'>loaded passcode from /home/agam/.urbit/~fiddyn-lavpun.txt
+</span><span class='line'>rest: replaying through event 7323
+</span><span class='line'>---------------- playback starting----------------
+</span><span class='line'>.....
+</span><span class='line'>---------------- playback <span class="nb">complete</span>----------------
+</span><span class='line'>save: gc: <span class="m">28</span> bytes shed<span class="p">;</span> 2.361.836 bytes live
+</span><span class='line'>
+</span><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>(hmm &hellip; &ldquo;<em>playback complete</em>&rdquo; ?? Yeah apparently everything you ever do is known forever, but that makes my head hurt right now so I won&rsquo;t try too hard to understand it just yet)</p>
+
+<p>Alright, continuing on &hellip;</p>
+
+<h2>Fun at the REPL</h2>
+
+<p>If you remember from <a href="http://agam.github.io/blog/2014/01/06/urbit/">earlier on</a>, we were dropped into a REPL.</p>
+
+<p>Being a REPL means we can do stuff like</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt; <span class="o">(</span>add <span class="m">4</span> 5<span class="o">)</span>
+</span><span class='line'>9
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>and</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt; <span class="o">=</span>a 17
+</span><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt; <span class="o">(</span>add <span class="m">14</span> a<span class="o">)</span>
+</span><span class='line'>31
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>and also</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt; <span class="o">(</span>mul <span class="m">6</span> 7<span class="o">)</span>
+</span><span class='line'>42
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>or</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt; <span class="o">(</span>mul <span class="m">5</span> <span class="o">(</span>add <span class="m">4</span> 7<span class="o">))</span>
+</span><span class='line'>55
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>If you look at some of the <code>hoon</code> files that were downloaded at the initial setup, you might intuit that they are executable-ish.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>+ /~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try/1/bin/reverse/hoon
+</span><span class='line'>...
+</span><span class='line'>+ /~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try/1/bin/fib/hoon
+</span><span class='line'>...
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>and more.</p>
+
+<p>These can be run (&ldquo;evaluated&rdquo; !!) at the command line. E.g. for <code>fib/hoon</code>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt; :fib 0
+</span><span class='line'>1
+</span><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt; :fib 1
+</span><span class='line'>1
+</span><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt; :fib 2
+</span><span class='line'>2
+</span><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt; :fib 3
+</span><span class='line'>3
+</span><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt; :fib 4
+</span><span class='line'>5
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Or for <code>zero/hoon</code>:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt; :zero
+</span><span class='line'><span class="m">0</span>                             ::  0, ~zod
+</span><span class='line'><span class="m">0</span>                             ::  1, ~nec
+</span><span class='line'><span class="m">0</span>                             ::  2, ~bud
+</span><span class='line'><span class="m">0</span>                             ::  3, ~wes
+</span><span class='line'><span class="m">0</span>                             ::  4, ~sev
+</span><span class='line'><span class="m">0</span>                             ::  5, ~per
+</span><span class='line'><span class="m">0</span>                             ::  6, ~sut
+</span><span class='line'><span class="m">0</span>                             ::  7, ~let
+</span><span class='line'><span class="m">0</span>                             ::  8, ~ful
+</span><span class='line'>...
+</span><span class='line'><span class="m">0</span>                             ::  252, ~pec
+</span><span class='line'><span class="m">0</span>                             ::  253, ~nel
+</span><span class='line'><span class="m">0</span>                             ::  254, ~nev
+</span><span class='line'><span class="m">0</span>                             ::  255, ~fes
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>which is just 256 zeros &hellip; but you get the idea.</p>
+
+<h2>Hoon files</h2>
+
+<p>(More on what <code>hoon</code> really is and how to parse it later (it has to be later because I don&rsquo;t know WTF it is right now))</p>
+
+<p>As another example, let&rsquo;s examine <code>cat/hoon</code> (which fulfills a purpose similar to the Unix <code>cat</code> you&rsquo;re familiar with)</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt; :cat /<span class="o">=</span><span class="nv">main</span><span class="o">=</span>/toy/cat/hoon
+</span><span class='line'>~ /cx/~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/main/~2014.1.7..09.24.24..4de6/toy/cat/hoon
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>The &ldquo;real&rdquo; file is at a location <em>and</em> a date! Yes, seriously. Running it again &hellip;</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt; :cat /<span class="o">=</span><span class="nv">main</span><span class="o">=</span>/toy/cat/hoon
+</span><span class='line'>~ /cx/~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/main/~2014.1.7..09.25.22..9bed/toy/cat/hoon
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&hellip; will give a different path.</p>
+
+<p>So far so good. What does the file actually contain ?</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt; :cat /<span class="o">=</span><span class="nv">main</span><span class="o">=</span>/bin/cat/hoon
+</span><span class='line'><span class="s1">&#39;!:&#39;</span>
+</span><span class='line'><span class="s1">&#39;::  /=main=/toy/cat/hoon&#39;</span>
+</span><span class='line'><span class="s1">&#39;::&#39;</span>
+</span><span class='line'><span class="s1">&#39;|=  *&#39;</span>
+</span><span class='line'><span class="s1">&#39;|=  ape=(list path)&#39;</span>
+</span><span class='line'><span class="s1">&#39;:_  ~&#39;</span>
+</span><span class='line'><span class="s1">&#39;:_  ~&#39;</span>
+</span><span class='line'><span class="s1">&#39;^-  gift&#39;</span>
+</span><span class='line'><span class="s1">&#39;:+  %mu  [%atom %t]&#39;</span>
+</span><span class='line'><span class="s1">&#39;=-  |-  ^-  (list ,@t)&#39;</span>
+</span><span class='line'><span class="s1">&#39;    ?~(foz ~ (weld i.foz $(foz t.foz)))&#39;</span>
+</span><span class='line'><span class="s1">&#39;^=  foz&#39;</span>
+</span><span class='line'><span class="s1">&#39;=|  foz=(list (list ,@t))&#39;</span>
+</span><span class='line'><span class="s1">&#39;|-  ^+  foz&#39;</span>
+</span><span class='line'><span class="s1">&#39;?~  ape  ~&#39;</span>
+</span><span class='line'><span class="s1">&#39;[(lore ((hard ,@) .^(%cx i.ape))) $(ape t.ape)]&#39;</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&ldquo;Yikes&rdquo; is an appropriate response at this point.</p>
+
+<p>BTW in case you were wondering: yes, right now Urbit <em>is</em> hosted on top of Unix (<strong>Arvo</strong> is written in <strong>Hoon</strong>, which is written in <strong>Nock</strong>, which is written in <strong>C</strong>), so you should see the exact same contents if you run</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>cat wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/main/bin/cat.hoon
+</span></code></pre></td></tr></table></div></figure>
+
+
+<h2>Setting up a destroyer</h2>
+
+<p>So I asked the nice folks at <a href="mailto:urbit@urbit.org">urbit</a> nicely and they sent me a (nice?) pair of destroyers (which if nothing else, should shorten the prompt by 75% or so).</p>
+
+<p>You&rsquo;ll receive a <em>ship</em> and its <em>ticket</em>, and then run</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try<span class="o">=</span>&gt; :begin ~todbyt-nathes
+</span><span class='line'>
+</span><span class='line'>Launching ~todbyt-nathes, one of 4.278.124.800 Urbit destroyers...
+</span><span class='line'>
+</span><span class='line'>            If I did not build <span class="k">for</span> myself
+</span><span class='line'>            <span class="k">for</span> whom should I build?
+</span><span class='line'>
+</span><span class='line'>                  -- Bunting, _Chomei at Toyama_
+</span><span class='line'>
+</span><span class='line'>Let<span class="s1">&#39;s configure your identity.  Warning - it&#39;</span>s nontrivial to
+</span><span class='line'>change this data once you<span class="err">&#39;</span>ve sent it to the server.  If you enter
+</span><span class='line'>something wrong, hit ^D to cancel, <span class="k">then</span> run the program again.
+</span><span class='line'>
+</span><span class='line'>Your ticket: &lt;Enter your ticket here&gt;
+</span><span class='line'>
+</span><span class='line'>Enter a passphrase or other unusual text.  You <span class="o">(</span>or your enemies<span class="o">)</span>
+</span><span class='line'>can regenerate your ship from this entropy.
+</span><span class='line'>
+</span><span class='line'>Entropy: **********
+</span><span class='line'>Entropy check: ~nildyl-hocmun
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Customization follows. This would normally be boring boilerplate, but I&rsquo;ve chosen to reproduce it here since some if it is entertaining.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>What language would your ship rather speak?  Enter it as a
+</span><span class='line'>two-letter <span class="o">(</span>ISO 639-1<span class="o">)</span> code, like <span class="s2">&quot;en&quot;</span> <span class="k">for</span> English.  Whatever
+</span><span class='line'>language you pick, it<span class="s1">&#39;ll all be English now, but in future</span>
+</span><span class='line'><span class="s1">we&#39;</span>ll be more sensitive to your needs.
+</span><span class='line'>
+</span><span class='line'>Language: en
+</span><span class='line'>
+</span><span class='line'>Okay, we<span class="err">&#39;</span>ll be speaking English.
+</span></code></pre></td></tr></table></div></figure>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>Please <span class="k">select</span> one of the pre-chosen forms:
+</span><span class='line'>
+</span><span class='line'>  %lady   female-identified individual
+</span><span class='line'>  %lord   male-identified individual
+</span><span class='line'>  %punk   opaque handle
+</span><span class='line'>  %anon   totally anonymous
+</span><span class='line'>
+</span><span class='line'>Form: %lord
+</span><span class='line'>
+</span><span class='line'>You<span class="s1">&#39;ve selected a personal identity.  For a %lord or a %lady,</span>
+</span><span class='line'><span class="s1">please use your real name only.  If you&#39;</span>d prefer a fictitious
+</span><span class='line'>handle, you can hit ^D and start over as a %punk.  Or you can
+</span><span class='line'>use %anon and go by your ship name alone.
+</span></code></pre></td></tr></table></div></figure>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>As a real person, we<span class="s1">&#39;re going to ask you for a little bit of</span>
+</span><span class='line'><span class="s1">personal information - not enough to compromise your privacy,</span>
+</span><span class='line'><span class="s1">just enough to make everyone on Urbit feel like a neighbor.</span>
+</span><span class='line'>
+</span><span class='line'><span class="s1">What we&#39;</span>re going to ask you <span class="k">for</span> is information that<span class="s1">&#39;s (a)</span>
+</span><span class='line'><span class="s1">public (would be obvious, or at least easy to guess, for</span>
+</span><span class='line'><span class="s1">someone who met you in person); (b) durable (doesn&#39;</span>t change
+</span><span class='line'>often<span class="o">)</span><span class="p">;</span> and <span class="o">(</span>c<span class="o">)</span> relevant <span class="o">(</span>helps you connect with friends<span class="o">)</span>.
+</span><span class='line'>
+</span><span class='line'>For example, we<span class="s1">&#39;ll ask for the year (not day) you were born,</span>
+</span><span class='line'><span class="s1">because your age is easy to guess in person, doesn&#39;</span>t change,
+</span><span class='line'>and has a big effect on how people perceive you.
+</span></code></pre></td></tr></table></div></figure>
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>Year you were born: &lt;Enter your year of birth here&gt;
+</span><span class='line'>
+</span><span class='line'>Where are you?  This is totally optional, but we<span class="err">&#39;</span>d like to
+</span><span class='line'>know your vague general location.  You can enter nothing at
+</span><span class='line'>all, just a country code, or country and postal code.
+</span><span class='line'>
+</span><span class='line'>Location: us/&lt;Enter your zipcode here&gt;
+</span><span class='line'>
+</span><span class='line'>Please tell us your name - and please make it a real name.
+</span><span class='line'>Pseudonyms are totally cool, but please use %punk.  Middle
+</span><span class='line'>name and nickname are optional.  Ünicode is encouraged.
+</span><span class='line'>
+</span><span class='line'>First name: &lt;Enter your name here&gt;
+</span><span class='line'>Middle name <span class="o">(</span>or blank<span class="o">)</span>:
+</span><span class='line'>Nickname/handle <span class="o">(</span>or blank<span class="o">)</span>: agam
+</span><span class='line'>Last name: &lt;Enter your name here&gt;
+</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>One basic human instinct is the urge to form political tribes.
+</span><span class='line'>In a network that fights this need, these tribes form anyway and
+</span><span class='line'>they form badly.  Urbit designs them into the infrastructure.
+</span><span class='line'>Inspired by the Qing Dynasty, you<span class="s1">&#39;ll align yourself with one of</span>
+</span><span class='line'><span class="s1">five colored &quot;banners&quot; - %red, %blue, %orange, %black or %white.</span>
+</span><span class='line'>
+</span><span class='line'><span class="s1">Political discourse across tribal boundaries is almost always an</span>
+</span><span class='line'><span class="s1">antisocial act - less communication, than symbolic violence.  In</span>
+</span><span class='line'><span class="s1">Urbit, messages marked political stay within your own banner;</span>
+</span><span class='line'><span class="s1">your friends in other banners simply won&#39;</span>t see them.  Between
+</span><span class='line'>banners, politics doesn<span class="s1">&#39;t erode apolitical relationships; inside</span>
+</span><span class='line'><span class="s1">each banner, political discourse is harmonious and productive.</span>
+</span><span class='line'>
+</span><span class='line'><span class="s1">Pick a banner by the adjective you feel best describes you:</span>
+</span><span class='line'>
+</span><span class='line'><span class="s1">%red     far left: radical, anarchist</span>
+</span><span class='line'><span class="s1">%blue    center-left: moderate, liberal</span>
+</span><span class='line'><span class="s1">%orange  center-right: conservative, libertarian</span>
+</span><span class='line'><span class="s1">%black   far right: traditionalist, reactionary</span>
+</span><span class='line'>
+</span><span class='line'><span class="s1">Or if digital agitation isn&#39;</span>t your cup of tea, choose %white, and
+</span><span class='line'>your Urbit experience will remain politics-free.
+</span><span class='line'>
+</span><span class='line'>Banner: %white
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>At this point, it got stuck &hellip;</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>generating 2048-bit RSA key...
+</span><span class='line'>ames: czar zod.urbit.org: ip .198.199.112.32
+</span><span class='line'><span class="p">;</span> ~doznec ~doznec not responding still trying
+</span><span class='line'>waiting on ~doznec/ta
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&hellip; so I hit <code>Ctrl-D</code> and ran it again.</p>
+
+<p>Still nothing. I guess I&rsquo;ll continue the next post once I get this working (!)</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-07T09:50:00-08:00" pubdate data-updated="true">Jan 7<sup>th</sup>, 2014</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/hoon/'>hoon</a>, <a class='category' href='/blog/categories/urbit/'>urbit,</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -1046,117 +1543,6 @@ For each round of computation, print the percentage of votes for each candidate,
 
 
 	<a class='category' href='/blog/categories/octopress/'>octopress,</a>, <a class='category' href='/blog/categories/social/'>social</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2013/12/14/augmenting-my-chromebook-with-a-vm/">
-		
-			Augmenting My Chromebook With a VM</a>
-	</h2>
-	<div class="entry-content">
-		<p>I had tried this out about a year ago, creating a small VM instance on Google Compute Engine. But a maintenance window occurred, my VM died, and that was that. I cleaned up and walked away.</p>
-
-<h2>Comparison</h2>
-
-<p>Sometime back, I heard about <a href="https://www.digitalocean.com/">Digital Ocean</a> from a friend. I had just switched to a chromebook and was missing the shell of my previous Linux laptop. So I once again looked into the current cloud offerings.</p>
-
-<p>There is an excellent comparison at <a href="http://cloudpricegrid.com/">cloud price grid</a> so I won&rsquo;t waste time repeating that.</p>
-
-<p>DigitalOcean seems the cheapest for a couple of options</p>
-
-<ul>
-<li><em>1core/512Mb/20G &mdash;> $5/mo</em></li>
-<li><em>1core/1G/30G  &mdash;> $10/mo</em></li>
-</ul>
-
-
-<p>(See <a href="https://www.digitalocean.com/pricing/">detailed pricing</a>)</p>
-
-<p>However, this is without any firewall or networking capability, and the datacenter seems to be near New York, so that&rsquo;s something to keep in mind.</p>
-
-<p>Meanwhile at Google Compute Engine, the right comparison would be with a combination of</p>
-
-<ul>
-<li><em>Persistent disk &mdash;> 20G for $0.8/mo</em></li>
-<li><em>f1-micro [1core/600Mb] &mdash;> $0.019/hr</em>
-[which by the way at max utilization turns out to be $13.78/mo]</li>
-</ul>
-
-
-<p>(See <a href="https://cloud.google.com/products/compute-engine/#pricing">detailed pricing</a>)</p>
-
-<p>A similar comparison for Amazon (I could be off in apples-to-apples here (what I think are apples may in fact be oranges))</p>
-
-<p><em>t1.micro [1core/630Mb] &mdash;> $0.025/hr</em></p>
-
-<p>So the cheapest Amazon has to offer seems more expensive than the cheapest Google has to offer (both of these instances will be pretty useless for hosting something substantial, but we&rsquo;re assuming the idea here is to have a small &ldquo;developer space&rdquo;).</p>
-
-<p>But keep in mind Amazon also has a <a href="http://aws.amazon.com/free/">free tier</a> so if you just want to try it out for a year, the micro instance is actually FREE (!)</p>
-
-<h2>Getting (re-)started with Google Compute Engine</h2>
-
-<p>I elected to stay with Google. The new <a href="https://cloud.google.com/console#/project">cloud console</a> is much better than it was before, with a nice grouping by project and sub-links to Appengine, CloudSql, CloudStorage, ComputeEngine, etc.</p>
-
-<p>Within the Cloud Engine dashboard, it is possible (and in fact, easy) to create a new VM, set up its associated disk and static IPs, OS, etc from the UI.</p>
-
-<h2>SSHing</h2>
-
-<p>One thing to point out is that the first time I set it up I used the <code>gcutil</code> tool to ssh into the instance; this creates local ssh keys and uploads the public key to the instance (it can be viewed in the <code>Metadata</code> part of the console). So I had to do this from a non-chromebook &ldquo;real&rdquo; computer (though there may be a workaround I&rsquo;m unaware of).</p>
-
-<p>For subsequent SSHs, the recommended way is to use a long SSH command</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'>ssh -o <span class="nv">UserKnownHostsFile</span><span class="o">=</span>/dev/null -o <span class="nv">CheckHostIP</span><span class="o">=</span>no -o  <span class="nv">StrictHostKeyChecking</span><span class="o">=</span>no <span class="se">\</span>
-</span><span class='line'> -i &lt;key-file&gt; -o <span class="nv">LogLevel</span><span class="o">=</span>QUIET -A  -p <span class="m">22</span> &lt;username&gt;@&lt;ipaddress&gt;
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>and this worked when I tried it from the computer I signed up on.</p>
-
-<p>Before trying to SSH from a chromebook, you have to copy ssh keys locally (how? I Dropbox&rsquo;d them and then deleted them from Dropbox, which is admittedly less secure &hellip; maybe I should have written it down and recreated manually?!).</p>
-
-<p>Anyway, so once you have copied the keys, you can use the <a href="https://chrome.google.com/webstore/detail/secure-shell/pnhechapfaindjhompbnflcldabbghjo?hl=en">Secure Shell</a> app.</p>
-
-<p>You have to click on <code>import...</code> to select the public/private key pair. At this point, when I used the long SSH command mentioned above, it didn&rsquo;t work. Eventually it only worked when I tried with a blank command (so the only arguments were username, host IP and the key file).</p>
-
-<h2>Chromebook + VM</h2>
-
-<p>Having tried this out for a while, I can&rsquo;t imagine living without it. Obviously it depends on internet access, but that&rsquo;s a common caveat these days.</p>
-
-<p>But I strongly encourage it, since it&rsquo;s a perfect complement to the otherwise &ldquo;browser-only&rdquo; world.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-12-14T17:14:00-08:00" pubdate data-updated="true">Dec 14<sup>th</sup>, 2013</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/chromebook/'>chromebook</a>, <a class='category' href='/blog/categories/vm/'>vm,</a>
 
 
 </div>
