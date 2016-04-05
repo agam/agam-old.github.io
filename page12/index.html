@@ -7,7 +7,18 @@
 	<meta name="author" content="Agam">
 
 	
-	<meta name="description" content="For various reasons, this blog is going to be focussed just on C++ programming, as boring as that may sound. I&rsquo;ll try not to make it too &hellip;">
+	<meta name="description" content="Reading through ANSI Common Lisp, and doing some of the exercises as I come across them. Here are a few from Ch 4 and 5: 1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12 &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -86,6 +97,274 @@
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2014/03/31/some-lisp-exercises/">
+		
+			Some Lisp Exercises</a>
+	</h2>
+	<div class="entry-content">
+		<p>Reading through ANSI Common Lisp, and doing some of the exercises as I come across them. Here are a few from Ch 4 and 5:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+<span class='line-number'>59</span>
+<span class='line-number'>60</span>
+<span class='line-number'>61</span>
+<span class='line-number'>62</span>
+<span class='line-number'>63</span>
+<span class='line-number'>64</span>
+<span class='line-number'>65</span>
+<span class='line-number'>66</span>
+<span class='line-number'>67</span>
+<span class='line-number'>68</span>
+<span class='line-number'>69</span>
+<span class='line-number'>70</span>
+<span class='line-number'>71</span>
+<span class='line-number'>72</span>
+<span class='line-number'>73</span>
+<span class='line-number'>74</span>
+<span class='line-number'>75</span>
+<span class='line-number'>76</span>
+<span class='line-number'>77</span>
+<span class='line-number'>78</span>
+<span class='line-number'>79</span>
+<span class='line-number'>80</span>
+<span class='line-number'>81</span>
+<span class='line-number'>82</span>
+<span class='line-number'>83</span>
+<span class='line-number'>84</span>
+<span class='line-number'>85</span>
+<span class='line-number'>86</span>
+<span class='line-number'>87</span>
+<span class='line-number'>88</span>
+<span class='line-number'>89</span>
+<span class='line-number'>90</span>
+<span class='line-number'>91</span>
+<span class='line-number'>92</span>
+<span class='line-number'>93</span>
+<span class='line-number'>94</span>
+<span class='line-number'>95</span>
+<span class='line-number'>96</span>
+<span class='line-number'>97</span>
+<span class='line-number'>98</span>
+<span class='line-number'>99</span>
+<span class='line-number'>100</span>
+<span class='line-number'>101</span>
+<span class='line-number'>102</span>
+<span class='line-number'>103</span>
+<span class='line-number'>104</span>
+<span class='line-number'>105</span>
+<span class='line-number'>106</span>
+<span class='line-number'>107</span>
+<span class='line-number'>108</span>
+<span class='line-number'>109</span>
+<span class='line-number'>110</span>
+<span class='line-number'>111</span>
+<span class='line-number'>112</span>
+<span class='line-number'>113</span>
+<span class='line-number'>114</span>
+</pre></td><td class='code'><pre><code class='cl'><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">rotate-square-array</span> <span class="p">(</span><span class="nv">arr</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">let*</span> <span class="p">((</span><span class="nv">dim</span> <span class="p">(</span><span class="nb">car</span> <span class="p">(</span><span class="nb">array-dimensions</span> <span class="nv">arr</span><span class="p">)))</span>
+</span><span class='line'>  <span class="p">(</span><span class="nv">newarr</span> <span class="p">(</span><span class="nb">make-array</span> <span class="p">(</span><span class="nb">list</span> <span class="nv">dim</span> <span class="nv">dim</span><span class="p">))))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nb">dotimes</span> <span class="p">(</span><span class="nv">i</span> <span class="nv">dim</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">(</span><span class="nb">dotimes</span> <span class="p">(</span><span class="nv">j</span> <span class="nv">dim</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">setf</span> <span class="p">(</span><span class="nb">aref</span> <span class="nv">newarr</span> <span class="nv">j</span> <span class="p">(</span><span class="nb">-</span> <span class="nv">dim</span> <span class="p">(</span><span class="nb">1+</span> <span class="nv">i</span><span class="p">)))</span> <span class="p">(</span><span class="nb">aref</span> <span class="nv">arr</span> <span class="nv">i</span> <span class="nv">j</span><span class="p">))))</span>
+</span><span class='line'>    <span class="nv">newarr</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">rev-l</span> <span class="p">(</span><span class="nv">lst</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">reduce</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">elem</span> <span class="nv">acc</span><span class="p">)</span> <span class="p">(</span><span class="nb">cons</span> <span class="nv">acc</span> <span class="nv">elem</span><span class="p">))</span> <span class="nv">lst</span> <span class="ss">:initial-value</span> <span class="no">nil</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">copy-l</span> <span class="p">(</span><span class="nv">lst</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">reduce</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">elem</span> <span class="nv">acc</span><span class="p">)</span> <span class="p">(</span><span class="nb">cons</span> <span class="nv">elem</span> <span class="nv">acc</span><span class="p">))</span> <span class="nv">lst</span>
+</span><span class='line'>    <span class="ss">:initial-value</span> <span class="no">nil</span> <span class="ss">:from-end</span> <span class="no">t</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">alist-to-ht</span> <span class="p">(</span><span class="nv">alist</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">ht</span> <span class="p">(</span><span class="nb">make-hash-table</span><span class="p">)))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nb">mapcar</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">kvpair</span><span class="p">)</span>
+</span><span class='line'>        <span class="p">(</span><span class="nb">setf</span> <span class="p">(</span><span class="nb">gethash</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">kvpair</span><span class="p">)</span> <span class="nv">ht</span><span class="p">)</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">kvpair</span><span class="p">)))</span>
+</span><span class='line'>      <span class="nv">alist</span><span class="p">)</span>
+</span><span class='line'>    <span class="nv">ht</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">ht-to-alist</span> <span class="p">(</span><span class="nv">ht</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">alist</span> <span class="o">&#39;</span><span class="p">()))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nb">maphash</span> <span class="p">(</span><span class="k">lambda</span> <span class="p">(</span><span class="nv">k</span> <span class="nv">v</span><span class="p">)</span>
+</span><span class='line'>         <span class="p">(</span><span class="nb">setf</span> <span class="nv">alist</span> <span class="p">(</span><span class="nb">acons</span> <span class="nv">k</span> <span class="nv">v</span> <span class="nv">alist</span><span class="p">)))</span>
+</span><span class='line'>       <span class="nv">ht</span><span class="p">)</span>
+</span><span class='line'>    <span class="nv">alist</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">precedes-iter</span> <span class="p">(</span><span class="nv">obj</span> <span class="nv">vec</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">pos-list</span> <span class="o">&#39;</span><span class="p">()))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nb">do*</span> <span class="p">((</span><span class="nv">last-pos</span> <span class="p">(</span><span class="nb">position</span> <span class="nv">obj</span> <span class="nv">vec</span><span class="p">)</span>
+</span><span class='line'>          <span class="p">(</span><span class="nb">position</span> <span class="nv">obj</span> <span class="nv">vec</span> <span class="ss">:start</span> <span class="p">(</span><span class="nb">1+</span> <span class="nv">last-pos</span><span class="p">))))</span>
+</span><span class='line'>   <span class="p">((</span><span class="nb">eql</span> <span class="nv">last-pos</span> <span class="no">nil</span><span class="p">)</span> <span class="nv">pos-list</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">(</span><span class="nb">and</span> <span class="p">(</span><span class="nb">&gt;</span> <span class="nv">last-pos</span> <span class="mi">0</span><span class="p">)</span>
+</span><span class='line'>     <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">elem</span> <span class="p">(</span><span class="nb">elt</span> <span class="nv">vec</span> <span class="p">(</span><span class="nb">-</span> <span class="nv">last-pos</span> <span class="mi">1</span><span class="p">))))</span>
+</span><span class='line'>       <span class="p">(</span><span class="nb">setf</span> <span class="nv">pos-list</span> <span class="p">(</span><span class="nb">adjoin</span> <span class="nv">elem</span> <span class="nv">pos-list</span><span class="p">)))))))</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">precedes-recur</span> <span class="p">(</span><span class="nv">obj</span> <span class="nv">vec</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">labels</span> <span class="p">((</span><span class="nv">precedes-helper</span> <span class="p">(</span><span class="nv">obj</span> <span class="nv">vec</span> <span class="nv">pos-list</span> <span class="nv">start-pos</span><span class="p">)</span>
+</span><span class='line'>       <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">next-pos</span> <span class="p">(</span><span class="nb">position</span> <span class="nv">obj</span> <span class="nv">vec</span> <span class="ss">:start</span> <span class="nv">start-pos</span><span class="p">)))</span>
+</span><span class='line'>         <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">null</span> <span class="nv">next-pos</span><span class="p">)</span>
+</span><span class='line'>         <span class="nv">pos-list</span>
+</span><span class='line'>         <span class="p">(</span><span class="nv">precedes-helper</span> <span class="nv">obj</span> <span class="nv">vec</span>
+</span><span class='line'>                  <span class="p">(</span><span class="nb">adjoin</span> <span class="p">(</span><span class="nb">elt</span> <span class="nv">vec</span> <span class="p">(</span><span class="nb">-</span> <span class="nv">next-pos</span> <span class="mi">1</span><span class="p">))</span>
+</span><span class='line'>                      <span class="nv">pos-list</span><span class="p">)</span>
+</span><span class='line'>                  <span class="p">(</span><span class="nb">1+</span> <span class="nv">next-pos</span><span class="p">))))))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nv">precedes-helper</span> <span class="nv">obj</span> <span class="nv">vec</span> <span class="o">&#39;</span><span class="p">()</span> <span class="mi">1</span><span class="p">)))</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">intersperse-recur</span> <span class="p">(</span><span class="nv">obj</span> <span class="nv">lst</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">labels</span> <span class="p">((</span><span class="nv">intersperse-helper</span> <span class="p">(</span><span class="nv">obj</span> <span class="nv">lst</span><span class="p">)</span>
+</span><span class='line'>       <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">null</span> <span class="nv">lst</span><span class="p">)</span>
+</span><span class='line'>       <span class="no">nil</span>
+</span><span class='line'>       <span class="p">(</span><span class="nb">cons</span> <span class="nv">obj</span> <span class="p">(</span><span class="nb">cons</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">lst</span><span class="p">)</span>
+</span><span class='line'>               <span class="p">(</span><span class="nv">intersperse-helper</span> <span class="nv">obj</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">lst</span><span class="p">)))))))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nb">cons</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">lst</span><span class="p">)</span> <span class="p">(</span><span class="nv">intersperse-helper</span> <span class="nv">obj</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">lst</span><span class="p">)))))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">intersperse-iter</span> <span class="p">(</span><span class="nv">obj</span> <span class="nv">lst</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">do</span> <span class="p">((</span><span class="nv">iter-lst</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">lst</span><span class="p">)</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">iter-lst</span><span class="p">))</span>
+</span><span class='line'>       <span class="p">(</span><span class="nv">result</span> <span class="p">(</span><span class="nb">list</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">lst</span><span class="p">))</span> <span class="p">(</span><span class="nb">cons</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">iter-lst</span><span class="p">)</span> <span class="p">(</span><span class="nb">cons</span> <span class="nv">obj</span> <span class="nv">result</span><span class="p">))))</span>
+</span><span class='line'>      <span class="p">((</span><span class="nb">null</span> <span class="nv">iter-lst</span><span class="p">)</span>
+</span><span class='line'>       <span class="p">(</span><span class="nb">reverse</span> <span class="nv">result</span><span class="p">))))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">within-one</span> <span class="p">(</span><span class="nv">x</span> <span class="nv">y</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">or</span> <span class="p">(</span><span class="nb">=</span> <span class="nv">x</span> <span class="p">(</span><span class="nb">1+</span> <span class="nv">y</span><span class="p">))</span>
+</span><span class='line'>      <span class="p">(</span><span class="nb">=</span> <span class="nv">y</span> <span class="p">(</span><span class="nb">1+</span> <span class="nv">x</span><span class="p">))))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">orderedlistp-recur</span> <span class="p">(</span><span class="nv">lst</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">labels</span> <span class="p">((</span><span class="nv">ordered-list-helper</span> <span class="p">(</span><span class="nv">elem</span> <span class="nv">lst</span><span class="p">)</span>
+</span><span class='line'>       <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">null</span> <span class="nv">lst</span><span class="p">)</span>
+</span><span class='line'>       <span class="no">t</span>
+</span><span class='line'>       <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">x</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">lst</span><span class="p">)))</span>
+</span><span class='line'>         <span class="p">(</span><span class="nb">and</span> <span class="p">(</span><span class="nv">within-one</span> <span class="nv">elem</span> <span class="nv">x</span><span class="p">)</span>
+</span><span class='line'>          <span class="p">(</span><span class="nv">ordered-list-helper</span> <span class="nv">x</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">lst</span><span class="p">)))))))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nv">ordered-list-helper</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">lst</span><span class="p">)</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">lst</span><span class="p">))))</span>
+</span><span class='line'>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">orderedlistp-iter</span> <span class="p">(</span><span class="nv">lst</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">do*</span> <span class="p">((</span><span class="nv">ordered</span> <span class="no">t</span>
+</span><span class='line'>       <span class="p">(</span><span class="nv">within-one</span> <span class="nv">first-elem</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">remaining</span><span class="p">)))</span>
+</span><span class='line'>  <span class="p">(</span><span class="nv">first-elem</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">lst</span><span class="p">)</span>
+</span><span class='line'>          <span class="p">(</span><span class="nb">car</span> <span class="nv">remaining</span><span class="p">))</span>
+</span><span class='line'>  <span class="p">(</span><span class="nv">remaining</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">lst</span><span class="p">)</span>
+</span><span class='line'>         <span class="p">(</span><span class="nb">cdr</span> <span class="nv">remaining</span><span class="p">)))</span>
+</span><span class='line'>       <span class="p">((</span><span class="nb">or</span> <span class="p">(</span><span class="nb">null</span> <span class="nv">remaining</span><span class="p">)</span>
+</span><span class='line'>      <span class="p">(</span><span class="nb">not</span> <span class="nv">ordered</span><span class="p">))</span>
+</span><span class='line'>  <span class="nv">ordered</span><span class="p">)))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">orderedlistp-map</span> <span class="p">(</span><span class="nv">lst</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">flet</span> <span class="p">((</span><span class="nv">ordered-list-mapper</span> <span class="p">(</span><span class="nv">elem1</span> <span class="nv">elem2</span><span class="p">)</span>
+</span><span class='line'>     <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">not</span> <span class="p">(</span><span class="nv">within-one</span> <span class="nv">elem1</span> <span class="nv">elem2</span><span class="p">))</span>
+</span><span class='line'>         <span class="p">(</span><span class="k">return-from</span> <span class="nv">orderedlistp-map</span> <span class="no">nil</span><span class="p">))))</span>
+</span><span class='line'>  <span class="p">(</span><span class="nb">mapc</span> <span class="nf">#&#39;</span><span class="nv">ordered-list-mapper</span> <span class="nv">lst</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">lst</span><span class="p">))</span>
+</span><span class='line'>  <span class="no">t</span><span class="p">))</span>
+</span><span class='line'>
+</span><span class='line'><span class="p">(</span><span class="nb">defun</span> <span class="nv">max-and-min</span> <span class="p">(</span><span class="nv">lst</span><span class="p">)</span>
+</span><span class='line'>  <span class="p">(</span><span class="k">labels</span> <span class="p">((</span><span class="nv">max-min-helper</span> <span class="p">(</span><span class="nv">lst</span> <span class="nv">curmin</span> <span class="nv">curmax</span><span class="p">)</span>
+</span><span class='line'>       <span class="p">(</span><span class="k">if</span> <span class="p">(</span><span class="nb">null</span> <span class="nv">lst</span><span class="p">)</span>
+</span><span class='line'>       <span class="p">(</span><span class="nb">values</span> <span class="nv">curmin</span> <span class="nv">curmax</span><span class="p">)</span>
+</span><span class='line'>       <span class="p">(</span><span class="k">let</span> <span class="p">((</span><span class="nv">elem</span> <span class="p">(</span><span class="nb">car</span> <span class="nv">lst</span><span class="p">))</span>
+</span><span class='line'>             <span class="p">(</span><span class="nb">rest</span> <span class="p">(</span><span class="nb">cdr</span> <span class="nv">lst</span><span class="p">)))</span>
+</span><span class='line'>         <span class="p">(</span><span class="nb">cond</span>
+</span><span class='line'>           <span class="p">((</span><span class="nb">and</span> <span class="p">(</span><span class="nb">eql</span> <span class="nv">curmin</span> <span class="no">nil</span><span class="p">)</span>
+</span><span class='line'>             <span class="p">(</span><span class="nb">eql</span> <span class="nv">curmax</span> <span class="no">nil</span><span class="p">))</span>
+</span><span class='line'>            <span class="p">(</span><span class="nv">max-min-helper</span> <span class="nb">rest</span> <span class="nv">elem</span> <span class="nv">elem</span><span class="p">))</span>
+</span><span class='line'>           <span class="p">((</span><span class="nb">&gt;</span> <span class="nv">elem</span> <span class="nv">curmax</span><span class="p">)</span>
+</span><span class='line'>            <span class="p">(</span><span class="nv">max-min-helper</span> <span class="nb">rest</span> <span class="nv">curmin</span> <span class="nv">elem</span><span class="p">))</span>
+</span><span class='line'>           <span class="p">((</span><span class="nb">&lt;</span> <span class="nv">elem</span> <span class="nv">curmin</span><span class="p">)</span>
+</span><span class='line'>            <span class="p">(</span><span class="nv">max-min-helper</span> <span class="nb">rest</span> <span class="nv">elem</span> <span class="nv">curmax</span><span class="p">))</span>
+</span><span class='line'>           <span class="p">(</span><span class="no">t</span>
+</span><span class='line'>            <span class="p">(</span><span class="nv">max-min-helper</span> <span class="nb">rest</span> <span class="nv">curmin</span> <span class="nv">curmax</span><span class="p">)))))))</span>
+</span><span class='line'>    <span class="p">(</span><span class="nv">max-min-helper</span> <span class="nv">lst</span> <span class="no">nil</span> <span class="no">nil</span><span class="p">)))</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-03-31T10:25:00-07:00" pubdate data-updated="true">Mar 31<sup>st</sup>, 2014</time></div>
+	<div class="tags">
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -949,133 +1228,6 @@ If we extrapolate today&rsquo;s trend, his mathematical education will be conduc
 
 
 	<a class='category' href='/blog/categories/clojure/'>clojure,</a>, <a class='category' href='/blog/categories/gettingstarted/'>gettingstarted</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2014/01/29/programming-fun-ascii-tree/">
-		
-			Programming Fun: Ascii Tree</a>
-	</h2>
-	<div class="entry-content">
-		<p>Another <a href="http://www.reddit.com/r/dailyprogrammer/comments/1t0r09/121613_challenge_145_easy_tree_generation/">easy problem</a> (I&rsquo;m not picking easy problems! I&rsquo;m just going in sequence!)</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>Input Description
-</span><span class='line'>-----------------
-</span><span class='line'>You will be given one line of text on standard-console input: an integer and
-</span><span class='line'>two characters, all space-delimited. The integer, N, will range inclusively
-</span><span class='line'>from 3 to 21 and always be odd. The next character will be your trunk
-</span><span class='line'>character. The next character will be your leaves character. Draw the trunk and
-</span><span class='line'>leaves components with these characters, respectively.
-</span><span class='line'>
-</span><span class='line'>Output Description
-</span><span class='line'>------------------
-</span><span class='line'>Given the three input arguments, draw a centered-tree. It should follow this
-</span><span class='line'>pattern: (this is the smallest tree possible, with a base of 3)
-</span><span class='line'>   *
-</span><span class='line'>  ***
-</span><span class='line'>  ###
-</span><span class='line'>Here's a much larger tree, of base 7:
-</span><span class='line'>   *
-</span><span class='line'>  ***
-</span><span class='line'> *****
-</span><span class='line'>*******
-</span><span class='line'>  ###</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Is this really programming at all? More like basic <em>arithmetic</em>. Anyway &hellip;</p>
-
-<div><script src='https://gist.github.com/8679031.js'></script>
-<noscript><pre><code>// Skipped includes
-
-using namespace std;
-
-int main(int argc, char* argv[]) {
-  int tree_width;
-  char trunk_char, leaf_char;
-  cin &gt;&gt; tree_width &gt;&gt; trunk_char &gt;&gt; leaf_char;
-
-  // Since the top of the tree is triangular, if the height is N the base will
-  // be 2 * N - 1.
-  assert(tree_width % 2 == 1);
-  assert(tree_width &gt; 0);
-  int tree_height = (tree_width + 1) / 2;
-
-  for (int i = 0; i &lt; tree_height; ++i) {
-    // The i_th row will have 2 * i + 1 leaves, in the center
-    for (int j = 0; j &lt; (tree_height - i); ++j) {
-      cout &lt;&lt; &quot; &quot;;
-    }
-    for (int j = 0; j &lt; (2 * i + 1); ++j) {
-      cout &lt;&lt; leaf_char;
-    }
-    cout &lt;&lt; endl;
-  }
-  // Trunk is always of width 3, in the center
-  for (int j = 0; j &lt; (tree_height - 1); ++j) {
-    cout &lt;&lt; &quot; &quot;;
-  }
-  for (int j = 0; j &lt; 3; ++j) {
-    cout &lt;&lt; trunk_char;
-  }
-  cout &lt;&lt; endl;
-}
-</code></pre></noscript></div>
-
-
-<p>[Also, I realized I&rsquo;m wasting everyone&rsquo;s time by having all those redundant <code>#include</code> lines, so I got rid of them here]</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-01-29T02:11:00-08:00" pubdate data-updated="true">Jan 29<sup>th</sup>, 2014</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/alwaysbecoding/'>alwaysbecoding,</a>, <a class='category' href='/blog/categories/reddit/'>reddit</a>
 
 
 </div>

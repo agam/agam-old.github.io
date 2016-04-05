@@ -7,7 +7,7 @@
 	<meta name="author" content="Agam">
 
 	
-	<meta name="description" content="I don&rsquo;t recall the very first articles I might have read about Haskell, but the first non-short text was Real World Haskell, which I went &hellip;">
+	<meta name="description" content="Migrating from my Github blog (in Octopress) was supposed to work pretty much as specified in this guide 1 I used this gist in source/rss.xml and &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -86,6 +86,93 @@
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2014/12/11/failure-to-ragequit/">
+		
+			Failure to Ragequit</a>
+	</h2>
+	<div class="entry-content">
+		<p>Migrating from my Github blog (in Octopress) was supposed to work pretty much as specified in <a href="http://www.stackednotion.com/blog/2014/02/26/migrating-from-octopress-to-wordpress/">this guide</a> <sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup></p>
+
+<ul>
+<li>I used <a href="https://gist.github.com/lucaspiller/9229838#file-rss-xml">this gist</a> in <code>source/rss.xml</code> and then ran <code>rake generate</code></li>
+<li>I imported the generated file (in <code>public/rss.xml</code>) into my Wordpress blog, only to see this error
+
+<blockquote><p>This does not appear to be a WXR file, missing/invalid WXR version number.</p></blockquote></li>
+<li>A helpful post on <a href="https://wordpress.org/support/topic/xml-to-wxr-issue">the Wordpress Forums</a> suggested the following change</li>
+</ul>
+
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>&lt;rss xmlns:dc="http://purl.org/dc/elements/1.1/" version="2.0"&gt;
+</span><span class='line'>  &lt;channel&gt;
+</span><span class='line'>    &lt;atom:link rel="hub" href="http://pubsubhubbub.appspot.com" xmlns:atom="http://www.w3.org/2005/Atom"/&gt;
+</span><span class='line'>    &lt;wp:wxr_version&gt;1.1&lt;/wp:wxr_version&gt;
+</span><span class='line'>    &lt;title&gt;Agam&#39;s Mashed-Up Pome&lt;/title&gt;</span></code></pre></td></tr></table></div></figure>
+
+
+<p>(i.e. adding the <code>wxr_version</code> marker line after the language specification)</p>
+
+<ul>
+<li>After this, I tried importing again, it gave some warnings about not recognizing the author (which was to be expected) &hellip; and then though it said &ldquo;import successful!&rdquo;, there were no posts to be seen!</li>
+</ul>
+
+
+<p><strong>WTF Aaaarrgh WTF</strong></p>
+
+<p><em>Update: An hour later, more sober &hellip;</em></p>
+
+<p>Yeah, I don&rsquo;t have the <em>$&amp;@%in</em> time to waste trying various other hacks. The big reasons I wanted to switch was that</p>
+
+<ol>
+<li>I don&rsquo;t want to muck around with Ruby <em>ever again</em>, and</li>
+<li>I want to be able to write posts <em>online</em> (i.e. through some sort of browser interface).</li>
+</ol>
+
+
+<p>Now (1) is not an immediate problem, so I suppose if it re-occurs, I&rsquo;ll put more time/effort into quitting Octopress, but meanwhile there are compromises possible for (2), such as the nice interface of <a href="http://draftin.com">draftin.com</a> that I <em>just</em> discovered. <em>So yeah, this blog lives on &hellip;</em></p>
+<div class="footnotes">
+<hr/>
+<ol>
+<li id="fn:1">
+<p>This is the <em>second</em> time I&rsquo;ve tried to jump from Octopress to Wordpress; Google suggests that most people seem to be <a href="https://www.google.com/search?q=migrate+%22from+wordpress+to+octopress%22&amp;oq=migrate+%22from+wordpress+to+octopress">going the opposite direction</a><a href="#fnref:1" rev="footnote">&#8617;</a></p></li>
+</ol>
+</div>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-12-11T22:07:14-08:00" pubdate data-updated="true">Dec 11<sup>th</sup>, 2014</time></div>
+	<div class="tags">
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -929,96 +1016,6 @@
 
 
 	<a class='category' href='/blog/categories/scala/'>scala</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2014/07/31/scala-var/">
-		
-			Scala: Var, Val, Def</a>
-	</h2>
-	<div class="entry-content">
-		<p>Using all three (<code>val</code>, <code>var</code>, `d</p>
-
-<p>ef<code>), I initialize, and then attempt to reassign. Only</code>var` succeeds (as it should), but the other two fail in different ways.</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-</pre></td><td class='code'><pre><code class='scala'><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="k">val</span> <span class="n">x</span> <span class="k">=</span> <span class="mi">6</span>
-</span><span class='line'><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">6</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="n">x</span> <span class="k">=</span> <span class="mi">7</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">console</span><span class="k">&gt;:</span><span class="mi">11</span><span class="k">:</span> <span class="kt">error:</span> <span class="kt">reassignment</span> <span class="kt">to</span> <span class="kt">val</span>
-</span><span class='line'>       <span class="n">x</span> <span class="k">=</span> <span class="mi">7</span>
-</span><span class='line'>         <span class="o">^</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="k">var</span> <span class="n">x</span> <span class="k">=</span> <span class="mi">6</span>
-</span><span class='line'><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">6</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="n">x</span> <span class="k">=</span> <span class="mi">7</span>
-</span><span class='line'><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span> <span class="o">=</span> <span class="mi">7</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="k">def</span> <span class="n">x</span> <span class="k">=</span> <span class="mi">6</span>
-</span><span class='line'><span class="n">x</span><span class="k">:</span> <span class="kt">Int</span>
-</span><span class='line'>
-</span><span class='line'><span class="n">scala</span><span class="o">&gt;</span> <span class="n">x</span> <span class="k">=</span> <span class="mi">7</span>
-</span><span class='line'><span class="o">&lt;</span><span class="n">console</span><span class="k">&gt;:</span><span class="mi">11</span><span class="k">:</span> <span class="kt">error:</span> <span class="kt">value</span> <span class="kt">x_=</span> <span class="kt">is</span> <span class="kt">not</span> <span class="kt">a</span> <span class="kt">member</span> <span class="kt">of</span> <span class="kt">object</span> <span class="kt">$iw</span>
-</span><span class='line'>       <span class="n">x</span> <span class="k">=</span> <span class="mi">7</span>
-</span><span class='line'>       <span class="o">^</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Deceptively similar at first, but I suppose you get used to it. Also, what the heck is <code>$iw</code> ?? (I&rsquo;m guessing it&rsquo;s an internal Java representation of the <code>Int</code> class)</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-07-31T13:04:30-07:00" pubdate data-updated="true">Jul 31<sup>st</sup>, 2014</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/scalax/'>scalax</a>
 
 
 </div>

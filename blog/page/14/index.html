@@ -7,7 +7,7 @@
 	<meta name="author" content="Agam">
 
 	
-	<meta name="description" content="First off, just in case you closed your shell, terminal, screen session, whatever: you can easily resume your Arvo session 1
+	<meta name="description" content="Here&rsquo;s a simple one. 1
 2
 3
 4
@@ -17,7 +17,10 @@
 8
 9
 10
-11 &hellip;">
+11
+12
+Input Description
+----------------- Input will consistent of an array of 2x6 space-delimited &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -96,6 +99,163 @@
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2014/01/07/programming-fun-braille/">
+		
+			Programming Fun: Braille</a>
+	</h2>
+	<div class="entry-content">
+		<p>Here&rsquo;s a simple <a href="http://www.reddit.com/r/dailyprogrammer/comments/1s061q/120313_challenge_143_easy_braille/">one</a>.</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Input Description
+</span><span class='line'>-----------------
+</span><span class='line'>
+</span><span class='line'>Input will consistent of an array of 2x6 space-delimited Braille characters.
+</span><span class='line'>This array is always on the same line, so regardless of how long the text is, it
+</span><span class='line'>will always be on 3-rows of text. A lowered bump is a dot character '.', while a
+</span><span class='line'>raised bump is an upper-case 'O' character.
+</span><span class='line'>
+</span><span class='line'>Output Description
+</span><span class='line'>------------------
+</span><span class='line'>
+</span><span class='line'>Print the transcribed Braille.</span></code></pre></td></tr></table></div></figure>
+
+
+
+
+<div><script src='https://gist.github.com/8308823.js'></script>
+<noscript><pre><code>#include &lt;cassert&gt;
+#include &lt;cmath&gt;
+#include &lt;cstdint&gt;
+#include &lt;cstdio&gt;
+#include &lt;cstdlib&gt;
+#include &lt;algorithm&gt;
+#include &lt;iomanip&gt;
+#include &lt;iostream&gt;
+#include &lt;limits&gt;
+#include &lt;string&gt;
+#include &lt;vector&gt;
+#include &lt;queue&gt;
+#include &lt;unordered_map&gt;
+
+using namespace std;
+
+void InitializeBrailleData(unordered_map&lt;string, char&gt;* rep) {
+  rep-&gt;insert(make_pair(&quot;O.....&quot;, 'A'));
+  rep-&gt;insert(make_pair(&quot;O.O...&quot;, 'B'));
+  rep-&gt;insert(make_pair(&quot;OO....&quot;, 'C'));
+  rep-&gt;insert(make_pair(&quot;OO.O..&quot;, 'D'));
+  rep-&gt;insert(make_pair(&quot;O..O..&quot;, 'E'));
+  rep-&gt;insert(make_pair(&quot;OOO...&quot;, 'F'));
+  rep-&gt;insert(make_pair(&quot;OOOO..&quot;, 'G'));
+  rep-&gt;insert(make_pair(&quot;O.OO..&quot;, 'H'));
+  rep-&gt;insert(make_pair(&quot;.OO...&quot;, 'I'));
+  rep-&gt;insert(make_pair(&quot;.OOO..&quot;, 'J'));
+  rep-&gt;insert(make_pair(&quot;O...O.&quot;, 'K'));
+  rep-&gt;insert(make_pair(&quot;O.O.O.&quot;, 'L'));
+  rep-&gt;insert(make_pair(&quot;OO..O.&quot;, 'M'));
+  rep-&gt;insert(make_pair(&quot;OO.OO.&quot;, 'N'));
+  rep-&gt;insert(make_pair(&quot;O..OO.&quot;, 'O'));
+  rep-&gt;insert(make_pair(&quot;OOO.O.&quot;, 'P'));
+  rep-&gt;insert(make_pair(&quot;OOOOO.&quot;, 'Q'));
+  rep-&gt;insert(make_pair(&quot;O.OOO.&quot;, 'R'));
+  rep-&gt;insert(make_pair(&quot;.OO.O.&quot;, 'S'));
+  rep-&gt;insert(make_pair(&quot;.OOOO.&quot;, 'T'));
+  rep-&gt;insert(make_pair(&quot;O...OO&quot;, 'U'));
+  rep-&gt;insert(make_pair(&quot;O.O.OO&quot;, 'V'));
+  rep-&gt;insert(make_pair(&quot;.OOO.O&quot;, 'W'));
+  rep-&gt;insert(make_pair(&quot;OO..OO&quot;, 'X'));
+  rep-&gt;insert(make_pair(&quot;OO.OOO&quot;, 'Y'));
+  rep-&gt;insert(make_pair(&quot;O..OOO&quot;, 'Z'));
+};
+
+void AddRepresentation(const string&amp; line, vector&lt;string&gt;* representations) {
+  for (int index = 0; index &lt; line.length(); index += 3) {
+    (*representations)[index / 3].push_back(line[index]);
+    (*representations)[index / 3].push_back(line[index + 1]);
+
+    assert((line[index + 2] == ' ') || (index + 2 == line.length()));
+  }
+}
+
+int main() {
+  unordered_map&lt;string, char&gt; braille_representation;
+  InitializeBrailleData(&amp;braille_representation);
+
+  // Assume input is well formed.
+  // This means we read three lines from standard input,
+  // and each line's length is (3 * x - 1)
+  string line1, line2, line3;
+  getline(cin, line1);
+  getline(cin, line2);
+  getline(cin, line3);
+
+  // Basic invariants
+  assert(line1.length() == line2.length());
+  assert(line2.length() == line3.length());
+  assert((line1.length() + 1) % 3 == 0);
+
+  // Get the input into our desired form
+  vector&lt;string&gt; representations((line1.length() + 1) / 3);
+  AddRepresentation(line1, &amp;representations);
+  AddRepresentation(line2, &amp;representations);
+  AddRepresentation(line3, &amp;representations);
+
+  for (const string&amp; rep : representations) {
+    cout &lt;&lt; braille_representation[rep];
+  }
+  cout &lt;&lt; endl;
+}
+</code></pre></noscript></div>
+
+
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-07T23:31:00-08:00" pubdate data-updated="true">Jan 7<sup>th</sup>, 2014</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/alwaysbecoding/'>alwaysbecoding,</a>, <a class='category' href='/blog/categories/reddit/'>reddit</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -1490,59 +1650,6 @@ For each round of computation, print the percentage of votes for each candidate,
 
 
 	<a class='category' href='/blog/categories/vm/'>vm</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2013/12/14/adding-social-elements-to-octopress/">
-		
-			Adding Social Elements to Octopress</a>
-	</h2>
-	<div class="entry-content">
-		<p>This is almost too easy. Octopress already comes with basic integration options built-in.</p>
-
-<p>See <a href="http://jekyllrb.com/docs/configuration/">here</a> for more details than I care about, but the short version is that you just have to edit <code>_config.yml</code> and fill in fields for your Google+ username, a true/false value indicating whether users can share your posts on Google+/Twitter, a Disqus shortname for comments, a Google Analytics tracking code &hellip; you get the idea.</p>
-
-<p>(though there seems to be some <a href="http://blog.jmac.org/blog/2013/03/30/putting-twitter-back-into-octopress/">extra work</a> required to get Twitter to show up in the sidebar.</p>
-
-<p>While we&rsquo;re at it, might as well change the theme too. There&rsquo;s a huge collection of options at <a href="http://opthemes.com/">OPThemes</a>. So, pick one and replace the default dark grey one!</p>
-
-<p>The usual flow is something like <code>git submodule add &lt;the theme's git repo&gt;</code> followed by <code>rake install["&lt;the theme name&gt;"]</code></p>
-
-<p>I picked <a href="http://alexgaribay.com/"><code>octoflat</code></a> which doesn&rsquo;t have a sidebar, but is otherwise pleasing to look at.</p>
-
-<p>Happy customizing!</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-12-14T18:22:00-08:00" pubdate data-updated="true">Dec 14<sup>th</sup>, 2013</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/octopress/'>octopress,</a>, <a class='category' href='/blog/categories/social/'>social</a>
 
 
 </div>

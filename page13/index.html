@@ -7,7 +7,7 @@
 	<meta name="author" content="Agam">
 
 	
-	<meta name="description" content="Another &ldquo;intermediate&rdquo; problem today. 1
+	<meta name="description" content="Another easy problem (I&rsquo;m not picking easy problems! I&rsquo;m just going in sequence!) 1
 2
 3
 4
@@ -26,9 +26,8 @@
 17
 18
 19
-Input Description
------------------
-On standard &hellip;">
+20
+21 &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -107,6 +106,133 @@ On standard &hellip;">
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2014/01/29/programming-fun-ascii-tree/">
+		
+			Programming Fun: Ascii Tree</a>
+	</h2>
+	<div class="entry-content">
+		<p>Another <a href="http://www.reddit.com/r/dailyprogrammer/comments/1t0r09/121613_challenge_145_easy_tree_generation/">easy problem</a> (I&rsquo;m not picking easy problems! I&rsquo;m just going in sequence!)</p>
+
+<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+</pre></td><td class='code'><pre><code class=''><span class='line'>Input Description
+</span><span class='line'>-----------------
+</span><span class='line'>You will be given one line of text on standard-console input: an integer and
+</span><span class='line'>two characters, all space-delimited. The integer, N, will range inclusively
+</span><span class='line'>from 3 to 21 and always be odd. The next character will be your trunk
+</span><span class='line'>character. The next character will be your leaves character. Draw the trunk and
+</span><span class='line'>leaves components with these characters, respectively.
+</span><span class='line'>
+</span><span class='line'>Output Description
+</span><span class='line'>------------------
+</span><span class='line'>Given the three input arguments, draw a centered-tree. It should follow this
+</span><span class='line'>pattern: (this is the smallest tree possible, with a base of 3)
+</span><span class='line'>   *
+</span><span class='line'>  ***
+</span><span class='line'>  ###
+</span><span class='line'>Here's a much larger tree, of base 7:
+</span><span class='line'>   *
+</span><span class='line'>  ***
+</span><span class='line'> *****
+</span><span class='line'>*******
+</span><span class='line'>  ###</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Is this really programming at all? More like basic <em>arithmetic</em>. Anyway &hellip;</p>
+
+<div><script src='https://gist.github.com/8679031.js'></script>
+<noscript><pre><code>// Skipped includes
+
+using namespace std;
+
+int main(int argc, char* argv[]) {
+  int tree_width;
+  char trunk_char, leaf_char;
+  cin &gt;&gt; tree_width &gt;&gt; trunk_char &gt;&gt; leaf_char;
+
+  // Since the top of the tree is triangular, if the height is N the base will
+  // be 2 * N - 1.
+  assert(tree_width % 2 == 1);
+  assert(tree_width &gt; 0);
+  int tree_height = (tree_width + 1) / 2;
+
+  for (int i = 0; i &lt; tree_height; ++i) {
+    // The i_th row will have 2 * i + 1 leaves, in the center
+    for (int j = 0; j &lt; (tree_height - i); ++j) {
+      cout &lt;&lt; &quot; &quot;;
+    }
+    for (int j = 0; j &lt; (2 * i + 1); ++j) {
+      cout &lt;&lt; leaf_char;
+    }
+    cout &lt;&lt; endl;
+  }
+  // Trunk is always of width 3, in the center
+  for (int j = 0; j &lt; (tree_height - 1); ++j) {
+    cout &lt;&lt; &quot; &quot;;
+  }
+  for (int j = 0; j &lt; 3; ++j) {
+    cout &lt;&lt; trunk_char;
+  }
+  cout &lt;&lt; endl;
+}
+</code></pre></noscript></div>
+
+
+<p>[Also, I realized I&rsquo;m wasting everyone&rsquo;s time by having all those redundant <code>#include</code> lines, so I got rid of them here]</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-29T02:11:00-08:00" pubdate data-updated="true">Jan 29<sup>th</sup>, 2014</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/alwaysbecoding/'>alwaysbecoding,</a>, <a class='category' href='/blog/categories/reddit/'>reddit</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -1383,163 +1509,6 @@ int main() {
 
 
 	<a class='category' href='/blog/categories/urbit/'>urbit</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2014/01/07/programming-fun-braille/">
-		
-			Programming Fun: Braille</a>
-	</h2>
-	<div class="entry-content">
-		<p>Here&rsquo;s a simple <a href="http://www.reddit.com/r/dailyprogrammer/comments/1s061q/120313_challenge_143_easy_braille/">one</a>.</p>
-
-<figure class='code'><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-</pre></td><td class='code'><pre><code class=''><span class='line'>Input Description
-</span><span class='line'>-----------------
-</span><span class='line'>
-</span><span class='line'>Input will consistent of an array of 2x6 space-delimited Braille characters.
-</span><span class='line'>This array is always on the same line, so regardless of how long the text is, it
-</span><span class='line'>will always be on 3-rows of text. A lowered bump is a dot character '.', while a
-</span><span class='line'>raised bump is an upper-case 'O' character.
-</span><span class='line'>
-</span><span class='line'>Output Description
-</span><span class='line'>------------------
-</span><span class='line'>
-</span><span class='line'>Print the transcribed Braille.</span></code></pre></td></tr></table></div></figure>
-
-
-
-
-<div><script src='https://gist.github.com/8308823.js'></script>
-<noscript><pre><code>#include &lt;cassert&gt;
-#include &lt;cmath&gt;
-#include &lt;cstdint&gt;
-#include &lt;cstdio&gt;
-#include &lt;cstdlib&gt;
-#include &lt;algorithm&gt;
-#include &lt;iomanip&gt;
-#include &lt;iostream&gt;
-#include &lt;limits&gt;
-#include &lt;string&gt;
-#include &lt;vector&gt;
-#include &lt;queue&gt;
-#include &lt;unordered_map&gt;
-
-using namespace std;
-
-void InitializeBrailleData(unordered_map&lt;string, char&gt;* rep) {
-  rep-&gt;insert(make_pair(&quot;O.....&quot;, 'A'));
-  rep-&gt;insert(make_pair(&quot;O.O...&quot;, 'B'));
-  rep-&gt;insert(make_pair(&quot;OO....&quot;, 'C'));
-  rep-&gt;insert(make_pair(&quot;OO.O..&quot;, 'D'));
-  rep-&gt;insert(make_pair(&quot;O..O..&quot;, 'E'));
-  rep-&gt;insert(make_pair(&quot;OOO...&quot;, 'F'));
-  rep-&gt;insert(make_pair(&quot;OOOO..&quot;, 'G'));
-  rep-&gt;insert(make_pair(&quot;O.OO..&quot;, 'H'));
-  rep-&gt;insert(make_pair(&quot;.OO...&quot;, 'I'));
-  rep-&gt;insert(make_pair(&quot;.OOO..&quot;, 'J'));
-  rep-&gt;insert(make_pair(&quot;O...O.&quot;, 'K'));
-  rep-&gt;insert(make_pair(&quot;O.O.O.&quot;, 'L'));
-  rep-&gt;insert(make_pair(&quot;OO..O.&quot;, 'M'));
-  rep-&gt;insert(make_pair(&quot;OO.OO.&quot;, 'N'));
-  rep-&gt;insert(make_pair(&quot;O..OO.&quot;, 'O'));
-  rep-&gt;insert(make_pair(&quot;OOO.O.&quot;, 'P'));
-  rep-&gt;insert(make_pair(&quot;OOOOO.&quot;, 'Q'));
-  rep-&gt;insert(make_pair(&quot;O.OOO.&quot;, 'R'));
-  rep-&gt;insert(make_pair(&quot;.OO.O.&quot;, 'S'));
-  rep-&gt;insert(make_pair(&quot;.OOOO.&quot;, 'T'));
-  rep-&gt;insert(make_pair(&quot;O...OO&quot;, 'U'));
-  rep-&gt;insert(make_pair(&quot;O.O.OO&quot;, 'V'));
-  rep-&gt;insert(make_pair(&quot;.OOO.O&quot;, 'W'));
-  rep-&gt;insert(make_pair(&quot;OO..OO&quot;, 'X'));
-  rep-&gt;insert(make_pair(&quot;OO.OOO&quot;, 'Y'));
-  rep-&gt;insert(make_pair(&quot;O..OOO&quot;, 'Z'));
-};
-
-void AddRepresentation(const string&amp; line, vector&lt;string&gt;* representations) {
-  for (int index = 0; index &lt; line.length(); index += 3) {
-    (*representations)[index / 3].push_back(line[index]);
-    (*representations)[index / 3].push_back(line[index + 1]);
-
-    assert((line[index + 2] == ' ') || (index + 2 == line.length()));
-  }
-}
-
-int main() {
-  unordered_map&lt;string, char&gt; braille_representation;
-  InitializeBrailleData(&amp;braille_representation);
-
-  // Assume input is well formed.
-  // This means we read three lines from standard input,
-  // and each line's length is (3 * x - 1)
-  string line1, line2, line3;
-  getline(cin, line1);
-  getline(cin, line2);
-  getline(cin, line3);
-
-  // Basic invariants
-  assert(line1.length() == line2.length());
-  assert(line2.length() == line3.length());
-  assert((line1.length() + 1) % 3 == 0);
-
-  // Get the input into our desired form
-  vector&lt;string&gt; representations((line1.length() + 1) / 3);
-  AddRepresentation(line1, &amp;representations);
-  AddRepresentation(line2, &amp;representations);
-  AddRepresentation(line3, &amp;representations);
-
-  for (const string&amp; rep : representations) {
-    cout &lt;&lt; braille_representation[rep];
-  }
-  cout &lt;&lt; endl;
-}
-</code></pre></noscript></div>
-
-
-
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-01-07T23:31:00-08:00" pubdate data-updated="true">Jan 7<sup>th</sup>, 2014</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/alwaysbecoding/'>alwaysbecoding,</a>, <a class='category' href='/blog/categories/reddit/'>reddit</a>
 
 
 </div>
