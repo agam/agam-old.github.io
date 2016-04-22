@@ -7,20 +7,11 @@
 	<meta name="author" content="Agam">
 
 	
-	<meta name="description" content="Here&rsquo;s a simple one. 1
+	<meta name="description" content="Turns out I was affected by the last &ldquo;continuity breach&rdquo;. So I had to delete everything and start over. In my case this meant 1
 2
 3
 4
-5
-6
-7
-8
-9
-10
-11
-12
-Input Description
------------------ Input will consistent of an array of 2x6 space-delimited &hellip;">
+5 &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -99,6 +90,96 @@ Input Description
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2014/01/08/urbit-back-again/">
+		
+			Urbit: Back Again</a>
+	</h2>
+	<div class="entry-content">
+		<p>Turns out I was affected by the last &ldquo;continuity breach&rdquo;.</p>
+
+<p>So I had to delete everything and start over. In my case this meant</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span><span class="nb">cd </span>urbit
+</span><span class='line'><span class="nv">$ </span>git pull origin master
+</span><span class='line'><span class="nv">$ </span>make clean
+</span><span class='line'><span class="nv">$ </span>make
+</span><span class='line'><span class="nv">$ </span>rm -rf urb/*-*
+</span><span class='line'><span class="nv">$ </span>rm -rf frogstar
+</span><span class='line'><span class="nv">$ </span>vere -c frogstar
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This time when I ran <code>:begin</code> it succeeded</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>generating 2048-bit RSA key...
+</span><span class='line'><span class="p">;</span> ~doznec _Urban Republic_ is your neighbor
+</span><span class='line'><span class="p">;</span> ~doznec _Urban Republic_ is your neighbor
+</span><span class='line'>request approved
+</span><span class='line'><span class="p">;</span> ~zod <span class="p">|</span>Tianming<span class="p">|</span> is your neighbor
+</span><span class='line'><span class="p">;</span> ~zod <span class="p">|</span>Tianming<span class="p">|</span> is your neighbor
+</span><span class='line'><span class="p">;</span> ~doznec _Urban Republic_ is your neighbor
+</span><span class='line'><span class="p">;</span> ~doznec _Urban Republic_ is your neighbor
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&hellip; and then more hoon files were downloaded, after which I got my new prompt:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+</pre></td><td class='code'><pre><code class='sh'><span class='line'>~todbyt-nathes/try<span class="o">=</span>&gt;
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>Next time I&rsquo;ll start exploring <em>Nock</em> and <em>Hoon</em> some more &hellip;</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2014-01-08T08:47:00-08:00" pubdate data-updated="true">Jan 8<sup>th</sup>, 2014</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/urbit/'>urbit</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -1607,49 +1688,6 @@ For each round of computation, print the percentage of votes for each candidate,
 
 
 	<a class='category' href='/blog/categories/screen/'>screen</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2013/12/16/starting-from-scratch-on-a-vm/">
-		
-			Starting From Scratch on a VM</a>
-	</h2>
-	<div class="entry-content">
-		<p>I&rsquo;ve started from scratch many times on new linux installations. It gets old after a while though, so I prefer to do it as infrequently as possible.</p>
-
-<p>Getting started with a bare-bones VM is one of the occasions for this, so I&rsquo;ll take the time to record what I do so that I don&rsquo;t have to revisit this stuff the <em>next time</em>.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2013-12-16T03:41:00-08:00" pubdate data-updated="true">Dec 16<sup>th</sup>, 2013</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/vm/'>vm</a>
 
 
 </div>

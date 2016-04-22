@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2016-04-04T23:05:06-07:00</updated>
+  <updated>2016-04-21T21:45:31-07:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,25 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Stumbling around programming]]></title>
+    <link href="http://agam.github.io/blog/2016/04/21/stumbling-around-programming/"/>
+    <updated>2016-04-21T21:42:53-07:00</updated>
+    <id>http://agam.github.io/blog/2016/04/21/stumbling-around-programming</id>
+    <content type="html"><![CDATA[<p>(In which I keep talking to myself about learning/doing stuff in the near past/future)</p>
+
+<ul>
+<li><p>Read Scott Meyers’ updated C++11/14 book: he’s really the only one who can do a good job of explaining stuff like the subtleties of universal references. Sad to see him take a break (though I hope he’s back in time to explain C++17 to us!)</p></li>
+<li><p>Realized I made a big arrogant jerky mistake by dismissing a lot of stuff as being lame and/or hipsterish and not taking it seriously. So I’m going to spend time learning Ruby/Rails and some Javascript/Coffeescript and make some toy apps with that</p></li>
+<li><p>I’ve totally fallen off the Math bandwagon, and I realized this actually happened <em>some time ago</em>, which is very depressing. And I don’t know <em>exactly</em> what to do about it, so I’d like to find <em>some</em> way back ..</p></li>
+<li><p>Had fun reading through a bunch of Clojure code/tutorials/books, but I don’t really have any ideas on what to <em>do</em> with it, as silly as that sounds</p></li>
+<li><p>Keep opening and closing Pharo. Way too much fun, but I have lesser and lesser time for that kind of goalless fun these days. Made a mental note to keep suggesting Squeak as a strong contender for an introductory programming environment for kids.</p></li>
+<li><p>Speculatively, if I get time, I have to get back to reading TAPL</p></li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Monthly Prog/Math/Sci summary: March 2016]]></title>
@@ -950,47 +969,6 @@
 <p><em>As the taste of umami itself is subtle and blends well with other tastes to expand and round out flavors, most people don&rsquo;t recognize umami when they encounter it, but it plays an important role making food taste delicious.</em> <a href="http://www.umamiinfo.com/2011/02/What-exactly-is-umami.php">(reference)</a><a href="#fnref:2" rev="footnote">&#8617;</a></p></li>
 </ol>
 </div>
-
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Syntax transformers (!)]]></title>
-    <link href="http://agam.github.io/blog/2015/07/25/syntax-transformers/"/>
-    <updated>2015-07-25T21:07:25-07:00</updated>
-    <id>http://agam.github.io/blog/2015/07/25/syntax-transformers</id>
-    <content type="html"><![CDATA[<p>I&rsquo;ve seen <code>defmacro</code> before, and while the pros and cons of &ldquo;hygiene&rdquo; are contentious, I had never bothered to learn macros in Scheme before. So now I&rsquo;m working my way through Kent Dybvig&rsquo;s <a href="http://www.scheme.com/tspl4/">&ldquo;The Scheme Programming Language&rdquo;</a>, and I have to say, I like what I see. Here&rsquo;s an example I wrote today:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-</pre></td><td class='code'><pre><code class='scheme'><span class='line'><span class="c1">;;; Exercise 3.1.3</span>
-</span><span class='line'><span class="p">(</span><span class="k">define-syntax </span><span class="nv">my-let*</span>
-</span><span class='line'>  <span class="p">(</span><span class="k">syntax-rules </span><span class="p">()</span>
-</span><span class='line'>    <span class="p">[(</span><span class="nf">_</span> <span class="p">((</span><span class="nf">x</span> <span class="nv">e</span><span class="p">))</span> <span class="nv">body</span> <span class="o">...</span><span class="p">)</span>
-</span><span class='line'>      <span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="nf">x</span> <span class="nv">e</span><span class="p">))</span>
-</span><span class='line'>        <span class="nv">body</span> <span class="o">...</span><span class="p">)]</span>
-</span><span class='line'>    <span class="p">[(</span><span class="nf">_</span> <span class="p">((</span><span class="nf">x1</span> <span class="nv">e1</span><span class="p">)</span> <span class="p">(</span><span class="nf">x2</span> <span class="nv">e2</span><span class="p">)</span> <span class="o">...</span><span class="p">)</span> <span class="nv">body</span> <span class="o">...</span><span class="p">)</span>
-</span><span class='line'>      <span class="p">(</span><span class="k">let </span><span class="p">((</span><span class="nf">x1</span> <span class="nv">e1</span><span class="p">))</span>
-</span><span class='line'>        <span class="p">(</span><span class="nf">my-let*</span> <span class="p">((</span><span class="nf">x2</span> <span class="nv">e2</span><span class="p">)</span> <span class="o">...</span><span class="p">)</span> <span class="nv">body</span> <span class="o">...</span><span class="p">))]))</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>Used in the REPL as follows:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='scheme'><span class='line'><span class="nv">&gt;</span> <span class="p">(</span><span class="nf">my-let*</span> <span class="p">([</span><span class="nv">a</span> <span class="mi">5</span><span class="p">]</span> <span class="p">[</span><span class="nv">b</span> <span class="p">(</span><span class="nb">+ </span><span class="nv">a</span> <span class="nv">a</span><span class="p">)]</span> <span class="p">[</span><span class="nv">c</span> <span class="p">(</span><span class="nb">+ </span><span class="nv">a</span> <span class="nv">b</span><span class="p">)])</span>
-</span><span class='line'>    <span class="p">(</span><span class="nb">list </span><span class="nv">a</span> <span class="nv">b</span> <span class="nv">c</span><span class="p">))</span>
-</span><span class='line'><span class="o">&#39;</span><span class="p">(</span><span class="mi">5</span> <span class="mi">10</span> <span class="mi">15</span><span class="p">)</span>
-</span></code></pre></td></tr></table></div></figure>
 
 ]]></content>
   </entry>

@@ -7,7 +7,7 @@
 	<meta name="author" content="Agam">
 
 	
-	<meta name="description" content="Statutory Warning: Spoilers ahead This turned out to be really simple, though I went through a phase of churning out complicated solutions because &hellip;">
+	<meta name="description" content="This problem afforded a chance to be lazy and have fun. There definitely is a pattern in the diagonals here: for a 3 x 3 matrix, the elements are 3 &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -86,6 +86,224 @@
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2015/02/17/euler-28-spiral-diagonals/">
+		
+			Euler 28: Spiral Diagonals</a>
+	</h2>
+	<div class="entry-content">
+		<p>This problem afforded a chance to be lazy and have fun.</p>
+
+<p>There definitely is a pattern in the diagonals here: for a <code>3 x 3</code> matrix, the elements are 3, 5, 7, 9. For a <code>5 x 5</code> matrix, the additional elements are 13, 17, 21, 25.</p>
+
+<p>You can see these as being (1 + 2), (1 + 4), (1 + 6), (1 + 8), and then (1 + 2 + 2 + 8), (1 + 4 + 4 + 8), (1 + 6 + 6 + 8), (1 + 8 + 8 + 8).</p>
+
+<p>Similarly, for a <code>7 x 7</code> matrix, the numbers are 31, 37, 43, 49, which are (1 + 2 + 2 + 2 + 8 + 8 + 8), (1 + 4 + 4 + 4 + 8 + 8 + 8), (1 + 6 + 6 + 6 + 8 + 8 + 8), (1 + 8 + 8 + 8 + 8 + 8 + 8)</p>
+
+<p>On the other hand, the problem mentions a <code>1001 x 1001</code> matrix, which is <em>tiny</em>, so why bother with these patterns? Just create the matrix and sum up the diagonals directly! (It&rsquo;s <em>just</em> a million elements &hellip; now if it was a few orders of magnitude higher, it would be a different story)</p>
+
+<p><strong>Statutory Warning</strong>: Spoilers ahead!</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+<span class='line-number'>9</span>
+<span class='line-number'>10</span>
+<span class='line-number'>11</span>
+<span class='line-number'>12</span>
+<span class='line-number'>13</span>
+<span class='line-number'>14</span>
+<span class='line-number'>15</span>
+<span class='line-number'>16</span>
+<span class='line-number'>17</span>
+<span class='line-number'>18</span>
+<span class='line-number'>19</span>
+<span class='line-number'>20</span>
+<span class='line-number'>21</span>
+<span class='line-number'>22</span>
+<span class='line-number'>23</span>
+<span class='line-number'>24</span>
+<span class='line-number'>25</span>
+<span class='line-number'>26</span>
+<span class='line-number'>27</span>
+<span class='line-number'>28</span>
+<span class='line-number'>29</span>
+<span class='line-number'>30</span>
+<span class='line-number'>31</span>
+<span class='line-number'>32</span>
+<span class='line-number'>33</span>
+<span class='line-number'>34</span>
+<span class='line-number'>35</span>
+<span class='line-number'>36</span>
+<span class='line-number'>37</span>
+<span class='line-number'>38</span>
+<span class='line-number'>39</span>
+<span class='line-number'>40</span>
+<span class='line-number'>41</span>
+<span class='line-number'>42</span>
+<span class='line-number'>43</span>
+<span class='line-number'>44</span>
+<span class='line-number'>45</span>
+<span class='line-number'>46</span>
+<span class='line-number'>47</span>
+<span class='line-number'>48</span>
+<span class='line-number'>49</span>
+<span class='line-number'>50</span>
+<span class='line-number'>51</span>
+<span class='line-number'>52</span>
+<span class='line-number'>53</span>
+<span class='line-number'>54</span>
+<span class='line-number'>55</span>
+<span class='line-number'>56</span>
+<span class='line-number'>57</span>
+<span class='line-number'>58</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="kr">import</span> <span class="k">qualified</span> <span class="nn">Data.List</span> <span class="k">as</span> <span class="n">L</span>
+</span><span class='line'><span class="kr">import</span> <span class="k">qualified</span> <span class="nn">Data.Vector</span> <span class="k">as</span> <span class="n">V</span>
+</span><span class='line'><span class="kr">import</span> <span class="k">qualified</span> <span class="nn">Data.Matrix</span> <span class="k">as</span> <span class="n">M</span>
+</span><span class='line'><span class="kr">import</span> <span class="k">qualified</span> <span class="nn">Data.HashMap.Strict</span> <span class="k">as</span> <span class="n">H</span>
+</span><span class='line'><span class="kr">import</span> <span class="nn">Prelude</span> <span class="k">hiding</span> <span class="p">(</span><span class="kt">Left</span><span class="p">,</span><span class="kt">Right</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="c1">-- Euler 28: spiral int matrix</span>
+</span><span class='line'>
+</span><span class='line'><span class="kr">data</span> <span class="kt">Direction</span> <span class="ow">=</span> <span class="kt">Down</span> <span class="o">|</span> <span class="kt">Left</span> <span class="o">|</span> <span class="kt">Right</span> <span class="o">|</span> <span class="kt">Up</span> <span class="kr">deriving</span> <span class="kt">Show</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">move</span> <span class="ow">::</span> <span class="p">(</span><span class="kt">Int</span><span class="p">,</span><span class="kt">Int</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="kt">Direction</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="kt">Int</span><span class="p">,</span><span class="kt">Int</span><span class="p">)</span>
+</span><span class='line'><span class="nf">move</span> <span class="n">oldPoint</span><span class="o">@</span><span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">x</span><span class="p">)</span> <span class="n">dir</span> <span class="ow">=</span>
+</span><span class='line'>  <span class="kr">case</span> <span class="n">dir</span> <span class="kr">of</span> <span class="kt">Down</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">y</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
+</span><span class='line'>              <span class="kt">Left</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>              <span class="kt">Right</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">y</span><span class="p">,</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+</span><span class='line'>              <span class="kt">Up</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="n">y</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="n">x</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">getSpiralMoves</span> <span class="ow">::</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="p">[</span><span class="kt">Direction</span><span class="p">]</span>
+</span><span class='line'><span class="nf">getSpiralMoves</span> <span class="n">n</span> <span class="ow">=</span>
+</span><span class='line'>  <span class="kr">if</span> <span class="n">n</span> <span class="o">==</span> <span class="mi">3</span>
+</span><span class='line'>  <span class="kr">then</span> <span class="p">[</span><span class="kt">Down</span><span class="p">,</span> <span class="kt">Right</span><span class="p">,</span> <span class="kt">Up</span><span class="p">,</span> <span class="kt">Up</span><span class="p">,</span> <span class="kt">Left</span><span class="p">,</span> <span class="kt">Left</span><span class="p">,</span> <span class="kt">Down</span><span class="p">,</span> <span class="kt">Down</span><span class="p">]</span>
+</span><span class='line'>  <span class="kr">else</span> <span class="kr">let</span> <span class="n">prevMoves</span> <span class="ow">=</span> <span class="n">getSpiralMoves</span> <span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+</span><span class='line'>           <span class="n">firstMove</span> <span class="ow">=</span> <span class="p">[</span><span class="kt">Down</span><span class="p">]</span>
+</span><span class='line'>           <span class="n">secondMove</span> <span class="ow">=</span> <span class="n">take</span> <span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span> <span class="o">$</span> <span class="n">repeat</span> <span class="kt">Right</span>
+</span><span class='line'>           <span class="n">thirdMove</span> <span class="ow">=</span> <span class="n">take</span> <span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">$</span> <span class="n">repeat</span> <span class="kt">Up</span>
+</span><span class='line'>           <span class="n">fourthMove</span> <span class="ow">=</span> <span class="n">take</span> <span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">$</span> <span class="n">repeat</span> <span class="kt">Left</span>
+</span><span class='line'>           <span class="n">fifthMove</span> <span class="ow">=</span> <span class="n">take</span> <span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">$</span> <span class="n">repeat</span> <span class="kt">Down</span>
+</span><span class='line'>       <span class="kr">in</span>
+</span><span class='line'>        <span class="n">prevMoves</span> <span class="o">++</span> <span class="n">firstMove</span> <span class="o">++</span> <span class="n">secondMove</span> <span class="o">++</span> <span class="n">thirdMove</span> <span class="o">++</span> <span class="n">fourthMove</span> <span class="o">++</span> <span class="n">fifthMove</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">getSpiralCoords</span> <span class="ow">::</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="p">[(</span><span class="kt">Int</span><span class="p">,</span><span class="kt">Int</span><span class="p">)]</span>
+</span><span class='line'><span class="nf">getSpiralCoords</span> <span class="n">n</span> <span class="ow">=</span>
+</span><span class='line'>  <span class="kr">let</span> <span class="n">mid</span> <span class="ow">=</span> <span class="n">div</span> <span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="mi">2</span>
+</span><span class='line'>      <span class="n">start</span> <span class="ow">=</span> <span class="p">(</span><span class="n">mid</span><span class="p">,</span><span class="n">mid</span><span class="p">)</span>
+</span><span class='line'>  <span class="kr">in</span>
+</span><span class='line'>   <span class="kt">L</span><span class="o">.</span><span class="n">scanl</span> <span class="n">move</span> <span class="n">start</span> <span class="o">$</span> <span class="n">getSpiralMoves</span> <span class="n">n</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">getCoordHash</span> <span class="ow">::</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="kt">H</span><span class="o">.</span><span class="kt">HashMap</span> <span class="p">(</span><span class="kt">Int</span><span class="p">,</span><span class="kt">Int</span><span class="p">)</span> <span class="kt">Int</span>
+</span><span class='line'><span class="nf">getCoordHash</span> <span class="n">n</span> <span class="ow">=</span> <span class="kt">H</span><span class="o">.</span><span class="n">fromList</span> <span class="o">$</span> <span class="n">zip</span> <span class="p">(</span><span class="n">getSpiralCoords</span> <span class="n">n</span><span class="p">)</span> <span class="p">[</span><span class="mi">1</span><span class="o">..</span><span class="p">]</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">genF</span> <span class="ow">::</span> <span class="kt">H</span><span class="o">.</span><span class="kt">HashMap</span> <span class="p">(</span><span class="kt">Int</span><span class="p">,</span><span class="kt">Int</span><span class="p">)</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="p">(</span><span class="kt">Int</span><span class="p">,</span> <span class="kt">Int</span><span class="p">)</span> <span class="ow">-&gt;</span> <span class="kt">Int</span>
+</span><span class='line'><span class="nf">genF</span> <span class="n">h</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">)</span> <span class="ow">=</span> <span class="n">h</span> <span class="kt">H</span><span class="o">.!</span> <span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">)</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">getDiagElems</span> <span class="ow">::</span> <span class="kt">M</span><span class="o">.</span><span class="kt">Matrix</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="kt">Int</span>
+</span><span class='line'><span class="nf">getDiagElems</span> <span class="n">mat</span> <span class="n">n</span> <span class="ow">=</span>
+</span><span class='line'>  <span class="kr">let</span> <span class="n">leftDiag</span> <span class="ow">=</span> <span class="n">sum</span> <span class="o">$</span> <span class="p">[</span><span class="kt">M</span><span class="o">.</span><span class="n">getElem</span> <span class="n">i</span> <span class="n">i</span> <span class="n">mat</span> <span class="o">|</span> <span class="n">i</span> <span class="ow">&lt;-</span> <span class="p">[</span><span class="mi">1</span> <span class="o">..</span> <span class="n">n</span><span class="p">]]</span>
+</span><span class='line'>      <span class="n">rightDiag</span> <span class="ow">=</span> <span class="n">sum</span> <span class="o">$</span> <span class="p">[</span><span class="kt">M</span><span class="o">.</span><span class="n">getElem</span> <span class="n">i</span> <span class="p">(</span><span class="n">n</span> <span class="o">+</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">i</span><span class="p">)</span> <span class="n">mat</span> <span class="o">|</span> <span class="n">i</span> <span class="ow">&lt;-</span> <span class="p">[</span><span class="mi">1</span> <span class="o">..</span> <span class="n">n</span><span class="p">]]</span>
+</span><span class='line'>      <span class="n">centerElem</span> <span class="ow">=</span> <span class="kr">let</span> <span class="n">c</span> <span class="ow">=</span> <span class="n">div</span> <span class="p">(</span><span class="n">n</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="mi">2</span>
+</span><span class='line'>                   <span class="kr">in</span>
+</span><span class='line'>                    <span class="kt">M</span><span class="o">.</span><span class="n">getElem</span> <span class="n">c</span> <span class="n">c</span> <span class="n">mat</span>
+</span><span class='line'>  <span class="kr">in</span>
+</span><span class='line'>   <span class="n">leftDiag</span> <span class="o">+</span> <span class="n">rightDiag</span> <span class="o">-</span> <span class="n">centerElem</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">getSpiralMatrix</span> <span class="ow">::</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="kt">M</span><span class="o">.</span><span class="kt">Matrix</span> <span class="kt">Int</span>
+</span><span class='line'><span class="nf">getSpiralMatrix</span> <span class="n">n</span> <span class="ow">=</span> <span class="kt">M</span><span class="o">.</span><span class="n">matrix</span> <span class="n">n</span> <span class="n">n</span> <span class="o">$</span> <span class="n">genF</span> <span class="o">$</span> <span class="n">getCoordHash</span> <span class="n">n</span>
+</span><span class='line'>
+</span><span class='line'><span class="nf">diagSum</span> <span class="ow">::</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="kt">Int</span>
+</span><span class='line'><span class="nf">diagSum</span> <span class="n">n</span> <span class="ow">=</span> <span class="n">getDiagElems</span> <span class="p">(</span><span class="n">getSpiralMatrix</span> <span class="n">n</span><span class="p">)</span> <span class="n">n</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>I added type signatures for every function, so here&rsquo;s a quick overview (this is terribly over-engineered, and turned out to be more of a way to get to know various Haskell datatypes than to actually solve this problem!):</p>
+
+<p><code>getSpiralMoves</code> translates the literal pattern of the square spiral into concrete steps and then <code>getSpiralCoords</code> converts these into <code>(i,j)</code> elements within the matrix. Since I use a <em>generating function</em> (in <code>getSpiralMatrix</code>) to create the matrix, I use a hash-map to store the value of each co-ordinate &hellip; and then <code>getDiagElems</code> iterates over the diagonal elements.</p>
+
+<p>The matrix does turn out as expected:</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+<span class='line-number'>7</span>
+<span class='line-number'>8</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="o">*</span><span class="kt">Main</span><span class="o">&gt;</span> <span class="n">getSpiralMatrix</span> <span class="mi">7</span>
+</span><span class='line'><span class="p">(</span> <span class="mi">43</span> <span class="mi">42</span> <span class="mi">41</span> <span class="mi">40</span> <span class="mi">39</span> <span class="mi">38</span> <span class="mi">37</span> <span class="p">)</span>
+</span><span class='line'><span class="p">(</span> <span class="mi">44</span> <span class="mi">21</span> <span class="mi">20</span> <span class="mi">19</span> <span class="mi">18</span> <span class="mi">17</span> <span class="mi">36</span> <span class="p">)</span>
+</span><span class='line'><span class="p">(</span> <span class="mi">45</span> <span class="mi">22</span>  <span class="mi">7</span>  <span class="mi">6</span>  <span class="mi">5</span> <span class="mi">16</span> <span class="mi">35</span> <span class="p">)</span>
+</span><span class='line'><span class="p">(</span> <span class="mi">46</span> <span class="mi">23</span>  <span class="mi">8</span>  <span class="mi">1</span>  <span class="mi">4</span> <span class="mi">15</span> <span class="mi">34</span> <span class="p">)</span>
+</span><span class='line'><span class="p">(</span> <span class="mi">47</span> <span class="mi">24</span>  <span class="mi">9</span>  <span class="mi">2</span>  <span class="mi">3</span> <span class="mi">14</span> <span class="mi">33</span> <span class="p">)</span>
+</span><span class='line'><span class="p">(</span> <span class="mi">48</span> <span class="mi">25</span> <span class="mi">10</span> <span class="mi">11</span> <span class="mi">12</span> <span class="mi">13</span> <span class="mi">32</span> <span class="p">)</span>
+</span><span class='line'><span class="p">(</span> <span class="mi">49</span> <span class="mi">26</span> <span class="mi">27</span> <span class="mi">28</span> <span class="mi">29</span> <span class="mi">30</span> <span class="mi">31</span> <span class="p">)</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>This was a simple problem but I was surprised by how <em>short</em> the code was; I didn&rsquo;t write overly terse code, added lots of whitespace, indentation, extra lines, etc, and the whole piece was <em>still</em> just 60 lines!</p>
+
+<p><strong>Update</strong>: Fine, here&rsquo;s the simple solution too.</p>
+
+<p>For every <code>N x N</code> matrix (where <code>N</code> is odd), the diagonal elements are all the diagonal elements of the <code>N-2</code>-sized matrix, plus four more. And these four include <code>N^2</code> and three others, each being <code>(N-1)</code> less than the other. The base case is <code>1 x 1</code>, with a value of 1.</p>
+
+<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
+<span class='line-number'>2</span>
+<span class='line-number'>3</span>
+<span class='line-number'>4</span>
+<span class='line-number'>5</span>
+<span class='line-number'>6</span>
+</pre></td><td class='code'><pre><code class='haskell'><span class='line'><span class="nf">euler28</span> <span class="ow">::</span> <span class="kt">Int</span> <span class="ow">-&gt;</span> <span class="kt">Int</span>
+</span><span class='line'><span class="nf">euler28</span> <span class="mi">1</span> <span class="ow">=</span> <span class="mi">1</span>
+</span><span class='line'><span class="nf">euler28</span> <span class="n">n</span> <span class="ow">=</span> <span class="kr">let</span> <span class="n">sideDiff</span> <span class="ow">=</span> <span class="n">n</span> <span class="o">-</span> <span class="mi">1</span>
+</span><span class='line'>                <span class="n">sq</span> <span class="ow">=</span> <span class="n">n</span> <span class="o">^</span> <span class="mi">2</span>
+</span><span class='line'>            <span class="kr">in</span>
+</span><span class='line'>             <span class="n">euler28</span> <span class="p">(</span><span class="n">n</span><span class="o">-</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="mi">4</span> <span class="o">*</span> <span class="n">sq</span> <span class="o">-</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">+</span> <span class="mi">3</span><span class="p">)</span> <span class="o">*</span> <span class="n">sideDiff</span>
+</span></code></pre></td></tr></table></div></figure>
+
+
+<p>&hellip; and then <code>euler28 1001</code> gives the same answer.</p>
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-02-17T11:33:10-08:00" pubdate data-updated="true">Feb 17<sup>th</sup>, 2015</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/haskell/'>haskell</a>, <a class='category' href='/blog/categories/projecteuler/'>projecteuler</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -2520,63 +2738,6 @@ After this, evaluating <code>amicables 10000</code> took <code>23.71</code> seco
 
 
 	<a class='category' href='/blog/categories/haskell/'>haskell</a>, <a class='category' href='/blog/categories/projecteuler/'>projecteuler</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2015/01/26/languages-slash-ecosystems-to-explore-in-2015/">
-		
-			Languages/ecosystems to Explore in 2015</a>
-	</h2>
-	<div class="entry-content">
-		<p>Yeah, why not make lists. This is a short one, so don&rsquo;t worry. In fact, it&rsquo;s a replacement for earlier lists, so it&rsquo;s not really that important; more of a note to my future self on current &ldquo;oscillations&rdquo;. There are three nice corners I&rsquo;d like to explore, in no particular order:</p>
-
-<h4>Go</h4>
-
-<p>It&rsquo;s really the <em>best</em> operational-semantics out there that has a great story on concurrency. I can never get tired of saying this: Go should be your first programming language.</p>
-
-<h4>Haskell</h4>
-
-<p>Yeah, tough one here. <em>Ocaml</em> is so good too, and F# has all those juicy libraries to be exploited, but I&rsquo;ve gone too far away from declarative problem solving over the years and need a real habit-changing kick. <em>Hence haskell</em>. I know I&rsquo;m reversing my position on this, but I&rsquo;ll write about it in a separate post.</p>
-
-<h4>R</h4>
-
-<p>Why is this here? More out of curiosity than anything else. I&rsquo;ve <em>dabbled</em> in the past. I got <em>R in a nutshell</em> a few years ago and then threw it away without reading much of it, but I think I judged too soon. All of &ldquo;statistics&rdquo; has become somewhat fuzzy for me over the years, so this is more of a way to get a refresher there. I&rsquo;ve heard good things about <a href="http://www-bcf.usc.edu/~gareth/ISL/">Introduction to Statistical Learning (with applications in R)</a>.</p>
-
-<h4>Conclusion</h4>
-
-<p>One common factor to all of these is they&rsquo;re <strong>free</strong> to explore, <em>and</em> they have a great <strong>community</strong> of helpful people who&rsquo;re good at answering questions, whether on mailing lists or IRC.</p>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-01-26T23:46:25-08:00" pubdate data-updated="true">Jan 26<sup>th</sup>, 2015</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/meta/'>meta</a>
 
 
 </div>
