@@ -7,7 +7,7 @@
 	<meta name="author" content="Agam">
 
 	
-	<meta name="description" content="I just encountered Zipf&rsquo;s Law1 for the first time, and wanted to confirm it for myself. So I got a copy of Alice in Wonderland2, removed the &hellip;">
+	<meta name="description" content="I saw an ad for Codecademy1 in the footer of some web page, and immediately had mixed reactions. I&rsquo;m all for making programming a basic skill &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -86,6 +86,103 @@
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2015/01/02/getting-into-programming/">
+		
+			Getting Into Programming, for _real_ and for _free_</a>
+	</h2>
+	<div class="entry-content">
+		<p>I saw an ad for Codecademy<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> in the footer of some web page, and immediately had mixed reactions. I&rsquo;m all for making programming a basic skill alongside reading and writing, but the focus of these &ldquo;bootcamps&rdquo;<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup> seems to be <em>vocational web development</em><sup id="fnref:3"><a href="#fn:3" rel="footnote">3</a></sup>.</p>
+
+<p>This is <del>fine</del>great for people who really want to do that and until now lacked a way to acquire these skills in a focussed manner. But I&rsquo;m worried that this will replace what <em>computer science</em> or <em>programming</em> mean to a whole generation of kids<sup id="fnref:4"><a href="#fn:4" rel="footnote">4</a></sup>.</p>
+
+<p>(Note: to be fair, there are bootcamps which are exceptions to the rule<sup id="fnref:5"><a href="#fn:5" rel="footnote">5</a></sup>, that focus on a wider array of skills)</p>
+
+<p>While tweaking web pages might offer an instant gratification that can be sufficient for most people, I hope there are lots of kids who&rsquo;d like a bit more &ldquo;hard core&rdquo; approach. In the past, I have always believed this path to best consist of <em>C</em> followed by <em>Python</em> followed by <em>Scheme</em>.</p>
+
+<p>This is still a great way to proceed, but I now think I have a better prescription: replace <em>Scheme</em> with one of <em>Racket</em><sup id="fnref:6"><a href="#fn:6" rel="footnote">6</a></sup>/<em>Common Lisp</em>/<em>Clojure</em>/<em>Haskell</em><sup id="fnref:7"><a href="#fn:7" rel="footnote">7</a></sup>, and replace <em>C</em> and <em>Python</em> by a single language: <em>Go</em>.</p>
+
+<p>The more I think about it, the more I am convinced that Go is an <em>excellent</em> way to learn programming. It fulfills the requirement of &ldquo;learning about the machine&rdquo; (since it&rsquo;s syntactically similar to C, but <em>safer</em>) and being quick to develop and iterate (as in Python, it&rsquo;s very easy to install external libraries, build, run, fix, run again, etc)</p>
+
+<p>I&rsquo;m thinking here of a 10-year old kid (ok, a 10-year old kid <em>who wants to learn</em>). There&rsquo;s stuff like Scratch<sup id="fnref:8"><a href="#fn:8" rel="footnote">8</a></sup> and Logo<sup id="fnref:9"><a href="#fn:9" rel="footnote">9</a></sup> for younger kids, and various programming tutorials aimed at slightly older kids, but what&rsquo;s the best way to target this kid? <strong>I think it&rsquo;s by getting him/her to play around with (1) some flavor of unix, and (2) learn Go. Both are free.<sup id="fnref:10"><a href="#fn:10" rel="footnote">10</a></sup></strong></p>
+
+<p>There&rsquo;s never been a better time to get acquainted with the nuts and bolts of computers &mdash; you don&rsquo;t even need to get a real one! These days major &ldquo;cloud providers&rdquo;<sup id="fnref:11"><a href="#fn:11" rel="footnote">11</a></sup> have some &ldquo;free usage&rdquo; tier, and an easy way to register for a single VM<sup id="fnref:12"><a href="#fn:12" rel="footnote">12</a></sup>.</p>
+
+<p>The best part about using a VM instead of a &ldquo;real computer&rdquo; is that you don&rsquo;t have to worry about crashing it, or otherwise doing anything irreversible. Reached a dead end? No problem, delete the VM and re-provision it.</p>
+
+<p>Which brings me to the second part, using Go. The Go playground<sup id="fnref:13"><a href="#fn:13" rel="footnote">13</a></sup> makes an initial introduction dead simple, but getting up and running locally is just as straightforward. The syntax is very simple and it&rsquo;s easy to bang out lots of code and immediately see it working. (also, one of things a kid <em>won&rsquo;t</em> have to learn with Go? <em>makefiles</em>!)</p>
+
+<p>A question that remains is &ldquo;what exactly to do with Go?&rdquo;, to which my answer is <em>&ldquo;simple text-based games&rdquo;</em>.</p>
+
+<p>So yeah &hellip; this is the train of thought I&rsquo;ve been carrying about for the past few days. BTW &hellip; it&rsquo;s New Year&rsquo;s Eve, so <strong>happy new year!</strong><sup id="fnref:14"><a href="#fn:14" rel="footnote">14</a></sup></p>
+<div class="footnotes">
+<hr/>
+<ol>
+<li id="fn:1">
+<p><a href="http://www.codecademy.com/">http://www.codecademy.com/</a><a href="#fnref:1" rev="footnote">&#8617;</a></p></li>
+<li id="fn:2">
+<p>See this <a href="http://www.skilledup.com/articles/the-ultimate-guide-to-coding-bootcamps-the-exhaustive-list/">exhaustive list</a> for a &ldquo;30,000 feet&rdquo; overview)<a href="#fnref:2" rev="footnote">&#8617;</a></p></li>
+<li id="fn:3">
+<p>E.g. &ldquo;Deep Dive Coders&rdquo; features <em>HTML5, CSS3, Github, javaScript, jQuery, Apache, MySQL, php</em>, while &ldquo;Makers Academy&rdquo; features <em>Ruby on Rails, HTML5, CSS3, Javascript, jQuery, Git, Agile and Lean</em> (whatever &ldquo;lean&rdquo; means)<a href="#fnref:3" rev="footnote">&#8617;</a></p></li>
+<li id="fn:4">
+<p>By which I mean ages 9 to 90 (!!)<a href="#fnref:4" rev="footnote">&#8617;</a></p></li>
+<li id="fn:5">
+<p>E.g. &ldquo;Fullstack Academy&rdquo; &mdash; though I&rsquo;m not sure if the name necessarily means what it does, since &ldquo;Refactor U&rdquo; promises <em>Full-stack JavaScript, Node.JS, HTML/CSS</em><a href="#fnref:5" rev="footnote">&#8617;</a></p></li>
+<li id="fn:6">
+<p>Which I think of as &ldquo;Scheme + useful libraries&rdquo;<a href="#fnref:6" rev="footnote">&#8617;</a></p></li>
+<li id="fn:7">
+<p>A contentious choice indeed; <em>more on this later(!)</em><a href="#fnref:7" rev="footnote">&#8617;</a></p></li>
+<li id="fn:8">
+<p><a href="http://scratch.mit.edu/">http://scratch.mit.edu/</a><a href="#fnref:8" rev="footnote">&#8617;</a></p></li>
+<li id="fn:9">
+<p><a href="http://el.media.mit.edu/logo-foundation/logo/turtle.html">http://el.media.mit.edu/logo-foundation/logo/turtle.html</a><a href="#fnref:9" rev="footnote">&#8617;</a></p></li>
+<li id="fn:10">
+<p>as in speech, and as in beer<a href="#fnref:10" rev="footnote">&#8617;</a></p></li>
+<li id="fn:11">
+<p>hate that term, but I don&rsquo;t know what else to use<a href="#fnref:11" rev="footnote">&#8617;</a></p></li>
+<li id="fn:12">
+<p>and even the smallest droplet on DigitalOcean, which is more than enough for this purpose, has a monthly price that&rsquo;s about the cost of a Venti Frappucino<a href="#fnref:12" rev="footnote">&#8617;</a></p></li>
+<li id="fn:13">
+<p><a href="https://play.golang.org/">https://play.golang.org/</a><a href="#fnref:13" rev="footnote">&#8617;</a></p></li>
+<li id="fn:14">
+<p>Although &mdash; thoughts like these are similar to <em>New Year&rsquo;s resolutions</em>, which means you need to consider the possibility that this entire post was conceived in a spirit of naive optimism.¯<a href="#fnref:14" rev="footnote">&#8617;</a></p></li>
+</ol>
+</div>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2015-01-02T15:17:08-08:00" pubdate data-updated="true">Jan 2<sup>nd</sup>, 2015</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/golang/'>golang</a>, <a class='category' href='/blog/categories/linux/'>linux</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -2147,215 +2244,6 @@
 
 
 	<a class='category' href='/blog/categories/golang/'>golang</a>, <a class='category' href='/blog/categories/learning/'>learning</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2014/12/16/dailyprogramming-markov-chain/">
-		
-			DailyProgramming: Markov Chain</a>
-	</h2>
-	<div class="entry-content">
-		<p>Been a long, <em>long</em> time since I looked at <a href="http://www.reddit.com/r/dailyprogrammer/">r/dailyprogrammer</a>, so I picked <a href="http://www.reddit.com/r/dailyprogrammer/comments/2ovt2i/20141210_challenge_192_intermediate_markov_chain/">this <em>intermediate</em> problem</a> from 5 days ago. Basically, given a dictionary, judge the likelihood of a word being a &ldquo;real word&rdquo;.</p>
-
-<p>Here&rsquo;s my solution:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-<span class='line-number'>4</span>
-<span class='line-number'>5</span>
-<span class='line-number'>6</span>
-<span class='line-number'>7</span>
-<span class='line-number'>8</span>
-<span class='line-number'>9</span>
-<span class='line-number'>10</span>
-<span class='line-number'>11</span>
-<span class='line-number'>12</span>
-<span class='line-number'>13</span>
-<span class='line-number'>14</span>
-<span class='line-number'>15</span>
-<span class='line-number'>16</span>
-<span class='line-number'>17</span>
-<span class='line-number'>18</span>
-<span class='line-number'>19</span>
-<span class='line-number'>20</span>
-<span class='line-number'>21</span>
-<span class='line-number'>22</span>
-<span class='line-number'>23</span>
-<span class='line-number'>24</span>
-<span class='line-number'>25</span>
-<span class='line-number'>26</span>
-<span class='line-number'>27</span>
-<span class='line-number'>28</span>
-<span class='line-number'>29</span>
-<span class='line-number'>30</span>
-<span class='line-number'>31</span>
-<span class='line-number'>32</span>
-<span class='line-number'>33</span>
-<span class='line-number'>34</span>
-<span class='line-number'>35</span>
-<span class='line-number'>36</span>
-<span class='line-number'>37</span>
-<span class='line-number'>38</span>
-<span class='line-number'>39</span>
-<span class='line-number'>40</span>
-<span class='line-number'>41</span>
-<span class='line-number'>42</span>
-<span class='line-number'>43</span>
-<span class='line-number'>44</span>
-<span class='line-number'>45</span>
-<span class='line-number'>46</span>
-<span class='line-number'>47</span>
-<span class='line-number'>48</span>
-<span class='line-number'>49</span>
-<span class='line-number'>50</span>
-<span class='line-number'>51</span>
-<span class='line-number'>52</span>
-<span class='line-number'>53</span>
-<span class='line-number'>54</span>
-<span class='line-number'>55</span>
-<span class='line-number'>56</span>
-<span class='line-number'>57</span>
-<span class='line-number'>58</span>
-<span class='line-number'>59</span>
-<span class='line-number'>60</span>
-<span class='line-number'>61</span>
-<span class='line-number'>62</span>
-<span class='line-number'>63</span>
-<span class='line-number'>64</span>
-<span class='line-number'>65</span>
-<span class='line-number'>66</span>
-<span class='line-number'>67</span>
-<span class='line-number'>68</span>
-<span class='line-number'>69</span>
-<span class='line-number'>70</span>
-<span class='line-number'>71</span>
-<span class='line-number'>72</span>
-<span class='line-number'>73</span>
-<span class='line-number'>74</span>
-<span class='line-number'>75</span>
-<span class='line-number'>76</span>
-</pre></td><td class='code'><pre><code class='go'><span class='line'><span class="kn">package</span> <span class="nx">main</span>
-</span><span class='line'>
-</span><span class='line'><span class="kn">import</span> <span class="p">(</span>
-</span><span class='line'>  <span class="s">&quot;bufio&quot;</span>
-</span><span class='line'>  <span class="s">&quot;flag&quot;</span>
-</span><span class='line'>  <span class="s">&quot;fmt&quot;</span>
-</span><span class='line'>  <span class="s">&quot;log&quot;</span>
-</span><span class='line'>  <span class="s">&quot;math&quot;</span>
-</span><span class='line'>  <span class="s">&quot;os&quot;</span>
-</span><span class='line'><span class="p">)</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">type</span> <span class="nx">wordmap</span> <span class="kd">map</span><span class="p">[</span><span class="kt">uint8</span><span class="p">]</span><span class="kd">map</span><span class="p">[</span><span class="kt">uint8</span><span class="p">]</span><span class="kt">int</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">func</span> <span class="nx">MakeWordMap</span><span class="p">(</span><span class="nx">w</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">wm</span> <span class="nx">wordmap</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">w</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">if</span> <span class="nx">i</span> <span class="o">==</span> <span class="nb">len</span><span class="p">(</span><span class="nx">w</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span> <span class="p">{</span>
-</span><span class='line'>          <span class="k">break</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>      <span class="nx">c</span> <span class="o">:=</span> <span class="nx">w</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span>
-</span><span class='line'>      <span class="nx">cnext</span> <span class="o">:=</span> <span class="nx">w</span><span class="p">[</span><span class="nx">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span>
-</span><span class='line'>      <span class="k">if</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">ok</span> <span class="o">:=</span> <span class="nx">wm</span><span class="p">[</span><span class="nx">c</span><span class="p">];</span> <span class="p">!</span><span class="nx">ok</span> <span class="p">{</span>
-</span><span class='line'>          <span class="nx">wm</span><span class="p">[</span><span class="nx">c</span><span class="p">]</span> <span class="p">=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">uint8</span><span class="p">]</span><span class="kt">int</span><span class="p">)</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>      <span class="nx">wm</span><span class="p">[</span><span class="nx">c</span><span class="p">][</span><span class="nx">cnext</span><span class="p">]</span> <span class="p">=</span> <span class="nx">wm</span><span class="p">[</span><span class="nx">c</span><span class="p">][</span><span class="nx">cnext</span><span class="p">]</span> <span class="o">+</span> <span class="mi">1</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">func</span> <span class="nx">ReadWords</span><span class="p">(</span><span class="nx">dictfile</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">wm</span> <span class="nx">wordmap</span><span class="p">)</span> <span class="p">{</span>
-</span><span class='line'>  <span class="nx">file</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">Open</span><span class="p">(</span><span class="nx">dictfile</span><span class="p">)</span>
-</span><span class='line'>  <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
-</span><span class='line'>      <span class="nx">log</span><span class="p">.</span><span class="nx">Fatal</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="k">defer</span> <span class="nx">file</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
-</span><span class='line'>
-</span><span class='line'>  <span class="nx">scanner</span> <span class="o">:=</span> <span class="nx">bufio</span><span class="p">.</span><span class="nx">NewScanner</span><span class="p">(</span><span class="nx">file</span><span class="p">)</span>
-</span><span class='line'>  <span class="k">for</span> <span class="nx">scanner</span><span class="p">.</span><span class="nx">Scan</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>      <span class="nx">MakeWordMap</span><span class="p">(</span><span class="nx">scanner</span><span class="p">.</span><span class="nx">Text</span><span class="p">(),</span> <span class="nx">wm</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">func</span> <span class="nx">CheckValidity</span><span class="p">(</span><span class="nx">w</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">wm</span> <span class="nx">wordmap</span><span class="p">)</span> <span class="kt">float64</span> <span class="p">{</span>
-</span><span class='line'>  <span class="kd">var</span> <span class="nx">c</span><span class="p">,</span> <span class="nx">cprev</span> <span class="kt">uint8</span>
-</span><span class='line'>  <span class="kd">var</span> <span class="nx">wordScore</span> <span class="kt">float64</span> <span class="p">=</span> <span class="mf">1.0</span>
-</span><span class='line'>  <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">w</span> <span class="p">{</span>
-</span><span class='line'>      <span class="k">if</span> <span class="nx">i</span> <span class="o">==</span> <span class="mi">0</span> <span class="p">{</span>
-</span><span class='line'>          <span class="nx">cprev</span> <span class="p">=</span> <span class="nx">w</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span>
-</span><span class='line'>          <span class="k">continue</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>      <span class="nx">c</span> <span class="p">=</span> <span class="nx">w</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span>
-</span><span class='line'>      <span class="nx">pairScore</span> <span class="o">:=</span> <span class="nx">wm</span><span class="p">[</span><span class="nx">cprev</span><span class="p">][</span><span class="nx">c</span><span class="p">]</span>
-</span><span class='line'>      <span class="nx">rowTotal</span> <span class="o">:=</span> <span class="mi">0</span>
-</span><span class='line'>      <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">count</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">wm</span><span class="p">[</span><span class="nx">cprev</span><span class="p">]</span> <span class="p">{</span>
-</span><span class='line'>          <span class="nx">rowTotal</span> <span class="o">+=</span> <span class="nx">count</span>
-</span><span class='line'>      <span class="p">}</span>
-</span><span class='line'>      <span class="nx">wordScore</span> <span class="p">=</span> <span class="nx">wordScore</span> <span class="o">*</span> <span class="nb">float64</span><span class="p">(</span><span class="nx">pairScore</span><span class="p">)</span> <span class="o">/</span> <span class="nb">float64</span><span class="p">(</span><span class="nx">rowTotal</span><span class="p">)</span>
-</span><span class='line'>      <span class="nx">cprev</span> <span class="p">=</span> <span class="nx">c</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'>  <span class="k">return</span> <span class="nx">wordScore</span>
-</span><span class='line'><span class="p">}</span>
-</span><span class='line'>
-</span><span class='line'><span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
-</span><span class='line'>  <span class="c1">// Takes a dictionary and a single word, and returns the</span>
-</span><span class='line'>  <span class="c1">// probability of that word being &quot;good&quot;</span>
-</span><span class='line'>  <span class="nx">wm</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="nx">wordmap</span><span class="p">)</span>
-</span><span class='line'>  <span class="nx">dictfile</span> <span class="o">:=</span> <span class="nx">flag</span><span class="p">.</span><span class="nx">String</span><span class="p">(</span><span class="s">&quot;dictfile&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="s">&quot;Path to word list&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="nx">checkword</span> <span class="o">:=</span> <span class="nx">flag</span><span class="p">.</span><span class="nx">String</span><span class="p">(</span><span class="s">&quot;checkword&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="s">&quot;Word to spell-check&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="nx">flag</span><span class="p">.</span><span class="nx">Parse</span><span class="p">()</span>
-</span><span class='line'>  <span class="nx">ReadWords</span><span class="p">(</span><span class="o">*</span><span class="nx">dictfile</span><span class="p">,</span> <span class="nx">wm</span><span class="p">)</span>
-</span><span class='line'>  <span class="nx">prob</span> <span class="o">:=</span> <span class="nx">CheckValidity</span><span class="p">(</span><span class="o">*</span><span class="nx">checkword</span><span class="p">,</span> <span class="nx">wm</span><span class="p">)</span>
-</span><span class='line'>  <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;%s has a score of %.20f\n&quot;</span><span class="p">,</span> <span class="o">*</span><span class="nx">checkword</span><span class="p">,</span> <span class="nx">prob</span><span class="p">)</span>
-</span><span class='line'>  <span class="k">if</span> <span class="nx">prob</span> <span class="p">&lt;</span> <span class="nx">math</span><span class="p">.</span><span class="nx">Pow10</span><span class="p">(</span><span class="o">-</span><span class="nb">len</span><span class="p">(</span><span class="o">*</span><span class="nx">checkword</span><span class="p">))</span> <span class="p">{</span>
-</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;It is probably not a word!&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
-</span><span class='line'>      <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;It looks like a real word!&quot;</span><span class="p">)</span>
-</span><span class='line'>  <span class="p">}</span>
-</span><span class='line'><span class="p">}</span>
-</span></code></pre></td></tr></table></div></figure>
-
-
-<p>It runs as follows:</p>
-
-<figure class='code'><figcaption><span></span></figcaption><div class="highlight"><table><tr><td class="gutter"><pre class="line-numbers"><span class='line-number'>1</span>
-<span class='line-number'>2</span>
-<span class='line-number'>3</span>
-</pre></td><td class='code'><pre><code class='sh'><span class='line'><span class="nv">$ </span>go run markov.go -dictfile<span class="o">=</span>/usr/share/dict/american-english  -checkword<span class="o">=</span>go
-</span><span class='line'>go has a score of 0.06318184860451107887
-</span><span class='line'>It looks like a real word!
-</span></code></pre></td></tr></table></div></figure>
-
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2014-12-16T12:13:06-08:00" pubdate data-updated="true">Dec 16<sup>th</sup>, 2014</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/alwaysbecoding/'>alwaysbecoding</a>, <a class='category' href='/blog/categories/golang/'>golang</a>
 
 
 </div>

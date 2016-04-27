@@ -4,7 +4,7 @@
   <title><![CDATA[Agam's Mashed-Up Pome]]></title>
   <link href="http://agam.github.io/atom.xml" rel="self"/>
   <link href="http://agam.github.io/"/>
-  <updated>2016-04-21T21:45:31-07:00</updated>
+  <updated>2016-04-26T22:40:47-07:00</updated>
   <id>http://agam.github.io/</id>
   <author>
     <name><![CDATA[Agam]]></name>
@@ -12,6 +12,57 @@
   </author>
   <generator uri="http://octopress.org/">Octopress</generator>
 
+  
+  <entry>
+    <title type="html"><![CDATA[Monthly Prog/Math/Sci summary: April 2016]]></title>
+    <link href="http://agam.github.io/blog/2016/04/26/monthly-prog-slash-math-slash-sci-summary-april-2016/"/>
+    <updated>2016-04-26T22:39:42-07:00</updated>
+    <id>http://agam.github.io/blog/2016/04/26/monthly-prog-slash-math-slash-sci-summary-april-2016</id>
+    <content type="html"><![CDATA[<p>Ok, so here’s this month’s curated list of interesting Math/Sci/Programming <em>stuff</em>. <strong>Note</strong>: this isn’t stuff that <em>happened</em> this month, it’s stuff that <em>I came across</em> this month.</p>
+
+<ul>
+<li>To start off with something <em>fun</em>, Gilad Bracha (I try not to miss anything by him) <a href="https://devchat.tv/ruby-rogues/250-rr-programming-language-evolution-and-design-with-gilad-bracha">joins the discussion</a> at <em>Ruby Rogues</em>, they all talk about Dart and Smalltalk and Newspeak, and much hilarity ensues. So, if you’re into that sort of thing.</li>
+</ul>
+
+
+<blockquote><p>GILAD:  And the thing is once you get used to the machine doing it for you it&rsquo;s really hard to go back to the Stone Age. Smalltalk or Smalltalk-like systems, they give you in certain ways the life of luxury. It&rsquo;s so nice that you can, when something goes wrong you can always find out exactly what the state of the objects were and say, “Oh, this is wrong.” And I don&rsquo;t have to restart things to get back there if I figured out what&rsquo;s wrong or I have a hunch what&rsquo;s wrong. I can just change it and tweak it and go forward a lot of times, which is something that again you have to experience because people tend to not believe that. But you usually can not only make the change but you can very often keep going even though the program was wrong. You can adjust its state now a bit and say, “Okay, let&rsquo;s assume that this is now consistent. I can keep moving and see what happens.” <strong>And you get so comfortable with that and it&rsquo;s so much more pleasant that after that yeah, you ramble on about it like I do.</strong></p></blockquote>
+
+<p>Yeah, watch it, it&rsquo;s all good stuff.</p>
+
+<ul>
+<li>Something to jog your preconceived notions about what “object oriented” means: a paper from twenty years ago, titled <a href="http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.56.4713"><em>”Classes vs. Prototypes &ndash; Some Philosophical and Historical Observations”</em></a></li>
+</ul>
+
+
+<blockquote><p>The distinction between class-based and prototype-based systems reflects a long-lasting philosophical dispute concerning the representation of abstractions. <strong>Plato viewed forms — stable, abstract, “ideal” descriptions of things — as having an existence more real than instances of those things in the real world</strong>. Class-based languages such as Smalltalk, C++ or Simula are Platonic in their explicit use of classes to represent similarity among collections of objects. Prototype-based systems such as Self [UnS87], Omega [Bla91, Bla94], Kevo [Tai92, Tai93], GlyphicScript [Gly94] and NewtonScript [SLS94] represent <strong>another view of the world, in which one does not rely so much on advance categorization and classification, but rather tries to make the concepts in the problem domain as tangible and intuitive as possible</strong>.</p></blockquote>
+
+<ul>
+<li><p>And if you liked that, you’ll like <a href="https://www.youtube.com/watch?v=8nfrC-YLYqc">this discussion</a> with David Ungar, the man behind the <em>Self</em> programming language. In case you never heard of it before (as I hadn’t, until recently), that’s where Javascript gets its concept of <em>”prototype”</em> from. And if you’re <em>still</em> hungry for more, see <a href="http://www.infoq.com/presentations/oop-language-context">this presentation</a> titled <em>”Dancing with Symmetry to Harness the Power of Complexity: Subjective Programming in Context”</em></p></li>
+<li><p>A set of ten <a href="http://www.allthingsdistributed.com/2016/03/10-lessons-from-10-years-of-aws.html">“learnings”</a> from ten years of AWS. If I had to pick, I’d say the hardest directive would be to <em>”build evolvable systems”</em>, because that almost never happens.</p></li>
+<li><p>Someone finally wrote what I&rsquo;ve been thinking for a while &hellip; the answer for &ldquo;how to do X&rdquo; can&rsquo;t always be &ldquo;oh, just use plugin Y” (or, <a href="http://amasad.me/2016/01/03/overcoming-intuition-in-programming/"><em>”How to overcome intuition in programming”</em></a>).</p></li>
+<li><p>Marvin Minsky passed away early this year; <a href="http://web.media.mit.edu/~minsky/papers/TuringLecture/TuringLecture.html">here</a> is his 1970 Turing Award lecture, which opens with this interesting sentence:</p></li>
+</ul>
+
+
+<blockquote><p>The trouble with computer science today is an obsessive concern with form instead of content.</p></blockquote>
+
+<p>It’s as true today as it was then, right? :)</p>
+
+<ul>
+<li><p>This is something I’ve come across many times before, so skip it if you’ve seen it, or skip it anyway; it’s basically a bunch of Haskell insider jokes, laid out as <a href="http://www.willamette.edu/~fruehr/haskell/evolution.html"><em>”The Evolution of a Haskell Programmer”</em></a>, starting from a freshman, going all the way to a post-doc, and ending, on an anti-climactic note, with the tenured professor.</p></li>
+<li><p>This one fulfills this month’s “rant quota”: Brian Will, slightly infamous for ranting against Object-Oriented Programming, talks about <a href="https://www.youtube.com/watch?v=L9v4Mg8wi4U&amp;list=WL&amp;index=6"><em>”Replacing the Unix tradition”</em></a></p></li>
+<li><p>Another post in the <em>counter-intuitive</em> category: <a href="http://ib-krajewski.blogspot.com/2015/11/ocaml-and-multithreading.html">the best defense</a> I’ve yet seen for <em>not</em> using shared-memory multithreading, using OCaml as an example.</p></li>
+</ul>
+
+
+<blockquote><p>… parallel processing plus message passing is a much safer model that multithreading …</p></blockquote>
+
+<ul>
+<li>Finally, to end on a similar note to which we began, the amazing Eugenia Cheng (look her books up) talks about <a href="https://www.youtube.com/watch?v=h2p68JjSUH0"><em>”How to Bake &lsquo;How to Bake Pi&rsquo;: Reflections on Making Abstract Math Palatable”</em></a>; it’s targeted at people of all ages, and tries to make math fun again!</li>
+</ul>
+
+]]></content>
+  </entry>
   
   <entry>
     <title type="html"><![CDATA[Stumbling around programming]]></title>
@@ -949,27 +1000,6 @@
 <p><img src="https://lh3.googleusercontent.com/rdJeePtMNq4uPKHvPWRNioZfZpQcqMe86rt-2M1bUAJJ=w1019-h665-no" alt="bigquery example" /></p>
 
 <p><em>(9 people went 27 miles, paid $95 and gave no tip!)</em></p>
-]]></content>
-  </entry>
-  
-  <entry>
-    <title type="html"><![CDATA[Shokunin and Umami in software engineering ....]]></title>
-    <link href="http://agam.github.io/blog/2015/08/08/shokunin-and-umami-in-software-engineering-dot-dot-dot/"/>
-    <updated>2015-08-08T19:57:05-07:00</updated>
-    <id>http://agam.github.io/blog/2015/08/08/shokunin-and-umami-in-software-engineering-dot-dot-dot</id>
-    <content type="html"><![CDATA[<p>Saw a great movie yesterday, <a href="https://www.youtube.com/watch?v=M-aGPniFvS0">&ldquo;Jiro dreams of Sushi&rdquo;</a>, which is really all about the lifelong quest for perfection. Chef Jiro Ono has been making Sushi for seven decades, and is still trying to get better at it.</p>
-
-<p>Which is admirable, but how can lesser mortals as us draw some inspiration from it? What is the equivalent of being a <em>Shokunin</em><sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> in terms of programming (or realistically, in terms of software engineering)? What is the equivalent experience of <em>Umami</em><sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>?</p>
-<div class="footnotes">
-<hr/>
-<ol>
-<li id="fn:1">
-<p><em>The Japanese word shokunin is defined by both Japanese and Japanese-English dictionaries as ‘craftsman’ or ‘artisan,’ but such a literal description does not fully express the deeper meaning.  The Japanese apprentice is taught that shokunin means not only having technical skills, but also implies an attitude and social consciousness. … The shokunin has a social obligation to work his/her best for the general welfare of the people.  This obligation is both spiritual and material, in that no matter what it is, the shokunin’s responsibility is to fulfill the requirement.</em> &mdash; <a href="https://wilsonkhoo.wordpress.com/2013/02/23/jiro-dreams-of-sushi-what-it-means-to-be-shokunin/">Tasio Odate</a><a href="#fnref:1" rev="footnote">&#8617;</a></p></li>
-<li id="fn:2">
-<p><em>As the taste of umami itself is subtle and blends well with other tastes to expand and round out flavors, most people don&rsquo;t recognize umami when they encounter it, but it plays an important role making food taste delicious.</em> <a href="http://www.umamiinfo.com/2011/02/What-exactly-is-umami.php">(reference)</a><a href="#fnref:2" rev="footnote">&#8617;</a></p></li>
-</ol>
-</div>
-
 ]]></content>
   </entry>
   

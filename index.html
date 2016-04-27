@@ -7,7 +7,7 @@
 	<meta name="author" content="Agam">
 
 	
-	<meta name="description" content="(In which I keep talking to myself about learning/doing stuff in the near past/future) Read Scott Meyers’ updated C++11/14 book: he’s really the &hellip;">
+	<meta name="description" content="Ok, so here’s this month’s curated list of interesting Math/Sci/Programming stuff. Note: this isn’t stuff that happened this month, it’s stuff that &hellip;">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
@@ -86,6 +86,89 @@
 		
 	
 	<div id="content" class="inner">
+
+
+    <article class="post">
+	<h2 class="title">
+		
+		<a href="/blog/2016/04/26/monthly-prog-slash-math-slash-sci-summary-april-2016/">
+		
+			Monthly Prog/Math/Sci Summary: April 2016</a>
+	</h2>
+	<div class="entry-content">
+		<p>Ok, so here’s this month’s curated list of interesting Math/Sci/Programming <em>stuff</em>. <strong>Note</strong>: this isn’t stuff that <em>happened</em> this month, it’s stuff that <em>I came across</em> this month.</p>
+
+<ul>
+<li>To start off with something <em>fun</em>, Gilad Bracha (I try not to miss anything by him) <a href="https://devchat.tv/ruby-rogues/250-rr-programming-language-evolution-and-design-with-gilad-bracha">joins the discussion</a> at <em>Ruby Rogues</em>, they all talk about Dart and Smalltalk and Newspeak, and much hilarity ensues. So, if you’re into that sort of thing.</li>
+</ul>
+
+
+<blockquote><p>GILAD:  And the thing is once you get used to the machine doing it for you it&rsquo;s really hard to go back to the Stone Age. Smalltalk or Smalltalk-like systems, they give you in certain ways the life of luxury. It&rsquo;s so nice that you can, when something goes wrong you can always find out exactly what the state of the objects were and say, “Oh, this is wrong.” And I don&rsquo;t have to restart things to get back there if I figured out what&rsquo;s wrong or I have a hunch what&rsquo;s wrong. I can just change it and tweak it and go forward a lot of times, which is something that again you have to experience because people tend to not believe that. But you usually can not only make the change but you can very often keep going even though the program was wrong. You can adjust its state now a bit and say, “Okay, let&rsquo;s assume that this is now consistent. I can keep moving and see what happens.” <strong>And you get so comfortable with that and it&rsquo;s so much more pleasant that after that yeah, you ramble on about it like I do.</strong></p></blockquote>
+
+<p>Yeah, watch it, it&rsquo;s all good stuff.</p>
+
+<ul>
+<li>Something to jog your preconceived notions about what “object oriented” means: a paper from twenty years ago, titled <a href="http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.56.4713"><em>”Classes vs. Prototypes &ndash; Some Philosophical and Historical Observations”</em></a></li>
+</ul>
+
+
+<blockquote><p>The distinction between class-based and prototype-based systems reflects a long-lasting philosophical dispute concerning the representation of abstractions. <strong>Plato viewed forms — stable, abstract, “ideal” descriptions of things — as having an existence more real than instances of those things in the real world</strong>. Class-based languages such as Smalltalk, C++ or Simula are Platonic in their explicit use of classes to represent similarity among collections of objects. Prototype-based systems such as Self [UnS87], Omega [Bla91, Bla94], Kevo [Tai92, Tai93], GlyphicScript [Gly94] and NewtonScript [SLS94] represent <strong>another view of the world, in which one does not rely so much on advance categorization and classification, but rather tries to make the concepts in the problem domain as tangible and intuitive as possible</strong>.</p></blockquote>
+
+<ul>
+<li><p>And if you liked that, you’ll like <a href="https://www.youtube.com/watch?v=8nfrC-YLYqc">this discussion</a> with David Ungar, the man behind the <em>Self</em> programming language. In case you never heard of it before (as I hadn’t, until recently), that’s where Javascript gets its concept of <em>”prototype”</em> from. And if you’re <em>still</em> hungry for more, see <a href="http://www.infoq.com/presentations/oop-language-context">this presentation</a> titled <em>”Dancing with Symmetry to Harness the Power of Complexity: Subjective Programming in Context”</em></p></li>
+<li><p>A set of ten <a href="http://www.allthingsdistributed.com/2016/03/10-lessons-from-10-years-of-aws.html">“learnings”</a> from ten years of AWS. If I had to pick, I’d say the hardest directive would be to <em>”build evolvable systems”</em>, because that almost never happens.</p></li>
+<li><p>Someone finally wrote what I&rsquo;ve been thinking for a while &hellip; the answer for &ldquo;how to do X&rdquo; can&rsquo;t always be &ldquo;oh, just use plugin Y” (or, <a href="http://amasad.me/2016/01/03/overcoming-intuition-in-programming/"><em>”How to overcome intuition in programming”</em></a>).</p></li>
+<li><p>Marvin Minsky passed away early this year; <a href="http://web.media.mit.edu/~minsky/papers/TuringLecture/TuringLecture.html">here</a> is his 1970 Turing Award lecture, which opens with this interesting sentence:</p></li>
+</ul>
+
+
+<blockquote><p>The trouble with computer science today is an obsessive concern with form instead of content.</p></blockquote>
+
+<p>It’s as true today as it was then, right? :)</p>
+
+<ul>
+<li><p>This is something I’ve come across many times before, so skip it if you’ve seen it, or skip it anyway; it’s basically a bunch of Haskell insider jokes, laid out as <a href="http://www.willamette.edu/~fruehr/haskell/evolution.html"><em>”The Evolution of a Haskell Programmer”</em></a>, starting from a freshman, going all the way to a post-doc, and ending, on an anti-climactic note, with the tenured professor.</p></li>
+<li><p>This one fulfills this month’s “rant quota”: Brian Will, slightly infamous for ranting against Object-Oriented Programming, talks about <a href="https://www.youtube.com/watch?v=L9v4Mg8wi4U&amp;list=WL&amp;index=6"><em>”Replacing the Unix tradition”</em></a></p></li>
+<li><p>Another post in the <em>counter-intuitive</em> category: <a href="http://ib-krajewski.blogspot.com/2015/11/ocaml-and-multithreading.html">the best defense</a> I’ve yet seen for <em>not</em> using shared-memory multithreading, using OCaml as an example.</p></li>
+</ul>
+
+
+<blockquote><p>… parallel processing plus message passing is a much safer model that multithreading …</p></blockquote>
+
+<ul>
+<li>Finally, to end on a similar note to which we began, the amazing Eugenia Cheng (look her books up) talks about <a href="https://www.youtube.com/watch?v=h2p68JjSUH0"><em>”How to Bake &lsquo;How to Bake Pi&rsquo;: Reflections on Making Abstract Math Palatable”</em></a>; it’s targeted at people of all ages, and tries to make math fun again!</li>
+</ul>
+
+
+		
+		
+	</div>
+
+
+<div class="meta">
+	<div class="date">
+
+
+
+
+
+
+
+
+  
+
+
+<time datetime="2016-04-26T22:39:42-07:00" pubdate data-updated="true">Apr 26<sup>th</sup>, 2016</time></div>
+	<div class="tags">
+
+
+	<a class='category' href='/blog/categories/monthly/'>monthly</a>
+
+
+</div>
+	
+</div>
+</article>
 
 
     <article class="post">
@@ -1070,65 +1153,6 @@
 
 
 	<a class='category' href='/blog/categories/clojure/'>clojure</a>
-
-
-</div>
-	
-</div>
-</article>
-
-
-    <article class="post">
-	<h2 class="title">
-		
-		<a href="/blog/2015/12/26/monthly-programming-summary-december-2015/">
-		
-			Monthly Programming Summary: December 2015</a>
-	</h2>
-	<div class="entry-content">
-		<p>A second installment of &ldquo;interesting stuff I came across this month&rdquo; &hellip;</p>
-
-<p>(<em>Aside:</em> I shouldn&rsquo;t call this a &ldquo;programming&rdquo; summary, but I can&rsquo;t think of anything better &mdash; it&rsquo;s more of a &ldquo;math + science + computers&rdquo; newsletter)</p>
-
-<ul>
-<li><p>The highlight of the last month for me was the realization of the dream of an ultra-cheap computer, the <a href="https://www.raspberrypi.org/blog/raspberry-pi-zero/">Raspberry Pi Zero</a>, which is cheaper than several drinks at Starbucks.</p></li>
-<li><p>Yes, ants displaying &ldquo;collective intelligence&rdquo; is old stuff (I first encountered a reference to it in the pages of <em>Godel, Escher, Bach</em>), but <a href="http://www.kurzweilai.net/army-ants-living-bridges-suggest-collective-intelligence">this article</a> is something else altogether, showing how &ldquo;living bridges&rdquo; are dynamically adjusted by the constituent ants, in response to foraaging needs.</p></li>
-<li><p><em>&ldquo;Get Lamp&rdquo;</em> (<a href="https://www.youtube.com/watch?v=UwZxUGmqSOo">link to trailer</a>) is an interesting documentary on the history of interactive text-based fiction, mostly adventure games. If you&rsquo;ve ever telneted to a MUD, you will like this.</p></li>
-<li><p>I lap up everything by Bret Victor, and hope for him to turn out as the Alan Kay of our time. <a href="https://medium.com/re-form/the-utopian-ui-architect-34dead42a28#.emrat4pnv">This</a> is aanother recent piece where he insists we haven&rsquo;t really <em>used</em> computers well at all.</p></li>
-<li><p>Finally, <a href="http://www.popularmechanics.com/military/weapons/a18343/the-cannons-on-the-b-29-bomber-were-a-mid-century-engineering-masterpiece/">this Popular Mechanics article</a> blew me away &mdash; before there were &ldquo;real&rdquo; computers, the B-29 Superfortress had high-tech computing <em>way</em> ahead of its time, to remotely operate its gun turrets. Obligatory youtube video below:</p></li>
-</ul>
-
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/nskFayhBcy0" frameborder="0" allowfullscreen></iframe>
-
-
-<p>This month&rsquo;s QOTM is from Bret Victor&rsquo;s piece above:</p>
-
-<blockquote><p>Now we’re staring at computer screens and moving our hands on a keyboard, but it’s basically the same thing. <strong>We’re computer users thinking paper thoughts.”</strong></p></blockquote>
-
-		
-		
-	</div>
-
-
-<div class="meta">
-	<div class="date">
-
-
-
-
-
-
-
-
-  
-
-
-<time datetime="2015-12-26T20:46:30-08:00" pubdate data-updated="true">Dec 26<sup>th</sup>, 2015</time></div>
-	<div class="tags">
-
-
-	<a class='category' href='/blog/categories/monthly/'>monthly</a>
 
 
 </div>
