@@ -1,0 +1,158 @@
+
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  
+  <meta charset="UTF-8">
+  <title>
+    programming fun circle area | Agam&#39;s Mashed-Up Pome
+  </title>
+
+
+  
+  <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
+
+  
+  <link rel="canonical" href="http://agam.github.io/post/2014/01/08/programming-fun-circle-area/"/>
+
+  
+  <link rel="stylesheet" href="/css/sanitize.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/highlight_monokai.css">
+  <link rel="stylesheet" href="/css/theme.css">
+  <link rel="stylesheet" href="/css/custom.css">
+  
+  
+  <link href="http://agam.github.io/index.xml" rel="alternate" type="application/rss+xml" title="Agam&#39;s Mashed-Up Pome" />
+  <link href="http://agam.github.io/index.xml" rel="feed" type="application/rss+xml" title="Agam&#39;s Mashed-Up Pome" />
+
+  
+  
+
+
+</head>
+
+
+
+<body>
+<div class="container">
+
+  
+  <header role="banner">
+    <div class="row gutters">
+      <div id="site-title" class="col span_6">
+        <h1><a href="http://agam.github.io/">Agam&#39;s Mashed-Up Pome</a></h1>
+        <h2>A lazy evaluation of compute space</h2>
+      </div>
+      <div id="social" class="col span_6">
+        <ul>
+          <li><a href="https://twitter.com/agambrahma" target="_blank">Twitter</a></li>
+          
+          
+          <li><a href="http://agam.github.io/index.xml" type="application/rss+xml" target="_blank">RSS</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+
+  
+  <main id="single" role="main">
+    <div class="article-header">
+      <h1>programming fun circle area</h1>
+      <div class="meta">
+        Jan 8, 2014 &nbsp;
+        
+      </div>
+    </div>
+    <article>
+      <p>Straightforward <em>math-only, no-algorithm</em> <a href="http://www.reddit.com/r/dailyprogrammer/comments/1s6484/120513_challenge_138_intermediate_overlapping/">problem</a></p>
+
+<pre><code>Input Description
+-----------------
+
+On standard input you will be given four floating-point space-delimited values:
+x y u w. x and y are the first circle's position in Cartesian coordinates. The
+second pair u and w are the second circle's position.
+
+Note that the given circles may not actually intersect. If this is the case,
+return the sum of both circles (which will always be Pi x 2 since our circles
+are unit-circles).
+
+Output Description
+------------------
+
+Print the summed volume of the two circles, up to an accuracy of 4 digits after the decimal place.
+</code></pre>
+
+<p>This is just trigonometry, so I made some Post-It illustrations. This one shows the general problem we have to solve.</p>
+
+<p>{% img center /images/programming-fun/circle-area-1.jpg 300 %}</p>
+
+<p>Given the centres of the two circles, and their radii, we know <em>d</em>, the distance between their centres and whether it leads to overlap at all.</p>
+
+<p>{% img center /images/programming-fun/circle-area-2.jpg 300 %}</p>
+
+<p>Overlap only occurs when <em>d &lt; 2r</em>. When <em>d &gt; 2r</em> the answer is just the sum of the areas.</p>
+
+<p>{% img center /images/programming-fun/circle-area-3.jpg 300 %}</p>
+
+<p>From this figure, it should be clear that the overlapping area is the segment of the circle subtended by the chord that is common to both circles. We can find the length of this chord by considering the right triangle formed by half of it, the radius, and half the centre distance.</p>
+
+<p>This then leads to the relationship between the area of the sector (<em>A</em>), the area of the triangle inside it (<em>A_1</em>) and the segment area (<em>A_2</em>)</p>
+
+<p>{% img center /images/programming-fun/circle-area-4.jpg 300 %}</p>
+
+<p>Finally, we subtract the segment area from the area of the circle (and then double it, for two circles) to get our answer.</p>
+
+<p>{% img center /images/programming-fun/circle-area-5.jpg 300 %}</p>
+
+<script type="text/javascript" src="http://gist.github.com/8323896.js"></script>
+
+
+      
+      
+      
+    </article>
+    
+
+
+  </main>
+  
+  <nav class="pagination-single">
+    
+      <span class="previous">&larr; <a href="http://agam.github.io/post/2014/01/08/urbit-back-again/" rel="prev">urbit back again</a></span>
+    
+    
+      <span class="next"><a href="http://agam.github.io/post/2014/01/16/programming-technology-and-science/" rel="next">programming technology and science</a> &rarr;</span>
+    
+  </nav>
+
+
+  
+  <footer role="contentinfo">
+    <div style="text-align:center;">
+      
+      Copyright Agam Brahma
+    </div>
+  </footer>
+
+
+</div>
+
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-16612682-4', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</body>
+</html>
+

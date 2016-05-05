@@ -1,0 +1,314 @@
+
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  
+  <meta charset="UTF-8">
+  <title>
+    dailyprogrammer textual cycles | Agam&#39;s Mashed-Up Pome
+  </title>
+
+
+  
+  <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
+
+  
+  <link rel="canonical" href="http://agam.github.io/post/2014/12/17/dailyprogrammer-textual-cycles/"/>
+
+  
+  <link rel="stylesheet" href="/css/sanitize.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/highlight_monokai.css">
+  <link rel="stylesheet" href="/css/theme.css">
+  <link rel="stylesheet" href="/css/custom.css">
+  
+  
+  <link href="http://agam.github.io/index.xml" rel="alternate" type="application/rss+xml" title="Agam&#39;s Mashed-Up Pome" />
+  <link href="http://agam.github.io/index.xml" rel="feed" type="application/rss+xml" title="Agam&#39;s Mashed-Up Pome" />
+
+  
+  
+
+
+</head>
+
+
+
+<body>
+<div class="container">
+
+  
+  <header role="banner">
+    <div class="row gutters">
+      <div id="site-title" class="col span_6">
+        <h1><a href="http://agam.github.io/">Agam&#39;s Mashed-Up Pome</a></h1>
+        <h2>A lazy evaluation of compute space</h2>
+      </div>
+      <div id="social" class="col span_6">
+        <ul>
+          <li><a href="https://twitter.com/agambrahma" target="_blank">Twitter</a></li>
+          
+          
+          <li><a href="http://agam.github.io/index.xml" type="application/rss+xml" target="_blank">RSS</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+
+  
+  <main id="single" role="main">
+    <div class="article-header">
+      <h1>dailyprogrammer textual cycles</h1>
+      <div class="meta">
+        Dec 17, 2014 &nbsp;
+        
+      </div>
+    </div>
+    <article>
+      <p><a href="http://www.reddit.com/r/dailyprogrammer/comments/2m82yz/20141114_challenge_188_hard_arrows_and_arrows/">Another one</a> from <a href="http://www.reddit.com/r/dailyprogrammer">r/dailyprogrammer</a>. This one involves text with &ldquo;arrows&rdquo;, but as the &ldquo;hint&rdquo; at the end says, it&rsquo;s really equivalent to finding cycles in a directed graph (it would be harder if there were multiple edges going out of each node, but that isn&rsquo;t the case here!)</p>
+
+<p>Here&rsquo;s my code:</p>
+
+<pre><code class="language-go">package main
+
+import &quot;fmt&quot;
+
+type Node struct {
+	val     uint8
+	next    *Node
+	visited bool
+	cycle   int
+}
+
+func main() {
+	var height, width int
+	fmt.Scanln(&amp;width, &amp;height)
+	grid := make([]Node, height*width)
+	for i := 0; i &lt; height; i++ {
+		var str string
+		fmt.Scanln(&amp;str)
+		for j := range str {
+			grid[i*width+j] = Node{str[j], nil, false, 1}
+		}
+	}
+
+	CreateLinks(&amp;grid, height, width)
+
+	// Traverse graph; each node is visited at most once,
+	// so the algorithm is O(n^2)
+	longestCycle := 0
+	var rootx, rooty int
+	for i := 0; i &lt; height; i++ {
+		for j := 0; j &lt; width; j++ {
+			curNode := &amp;grid[i*width+j]
+			if curNode.visited {
+				continue
+			}
+			curCycleLength := TraverseNode(curNode)
+			if curCycleLength &gt; longestCycle {
+				rooty, rootx = i, j
+				longestCycle = curCycleLength
+			}
+		}
+	}
+	fmt.Printf(&quot;The largest cycle was found at (%d, %d) with a length of %d\n&quot;, rooty, rootx, grid[rooty*width+rootx].cycle-1)
+	TraceCycle(grid, height, width, rooty, rootx)
+}
+
+func TraverseNode(node *Node) int {
+	// Recursively returns the length of the cycle found starting
+	// at the current node
+	if node.visited {
+		return node.cycle
+	}
+	node.visited = true
+	cycleLength := 1 + TraverseNode(node.next)
+	node.cycle = cycleLength
+	return cycleLength
+}
+
+func GetNextNode(val uint8, i, j, h, w int) (int, int) {
+	switch val {
+	case '&lt;':
+		return i, (j + w - 1) % w
+	case '&gt;':
+		return i, (j + 1) % w
+	case '^':
+		return (i + h - 1) % h, j
+	case 'v':
+		return (i + 1) % h, j
+	default:
+		panic(&quot;wtf&quot;)
+	}
+}
+
+func CreateLinks(grid *[]Node, height, width int) {
+	var node *Node
+	for i := 0; i &lt; height; i++ {
+		for j := 0; j &lt; width; j++ {
+			node = &amp;(*grid)[i*width+j]
+			nexti, nextj := GetNextNode(node.val, i, j, height, width)
+			node.next = &amp;(*grid)[nexti*width+nextj]
+		}
+	}
+}
+
+func TraceCycle(grid []Node, height, width, curY, curX int) {
+	tracedGrid := make([]Node, height*width)
+	for i := 0; i &lt; height; i++ {
+		for j := 0; j &lt; width; j++ {
+			tracedGrid[i*width+j] = Node{' ', nil, false, 1}
+		}
+	}
+
+	for {
+		v := grid[curY*width+curX].val
+		tracedGrid[curY*width+curX].val = v
+		tracedGrid[curY*width+curX].visited = true
+		curY, curX = GetNextNode(v, curY, curX, height, width)
+
+		if tracedGrid[curY*width+curX].visited == true {
+			break
+		}
+	}
+
+	fmt.Println(&quot;Here is the longest cycle :-\n&quot;)
+	for i := 0; i &lt; height; i++ {
+		for j := 0; j &lt; width; j++ {
+			fmt.Printf(&quot;%c&quot;, tracedGrid[i*width+j].val)
+		}
+		fmt.Println()
+	}
+}
+</code></pre>
+
+<p>It runs as follows:</p>
+
+<p>(sample 1)</p>
+
+<pre><code>$ cat sample-input1
+5 5
+&gt;&gt;&gt;&gt;v
+^v&lt;&lt;v
+^vv^v
+^&gt;&gt;v&lt;
+^&lt;&lt;&lt;^
+</code></pre>
+
+<pre><code class="language-sh">$ cat sample-input1 | go run cycles.go                                                                                                                       
+The largest cycle was found at (0, 0) with a length of 16
+Here is the longest cycle :-
+
+&gt;&gt;&gt;&gt;v
+^   v
+^   v
+^  v&lt;
+^&lt;&lt;&lt;
+</code></pre>
+
+<p>(sample 2)</p>
+
+<pre><code>45 20
+^^v&gt;&gt;v^&gt;&gt;v&lt;&lt;&lt;v&gt;v&lt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;^vvv^^vvvv&lt;v^^&gt;&lt;^^v&gt;
+&gt;&gt;&lt;&lt;&gt;vv&lt;&gt;&lt;&lt;&lt;^&gt;&lt;^&lt;^v^^&lt;vv&gt;&gt;^v&lt;v^vv^^v&lt;&gt;&lt;^&gt;&gt;&lt;v&lt;
+vv&lt;^v&lt;v&lt;v&lt;vvv&gt;v&lt;v&lt;vv&lt;^&lt;v&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;^&lt;&gt;&lt;&gt;^&gt;&lt;^v&gt;&gt;&gt;
+&lt;v&lt;v^^&lt;v&lt;&gt;v&lt;&gt;v&lt;v&lt;^v^&gt;^&lt;^&lt;&lt;v&gt;^v&gt;&lt;^v^&gt;&gt;^^^&lt;&gt;&lt;^v
+^&gt;&gt;&gt;^v^v^&lt;&gt;&gt;vvv&gt;v^^&lt;^&lt;&lt;&lt;&gt;&lt;&gt;v&gt;&gt;^v&lt;^^&lt;&gt;v&gt;&gt;v&lt;v&gt;^
+^^^&lt;&lt;^&lt;^&gt;&gt;^v&gt;&gt;&gt;&gt;&gt;&lt;&gt;&gt;^v&lt;^^^&lt;^^v^v&lt;^&lt;v^&gt;&lt;&lt;^&lt;&lt;&lt;&gt;
+v&lt;&gt;v^vv^v&lt;&gt;&lt;^&gt;v^vv&gt;^^v^&lt;&gt;v^^^&gt;^&gt;vv&lt;^&lt;&lt;v^&lt;&lt;&gt;^v
+&lt;&lt;&lt;&lt;&lt;^&lt;vv&lt;^&gt;&lt;&gt;^^&gt;&gt;&gt;^^^^&lt;^&lt;^v^&gt;&lt;^v^v&gt;^vvv&gt;^v^^
+&lt;&lt;v^&lt;v&lt;&lt;^^v&lt;&gt;v&gt;v^&lt;&lt;&lt;&lt;&lt;&gt;^^v&lt;v^&gt;&gt;&gt;v^&gt;&lt;v^v&lt;v^^^&lt;
+^^&gt;&gt;^&lt;vv&lt;vv&lt;&gt;v^&lt;^&lt;^^&gt;&lt;&gt;&lt;^vvvv&lt;&lt;v&lt;^&lt;&lt;^&gt;^&gt;vv^&lt;v
+^^v^&gt;&gt;^&gt;^&lt;vv^^&lt;&gt;&gt;^^v&gt;v&gt;&gt;v&gt;&gt;v^vv&lt;vv^&gt;&gt;&lt;&gt;&gt;v&lt;&lt;&gt;&gt;
+^v&lt;^v&lt;v&gt;^^&lt;&gt;&gt;^&gt;^&gt;^^v&gt;v&lt;&lt;&lt;&lt;&lt;&gt;&gt;&lt;&gt;&lt;^v&lt;^^v&gt;&lt;v&gt;^&lt;&lt;
+v&gt;v&lt;&gt;&lt;^v&lt;&lt;^^&lt;^&gt;v&gt;^&gt;&lt;^&gt;&lt;v^&gt;&lt;v^^^&gt;&gt;&lt;^^&lt;^vv^^^&gt;^
+v&gt;&lt;&gt;^&gt;&lt;vv^v^^&gt;&gt;&lt;&gt;^&lt;^v&lt;^&gt;&lt;v&gt;^v^&lt;^&lt;&gt;&gt;^&lt;^vv&lt;v&gt;^v
+&gt;&lt;^&lt;v&gt;&gt;v&gt;^&lt;&lt;^&gt;^&lt;^^&gt;v^^v&lt;&gt;&gt;v&gt;&lt;&lt;&gt;v&lt;&lt;^&gt;&lt;&lt;&gt;^&gt;^v&lt;v
+&gt;vv&gt;^&gt;^v&gt;&lt;^^&lt;v^&gt;^&gt;v&lt;^v&gt;&lt;&gt;vv&gt;v&lt;^&gt;&lt;&lt;&lt;&lt;v^&lt;^vv&lt;&gt;v
+&lt;&gt;&lt;&lt;^^&gt;&gt;^&lt;&gt;vv&gt;&lt;^^&lt;vv&lt;&lt;^v^v^&lt;^^^^vv&lt;&lt;&gt;^&lt;vvv^vv
+&gt;v&lt;&lt;v^&gt;&lt;v&lt;^^&gt;&lt;^v^&lt;&lt;&lt;&gt;^&lt;&lt;vvvv^^^v&lt;&lt;v&gt;vv&gt;^&gt;&gt;^&lt;&gt;
+^^^^&lt;^&lt;&gt;^^vvv&gt;v^&lt;&lt;&gt;&gt;&lt;^&lt;&lt;v&gt;^&lt;&lt;v&gt;&gt;&gt;&lt;&gt;&gt;&gt;&lt;&lt;^^&gt;vv&gt;
+&lt;^&lt;^&lt;&gt;vvv^v&gt;&lt;&lt;&lt;vvv&lt;&gt;&gt;&gt;&gt;^&lt;&lt;&lt;^vvv&gt;^&lt;&lt;&lt;^vv&gt;v^&gt;&lt;^
+</code></pre>
+
+<pre><code class="language-sh">$ cat sample-input2 | go run cycles.go
+The largest cycle was found at (19, 18) with a length of 49
+Here is the longest cycle :-
+
+                 &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;^
+                    ^&lt;
+                     ^
+                    &gt;^
+                    ^
+                   &gt;^
+                   ^
+                &gt;&gt;&gt;^
+                ^
+                ^&lt;
+                 ^
+                 ^
+                 ^
+                &gt;^
+                ^
+                ^
+                ^  v&lt;&lt;
+                ^&lt;&lt;&lt; ^
+                     ^&lt;&lt;
+                 v&lt;    ^&lt;&lt;
+</code></pre>
+
+<p><strong>Notes:</strong></p>
+
+<ul>
+<li><p>Spent a lot of time tracking down essentially a <code>s/width/height</code> error throughout. Embarrassing.</p></li>
+
+<li><p>I&rsquo;m a bit disturbed that my answer for sample 2 is different from the one given in the problem description (that one is <em>shorter</em>!)</p></li>
+</ul>
+
+      
+      
+      
+    </article>
+    
+
+
+  </main>
+  
+  <nav class="pagination-single">
+    
+      <span class="previous">&larr; <a href="http://agam.github.io/post/2014/12/17/io-performance-is-that-really-an-ssd/" rel="prev">io performance is that really an ssd</a></span>
+    
+    
+      <span class="next"><a href="http://agam.github.io/post/2014/12/18/logic-through-haskell-not-necessarily-dot-dot-dot/" rel="next">logic through haskell not necessarily dot dot dot</a> &rarr;</span>
+    
+  </nav>
+
+
+  
+  <footer role="contentinfo">
+    <div style="text-align:center;">
+      
+      Copyright Agam Brahma
+    </div>
+  </footer>
+
+
+</div>
+
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-16612682-4', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</body>
+</html>
+

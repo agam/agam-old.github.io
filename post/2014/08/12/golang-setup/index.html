@@ -1,0 +1,122 @@
+
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  
+  <meta charset="UTF-8">
+  <title>
+    golang setup | Agam&#39;s Mashed-Up Pome
+  </title>
+
+
+  
+  <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
+
+  
+  <link rel="canonical" href="http://agam.github.io/post/2014/08/12/golang-setup/"/>
+
+  
+  <link rel="stylesheet" href="/css/sanitize.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/highlight_monokai.css">
+  <link rel="stylesheet" href="/css/theme.css">
+  <link rel="stylesheet" href="/css/custom.css">
+  
+  
+  <link href="http://agam.github.io/index.xml" rel="alternate" type="application/rss+xml" title="Agam&#39;s Mashed-Up Pome" />
+  <link href="http://agam.github.io/index.xml" rel="feed" type="application/rss+xml" title="Agam&#39;s Mashed-Up Pome" />
+
+  
+  
+
+
+</head>
+
+
+
+<body>
+<div class="container">
+
+  
+  <header role="banner">
+    <div class="row gutters">
+      <div id="site-title" class="col span_6">
+        <h1><a href="http://agam.github.io/">Agam&#39;s Mashed-Up Pome</a></h1>
+        <h2>A lazy evaluation of compute space</h2>
+      </div>
+      <div id="social" class="col span_6">
+        <ul>
+          <li><a href="https://twitter.com/agambrahma" target="_blank">Twitter</a></li>
+          
+          
+          <li><a href="http://agam.github.io/index.xml" type="application/rss+xml" target="_blank">RSS</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+
+  
+  <main id="single" role="main">
+    <div class="article-header">
+      <h1>golang setup</h1>
+      <div class="meta">
+        Aug 12, 2014 &nbsp;
+        
+      </div>
+    </div>
+    <article>
+      <p>Just some basic personal notes here.</p>
+
+<p>Obviously, get the <code>go-mode</code> for Emacs. It has useful shortcuts, like <code>C-c C-a</code> to import a package while you&rsquo;re editing some code and don&rsquo;t want to scroll up and add this, or <code>C-c C-d</code> to show the signature of the function at point. There are other useful functions (for which you can add your own shortcuts), such as <code>gofmt</code> which does what you&rsquo;d expect, and <code>go-play-region</code>, which is nifty (but perhaps not that useful): it sends the selected code to <a href="http://play.golang.org/">the Go Playground</a>, and displays the result.</p>
+
+<p>It&rsquo;ll also be useful to get <code>godef</code>. So, just <code>go get code.google.com/p/rog-go/exp/cmd/godef</code> (remember to set <code>$GOPATH</code> first &ndash; I use <code>~/Golang/Packages</code>).</p>
+
+<p>If you&rsquo;re enthusiastic about further Emacs-Go integration, you can try out <a href="http://github.com/dougm/goflymake"><code>goflymake</code></a> &ndash; I haven&rsquo;t used it myself (the compile step is nearly-instantaneous for me anyway), but I&rsquo;ve heard its good, so YMMV.</p>
+
+      
+      
+      
+    </article>
+    
+
+
+  </main>
+  
+  <nav class="pagination-single">
+    
+      <span class="previous">&larr; <a href="http://agam.github.io/post/2014/08/12/ridiculous-concurrency/" rel="prev">ridiculous concurrency</a></span>
+    
+    
+      <span class="next"><a href="http://agam.github.io/post/2014/08/19/command-line-gists/" rel="next">command line gists</a> &rarr;</span>
+    
+  </nav>
+
+
+  
+  <footer role="contentinfo">
+    <div style="text-align:center;">
+      
+      Copyright Agam Brahma
+    </div>
+  </footer>
+
+
+</div>
+
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-16612682-4', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</body>
+</html>
+

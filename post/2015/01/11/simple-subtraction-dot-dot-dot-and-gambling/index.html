@@ -1,0 +1,618 @@
+
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  
+  <meta charset="UTF-8">
+  <title>
+    simple subtraction dot dot dot and gambling | Agam&#39;s Mashed-Up Pome
+  </title>
+
+
+  
+  <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
+
+  
+  <link rel="canonical" href="http://agam.github.io/post/2015/01/11/simple-subtraction-dot-dot-dot-and-gambling/"/>
+
+  
+  <link rel="stylesheet" href="/css/sanitize.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/highlight_monokai.css">
+  <link rel="stylesheet" href="/css/theme.css">
+  <link rel="stylesheet" href="/css/custom.css">
+  
+  
+  <link href="http://agam.github.io/index.xml" rel="alternate" type="application/rss+xml" title="Agam&#39;s Mashed-Up Pome" />
+  <link href="http://agam.github.io/index.xml" rel="feed" type="application/rss+xml" title="Agam&#39;s Mashed-Up Pome" />
+
+  
+  
+
+
+</head>
+
+
+
+<body>
+<div class="container">
+
+  
+  <header role="banner">
+    <div class="row gutters">
+      <div id="site-title" class="col span_6">
+        <h1><a href="http://agam.github.io/">Agam&#39;s Mashed-Up Pome</a></h1>
+        <h2>A lazy evaluation of compute space</h2>
+      </div>
+      <div id="social" class="col span_6">
+        <ul>
+          <li><a href="https://twitter.com/agambrahma" target="_blank">Twitter</a></li>
+          
+          
+          <li><a href="http://agam.github.io/index.xml" type="application/rss+xml" target="_blank">RSS</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+
+  
+  <main id="single" role="main">
+    <div class="article-header">
+      <h1>simple subtraction dot dot dot and gambling</h1>
+      <div class="meta">
+        Jan 11, 2015 &nbsp;
+        
+      </div>
+    </div>
+    <article>
+      
+
+<p>Continuing on the theme of the last two posts, here are two more examples, here are <em>two more</em>. The first is a simple change-counting program, which might fit the bill for a &ldquo;first program&rdquo;, and the second is a game of craps (not too interactive, unfortunately; all you do is place a bet &ndash; I did at least add a delay for the dice throw to make it seem less &hellip; er &hellip; automated).</p>
+
+<h3 id="change-go-source">Change: Go Source</h3>
+
+<pre><code class="language-go">package main
+
+import (
+	&quot;fmt&quot;
+	&quot;math&quot;
+	&quot;strings&quot;
+)
+
+type moneyUnit struct {
+	name  string
+	value int
+}
+
+var moneyUnits = []moneyUnit{
+	{&quot;Hundred Dollar Bill&quot;, 100 * 100},
+	{&quot;Fifty Dollar Bill&quot;, 50 * 100},
+	{&quot;Twenty Dollar Bill&quot;, 20 * 100},
+	{&quot;Ten Dollar Bill&quot;, 10 * 100},
+	{&quot;Five Dollar Bill&quot;, 5 * 100},
+	{&quot;One Dollar Bill&quot;, 100},
+	{&quot;One-Half Dollar&quot;, 50},
+	{&quot;Quarter&quot;, 25},
+	{&quot;Dime&quot;, 10},
+	{&quot;Nickel&quot;, 5},
+	{&quot;Penny&quot;, 1},
+}
+
+func showUsage() {
+	fmt.Println(&quot;\n         The Change-Maker   &quot;)
+	fmt.Println(&quot;----------------------------------\n&quot;)
+	fmt.Println(&quot;I'll help you calculate the change for any item purchased.\n&quot;)
+}
+
+func getMoney(prompt string) float64 {
+	for {
+		fmt.Printf(&quot;%s : $&quot;, prompt)
+		var answer float64
+		fmt.Scan(&amp;answer)
+		pennies := answer * 100
+		roundPennies := math.Ceil(pennies)
+		if roundPennies-pennies &gt; 1e-4 {
+			fmt.Println(&quot;Error: please enter $XXXX.XX (i.e. up to two decimal places!)&quot;)
+		} else {
+			return answer
+		}
+	}
+}
+
+func deductChange(pennies, unit int) (numUnits int, remaining int) {
+	if pennies%unit == 0 {
+		return pennies / unit, 0
+	} else {
+		numUnits = pennies / unit
+		remaining = pennies - numUnits*unit
+		return
+	}
+}
+
+func showChange(pennies int) {
+	for _, u := range moneyUnits {
+		var numUnits int
+		numUnits, pennies = deductChange(pennies, u.value)
+		if numUnits &gt; 0 {
+			fmt.Printf(&quot;%5d  %s(s)\n&quot;, numUnits, u.name)
+		}
+	}
+	if pennies != 0 {
+		panic(&quot;wtf&quot;)
+	}
+}
+
+func main() {
+	showUsage()
+	for {
+		cost := getMoney(&quot;Cost of item?&quot;)
+		payment := getMoney(&quot;Amount of payment?&quot;)
+		if payment == cost {
+			fmt.Println(&quot;Aha! you don't need any change!\n&quot;)
+		} else if payment-cost &gt; 0 {
+			showChange(int((payment - cost) * 100))
+		} else {
+			fmt.Println(&quot;\nHey! you need to pay me some more for that!&quot;)
+		}
+		fmt.Printf(&quot;\nAnother item? (enter 'y' or 'n'): &quot;)
+		var another string
+		fmt.Scan(&amp;another)
+		if strings.ToLower(another) == &quot;n&quot; {
+			break
+		} else {
+			fmt.Println()
+		}
+	}
+	fmt.Println(&quot;\n\nThank you, come again!\n\n&quot;)
+}
+</code></pre>
+
+<h3 id="change-basic-source">Change: Basic Source</h3>
+
+<pre><code class="language-basic">2 PRINT TAB(33);&quot;CHANGE&quot;
+4 PRINT TAB(15);&quot;CREATIVE COMPUTING  MORRISTOWN, NEW JERSEY&quot;
+5 PRINT:PRINT:PRINT
+6 PRINT &quot;I, YOUR FRIENDLY MICROCOMPUTER, WILL DETERMINE&quot;
+8 PRINT &quot;THE CORRECT CHANGE FOR ITEMS COSTING UP TO $100.&quot;
+9 PRINT:PRINT
+10 PRINT &quot;COST OF ITEM&quot;;:INPUT A:PRINT &quot;AMOUNT OF PAYMENT&quot;;:INPUT P
+20 C=P-A:M=C:IF C&lt;&gt;0 THEN 90
+25 PRINT &quot;CORRECT AMOUNT, THANK YOU.&quot;
+30 GOTO 400
+90 IF C&gt;0 THEN 120
+95 PRINT &quot;SORRY, YOU HAVE SHORT-CHANGED ME $&quot;;A-P
+100 GOTO 10
+120 PRINT &quot;YOUR CHANGE, $&quot;;C
+130 D=INT(C/10)
+140 IF D=0 THEN 155
+150 PRINT D;&quot;TEN DOLLAR BILL(S)&quot;
+155 C=M-(D*10)
+160 E=INT(C/5)
+170 IF E=0 THEN 185
+180 PRINT E;&quot;FIVE DOLLARS BILL(S)&quot;
+185 C=M-(D*10+E*5)
+190 F=INT(C)
+200 IF F=0 THEN 215
+210 PRINT F;&quot;ONE DOLLAR BILL(S)&quot;
+215 C=M-(D*10+E*5+F)
+220 C=C*100
+225 N=C
+230 G=INT(C/50)
+240 IF G=0 THEN 255
+250 PRINT G;&quot;ONE HALF DOLLAR(S)&quot;
+255 C=N-(G*50)
+260 H=INT(C/25)
+270 IF H=0 THEN 285
+280 PRINT H;&quot;QUARTER(S)&quot;
+285 C=N-(G*50+H*25)
+290 I=INT(C/10)
+300 IF I=0 THEN 315
+310 PRINT I;&quot;DIME(S)&quot;
+315 C=N-(G*50+H*25+I*10)
+320 J=INT(C/5)
+330 IF J=0 THEN 345
+340 PRINT J;&quot;NICKEL(S)&quot;
+345 C=N-(G*50+H*25+I*10+J*5)
+350 K=INT(C+.5)
+360 IF K=0 THEN 380
+370 PRINT K;&quot;PENNY(S)&quot;
+380 PRINT &quot;THANK YOU, COME AGAIN.&quot;
+390 PRINT:PRINT
+400 GOTO 10
+410 END
+</code></pre>
+
+<h3 id="change-gameplay">Change: Gameplay</h3>
+
+<pre><code class="language-sh">$ go run change.go
+
+         The Change-Maker
+		 ----------------------------------
+
+I'll help you calculate the change for any item purchased.
+
+Cost of item? : $4.56
+Amount of payment? : $20
+1  Ten Dollar Bill(s)
+1  Five Dollar Bill(s)
+1  Quarter(s)
+1  Dime(s)
+1  Nickel(s)
+4  Penny(s)
+
+Another item? (enter 'y' or 'n'): y
+
+Cost of item? : $56.43
+Amount of payment? : $525.50
+4  Hundred Dollar Bill(s)
+1  Fifty Dollar Bill(s)
+1  Ten Dollar Bill(s)
+1  Five Dollar Bill(s)
+4  One Dollar Bill(s)
+1  Nickel(s)
+2  Penny(s)
+
+Another item? (enter 'y' or 'n'): n
+
+
+Thank you, come again!
+</code></pre>
+
+<h3 id="craps-go-source">Craps: Go Source</h3>
+
+<pre><code class="language-go">package main
+
+import (
+	&quot;fmt&quot;
+	&quot;math/rand&quot;
+	&quot;strings&quot;
+	&quot;time&quot;
+)
+
+const (
+	playerStartingMoney = 100
+	minimumBetAmount    = 5
+	diceThrowDelayMs    = 300
+	pointBreakThrow     = 7
+)
+
+const (
+	rollerPlayer = iota
+	rollerComputer
+)
+
+const (
+	winStr       = &quot;... and Win!&quot;
+	loseStr      = &quot;... and Lose!&quot;
+	rollAgainStr = &quot;... roll again ...&quot;
+)
+
+var winningThrows = map[int]bool{
+	7:  true,
+	11: true,
+}
+
+var losingThrows = map[int]bool{
+	2:  true,
+	3:  true,
+	12: true,
+}
+
+func showUsage() {
+	fmt.Printf(&quot;See rules? enter 'y' or 'n' : &quot;)
+	var choice string
+	fmt.Scan(&amp;choice)
+	if strings.ToLower(choice) == &quot;n&quot; {
+		return
+	}
+	fmt.Println(&quot;\n       Welcome to CRAPS!    &quot;)
+	fmt.Println(&quot;----------------------------------------&quot;)
+	fmt.Println(&quot;\nHere are the rules:&quot;)
+	fmt.Println(&quot;- You roll a pair of dice and add up the score for each turn&quot;)
+	fmt.Println(&quot;- rolling a 7 or 11 on the first roll wins&quot;)
+	fmt.Println(&quot;- rolling a 2, 3 or 12 on the first roll loses&quot;)
+	fmt.Println(&quot;- any other number becomes your 'point', and you continue to roll&quot;)
+	fmt.Println(&quot;    - if you subsequently roll your 'point' again, you win&quot;)
+	fmt.Println(&quot;    - if you roll a 7, you lose&quot;)
+	fmt.Println(&quot;- When one of us loses, we switch dice&quot;)
+	fmt.Println(&quot;- You start with $100, and have to bet a minimum of $5 per turn&quot;)
+	fmt.Println(&quot;- You get the first turn&quot;)
+	fmt.Println(&quot;- To stop betting, just enter $0 as your bet amount&quot;)
+	fmt.Println(&quot;\n\nThat's it, let's go!\n\n&quot;)
+}
+
+func getBetMoney(total int) (bet int) {
+	for {
+		fmt.Printf(&quot;\nYou have $%d, how much would you like to bet? $&quot;, total)
+		fmt.Scan(&amp;bet)
+		if bet &gt; total {
+			fmt.Println(&quot;Hey, you can't bet more than you have!&quot;)
+		} else if bet &gt; 0 &amp;&amp; bet &lt; minimumBetAmount {
+			fmt.Printf(&quot;Sorry buddy, you gotta place at least $%d on the table.\n&quot;, minimumBetAmount)
+		} else {
+			return
+		}
+	}
+}
+
+func getDice(subject string) int {
+	fmt.Printf(&quot;%s roll &quot;, subject)
+	time.Sleep(diceThrowDelayMs * time.Millisecond)
+	dice1 := 1 + rand.Intn(6)
+	fmt.Printf(&quot;%d &quot;, dice1)
+	time.Sleep(diceThrowDelayMs * time.Millisecond)
+	dice2 := 1 + rand.Intn(6)
+	fmt.Printf(&quot;and %d &quot;, dice2)
+	time.Sleep(diceThrowDelayMs * time.Millisecond)
+	return dice1 + dice2
+}
+
+func playRound(roller int) bool {
+	subject := &quot;I&quot;
+	possessive := &quot;My&quot;
+	if roller == rollerPlayer {
+		subject = &quot;You&quot;
+		possessive = &quot;Your&quot;
+	}
+
+	firstThrow := getDice(subject)
+
+	if winningThrows[firstThrow] {
+		fmt.Println(winStr)
+		return true
+	}
+	if losingThrows[firstThrow] {
+		fmt.Println(loseStr)
+		return false
+	}
+
+	fmt.Printf(&quot;so %s point is %d\n&quot;, possessive, firstThrow)
+	for {
+		throw := getDice(subject)
+		if throw == firstThrow {
+			fmt.Printf(&quot;and make %s point!\n&quot;, possessive)
+			return true
+		}
+		if throw == pointBreakThrow {
+			fmt.Println(loseStr)
+			return false
+		}
+		fmt.Println(rollAgainStr)
+	}
+}
+
+func updateMoney(won bool, total, bet int) (newTotal int) {
+	if won {
+		newTotal = total + bet
+	} else {
+		newTotal = total - bet
+	}
+	return
+}
+
+func showQuitMessage() {
+	fmt.Println(&quot;\nAh I wish I could quit this easily ... farewell, young gambler!\n&quot;)
+}
+
+func main() {
+	showUsage()
+	rand.Seed(time.Now().Unix())
+
+	playerMoney := playerStartingMoney
+	for {
+		fmt.Println(&quot;\n\nOk, your turn now\n&quot;)
+		for {
+			bet := getBetMoney(playerMoney)
+			if bet == 0 {
+				showQuitMessage()
+				return
+			}
+			playerWon := playRound(rollerPlayer)
+			playerMoney = updateMoney(playerWon, playerMoney, bet)
+			if !playerWon {
+				break
+			}
+		}
+
+		fmt.Println(&quot;\n\nOk, my turn now\n&quot;)
+		for {
+			bet := getBetMoney(playerMoney)
+			if bet == 0 {
+				showQuitMessage()
+				return
+			}
+			computerWon := playRound(rollerComputer)
+			playerMoney = updateMoney(!computerWon, playerMoney, bet)
+			if !computerWon {
+				break
+			}
+		}
+	}
+}
+</code></pre>
+
+<h3 id="craps-basic-source">Craps: Basic Source</h3>
+
+<pre><code class="language-basic">5 PRINT TAB(33);&quot;CRAPS&quot;
+10 PRINT TAB(15);&quot;CREATIVE COMPUTING  MORRISTOWN, NEW JERSEY&quot;
+12 PRINT:PRINT:PRINT
+15 LET R=0
+20 PRINT&quot;2,3,12 ARE LOSERS; 4,5,6,8,9,10 ARE POINTS; 7,11 ARE NATURAL WINNERS.&quot;
+21 LET T=1
+22 PRINT &quot;PICK A NUMBER AND INPUT TO ROLL DICE&quot;;
+23 INPUT Z
+24 LET X=(RND(0))
+25 LET T =T+1
+26 IF T&lt;=Z GOTO 24
+27 PRINT&quot;INPUT THE AMOUNT OF YOUR WAGER.&quot;;
+28 INPUT F
+30 PRINT &quot;I WILL NOW THROW THE DICE&quot;
+40 LET E=INT(7*RND(1))
+41 LET S=INT(7*RND(1))
+42 LET X=E+S
+50 IF X=7 GOTO 180
+55 IF X=11 GOTO 180
+60 IF X=1 GOTO 40
+62 IF X=2 GOTO 195
+65 IF X=0 GOTO 40
+70 IF X=2 GOTO 200
+80 IF X=3 GOTO 200
+90 IF X=12 GOTO 200
+125 IF X=5 GOTO 220
+130 IF X =6 GOTO 220
+140 IF X=8 GOTO 220
+150 IF X=9 GOTO 220
+160 IF X =10 GOTO 220
+170 IF X=4 GOTO 220
+180 PRINT X &quot;- NATURAL....A WINNER!!!!&quot;
+185 PRINT X&quot;PAYS EVEN MONEY, YOU WIN&quot;F&quot;DOLLARS&quot;
+190 GOTO 210
+195 PRINT X&quot;- SNAKE EYES....YOU LOSE.&quot;
+196 PRINT &quot;YOU LOSE&quot;F &quot;DOLLARS.&quot;
+197 LET F=0-F
+198 GOTO 210
+200 PRINT X &quot; - CRAPS...YOU LOSE.&quot;
+205 PRINT &quot;YOU LOSE&quot;F&quot;DOLLARS.&quot;
+206 LET F=0-F
+210 LET R= R+F
+211 GOTO 320
+220 PRINT X &quot;IS THE POINT. I WILL ROLL AGAIN&quot;
+230 LET H=INT(7*RND(1))
+231 LET Q=INT(7*RND(1))
+232 LET O=H+Q
+240 IF O=1 GOTO 230
+250 IF O=7 GOTO 290
+255 IF O=0 GOTO 230
+260 IF O=X GOTO 310
+270 PRINT O &quot; - NO POINT. I WILL ROLL AGAIN&quot;
+280 GOTO 230
+290 PRINT O &quot;- CRAPS. YOU LOSE.&quot;
+291 PRINT &quot;YOU LOSE $&quot;F
+292 F=0-F
+293 GOTO 210
+300 GOTO 320
+310 PRINT X&quot;- A WINNER.........CONGRATS!!!!!!!!&quot;
+311 PRINT X &quot;AT 2 TO 1 ODDS PAYS YOU...LET ME SEE...&quot;2*F&quot;DOLLARS&quot;
+312 LET F=2*F
+313 GOTO 210
+320 PRINT &quot; IF YOU WANT TO PLAY AGAIN PRINT 5 IF NOT PRINT 2&quot;;
+330 INPUT M
+331 IF R&lt;0 GOTO 334
+332 IF R&gt;0 GOTO 336
+333 IF R=0 GOTO 338
+334 PRINT &quot;YOU ARE NOW UNDER $&quot;;-R
+335 GOTO 340
+336 PRINT &quot;YOU ARE NOW AHEAD $&quot;;R
+337 GOTO 340
+338 PRINT &quot;YOU ARE NOW EVEN AT 0&quot;
+340 IF M=5 GOTO 27
+341 IF R&lt;0 GOTO 350
+342 IF R&gt;0 GOTO 353
+343 IF R=0 GOTO 355
+350 PRINT&quot;TOO BAD, YOU ARE IN THE HOLE. COME AGAIN.&quot;
+351 GOTO 360
+353 PRINT&quot;CONGRATULATIONS---YOU CAME OUT A WINNER. COME AGAIN!&quot;
+354 GOTO 360
+355 PRINT&quot;CONGRATULATIONS---YOU CAME OUT EVEN, NOT BAD FOR AN AMATEUR&quot;
+360 END
+</code></pre>
+
+<h3 id="craps-gameplay">Craps: Gameplay</h3>
+
+<pre><code class="language-sh">$ go run craps.go
+See rules? enter 'y' or 'n' : y
+
+       Welcome to CRAPS!
+	   ----------------------------------------
+
+Here are the rules:
+- You roll a pair of dice and add up the score for each turn
+- rolling a 7 or 11 on the first roll wins
+- rolling a 2, 3 or 12 on the first roll loses
+- any other number becomes your 'point', and you continue to roll
+    - if you subsequently roll your 'point' again, you win
+    - if you roll a 7, you lose
+- When one of us loses, we switch dice
+- You start with $100, and have to bet a minimum of $5 per turn
+- You get the first turn
+- To stop betting, just enter $0 as your bet amount
+
+
+That's it, let's go!
+
+Ok, your turn now
+
+You have $100, how much would you like to bet? $10
+You roll 2 and 3 so Your point is 5
+You roll 6 and 5 ... roll again ...
+You roll 1 and 5 ... roll again ...
+You roll 4 and 6 ... roll again ...
+You roll 6 and 5 ... roll again ...
+You roll 1 and 5 ... roll again ...
+You roll 2 and 2 ... roll again ...
+You roll 2 and 3 and make Your point!
+
+You have $110, how much would you like to bet? $20
+You roll 3 and 2 so Your point is 5
+You roll 2 and 4 ... roll again ...
+You roll 6 and 4 ... roll again ...
+You roll 3 and 1 ... roll again ...
+You roll 4 and 3 ... and Lose!
+
+Ok, my turn now
+
+You have $90, how much would you like to bet? $0
+
+Ah I wish I could quit this easily ... farewell, young gambler!
+
+</code></pre>
+
+<p>Coming next: a different kind of gambling game (Blackjack?) and a slightly more involved two-player game (Battleship?)</p>
+
+      
+      
+      
+    </article>
+    
+
+
+  </main>
+  
+  <nav class="pagination-single">
+    
+      <span class="previous">&larr; <a href="http://agam.github.io/post/2015/01/10/these-pretzels-are-making-me-thirsty/" rel="prev">these pretzels are making me thirsty</a></span>
+    
+    
+      <span class="next"><a href="http://agam.github.io/post/2015/01/13/blackjack/" rel="next">blackjack</a> &rarr;</span>
+    
+  </nav>
+
+
+  
+  <footer role="contentinfo">
+    <div style="text-align:center;">
+      
+      Copyright Agam Brahma
+    </div>
+  </footer>
+
+
+</div>
+
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-16612682-4', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</body>
+</html>
+

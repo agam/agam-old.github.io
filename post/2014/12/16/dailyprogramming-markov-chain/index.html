@@ -1,0 +1,203 @@
+
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  
+  <meta charset="UTF-8">
+  <title>
+    dailyprogramming markov chain | Agam&#39;s Mashed-Up Pome
+  </title>
+
+
+  
+  <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
+
+  
+  <link rel="canonical" href="http://agam.github.io/post/2014/12/16/dailyprogramming-markov-chain/"/>
+
+  
+  <link rel="stylesheet" href="/css/sanitize.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/highlight_monokai.css">
+  <link rel="stylesheet" href="/css/theme.css">
+  <link rel="stylesheet" href="/css/custom.css">
+  
+  
+  <link href="http://agam.github.io/index.xml" rel="alternate" type="application/rss+xml" title="Agam&#39;s Mashed-Up Pome" />
+  <link href="http://agam.github.io/index.xml" rel="feed" type="application/rss+xml" title="Agam&#39;s Mashed-Up Pome" />
+
+  
+  
+
+
+</head>
+
+
+
+<body>
+<div class="container">
+
+  
+  <header role="banner">
+    <div class="row gutters">
+      <div id="site-title" class="col span_6">
+        <h1><a href="http://agam.github.io/">Agam&#39;s Mashed-Up Pome</a></h1>
+        <h2>A lazy evaluation of compute space</h2>
+      </div>
+      <div id="social" class="col span_6">
+        <ul>
+          <li><a href="https://twitter.com/agambrahma" target="_blank">Twitter</a></li>
+          
+          
+          <li><a href="http://agam.github.io/index.xml" type="application/rss+xml" target="_blank">RSS</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+
+  
+  <main id="single" role="main">
+    <div class="article-header">
+      <h1>dailyprogramming markov chain</h1>
+      <div class="meta">
+        Dec 16, 2014 &nbsp;
+        
+      </div>
+    </div>
+    <article>
+      <p>Been a long, <em>long</em> time since I looked at <a href="http://www.reddit.com/r/dailyprogrammer/">r/dailyprogrammer</a>, so I picked <a href="http://www.reddit.com/r/dailyprogrammer/comments/2ovt2i/20141210_challenge_192_intermediate_markov_chain/">this <em>intermediate</em> problem</a> from 5 days ago. Basically, given a dictionary, judge the likelihood of a word being a &ldquo;real word&rdquo;.</p>
+
+<p>Here&rsquo;s my solution:</p>
+
+<pre><code class="language-go">package main
+
+import (
+	&quot;bufio&quot;
+	&quot;flag&quot;
+	&quot;fmt&quot;
+	&quot;log&quot;
+	&quot;math&quot;
+	&quot;os&quot;
+)
+
+type wordmap map[uint8]map[uint8]int
+
+func MakeWordMap(w string, wm wordmap) {
+	for i := range w {
+		if i == len(w)-1 {
+			break
+		}
+		c := w[i]
+		cnext := w[i+1]
+		if _, ok := wm[c]; !ok {
+			wm[c] = make(map[uint8]int)
+		}
+		wm[c][cnext] = wm[c][cnext] + 1
+	}
+}
+
+func ReadWords(dictfile string, wm wordmap) {
+	file, err := os.Open(dictfile)
+	if err != nil {
+		log.Fatal(err)
+	}
+	defer file.Close()
+
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
+		MakeWordMap(scanner.Text(), wm)
+	}
+}
+
+func CheckValidity(w string, wm wordmap) float64 {
+	var c, cprev uint8
+	var wordScore float64 = 1.0
+	for i := range w {
+		if i == 0 {
+			cprev = w[i]
+			continue
+		}
+		c = w[i]
+		pairScore := wm[cprev][c]
+		rowTotal := 0
+		for _, count := range wm[cprev] {
+			rowTotal += count
+		}
+		wordScore = wordScore * float64(pairScore) / float64(rowTotal)
+		cprev = c
+	}
+	return wordScore
+}
+
+func main() {
+	// Takes a dictionary and a single word, and returns the
+	// probability of that word being &quot;good&quot;
+	wm := make(wordmap)
+	dictfile := flag.String(&quot;dictfile&quot;, &quot;&quot;, &quot;Path to word list&quot;)
+	checkword := flag.String(&quot;checkword&quot;, &quot;&quot;, &quot;Word to spell-check&quot;)
+	flag.Parse()
+	ReadWords(*dictfile, wm)
+	prob := CheckValidity(*checkword, wm)
+	fmt.Printf(&quot;%s has a score of %.20f\n&quot;, *checkword, prob)
+	if prob &lt; math.Pow10(-len(*checkword)) {
+		fmt.Println(&quot;It is probably not a word!&quot;)
+	} else {
+		fmt.Println(&quot;It looks like a real word!&quot;)
+	}
+}
+</code></pre>
+
+<p>It runs as follows:</p>
+
+<pre><code class="language-sh">$ go run markov.go -dictfile=/usr/share/dict/american-english  -checkword=go
+go has a score of 0.06318184860451107887
+It looks like a real word!
+</code></pre>
+
+      
+      
+      
+    </article>
+    
+
+
+  </main>
+  
+  <nav class="pagination-single">
+    
+      <span class="previous">&larr; <a href="http://agam.github.io/post/2014/12/16/the-gardens-of-go/" rel="prev">the gardens of go</a></span>
+    
+    
+      <span class="next"><a href="http://agam.github.io/post/2014/12/17/io-performance-is-that-really-an-ssd/" rel="next">io performance is that really an ssd</a> &rarr;</span>
+    
+  </nav>
+
+
+  
+  <footer role="contentinfo">
+    <div style="text-align:center;">
+      
+      Copyright Agam Brahma
+    </div>
+  </footer>
+
+
+</div>
+
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-16612682-4', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</body>
+</html>
+

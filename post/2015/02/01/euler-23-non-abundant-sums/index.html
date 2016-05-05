@@ -1,0 +1,195 @@
+
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  
+  <meta charset="UTF-8">
+  <title>
+    euler 23 non abundant sums | Agam&#39;s Mashed-Up Pome
+  </title>
+
+
+  
+  <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
+
+  
+  <link rel="canonical" href="http://agam.github.io/post/2015/02/01/euler-23-non-abundant-sums/"/>
+
+  
+  <link rel="stylesheet" href="/css/sanitize.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/highlight_monokai.css">
+  <link rel="stylesheet" href="/css/theme.css">
+  <link rel="stylesheet" href="/css/custom.css">
+  
+  
+  <link href="http://agam.github.io/index.xml" rel="alternate" type="application/rss+xml" title="Agam&#39;s Mashed-Up Pome" />
+  <link href="http://agam.github.io/index.xml" rel="feed" type="application/rss+xml" title="Agam&#39;s Mashed-Up Pome" />
+
+  
+  
+
+
+</head>
+
+
+
+<body>
+<div class="container">
+
+  
+  <header role="banner">
+    <div class="row gutters">
+      <div id="site-title" class="col span_6">
+        <h1><a href="http://agam.github.io/">Agam&#39;s Mashed-Up Pome</a></h1>
+        <h2>A lazy evaluation of compute space</h2>
+      </div>
+      <div id="social" class="col span_6">
+        <ul>
+          <li><a href="https://twitter.com/agambrahma" target="_blank">Twitter</a></li>
+          
+          
+          <li><a href="http://agam.github.io/index.xml" type="application/rss+xml" target="_blank">RSS</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+
+  
+  <main id="single" role="main">
+    <div class="article-header">
+      <h1>euler 23 non abundant sums</h1>
+      <div class="meta">
+        Feb 1, 2015 &nbsp;
+        
+      </div>
+    </div>
+    <article>
+      <p>Had a slice of free time, so decided to look at the next problem. Here&rsquo;s the initial naive solution:</p>
+
+<pre><code class="language-haskell">divisors n = [x | x &lt;- [1 .. n-1], n `mod` x == 0]
+
+isAbundant n = n &lt; (sum $ divisors n)
+
+abundants n = filter isAbundant $ [1 .. n]
+
+expressSum z nums = not $ null [(x,y) | x &lt;- nums, y &lt;- nums, x + y == z]
+
+sumAbundants n =
+  let a = abundants n in
+          sum $ filter (\x -&gt; not $ expressSum x a) [1 .. n]
+</code></pre>
+
+<p>While it gave the correct answer, it did so in <code>3133.33</code> seconds, which is &hellip; embarrassing.</p>
+
+<p>This is just <em>too</em> inefficient, even the following &hellip;</p>
+
+<pre><code class="language-lisp">(defun divisors (n)
+  (loop for i from 1 below n
+     when (= 0 (mod n i))
+       collect i))
+
+(defun abundantp (n)
+  (&lt; n
+     (reduce #'+ (divisors n))))
+
+(defun abundants (n)
+  (loop for i from 1 below n
+     when (abundantp i)
+       collect i))
+
+(defun possible-summands (z nums)
+  (loop for x in nums do
+       (loop for y in nums
+	  when (= z (+ x y)) do
+	    (return-from possible-summands (cons x y)))))
+  
+(defun sum-abundants (n)
+  (let* ((ab (abundants n))
+	 (summands 
+	  (loop for i from 1 to n
+	     when (null (possible-summands i ab))
+	     collect i)))
+    (reduce #'+ summands)))
+</code></pre>
+
+<p>&hellip; takes no less than half as long, at <code>1329.168</code> seconds.</p>
+
+<p>BTW why is <code>28123</code> the upper limit for this sequence? I had no idea, and found <a href="http://mathschallenge.net/full/sum_of_two_abundant_numbers">this explanation</a> (and tangentially, <a href="http://mathschallenge.net/view/even_sum_of_two_abundant_numbers">this one</a> too).</p>
+
+<p>Anyway, I&rsquo;m ashamed to say I didn&rsquo;t put in the effort to learn how to profile Haskell programs (<em>next time ?</em>) and profiled the Lisp version instead, which showed that (<strong>duh</strong>) all the time was going in finding divisors. Obviously, we can just loop till the <em>square root of N</em> instead of looping <em>all the way to N</em>. After this change:</p>
+
+<pre><code class="language-lisp">(defun divisors (n)
+(declare (type fixnum n))
+  (loop for i from 1 below (floor (sqrt n))
+     when (= 0 (mod n i))
+       collect i))
+</code></pre>
+
+<p>&hellip; it runs in <code>38 milliseconds</code> !!</p>
+
+<p>And a similar change to the Haskell version:</p>
+
+<pre><code class="language-haskell">divisors :: Int -&gt; [Int]
+divisors n = [x | x &lt;- [1 .. round $ sqrt $ fromIntegral n], n `mod` x == 0]
+</code></pre>
+
+<p>gave the expected answer in <code>180 milliseconds</code>. Not bad (though it should be noted we&rsquo;re still an order of magnitude away in efficiency).</p>
+
+<p><strong>Notes:</strong></p>
+
+<ul>
+<li><p>Haskell makes it very easy to quickly arrive at a <em>correct</em> solution, but the road from there to an <em>efficient</em> solution is less clear.</p></li>
+
+<li><p>The brevity of the notation helps, but I get a feeling it&rsquo;s also due to the single-letter variable names &ndash; which is all right (and indeed well-suited) for a tiny math problem, but unclear whether it&rsquo;ll hold up for code in a large-scale project.</p></li>
+
+<li><p>People usually jump to the [&ldquo;Programming Language shootout&rdquo;](), but if the code <em>there</em> is any indication, writing performant Haskell code is a dark art, and <em>the three-line quicksort is a devilish honeytrap</em>.</p></li>
+</ul>
+
+      
+      
+      
+    </article>
+    
+
+
+  </main>
+  
+  <nav class="pagination-single">
+    
+      <span class="previous">&larr; <a href="http://agam.github.io/post/2015/01/31/euler-21-amicable-numbers/" rel="prev">euler 21 amicable numbers</a></span>
+    
+    
+      <span class="next"><a href="http://agam.github.io/post/2015/02/01/euler-22-scoring-names/" rel="next">euler 22 scoring names</a> &rarr;</span>
+    
+  </nav>
+
+
+  
+  <footer role="contentinfo">
+    <div style="text-align:center;">
+      
+      Copyright Agam Brahma
+    </div>
+  </footer>
+
+
+</div>
+
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-16612682-4', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</body>
+</html>
+

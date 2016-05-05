@@ -1,0 +1,170 @@
+
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  
+  <meta charset="UTF-8">
+  <title>
+    euler 41 pandigital primes | Agam&#39;s Mashed-Up Pome
+  </title>
+
+
+  
+  <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
+
+  
+  <link rel="canonical" href="http://agam.github.io/post/2015/03/22/euler-41-pandigital-primes/"/>
+
+  
+  <link rel="stylesheet" href="/css/sanitize.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/highlight_monokai.css">
+  <link rel="stylesheet" href="/css/theme.css">
+  <link rel="stylesheet" href="/css/custom.css">
+  
+  
+  <link href="http://agam.github.io/index.xml" rel="alternate" type="application/rss+xml" title="Agam&#39;s Mashed-Up Pome" />
+  <link href="http://agam.github.io/index.xml" rel="feed" type="application/rss+xml" title="Agam&#39;s Mashed-Up Pome" />
+
+  
+  
+
+
+</head>
+
+
+
+<body>
+<div class="container">
+
+  
+  <header role="banner">
+    <div class="row gutters">
+      <div id="site-title" class="col span_6">
+        <h1><a href="http://agam.github.io/">Agam&#39;s Mashed-Up Pome</a></h1>
+        <h2>A lazy evaluation of compute space</h2>
+      </div>
+      <div id="social" class="col span_6">
+        <ul>
+          <li><a href="https://twitter.com/agambrahma" target="_blank">Twitter</a></li>
+          
+          
+          <li><a href="http://agam.github.io/index.xml" type="application/rss+xml" target="_blank">RSS</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+
+  
+  <main id="single" role="main">
+    <div class="article-header">
+      <h1>euler 41 pandigital primes</h1>
+      <div class="meta">
+        Mar 22, 2015 &nbsp;
+        
+      </div>
+    </div>
+    <article>
+      <p>Yet another <em>brute-force</em> solution, pushing the line a bit at <em>1991 seconds</em>. But hey, it works, and was quick to write, so &hellip;</p>
+
+<p><strong>Statutory Warning</strong>: <em>spoilers ahead</em></p>
+
+<pre><code class="language-lisp">(defparameter *max-num-limit* 1000000000)
+(defparameter *all-numbers* (make-array (list *max-num-limit*) :element-type 'bit :initial-element 1))
+
+(defun mark-primes (&amp;optional (n *max-num-limit*))
+  ;; 0 and 1 are not prime
+  (mark-not-prime 0)
+  (mark-not-prime 1)
+  ;; Mark 2 as prime, then do the following:
+  ;; (1) Mark all multiples of the prime number,
+  ;; (2) Find next available prime number, mark it as prime,
+  ;; Repeat (1) until n
+  (let ((prime 2))
+    (loop while (&lt; prime n) do
+         (mark-prime-multiples prime n)
+         (setf prime (find-next-prime prime n)))))
+
+(defun mark-not-prime (idx)
+  (setf (bit *all-numbers* idx) 0))
+
+(defun mark-prime-multiples (prime limit)
+  (do ((i (* prime 2) (+ i prime)))
+      ((&gt;= i limit))
+    (mark-not-prime i)))
+
+(defun find-next-prime (prev-prime limit)
+  (do ((i (1+ prev-prime) (1+ i)))
+      ((or (= i limit) (= 1 (bit *all-numbers* i))) i)))
+
+(defun is-prime (n)
+  (= 1 (bit *all-numbers* n)))
+
+(defun get-num-digits (n)
+  (ceiling (log n 10)))
+
+(defun is-pandigital (n)
+  (let* ((num-digits (get-num-digits n))
+         (digits (make-array num-digits :element-type 'bit :initial-element 0)))
+    (loop while (and (&gt; n 0)
+                     (&gt; (mod n 10) 0)
+                     (&lt;= (mod n 10) num-digits)) do
+         (setf (bit digits (1- (mod n 10))) 1)
+         (setf n (floor (/ n 10))))
+    (= (length digits) (count 1 digits))))
+
+(defun euler41 ()
+  (mark-primes)
+  (do ((n 987654321 (1- n)))
+      ((and (is-pandigital n) (is-prime n)) n)))
+</code></pre>
+
+<p>Everything is wrapped up in the call to <code>(euler41)</code>.</p>
+
+      
+      
+      
+    </article>
+    
+
+
+  </main>
+  
+  <nav class="pagination-single">
+    
+      <span class="previous">&larr; <a href="http://agam.github.io/post/2015/03/21/euler-40-champernownes-constant/" rel="prev">euler 40 champernownes constant</a></span>
+    
+    
+      <span class="next"><a href="http://agam.github.io/post/2015/03/23/euler-42-coded-triangle-numbers/" rel="next">euler 42 coded triangle numbers</a> &rarr;</span>
+    
+  </nav>
+
+
+  
+  <footer role="contentinfo">
+    <div style="text-align:center;">
+      
+      Copyright Agam Brahma
+    </div>
+  </footer>
+
+
+</div>
+
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-16612682-4', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</body>
+</html>
+

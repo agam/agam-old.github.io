@@ -1,0 +1,339 @@
+
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  
+  <meta charset="UTF-8">
+  <title>
+    grumbling about jekyll | Agam&#39;s Mashed-Up Pome
+  </title>
+
+
+  
+  <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
+
+  
+  <link rel="canonical" href="http://agam.github.io/post/2014/07/14/grumbling-about-jekyll/"/>
+
+  
+  <link rel="stylesheet" href="/css/sanitize.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/highlight_monokai.css">
+  <link rel="stylesheet" href="/css/theme.css">
+  <link rel="stylesheet" href="/css/custom.css">
+  
+  
+  <link href="http://agam.github.io/index.xml" rel="alternate" type="application/rss+xml" title="Agam&#39;s Mashed-Up Pome" />
+  <link href="http://agam.github.io/index.xml" rel="feed" type="application/rss+xml" title="Agam&#39;s Mashed-Up Pome" />
+
+  
+  
+
+
+</head>
+
+
+
+<body>
+<div class="container">
+
+  
+  <header role="banner">
+    <div class="row gutters">
+      <div id="site-title" class="col span_6">
+        <h1><a href="http://agam.github.io/">Agam&#39;s Mashed-Up Pome</a></h1>
+        <h2>A lazy evaluation of compute space</h2>
+      </div>
+      <div id="social" class="col span_6">
+        <ul>
+          <li><a href="https://twitter.com/agambrahma" target="_blank">Twitter</a></li>
+          
+          
+          <li><a href="http://agam.github.io/index.xml" type="application/rss+xml" target="_blank">RSS</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+
+  
+  <main id="single" role="main">
+    <div class="article-header">
+      <h1>grumbling about jekyll</h1>
+      <div class="meta">
+        Jul 14, 2014 &nbsp;
+        
+      </div>
+    </div>
+    <article>
+      <p>Yeah, not happy about how these dependencies keep breaking. It&rsquo;s a reminder about how fragile these scripting ecosystems are.</p>
+
+<p>Seeing <code>Gem::LoadError: You have already activated rake 10.2.2, but your Gemfile requires rake 0.9.6.</code>` once is enough.</p>
+
+<p>I tried a bunch of stuff and none of it worked. Eventually I gave up, deleted <code>Gemfile.lock</code>, ran <code>bundle install</code>, and just switched my workflow over to using <code>bundle exec rake ...</code> instead of just <code>rake ...</code>. Which grates on me now, but whatever.</p>
+
+<p>Oh wait, no that changed <em>nothing</em>. Bundle is still using <code>rake 0.9.6</code>. Do I need to muck around in the Gemfile now? Why can&rsquo;t it just, you know use this &ldquo;activated version&rdquo; instead?</p>
+
+<p>Nooo &hellip; I have an old version of ruby. I know, I&rsquo;ll use <code>rvm</code>, which I used when I got started with all this. Except &hellip;</p>
+
+<pre><code>RVM is not a function, selecting rubies with 'rvm use ...' will not work.
+
+You need to change your terminal emulator preferences to allow login shell.
+Sometimes it is required to use `/bin/bash --login` as the command.
+Please visit https://rvm.io/integration/gnome-terminal/ for a example.
+</code></pre>
+
+<p>There <em>must</em> be a way out. Doesn&rsquo;t Ubuntu update ruby? Let&rsquo;s try <code>sudo apt-get upgrade ruby</code>. No, it&rsquo;s already the &ldquo;latest version&rdquo;.</p>
+
+<p>What? Ah yes, the breakdown in sensible versioning: different versions are just different names here, let&rsquo;s try <code>sudo apt-get install ruby1.9</code> instead.</p>
+
+<pre><code>The following packages have unmet dependencies:
+ libodbc-ruby1.9.1 : Depends: ruby-odbc but it is not going to be installed
+ libodbc-ruby1.9.1-dbg : Depends: ruby-odbc-dbg but it is not going to be installed
+E: Unable to correct problems, you have held broken packages.
+</code></pre>
+
+<p>I have &ldquo;held broken packages&rdquo;! Indeed! Regardless, something seems to have happened, so <code>sudo ln -sf /usr/bin/ruby1.9.1 /usr/bin/ruby</code> might do something ?</p>
+
+<p>Alriiite! Let&rsquo;s try to use <code>rake</code> again:</p>
+
+<pre><code>$ bundle exec rake generate
+Could not find rake-0.9.6 in any of the sources
+</code></pre>
+
+<p>Hmm, perhaps I need to rerun <code>bundle update</code> ?</p>
+
+<pre><code>Installing RedCloth (4.2.9) with native extensions /usr/lib/ruby/1.9.1/rubygems/installer.rb:552:in `rescue in block in build_extensions': ERROR: Failed to build gem native extension. (Gem::Installer::ExtensionBuildError)
+
+        /usr/bin/ruby1.9.1 extconf.rb 
+/usr/lib/ruby/1.9.1/rubygems/custom_require.rb:36:in `require': cannot load such file -- mkmf (LoadError)
+						     from /usr/lib/ruby/1.9.1/rubygems/custom_require.rb:36:in `require'
+						     from extconf.rb:1:in `&lt;main&gt;'
+
+</code></pre>
+
+<p>Clearly, I am the stupid n00b here. I&rsquo;ve managed to end up worse off than where I started. Help!</p>
+
+<p>Time to try something different. Overwrite the Gemfile with <a href="https://github.com/imathis/octopress/blob/master/Gemfile">the octopress master copy</a> and run <code>bundle install</code> again.</p>
+
+<p>BTW, did I mention how long this step takes? No? Too bad. You&rsquo;ll just have to find out for yourself.</p>
+
+<p><lolrus>Nooo! I still be getting error!</lolrus></p>
+
+<p>What does the great and benevolent <a href="http://stackoverflow.com/questions/12149503/snorby-setup-redcloth-error">Stackoverflow suggest</a>? <code>sudo apt-get install ruby1.9.1-dev</code></p>
+
+<p>At this point the magnitude of my true dependencies was revealed to me:</p>
+
+<pre><code>Fetching source index for https://rubygems.org/
+Using rake (10.3.2) 
+Installing RedCloth (4.2.9) with native extensions 
+Installing blankslate (2.1.2.4) 
+Installing timers (1.1.0) 
+Installing celluloid (0.15.2) 
+Installing chunky_png (1.3.1) 
+Installing fast-stemmer (1.0.2) with native extensions 
+Installing classifier (1.3.4) 
+Installing coffee-script-source (1.7.1) 
+Installing execjs (2.2.1) 
+Installing coffee-script (2.3.0) 
+Installing colorator (0.1) 
+Installing fssm (0.2.10) 
+Installing sass (3.2.19) 
+Installing compass (0.12.6) 
+Installing ffi (1.9.3) with native extensions 
+Installing tilt (1.4.1) 
+Installing haml (4.0.5) 
+Installing jekyll-coffeescript (1.0.0) 
+Installing jekyll-gist (1.1.0) 
+Installing jekyll-paginate (1.0.0) 
+Installing jekyll-sass-converter (1.0.0) 
+Installing rb-fsevent (0.9.4) 
+Installing rb-inotify (0.9.5) 
+Installing listen (2.7.9) 
+Installing jekyll-watch (1.0.0) 
+Installing kramdown (1.4.0) 
+Installing liquid (2.6.1) 
+Installing mercenary (0.3.4) 
+Installing posix-spawn (0.3.8) with native extensions 
+Installing yajl-ruby (1.1.0) with native extensions 
+Installing pygments.rb (0.6.0) 
+Installing redcarpet (3.1.2) with native extensions 
+Installing safe_yaml (1.0.3) 
+Installing parslet (1.5.0) 
+Installing toml (0.1.1) 
+Installing jekyll (2.1.1) 
+Installing jekyll-date-format (1.0.0) 
+Installing jekyll-page-hooks (1.3.0) 
+Installing jekyll-sitemap (0.5.0) 
+Installing rack (1.5.2) 
+Installing rack-protection (1.5.3) 
+Installing rdiscount (2.0.7.3) with native extensions 
+Installing rubypants (0.2.0) 
+Installing sass-globbing (1.0.0) 
+Installing sinatra (1.4.5) 
+Installing stringex (1.4.0) 
+Using bundler (1.0.15) 
+Your bundle is complete! It was installed into ./liquid
+</code></pre>
+
+<p>After that cheeful status update, I thought I&rsquo;d start by trying out the old workflow again:</p>
+
+<pre><code>$ rake generate
+Could not find rake-10.3.2 in any of the sources
+Run `bundle install` to install missing gems.
+</code></pre>
+
+<p>Too optimistic too soon, eh?</p>
+
+<pre><code>$ bundle exec rake generate
+## Generating Site with Jekyll
+overwrite source/stylesheets/screen.css 
+/usr/local/google/home/agam/Documents/agam.github.io/liquid/ruby/1.9.1/gems/execjs-2.2.1/lib/execjs/runtimes.rb:51:in `autodetect': Could not find a JavaScript runtime. See https://github.com/sstephenson/execjs for a list of available runtimes. (ExecJS::RuntimeUnavailable)
+														      from /usr/local/google/home/agam/Documents/agam.github.io/liquid/ruby/1.9.1/gems/execjs-2.2.1/lib/execjs.rb:5:in `&lt;module:ExecJS&gt;'
+														      from /usr/local/google/home/agam/Documents/agam.github.io/liquid/ruby/1.9.1/gems/execjs-2.2.1/lib/execjs.rb:4:in `&lt;top (required)&gt;'
+														      from /usr/local/google/home/agam/Documents/agam.github.io/liquid/ruby/1.9.1/gems/coffee-script-2.3.0/lib/coffee_script.rb:1:in `require'
+														      from /usr/local/google/home/agam/Documents/agam.github.io/liquid/ruby/1.9.1/gems/coffee-script-2.3.0/lib/coffee_script.rb:1:in `&lt;top (required)&gt;'
+														      from /usr/local/google/home/agam/Documents/agam.github.io/liquid/ruby/1.9.1/gems/coffee-script-2.3.0/lib/coffee-script.rb:1:in `require'
+														      from /usr/local/google/home/agam/Documents/agam.github.io/liquid/ruby/1.9.1/gems/coffee-script-2.3.0/lib/coffee-script.rb:1:in `&lt;top (required)&gt;'
+														      from /usr/local/google/home/agam/Documents/agam.github.io/liquid/ruby/1.9.1/gems/jekyll-coffeescript-1.0.0/lib/jekyll-coffeescript.rb:2:in `require'
+														      from /usr/local/google/home/agam/Documents/agam.github.io/liquid/ruby/1.9.1/gems/jekyll-coffeescript-1.0.0/lib/jekyll-coffeescript.rb:2:in `&lt;top (required)&gt;'
+														      from /usr/local/google/home/agam/Documents/agam.github.io/liquid/ruby/1.9.1/gems/jekyll-2.1.1/lib/jekyll.rb:75:in `require'
+														      from /usr/local/google/home/agam/Documents/agam.github.io/liquid/ruby/1.9.1/gems/jekyll-2.1.1/lib/jekyll.rb:75:in `&lt;top (required)&gt;'
+														      from /usr/local/google/home/agam/Documents/agam.github.io/liquid/ruby/1.9.1/gems/jekyll-2.1.1/bin/jekyll:6:in `require'
+														      from /usr/local/google/home/agam/Documents/agam.github.io/liquid/ruby/1.9.1/gems/jekyll-2.1.1/bin/jekyll:6:in `&lt;top (required)&gt;'
+														      from /usr/local/google/home/agam/Documents/agam.github.io/liquid/ruby/1.9.1/bin/jekyll:19:in `load'
+														      from /usr/local/google/home/agam/Documents/agam.github.io/liquid/ruby/1.9.1/bin/jekyll:19:in `&lt;main&gt;'
+</code></pre>
+
+<p>Obviously, there&rsquo;s one dependency missing from the list above. What, you say, you <em>didn&rsquo;t</em> know you need to install <code>Node.js</code> too?</p>
+
+<p><code>sudo apt-get install nodejs</code></p>
+
+<p><strong>Are we there yet?</strong> The suspense is killing me. Nope, running <code>bundle exec rake generate</code> just (very helpfully!) shows me</p>
+
+<pre><code>$ bundle exec rake generate
+## Generating Site with Jekyll
+unchanged sass/screen.scss
+jekyll 2.1.1 -- Jekyll is a blog-aware, static site generator in Ruby
+
+Usage:
+
+  jekyll &lt;subcommand&gt; [options]
+
+Options:
+        -s, --source [DIR]  Source directory (defaults to ./)
+        -d, --destination [DIR]  Destination directory (defaults to ./_site)
+            --safe         Safe mode (defaults to false)
+        -p, --plugins PLUGINS_DIR1[,PLUGINS_DIR2[,...]]  Plugins directory (defaults to ./_plugins)
+            --layouts DIR  Layouts directory (defaults to ./_layouts)
+        -h, --help         Show this message
+        -v, --version      Print the name and version
+        -t, --trace        Show the full backtrace when an error occurs
+
+Subcommands:
+  build                 Build your site
+  docs                  Launch local server with docs for Jekyll v2.1.1
+  new                   Creates a new Jekyll site scaffold in PATH
+  serve, server         Serve your site locally
+  doctor, hyde          Search site and print specific deprecation warnings
+</code></pre>
+
+<p>Yes, I knew Jekyll was under that somewhere. That&rsquo;s sort of why I started using all this in the first place. Thanks for reminding me though. When I started writing this post I thought it would be a couple of lines, a quick edit-save-post, all done in five minutes. Cue evil laughter.</p>
+
+<p><em>What, give up now? In our moment of triumph?</em> I overwrote the Gemfile earlier; what about doing the same for the Rakefile?</p>
+
+<pre><code>$ bundle exec rake generate
+## Generating Site with Jekyll
+unchanged sass/screen.scss
+Configuration file: /usr/local/google/home/agam/Documents/agam.github.io/_config.yml
+       Deprecation: The 'pygments' configuration option has been renamed to 'highlighter'. Please update your config file accordingly. The allowed values are 'rouge', 'pygments' or null.
+            Source: source
+       Destination: public
+      Generating... 
+jekyll 2.1.1 | Error:  undefined method `published' for &lt;Post: /blog/2013/06/26/data-structures-haskell-vs-cpp&gt;:Jekyll::Post
+</code></pre>
+
+<p>Now I&rsquo;ve <em>retroactively</em> broken stuff.</p>
+
+<p>Finally, a light dawns: I should have done the following right at the beginning: <code>git pull origin master</code>. And of course, doing this now gives merge conflicts galore.</p>
+
+<p>&hellip; many tens of minutes pass &hellip;</p>
+
+<p>I realized there is no alternative to delve into the source here. <code>lib/jekyll/post.rb' has a</code>published?<code>method, perhaps this is being called without the trailing</code>?` somewhere? (BTW this is EXACTLY why I <strong>hate</strong> dynamically-typed, uncompiled languages!).</p>
+
+<p><code>plugins/preview_unpublished.rb</code> shows a match &hellip; so I deleted it.</p>
+
+<p>Now we have a new problem &hellip;</p>
+
+<pre><code>jekyll 2.1.1 | Error:  undefined method `subclasses' for Jekyll::PostFilter:Class
+</code></pre>
+
+<p>&hellip; but at least the old one is gone! We&rsquo;re getting closer!</p>
+
+<p>Sure enough, it&rsquo;s another plugin: <code>plugins/post_filters.rb</code>. At this point I realize there may be many more, so I see the list of plugins <a href="https://github.com/imathis/octopress/tree/master/plugins">that should exist by default</a> and get rid of any others. Turns out, it&rsquo;s just one more: <code>plugins/sitemap_generator.rb</code>.</p>
+
+<p>No luck yet.</p>
+
+<pre><code>Liquid Exception: undefined method `deep_merge' for #&lt;Hash:0x0000000277cb38&gt; in sitemap.xml
+</code></pre>
+
+<p>Now I&rsquo;m getting impatient. I just want to post a &ldquo;Goodbye&rdquo; post. One last post. I&rsquo;ll render it myself if I have to.</p>
+
+<p>Ok, it&rsquo;s the plugins again. I got rid of <code>plugins/date.rb</code> and updated <code>plugins/octopress_filters.rb</code>.</p>
+
+<p>IT WORKS! Oh god it works!</p>
+
+<p>Ok, my custom theme is gone and all, but that&rsquo;s ok, I won&rsquo;t complain. <em>Update</em>: Needless to say, I got it back (after all this, surely &hellip;)</p>
+
+<p>All&rsquo;s well that ends well, you say? <em>WTF!</em> Nothing new here &hellip; the whole point of relying on stuff like this is after all to engage in this periodic ritual sacrifice of time. Which is great when you&rsquo;re <em>12</em>, not so much now.</p>
+
+<p>I could just leave things as they are, or &hellip; the other option is to switch away to Wordpress or Ghost or Tumblr or whatever else (thought I don&rsquo;t want to migrate my posts <em>again</em>, so if I do something like that I&rsquo;ll just leave all this stuff here, with a pointer to it &hellip;).</p>
+
+<p><em><strong>Update</strong></em>: I realized I had once started <a href="http://agamposts.tumblr.com">a Tumblr blog</a> (or is that a <em>tumblog</em> ?), so might as well repurpose it for something other than just snippets. If you&rsquo;re one of the two people who read this blog (aha! I had Google Analytics enabled!), you can &ldquo;add&rdquo; me, or &ldquo;follow&rdquo; me there. Or whatever the cool kids are calling it these days.</p>
+
+      
+      
+      
+    </article>
+    
+
+
+  </main>
+  
+  <nav class="pagination-single">
+    
+      <span class="previous">&larr; <a href="http://agam.github.io/post/2014/04/02/google-cloud-dot-dot-dot-again/" rel="prev">google cloud dot dot dot again</a></span>
+    
+    
+      <span class="next"><a href="http://agam.github.io/post/2014/07/25/simple-game-of-life/" rel="next">simple game of life</a> &rarr;</span>
+    
+  </nav>
+
+
+  
+  <footer role="contentinfo">
+    <div style="text-align:center;">
+      
+      Copyright Agam Brahma
+    </div>
+  </footer>
+
+
+</div>
+
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-16612682-4', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</body>
+</html>
+

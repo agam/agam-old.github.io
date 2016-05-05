@@ -1,0 +1,170 @@
+
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  
+  <meta charset="UTF-8">
+  <title>
+    programming fun banquet planning | Agam&#39;s Mashed-Up Pome
+  </title>
+
+
+  
+  <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
+
+  
+  <link rel="canonical" href="http://agam.github.io/post/2014/01/07/programming-fun-banquet-planning/"/>
+
+  
+  <link rel="stylesheet" href="/css/sanitize.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/highlight_monokai.css">
+  <link rel="stylesheet" href="/css/theme.css">
+  <link rel="stylesheet" href="/css/custom.css">
+  
+  
+  <link href="http://agam.github.io/index.xml" rel="alternate" type="application/rss+xml" title="Agam&#39;s Mashed-Up Pome" />
+  <link href="http://agam.github.io/index.xml" rel="feed" type="application/rss+xml" title="Agam&#39;s Mashed-Up Pome" />
+
+  
+  
+
+
+</head>
+
+
+
+<body>
+<div class="container">
+
+  
+  <header role="banner">
+    <div class="row gutters">
+      <div id="site-title" class="col span_6">
+        <h1><a href="http://agam.github.io/">Agam&#39;s Mashed-Up Pome</a></h1>
+        <h2>A lazy evaluation of compute space</h2>
+      </div>
+      <div id="social" class="col span_6">
+        <ul>
+          <li><a href="https://twitter.com/agambrahma" target="_blank">Twitter</a></li>
+          
+          
+          <li><a href="http://agam.github.io/index.xml" type="application/rss+xml" target="_blank">RSS</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+
+  
+  <main id="single" role="main">
+    <div class="article-header">
+      <h1>programming fun banquet planning</h1>
+      <div class="meta">
+        Jan 7, 2014 &nbsp;
+        
+      </div>
+    </div>
+    <article>
+      <p>Here&rsquo;s <a href="http://www.reddit.com/r/dailyprogrammer/comments/1rnrs2/112813_challenge_137_intermediate_hard_banquet/">another</a> daily programming problem:</p>
+
+<pre><code>Input Description
+-----------------
+
+On standard console input, you will be given two space-delimited integers, N and M. N is the number of food items, while M is the number of food-relationships. Food-items are unique single-word lower-case names with optional underscores (the '_' character), while food-relationships are two food items that are space delimited. All food-items will be listed first on their own lines, then all food-relationships will be listed on their own lines afterwards. A food-relationship is where the first item must be served before the second item.
+Note that in the food-relationships list, some food-item names can use the wildcard-character '*'. You must support this by expanding the rule to fulfill any combination of strings that fit the wildcard. For example, using the items from Sample Input 2, the rule &quot;turkey* *_pie&quot; expands to the following four rules:
+turkey almond_pie
+turkey_stuffing almond_pie
+turkey pecan_pie
+turkey_stuffing pecan_pie
+A helpful way to think about the wildcard expansion is to use the phrase &quot;any item A must be before any item B&quot;. An example would be the food-relationship &quot;*pie coffee&quot;, which can be read as &quot;any pie must be before coffee&quot;.
+Some orderings may be ambiguous: you might have two desserts before coffee, but the ordering of desserts may not be explicit. In such a case, group the items together.
+
+Output Description
+------------------
+
+Print the correct order of food-items with a preceding index, starting from 1. If there are ambiguous ordering for items, list them together on the same line as a comma-delimited array of food-items. Any items that do not have a relationship must be printed with a warning or error message.
+
+</code></pre>
+
+<p>The second sample input (to take an example) is as follows:</p>
+
+<pre><code>8 5
+turkey
+pecan_pie
+salad
+crab_cakes
+almond_pie
+rice
+coffee
+turkey_stuffing
+turkey_stuffing turkey
+turkey* *_pie
+*pie coffee
+salad turkey*
+crab_cakes salad
+</code></pre>
+
+<p>So this implies a graph that looks something like this:</p>
+
+<p>{% img center /images/programming-fun/graph-dependency-1.jpg 300 %}</p>
+
+<p>Or, if you wish, with the arrows reversed, like this:</p>
+
+<p>{% img center /images/programming-fun/graph-dependency-2.jpg 300 %}</p>
+
+<p>So it&rsquo;s possible to start from the first <code>root</code> node, labelling it as <code>0</code> and its neighbors as <code>1</code>. This process can be repeated, with its neighbors&rsquo; neighbors being labelled as <code>2</code>, and so on, until there are no nodes left to label.</p>
+
+<p>{% img center /images/programming-fun/graph-dependency-3.jpg 300  %}</p>
+
+<p>Once all nodes are labelled, the solution is just a pairing of these numbers and the corresponding nodes.</p>
+
+<script type="text/javascript" src="http://gist.github.com/8293739.js"></script>
+
+
+      
+      
+      
+    </article>
+    
+
+
+  </main>
+  
+  <nav class="pagination-single">
+    
+      <span class="previous">&larr; <a href="http://agam.github.io/post/2014/01/07/programming-fun-braille/" rel="prev">programming fun braille</a></span>
+    
+    
+      <span class="next"><a href="http://agam.github.io/post/2014/01/08/urbit-back-again/" rel="next">urbit back again</a> &rarr;</span>
+    
+  </nav>
+
+
+  
+  <footer role="contentinfo">
+    <div style="text-align:center;">
+      
+      Copyright Agam Brahma
+    </div>
+  </footer>
+
+
+</div>
+
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-16612682-4', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</body>
+</html>
+

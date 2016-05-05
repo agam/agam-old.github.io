@@ -1,0 +1,196 @@
+
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  
+  <meta charset="UTF-8">
+  <title>
+    minsky turing lecture part 1 | Agam&#39;s Mashed-Up Pome
+  </title>
+
+
+  
+  <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
+
+  
+  <link rel="canonical" href="http://agam.github.io/post/2014/01/26/minsky-turing-lecture-part-1/"/>
+
+  
+  <link rel="stylesheet" href="/css/sanitize.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/highlight_monokai.css">
+  <link rel="stylesheet" href="/css/theme.css">
+  <link rel="stylesheet" href="/css/custom.css">
+  
+  
+  <link href="http://agam.github.io/index.xml" rel="alternate" type="application/rss+xml" title="Agam&#39;s Mashed-Up Pome" />
+  <link href="http://agam.github.io/index.xml" rel="feed" type="application/rss+xml" title="Agam&#39;s Mashed-Up Pome" />
+
+  
+  
+
+
+</head>
+
+
+
+<body>
+<div class="container">
+
+  
+  <header role="banner">
+    <div class="row gutters">
+      <div id="site-title" class="col span_6">
+        <h1><a href="http://agam.github.io/">Agam&#39;s Mashed-Up Pome</a></h1>
+        <h2>A lazy evaluation of compute space</h2>
+      </div>
+      <div id="social" class="col span_6">
+        <ul>
+          <li><a href="https://twitter.com/agambrahma" target="_blank">Twitter</a></li>
+          
+          
+          <li><a href="http://agam.github.io/index.xml" type="application/rss+xml" target="_blank">RSS</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+
+  
+  <main id="single" role="main">
+    <div class="article-header">
+      <h1>minsky turing lecture part 1</h1>
+      <div class="meta">
+        Jan 26, 2014 &nbsp;
+        
+      </div>
+    </div>
+    <article>
+      
+
+<p>I came across a reference to Marvin Minsky&rsquo;s 1970 Turing Award Lecture. I&rsquo;ve barely read any of these lectures, always assuming they would be empty or pedantic or plain boring. Reading this changed that perception completely.</p>
+
+<h2 id="science-and-education">Science and Education</h2>
+
+<p>The structure of this lecture seems very interesting to me; it seems to be divided into two parts. The first focussing more on computer science and its failings, and the second on (what seems to me) education.</p>
+
+<p>This post is about the first part. And by &ldquo;about&rdquo; I mean just extracts with minimal commentary.</p>
+
+<h2 id="the-trouble-with-computer-science">The trouble with Computer Science &hellip;</h2>
+
+<blockquote>
+<p>The trouble with computer science today is an obsessive concern with form instead of content.</p>
+</blockquote>
+
+<p>(yes, that&rsquo;s the opening line!)</p>
+
+<blockquote>
+<p>This essay has three parts, suggesting form-content confusion in <em>theory of computation</em>, in <em>programming languages</em>, and in <em>education</em>.</p>
+</blockquote>
+
+<p>(yes, I said two parts earlier &hellip; I just clubbed the first two together)</p>
+
+<blockquote>
+<p>Suppose that we had <em>n</em> computers instead of just one. How much can we speed up what kinds of calculations? For some, we can surely gain a factor of <em>n</em>. But these are rare. For others, we can gain log <em>n</em>, but it is hard to find any or to prove what are their properties. And for most, I think, we can gain hardly anything; this is the case in which there are many highly branched conditionals, so that look-ahead on possible branches will usually be wasted. <strong>We know almost nothing about this; most people think, with surely incorrect optimism, that parallelism is usually a profitable way to speed up most computations.</strong></p>
+</blockquote>
+
+<p>(&ldquo;surely incorrect optimism&rdquo;! I agree!)</p>
+
+<blockquote>
+<p>&hellip; in today&rsquo;s computer science curricula &hellip; almost all their time is devoted to formal classifications of syntactic language types, defeatist unsolvability theories, <strong>folklore about systems programming</strong>, and generally trivial fragments of &ldquo;optimization of logic design&rdquo; &ndash; the latter often in situations where the art of heuristic programming has far outstretched the special-case &ldquo;theories&rdquo; so grimly taught and tested &ndash; and <strong>invocations about programming style almost sure to be outmoded before the student graduates</strong>.</p>
+</blockquote>
+
+<p>(yup, quite true even today)</p>
+
+<h2 id="the-trouble-with-programming-languages">The trouble with programming languages &hellip;</h2>
+
+<blockquote>
+<p><em>SYNTAX IS OFTEN UNNECESSARY</em>. <strong>One can survive with much less syntax than is generally realized</strong>. Much of programming syntax is concerned with suppression of parentheses or with emphasis of scope markers. There are alternatives that have been much underused.
+&hellip; such devices as infixes and operator precedence &hellip; have their place. But <em>their importance to computer science as a whole has been so exaggerated that it is beginning to corrupt the youth</em>.</p>
+</blockquote>
+
+<p>(I wonder what he would have thought of <em>C++</em> !)</p>
+
+<blockquote>
+<p>The clumsiness, for humans, of writing all the parentheses is evident; <strong>the advantages of not having to learn all the conventions &hellip; is often overlooked</strong>.
+It remains to be seen whether a syntax with explicit delimiters is reactionary, or whether it is the wave of the future.</p>
+</blockquote>
+
+<p>(a possible nod to Lisp ?)</p>
+
+<blockquote>
+<p>Much can be done to clarify the structure of expressions in such a &ldquo;syntax-weak&rdquo; language by using indentation and other layout devices that are outside the language proper.</p>
+</blockquote>
+
+<p>(a possible precursory nod to Python ?)</p>
+
+<h2 id="moving-forward">Moving forward &hellip;</h2>
+
+<blockquote>
+<p>What is a compiler for? The usual answers resemble &ldquo;to translate from one language to another&rdquo; or &ldquo;to take a description of an algorithm and assemble it into a program, filling in many small details.&rdquo; For the future, a more ambitious view is required. Most compilers will be systems that &ldquo;produce an algorithm, given a description of its effect.&rdquo;</p>
+</blockquote>
+
+<p>(not sure what to make of this)</p>
+
+<blockquote>
+<p>No matter how a language is described, a computer must use a procedure to interpret it. One should remember that <em>in describing a language the main goal is to explain how to write programs in int and what such programs mean</em>. The main goal <em>isn&rsquo;t</em> to describe the syntax.</p>
+</blockquote>
+
+<p>(Sure, ok)</p>
+
+<blockquote>
+<p>Paradoxically, though modern programming ideas were developed because processes were hard to depict with classical mathematical notations, designers are turning back to an earlier form &ndash; the equation &ndash; in just the kind of situation that <em>needs</em> program.</p>
+</blockquote>
+
+<p>(aha! wait, what?)</p>
+
+<h2 id="stay-tuned">Stay tuned</h2>
+
+<p>So much for Part 1. I&rsquo;ll pick up the rest of the extracts next time.</p>
+
+      
+      
+      
+    </article>
+    
+
+
+  </main>
+  
+  <nav class="pagination-single">
+    
+      <span class="previous">&larr; <a href="http://agam.github.io/post/2014/01/24/cost-comparison-google-cloud-vs-digitalocean/" rel="prev">cost comparison google cloud vs digitalocean</a></span>
+    
+    
+      <span class="next"><a href="http://agam.github.io/post/2014/01/27/programming-fun-adjacency-matrix/" rel="next">programming fun adjacency matrix</a> &rarr;</span>
+    
+  </nav>
+
+
+  
+  <footer role="contentinfo">
+    <div style="text-align:center;">
+      
+      Copyright Agam Brahma
+    </div>
+  </footer>
+
+
+</div>
+
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-16612682-4', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</body>
+</html>
+

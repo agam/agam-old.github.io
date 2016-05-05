@@ -1,0 +1,234 @@
+
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  
+  <meta charset="UTF-8">
+  <title>
+    euler 25 fibonacci digits | Agam&#39;s Mashed-Up Pome
+  </title>
+
+
+  
+  <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
+
+  
+  <link rel="canonical" href="http://agam.github.io/post/2015/02/10/euler-25-fibonacci-digits/"/>
+
+  
+  <link rel="stylesheet" href="/css/sanitize.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/highlight_monokai.css">
+  <link rel="stylesheet" href="/css/theme.css">
+  <link rel="stylesheet" href="/css/custom.css">
+  
+  
+  <link href="http://agam.github.io/index.xml" rel="alternate" type="application/rss+xml" title="Agam&#39;s Mashed-Up Pome" />
+  <link href="http://agam.github.io/index.xml" rel="feed" type="application/rss+xml" title="Agam&#39;s Mashed-Up Pome" />
+
+  
+  
+
+
+</head>
+
+
+
+<body>
+<div class="container">
+
+  
+  <header role="banner">
+    <div class="row gutters">
+      <div id="site-title" class="col span_6">
+        <h1><a href="http://agam.github.io/">Agam&#39;s Mashed-Up Pome</a></h1>
+        <h2>A lazy evaluation of compute space</h2>
+      </div>
+      <div id="social" class="col span_6">
+        <ul>
+          <li><a href="https://twitter.com/agambrahma" target="_blank">Twitter</a></li>
+          
+          
+          <li><a href="http://agam.github.io/index.xml" type="application/rss+xml" target="_blank">RSS</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+
+  
+  <main id="single" role="main">
+    <div class="article-header">
+      <h1>euler 25 fibonacci digits</h1>
+      <div class="meta">
+        Feb 10, 2015 &nbsp;
+        
+      </div>
+    </div>
+    <article>
+      <p><strong>Statutory Warning</strong>: spoilers ahead</p>
+
+<p><em>Problem: find the first fibonacci number with 1000 digits</em></p>
+
+<p>First though: hah, I can get the Nth fibonacci number in O(1) time!</p>
+
+<pre><code class="language-lisp">(defun fib (n)
+  (let ((inv-sq-5 (/ 1 (sqrt 5)))
+	(phi (/ (1+ (sqrt 5)) 2)))
+    (floor (+ 0.5 (* inv-sq-5 (expt phi n))))))
+
+(defun digits (n)
+  (round (1+ (log n 10))))
+
+(defun log-fib-10 (n)
+  (let ((log-10 (log 10))
+	(log-phi (log (/ (1+ (sqrt 5)) 2)))
+	(log-k (log (/ 1 (sqrt 5)))))
+    (* log-10 (+ log-k (* n log-phi)))))
+</code></pre>
+
+<p>Nope, floating point numbers don&rsquo;t go beyond 308 digits or so</p>
+
+<pre><code class="language-lisp">CL-USER&gt; most-positive-double-float
+1.7976931348623157d308
+</code></pre>
+
+<p>Perhaps there was a clever way to workaround this, but I wasn&rsquo;t feeling clever enough at the time. So, back to brute force.</p>
+
+<pre><code class="language-lisp">(defun fib (n)
+  (cond ((= n 0) 0)
+	((= n 1) 1)
+	(t (+ (fib (- n 1)) (fib (- n 2))))))
+</code></pre>
+
+<p>Well, this just takes <em>too long</em> (<code>(fib 40)</code> takes <code>3.883</code> seconds, and that has just 9 digits, so forget about anything bigger). Next step: memoization.</p>
+
+<pre><code class="language-lisp">(let ((memo-table (make-hash-table)))
+  (defun memo-fib (n)
+    (multiple-value-bind (hash-val exists) (gethash n memo-table)
+      (if exists
+	  hash-val
+	  (let ((new-val (cond ((= n 0) 0)
+			               ((= n 1) 1)
+			               (t (+ (memo-fib (- n 1)) (memo-fib (- n 2)))))))
+	    (setf (gethash n memo-table) new-val)
+	    new-val)))))
+
+(defun digits-num (n)
+  (length (princ-to-string n)))
+</code></pre>
+
+<p>(yeah just to be even less clever, I get the digits by seeing the length of the string representation of the number &hellip; works)</p>
+
+<p><code>(memo-fib 40)</code> is instantaneous, so is <code>(memo-fib 1000)</code>, and <code>(memo-fib 10000)</code> takes <code>3 ms</code>, so this should do it.</p>
+
+<p>I used this to manually guess my way around and found the answer. Woohoo!</p>
+
+<p>But this last part felt a bit &hellip; dirty, so before quitting this problem, I decided to automate it this way:</p>
+
+<pre><code class="language-lisp">(defun bin-search-range (fn target)
+  (do* ((i 1 (* 2 i))
+       (val (funcall fn 1) (funcall fn i)))
+       ((&gt;= val target) (values i (/ i 2)))
+    (format t &quot;Debug: Trying (~A, ~A)~%&quot; i val)))
+
+(defun bin-search (fn low high target)
+  (let* ((mid (round (/ (+ low high) 2)))
+	 (mid-val (funcall fn mid)))
+    (format t &quot;Debug: Searching b/w (~A, ~A), found (~A, ~A)~%&quot; low high mid mid-val)
+    (cond ((= high mid) mid)
+	  ((&gt;= mid-val target) (bin-search fn low mid target))
+	  ((&lt; mid-val target) (bin-search fn mid high target)))))
+
+(defun solve (fn target)
+  &quot;Two-phase search; first, exponentially increase argument until target is exceeded, then begin binary search with last argument&quot;
+  (multiple-value-bind (high low) (bin-search-range fn target)
+    (bin-search fn low high target)))
+
+(defun target-function (n)
+  (digits-num (memo-fib n)))
+
+(defun euler-25 ()
+  (solve #'target-function 1000))
+</code></pre>
+
+<p>Yes, it does work. I left in my original debug statements (BTW the initial version had not one but <em>two</em> off-by-one errors! I learn slowly &hellip;), so the working is illustrated as follows:</p>
+
+<pre><code class="language-lisp">CL-USER&gt; (euler-25)
+Debug: Trying (1, 1)
+Debug: Trying (2, 1)
+Debug: Trying (4, 1)
+Debug: Trying (8, 2)
+Debug: Trying (16, 3)
+Debug: Trying (32, 7)
+Debug: Trying (64, 14)
+Debug: Trying (128, 27)
+Debug: Trying (256, 54)
+Debug: Trying (512, 107)
+Debug: Trying (1024, 214)
+Debug: Trying (2048, 428)
+Debug: Trying (4096, 856)
+Debug: Searching b/w (4096, 8192), found (6144, 1284)
+Debug: Searching b/w (4096, 6144), found (5120, 1070)
+Debug: Searching b/w (4096, 5120), found (4608, 963)
+Debug: Searching b/w (4608, 5120), found (4864, 1017)
+Debug: Searching b/w (4608, 4864), found (4736, 990)
+Debug: Searching b/w (4736, 4864), found (4800, 1003)
+Debug: Searching b/w (4736, 4800), found (4768, 997)
+Debug: Searching b/w (4768, 4800), found (4784, 1000)
+Debug: Searching b/w (4768, 4784), found (4776, 998)
+Debug: Searching b/w (4776, 4784), found (4780, 999)
+Debug: Searching b/w (4780, 4784), found (4782, 1000)
+Debug: Searching b/w (4780, 4782), found (4781, 999)
+Debug: Searching b/w (4781, 4782), found (4782, 1000)
+4782
+</code></pre>
+
+<p>The whole thing took <code>6 ms</code>. Not bad, eh?</p>
+
+      
+      
+      
+    </article>
+    
+
+
+  </main>
+  
+  <nav class="pagination-single">
+    
+      <span class="previous">&larr; <a href="http://agam.github.io/post/2015/02/08/euler-24-permutations/" rel="prev">euler 24 permutations</a></span>
+    
+    
+      <span class="next"><a href="http://agam.github.io/post/2015/02/11/euler-26-reciprocal-cycles/" rel="next">euler 26 reciprocal cycles</a> &rarr;</span>
+    
+  </nav>
+
+
+  
+  <footer role="contentinfo">
+    <div style="text-align:center;">
+      
+      Copyright Agam Brahma
+    </div>
+  </footer>
+
+
+</div>
+
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-16612682-4', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</body>
+</html>
+

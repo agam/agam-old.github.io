@@ -1,0 +1,255 @@
+
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  
+  <meta charset="UTF-8">
+  <title>
+    trying out stack dot dot dot | Agam&#39;s Mashed-Up Pome
+  </title>
+
+
+  
+  <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
+
+  
+  <link rel="canonical" href="http://agam.github.io/post/2015/06/10/trying-out-stack-dot-dot-dot/"/>
+
+  
+  <link rel="stylesheet" href="/css/sanitize.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/highlight_monokai.css">
+  <link rel="stylesheet" href="/css/theme.css">
+  <link rel="stylesheet" href="/css/custom.css">
+  
+  
+  <link href="http://agam.github.io/index.xml" rel="alternate" type="application/rss+xml" title="Agam&#39;s Mashed-Up Pome" />
+  <link href="http://agam.github.io/index.xml" rel="feed" type="application/rss+xml" title="Agam&#39;s Mashed-Up Pome" />
+
+  
+  
+
+
+</head>
+
+
+
+<body>
+<div class="container">
+
+  
+  <header role="banner">
+    <div class="row gutters">
+      <div id="site-title" class="col span_6">
+        <h1><a href="http://agam.github.io/">Agam&#39;s Mashed-Up Pome</a></h1>
+        <h2>A lazy evaluation of compute space</h2>
+      </div>
+      <div id="social" class="col span_6">
+        <ul>
+          <li><a href="https://twitter.com/agambrahma" target="_blank">Twitter</a></li>
+          
+          
+          <li><a href="http://agam.github.io/index.xml" type="application/rss+xml" target="_blank">RSS</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+
+  
+  <main id="single" role="main">
+    <div class="article-header">
+      <h1>trying out stack dot dot dot</h1>
+      <div class="meta">
+        Jun 10, 2015 &nbsp;
+        
+      </div>
+    </div>
+    <article>
+      <p>Tried this out after <a href="https://www.fpcomplete.com/blog/2015/06/announcing-first-public-beta-stack">I read about it</a>. Note: the following was all done on a Macbook, but it should work similarly on Linux too.</p>
+
+<p><strong>Get Stack</strong></p>
+
+<p><a href="https://github.com/fpco/stack/releases/download/v0.0.0-beta/stack-0.0.0-x86_64-osx.gz">Download</a> it.</p>
+
+<p><code>gunzip</code> and copy to some directory in <code>$PATH</code></p>
+
+<p><strong>Use Stack</strong></p>
+
+<p>Create dummy <code>.hs</code> file.</p>
+
+<pre><code class="language-haskell">main = putStrLn &quot;Hello World&quot;
+</code></pre>
+
+<p><em>Digression: first build</em></p>
+
+<p>You need <code>GHC</code> installed, and a file called <code>stack.yaml</code> in the local directory. But if you don&rsquo;t, no problem.</p>
+
+<pre><code class="language-sh">$ stack ghc dummy.hs
+No .cabal file found in directory /Users/agam/Documents/Haskell/Dummy/
+Writing default config file to: /Users/agam/Documents/Haskell/Dummy/stack.yaml
+Downloading lts-2.13 build plan ...
+Downloaded lts-2.13 build plan.
+Populating index cache, may take a moment ...
+Updating package index hackage.haskell.org ...
+Cloning package index ...
+Done populating index cache.
+Downloading ghc-7.8.4 ...
+Downloaded ghc-7.8.4.
+Unpacking GHC ...
+Configuring GHC ...
+Installing GHC ...
+GHC installed.
+</code></pre>
+
+<p>Run it once more to actually build it.</p>
+
+<pre><code class="language-sh">$ stack ghc dummy.hs
+[1 of 1] Compiling Main             ( dummy.hs, dummy.o )
+Linking dummy ...
+$ ls
+stack.yaml dummy.o dummy.hs dummy.hi dummy
+</code></pre>
+
+<p><strong>Run the program</strong></p>
+
+<p>Just run the executable created:</p>
+
+<pre><code class="language-sh">$ ./dummy
+Hello World
+</code></pre>
+
+<p>Alternatively, combine steps 4 and 5</p>
+
+<pre><code class="language-sh">$ stack runghc dummy.hs
+Hello World
+</code></pre>
+
+<p><strong>Libraries</strong></p>
+
+<p>(this is why we&rsquo;re <em>really</em> here, right?)</p>
+
+<pre><code class="language-sh">$ stack update
+Updating package index hackage.haskell.org ...
+</code></pre>
+
+<p>What packages do we have ?</p>
+
+<pre><code class="language-sh">$ stack exec -- ghc-pkg list
+/Users/agam/.stack/programs/x86_64-osx/ghc-7.8.4/lib/ghc-7.8.4/package.conf.d/
+Cabal-1.18.1.5
+array-0.5.0.0
+base-4.7.0.2
+bin-package-db-0.0.0.0
+binary-0.7.1.0
+bytestring-0.10.4.0
+containers-0.5.5.1
+deepseq-1.3.0.2
+directory-1.2.1.0
+filepath-1.3.0.2
+ghc-7.8.4
+ghc-prim-0.3.1.0
+haskeline-0.7.1.2
+haskell2010-1.1.2.0
+haskell98-2.0.0.3
+hoopl-3.10.0.1
+hpc-0.6.0.1
+integer-gmp-0.5.1.0
+old-locale-1.0.0.6
+old-time-1.1.0.2
+pretty-1.1.1.1
+process-1.2.0.0
+rts-1.0
+template-haskell-2.9.0.0
+terminfo-0.4.0.0
+time-1.4.2
+transformers-0.3.0.0
+unix-2.7.0.1
+xhtml-3000.2.1
+</code></pre>
+
+<p><strong>Get a new package using Stack</strong></p>
+
+<p>First, we need to <em>require</em> some new package. Change dummy code to (e.g.)</p>
+
+<pre><code class="language-haskell">import System.Random
+import Control.Monad (replicateM)
+
+main = replicateM 10 (randomIO :: IO Float) &gt;&gt;= print
+</code></pre>
+
+<p>Try to build it</p>
+
+<pre><code class="language-sh">$ stack ghc dummy.hs
+
+dummy.hs:1:8:
+Could not find module ‘System.Random’
+Use -v to see a list of the files searched for.
+</code></pre>
+
+<p>So let&rsquo;s get it then:</p>
+
+<pre><code class="language-sh">$ stack deps random
+random-1.1: downloading
+random-1.1: configure
+random-1.1: build
+random-1.1: install
+</code></pre>
+
+<p>&hellip; and then run it again:</p>
+
+<pre><code class="language-sh">$ stack ghc dummy.hs
+[1 of 1] Compiling Main             ( dummy.hs, dummy.o )
+Linking dummy ...
+$ ./dummy
+[0.4301154,0.9796305,4.801333e-2,0.6978437,0.45780963,0.21923387,0.33110678,0.2976914,5.8295727e-3,0.28221375]
+</code></pre>
+
+<p>Not bad at all. Reminds me of the feeling I got after wading through the plethora of python package handling frameworks and discovering Anaconda. This is <em>finally</em> a newbie-friendly language; &ldquo;cabal hell&rdquo; is no more (!)</p>
+
+      
+      
+      
+    </article>
+    
+
+
+  </main>
+  
+  <nav class="pagination-single">
+    
+      <span class="previous">&larr; <a href="http://agam.github.io/post/2015/06/06/freebsd-and-linux-install-paths/" rel="prev">freebsd and linux install paths</a></span>
+    
+    
+      <span class="next"><a href="http://agam.github.io/post/2015/06/13/freebsd-on-google-compute-engine/" rel="next">freebsd on google compute engine</a> &rarr;</span>
+    
+  </nav>
+
+
+  
+  <footer role="contentinfo">
+    <div style="text-align:center;">
+      
+      Copyright Agam Brahma
+    </div>
+  </footer>
+
+
+</div>
+
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-16612682-4', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</body>
+</html>
+

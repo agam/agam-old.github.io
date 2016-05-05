@@ -1,0 +1,217 @@
+
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  
+  <meta charset="UTF-8">
+  <title>
+    euler 32 sum of pan digital products | Agam&#39;s Mashed-Up Pome
+  </title>
+
+
+  
+  <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
+
+  
+  <link rel="canonical" href="http://agam.github.io/post/2015/03/04/euler-32-sum-of-pan-digital-products/"/>
+
+  
+  <link rel="stylesheet" href="/css/sanitize.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/highlight_monokai.css">
+  <link rel="stylesheet" href="/css/theme.css">
+  <link rel="stylesheet" href="/css/custom.css">
+  
+  
+  <link href="http://agam.github.io/index.xml" rel="alternate" type="application/rss+xml" title="Agam&#39;s Mashed-Up Pome" />
+  <link href="http://agam.github.io/index.xml" rel="feed" type="application/rss+xml" title="Agam&#39;s Mashed-Up Pome" />
+
+  
+  
+
+
+</head>
+
+
+
+<body>
+<div class="container">
+
+  
+  <header role="banner">
+    <div class="row gutters">
+      <div id="site-title" class="col span_6">
+        <h1><a href="http://agam.github.io/">Agam&#39;s Mashed-Up Pome</a></h1>
+        <h2>A lazy evaluation of compute space</h2>
+      </div>
+      <div id="social" class="col span_6">
+        <ul>
+          <li><a href="https://twitter.com/agambrahma" target="_blank">Twitter</a></li>
+          
+          
+          <li><a href="http://agam.github.io/index.xml" type="application/rss+xml" target="_blank">RSS</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+
+  
+  <main id="single" role="main">
+    <div class="article-header">
+      <h1>euler 32 sum of pan digital products</h1>
+      <div class="meta">
+        Mar 4, 2015 &nbsp;
+        
+      </div>
+    </div>
+    <article>
+      <p>Pretty dumb naive solution.</p>
+
+<p><strong>Statutory Warning</strong>: <em>Spoilers ahead</em></p>
+
+<pre><code class="language-c++">using std::vector;
+static const int kNumDigits = 9;
+
+int getNumber(const vector&lt;int&gt;&amp; vNum) {
+  int result = 0;
+  for (int i = 0; i &lt; vNum.size(); ++i) {
+    result = result * 10 + vNum[i];
+  }
+  return result;
+}
+
+bool isProduct(const vector&lt;int&gt;&amp; vMultA,
+               const vector&lt;int&gt;&amp; vMultB,
+               const vector&lt;int&gt;&amp; vProduct) {
+  int multa = getNumber(vMultA);
+  int multb = getNumber(vMultB);
+  int product = getNumber(vProduct);
+  bool result = (multa * multb == product);
+  if (result) {
+    std::cout &lt;&lt; &quot;Debug: Testing &quot; &lt;&lt; multa &lt;&lt; &quot; * &quot; &lt;&lt; multb &lt;&lt; &quot; = &quot; &lt;&lt; product
+              &lt;&lt; &quot;  --- MATCH!\n&quot;;
+  }
+  return result;
+}
+
+// Try all possible splits from this combination
+void tryPermutation(const vector&lt;int&gt;&amp; p,
+                    int* total_matches,
+                    std::unordered_set&lt;int&gt;* products) {
+  assert(p.size() == kNumDigits);
+  // There are nine digits, indexed from 0 to 8
+  // First number spans 0 to i, the second i + 1 to j, third is from j + 1 to 8
+  for (int i = 0; i &lt;= kNumDigits - 3; ++i) {
+    for (int j = i+1; j &lt;= kNumDigits - 2; ++j) {
+      vector&lt;int&gt; n1, n2, n3;
+      for (int k = 0; k &lt;= i; ++k) {
+        n1.push_back(p[k]);
+      }
+      for (int k = i+1; k &lt;= j; ++k) {
+        n2.push_back(p[k]);
+      }
+      for (int k = j+1; k &lt;= kNumDigits-1; ++k) {
+        n3.push_back(p[k]);
+      }
+      if (isProduct(n1,n2,n3)) {
+        ++(*total_matches);
+        products-&gt;insert(getNumber(n3));
+      }
+    }
+  }
+}
+
+int main() {
+  vector&lt;int&gt; digits;
+  for (int i = 1; i &lt;= kNumDigits; ++i) {
+    digits.push_back(i);
+  }
+  int total_matches = 0;
+  std::unordered_set&lt;int&gt; products;
+  do {
+    tryPermutation(digits, &amp;total_matches, &amp;products);
+  } while (std::next_permutation(digits.begin(), digits.end()));
+  int products_sum = 0;
+  for (const auto&amp; p : products) {
+    products_sum += p;
+  }
+  std::cout &lt;&lt; &quot;Number of matches = &quot; &lt;&lt; total_matches &lt;&lt; &quot;, &quot;
+            &lt;&lt; &quot;Sum of products = &quot; &lt;&lt; products_sum &lt;&lt; std::endl;
+}
+
+</code></pre>
+
+<p>Runs as follows:</p>
+
+<pre><code class="language-sh">~/cpp $ time ./Test
+Debug: Testing 12 * 483 = 5796  --- MATCH!
+Debug: Testing 138 * 42 = 5796  --- MATCH!
+Debug: Testing 157 * 28 = 4396  --- MATCH!
+Debug: Testing 159 * 48 = 7632  --- MATCH!
+Debug: Testing 1738 * 4 = 6952  --- MATCH!
+Debug: Testing 18 * 297 = 5346  --- MATCH!
+Debug: Testing 186 * 39 = 7254  --- MATCH!
+Debug: Testing 1963 * 4 = 7852  --- MATCH!
+Debug: Testing 198 * 27 = 5346  --- MATCH!
+Debug: Testing 27 * 198 = 5346  --- MATCH!
+Debug: Testing 28 * 157 = 4396  --- MATCH!
+Debug: Testing 297 * 18 = 5346  --- MATCH!
+Debug: Testing 39 * 186 = 7254  --- MATCH!
+Debug: Testing 4 * 1738 = 6952  --- MATCH!
+Debug: Testing 4 * 1963 = 7852  --- MATCH!
+Debug: Testing 42 * 138 = 5796  --- MATCH!
+Debug: Testing 48 * 159 = 7632  --- MATCH!
+Debug: Testing 483 * 12 = 5796  --- MATCH!
+Number of matches = 18, Sum of products = 45228
+15.517 secs
+</code></pre>
+
+<p>(Wait, why C++ instead of &hellip; other recent languages? Couple of reasons: (1) I thought I&rsquo;d need to brute force this (though it eventually turned out to take much less time than I anticipated), and (2) I&rsquo;m sort of <em>over</em> the <em>over-experimentation</em> with languages that I&rsquo;m not <em>really</em> going to use, and I&rsquo;m not going to get much out of anyway. Yes, tough. Deal with it)</p>
+
+      
+      
+      
+    </article>
+    
+
+
+  </main>
+  
+  <nav class="pagination-single">
+    
+      <span class="previous">&larr; <a href="http://agam.github.io/post/2015/03/04/euler-33-curious-fractions/" rel="prev">euler 33 curious fractions</a></span>
+    
+    
+      <span class="next"><a href="http://agam.github.io/post/2015/03/05/euler-36-palindromic-numbers/" rel="next">euler 36 palindromic numbers</a> &rarr;</span>
+    
+  </nav>
+
+
+  
+  <footer role="contentinfo">
+    <div style="text-align:center;">
+      
+      Copyright Agam Brahma
+    </div>
+  </footer>
+
+
+</div>
+
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-16612682-4', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</body>
+</html>
+

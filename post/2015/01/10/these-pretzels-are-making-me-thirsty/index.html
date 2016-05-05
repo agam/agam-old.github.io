@@ -1,0 +1,353 @@
+
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  
+  <meta charset="UTF-8">
+  <title>
+    these pretzels are making me thirsty | Agam&#39;s Mashed-Up Pome
+  </title>
+
+
+  
+  <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
+
+  
+  <link rel="canonical" href="http://agam.github.io/post/2015/01/10/these-pretzels-are-making-me-thirsty/"/>
+
+  
+  <link rel="stylesheet" href="/css/sanitize.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/highlight_monokai.css">
+  <link rel="stylesheet" href="/css/theme.css">
+  <link rel="stylesheet" href="/css/custom.css">
+  
+  
+  <link href="http://agam.github.io/index.xml" rel="alternate" type="application/rss+xml" title="Agam&#39;s Mashed-Up Pome" />
+  <link href="http://agam.github.io/index.xml" rel="feed" type="application/rss+xml" title="Agam&#39;s Mashed-Up Pome" />
+
+  
+  
+
+
+</head>
+
+
+
+<body>
+<div class="container">
+
+  
+  <header role="banner">
+    <div class="row gutters">
+      <div id="site-title" class="col span_6">
+        <h1><a href="http://agam.github.io/">Agam&#39;s Mashed-Up Pome</a></h1>
+        <h2>A lazy evaluation of compute space</h2>
+      </div>
+      <div id="social" class="col span_6">
+        <ul>
+          <li><a href="https://twitter.com/agambrahma" target="_blank">Twitter</a></li>
+          
+          
+          <li><a href="http://agam.github.io/index.xml" type="application/rss+xml" target="_blank">RSS</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+
+  
+  <main id="single" role="main">
+    <div class="article-header">
+      <h1>these pretzels are making me thirsty</h1>
+      <div class="meta">
+        Jan 10, 2015 &nbsp;
+        
+      </div>
+    </div>
+    <article>
+      <p>All right, here&rsquo;s <em>another</em> one of the series of hypothetically pedagogical text games in Go. This one is based on the original <em>Bagels</em>, which I then appropriated as <em>Pretzels</em>.</p>
+
+<p>Here&rsquo;s the code:</p>
+
+<pre><code class="language-go">package main
+
+import (
+	&quot;fmt&quot;
+	&quot;math/rand&quot;
+	&quot;time&quot;
+)
+
+const (
+	minRange  = 100
+	maxRange  = 999
+	numDigits = 3
+	maxTries  = 20
+)
+
+const (
+	picoStr    = &quot; -- PICO -- &quot;
+	fermiStr   = &quot; -- FERMI -- &quot;
+	pretzelStr = &quot; -- PRETZEL -- &quot;
+)
+
+func showIntro() {
+	fmt.Println(&quot;\nWelcome to 'PRETZELS' !!&quot;)
+	fmt.Println(&quot;------------------------&quot;)
+	fmt.Println(
+		&quot;\nHere are the rules. I'm going to guess a THREE-DIGIT number, and then &quot; +
+			&quot;you have to guess it. I will give you clues as follows: \n&quot; +
+			&quot;   PICO -- you got one digit correct, BUT in the wrong position\n&quot; +
+			&quot;  FERMI -- you got on digit correct, AND in the right position\n&quot; +
+			&quot;PRETZEL -- you got NO digits correct.\n&quot;)
+	fmt.Printf(&quot;You get %d chances to guess it!\n\n&quot;, maxTries)
+}
+
+func getDigits(num int, digits []int) {
+	var i int
+	for {
+		digits[i] = num % 10
+		i++
+		num /= 10
+		if num == 0 {
+			break
+		}
+	}
+}
+
+func showFeedback(targetDigits []int, guess int) {
+	guessDigits := make([]int, numDigits)
+	getDigits(guess, guessDigits)
+	somethingMatched := false
+	for i := 0; i &lt; len(guessDigits); i++ {
+		if guessDigits[i] == targetDigits[i] {
+			fmt.Printf(fermiStr)
+			somethingMatched = true
+			continue
+		}
+		for j := 0; j &lt; len(targetDigits); j++ {
+			if guessDigits[i] == targetDigits[j] {
+				fmt.Printf(picoStr)
+				somethingMatched = true
+				break
+			}
+		}
+	}
+	if !somethingMatched {
+		fmt.Printf(pretzelStr)
+	}
+	fmt.Println()
+}
+
+func main() {
+	showIntro()
+
+	rand.Seed(time.Now().Unix())
+	target := minRange + rand.Intn(maxRange-minRange)
+	targetDigits := make([]int, numDigits)
+	getDigits(target, targetDigits)
+
+	var numTries int
+	for {
+		fmt.Printf(&quot;\nWhat is Guess #%d ? &quot;, numTries+1)
+		var guess int
+		fmt.Scan(&amp;guess)
+
+		if guess &lt; minRange || guess &gt; maxRange {
+			fmt.Printf(&quot;You MUST choose a number between %d and %d, try again ...\n\n&quot;, minRange, maxRange)
+			continue
+		}
+		showFeedback(targetDigits, guess)
+		if guess == target {
+			fmt.Println(&quot;\nYou got it!!\n&quot;)
+			break
+		}
+		if numTries &gt; maxTries {
+			fmt.Println(&quot;\nOOPS ... you ran out of chances! :(\n&quot;)
+			fmt.Printf(&quot;(The number I thought of was %d)\n\n&quot;, target)
+			break
+		}
+		numTries++
+	}
+	fmt.Println(&quot;\n\n     ... these pretzels are making me thirsty! ...\n&quot;)
+}
+</code></pre>
+
+<p>and here&rsquo;s the eye-watering original:</p>
+
+<pre><code class="language-basic">5 PRINT TAB(33);&quot;BAGELS&quot;
+10 PRINT TAB(15);&quot;CREATIVE COMPUTING  MORRISTOWN, NEW JERSEY&quot;:PRINT:PRINT
+15 REM *** BAGLES NUMBER GUESSING GAME
+20 REM *** ORIGINAL SOURCE UNKNOWN BUT SUSPECTED TO BE
+25 REM *** LAWRENCE HALL OF SCIENCE, U.C. BERKELY
+30 DIM A1(6),A(3),B(3)
+40 Y=0:T=255
+50 PRINT:PRINT:PRINT
+70 INPUT &quot;WOULD YOU LIKE THE RULES (YES OR NO)&quot;;A$
+90 IF LEFT$(A$,1)=&quot;N&quot; THEN 150
+100 PRINT:PRINT &quot;I AM THINKING OF A THREE-DIGIT NUMBER.  TRY TO GUESS&quot;
+110 PRINT &quot;MY NUMBER AND I WILL GIVE YOU CLUES AS FOLLOWS:&quot;
+120 PRINT &quot;   PICO   - ONE DIGIT CORRECT BUT IN THE WRONG POSITION&quot;
+130 PRINT &quot;   FERMI  - ONE DIGIT CORRECT AND IN THE RIGHT POSITION&quot;
+140 PRINT &quot;   BAGELS - NO DIGITS CORRECT&quot;
+150 FOR I=1 TO 3
+160 A(I)=INT(10*RND(1))
+165 IF I-1=0 THEN 200
+170 FOR J=1 TO I-1
+180 IF A(I)=A(J) THEN 160
+190 NEXT J
+200 NEXT I
+210 PRINT:PRINT &quot;O.K.  I HAVE A NUMBER IN MIND.&quot;
+220 FOR I=1 TO 20
+230 PRINT &quot;GUESS #&quot;;I,
+240 INPUT A$
+245 IF LEN(A$)&lt;&gt;3 THEN 630
+250 FOR Z=1 TO 3:A1(Z)=ASC(MID$(A$,Z,1)):NEXT Z
+260 FOR J=1 TO 3
+270 IF A1(J)&lt;48 THEN 300
+280 IF A1(J)&gt;57 THEN 300
+285 B(J)=A1(J)-48
+290 NEXT J
+295 GOTO 320
+300 PRINT &quot;WHAT?&quot;
+310 GOTO 230
+320 IF B(1)=B(2) THEN 650
+330 IF B(2)=B(3) THEN 650
+340 IF B(3)=B(1) THEN 650
+350 C=0:D=0
+360 FOR J=1 TO 2
+370 IF A(J)&lt;&gt;B(J+1) THEN 390
+380 C=C+1
+390 IF A(J+1)&lt;&gt;B(J) THEN 410
+400 C=C+1
+410 NEXT J
+420 IF A(1)&lt;&gt;B(3) THEN 440
+430 C=C+1
+440 IF A(3)&lt;&gt;B(1) THEN 460
+450 C=C+1
+460 FOR J=1 TO 3
+470 IF A(J)&lt;&gt;B(J) THEN 490
+480 D=D+1
+490 NEXT J
+500 IF D=3 THEN 680
+505 IF C=0 THEN 545
+520 FOR J=1 TO C
+530 PRINT &quot;PICO &quot;;
+540 NEXT J
+545 IF D=0 THEN 580
+550 FOR J=1 TO D
+560 PRINT &quot;FERMI &quot;;
+570 NEXT J
+580 IF C+D&lt;&gt;0 THEN 600
+590 PRINT &quot;BAGELS&quot;;
+600 PRINT
+605 NEXT I
+610 PRINT &quot;OH WELL.&quot;
+615 PRINT &quot;THAT'S TWNETY GUESSES.  MY NUMBER WAS&quot;;100*A(1)+10*A(2)+A(3)
+620 GOTO 700
+630 PRINT &quot;TRY GUESSING A THREE-DIGIT NUMBER.&quot;:GOTO 230
+650 PRINT &quot;OH, I FORGOT TO TELL YOU THAT THE NUMBER I HAVE IN MIND&quot;
+660 PRINT &quot;HAS NO TWO DIGITS THE SAME.&quot;:GOTO 230
+680 PRINT &quot;YOU GOT IT!!!&quot;:PRINT
+690 Y=Y+1
+700 INPUT &quot;PLAY AGAIN (YES OR NO)&quot;;A$
+720 IF LEFT$(A$,1)=&quot;YES&quot; THEN 150
+730 IF Y=0 THEN 750
+740 PRINT:PRINT &quot;A&quot;;Y;&quot;POINT BAGELS BUFF!!&quot;
+750 PRINT &quot;HOPE YOU HAD FUN.  BYE.&quot;
+999 END
+</code></pre>
+
+<p>And just to show how much fun this is (copy-paste and try it!), here&rsquo;s a sample run:</p>
+
+<pre><code class="language-sh">$ go run pretzels.go
+
+Welcome to 'PRETZELS' !!
+------------------------
+
+Here are the rules. I'm going to guess a THREE-DIGIT number, and then you have to guess it. I will give you clues as follows:
+   PICO -- you got one digit correct, BUT in the wrong position
+  FERMI -- you got on digit correct, AND in the right position
+PRETZEL -- you got NO digits correct.
+
+You get 20 chances to guess it!
+
+
+What is Guess #1 ? 123
+ -- PRETZEL --
+
+What is Guess #2 ? 456
+ -- PICO --
+
+What is Guess #3 ? 789
+ -- PICO --  -- PICO --
+
+What is Guess #4 ? 100
+ -- PRETZEL --
+
+What is Guess #5 ? 987
+ -- PICO --  -- PICO --
+
+What is Guess #6 ? 8797
+You MUST choose a number between 100 and 999, try again ...
+
+
+What is Guess #6 ? 897
+ -- FERMI --  -- FERMI --
+
+What is Guess #7 ? 894
+ -- FERMI --  -- FERMI --  -- FERMI --
+
+You got it!!
+
+
+
+     ... these pretzels are making me thirsty! ...
+</code></pre>
+
+      
+      
+      
+    </article>
+    
+
+
+  </main>
+  
+  <nav class="pagination-single">
+    
+      <span class="previous">&larr; <a href="http://agam.github.io/post/2015/01/08/rock/" rel="prev">rock</a></span>
+    
+    
+      <span class="next"><a href="http://agam.github.io/post/2015/01/11/simple-subtraction-dot-dot-dot-and-gambling/" rel="next">simple subtraction dot dot dot and gambling</a> &rarr;</span>
+    
+  </nav>
+
+
+  
+  <footer role="contentinfo">
+    <div style="text-align:center;">
+      
+      Copyright Agam Brahma
+    </div>
+  </footer>
+
+
+</div>
+
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-16612682-4', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</body>
+</html>
+

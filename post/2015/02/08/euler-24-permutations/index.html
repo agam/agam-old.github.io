@@ -1,0 +1,281 @@
+
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  
+  <meta charset="UTF-8">
+  <title>
+    euler 24 permutations | Agam&#39;s Mashed-Up Pome
+  </title>
+
+
+  
+  <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
+
+  
+  <link rel="canonical" href="http://agam.github.io/post/2015/02/08/euler-24-permutations/"/>
+
+  
+  <link rel="stylesheet" href="/css/sanitize.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/highlight_monokai.css">
+  <link rel="stylesheet" href="/css/theme.css">
+  <link rel="stylesheet" href="/css/custom.css">
+  
+  
+  <link href="http://agam.github.io/index.xml" rel="alternate" type="application/rss+xml" title="Agam&#39;s Mashed-Up Pome" />
+  <link href="http://agam.github.io/index.xml" rel="feed" type="application/rss+xml" title="Agam&#39;s Mashed-Up Pome" />
+
+  
+  
+
+
+</head>
+
+
+
+<body>
+<div class="container">
+
+  
+  <header role="banner">
+    <div class="row gutters">
+      <div id="site-title" class="col span_6">
+        <h1><a href="http://agam.github.io/">Agam&#39;s Mashed-Up Pome</a></h1>
+        <h2>A lazy evaluation of compute space</h2>
+      </div>
+      <div id="social" class="col span_6">
+        <ul>
+          <li><a href="https://twitter.com/agambrahma" target="_blank">Twitter</a></li>
+          
+          
+          <li><a href="http://agam.github.io/index.xml" type="application/rss+xml" target="_blank">RSS</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+
+  
+  <main id="single" role="main">
+    <div class="article-header">
+      <h1>euler 24 permutations</h1>
+      <div class="meta">
+        Feb 8, 2015 &nbsp;
+        
+      </div>
+    </div>
+    <article>
+      <p>(The fact that this turned out to be a long story is <em>ridiculous</em>, but perhaps it&rsquo;ll be useful to someone else)</p>
+
+<p>The idea here is intuitive: given say <code>0</code>, <code>1</code> and <code>2</code>, we can immediately come up with the following orderings:</p>
+
+<pre><code>012
+021
+102
+120
+201
+210
+</code></pre>
+
+<p>The problem here is to find the millionth permutation of <code>0</code>, <code>1</code>, <code>2</code>, <code>3</code>, <code>4</code>, <code>5</code>, <code>6</code>, <code>7</code>, <code>8</code>, <code>9</code>.</p>
+
+<p>The first way is to <em>cheat</em> and work it out with pen-and-paper, upon which you soon realize that there are cycles for each set of numbers. E.g. for two numbers we would have 2 possible orderings (<code>01</code> and <code>10</code>), for three we have the ones shown above, etc, and this is because for <code>n</code> numbers we have <code>n!</code> combinations. Right, that&rsquo;s obvious. But the next step is to see that <em>within</em> each block of <code>n!</code>, there are <code>n</code> blocks of size <code>(n-1)!</code>, where the first digit is the same, which means we have a straightforward way of reducing the problem of size <code>n</code> to a problem of size <code>n-1</code>.</p>
+
+<p>As an example, to find the fifth permutation in the example above, we would see that it involves two cycles of two digits each, and then halfway through a single cycle. So we can come up with the first digit being <code>2</code>, and the next digit being the second of the remaining digits (i.e. <code>1</code>), and we&rsquo;re finally left with <code>0</code>.</p>
+
+<p>(<strong>Note</strong>: Argh &hellip; This sentence is wrong! But I didn&rsquo;t realize that until later)</p>
+
+<p>So I wrote the code for this, and I used Ocaml because I&rsquo;m a complete n00b at it.</p>
+
+<pre><code class="language-ocaml">let rec fact n =
+  if n = 0 then 1
+  else n * fact (n - 1)
+
+let perm_total = 1_000_000;;
+
+let get_perm total index =
+  let fact_index = fact index in
+  total / (fact_index), total mod fact_index
+
+let rec get_all_perms total index_size =
+  let rec get_next_perm total index_size perm_list =
+    if index_size = 0 then perm_list
+    else match get_perm total index_size with
+	 | p, new_total -&gt; get_next_perm new_total (index_size - 1) (p :: perm_list)
+  in List.rev (get_next_perm total index_size [])
+
+let rec digits_list n lst =
+  if n = 0 then (0 :: lst)
+  else digits_list (n - 1) (n :: lst)
+
+let remove_digit digit lst =
+  List.filter (fun x -&gt; x &lt;&gt; digit) lst
+
+let rec get_next_perm_digit perm_list digit_list pdlist =
+  if List.length perm_list = 0 then pdlist
+  else let p = List.hd perm_list in
+       let d = List.nth digit_list p in
+       get_next_perm_digit (List.tl perm_list) (remove_digit d digit_list) (d :: pdlist)
+	      
+let rec get_perm_digits perm_list =
+  let digits = digits_list (List.length perm_list) [] in
+  List.rev (get_next_perm_digit perm_list digits [])
+
+let euler24 = get_perm_digits (get_all_perms perm_total 9);;	   
+</code></pre>
+
+<p>Yes, the names are terrible. Many of the started out as nested functions which I pulled into the top-level to test separately. Anyway, the point is &hellip; the answer was <strong>wrong</strong>.</p>
+
+<p>Ok, I thought, I must&rsquo;ve screwed up in the <em>Ocaml-ness</em> of my solution. So I rewrote it thusly:</p>
+
+<pre><code class="language-lisp">(defun fact (n)
+  (if (= n 1)
+      1
+      (* n (fact (1- n)))))
+
+(defparameter *total* 1000000)
+
+(defun get-perm (total index)
+  (let ((f (fact index)))
+    (truncate total f)))
+
+(defun get-next-perm (total index-size perm-list)
+  (if (= index-size 0)
+      (cons 0 perm-list)
+      (multiple-value-bind (p new_total)
+	  (get-perm total index-size)
+	(get-next-perm new_total (1- index-size) (cons p perm-list)))))
+
+(defun get-all-perms (total index-size)
+  (reverse (get-next-perm total index-size '())))
+
+(defun digits-list (n)
+  (loop for i from 0 to n
+       collect i))
+
+(defun get-next-perm-digit (perm-list digit-list p-d-list)
+  (if (null perm-list)
+      p-d-list
+      (let* ((p (first perm-list))
+	     (d (nth p digit-list)))
+	(get-next-perm-digit (rest perm-list)
+			     (remove d digit-list)
+			     (cons d p-d-list)))))
+
+(defun get-perm-digits (perm-list)
+  (let ((digits (digits-list (1- (length perm-list)))))
+    (reverse (get-next-perm-digit perm-list digits '()))))
+
+(defun euler-24 ()
+  (get-perm-digits (get-all-perms *total* 9)))
+</code></pre>
+
+<p>The <em>same</em> answer popped out &ndash; which means I was successful at my translation &ndash; but it was still the wrong answer. In the initial few seconds of denial, I refreshed the Project Euler page and tried again. No luck.</p>
+
+<p>Now it was time for desperate measures, so I came up with this brute force solution:</p>
+
+<pre><code class="language-lisp">(defun list-&gt;number (list)
+  (reduce (lambda (x y) (+ (* x 10) y)) list))
+
+(defun number-&gt;list (n)
+  (do ((tempn n (floor (/ tempn 10)))
+       (digits '() (cons (mod tempn 10) digits)))
+      ((= tempn 0) digits)))
+
+(defun has-digits (n digit-list)
+  (let ((nlist (number-&gt;list n)))
+    (not (set-difference digit-list nlist))))
+
+(defun brute-force-next-permutation (digit-list)
+  (let ((n (list-&gt;number digit-list)))
+    (do ((trynum (1+ n) (1+ trynum)))
+	((has-digits trynum digit-list) (number-&gt;list trynum))
+      (format t &quot;Trying ~A~%&quot; trynum))))
+</code></pre>
+
+<p>&hellip;. which wasn&rsquo;t <em>quite</em> right either, since it skipped the leading zero in our lists. This one seemed to work:</p>
+
+<pre><code class="language-lisp">
+(defun add-num (digit-list)
+  (let ((sum (1+ (first digit-list))))
+    (if (&lt; sum 10)
+	(cons sum (rest digit-list))
+	(cons (mod sum 10) (add-num (rest digit-list))))))
+
+(defun next-number (digit-list)
+  (let ((revlist (reverse digit-list)))
+    (nreverse (add-num revlist))))
+
+(defun brute-force-next-permutation (digit-list)
+  (do ((trynum (next-number digit-list) (next-number trynum)))
+      ((not (set-difference digit-list trynum)) trynum)))
+
+(defun brute-force-nth-permutation (digit-list n)
+  (do ((i 1 (1+ i))
+       (trynum digit-list (brute-force-next-permutation trynum)))
+      ((= i n) trynum)))
+</code></pre>
+
+<p>So I set that running with <code>(brute-force-nth-permutation '(0 1 2 3 4 5 6 7 8 9) 1000000)</code>, and it looked like it was clearly going to take a while.</p>
+
+<p>At this point I was really depressed, since I couldn&rsquo;t figure out <em>what</em> was wrong with the initial approach which was so <em>straightforward</em> &hellip; and then I realized that <strong>I was probably off by one</strong>.</p>
+
+<p>So I took the answer submitted earlier, and entered the <em>next</em> permutation. Nope. Ok, what about the <em>previous</em> one? That worked!</p>
+
+<p>(<strong>Note</strong>: To circle back to the &lsquo;trivial&rsquo; example at the top of the post: I didn&rsquo;t catch myself talking about the fifth permutation as being 0,1,2,3,4,5 &ndash; so I was really talking about the <em>sixth</em> permutation &hellip;)</p>
+
+<p>Later, the (inefficient) brute-force computation terminated in <code>1668</code> seconds, and happily, the answers matched. I tried the previous code with a small modification:</p>
+
+<pre><code class="language-lisp">(defun euler-24 ()
+  (get-perm-digits (get-all-perms (1- *total*) 9)))
+</code></pre>
+
+<p>&hellip; and it gave the same answer (and obviously, so did the Ocaml version). So a happy ending to this story, but a painful reminder of the fact that <strong>there are only two hard problems in computer science: naming, caching, and off-by-one errors.</strong></p>
+
+      
+      
+      
+    </article>
+    
+
+
+  </main>
+  
+  <nav class="pagination-single">
+    
+      <span class="previous">&larr; <a href="http://agam.github.io/post/2015/02/06/failure-to-get-started/" rel="prev">failure to get started</a></span>
+    
+    
+      <span class="next"><a href="http://agam.github.io/post/2015/02/10/euler-25-fibonacci-digits/" rel="next">euler 25 fibonacci digits</a> &rarr;</span>
+    
+  </nav>
+
+
+  
+  <footer role="contentinfo">
+    <div style="text-align:center;">
+      
+      Copyright Agam Brahma
+    </div>
+  </footer>
+
+
+</div>
+
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-16612682-4', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</body>
+</html>
+

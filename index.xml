@@ -1,0 +1,734 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Agam&#39;s Mashed-Up Pome</title>
+    <link>http://agam.github.io/</link>
+    <description>Recent content on Agam&#39;s Mashed-Up Pome</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 26 Apr 2016 00:00:00 +0000</lastBuildDate>
+    <atom:link href="http://agam.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>monthly prog slash math slash sci summary april 2016</title>
+      <link>http://agam.github.io/post/2016/04/26/monthly-prog-slash-math-slash-sci-summary-april-2016/</link>
+      <pubDate>Tue, 26 Apr 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://agam.github.io/post/2016/04/26/monthly-prog-slash-math-slash-sci-summary-april-2016/</guid>
+      <description>&lt;p&gt;Ok, so here’s this month’s curated list of interesting Math/Sci/Programming &lt;em&gt;stuff&lt;/em&gt;. &lt;strong&gt;Note&lt;/strong&gt;: this isn’t stuff that &lt;em&gt;happened&lt;/em&gt; this month, it’s stuff that &lt;em&gt;I came across&lt;/em&gt; this month.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;To start off with something &lt;em&gt;fun&lt;/em&gt;, Gilad Bracha (I try not to miss anything by him) &lt;a href=&#34;https://devchat.tv/ruby-rogues/250-rr-programming-language-evolution-and-design-with-gilad-bracha&#34;&gt;joins the discussion&lt;/a&gt; at &lt;em&gt;Ruby Rogues&lt;/em&gt;, they all talk about Dart and Smalltalk and Newspeak, and much hilarity ensues. So, if you’re into that sort of thing.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;GILAD:  And the thing is once you get used to the machine doing it for you it&amp;rsquo;s really hard to go back to the Stone Age. Smalltalk or Smalltalk-like systems, they give you in certain ways the life of luxury. It&amp;rsquo;s so nice that you can, when something goes wrong you can always find out exactly what the state of the objects were and say, “Oh, this is wrong.” And I don&amp;rsquo;t have to restart things to get back there if I figured out what&amp;rsquo;s wrong or I have a hunch what&amp;rsquo;s wrong. I can just change it and tweak it and go forward a lot of times, which is something that again you have to experience because people tend to not believe that. But you usually can not only make the change but you can very often keep going even though the program was wrong. You can adjust its state now a bit and say, “Okay, let&amp;rsquo;s assume that this is now consistent. I can keep moving and see what happens.” &lt;strong&gt;And you get so comfortable with that and it&amp;rsquo;s so much more pleasant that after that yeah, you ramble on about it like I do.&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Yeah, watch it, it&amp;rsquo;s all good stuff.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Something to jog your preconceived notions about what “object oriented” means: a paper from twenty years ago, titled &lt;a href=&#34;http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.56.4713&#34;&gt;&lt;em&gt;”Classes vs. Prototypes - Some Philosophical and Historical Observations”&lt;/em&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;The distinction between class-based and prototype-based systems reflects a long-lasting philosophical dispute concerning the representation of abstractions. &lt;strong&gt;Plato viewed forms — stable, abstract, “ideal” descriptions of things — as having an existence more real than instances of those things in the real world&lt;/strong&gt;. Class-based languages such as Smalltalk, C++ or Simula are Platonic in their explicit use of classes to represent similarity among collections of objects. Prototype-based systems such as Self [UnS87], Omega [Bla91, Bla94], Kevo [Tai92, Tai93], GlyphicScript [Gly94] and NewtonScript [SLS94] represent &lt;strong&gt;another view of the world, in which one does not rely so much on advance categorization and classification, but rather tries to make the concepts in the problem domain as tangible and intuitive as possible&lt;/strong&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;And if you liked that, you’ll like &lt;a href=&#34;https://www.youtube.com/watch?v=8nfrC-YLYqc&#34;&gt;this discussion&lt;/a&gt; with David Ungar, the man behind the &lt;em&gt;Self&lt;/em&gt; programming language. In case you never heard of it before (as I hadn’t, until recently), that’s where Javascript gets its concept of &lt;em&gt;”prototype”&lt;/em&gt; from. And if you’re &lt;em&gt;still&lt;/em&gt; hungry for more, see &lt;a href=&#34;http://www.infoq.com/presentations/oop-language-context&#34;&gt;this presentation&lt;/a&gt; titled &lt;em&gt;”Dancing with Symmetry to Harness the Power of Complexity: Subjective Programming in Context”&lt;/em&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;A set of ten &lt;a href=&#34;http://www.allthingsdistributed.com/2016/03/10-lessons-from-10-years-of-aws.html&#34;&gt;“learnings”&lt;/a&gt; from ten years of AWS. If I had to pick, I’d say the hardest directive would be to &lt;em&gt;”build evolvable systems”&lt;/em&gt;, because that almost never happens.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Someone finally wrote what I&amp;rsquo;ve been thinking for a while &amp;hellip; the answer for &amp;ldquo;how to do X&amp;rdquo; can&amp;rsquo;t always be &amp;ldquo;oh, just use plugin Y” (or, &lt;a href=&#34;http://amasad.me/2016/01/03/overcoming-intuition-in-programming/&#34;&gt;&lt;em&gt;”How to overcome intuition in programming”&lt;/em&gt;&lt;/a&gt;).&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Marvin Minsky passed away early this year; &lt;a href=&#34;http://web.media.mit.edu/~minsky/papers/TuringLecture/TuringLecture.html&#34;&gt;here&lt;/a&gt; is his 1970 Turing Award lecture, which opens with this interesting sentence:&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;The trouble with computer science today is an obsessive concern with form instead of content.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;It’s as true today as it was then, right? :)&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;This is something I’ve come across many times before, so skip it if you’ve seen it, or skip it anyway; it’s basically a bunch of Haskell insider jokes, laid out as &lt;a href=&#34;http://www.willamette.edu/~fruehr/haskell/evolution.html&#34;&gt;&lt;em&gt;”The Evolution of a Haskell Programmer”&lt;/em&gt;&lt;/a&gt;, starting from a freshman, going all the way to a post-doc, and ending, on an anti-climactic note, with the tenured professor.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;This one fulfills this month’s “rant quota”: Brian Will, slightly infamous for ranting against Object-Oriented Programming, talks about &lt;a href=&#34;https://www.youtube.com/watch?v=L9v4Mg8wi4U&amp;amp;list=WL&amp;amp;index=6&#34;&gt;&lt;em&gt;”Replacing the Unix tradition”&lt;/em&gt;&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Another post in the &lt;em&gt;counter-intuitive&lt;/em&gt; category: &lt;a href=&#34;http://ib-krajewski.blogspot.com/2015/11/ocaml-and-multithreading.html&#34;&gt;the best defense&lt;/a&gt; I’ve yet seen for &lt;em&gt;not&lt;/em&gt; using shared-memory multithreading, using OCaml as an example.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;… parallel processing plus message passing is a much safer model that multithreading …&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Finally, to end on a similar note to which we began, the amazing Eugenia Cheng (look her books up) talks about &lt;a href=&#34;https://www.youtube.com/watch?v=h2p68JjSUH0&#34;&gt;&lt;em&gt;”How to Bake &amp;lsquo;How to Bake Pi&amp;rsquo;: Reflections on Making Abstract Math Palatable”&lt;/em&gt;&lt;/a&gt;; it’s targeted at people of all ages, and tries to make math fun again!&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>stumbling around programming</title>
+      <link>http://agam.github.io/post/2016/04/21/stumbling-around-programming/</link>
+      <pubDate>Thu, 21 Apr 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://agam.github.io/post/2016/04/21/stumbling-around-programming/</guid>
+      <description>&lt;p&gt;(In which I keep talking to myself about learning/doing stuff in the near past/future)&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Read Scott Meyers’ updated C++&lt;sup&gt;11&lt;/sup&gt;&amp;frasl;&lt;sub&gt;14&lt;/sub&gt; book: he’s really the only one who can do a good job of explaining stuff like the subtleties of universal references. Sad to see him take a break (though I hope he’s back in time to explain C++17 to us!)&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Realized I made a big arrogant jerky mistake by dismissing a lot of stuff as being lame and/or hipsterish and not taking it seriously. So I’m going to spend time learning Ruby/Rails and some Javascript/Coffeescript and make some toy apps with that&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;I’ve totally fallen off the Math bandwagon, and I realized this actually happened &lt;em&gt;some time ago&lt;/em&gt;, which is very depressing. And I don’t know &lt;em&gt;exactly&lt;/em&gt; what to do about it, so I’d like to find &lt;em&gt;some&lt;/em&gt; way back ..&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Had fun reading through a bunch of Clojure code/tutorials/books, but I don’t really have any ideas on what to &lt;em&gt;do&lt;/em&gt; with it, as silly as that sounds&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Keep opening and closing Pharo. Way too much fun, but I have lesser and lesser time for that kind of goalless fun these days. Made a mental note to keep suggesting Squeak as a strong contender for an introductory programming environment for kids.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Speculatively, if I get time, I have to get back to reading TAPL&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>monthly prog slash math slash sci summary march 2016</title>
+      <link>http://agam.github.io/post/2016/04/04/monthly-prog-slash-math-slash-sci-summary-march-2016/</link>
+      <pubDate>Mon, 04 Apr 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://agam.github.io/post/2016/04/04/monthly-prog-slash-math-slash-sci-summary-march-2016/</guid>
+      <description>&lt;p&gt;(&lt;em&gt;Meta&lt;/em&gt;: This month&amp;rsquo;s post is late because I was on vacation)&lt;/p&gt;
+
+&lt;p&gt;March&amp;rsquo;s list of curated &lt;em&gt;stuff&lt;/em&gt;:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;A &lt;a href=&#34;http://ethw.org/Main_Page&#34;&gt;grab bag&lt;/a&gt; of engineering and technology history: lots of interesting stuff here, such as &lt;a href=&#34;http://ethw.org/Creating_Magnetic_Disk_Storage_at_IBM&#34;&gt;this overview&lt;/a&gt; of early disk storage&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=RdE-d_EhzmA&#34;&gt;A talk&lt;/a&gt; by David West on how &amp;ldquo;Object Oriented Programming&amp;rdquo; has been misunderstood (I ended up buying his book &lt;a href=&#34;http://www.amazon.com/Object-Thinking-Developer-Reference-David/dp/0735619654&#34;&gt;&lt;em&gt;&amp;ldquo;Object Thinking&amp;rdquo;&lt;/em&gt;&lt;/a&gt;)&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Stumbled across this PhD thesis from 1991 by John Sturdy titled &lt;a href=&#34;http://www.cb1.com/~john/thesis/thesis.html&#34;&gt;&lt;em&gt;&amp;ldquo;A Lisp through the Looking Glass&amp;rdquo;&lt;/em&gt;&lt;/a&gt;; it seemed vaguely similar to the &lt;em&gt;Black&lt;/em&gt; system in Scheme that Nadia demoed a while ago at Strangeloop. Anyway, while I don&amp;rsquo;t quite understand it, there is much coolness here.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;This thesis presents a new architecture for programming language interpreters, &lt;strong&gt;in which interpreters are not only first-class values, but are also arranged in a tower of meta-circular interpretation&lt;/strong&gt; which is accessible reflectively&amp;mdash;so that a program may modify elements of the meta-circular tower under which it runs, and thus cause changes in the manner of its own interpretation.&lt;/p&gt;
+
+&lt;p&gt;To facilitate such modification, we develop a representation for interpreters that splits each interpreter into a language (a collection of independently implemented constructs) and an evaluator (connecting the constructs together).&lt;/p&gt;
+
+&lt;p&gt;To implement such a mutable infinite meta-circular interpreter, we need another interpreter outside the tower, the meta-evaluator. We present this, along with a systematic way of linking it to the meta-circular tower. We show that a further form of meta-circularity may be introduced by bringing the meta-evaluator into the reflectively accessible part of the system; and that this may be repeated without limit, using the same techniques.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Gregory Chaitin wrote an essay on &lt;a href=&#34;http://inference-review.com/article/doing-mathematics-differently&#34;&gt;&lt;em&gt;&amp;ldquo;Doing Mathematics Differently&amp;rdquo;&lt;/em&gt;&lt;/a&gt;, in which he seems to encourage an experimental branch of mathematics, similar to physics.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Another essay, this time by Simon Schaffer titled &lt;a href=&#34;http://www.imaginaryfutures.net/2007/04/16/babbages-intelligence-by-simon-schaffer/&#34;&gt;&lt;em&gt;&amp;ldquo;Babbage&amp;rsquo;s Intelligence&amp;rdquo;&lt;/em&gt;&lt;/a&gt;, which is ridiculously long and meanders endlessly, and is worth reading only for the fascinating nuggets buried here and there.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;In his address to the Society in early 1824, the Society’s president, the financier, mathematician and orientalist Henry Colebrooke, summed up the significance of Babbage’s planned device. He referred to contemporary developments of industrial machinery only to contrast them with the Difference Engine. “In other cases, mechanical devices have substituted machines for simpler tools or for bodily labour….But the invention to which I am adverting comes in place of mental exertion: it substitutes mechanical performance for an intellectual process”. In other words, &lt;strong&gt;“Mr Babbage’s invention puts an engine in place of the computer”&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;As Babbage and his allies among the political economists showed, the disaggregation of the production process into its simplest components allowed a series of economies and practices of surveillance. Mechanized production required strict discipline. The same was true of the Analytical Engine. Parcelling the processes of Lagrangean algebra into specific components allowed the increase in speed of the machine, the transformation of infinities of space into manageable durations of time, the most economical recompense to each component in terms of consumed power (if mechanical) or consumed wages (if human). “&lt;strong&gt;The whole history of the invention has been a struggle against time&lt;/strong&gt;”, Babbage wrote in 1837. The replacement of individual human intelligence by machine intelligence was as apparent in the workshop as in the engines. In the former, this task was both politically and economically necessary. “One great advantage which we derive from machinery is the check which it affords against the inattention, idleness or the dishonesty of human agents”. This set of failings could produce erroneous astronomical tables, hence the significance of Prony’s reports on the performance of the least intelligent computers when subject to the right management. Unreliable agents could also form trade union combinations, which, Babbage held, were always “injurious” to the workforce itself. His aim here was to contest the influence of “designing persons” and show the working classes that &lt;strong&gt;“the prosperity and success of the master manufacturer is essential to the welfare of the workman”&lt;/strong&gt;, even though “I am compelled to admit that this connexion is in many cases too remote to be understood by the latter”.&lt;/p&gt;
+
+&lt;p&gt;This problem of the geography of intelligence depended on the fetishisation of the machines and the reification of the labour power exerted around them. As Raphael Samuel has demonstrated, mid-Victorian industrial mechanization was accompanied by the preservation, intensification and expansion of skilled manual labour throughout the economy. “The mid-Victorian engineer was still characteristically a craftsman, an artisan or mechanic rather than an operative or hand”. [67] The representation of this dual process of the intensification of skill and the subordination of mechanization involved a remarkable balancing act amongst the commentators on the factory system. In the report of his Lancashire tour during the Chartist general strike of 1842, in which almost every cotton works was closed, Cooke Taylor premised that “the diffusion of the Factory System has created a larger demand than previously existed for intelligence and contrivance” among the workforce, and deduced that &lt;strong&gt;the machines themselves could not, or should not, be granted tyrannic power&lt;/strong&gt;. “The operatives are stringently ruled by their own consent…So strange a combination of perfect despotism with perfect freedom never before existed, and to have produced such a state is one of the noblest triumphs of morality and intelligence”. [68] &lt;strong&gt;The problem remained. Whose intelligence had produced this splendid state of voluntary servitude and supreme skill? Protagonists of the cotton masters had no doubt – it flowed from the machines themselves&lt;/strong&gt;. Thus Edward Baines, a veteran lecturer against the Chartists on the benefits of rapid automation, argued in his history of the cotton industry that “all the precision, power and incessant motion belong to the machines alone, and the work-people have merely to supply them with work”. The embodiment of skill within the automatic system was used to distract attention from the labour power exerted by the workforce itself. The most hostile critics of the machine economy, such as the Liberal Manchester medic Peter Gaskell, countered that it followed that any worker would be &lt;strong&gt;“reduced to a mere watcher or feeder of his mighty assistant”, and that “the struggle carrying on between human power on the one hand, and steam aided by machinery, is gradually approaching a crisis”&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;The apotheosis of the intelligent machine was an integral part of Babbage’s ambitious programme. This programme has been used here to illuminate the complex character of systematic vision in the Industrial Revolution. In the Ninth Bridgewater Treatise, &lt;strong&gt;the system was coextensive with the universe, and Babbage explained that its order and logic would only be visible from a privileged point of view&lt;/strong&gt;. In his surveys of the factories and workshops, Babbage set out to reveal the systematic character of the machine economy by pointing out the rationale of the production, distribution and deployment of power in the workshops of industrial Britain. In his project to build intelligent calculating engines, he attempted to represent himself as the intellectual manager of the complex labour relations of the machine-tool industry, initially disastrously, and then as part of his overall vision of a newly rational system of automatic precision engineering. In the setting of early Victorian society, &lt;strong&gt;the connections between these spheres of theological, political and technological work cannot be seen as merely metaphorical. These techniques helped make a new social order and a new form of knowledge.&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;A fascinating &lt;a href=&#34;http://www.gmunk.com/OBLIVION-GFX&#34;&gt;account&lt;/a&gt; of the special effects work on the movie &lt;em&gt;&amp;ldquo;Oblivion&amp;rdquo;&lt;/em&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Dave Baggett at Gamasutra describes &lt;a href=&#34;http://www.gamasutra.com/blogs/DaveBaggett/20131031/203788/My_Hardest_Bug_Ever.php&#34;&gt;&lt;em&gt;&amp;ldquo;my hardest bug ever&amp;rdquo;&lt;/em&gt;&lt;/a&gt;, where setting the timer to a high enough clock rate interfered with the baud rate (??). I would hate to have a problem like that.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Luke Gorrie shows how a modern CPU is complicated enough &lt;a href=&#34;https://github.com/lukego/blog/issues/15&#34;&gt;to be thought of&lt;/a&gt; as a distributed programming system.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Finally, if you too get irritated by the mention of the word &lt;em&gt;&amp;ldquo;agile&amp;rdquo;&lt;/em&gt;, &lt;a href=&#34;https://www.youtube.com/watch?v=hG4LH6P8Syk&#34;&gt;Robert Martin explains&lt;/a&gt; how it started and how it became so bad.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>some badly written code</title>
+      <link>http://agam.github.io/post/2016/03/11/some-badly-written-code/</link>
+      <pubDate>Fri, 11 Mar 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://agam.github.io/post/2016/03/11/some-badly-written-code/</guid>
+      <description>&lt;p&gt;Heh, didn&amp;rsquo;t know what else to title this sort of scrapbook/notebook entry. Basically I hadn’t looked at Codewars for a long time, so I went back and tried the next “Kata”.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Problem:&lt;/em&gt; Given two integers m, n (1 &amp;lt;= m &amp;lt;= n) we want to find all integers between m and n whose sum of squared divisors is itself a square.&lt;/p&gt;
+
+&lt;p&gt;(E.g. 42 has divisors: 1,2,3,6,7,14,21,42, the squares of which are 1,4,9,3649,196,441,1764, and sum to 2500, which is a square)&lt;/p&gt;
+
+&lt;p&gt;I wrote my trivial solution, tried it and the submission failed because it timed out. So I hacked away, and uglified my solution, until it was using “memoized” divisors.&lt;/p&gt;
+
+&lt;p&gt;I ran it locally and it seemed faster, then I submitted it, and … it timed out again. I gave up, and moved on. I guess the lesson to be learnt is that it&amp;rsquo;s always easy to code yourself into a corner?&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Solution:&lt;/em&gt;&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-haskell&#34;&gt;module Codewars.G964.Sumdivsq where
+
+import Data.List
+import Data.Map as M
+
+intSqrt :: Int -&amp;gt; Int
+intSqrt = floor . sqrt . fromIntegral
+
+isSquare :: Int -&amp;gt; Bool
+isSquare x = x == (intSqrt x)^2
+
+sumSq :: [Int] -&amp;gt; Int
+sumSq list = sum [x^2 | x &amp;lt;- list]
+
+multiply :: Int -&amp;gt; [Int] -&amp;gt; [Int]
+multiply factor oldDivlist = factor : oldDivlist ++ (Data.List.map (* factor) oldDivlist)
+
+divisorHelper :: Int -&amp;gt; Int -&amp;gt; Int -&amp;gt; (Map Int [Int]) -&amp;gt; [Int] -&amp;gt; (Map Int [Int], [Int])
+divisorHelper n lower upper knownDivs listDivs =
+  if lower &amp;gt; upper
+  then (M.insert n listDivs knownDivs, listDivs)
+  else
+    let otherDiv = n `div` lower
+    in
+      if (n `rem` lower /= 0)
+      then
+        -- Keep going till we can divide
+        divisorHelper n (lower+1) upper knownDivs listDivs
+      else
+        if otherDiv == lower
+        then
+          -- Special case: we reach a square divisor
+          (M.insert n (lower : listDivs) knownDivs, lower : listDivs)
+          -- Ok, we need to know if we&#39;ve seen the bigger number before
+        else case M.lookup otherDiv knownDivs of
+          Just oldDivlist -&amp;gt;
+            -- We&#39;re done!
+            let newDivlist = nub $ (lower : listDivs) ++ (multiply lower oldDivlist)
+            in
+              (M.insert n newDivlist knownDivs, newDivlist)
+          Nothing -&amp;gt; divisorHelper n (lower+1) (otherDiv-1) knownDivs (lower : otherDiv : listDivs)
+
+
+divisors :: Int -&amp;gt; (Map Int [Int]) -&amp;gt; (Map Int [Int], [Int])
+divisors n knownDivs = divisorHelper n 1 n knownDivs []
+
+listSquaredHelper :: Int -&amp;gt; Int -&amp;gt; Map Int [Int] -&amp;gt; [(Int, Int)] -&amp;gt; [(Int, Int)]
+listSquaredHelper lower upper knownDivs sqList =
+  if lower &amp;gt; upper
+  then
+    sqList
+  else
+    let (newKnownDivs, divs) = divisors lower knownDivs
+        s = sumSq divs
+    in
+      if isSquare s
+      then
+        listSquaredHelper (lower+1) upper newKnownDivs  ((lower,s):sqList)
+      else
+        listSquaredHelper (lower+1) upper newKnownDivs sqList
+
+listSquared :: Int -&amp;gt; Int -&amp;gt; [(Int, Int)]
+listSquared m n = reverse $ listSquaredHelper m n M.empty []
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;I clearly have a long way to go in understanding the “why” of Haskell performance. My initial solution was much, uh &amp;hellip; simpler. I didn&amp;rsquo;t save it but I translated that into Clojure, which looks something like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-clojure&#34;&gt;(ns sumdivsq.core)
+
+(defn is-square
+  [n]
+  (== n (Math/pow (int (Math/sqrt n)) 2)))
+
+(defn sum-sq
+  [lst]
+  (int (reduce + (map #(Math/pow % 2) lst))))
+
+(defn divisors
+  [n]
+  (if (== n 1)
+    [1]
+    (conj (filter #(== 0 (mod n %)) (range 1 (inc (/ n 2)))) n)))
+
+(defn list-squared
+  [m n]
+  (letfn [(lfh [n]
+            (let [ssq (sum-sq (divisors n))]
+              (when (is-square ssq)
+                [n, ssq])))]
+    (keep #(lfh %) (range m n))))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Certainly &lt;em&gt;looks&lt;/em&gt; very nice, and it passed all the tests, but I was too impatient to begin optimizing it, and left this one behind too &amp;hellip;&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>object thinking</title>
+      <link>http://agam.github.io/post/2016/03/02/object-thinking/</link>
+      <pubDate>Wed, 02 Mar 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://agam.github.io/post/2016/03/02/object-thinking/</guid>
+      <description>&lt;p&gt;I picked up &lt;a href=&#34;http://www.amazon.com/Object-Thinking-Developer-Reference-David/dp/0735619654&#34;&gt;&lt;em&gt;&amp;ldquo;Object Thinking&amp;rdquo;&lt;/em&gt;&lt;/a&gt; by David West recently, which is an unusual computer programming text, in that it devotes much (most?) of its pages to &amp;ldquo;philosophy&amp;rdquo;.&lt;/p&gt;
+
+&lt;p&gt;Somewhere towards the beginning, there&amp;rsquo;s this example of writing a program to count the frequencies of words, first in Pascal, then in Smalltalk written like Pascal, and finally in Smalltalk written in the &amp;ldquo;proper&amp;rdquo; OO style.&lt;/p&gt;
+
+&lt;p&gt;I thought I&amp;rsquo;d attempt the same but with Go and Dart instead &amp;hellip;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Note (1)&lt;/strong&gt;: this is &lt;em&gt;not&lt;/em&gt; about one language being better than another or something of the sort; the point is rather that the style is independent of the language, is meant only to contrast (in the author&amp;rsquo;s opinion) purely procedural vs purely object-oriented styles of programming.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Note (2)&lt;/strong&gt;: some of the code below may be idiomatic, don&amp;rsquo;t get upset, this is just for fun, I&amp;rsquo;m trying to match the original Pascal and Smalltalk as closely as possible.&lt;/p&gt;
+
+&lt;p&gt;First of all, the classic procedural program.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-go&#34;&gt;package main
+
+import &amp;quot;fmt&amp;quot;
+import &amp;quot;bufio&amp;quot;
+import &amp;quot;os&amp;quot;
+
+func main() {
+	fmt.Printf(&amp;quot;Enter line: &amp;quot;)
+	bio := bufio.NewReader(os.Stdin)
+	line, _, err := bio.ReadLine()
+	if err != nil {
+		return
+	}
+	var f [26]int
+	for i := 0; i &amp;lt; 26; i++ {
+		f[i] = 0
+	}
+
+	for i := 0; i &amp;lt; len(line); i++ {
+		c := line[i]
+		k := c - &#39;a&#39;
+		if k &amp;gt;= 0 &amp;amp;&amp;amp; k &amp;lt; 26 {
+			f[k] = f[k] + 1
+		}
+	}
+
+	fmt.Println(&amp;quot;Frequencies :-&amp;quot;)
+	for i := 0; i &amp;lt; 26; i++ {
+		fmt.Printf(&amp;quot;%d &amp;quot;, f[i])
+	}
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Second, a language that supports object-orientation, but used in a procedural style.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-dart&#34;&gt;import &#39;dart:io&#39;;
+
+main() {
+  var f = new List(26);
+  stdout.write(&amp;quot;Enter line: &amp;quot;);
+  var line = stdin.readLineSync();
+        
+  for (int i = 0; i &amp;lt; 26; i++) {
+    f[i] = 0;
+  }
+
+  var lowerCaseA = &amp;quot;a&amp;quot;.codeUnitAt(0);
+  for (int i = 0; i &amp;lt; line.length; i++) {
+    var c = line.codeUnitAt(i);
+    var k = c - lowerCaseA;
+    if (k &amp;gt;= 0 &amp;amp;&amp;amp; k &amp;lt; 26) {
+      f[k] = f[k] + 1;
+    }
+  }
+
+  print(&amp;quot;Frequencies :-&amp;quot;);
+  stdout.write(f);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Third, an object-oriented program (or, you could call it a functional program too, and then make a meta-point that I won&amp;rsquo;t).&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-dart&#34;&gt;import &#39;dart:io&#39;;
+
+main() {
+  var f = new Map();
+  stdout.write(&amp;quot;Enter line: &amp;quot;);
+  var line = stdin.readLineSync();
+  line.runes.toList().forEach((e) {
+        f.putIfAbsent(e, () =&amp;gt; 0);
+        f[e]++;
+      });
+
+  print(&amp;quot;Frequencies :-&amp;quot;);
+  print(f);
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Unfortunately, the original analogy might not be preserved very well, because (1) Dart is &lt;em&gt;way&lt;/em&gt; more verbose than Smalltalk, and (2) I showed whole programs here, rather than relevant fragments.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>monthly prog slash math slash sci summary february 2016</title>
+      <link>http://agam.github.io/post/2016/02/26/monthly-prog-slash-math-slash-sci-summary-february-2016/</link>
+      <pubDate>Fri, 26 Feb 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://agam.github.io/post/2016/02/26/monthly-prog-slash-math-slash-sci-summary-february-2016/</guid>
+      <description>&lt;p&gt;I said I’d pick a better name, but I couldn’t, so I picked a &lt;em&gt;different&lt;/em&gt; name instead. Anyway, here is February’s badly curated list:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;You may have come across &lt;a href=&#34;http://www.templeos.org&#34;&gt;TempleOS&lt;/a&gt;, one of those crazy things made by crazy people, and it looks like &lt;a href=&#34;http://web.archive.org/web/20060702135534/http://www.losethos.com/&#34;&gt;&lt;em&gt;“LoseThos”&lt;/em&gt;&lt;/a&gt; was a predecessor (&lt;strong&gt;note&lt;/strong&gt;: that it is available at all is due to the ever-amazing “Wayback Machine”)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;You used to buy a computer to program. They didn&amp;rsquo;t do much else&lt;/strong&gt;. LoseThos is intended for hobbiest programmers. A working knowledge of C programming is required. It more or less runs on least common denominator PC hardware without networking or the Internet. It is retro in some respects, having no security. As a programmer, I like having full access to my machine &amp;ndash; being able to turn-off interrupts or do direct disk block access. It is highly textual, so things can be scripted.  It boots fast, and you can power-off whenever you feel like, but just don&amp;rsquo;t do it during disk writes.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Someone pointed me to the &lt;a href=&#34;https://lab.open.wolframcloud.com/app/&#34;&gt;“Wolfram Programming Lab”&lt;/a&gt; … I’ve only looked at it superficially, but it might be a good alternative to &lt;em&gt;Scratch&lt;/em&gt;, as an initial introduction to programming that “makes things happen”&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;This is a theme that I like to share and re-share: Anil Dash talks about &lt;a href=&#34;https://www.youtube.com/watch?v=9KKMnoTTHJk&#34;&gt;“The Web We Lost”&lt;/a&gt; (tl;dr: &lt;strong&gt;the internet we have is not the internet we were promised&lt;/strong&gt;)&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;I was no fan of Robert Martin, perhaps because I wrongly associated him with excessive “bureaucracy” in software engineering, but it’s clear I was wrong, because &lt;a href=&#34;http://www.infoq.com/presentations/history-future-programming-languages&#34;&gt;&lt;em&gt;this&lt;/em&gt;&lt;/a&gt; is a &lt;em&gt;great&lt;/em&gt; talk, and is one of the few people (other than, say, Alan Kay), who’ve made this connection between the changes in the “culture” of software development and its “popularization”.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://www.youtube.com/watch?v=K13_sWm_gZw&#34;&gt;This talk&lt;/a&gt; by John McCarthy wasn’t particularly interesting, except for a choice quote that’s sure to offend certain “GPL fundamentalists” out there:&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;I think that &lt;strong&gt;Richard Stallman who has been a hero in many respects, has been a negative force in his view that anything/everything should be free and no one should have to pay for anything unless Stallman would think of a mechanism&lt;/strong&gt; … where my daughter who is a professional writer would still be able to make money.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Daniel Spiewak talks about &lt;a href=&#34;http://www.infoq.com/presentations/post-functional-scala-clojure-haskell&#34;&gt;“Living in a Post-Functional World”&lt;/a&gt;. I thought this would be meh, but turned out to be very insightful, and also indicates how close FP and OO really are. More to the point, &lt;strong&gt;since modularity is non-negotiable, any solution to the problem of modularity drags in OO-ish stuff into an FP language&lt;/strong&gt;.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Someone (thanks, @Beobachter!) suggested using &lt;a href=&#34;http://learn.getgrav.org/basics/what-is-grav&#34;&gt;&lt;em&gt;Grav&lt;/em&gt;&lt;/a&gt;, an intermediate alternative to a fully-static blog (what I have right now), and a fully-dynamic one (e.g. Wordpress), but I’ve been too lazy to investigate how to make the switch.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Here is a (very, very humorous!) piece in The Register, &lt;a href=&#34;http://www.theregister.co.uk/2016/01/13/stob_remember_the_monoids/&#34;&gt;&lt;em&gt;”Learn you Func Prog on five minute quick!”&lt;/em&gt;&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;The object-oriented era of coding is at last drawing to an inevitable and shameful close. We can – and we must! – all join hands and skip gaily into a brave new world, where sloppy state and careless side effects are excised without ruth.&lt;/p&gt;
+
+&lt;p&gt;Now every program, from humble Android applet to mighty engine-pollution-test-falsifier, must slough off ridiculous trappings and clumsy complexities of objectivity, and float elegantly forwards down the shiny new functional pipeline – the one, true alimentary canal of code to concurrent computing paradise.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;And so on.&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;Finally, Gilad Bracha’s &lt;a href=&#34;http://www.amazon.com/Dart-Programming-Language-Gilad-Bracha/dp/0321927702?tag=duckduckgo-osx-20&#34;&gt;new book&lt;/a&gt; is very enticing; I’ve placed it on my “soon-to-read-unless-I’m-lying-to-myself-about-my-available-free-time” list, and so should you.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>considering moving away from a static blog dot dot dot</title>
+      <link>http://agam.github.io/post/2016/02/08/considering-moving-away-from-a-static-blog-dot-dot-dot/</link>
+      <pubDate>Mon, 08 Feb 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://agam.github.io/post/2016/02/08/considering-moving-away-from-a-static-blog-dot-dot-dot/</guid>
+      <description>&lt;p&gt;This blog has been my longest continuous online presence (beginning as a &lt;em&gt;Hakyll&lt;/em&gt; blog in 2012 before switching to &lt;em&gt;Jekyll&lt;/em&gt; (well, &lt;em&gt;Octopress&lt;/em&gt;) about a year later). I liked the whole &amp;ldquo;edit in markdown in a terminal and use &lt;code&gt;git&lt;/code&gt; for everything&amp;rdquo; flow.&lt;/p&gt;
+
+&lt;p&gt;Unfortunately, time is scarcer now, my free time is less structured, and I often find myself away from an actual terminal, though equipped with a capable smartphone. For my &lt;a href=&#34;https://abacusnoirform.wordpress.com&#34;&gt;more-general-purpose blog&lt;/a&gt;, I used Wordpress and it&amp;rsquo;s worked out pretty well so far, because I can &amp;ldquo;write on the go&amp;rdquo;, and I&amp;rsquo;d like to be able to do the same for this blog too.&lt;/p&gt;
+
+&lt;p&gt;So I haven&amp;rsquo;t decided exactly how and when to migrate (because hey, I do want to keep what I have) to a &amp;ldquo;dynamic blog&amp;rdquo; (funny phrase, that), but I definitely want to do it sometime this year.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>monthly programming summary january 2016</title>
+      <link>http://agam.github.io/post/2016/01/25/monthly-programming-summary-january-2016/</link>
+      <pubDate>Mon, 25 Jan 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://agam.github.io/post/2016/01/25/monthly-programming-summary-january-2016/</guid>
+      <description>&lt;p&gt;Again, this isn’t really restricted to &lt;em&gt;Programming&lt;/em&gt; per se, but more generally “computer-related stuff”. Next time, I’ll pick a better name. Until then, here are a few interesting links I came across last month, in no  particular order:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;The Handbook of Lisp Functions (cover page below): a &lt;a href=&#34;http://www.softwarepreservation.org/projects/LISP/mblisp/Handbook_of_LISP_Functions.pdf&#34;&gt;technical report&lt;/a&gt; from &lt;em&gt;1961&lt;/em&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;{% img &lt;a href=&#34;https://doc-14-48-docs.googleusercontent.com/docs/securesc/o7m1hv4d96s4jtg9a81aobcff174890t/49eh1go9f5v2i53agksqnv1ghn4m8mj9/1453780800000/03675759775475626385/03675759775475626385/0B7bvhABhpDqmMmRPQmRvWXpkZTg&#34;&gt;https://doc-14-48-docs.googleusercontent.com/docs/securesc/o7m1hv4d96s4jtg9a81aobcff174890t/49eh1go9f5v2i53agksqnv1ghn4m8mj9/1453780800000/03675759775475626385/03675759775475626385/0B7bvhABhpDqmMmRPQmRvWXpkZTg&lt;/a&gt; %}&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Digression on learning new languages: Ugh, I’m too embarassed to even write this. I keep changing my mind about what I like more. I thought this was going to be “the year of Clojure” for me, but then &lt;a href=&#34;http://www.amazon.com/Dart-Programming-Language-Gilad-Bracha/dp/0321927702#&#34;&gt;Gilad Bracha’s book&lt;/a&gt; came out and now I’m torn again (Can I have them &lt;em&gt;both&lt;/em&gt;? Maybe, but I fear I don’t have that kind of time anymore :P)&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Busting the myths behind MicroKernels: &lt;a href=&#34;http://blog.darknedgy.net/technology/2016/01/01/0/&#34;&gt;&lt;em&gt;”Microkernels are slow and Elvis didn’t do no drugs”&lt;/em&gt;&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Here is a paper from 1982 (&lt;a href=&#34;http://www.smecc.org/The%20Architecture%20%20of%20the%20Burroughs%20B-5000.htm&#34;&gt;&lt;em&gt;”The Architecture of the Burroughs B5000 - 20 Years Later and Still Ahead of the Times?”&lt;/em&gt;&lt;/a&gt;), which was &lt;em&gt;even then&lt;/em&gt; lamenting the sorry state of hardware, and only seems quaint now (as in &lt;em&gt;”why would you do things different?”&lt;/em&gt;)&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Various ways to make Clojure programming more productive: &lt;a href=&#34;http://dev.solita.fi/2014/03/18/pimp-my-repl.html&#34;&gt;&lt;em&gt;”Pimp My REPL”&lt;/em&gt;&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;I had a bunch of entertaining blog posts by Crista Lopez in the past (e.g. &lt;a href=&#34;http://tagide.com/blog/fiction/jedi-masters/&#34;&gt;&lt;em&gt;”Jedi Masters”&lt;/em&gt;&lt;/a&gt;), but was blown away by this set of slides. You’re a programmer, you want to be a programmer for life, you &lt;em&gt;have&lt;/em&gt; to read this: &lt;a href=&#34;http://gotocon.com/dl/goto-aar-2013/slides/CristinaVideiraLopes_ExercisesInStyle.pdf&#34;&gt;&lt;em&gt;”Exercises in Programming Style”&lt;/em&gt;&lt;/a&gt;. And if you really like it, &lt;a href=&#34;http://www.amazon.com/Exercises-Programming-Style-Cristina-Videira/dp/1482227371&#34;&gt;get the book&lt;/a&gt;.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Came across this intriguing indie film trailer (&lt;a href=&#34;https://vimeo.com/147111732&#34;&gt;&lt;em&gt;”TraceRoute”&lt;/em&gt;&lt;/a&gt;), though I haven’t gotten around to seeing the movie yet (the writer/protagonist navigates “… the ghosts of nerddom’s past present and future …”). Dunno, added it to my “to watch” list.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Obviously, the X-Files is back. If you like this sort of stuff, the first episode &lt;a href=&#34;http://www.fox.com/watch/607308867569/7756658688&#34;&gt;is free to watch&lt;/a&gt; on Fox. Go watch it :)&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;A couple of articles for “historical interest”. The first is the New York Times reporting on … &lt;a href=&#34;http://www.nytimes.com/1996/01/22/business/the-new-york-times-introduces-a-web-site.html&#34;&gt;the opening of its web site, in 1996!&lt;/a&gt;. But really, you skip ahead to the very last line for your dose of irony-or-tragedy: &lt;em&gt;“The market is booming for newspapers on the World Wide Web”&lt;/em&gt;. Ouch.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;The second is hilarious, from even further back (&lt;a href=&#34;http://www.nytimes.com/1984/12/25/science/value-of-windowing-is-questioned.html&#34;&gt;&lt;em&gt;”Value of Windowing is Questioned”&lt;/em&gt;&lt;/a&gt;, 1984!!), and here the Times speculates on the dubious value of a graphical user interface. The opening line asks: &lt;em&gt;“Does anyone do windows any more?”&lt;/em&gt;, and the article concludes by predicting “doom” for the upcoming new OS by Microsoft. I thought I’d see if the author had time to reflect on his past predictions, so I looked through the newspaper’s archives, but it looks like he stopped writing technology articles in 1987 and switched to Food and Travel. Anyway.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Here’s a “quote of the month” for you:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Science is much more ‘sloppy’ and ‘irrational’ than its methodological image.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;(Paul Feyerabend, &lt;em&gt;Against Method&lt;/em&gt;, and I meant to refer to the so-called science of computers)&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>daily programming simple list stuff</title>
+      <link>http://agam.github.io/post/2016/01/11/daily-programming-simple-list-stuff/</link>
+      <pubDate>Mon, 11 Jan 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://agam.github.io/post/2016/01/11/daily-programming-simple-list-stuff/</guid>
+      <description>&lt;p&gt;Since I&amp;rsquo;m warming up to Clojure this year, why not get started with the &amp;ldquo;dailyprogrammer&amp;rdquo; subreddit again?&lt;/p&gt;
+
+&lt;p&gt;So here&amp;rsquo;s a (noobish) solution to &lt;a href=&#34;https://www.reddit.com/r/dailyprogrammer/comments/40h9pd/20160111_challenge_249_easy_playing_the_stock/&#34;&gt;this problem&lt;/a&gt;:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-clojure&#34;&gt;(ns dailyprog.core
+  (:gen-class)
+  (:require [clojure.string :as str]))
+
+(defn input-&amp;gt;float
+  [input]
+  (map #(Float/parseFloat %) (str/split input #&amp;quot; &amp;quot;)))
+
+(defn difference
+  &amp;quot;Given a list of prices, a price in the list and its index, return the best price to sell it at&amp;quot;
+  [lst index buy-price]
+  (let [max-sell-price (apply max (drop index lst))]
+    {:buy-price buy-price
+    :sell-price max-sell-price
+    :difference (- max-sell-price buy-price)}))
+
+(defn difference-vector
+  [lst]
+  (map-indexed (partial difference lst) lst))
+
+(defn -main
+  [&amp;amp; args]
+  (println(-&amp;gt;&amp;gt; (slurp (first args))
+                input-&amp;gt;float
+                difference-vector
+                (apply max-key :difference))))
+
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;and it runs like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;&amp;gt; lein run /tmp/challenge-input
+{:buy-price 8.03, :sell-price 10.02, :difference 1.9900007247924805}
+&lt;/code&gt;&lt;/pre&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>clojure from the ground up</title>
+      <link>http://agam.github.io/post/2016/01/06/clojure-from-the-ground-up/</link>
+      <pubDate>Wed, 06 Jan 2016 00:00:00 +0000</pubDate>
+      
+      <guid>http://agam.github.io/post/2016/01/06/clojure-from-the-ground-up/</guid>
+      <description>&lt;p&gt;It&amp;rsquo;s time for the same old new year resolution again: going to stop randomly skimming new languages and focus on something in depth.&lt;/p&gt;
+
+&lt;p&gt;This time, without loss of generality (hopefully!), I picked Clojure (&lt;em&gt;again ?&lt;/em&gt;).&lt;/p&gt;
+
+&lt;p&gt;Found this nice series of posts called &lt;a href=&#34;https://aphyr.com/posts/301-clojure-from-the-ground-up-welcome&#34;&gt;&lt;em&gt;&amp;ldquo;Clojure from the ground up&amp;rdquo;&lt;/em&gt;&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;The best part is that unlike other random free tutorials online, this one has exercises.&lt;/p&gt;
+
+&lt;p&gt;For example, &lt;a href=&#34;https://aphyr.com/posts/306-clojure-from-the-ground-up-state&#34;&gt;the post that introduces concurrency primitives&lt;/a&gt; asks us to write our own &lt;code&gt;future&lt;/code&gt; macro.&lt;/p&gt;
+
+&lt;p&gt;I came up with this kludge:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-clojure&#34;&gt;(defmacro my-future [&amp;amp; body]
+  `(let [p# (promise)]
+    (.start (Thread.
+      (fn [] (let [f# (fn [] ~@body)
+                   r# (f#)]
+               (deliver p# r#)))))
+               p#))
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The expansion looks like this:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-clojure&#34;&gt;clojure-noob.core&amp;gt; (pprint (macroexpand &#39;(my-future (Thread/sleep 5000) (prn &amp;quot;Hey ... &amp;quot;))))
+(let*
+  [p__9904__auto__ (clojure.core/promise)]
+  (.start
+    (java.lang.Thread.
+      (clojure.core/fn
+       []
+       (clojure.core/let
+        [f__9905__auto__
+          (clojure.core/fn [] (Thread/sleep 5000) (prn &amp;quot;Hey ... &amp;quot;))
+          r__9906__auto__ (f__9905__auto__)]
+        (clojure.core/deliver p__9904__auto__ r__9906__auto__)))))
+        p__9904__auto__)
+nil
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;And it seems to work:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-clojure&#34;&gt;clojure-noob.core&amp;gt; (def x (my-future (Thread/sleep 5000) (prn &amp;quot;Hey ... &amp;quot;)))
+#&#39;clojure-noob.core/x
+clojure-noob.core&amp;gt; (pprint x)
+#&amp;lt;Promise@6a1dc62: :not-delivered&amp;gt;
+nil
+&amp;quot;Hey ... &amp;quot;
+clojure-noob.core&amp;gt;
+clojure-noob.core&amp;gt; (pprint x)
+#&amp;lt;Promise@6a1dc62: nil&amp;gt;
+nil
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;Here&amp;rsquo;s hoping to fun times ahead (and a &lt;em&gt;happy new year&lt;/em&gt; to you too!)&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>monthly programming summary december 2015</title>
+      <link>http://agam.github.io/post/2015/12/26/monthly-programming-summary-december-2015/</link>
+      <pubDate>Sat, 26 Dec 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://agam.github.io/post/2015/12/26/monthly-programming-summary-december-2015/</guid>
+      <description>&lt;p&gt;A second installment of &amp;ldquo;interesting stuff I came across this month&amp;rdquo; &amp;hellip;&lt;/p&gt;
+
+&lt;p&gt;(&lt;em&gt;Aside:&lt;/em&gt; I shouldn&amp;rsquo;t call this a &amp;ldquo;programming&amp;rdquo; summary, but I can&amp;rsquo;t think of anything better &amp;ndash; it&amp;rsquo;s more of a &amp;ldquo;math + science + computers&amp;rdquo; newsletter)&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;The highlight of the last month for me was the realization of the dream of an ultra-cheap computer, the &lt;a href=&#34;https://www.raspberrypi.org/blog/raspberry-pi-zero/&#34;&gt;Raspberry Pi Zero&lt;/a&gt;, which is cheaper than several drinks at Starbucks.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Yes, ants displaying &amp;ldquo;collective intelligence&amp;rdquo; is old stuff (I first encountered a reference to it in the pages of &lt;em&gt;Godel, Escher, Bach&lt;/em&gt;), but &lt;a href=&#34;http://www.kurzweilai.net/army-ants-living-bridges-suggest-collective-intelligence&#34;&gt;this article&lt;/a&gt; is something else altogether, showing how &amp;ldquo;living bridges&amp;rdquo; are dynamically adjusted by the constituent ants, in response to foraaging needs.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;em&gt;&amp;ldquo;Get Lamp&amp;rdquo;&lt;/em&gt; (&lt;a href=&#34;https://www.youtube.com/watch?v=UwZxUGmqSOo&#34;&gt;link to trailer&lt;/a&gt;) is an interesting documentary on the history of interactive text-based fiction, mostly adventure games. If you&amp;rsquo;ve ever telneted to a MUD, you will like this.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;I lap up everything by Bret Victor, and hope for him to turn out as the Alan Kay of our time. &lt;a href=&#34;https://medium.com/re-form/the-utopian-ui-architect-34dead42a28#.emrat4pnv&#34;&gt;This&lt;/a&gt; is aanother recent piece where he insists we haven&amp;rsquo;t really &lt;em&gt;used&lt;/em&gt; computers well at all.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Finally, &lt;a href=&#34;http://www.popularmechanics.com/military/weapons/a18343/the-cannons-on-the-b-29-bomber-were-a-mid-century-engineering-masterpiece/&#34;&gt;this Popular Mechanics article&lt;/a&gt; blew me away &amp;ndash; before there were &amp;ldquo;real&amp;rdquo; computers, the B-29 Superfortress had high-tech computing &lt;em&gt;way&lt;/em&gt; ahead of its time, to remotely operate its gun turrets. Obligatory youtube video below:&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/nskFayhBcy0&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;
+
+&lt;p&gt;This month&amp;rsquo;s QOTM is from Bret Victor&amp;rsquo;s piece above:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Now we’re staring at computer screens and moving our hands on a keyboard, but it’s basically the same thing. &lt;strong&gt;We’re computer users thinking paper thoughts.”&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>monthly programming summary november 2015</title>
+      <link>http://agam.github.io/post/2015/11/27/monthly-programming-summary-november-2015/</link>
+      <pubDate>Fri, 27 Nov 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://agam.github.io/post/2015/11/27/monthly-programming-summary-november-2015/</guid>
+      <description>&lt;p&gt;A second installment of &amp;ldquo;interesting stuff I came across this month&amp;rdquo; &amp;hellip;&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;A 1972 article in Rolling Stone magazine by Stewart Brand: &lt;a href=&#34;http://www.wheels.org/spacewar/stone/rolling_stone.html&#34;&gt;&lt;em&gt;&amp;ldquo;Fanatic Life and Symbolic Death Among the Computer Bums&amp;rdquo;&lt;/em&gt;&lt;/a&gt;. If only the present had corresponded a little closer to the imagined future of the past, eh? :)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;The hackers are the technicians of this science - &lt;em&gt;“It’s a term of derision and also the ultimate compliment.”&lt;/em&gt; They are the ones who translate human demands into code that the machines can understand and act on. They are legion. &lt;strong&gt;Fanatics with a potent new toy&lt;/strong&gt;. A mobile new-found elite, with its own apparat, language and character, its own legends and humor. Those magnificent men with their flying machines, scouting a leading edge of technology which has an odd softness to it; outlaw country, where rules are not decree or routine so much as the starker demands of what’s possible.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;An excellent blog that was forced offline by vociferous commentors, but lives on in the depths of the Wayback Machine: &lt;a href=&#34;http://web.archive.org/web/20140107054458/http://yinwang0.wordpress.com/&#34;&gt;&lt;em&gt;&amp;ldquo;Surely I am Joking&amp;rdquo;&lt;/em&gt;&lt;/a&gt; by Yin Wang. &lt;em&gt;All&lt;/em&gt; the posts are good, my favorites are the ones on the downsides of &amp;ldquo;pure&amp;rdquo; FP and &amp;ldquo;pure&amp;rdquo; OOP (and &lt;a href=&#34;http://web.archive.org/web/20140116155929/http://yinwang0.wordpress.com/2013/11/09/oop-fp&#34;&gt;how the two are similar!&lt;/a&gt;), the one on &lt;a href=&#34;http://web.archive.org/web/20131127131340/http://yinwang0.wordpress.com/2012/09/16/what-is-a-program/&#34;&gt;&lt;em&gt;&amp;ldquo;what is a program?&amp;rdquo;&lt;/em&gt;&lt;/a&gt;, and the one on the &lt;a href=&#34;http://web.archive.org/web/20140103011845/http://yinwang0.wordpress.com/2013/04/05/database/&#34;&gt;&lt;em&gt;&amp;ldquo;dark age of programming&amp;rdquo;&lt;/em&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;A 1987 article in &lt;em&gt;&amp;ldquo;Computer Language&amp;rdquo;&lt;/em&gt; magazine: &lt;a href=&#34;http://bit-player.org/wp-content/extras/bph-publications/CompLang-1987-04-Hayes-mutant-lisps.pdf&#34;&gt;&lt;em&gt;&amp;ldquo;Mutant languages from the LISP lab&amp;rdquo;&lt;/em&gt;&lt;/a&gt; &amp;ndash; just for fun, and an insight into the pre-Common Lisp era.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;A humorous blog entry from 2009: &lt;a href=&#34;http://james-iry.blogspot.com/2009/05/brief-incomplete-and-mostly-wrong.html&#34;&gt;&lt;em&gt;&amp;ldquo;A Brief, Incomplete, and Mostly Wrong History of Programming Languages&amp;rdquo;&lt;/em&gt;&lt;/a&gt;, with a self-explanatory title.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;And finally, a &amp;ldquo;quote-of-the-month&amp;rdquo;. This one is short and succinct &lt;em&gt;Perlisism&lt;/em&gt;:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Computer Science is embarrassed by the computer.&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>monthly programming summary</title>
+      <link>http://agam.github.io/post/2015/10/26/monthly-programming-summary/</link>
+      <pubDate>Mon, 26 Oct 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://agam.github.io/post/2015/10/26/monthly-programming-summary/</guid>
+      <description>&lt;p&gt;Here&amp;rsquo;s the first installment in an experiment &amp;ndash; writing a monthly roundup of a few things I read/saw/did this month that I found sort of interesting. I do something on my (general, non-programming-specific) &lt;a href=&#34;http://abacusnoirform.com/&#34;&gt;personal blog&lt;/a&gt;, so I thought the same might be a useful exercise here too.&lt;/p&gt;
+
+&lt;p&gt;In no particular order:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;The &amp;ldquo;Balloon edition&amp;rdquo; of BYTE magazine &lt;a href=&#34;https://archive.org/stream/byte-magazine-1981-08/1981_08_BYTE_06-08_Smalltalk#page/n0/mode/2up&#34;&gt;from 1981&lt;/a&gt; &amp;hellip; it&amp;rsquo;s amazing how this stuff is &lt;em&gt;still&lt;/em&gt; a revolutionary idea (also, the advertisements from three decades ago are hilarious)&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;em&gt;&amp;rdquo;&amp;lsquo;SHOULD I learn to program?&amp;rsquo; and &amp;lsquo;Do I have to learn to program?&amp;rsquo; are two variants of the question probably most asked by people testing the waters of computer ownership. The answer usually boils down to an emphatic &amp;lsquo;that depends &amp;hellip;, but probably not.&amp;rsquo;&amp;rdquo;&lt;/em&gt; Sounds relevant? Sounds current? In fact, this is from a New York Times article &lt;a href=&#34;http://www.nytimes.com/1984/01/17/science/personal-computers-does-everyone-need-to-learn-programming.html&#34;&gt;from 1984 (!)&lt;/a&gt;, titled &lt;em&gt;&amp;ldquo;Personal computers: Does everyone need to learn programming?&amp;rdquo;&lt;/em&gt; (there is a conclusion to be drawn from this, but I won&amp;rsquo;t go there)&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;I read through Dijkstra&amp;rsquo;s &lt;a href=&#34;https://www.cs.utexas.edu/users/EWD/&#34;&gt;notes&lt;/a&gt; a while ago, here&amp;rsquo;s &lt;a href=&#34;https://www.vex.net/~trebla/ewd.html&#34;&gt;someone else&amp;rsquo;s curated version&lt;/a&gt; of them.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;A Google Tech Talk from 2007 by Alex Wright, on &lt;a href=&#34;https://www.youtube.com/watch?v=72nfrhXroo8&#34;&gt;&lt;em&gt;&amp;ldquo;The Web That Wasn&amp;rsquo;t&amp;rdquo;&lt;/em&gt;&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;I&amp;rsquo;ll leave you with this quote from Alan Kay:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Perhaps it was commercialization in the 1980s that killed off the next expected new thing. Our plan and our hope was that the next generation of kids would come along and do something better than Smalltalk around 1984 or so. We all thought that the next level of programming language would be much more strategic and even policy-oriented and would have much more knowledge about what it was trying to do. But a variety of different things conspired together, and that next generation actually didn’t show up. &lt;strong&gt;One could actually argue—as I sometimes do—that the success of commercial personal computing and operating systems has actually led to a considerable retrogression in many, many respects.&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>a taste of j</title>
+      <link>http://agam.github.io/post/2015/10/09/a-taste-of-j/</link>
+      <pubDate>Fri, 09 Oct 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://agam.github.io/post/2015/10/09/a-taste-of-j/</guid>
+      <description>&lt;p&gt;I recently stumbled across APL and J, as mentioned in a previous post, and began reading a bit of &lt;a href=&#34;http://www.jsoftware.com/help/learning/contents.htm&#34;&gt;an introductory book&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;A couple of days ago, I came across this series of coding tasks on a blog called &amp;ldquo;Programming Praxis&amp;rdquo;, and I picked &lt;a href=&#34;http://programmingpraxis.com/2015/10/06/the-iron-bar/&#34;&gt;the most recent one&lt;/a&gt; as an example to try out some J noobism.&lt;/p&gt;
+
+&lt;p&gt;The example is simple but contrived (and &lt;em&gt;median&lt;/em&gt; is a terrible name) &amp;ndash; we basically have to write a function that that takes two arguments and either increments, decrements or does nothing, with the first argument. In J, like so many other tasks, this is essentially one line (12 characters, to be precise).&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;median =: [ + (* @: -)~
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;To give some idea on what&amp;rsquo;s going on here, this expression can be broken, first, into three parts: &lt;code&gt;[&lt;/code&gt;, &lt;code&gt;+&lt;/code&gt;, &lt;code&gt;(* @: -)~&lt;/code&gt;. Let&amp;rsquo;s start with the sub-expression within the parentheses: &lt;code&gt;* @: -&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Here, &lt;code&gt;*&lt;/code&gt; is a &lt;em&gt;verb&lt;/em&gt; (think: &lt;em&gt;&amp;ldquo;function&amp;rdquo;&lt;/em&gt;) that returns 1, 0, or -1 depending on the sign of its argument. So &lt;code&gt;* 4&lt;/code&gt; is &lt;code&gt;1&lt;/code&gt;, &lt;code&gt;* _2&lt;/code&gt; (that&amp;rsquo;s how -2 is represented) is &lt;code&gt;_1&lt;/code&gt;, &lt;code&gt;* 0&lt;/code&gt; is &lt;code&gt;0&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;-&lt;/code&gt; is the only thing that does what you would expect: &lt;code&gt;4 - 3&lt;/code&gt; is &lt;code&gt;1&lt;/code&gt;, and so on.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;@:&lt;/code&gt; is a &lt;em&gt;conjunction&lt;/em&gt;, such that &lt;code&gt;f @: g&lt;/code&gt; when applied to &lt;em&gt;x&lt;/em&gt; has the effect of &lt;em&gt;f (g x)&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;]&lt;/code&gt; is a verb that when given two values, always selects the first of the two.&lt;/p&gt;
+
+&lt;p&gt;&lt;code&gt;~&lt;/code&gt; is an &lt;em&gt;adverb&lt;/em&gt; that reverses the order of arguments to its preceding verb. So while &lt;code&gt;%&lt;/code&gt; applied to &lt;em&gt;x&lt;/em&gt; and &lt;em&gt;y&lt;/em&gt; yields &lt;em&gt;(x % y)&lt;/em&gt;, &lt;code&gt;%~&lt;/code&gt; applied to &lt;em&gt;x&lt;/em&gt; and &lt;em&gt;y&lt;/em&gt; yields &lt;em&gt;(y % x)&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Now things get a little tricky (but only a &lt;em&gt;little&lt;/em&gt;; we&amp;rsquo;re barely scratching the surface of J here). The expression for median can be seen as three verbs laid down together, and this is interpreted as a &lt;em&gt;&amp;ldquo;train&amp;rdquo;&lt;/em&gt; of verbs, or more specifically in this case, a &lt;em&gt;&amp;ldquo;dyadic fork&amp;rdquo;&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;Basically, &lt;em&gt;(f g h)&lt;/em&gt; when applied to two values &lt;em&gt;x&lt;/em&gt; and &lt;em&gt;y&lt;/em&gt;, is equivalent to &lt;em&gt;g&lt;/em&gt; applied to the result of &lt;em&gt;f&lt;/em&gt; applied to &lt;em&gt;x&lt;/em&gt; and &lt;em&gt;y&lt;/em&gt;, and the result of &lt;em&gt;h&lt;/em&gt; applied to &lt;em&gt;x&lt;/em&gt; and &lt;em&gt;y&lt;/em&gt;. Or, using infix notation,&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;x (f g h) y   is equivalent to    (x f y) g (x h y)
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The reason &lt;em&gt;x&lt;/em&gt; and &lt;em&gt;y&lt;/em&gt; aren&amp;rsquo;t present in the definition of &lt;em&gt;median&lt;/em&gt; is that it&amp;rsquo;s defined using a &amp;ldquo;tacit&amp;rdquo; form rather than an &amp;ldquo;explicit&amp;rdquo; form (somewhat similar to &amp;ldquo;point-free&amp;rdquo; definitions in Haskell).&lt;/p&gt;
+
+&lt;p&gt;Putting it all together now, when applied to two arguments, we get the equivalent of &lt;code&gt;(x [ y) + (* (y - x))&lt;/code&gt;, which gives &lt;code&gt;x + 1&lt;/code&gt; when &lt;em&gt;y &amp;gt; x&lt;/em&gt;, &lt;code&gt;x + 0&lt;/code&gt; when &lt;em&gt;y == x&lt;/em&gt;, and &lt;code&gt;x + (-1)&lt;/code&gt; when &lt;em&gt;y &amp;lt; x&lt;/em&gt;, which is what we want.&lt;/p&gt;
+
+&lt;p&gt;If you like this sort of thing, head over to &lt;a href=&#34;http://www.jsoftware.com/&#34;&gt;jsoftware.com&lt;/a&gt; for more.&lt;/p&gt;
+</description>
+    </item>
+    
+    <item>
+      <title>types as constraints dot dot dot</title>
+      <link>http://agam.github.io/post/2015/10/02/types-as-constraints-dot-dot-dot/</link>
+      <pubDate>Fri, 02 Oct 2015 00:00:00 +0000</pubDate>
+      
+      <guid>http://agam.github.io/post/2015/10/02/types-as-constraints-dot-dot-dot/</guid>
+      <description>&lt;p&gt;(Don&amp;rsquo;t ask me why or how I got here, but &amp;hellip;) I came across a very old (Nov 1980) &lt;a href=&#34;http://ml.cddddr.org/lisp-forum/msg00022.html&#34;&gt;post in a mailing list&lt;/a&gt; that might be related to our current confusion on the different interpretations of what &lt;em&gt;types&lt;/em&gt; mean:&lt;/p&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;The second way is to keep careful tabs on what functions call this one and the way that they have to be changed to match changes in this function.  It is exactly this latter type of control (auditing function) that I mean should be included in NIL (or whatever).  I am not against extending the language any more than I am against GOTOs (which is not very much).&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

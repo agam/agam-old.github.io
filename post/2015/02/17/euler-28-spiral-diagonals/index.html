@@ -1,0 +1,218 @@
+
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  
+  <meta charset="UTF-8">
+  <title>
+    euler 28 spiral diagonals | Agam&#39;s Mashed-Up Pome
+  </title>
+
+
+  
+  <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
+
+  
+  <link rel="canonical" href="http://agam.github.io/post/2015/02/17/euler-28-spiral-diagonals/"/>
+
+  
+  <link rel="stylesheet" href="/css/sanitize.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/highlight_monokai.css">
+  <link rel="stylesheet" href="/css/theme.css">
+  <link rel="stylesheet" href="/css/custom.css">
+  
+  
+  <link href="http://agam.github.io/index.xml" rel="alternate" type="application/rss+xml" title="Agam&#39;s Mashed-Up Pome" />
+  <link href="http://agam.github.io/index.xml" rel="feed" type="application/rss+xml" title="Agam&#39;s Mashed-Up Pome" />
+
+  
+  
+
+
+</head>
+
+
+
+<body>
+<div class="container">
+
+  
+  <header role="banner">
+    <div class="row gutters">
+      <div id="site-title" class="col span_6">
+        <h1><a href="http://agam.github.io/">Agam&#39;s Mashed-Up Pome</a></h1>
+        <h2>A lazy evaluation of compute space</h2>
+      </div>
+      <div id="social" class="col span_6">
+        <ul>
+          <li><a href="https://twitter.com/agambrahma" target="_blank">Twitter</a></li>
+          
+          
+          <li><a href="http://agam.github.io/index.xml" type="application/rss+xml" target="_blank">RSS</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+
+  
+  <main id="single" role="main">
+    <div class="article-header">
+      <h1>euler 28 spiral diagonals</h1>
+      <div class="meta">
+        Feb 17, 2015 &nbsp;
+        
+      </div>
+    </div>
+    <article>
+      <p>This problem afforded a chance to be lazy and have fun.</p>
+
+<p>There definitely is a pattern in the diagonals here: for a <code>3 x 3</code> matrix, the elements are 3, 5, 7, 9. For a <code>5 x 5</code> matrix, the additional elements are 13, 17, 21, 25.</p>
+
+<p>You can see these as being (1 + 2), (1 + 4), (1 + 6), (1 + 8), and then (1 + 2 + 2 + 8), (1 + 4 + 4 + 8), (1 + 6 + 6 + 8), (1 + 8 + 8 + 8).</p>
+
+<p>Similarly, for a <code>7 x 7</code> matrix, the numbers are 31, 37, 43, 49, which are (1 + 2 + 2 + 2 + 8 + 8 + 8), (1 + 4 + 4 + 4 + 8 + 8 + 8), (1 + 6 + 6 + 6 + 8 + 8 + 8), (1 + 8 + 8 + 8 + 8 + 8 + 8)</p>
+
+<p>On the other hand, the problem mentions a <code>1001 x 1001</code> matrix, which is <em>tiny</em>, so why bother with these patterns? Just create the matrix and sum up the diagonals directly! (It&rsquo;s <em>just</em> a million elements &hellip; now if it was a few orders of magnitude higher, it would be a different story)</p>
+
+<p><strong>Statutory Warning</strong>: Spoilers ahead!</p>
+
+<pre><code class="language-haskell">import qualified Data.List as L
+import qualified Data.Vector as V
+import qualified Data.Matrix as M
+import qualified Data.HashMap.Strict as H
+import Prelude hiding (Left,Right)
+
+-- Euler 28: spiral int matrix
+
+data Direction = Down | Left | Right | Up deriving Show
+
+move :: (Int,Int) -&gt; Direction -&gt; (Int,Int)
+move oldPoint@(y,x) dir =
+  case dir of Down -&gt; (y+1,x)
+              Left -&gt; (y,x-1)
+              Right -&gt; (y,x+1)
+              Up -&gt; (y-1,x)
+
+getSpiralMoves :: Int -&gt; [Direction]
+getSpiralMoves n =
+  if n == 3
+  then [Down, Right, Up, Up, Left, Left, Down, Down]
+  else let prevMoves = getSpiralMoves (n-2)
+           firstMove = [Down]
+           secondMove = take (n-2) $ repeat Right
+           thirdMove = take (n-1) $ repeat Up
+           fourthMove = take (n-1) $ repeat Left
+           fifthMove = take (n-1) $ repeat Down
+       in
+        prevMoves ++ firstMove ++ secondMove ++ thirdMove ++ fourthMove ++ fifthMove
+
+getSpiralCoords :: Int -&gt; [(Int,Int)]
+getSpiralCoords n =
+  let mid = div (n+1) 2
+      start = (mid,mid)
+  in
+   L.scanl move start $ getSpiralMoves n
+
+getCoordHash :: Int -&gt; H.HashMap (Int,Int) Int
+getCoordHash n = H.fromList $ zip (getSpiralCoords n) [1..]
+
+genF :: H.HashMap (Int,Int) Int -&gt; (Int, Int) -&gt; Int
+genF h (i,j) = h H.! (i,j)
+
+getDiagElems :: M.Matrix Int -&gt; Int -&gt; Int
+getDiagElems mat n =
+  let leftDiag = sum $ [M.getElem i i mat | i &lt;- [1 .. n]]
+      rightDiag = sum $ [M.getElem i (n + 1 - i) mat | i &lt;- [1 .. n]]
+      centerElem = let c = div (n+1) 2
+                   in
+                    M.getElem c c mat
+  in
+   leftDiag + rightDiag - centerElem
+
+getSpiralMatrix :: Int -&gt; M.Matrix Int
+getSpiralMatrix n = M.matrix n n $ genF $ getCoordHash n
+
+diagSum :: Int -&gt; Int
+diagSum n = getDiagElems (getSpiralMatrix n) n
+</code></pre>
+
+<p>I added type signatures for every function, so here&rsquo;s a quick overview (this is terribly over-engineered, and turned out to be more of a way to get to know various Haskell datatypes than to actually solve this problem!):</p>
+
+<p><code>getSpiralMoves</code> translates the literal pattern of the square spiral into concrete steps and then <code>getSpiralCoords</code> converts these into <code>(i,j)</code> elements within the matrix. Since I use a <em>generating function</em> (in <code>getSpiralMatrix</code>) to create the matrix, I use a hash-map to store the value of each co-ordinate &hellip; and then <code>getDiagElems</code> iterates over the diagonal elements.</p>
+
+<p>The matrix does turn out as expected:</p>
+
+<pre><code class="language-haskell">*Main&gt; getSpiralMatrix 7
+( 43 42 41 40 39 38 37 )
+( 44 21 20 19 18 17 36 )
+( 45 22  7  6  5 16 35 )
+( 46 23  8  1  4 15 34 )
+( 47 24  9  2  3 14 33 )
+( 48 25 10 11 12 13 32 )
+( 49 26 27 28 29 30 31 )
+</code></pre>
+
+<p>This was a simple problem but I was surprised by how <em>short</em> the code was; I didn&rsquo;t write overly terse code, added lots of whitespace, indentation, extra lines, etc, and the whole piece was <em>still</em> just 60 lines!</p>
+
+<p><strong>Update</strong>: Fine, here&rsquo;s the simple solution too.</p>
+
+<p>For every <code>N x N</code> matrix (where <code>N</code> is odd), the diagonal elements are all the diagonal elements of the <code>N-2</code>-sized matrix, plus four more. And these four include <code>N^2</code> and three others, each being <code>(N-1)</code> less than the other. The base case is <code>1 x 1</code>, with a value of 1.</p>
+
+<pre><code class="language-haskell">euler28 :: Int -&gt; Int
+euler28 1 = 1
+euler28 n = let sideDiff = n - 1
+                sq = n ^ 2
+            in
+             euler28 (n-2) + 4 * sq - (1 + 2 + 3) * sideDiff
+</code></pre>
+
+<p>&hellip; and then <code>euler28 1001</code> gives the same answer.</p>
+
+      
+      
+      
+    </article>
+    
+
+
+  </main>
+  
+  <nav class="pagination-single">
+    
+      <span class="previous">&larr; <a href="http://agam.github.io/post/2015/02/14/euler-27-quadratic-primes/" rel="prev">euler 27 quadratic primes</a></span>
+    
+    
+      <span class="next"><a href="http://agam.github.io/post/2015/02/18/euler-30-sums-of-powers-of-digits/" rel="next">euler 30 sums of powers of digits</a> &rarr;</span>
+    
+  </nav>
+
+
+  
+  <footer role="contentinfo">
+    <div style="text-align:center;">
+      
+      Copyright Agam Brahma
+    </div>
+  </footer>
+
+
+</div>
+
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-16612682-4', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</body>
+</html>
+

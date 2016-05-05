@@ -1,0 +1,387 @@
+
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  
+  <meta charset="UTF-8">
+  <title>
+    urbit hoon | Agam&#39;s Mashed-Up Pome
+  </title>
+
+
+  
+  <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
+
+  
+  <link rel="canonical" href="http://agam.github.io/post/2014/01/07/urbit-hoon/"/>
+
+  
+  <link rel="stylesheet" href="/css/sanitize.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/highlight_monokai.css">
+  <link rel="stylesheet" href="/css/theme.css">
+  <link rel="stylesheet" href="/css/custom.css">
+  
+  
+  <link href="http://agam.github.io/index.xml" rel="alternate" type="application/rss+xml" title="Agam&#39;s Mashed-Up Pome" />
+  <link href="http://agam.github.io/index.xml" rel="feed" type="application/rss+xml" title="Agam&#39;s Mashed-Up Pome" />
+
+  
+  
+
+
+</head>
+
+
+
+<body>
+<div class="container">
+
+  
+  <header role="banner">
+    <div class="row gutters">
+      <div id="site-title" class="col span_6">
+        <h1><a href="http://agam.github.io/">Agam&#39;s Mashed-Up Pome</a></h1>
+        <h2>A lazy evaluation of compute space</h2>
+      </div>
+      <div id="social" class="col span_6">
+        <ul>
+          <li><a href="https://twitter.com/agambrahma" target="_blank">Twitter</a></li>
+          
+          
+          <li><a href="http://agam.github.io/index.xml" type="application/rss+xml" target="_blank">RSS</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+
+  
+  <main id="single" role="main">
+    <div class="article-header">
+      <h1>urbit hoon</h1>
+      <div class="meta">
+        Jan 7, 2014 &nbsp;
+        
+      </div>
+    </div>
+    <article>
+      
+
+<p>First off, just in case you closed your shell, terminal, screen session, whatever: you can easily resume your Arvo session</p>
+
+<pre><code class="language-sh">agam@myvm:~/urbit$ bin/vere frogstar
+vere: urbit home is /home/agam/urbit/urb
+loom: loaded 11MB
+init: gc: 2.361.752 bytes live
+time: ~2014.1.7..09.04.14..a902
+ames: on localhost, UDP 57882.
+http: live on 8080
+rest: checkpoint to event 7.319
+rest: old 0v1i.p6o91, new 0v1k.b3ul0
+loaded passcode from /home/agam/.urbit/~fiddyn-lavpun.txt
+rest: replaying through event 7323
+---------------- playback starting----------------
+.....
+---------------- playback complete----------------
+save: gc: 28 bytes shed; 2.361.836 bytes live
+
+~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try=&gt; 
+</code></pre>
+
+<p>(hmm &hellip; &ldquo;<em>playback complete</em>&rdquo; ?? Yeah apparently everything you ever do is known forever, but that makes my head hurt right now so I won&rsquo;t try too hard to understand it just yet)</p>
+
+<p>Alright, continuing on &hellip;</p>
+
+<h2 id="fun-at-the-repl">Fun at the REPL</h2>
+
+<p>If you remember from <a href="http://agam.github.io/blog/2014/01/06/urbit/">earlier on</a>, we were dropped into a REPL.</p>
+
+<p>Being a REPL means we can do stuff like</p>
+
+<pre><code class="language-sh">~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try=&gt; (add 4 5)
+9
+</code></pre>
+
+<p>and</p>
+
+<pre><code class="language-sh">~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try=&gt; =a 17
+~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try=&gt; (add 14 a)
+31
+</code></pre>
+
+<p>and also</p>
+
+<pre><code class="language-sh">~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try=&gt; (mul 6 7)
+42
+</code></pre>
+
+<p>or</p>
+
+<pre><code class="language-sh">~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try=&gt; (mul 5 (add 4 7))
+55
+</code></pre>
+
+<p>If you look at some of the <code>hoon</code> files that were downloaded at the initial setup, you might intuit that they are executable-ish.</p>
+
+<pre><code class="language-sh">+ /~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try/1/bin/reverse/hoon
+...
++ /~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try/1/bin/fib/hoon
+...
+</code></pre>
+
+<p>and more.</p>
+
+<p>These can be run (&ldquo;evaluated&rdquo; !!) at the command line. E.g. for <code>fib/hoon</code>:</p>
+
+<pre><code class="language-sh">~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try=&gt; :fib 0
+1
+~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try=&gt; :fib 1
+1
+~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try=&gt; :fib 2
+2
+~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try=&gt; :fib 3
+3
+~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try=&gt; :fib 4
+5
+</code></pre>
+
+<p>Or for <code>zero/hoon</code>:</p>
+
+<pre><code class="language-sh">~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try=&gt; :zero
+0                             ::  0, ~zod
+0                             ::  1, ~nec
+0                             ::  2, ~bud
+0                             ::  3, ~wes
+0                             ::  4, ~sev
+0                             ::  5, ~per
+0                             ::  6, ~sut
+0                             ::  7, ~let
+0                             ::  8, ~ful
+...
+0                             ::  252, ~pec
+0                             ::  253, ~nel
+0                             ::  254, ~nev
+0                             ::  255, ~fes
+</code></pre>
+
+<p>which is just 256 zeros &hellip; but you get the idea.</p>
+
+<h2 id="hoon-files">Hoon files</h2>
+
+<p>(More on what <code>hoon</code> really is and how to parse it later (it has to be later because I don&rsquo;t know WTF it is right now))</p>
+
+<p>As another example, let&rsquo;s examine <code>cat/hoon</code> (which fulfills a purpose similar to the Unix <code>cat</code> you&rsquo;re familiar with)</p>
+
+<pre><code class="language-sh">~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try=&gt; :cat /=main=/toy/cat/hoon
+~ /cx/~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/main/~2014.1.7..09.24.24..4de6/toy/cat/hoon
+</code></pre>
+
+<p>The &ldquo;real&rdquo; file is at a location <em>and</em> a date! Yes, seriously. Running it again &hellip;</p>
+
+<pre><code class="language-sh">~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try=&gt; :cat /=main=/toy/cat/hoon
+~ /cx/~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/main/~2014.1.7..09.25.22..9bed/toy/cat/hoon
+</code></pre>
+
+<p>&hellip; will give a different path.</p>
+
+<p>So far so good. What does the file actually contain ?</p>
+
+<pre><code class="language-sh">~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try=&gt; :cat /=main=/bin/cat/hoon
+'!:'
+'::  /=main=/toy/cat/hoon'
+'::'
+'|=  *'
+'|=  ape=(list path)'
+':_  ~'
+':_  ~'
+'^-  gift'
+':+  %mu  [%atom %t]'
+'=-  |-  ^-  (list ,@t)'
+'    ?~(foz ~ (weld i.foz $(foz t.foz)))'
+'^=  foz'
+'=|  foz=(list (list ,@t))'
+'|-  ^+  foz'
+'?~  ape  ~'
+'[(lore ((hard ,@) .^(%cx i.ape))) $(ape t.ape)]'
+</code></pre>
+
+<p>&ldquo;Yikes&rdquo; is an appropriate response at this point.</p>
+
+<p>BTW in case you were wondering: yes, right now Urbit <em>is</em> hosted on top of Unix (<strong>Arvo</strong> is written in <strong>Hoon</strong>, which is written in <strong>Nock</strong>, which is written in <strong>C</strong>), so you should see the exact same contents if you run</p>
+
+<pre><code class="language-sh">$ cat wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/main/bin/cat.hoon
+</code></pre>
+
+<h2 id="setting-up-a-destroyer">Setting up a destroyer</h2>
+
+<p>So I asked the nice folks at <a href="mailto:urbit@urbit.org">urbit</a> nicely and they sent me a (nice?) pair of destroyers (which if nothing else, should shorten the prompt by 75% or so).</p>
+
+<p>You&rsquo;ll receive a <em>ship</em> and its <em>ticket</em>, and then run</p>
+
+<pre><code class="language-sh">~wicmet-balful-tipdet-tardul--nisred-divpen-panref-sicbet/try=&gt; :begin ~todbyt-nathes
+
+Launching ~todbyt-nathes, one of 4.278.124.800 Urbit destroyers...
+
+            If I did not build for myself
+            for whom should I build?
+
+                  -- Bunting, _Chomei at Toyama_
+
+Let's configure your identity.  Warning - it's nontrivial to
+change this data once you've sent it to the server.  If you enter
+something wrong, hit ^D to cancel, then run the program again.
+
+Your ticket: &lt;Enter your ticket here&gt;
+
+Enter a passphrase or other unusual text.  You (or your enemies)
+can regenerate your ship from this entropy.
+
+Entropy: **********
+Entropy check: ~nildyl-hocmun
+</code></pre>
+
+<p>Customization follows. This would normally be boring boilerplate, but I&rsquo;ve chosen to reproduce it here since some if it is entertaining.</p>
+
+<pre><code class="language-sh">What language would your ship rather speak?  Enter it as a
+two-letter (ISO 639-1) code, like &quot;en&quot; for English.  Whatever
+language you pick, it'll all be English now, but in future
+we'll be more sensitive to your needs.
+
+Language: en
+
+Okay, we'll be speaking English.
+</code></pre>
+
+<pre><code class="language-sh">Please select one of the pre-chosen forms:
+
+  %lady   female-identified individual
+  %lord   male-identified individual
+  %punk   opaque handle
+  %anon   totally anonymous
+
+Form: %lord
+
+You've selected a personal identity.  For a %lord or a %lady,
+please use your real name only.  If you'd prefer a fictitious
+handle, you can hit ^D and start over as a %punk.  Or you can
+use %anon and go by your ship name alone.
+</code></pre>
+
+<pre><code class="language-sh">As a real person, we're going to ask you for a little bit of
+personal information - not enough to compromise your privacy,
+just enough to make everyone on Urbit feel like a neighbor.
+
+What we're going to ask you for is information that's (a)
+public (would be obvious, or at least easy to guess, for
+someone who met you in person); (b) durable (doesn't change
+often); and (c) relevant (helps you connect with friends).
+
+For example, we'll ask for the year (not day) you were born,
+because your age is easy to guess in person, doesn't change,
+and has a big effect on how people perceive you.
+
+</code></pre>
+
+<pre><code class="language-sh">Year you were born: &lt;Enter your year of birth here&gt;
+
+Where are you?  This is totally optional, but we'd like to
+know your vague general location.  You can enter nothing at
+all, just a country code, or country and postal code.
+
+Location: us/&lt;Enter your zipcode here&gt;
+
+Please tell us your name - and please make it a real name.
+Pseudonyms are totally cool, but please use %punk.  Middle
+name and nickname are optional.  Ünicode is encouraged.
+
+First name: &lt;Enter your name here&gt;
+Middle name (or blank):
+Nickname/handle (or blank): agam
+Last name: &lt;Enter your name here&gt;
+</code></pre>
+
+<pre><code class="language-sh">One basic human instinct is the urge to form political tribes.
+In a network that fights this need, these tribes form anyway and
+they form badly.  Urbit designs them into the infrastructure.
+Inspired by the Qing Dynasty, you'll align yourself with one of
+five colored &quot;banners&quot; - %red, %blue, %orange, %black or %white.
+
+Political discourse across tribal boundaries is almost always an
+antisocial act - less communication, than symbolic violence.  In
+Urbit, messages marked political stay within your own banner;
+your friends in other banners simply won't see them.  Between
+banners, politics doesn't erode apolitical relationships; inside
+each banner, political discourse is harmonious and productive.
+
+Pick a banner by the adjective you feel best describes you:
+
+%red     far left: radical, anarchist
+%blue    center-left: moderate, liberal
+%orange  center-right: conservative, libertarian
+%black   far right: traditionalist, reactionary
+
+Or if digital agitation isn't your cup of tea, choose %white, and
+your Urbit experience will remain politics-free.
+
+Banner: %white
+</code></pre>
+
+<p>At this point, it got stuck &hellip;</p>
+
+<pre><code class="language-sh">generating 2048-bit RSA key...
+ames: czar zod.urbit.org: ip .198.199.112.32
+; ~doznec ~doznec not responding still trying
+waiting on ~doznec/ta
+</code></pre>
+
+<p>&hellip; so I hit <code>Ctrl-D</code> and ran it again.</p>
+
+<p>Still nothing. I guess I&rsquo;ll continue the next post once I get this working (!)</p>
+
+      
+      
+      
+    </article>
+    
+
+
+  </main>
+  
+  <nav class="pagination-single">
+    
+      <span class="previous">&larr; <a href="http://agam.github.io/post/2014/01/06/urbit/" rel="prev">urbit</a></span>
+    
+    
+      <span class="next"><a href="http://agam.github.io/post/2014/01/07/programming-fun-braille/" rel="next">programming fun braille</a> &rarr;</span>
+    
+  </nav>
+
+
+  
+  <footer role="contentinfo">
+    <div style="text-align:center;">
+      
+      Copyright Agam Brahma
+    </div>
+  </footer>
+
+
+</div>
+
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-16612682-4', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</body>
+</html>
+

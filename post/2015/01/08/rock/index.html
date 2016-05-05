@@ -1,0 +1,303 @@
+
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  
+  <meta charset="UTF-8">
+  <title>
+    rock | Agam&#39;s Mashed-Up Pome
+  </title>
+
+
+  
+  <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
+
+  
+  <link rel="canonical" href="http://agam.github.io/post/2015/01/08/rock/"/>
+
+  
+  <link rel="stylesheet" href="/css/sanitize.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/highlight_monokai.css">
+  <link rel="stylesheet" href="/css/theme.css">
+  <link rel="stylesheet" href="/css/custom.css">
+  
+  
+  <link href="http://agam.github.io/index.xml" rel="alternate" type="application/rss+xml" title="Agam&#39;s Mashed-Up Pome" />
+  <link href="http://agam.github.io/index.xml" rel="feed" type="application/rss+xml" title="Agam&#39;s Mashed-Up Pome" />
+
+  
+  
+
+
+</head>
+
+
+
+<body>
+<div class="container">
+
+  
+  <header role="banner">
+    <div class="row gutters">
+      <div id="site-title" class="col span_6">
+        <h1><a href="http://agam.github.io/">Agam&#39;s Mashed-Up Pome</a></h1>
+        <h2>A lazy evaluation of compute space</h2>
+      </div>
+      <div id="social" class="col span_6">
+        <ul>
+          <li><a href="https://twitter.com/agambrahma" target="_blank">Twitter</a></li>
+          
+          
+          <li><a href="http://agam.github.io/index.xml" type="application/rss+xml" target="_blank">RSS</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+
+  
+  <main id="single" role="main">
+    <div class="article-header">
+      <h1>rock</h1>
+      <div class="meta">
+        Jan 8, 2015 &nbsp;
+        
+      </div>
+    </div>
+    <article>
+      <p>I&rsquo;ve been having some fun with the idea of simple text-based games in Go<sup class="footnote-ref" id="fnref:1"><a rel="footnote" href="#fn:1">1</a></sup>. The original BASIC games book<sup class="footnote-ref" id="fnref:2"><a rel="footnote" href="#fn:2">2</a></sup> was not hard to find, and it was interesting to revisit it again.</p>
+
+<p>The first thing that stared me in the face was just how <em>bad</em> (and by &ldquo;bad&rdquo; I mean <em>incomprehensible</em>) most of the code was. In my nostalgia I had completely lost sight of this.</p>
+
+<p>The second thing was how nicely self-contained each game was, focussed on one simple idea, and implicitly pedagogical. Indeed, the games can be divided into a few distinct families<sup class="footnote-ref" id="fnref:3"><a rel="footnote" href="#fn:3">3</a></sup>.</p>
+
+<p>So I came up with a hypothetical organization for my hypothetical book &ndash; it would need some simple stuff to start out with (with for loops, conditionals, functions, and so on), and slowly introduce more stuff. <em>An explicit non-goal</em> would be teaching the language in its complete form (a link to <em>Effective Go</em><sup class="footnote-ref" id="fnref:4"><a rel="footnote" href="#fn:4">4</a></sup> should suffice for the motivated reader).</p>
+
+<p>In terms of Games, the rough plan I came up with was: start with some simple guessing game, then maybe a slightly more involved version, then a card game, then the classic <em>Battleship</em> around the mid-point, followed by a sort of <em>&ldquo;dungeon RPG&rdquo;</em> with some optional discussion at each point (e.g. should the computer in &ldquo;Battleship&rdquo; be dumb and random, or <em>learn</em>?)</p>
+
+<p>To get an idea of what this might look like, I wrote the first four of these. Here is what might pass for the very first one, a modified version of <em>&ldquo;Rock, Paper, Scissors&rdquo;</em>.</p>
+
+<pre><code class="language-go">package main
+
+import (
+	&quot;fmt&quot;
+	&quot;math/rand&quot;
+	&quot;strings&quot;
+	&quot;time&quot;
+)
+
+const (
+	rock = iota
+	paper
+	scissors
+	lizard
+	spock
+	maxOptions
+)
+
+var handOptions = []string{&quot;rock&quot;, &quot;paper&quot;, &quot;scissors&quot;, &quot;lizard&quot;, &quot;spock&quot;}
+
+type precedence struct {
+	hand1  int
+	reason string
+	hand2  int
+}
+
+var precedences = []precedence{
+	{spock, &quot;smashes&quot;, scissors},
+	{spock, &quot;vaporises&quot;, rock},
+	{lizard, &quot;posions&quot;, spock},
+	{lizard, &quot;eats&quot;, paper},
+	{rock, &quot;crushes&quot;, lizard},
+	{rock, &quot;cruses&quot;, scissors},
+	{paper, &quot;covers&quot;, rock},
+	{paper, &quot;disproves&quot;, spock},
+	{scissors, &quot;cuts&quot;, paper},
+	{scissors, &quot;decapitates&quot;, lizard},
+}
+
+func showUsage() {
+	fmt.Println(&quot;\n     Welcome to ROCK - PAPER - SCISSORS - LIZARD - SPOCK  &quot;)
+	fmt.Println(&quot;----------------------------------------------------------\n&quot;)
+	fmt.Println(&quot;We each pick one of the following : \n&quot;)
+	for i := 0; i &lt; maxOptions; i++ {
+		fmt.Printf(&quot;--&gt;  %s  &lt;--\n&quot;, handOptions[i])
+	}
+	fmt.Println()
+}
+
+func getPlayerChoice() int {
+	for {
+		fmt.Printf(&quot;\nEnter your choice : &quot;)
+		var choice string
+		fmt.Scan(&amp;choice)
+
+		choice = strings.ToLower(choice)
+
+		for i := 0; i &lt; maxOptions; i++ {
+			if handOptions[i] == choice {
+				return i
+			}
+		}
+	}
+}
+
+func getComputerChoice() (choice int) {
+	choice = rand.Intn(maxOptions)
+	fmt.Printf(&quot;I chose &quot;)
+	for i := 0; i &lt; 3; i++ {
+		fmt.Printf(&quot;.&quot;)
+		time.Sleep(200 * time.Millisecond)
+	}
+	fmt.Printf(&quot; %s\n\n&quot;, handOptions[choice])
+	return
+}
+
+func main() {
+	showUsage()
+
+	rand.Seed(time.Now().Unix())
+	var playerWins, computerWins int
+
+	for {
+		fmt.Printf(&quot;\nThe score is: Me %d, You %d\n&quot;, computerWins, playerWins)
+		playerChoice := getPlayerChoice()
+		computerChoice := getComputerChoice()
+
+		playerWon := false
+		computerWon := false
+		for _, p := range precedences {
+			if p.hand1 == playerChoice &amp;&amp; p.hand2 == computerChoice {
+				fmt.Printf(&quot;Alas! %s %s %s! You Win! :(\n&quot;,
+					handOptions[p.hand1], p.reason, handOptions[p.hand2])
+				playerWon = true
+			}
+			if p.hand1 == computerChoice &amp;&amp; p.hand2 == playerChoice {
+				fmt.Printf(&quot;Aha! %s %s %s! I win! :)\n&quot;,
+					handOptions[p.hand1], p.reason, handOptions[p.hand2])
+				computerWon = true
+			}
+		}
+
+		if playerWon {
+			playerWins++
+		} else if computerWon {
+			computerWins++
+		} else {
+			fmt.Println(&quot;Hey, look, it was a draw!\n\n&quot;)
+		}
+
+		fmt.Printf(&quot;\nPlay another round ?  (enter 'y' or 'n') : &quot;)
+		var another string
+		fmt.Scan(&amp;another)
+		if strings.ToLower(another) == &quot;y&quot; {
+			continue
+		} else {
+			break
+		}
+	}
+	fmt.Println(&quot;\nOh well, until next time then ... \n&quot;)
+}
+</code></pre>
+
+<p>Try it out! It&rsquo;s meant to be simple and straightforward &ndash; but wait! Before you pass judgement, I present to you the <em>original</em> version:</p>
+
+<pre><code class="language-basic">10 PRINT TAB(21);&quot;GAME OF ROCK, SCISSORS, PAPER&quot;
+20 PRINT TAB(15);&quot;CREATIVE COMPUTING  MORRISTOWN, NEW JERSEY&quot;
+25 PRINT:PRINT:PRINT
+30 INPUT &quot;HOW MANY GAMES&quot;;Q
+40 IF Q&lt;11 THEN 60
+50 PRINT &quot;SORRY, BUT WE AREN'T ALLOWED TO PLAY THAT MANY.&quot;: GOTO 30
+60 FOR G=1 TO Q
+70 PRINT: PRINT &quot;GAME NUMBER&quot;;G
+80 X=INT(RND(1)*3+1)
+90 PRINT &quot;3=ROCK...2=SCISSORS...1=PAPER&quot;
+100 INPUT &quot;1...2...3...WHAT'S YOUR CHOICE&quot;;K
+110 IF (K-1)*(K-2)*(K-3)&lt;&gt;0 THEN PRINT &quot;INVALID.&quot;: GOTO 90
+120 PRINT &quot;THIS IS MY CHOICE...&quot;
+130 ON X GOTO 140,150,160
+140 PRINT &quot;...PAPER&quot;: GOTO 170
+150 PRINT &quot;...SCISSORS&quot;: GOTO 170
+160 PRINT &quot;...ROCK&quot;
+170 IF X=K THEN 250
+180 IF X&gt;K THEN 230
+190 IF X=1 THEN 210
+200 PRINT &quot;YOU WIN!!!&quot;:H=H+1: GOTO 260
+210 IF K&lt;&gt;3 THEN 200
+220 PRINT &quot;WOW!  I WIN!!!&quot;:C=C+1:GOTO 260
+230 IF K&lt;&gt;1 OR X&lt;&gt;3 THEN 220
+240 GOTO 200
+250 PRINT &quot;TIE GAME.  NO WINNER.&quot;
+260 NEXT G
+270 PRINT: PRINT &quot;HERE IS THE FINAL GAME SCORE:&quot;
+280 PRINT &quot;I HAVE WON&quot;;C;&quot;GAME(S).&quot;
+290 PRINT &quot;YOU HAVE WON&quot;;H;&quot;GAME(S).&quot;
+300 PRINT &quot;AND&quot;;Q-(C+H);&quot;GAME(S) ENDED IN A TIE.&quot;
+310 PRINT: PRINT &quot;THANKS FOR PLAYING!!&quot;
+320 END
+</code></pre>
+
+<p>Yes, folks, that is the kind of stuff I <em>cannot</em> believe I squinted over and read again and again :(</p>
+<div class="footnotes">
+
+<hr />
+
+<ol>
+<li id="fn:1">First mentioned <a href="http://agam.github.io/blog/2014/12/17/the-gardens-of-go/">here</a> a month ago
+ <a class="footnote-return" href="#fnref:1"><sup>[return]</sup></a></li>
+<li id="fn:2"><a href="http://www.atariarchives.org/basicgames/">&ldquo;Basic Computer Games&rdquo;</a>, originally for the Atari
+ <a class="footnote-return" href="#fnref:2"><sup>[return]</sup></a></li>
+<li id="fn:3">As in <a href="http://bitsavers.trailing-edge.com/pdf/dec/_Books/101_BASIC_Computer_Games_Mar75.pdf">this version with commentary</a>; see <em>Appendix A (pg 247)</em>
+ <a class="footnote-return" href="#fnref:3"><sup>[return]</sup></a></li>
+<li id="fn:4"><a href="https://golang.org/doc/effective_go.html">&ldquo;Effective Go&rdquo;</a>
+ <a class="footnote-return" href="#fnref:4"><sup>[return]</sup></a></li>
+</ol>
+</div>
+
+      
+      
+      
+    </article>
+    
+
+
+  </main>
+  
+  <nav class="pagination-single">
+    
+      <span class="previous">&larr; <a href="http://agam.github.io/post/2015/01/07/lisp-performance-check-up/" rel="prev">lisp performance check up</a></span>
+    
+    
+      <span class="next"><a href="http://agam.github.io/post/2015/01/10/these-pretzels-are-making-me-thirsty/" rel="next">these pretzels are making me thirsty</a> &rarr;</span>
+    
+  </nav>
+
+
+  
+  <footer role="contentinfo">
+    <div style="text-align:center;">
+      
+      Copyright Agam Brahma
+    </div>
+  </footer>
+
+
+</div>
+
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-16612682-4', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</body>
+</html>
+

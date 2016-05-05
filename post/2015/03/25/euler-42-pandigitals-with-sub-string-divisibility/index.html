@@ -1,0 +1,171 @@
+
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  
+  <meta charset="UTF-8">
+  <title>
+    euler 42 pandigitals with sub string divisibility | Agam&#39;s Mashed-Up Pome
+  </title>
+
+
+  
+  <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
+
+  
+  <link rel="canonical" href="http://agam.github.io/post/2015/03/25/euler-42-pandigitals-with-sub-string-divisibility/"/>
+
+  
+  <link rel="stylesheet" href="/css/sanitize.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/highlight_monokai.css">
+  <link rel="stylesheet" href="/css/theme.css">
+  <link rel="stylesheet" href="/css/custom.css">
+  
+  
+  <link href="http://agam.github.io/index.xml" rel="alternate" type="application/rss+xml" title="Agam&#39;s Mashed-Up Pome" />
+  <link href="http://agam.github.io/index.xml" rel="feed" type="application/rss+xml" title="Agam&#39;s Mashed-Up Pome" />
+
+  
+  
+
+
+</head>
+
+
+
+<body>
+<div class="container">
+
+  
+  <header role="banner">
+    <div class="row gutters">
+      <div id="site-title" class="col span_6">
+        <h1><a href="http://agam.github.io/">Agam&#39;s Mashed-Up Pome</a></h1>
+        <h2>A lazy evaluation of compute space</h2>
+      </div>
+      <div id="social" class="col span_6">
+        <ul>
+          <li><a href="https://twitter.com/agambrahma" target="_blank">Twitter</a></li>
+          
+          
+          <li><a href="http://agam.github.io/index.xml" type="application/rss+xml" target="_blank">RSS</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+
+  
+  <main id="single" role="main">
+    <div class="article-header">
+      <h1>euler 42 pandigitals with sub string divisibility</h1>
+      <div class="meta">
+        Mar 25, 2015 &nbsp;
+        
+      </div>
+    </div>
+    <article>
+      <p>These brute force solutions are getting a bit worrying, but here is another one. (I keep promising myself to get out of my comfort zone, but (<em>unfortunately!</em>) code like this is too easy to write).</p>
+
+<p><strong>Statutory Warning</strong>: <em>Spoilers ahead</em></p>
+
+<pre><code class="language-lisp">;; For all 0-9 pandigital numbers, find the ones which have successive
+;; substrings of length 3 diisible by 2,3,...,17.
+
+(defparameter *prime-divisors* #(17 13 11 7 5 3 2))
+
+;; A number is 0-9 pandigital if it (a) is 10 digits long, and (b) has every digit from 0-9
+(defun is-pandigital (num)
+  (declare (type fixnum num))
+  (let ((digits-seen (make-array 10 :element-type 'bit :initial-element 0)))
+    (do* ((n num (floor (/ n 10)))
+          (d (mod n 10) (mod n 10))
+          (num-digits 0 (1+ num-digits)))
+         ((= n 0) (and (= num-digits 10)
+                       (every (lambda (x) (= x 1)) digits-seen)))
+      (setf (bit digits-seen d) 1))))
+
+(defun check-divisibility (num div-index)
+  (= 0 (mod num (aref *prime-divisors* div-index))))
+
+(defun get-three-digit-num (num)
+  (let ((ones (mod num 10))
+        (tens (mod (floor (/ num 10)) 10))
+        (hundreds (mod (floor (/ num 100)) 10)))
+    (+ ones
+       (* 10 tens)
+       (* 100 hundreds))))
+
+;; Go backwards in groups of three digits and check divisibility
+(defun has-divisible-substrings (num)
+  (do* ((n num (floor (/ n 10)))
+        (div-index 0 (1+ div-index))
+        (dividend (get-three-digit-num n) (get-three-digit-num n))
+        (div-p (check-divisibility dividend div-index)
+               (and div-p (check-divisibility dividend div-index))))
+       ((&lt; n 10000) div-p)))
+
+(defun check-substring-pandigital-range (start end)
+  (declare (type fixnum start end))
+  (let ((candidates '()))
+    (loop for num from start to end do
+         (if (and (is-pandigital num)
+                  (has-divisible-substrings num))
+             (push num candidates)))
+    candidates))
+
+(defun euler43 ()
+  (let ((candidates (check-substring-pandigital-range 1234567890 9876543210)))
+    (print candidates)
+    (apply #'+ candidates)))
+</code></pre>
+
+<p>As before, evaluating <code>(euler43)</code> shows the final solution (sum), along with the (six!) candidate numbers making up the sum. This took a whopping <code>4.3 hours</code> to churn through the 8.5 billion numbers. Maybe I need to create a new constraint for these problems: either pen-and-paper, or something <em>slow</em> (like Python ?! :P), so that brute force is never tempting again.</p>
+
+      
+      
+      
+    </article>
+    
+
+
+  </main>
+  
+  <nav class="pagination-single">
+    
+      <span class="previous">&larr; <a href="http://agam.github.io/post/2015/03/23/euler-42-coded-triangle-numbers/" rel="prev">euler 42 coded triangle numbers</a></span>
+    
+    
+      <span class="next"><a href="http://agam.github.io/post/2015/03/25/a-second-look-at-python/" rel="next">a second look at python</a> &rarr;</span>
+    
+  </nav>
+
+
+  
+  <footer role="contentinfo">
+    <div style="text-align:center;">
+      
+      Copyright Agam Brahma
+    </div>
+  </footer>
+
+
+</div>
+
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-16612682-4', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</body>
+</html>
+

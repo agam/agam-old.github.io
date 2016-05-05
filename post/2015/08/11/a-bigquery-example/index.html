@@ -1,0 +1,130 @@
+
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  
+  <meta charset="UTF-8">
+  <title>
+    a bigquery example | Agam&#39;s Mashed-Up Pome
+  </title>
+
+
+  
+  <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
+
+  
+  <link rel="canonical" href="http://agam.github.io/post/2015/08/11/a-bigquery-example/"/>
+
+  
+  <link rel="stylesheet" href="/css/sanitize.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/highlight_monokai.css">
+  <link rel="stylesheet" href="/css/theme.css">
+  <link rel="stylesheet" href="/css/custom.css">
+  
+  
+  <link href="http://agam.github.io/index.xml" rel="alternate" type="application/rss+xml" title="Agam&#39;s Mashed-Up Pome" />
+  <link href="http://agam.github.io/index.xml" rel="feed" type="application/rss+xml" title="Agam&#39;s Mashed-Up Pome" />
+
+  
+  
+
+
+</head>
+
+
+
+<body>
+<div class="container">
+
+  
+  <header role="banner">
+    <div class="row gutters">
+      <div id="site-title" class="col span_6">
+        <h1><a href="http://agam.github.io/">Agam&#39;s Mashed-Up Pome</a></h1>
+        <h2>A lazy evaluation of compute space</h2>
+      </div>
+      <div id="social" class="col span_6">
+        <ul>
+          <li><a href="https://twitter.com/agambrahma" target="_blank">Twitter</a></li>
+          
+          
+          <li><a href="http://agam.github.io/index.xml" type="application/rss+xml" target="_blank">RSS</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+
+  
+  <main id="single" role="main">
+    <div class="article-header">
+      <h1>a bigquery example</h1>
+      <div class="meta">
+        Aug 11, 2015 &nbsp;
+        
+      </div>
+    </div>
+    <article>
+      <p>I had read about BigQuery but hadn&rsquo;t had a chance to use the external product yet. This week I came across some article about Uber and taxis etc, and it had a link to recently released data by <a href="http://www.nyc.gov/html/tlc/html/about/statistics.shtml">The NYC Taxi and Limousine Commission</a>. In addition to directly downloading the data, or looking at it through <a href="https://data.cityofnewyork.us/data?agency=Taxi+and+Limousine+Commission+%28TLC%29&amp;cat=&amp;type=new_view&amp;browseSearch=&amp;scope">NYC OpenData</a>, you can also <a href="https://bigquery.cloud.google.com/table/nyc-tlc:yellow.trips_2015">play around with it using BigQuery</a>.</p>
+
+<p>So here&rsquo;s a sample I threw together:</p>
+
+<pre><code class="language-sql">SELECT trip_distance, fare_amount, tip_amount, tolls_amount, round(100.0 * tip_amount / fare_amount) as tip_ratio
+FROM [nyc-tlc:yellow.trips_2015]
+WHERE fare_amount &gt; 50 AND trip_distance &gt; 15 AND passenger_count &gt; 8
+ORDER BY trip_distance DESC
+</code></pre>
+
+<p>The screenshot shows the cached results, it took about 6 seconds to run (which is not bad, considering the dataset is about <em>10 Gigs</em> !!)</p>
+
+<p><img src="https://lh3.googleusercontent.com/rdJeePtMNq4uPKHvPWRNioZfZpQcqMe86rt-2M1bUAJJ=w1019-h665-no" alt="bigquery example" /></p>
+
+<p><em>(9 people went 27 miles, paid $95 and gave no tip!)</em></p>
+
+      
+      
+      
+    </article>
+    
+
+
+  </main>
+  
+  <nav class="pagination-single">
+    
+      <span class="previous">&larr; <a href="http://agam.github.io/post/2015/08/09/shokunin-and-umami-in-software-engineering-dot-dot-dot/" rel="prev">shokunin and umami in software engineering dot dot dot</a></span>
+    
+    
+      <span class="next"><a href="http://agam.github.io/post/2015/08/19/freebsd-on-gce-the-last-post/" rel="next">freebsd on gce the last post</a> &rarr;</span>
+    
+  </nav>
+
+
+  
+  <footer role="contentinfo">
+    <div style="text-align:center;">
+      
+      Copyright Agam Brahma
+    </div>
+  </footer>
+
+
+</div>
+
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-16612682-4', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</body>
+</html>
+

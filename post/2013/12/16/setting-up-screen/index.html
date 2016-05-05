@@ -1,0 +1,132 @@
+
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  
+  <meta charset="UTF-8">
+  <title>
+    setting up screen | Agam&#39;s Mashed-Up Pome
+  </title>
+
+
+  
+  <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
+
+  
+  <link rel="canonical" href="http://agam.github.io/post/2013/12/16/setting-up-screen/"/>
+
+  
+  <link rel="stylesheet" href="/css/sanitize.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/highlight_monokai.css">
+  <link rel="stylesheet" href="/css/theme.css">
+  <link rel="stylesheet" href="/css/custom.css">
+  
+  
+  <link href="http://agam.github.io/index.xml" rel="alternate" type="application/rss+xml" title="Agam&#39;s Mashed-Up Pome" />
+  <link href="http://agam.github.io/index.xml" rel="feed" type="application/rss+xml" title="Agam&#39;s Mashed-Up Pome" />
+
+  
+  
+
+
+</head>
+
+
+
+<body>
+<div class="container">
+
+  
+  <header role="banner">
+    <div class="row gutters">
+      <div id="site-title" class="col span_6">
+        <h1><a href="http://agam.github.io/">Agam&#39;s Mashed-Up Pome</a></h1>
+        <h2>A lazy evaluation of compute space</h2>
+      </div>
+      <div id="social" class="col span_6">
+        <ul>
+          <li><a href="https://twitter.com/agambrahma" target="_blank">Twitter</a></li>
+          
+          
+          <li><a href="http://agam.github.io/index.xml" type="application/rss+xml" target="_blank">RSS</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+
+  
+  <main id="single" role="main">
+    <div class="article-header">
+      <h1>setting up screen</h1>
+      <div class="meta">
+        Dec 16, 2013 &nbsp;
+        
+      </div>
+    </div>
+    <article>
+      <p>This is pretty much the first thing I do. I&rsquo;ve learned the hard way that I really really need persistent terminal state.</p>
+
+<p>One of the changes I always make is to switch the default key combination away from <code>C-a</code>. Initially I did this during my &ldquo;year of trying Emacs&rdquo; (since it&rsquo;s the default &ldquo;move to beginning of line&rdquo; shortcut). I chose <code>C-z</code> (via <code>escape ^Zz</code>) but you might want to do this anyway if for example you feel <code>C-b</code> would be easier to type.</p>
+
+<p>The other must-have is labels for the tabs. I want to know what I&rsquo;m switching between (a suitable modification to <code>hardstatus</code>).</p>
+
+<p>The status line looks something like this.</p>
+
+<p><img src="https://pbs.twimg.com/media/BblUW36CQAAG_Ol.png:large" alt="screen status with 3 tabs open" /></p>
+
+<p>It&rsquo;s pretty minimal; you can add an arbitrary amount of customization to your status line, but this is all that I need.</p>
+
+<p>Finally, there are a couple of &ldquo;features&rdquo; that <em>have</em> to be disabled: the screen flash on tab completion (<code>vbell off</code>), and the annoying startup message (<code>startup_message off</code>).</p>
+
+<p>I&rsquo;m sure you know all about switching tabs, detaching and resuming sessions and all that. The only (in hindsight obvious) rule of thumb I&rsquo;ve learnt is to <em>always</em> launch a session with a name. Because you might just want to start two sessions. And then when it comes time to resume them, you won&rsquo;t know which is which. So make <code>screen -S &lt;sessionname&gt;</code> your friend.</p>
+
+<p>Anyway I have a github repo for my &ldquo;dotfiles&rdquo; and you can see my basic screenrc <a href="https://github.com/agam/dotfiles/blob/master/.screenrc">here</a></p>
+
+      
+      
+      
+    </article>
+    
+
+
+  </main>
+  
+  <nav class="pagination-single">
+    
+      <span class="previous">&larr; <a href="http://agam.github.io/post/2013/12/16/small-change-for-vim-and-git/" rel="prev">small change for vim and git</a></span>
+    
+    
+      <span class="next"><a href="http://agam.github.io/post/2013/12/19/ranked-voting/" rel="next">ranked voting</a> &rarr;</span>
+    
+  </nav>
+
+
+  
+  <footer role="contentinfo">
+    <div style="text-align:center;">
+      
+      Copyright Agam Brahma
+    </div>
+  </footer>
+
+
+</div>
+
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-16612682-4', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</body>
+</html>
+

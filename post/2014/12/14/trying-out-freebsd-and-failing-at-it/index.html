@@ -1,0 +1,379 @@
+
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  
+  <meta charset="UTF-8">
+  <title>
+    trying out freebsd and failing at it | Agam&#39;s Mashed-Up Pome
+  </title>
+
+
+  
+  <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
+
+  
+  <link rel="canonical" href="http://agam.github.io/post/2014/12/14/trying-out-freebsd-and-failing-at-it/"/>
+
+  
+  <link rel="stylesheet" href="/css/sanitize.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/highlight_monokai.css">
+  <link rel="stylesheet" href="/css/theme.css">
+  <link rel="stylesheet" href="/css/custom.css">
+  
+  
+  <link href="http://agam.github.io/index.xml" rel="alternate" type="application/rss+xml" title="Agam&#39;s Mashed-Up Pome" />
+  <link href="http://agam.github.io/index.xml" rel="feed" type="application/rss+xml" title="Agam&#39;s Mashed-Up Pome" />
+
+  
+  
+
+
+</head>
+
+
+
+<body>
+<div class="container">
+
+  
+  <header role="banner">
+    <div class="row gutters">
+      <div id="site-title" class="col span_6">
+        <h1><a href="http://agam.github.io/">Agam&#39;s Mashed-Up Pome</a></h1>
+        <h2>A lazy evaluation of compute space</h2>
+      </div>
+      <div id="social" class="col span_6">
+        <ul>
+          <li><a href="https://twitter.com/agambrahma" target="_blank">Twitter</a></li>
+          
+          
+          <li><a href="http://agam.github.io/index.xml" type="application/rss+xml" target="_blank">RSS</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+
+  
+  <main id="single" role="main">
+    <div class="article-header">
+      <h1>trying out freebsd and failing at it</h1>
+      <div class="meta">
+        Dec 14, 2014 &nbsp;
+        
+      </div>
+    </div>
+    <article>
+      
+
+<p>Wait, what? Why?! No reason, really. I saw the new FreeBSD book<sup class="footnote-ref" id="fnref:1"><a rel="footnote" href="#fn:1">1</a></sup> lying around in someone&rsquo;s office, and separately I was reminded of the week I spent getting Gentoo up and running a decade ago, and decided I missed all that and wanted to repeat a similar experience.</p>
+
+<p>So, this is an attempt to both (1) install it within a VM on the Google Compute Engine<sup class="footnote-ref" id="fnref:2"><a rel="footnote" href="#fn:2">2</a></sup>, and (2) slowly learn more about it. Here follows a log of everything I did, based on the original instructions from the mailing list <sup class="footnote-ref" id="fnref:3"><a rel="footnote" href="#fn:3">3</a></sup>. (<em>Meta-note: if running remotely, be sensible; use <code>tmux</code> or <code>screen</code></em>)</p>
+
+<h3 id="step-1-install-the-emulator"><em>Step 1</em>: Install the emulator</h3>
+
+<pre><code class="language-sh">$ sudo apt-get install qemu
+</code></pre>
+
+<h3 id="step-2-get-the-freebsd-version-to-install-in-my-case-i-picked-the-disc1-version-corresponding-to-the-release-image-4"><em>Step 2</em>: Get the FreeBSD version to install &ndash; in my case, I picked the &ldquo;disc1&rdquo; version corresponding to the &ldquo;RELEASE&rdquo; image<sup class="footnote-ref" id="fnref:4"><a rel="footnote" href="#fn:4">4</a></sup></h3>
+
+<pre><code class="language-sh">$ wget ftp://ftp.freebsd.org/pub/FreeBSD/releases/amd64/amd64/ISO-IMAGES/10.1/FreeBSD-10.1-RELEASE-amd64-disc1.iso
+</code></pre>
+
+<h3 id="step-3-create-the-disk-image-for-the-emulator"><em>Step 3</em>: Create the disk image for the emulator</h3>
+
+<pre><code class="language-sh">$ qemu-img create disk.raw 100g
+Formatting 'disk.raw', fmt=raw size=107374182400 
+</code></pre>
+
+<h3 id="step-4-boot-from-the-iso-downloaded-earlier"><em>Step 4</em>: Boot from the ISO downloaded earlier</h3>
+
+<p>Notes:
+- The original instructions also mention <code>--enable_kvm</code>, but that didn&rsquo;t work for me. I tried <code>sudo modprobe kvm-intel</code>, but <code>dmesg | grep kvm</code> informed me that it had been disabled by the Bios, so I skipped it here.
+- If you are running this remotely (like I was), you&rsquo;ll have to add <code>--curses</code> to the <code>qemu</code> command line.</p>
+
+<h3 id="step-5-install-freebsd"><em>Step 5</em>: Install FreeBSD</h3>
+
+<p>At this point, if all went well, the emulator should boot up and you should see the &ldquo;Welcome&rdquo; screen, where you can hit &ldquo;Install&rdquo; and begin.</p>
+
+<p>Notes:
+- Pretty standard stuff, if you&rsquo;ve done a linux install before.
+- When it came to the disk setup I chose <code>ufs</code> for no particular reason<sup class="footnote-ref" id="fnref:5"><a rel="footnote" href="#fn:5">5</a></sup>, but you can choose any of the options; it&rsquo;ll show you the suggested table for the &ldquo;entire disk&rdquo; as split between <code>freebsd-boot</code>, <code>freebsd-ufs</code> and <code>freebsd-swap</code>, just hit <em>&ldquo;Finish&rdquo;</em> and then <em>&ldquo;Commit&rdquo;</em> to proceed.
+- Take a nice long break when the <em>&ldquo;Archive Extraction&rdquo;</em> step begins; this is computationally intensive, and (especially without <code>kvm</code> enabled) takes a <em>long</em> time on the emulator.
+- DNS settings are <code>google.internal.</code> for the <em>&ldquo;search&rdquo;</em>, and <code>169.254.169.254</code> for the DNS IP.
+- Include <code>sshd</code> and <code>ntpd</code> in the list of services to start at boot</p>
+
+<h3 id="step-6-further-configuration-as-root"><em>Step 6</em>: Further configuration (as root)</h3>
+
+<p>Once you hit <em>&ldquo;Exit&rdquo;</em> at the end, choose the option to drop into a shell and then run the following:</p>
+
+<pre><code class="language-sh">echo 'console=&quot;comconsole&quot;' &gt;&gt;/etc/rc.conf
+echo ‘console=”comconsole”’ &gt; /boot/loader.conf
+sed -I -e “/hostname/d” /etc/rc.conf
+echo -Dh &gt;/boot.config
+
+cat &lt;&lt;EOF &gt;/etc/dhclient.conf
+interface &quot;vtnet0&quot; {
+  supersede subnet-mask 255.255.0.0;
+}
+EOF
+
+sed -I -e “/server/d” /etc/ntp.conf
+echo “server 169.254.169.254” &gt;&gt; /etc/ntp.conf
+
+echo “169.254.169.254 metadata.google.internal metadata” &gt;&gt; /etc/hosts
+</code></pre>
+
+<h3 id="step-7-add-yourself-as-a-user"><em>Step 7</em>: Add yourself as a user</h3>
+
+<ul>
+<li>Run <code>adduser</code> and follow the prompts<sup class="footnote-ref" id="fnref:6"><a rel="footnote" href="#fn:6">6</a></sup></li>
+<li>Add yourself to the <code>wheel</code> group. E.g. in my case:
+<code>sh
+$ pw user mod agam -G wheel
+</code></li>
+<li>Allow yourself to login via <code>ssh</code>:
+<code>sh
+$ sed -I -e “s/#PasswordAuthentication no/PasswordAuthentication yes/” /etc/ssh/sshd_config
+</code></li>
+</ul>
+
+<h3 id="step-8-setup-gce-within-the-image"><em>Step 8</em>: Setup GCE (within the image)</h3>
+
+<ul>
+<li>Enable either OpenDNS or Google Public DNS . E.g. for the latter:
+<code>sh
+$ echo “nameserver 8.8.8.8” &gt;&gt; /etc/resolv.conf
+</code></li>
+<li>Install <code>sudo</code>, <code>python</code><sup class="footnote-ref" id="fnref:7"><a rel="footnote" href="#fn:7">7</a></sup>, and <code>wget</code><sup class="footnote-ref" id="fnref:8"><a rel="footnote" href="#fn:8">8</a></sup></li>
+<li>Get <code>gcloud</code><sup class="footnote-ref" id="fnref:9"><a rel="footnote" href="#fn:9">9</a></sup><sup class="footnote-ref" id="fnref:10"><a rel="footnote" href="#fn:10">10</a></sup></li>
+<li>Remove the DNS record added earlier:
+<code>sh
+$ sed -I -e “/8.8.8.8/d” /etc/resolv.conf
+</code></li>
+<li>Turn off FreeBSD (run <code>poweroff</code>)</li>
+</ul>
+
+<h3 id="step-9-setup-gce-on-your-workstation"><em>Step 9</em>: Setup GCE (on your workstation)</h3>
+
+<ul>
+<li>Install <code>gcloud</code> (as before)</li>
+<li>Authenticate: Run <code>gcloud auth login</code> and follow the url to enter the code</li>
+<li>Prepare the image for upload: <code>tar -Szcf freebsd.tar.gz disk.raw</code></li>
+<li>Create a bucket<sup class="footnote-ref" id="fnref:11"><a rel="footnote" href="#fn:11">11</a></sup> and upload<sup class="footnote-ref" id="fnref:12"><a rel="footnote" href="#fn:12">12</a></sup> the image there (Note: I was shocked, <em>shocked</em>, by how <em>fast</em> this upload went!)</li>
+
+<li><p>Prepare the image for use in your VM and insert it</p>
+
+<pre><code class="language-sh">$ gcutil addimage freebsd gs://&lt;bucket&gt;/&lt;object&gt;
+$ gcutil --project &lt;project_id&gt; freebsd gs://&lt;bucket&gt;/&lt;object&gt;
+</code></pre></li>
+
+<li><p>Add a VM and SSH to it (both these operations can be done either through the &ldquo;Google Cloud Console&rdquo; or the command-line client<sup class="footnote-ref" id="fnref:13"><a rel="footnote" href="#fn:13">13</a></sup>). E.g. in my case the latter is
+<code>&gt; gcloud compute ssh myvm</code><sup class="footnote-ref" id="fnref:14"><a rel="footnote" href="#fn:14">14</a></sup></p></li>
+</ul>
+
+<h3 id="step-10-nope"><em>Step 10</em>: Nope</h3>
+
+<p>Yeah this didn&rsquo;t work for me. Luckily, the &ldquo;serial console&rdquo; can be viewed through the dashboard, and what I saw was a repeated failure to boot.</p>
+
+<pre><code>Mounting local file systems:.
+Writing entropy file:.
+vtnet0: link state changed to UP
+Starting Network: lo0 vtnet0.
+lo0: flags=8049&lt;UP,LOOPBACK,RUNNING,MULTICAST&gt; metric 0 mtu 16384
+     options=600003&lt;RXCSUM,TXCSUM,RXCSUM_IPV6,TXCSUM_IPV6&gt;
+     inet6 ::1 prefixlen 128 
+     inet6 fe80::1%lo0 prefixlen 64 scopeid 0x2 
+     inet 127.0.0.1 netmask 0xff000000 
+     nd6 options=21&lt;PERFORMNUD,AUTO_LINKLOCAL&gt;
+vtnet0: flags=8943&lt;UP,BROADCAST,RUNNING,PROMISC,SIMPLEX,MULTICAST&gt; metric 0 mtu 1500
+	options=6c01bb&lt;RXCSUM,TXCSUM,VLAN_MTU,VLAN_HWTAGGING,JUMBO_MTU,VLAN_HWCSUM,TSO4,VLAN_HWTSO,LINKSTATE,RXCSUM_IPV6,TXCSUM_IPV6&gt;
+	ether 42:01:0a:f0:c8:6c
+	nd6 options=29&lt;PERFORMNUD,IFDISABLED,AUTO_LINKLOCAL&gt;
+	media: Ethernet 10Gbase-T &lt;full-duplex&gt;
+	status: active
+Starting devd.
+Starting dhclient.
+DHCPREQUEST on vtnet0 to 255.255.255.255 port 67
+DHCPNAK from 169.254.169.254
+DHCPDISCOVER on vtnet0 to 255.255.255.255 port 67 interval 8
+DHCPOFFER from 169.254.169.254
+DHCPREQUEST on vtnet0 to 255.255.255.255 port 67
+DHCPACK from 169.254.169.254
+panic: ffs_write: type 0xfffff80008a1cb10 0 (0,150)
+cpuid = 2
+KDB: stack backtrace:
+#0 0xffffffff80963000 at kdb_backtrace+0x60
+#1 0xffffffff80928125 at panic+0x155
+#2 0xffffffff80b7f825 at ffs_write+0x5b5
+#3 0xffffffff80e428f5 at VOP_WRITE_APV+0x145
+#4 0xffffffff809d96f9 at vn_write+0x259
+#5 0xffffffff809d598b at vn_io_fault+0x10b
+#6 0xffffffff8097a437 at dofilewrite+0x87
+#7 0xffffffff8097a168 at kern_writev+0x68
+#8 0xffffffff8097a0f3 at sys_write+0x63
+#9 0xffffffff80d25851 at amd64_syscall+0x351
+#10 0xffffffff80d0aa6b at Xfast_syscall+0xfb
+Uptime: 7s
+</code></pre>
+
+<p>Looks like this may be a corrupt disk? Not sure. But pretty bummed :(</p>
+
+<p><em><strong>Update</strong></em>: I see people having luck with either (1) building a &ldquo;rescue disk&rdquo; on a running FreeBSD machine (not an option for me), or (2) using the <code>mfsbsd</code><sup class="footnote-ref" id="fnref:15"><a rel="footnote" href="#fn:15">15</a></sup> remote install. I think I&rsquo;ll try the latter when I get time.</p>
+
+<p><em><strong>Update</strong></em>: Here&rsquo;s how that went :-</p>
+
+<ul>
+<li>Get the <code>mfsbsd</code> image<sup class="footnote-ref" id="fnref:16"><a rel="footnote" href="#fn:16">16</a></sup></li>
+</ul>
+
+<pre><code class="language-sh">$curl -o disk.raw http://mfsbsd.vx.sk/files/iso/10/amd64/mfsbsd-se-10.1-RELEASE-amd64.iso`
+</code></pre>
+
+<ul>
+<li>Tar it, upload it</li>
+</ul>
+
+<pre><code class="language-sh">$ tar -Szcf mfs-freebsd.tar.gz disk.raw
+$ gsutil cp mfs-freebsd.tar.gz gs://&lt;bucket_name&gt;
+$ gcutil addimage mfs-freebsd gs://&lt;bucket_name&gt;/mfs-freebsd.tar.gz
+</code></pre>
+
+<ul>
+<li>Create a VM with this instance</li>
+</ul>
+
+<p>Aaand &hellip; NOPE again; fails to even show the serial console this time :(
+Error: <code>The resource 'projects/algol-c/zones/us-central1-a/instances/myvm' is not ready</code></p>
+
+<ul>
+<li>Deleted the VM and created it again<sup class="footnote-ref" id="fnref:17"><a rel="footnote" href="#fn:17">17</a></sup></li>
+</ul>
+
+<p>Failed again, but this time I grabbed the output before it vanished:</p>
+
+<pre><code>Unable to lock ram - bridge not found
+Changing serial settings was 3/2 now 3/0
+enter handle_19:
+  NULL
+Booting from Hard Disk...
+Boot failed: not a bootable disk
+
+enter handle_18:
+  NULL
+Booting from Floppy...
+Boot failed: could not read the boot disk
+
+enter handle_18:
+  NULL
+No bootable device.  Powering off VM.
+END OF LINE
+  Retrying in 60 seconds.
+</code></pre>
+
+<ul>
+<li><em>Of course!</em> I have to <em>make</em> a bootable image using this iso (!) But, But, But &hellip;. that needs a running FreeBSD system?!</li>
+</ul>
+
+<p><em><strong>Update</strong></em>: Damn, looks like GCE is behind both Amazon and (wtf!) Microsoft on this. From the release notes for v10.1:</p>
+
+<blockquote>
+<p>FreeBSD 10.1-RELEASE is also available on these cloud hosting platforms:</p>
+
+<ul>
+<li>Amazon® EC2™ FreeBSD/amd64</li>
+<li>Microsoft® Azure™ FreeBSD/amd64,  FreeBSD/i386</li>
+</ul>
+</blockquote>
+
+<p><em><strong>Conclusion</strong></em>: The <code>qemu</code> path should have worked, I don&rsquo;t yet understand why not. Another option might be to try the <em>vhd</em> image and get that to work. Or try EC2/Azure. Or wait for someone to figure this out and publicly share a working image. Or give up on FreeBSD and get back &ldquo;to real work&rdquo; :)</p>
+<div class="footnotes">
+
+<hr />
+
+<ol>
+<li id="fn:1">The <a href="http://www.amazon.com/gp/product/0321968972/ref=pd_lpo_sbs_dp_ss_1?pf_rd_p=1944687562&amp;pf_rd_s=lpo-top-stripe-1&amp;pf_rd_t=201&amp;pf_rd_i=0201702452&amp;pf_rd_m=ATVPDKIKX0DER&amp;pf_rd_r=0QBY4BRZHVN8ZNNFWDMW">newer edition</a> of &ldquo;The Design and Implementation of the FreeBSD Operating System&rdquo;
+ <a class="footnote-return" href="#fnref:1"><sup>[return]</sup></a></li>
+<li id="fn:2">Yes, I&rsquo;ve heard <a href="http://www.daemonology.net/freebsd-on-ec2/">the Amazon experience</a> is easier, but that would be &hellip; uh &hellip; slightly disloyal right now :P
+ <a class="footnote-return" href="#fnref:2"><sup>[return]</sup></a></li>
+<li id="fn:3"><a href="https://groups.google.com/forum/#!msg/gce-discussion/YWoa3Aa_49U/FYAg9oiRlLUJ">https://groups.google.com/forum/#!msg/gce-discussion/YWoa3Aa_49U/FYAg9oiRlLUJ</a>
+ <a class="footnote-return" href="#fnref:3"><sup>[return]</sup></a></li>
+<li id="fn:4">From <a href="ftp://ftp.freebsd.org/pub/FreeBSD/releases/amd64/amd64/ISO-IMAGES/10.1/">this list</a>
+ <a class="footnote-return" href="#fnref:4"><sup>[return]</sup></a></li>
+<li id="fn:5">Don&rsquo;t necessarily care too much about the <a href="http://www.smbitjournal.com/2014/05/the-cult-of-zfs/">&ldquo;Cult of ZFS&rdquo;</a>; besides, UFS is faster.
+ <a class="footnote-return" href="#fnref:5"><sup>[return]</sup></a></li>
+<li id="fn:6">Shell choices are <code>sh</code>/<code>csh</code>/<code>tcsh</code>, with the first being the default option. Take your pick; I&rsquo;m going to replace <code>sh</code> with <code>bash</code> later anyway.
+ <a class="footnote-return" href="#fnref:6"><sup>[return]</sup></a></li>
+<li id="fn:7">If you try to guess and install Python 3, you&rsquo;ll see this error: <code>ERROR: Python 3 is not supported by the Google Cloud SDK.  Please use a Python 2.x version that is 2.6 or greater</code> (Do as it says! (Also, you might not want to put bets on python 3?))
+ <a class="footnote-return" href="#fnref:7"><sup>[return]</sup></a></li>
+<li id="fn:8">Either run <code>pkg_add -r</code> for each tool, or compile it from source with ports. For the latter, first run <code>portsnap fetch</code>, <code>portsnap extract</code>, and <code>portsnap update</code>, in that order (this is a one-time setup), then <code>cd</code> to the appropriate directory under <code>/usr/ports</code> and run <code>make install</code> for each tool (<strong>warning</strong>: this takes a long, long, <em>long</em> time! If you&rsquo;re running the emulator without <code>kvm</code> support, you have to be <em>extremely masochistic</em> to try compiling from source).
+ <a class="footnote-return" href="#fnref:8"><sup>[return]</sup></a></li>
+<li id="fn:9">Original instructions refer to <code>gsutil</code> and <code>gcutil</code> separately, but they were (you guessed it!) <em>deprecated</em>.
+ <a class="footnote-return" href="#fnref:9"><sup>[return]</sup></a></li>
+<li id="fn:10">More information <a href="https://cloud.google.com/compute/docs/gcloud-compute/">here</a>
+ <a class="footnote-return" href="#fnref:10"><sup>[return]</sup></a></li>
+<li id="fn:11"><code>gsutil -p &lt;project_id&gt; -c gs://&lt;bucket_name&gt;</code>
+ <a class="footnote-return" href="#fnref:11"><sup>[return]</sup></a></li>
+<li id="fn:12"><code>gsutil cp &lt;gzipped_file&gt; gs://&lt;bucket_name&gt;</code>
+ <a class="footnote-return" href="#fnref:12"><sup>[return]</sup></a></li>
+<li id="fn:13"><a href="https://cloud.google.com/sdk/gcloud/reference/compute/instances/create">https://cloud.google.com/sdk/gcloud/reference/compute/instances/create</a>
+ <a class="footnote-return" href="#fnref:13"><sup>[return]</sup></a></li>
+<li id="fn:14">You also need a <code>--project</code> flag, but you can set a global value for this by running <code>gcloud config set project &lt;project_id&gt;</code>
+ <a class="footnote-return" href="#fnref:14"><sup>[return]</sup></a></li>
+<li id="fn:15"><a href="https://www.freebsd.org/doc/en_US.ISO8859-1/articles/remote-install/preparation.html">https://www.freebsd.org/doc/en_US.ISO8859-1/articles/remote-install/preparation.html</a>
+ <a class="footnote-return" href="#fnref:15"><sup>[return]</sup></a></li>
+<li id="fn:16">In case you were wondering, the file name inside the uploaded image <em>has</em> to be <code>disk.raw</code>
+ <a class="footnote-return" href="#fnref:16"><sup>[return]</sup></a></li>
+<li id="fn:17">&ldquo;Terminated&rdquo; VMs have to be dealt with this way, AFAICS
+ <a class="footnote-return" href="#fnref:17"><sup>[return]</sup></a></li>
+</ol>
+</div>
+
+      
+      
+      
+    </article>
+    
+
+
+  </main>
+  
+  <nav class="pagination-single">
+    
+      <span class="previous">&larr; <a href="http://agam.github.io/post/2014/12/11/failure-to-ragequit/" rel="prev">failure to ragequit</a></span>
+    
+    
+      <span class="next"><a href="http://agam.github.io/post/2014/12/16/the-gardens-of-go/" rel="next">the gardens of go</a> &rarr;</span>
+    
+  </nav>
+
+
+  
+  <footer role="contentinfo">
+    <div style="text-align:center;">
+      
+      Copyright Agam Brahma
+    </div>
+  </footer>
+
+
+</div>
+
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-16612682-4', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</body>
+</html>
+

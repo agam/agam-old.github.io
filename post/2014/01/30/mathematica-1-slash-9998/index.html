@@ -1,0 +1,165 @@
+
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  
+  <meta charset="UTF-8">
+  <title>
+    mathematica 1 slash 9998 | Agam&#39;s Mashed-Up Pome
+  </title>
+
+
+  
+  <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
+
+  
+  <link rel="canonical" href="http://agam.github.io/post/2014/01/30/mathematica-1-slash-9998/"/>
+
+  
+  <link rel="stylesheet" href="/css/sanitize.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/highlight_monokai.css">
+  <link rel="stylesheet" href="/css/theme.css">
+  <link rel="stylesheet" href="/css/custom.css">
+  
+  
+  <link href="http://agam.github.io/index.xml" rel="alternate" type="application/rss+xml" title="Agam&#39;s Mashed-Up Pome" />
+  <link href="http://agam.github.io/index.xml" rel="feed" type="application/rss+xml" title="Agam&#39;s Mashed-Up Pome" />
+
+  
+  
+
+
+</head>
+
+
+
+<body>
+<div class="container">
+
+  
+  <header role="banner">
+    <div class="row gutters">
+      <div id="site-title" class="col span_6">
+        <h1><a href="http://agam.github.io/">Agam&#39;s Mashed-Up Pome</a></h1>
+        <h2>A lazy evaluation of compute space</h2>
+      </div>
+      <div id="social" class="col span_6">
+        <ul>
+          <li><a href="https://twitter.com/agambrahma" target="_blank">Twitter</a></li>
+          
+          
+          <li><a href="http://agam.github.io/index.xml" type="application/rss+xml" target="_blank">RSS</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+
+  
+  <main id="single" role="main">
+    <div class="article-header">
+      <h1>mathematica 1 slash 9998</h1>
+      <div class="meta">
+        Jan 30, 2014 &nbsp;
+        
+      </div>
+    </div>
+    <article>
+      <p>I saw this piece about how <code>1/1998</code> was approximated by series of powers of <code>2</code>, which raised the question, &ldquo;Can Mathematica help confirm this?&rdquo; (<em>of course it can!</em>)</p>
+
+<p>First, a gut check to see the decimal expansion</p>
+
+<pre><code>N[1/9998, 100]
+</code></pre>
+
+<p>which shows</p>
+
+<pre><code>0.00010002000400080016003200640128025605121024204840968193638727745549 \
+10982196439287857571514302860572114
+</code></pre>
+
+<p>(if you don&rsquo;t specify the <code>100</code> in the argument to <code>N[]</code>, it will show you just <code>0.00010002</code> by default)</p>
+
+<p>This can be visualized as</p>
+
+<pre><code>0.0001 +
+0.00000002 +
+0.000000000004 +
+0.0000000000000008 +
+0.00000000000000000016 +
+...
+0.000000000000000000000000000000000256 +
+...
+</code></pre>
+
+<p>All right, so we do see these powers of 2! They seem to be in &ldquo;groups&rdquo; &ndash; <code>0004</code>, <code>0016</code>, <code>1024</code> and so on.</p>
+
+<p>So we want to check if something like <code>2^i/10000^i</code> can add up to this number.</p>
+
+<pre><code>Parallelize[
+ Table[1/9998 - Total[Table[2^i/10000^i, {i, 1, n}]], {n, 1, 10000}] ]
+</code></pre>
+
+<p>I initially tried this <em>without</em> <code>Parallelize[]</code>, but that kept going <em>for a while</em>, so I had to abort it (<code>Evaluation</code>-&gt;<code>Abort Evaluation</code>) and try this version instead.</p>
+
+<p>Anyway, so this whirs for a while. As this <code>htop</code> output shows, it really does use as many cores as possible.</p>
+
+<p>{% img center <a href="http://farm6.staticflickr.com/5504/12227941034_4ce9d69db4_z_d.jpg">http://farm6.staticflickr.com/5504/12227941034_4ce9d69db4_z_d.jpg</a> %}</p>
+
+<p>Eventually when it&rsquo;s done, we can <code>ListPlot</code> it.</p>
+
+<pre><code>ListPlot[%118, Frame -&gt; True, FrameStyle -&gt; Black, 
+ PlotRange -&gt; { {1, 10000}, {-0.000105, -0.000095} }]
+</code></pre>
+
+<p>{% img center <a href="http://farm6.staticflickr.com/5535/12227532975_ee70979b52_z_d.jpg">http://farm6.staticflickr.com/5535/12227532975_ee70979b52_z_d.jpg</a> %}</p>
+
+<p>As this graph shows, the result is remarkably close to a constant value of <code>-0.0001</code> !!</p>
+
+      
+      
+      
+    </article>
+    
+
+
+  </main>
+  
+  <nav class="pagination-single">
+    
+      <span class="previous">&larr; <a href="http://agam.github.io/post/2014/01/30/mathematica-a-simple-ant/" rel="prev">mathematica a simple ant</a></span>
+    
+    
+      <span class="next"><a href="http://agam.github.io/post/2014/02/01/playing-with-the-exponential-curve/" rel="next">playing with the exponential curve</a> &rarr;</span>
+    
+  </nav>
+
+
+  
+  <footer role="contentinfo">
+    <div style="text-align:center;">
+      
+      Copyright Agam Brahma
+    </div>
+  </footer>
+
+
+</div>
+
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-16612682-4', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</body>
+</html>
+

@@ -1,0 +1,288 @@
+
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  
+  <meta charset="UTF-8">
+  <title>
+    dailyprogrammer stacking sticks | Agam&#39;s Mashed-Up Pome
+  </title>
+
+
+  
+  <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
+
+  
+  <link rel="canonical" href="http://agam.github.io/post/2014/12/21/dailyprogrammer-stacking-sticks/"/>
+
+  
+  <link rel="stylesheet" href="/css/sanitize.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/highlight_monokai.css">
+  <link rel="stylesheet" href="/css/theme.css">
+  <link rel="stylesheet" href="/css/custom.css">
+  
+  
+  <link href="http://agam.github.io/index.xml" rel="alternate" type="application/rss+xml" title="Agam&#39;s Mashed-Up Pome" />
+  <link href="http://agam.github.io/index.xml" rel="feed" type="application/rss+xml" title="Agam&#39;s Mashed-Up Pome" />
+
+  
+  
+
+
+</head>
+
+
+
+<body>
+<div class="container">
+
+  
+  <header role="banner">
+    <div class="row gutters">
+      <div id="site-title" class="col span_6">
+        <h1><a href="http://agam.github.io/">Agam&#39;s Mashed-Up Pome</a></h1>
+        <h2>A lazy evaluation of compute space</h2>
+      </div>
+      <div id="social" class="col span_6">
+        <ul>
+          <li><a href="https://twitter.com/agambrahma" target="_blank">Twitter</a></li>
+          
+          
+          <li><a href="http://agam.github.io/index.xml" type="application/rss+xml" target="_blank">RSS</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+
+  
+  <main id="single" role="main">
+    <div class="article-header">
+      <h1>dailyprogrammer stacking sticks</h1>
+      <div class="meta">
+        Dec 21, 2014 &nbsp;
+        
+      </div>
+    </div>
+    <article>
+      <p>Some of the most interesting (and frustrating!) problems are the ones which are <em>obvious</em> to you as a human being but quite <em>unobvious</em> how to put into code.</p>
+
+<p><a href="http://www.reddit.com/r/dailyprogrammer/comments/2oe0px/2014125_challenge_191_hard_tricky_stick_stacking/">This one</a> from <code>r/dailyprogrammer</code> is one of those. Given &ldquo;sticks&rdquo; on a plane, how do you order them so that they can be slid across one axis without touching each other (assuming the sticks don&rsquo;t cross each other to begin with) ?</p>
+
+<p>In this case that axis is the &ldquo;positive-Y&rdquo;, and it should be possible to come up with a simpler answer (since this is sort of a 2-D depth buffer), but for now this is my messy answer:</p>
+
+<pre><code class="language-go">package main
+
+import &quot;fmt&quot;
+import &quot;math&quot;
+
+type Stick struct {
+	id             int
+	x1, y1, x2, y2 float64
+}
+
+type CompareResult int
+
+const (
+	LessThan CompareResult = iota
+	EqualTo
+	GreaterThan
+)
+
+type Sticks []Stick
+
+func (s1 Stick) Compare(s2 Stick) CompareResult {
+	maxY1 := math.Max(s1.y1, s1.y2)
+	minY1 := math.Min(s1.y1, s1.y2)
+	maxY2 := math.Max(s2.y1, s2.y2)
+	minY2 := math.Min(s2.y1, s2.y2)
+
+	if minY2 &gt; maxY1 {
+		return LessThan
+	}
+	if minY1 &gt; maxY2 {
+		return GreaterThan
+	}
+
+	// Inconclusive, we need to consider the x-values too
+	maxX1 := math.Max(s1.x1, s1.x2)
+	minX1 := math.Min(s1.x1, s1.x2)
+	maxX2 := math.Max(s2.x1, s2.x2)
+	minX2 := math.Min(s2.x1, s2.x2)
+
+	// The equality case : the lines should be &quot;exclusive&quot;
+	// (otherwise, it means they are crossing!).
+	if minX1 &gt; maxX2 || minX2 &gt; maxX1 {
+		return EqualTo
+	}
+
+	// Alright, there is clearly overlap, so we look at a bunch of
+	// cases.
+
+	// First, is one line wholly contained within the other? If
+	// yes, we only need to check one point; the &quot;non-crossing&quot;
+	// condition takes care of it being true for all points.
+	if maxX1 &gt; maxX2 &amp;&amp; minX1 &lt; minX2 {
+		if s2.getY(minX2) &gt;= s1.getY(minX2) {
+			return LessThan
+		} else {
+			return GreaterThan
+		}
+	}
+	if maxX1 &lt; maxX2 &amp;&amp; minX1 &gt; minX2 {
+		if s2.getY(minX1) &gt;= s1.getY(minX1) {
+			return LessThan
+		} else {
+			return GreaterThan
+		}
+	}
+
+	// Lines partially overlap; so there are two cases to consider
+	if maxX1 &gt;= minX2 &amp;&amp; minX2 &gt;= minX1 {
+		// The &quot;left&quot; portion of s2 overlaps the &quot;right&quot; portion of s1
+		if s2.getY(minX2) &gt;= s1.getY(minX2) {
+			return LessThan
+		} else {
+			return GreaterThan
+		}
+	}
+	if maxX2 &gt;= minX1 &amp;&amp; maxX1 &gt;= maxX2 {
+		// vice-versa
+		if s2.getY(maxX2) &gt;= s1.getY(maxX2) {
+			return LessThan
+		} else {
+			return GreaterThan
+		}
+	}
+
+	// We should have handled all the cases!
+	panic(&quot;Wtf!!&quot;)
+}
+
+func (s Stick) getY(x float64) float64 {
+	// Special case for vertical line
+	if s.x1 == s.x2 {
+		if x == s.x1 {
+			return s.y1
+		} else {
+			panic(fmt.Sprintf(&quot;Incorrect x = %f for stick %+v&quot;, x, s))
+		}
+	}
+	// For all other cases, use the slope of the line
+	slope := (s.y2 - s.y1) / (s.x2 - s.x1)
+	return s.y1 + (slope * (x - s.x1))
+}
+
+func main() {
+	var ss Sticks
+	var numSticks int
+	fmt.Scanln(&amp;numSticks)
+	for i := 0; i &lt; numSticks; i++ {
+		var id int
+		var x1, y1, x2, y2 float64
+		fmt.Scanf(&quot;%d:%f,%f,%f,%f\n&quot;,
+			&amp;id, &amp;x1, &amp;y1, &amp;x2, &amp;y2)
+		if i != id-1 {
+			panic(&quot;WTF&quot;)
+		}
+		s := Stick{id, x1, y1, x2, y2}
+		ss = append(ss, s)
+	}
+
+	ss.TotalSort()
+
+	fmt.Println(&quot;Here is the computed stick order :-\n&quot;)
+
+	PrintSticks(ss)
+}
+
+func PrintSticks(ss Sticks) {
+	for i, s := range ss {
+		if i == len(ss)-1 {
+			fmt.Println(s.id)
+		} else {
+			fmt.Printf(&quot;%d, &quot;, s.id)
+		}
+	}
+}
+
+func (ss *Sticks) TotalSort() {
+	for i := 0; i &lt; len(*ss)-1; i++ {
+		max := i
+		for j := i + 1; j &lt; len(*ss); j++ {
+			if (*ss)[max].Compare((*ss)[j]) == LessThan {
+				max = j
+			}
+		}
+		if max != i {
+			(*ss)[i], (*ss)[max] = (*ss)[max], (*ss)[i]
+		}
+	}
+}
+</code></pre>
+
+<p>It runs as follows:</p>
+
+<pre><code class="language-sh">$ cat sample-input2
+5
+1:3,3,8,1
+2:11,2,15,2
+3:6,3,12,4
+4:10,5,10,10
+5:9,11,18,12
+
+$ cat sample-input2 | go run sticks.go
+Here is the computed stick order :-
+
+5, 4, 3, 2, 1
+</code></pre>
+
+<p>Most of the &ldquo;action&rdquo; is in the <code>Compare()</code> function, but I also like how it&rsquo;s possible to define arbitrary &ldquo;receivers&rdquo; for functions in Go (e.g. used for <code>getY()</code> above)</p>
+
+      
+      
+      
+    </article>
+    
+
+
+  </main>
+  
+  <nav class="pagination-single">
+    
+      <span class="previous">&larr; <a href="http://agam.github.io/post/2014/12/18/logic-through-haskell-not-necessarily-dot-dot-dot/" rel="prev">logic through haskell not necessarily dot dot dot</a></span>
+    
+    
+      <span class="next"><a href="http://agam.github.io/post/2014/12/23/status-update/" rel="next">status update</a> &rarr;</span>
+    
+  </nav>
+
+
+  
+  <footer role="contentinfo">
+    <div style="text-align:center;">
+      
+      Copyright Agam Brahma
+    </div>
+  </footer>
+
+
+</div>
+
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-16612682-4', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</body>
+</html>
+

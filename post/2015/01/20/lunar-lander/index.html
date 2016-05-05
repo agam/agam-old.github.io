@@ -1,0 +1,571 @@
+
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  
+  <meta charset="UTF-8">
+  <title>
+    lunar lander | Agam&#39;s Mashed-Up Pome
+  </title>
+
+
+  
+  <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
+
+  
+  <link rel="canonical" href="http://agam.github.io/post/2015/01/20/lunar-lander/"/>
+
+  
+  <link rel="stylesheet" href="/css/sanitize.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/highlight_monokai.css">
+  <link rel="stylesheet" href="/css/theme.css">
+  <link rel="stylesheet" href="/css/custom.css">
+  
+  
+  <link href="http://agam.github.io/index.xml" rel="alternate" type="application/rss+xml" title="Agam&#39;s Mashed-Up Pome" />
+  <link href="http://agam.github.io/index.xml" rel="feed" type="application/rss+xml" title="Agam&#39;s Mashed-Up Pome" />
+
+  
+  
+
+
+</head>
+
+
+
+<body>
+<div class="container">
+
+  
+  <header role="banner">
+    <div class="row gutters">
+      <div id="site-title" class="col span_6">
+        <h1><a href="http://agam.github.io/">Agam&#39;s Mashed-Up Pome</a></h1>
+        <h2>A lazy evaluation of compute space</h2>
+      </div>
+      <div id="social" class="col span_6">
+        <ul>
+          <li><a href="https://twitter.com/agambrahma" target="_blank">Twitter</a></li>
+          
+          
+          <li><a href="http://agam.github.io/index.xml" type="application/rss+xml" target="_blank">RSS</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+
+  
+  <main id="single" role="main">
+    <div class="article-header">
+      <h1>lunar lander</h1>
+      <div class="meta">
+        Jan 20, 2015 &nbsp;
+        
+      </div>
+    </div>
+    <article>
+      <p>While I&rsquo;m on a roll, here&rsquo;s something else &hellip; a very simple game that is a contender for the &ldquo;first&rdquo; one, since it basically revolves around a couple of lines that involve a basic speed/distance calculation. Still, it <em>is</em> fun to play. It might be really hard though, since I haven&rsquo;t yet been able to <em>&ldquo;win&rdquo;</em> :P</p>
+
+<p>Anyhow, here&rsquo;s the Go source:</p>
+
+<pre><code class="language-go">package main
+
+import (
+	&quot;fmt&quot;
+	&quot;math&quot;
+	&quot;math/rand&quot;
+	&quot;strings&quot;
+	&quot;time&quot;
+)
+
+const (
+	initialHeight   = 500.0
+	initialFuel     = 120.0
+	initialVelocity = 50.0
+	deviance        = 0.05
+)
+
+const (
+	maxThrust                      = 30
+	maxDistance                    = 600
+	maxDistancePlotWidth           = 60
+	maxAllowableImpactVelocity     = 2
+	lunarGravitationalAccelaration = 5.3
+)
+
+var height float64
+var fuel float64
+var velocity float64
+
+func floatEqual(x, y float64) bool {
+	return math.Abs(x-y) &lt; 0.00000001
+}
+
+func setInitialParameters() {
+	randomize := func(val float64, deviance float64) float64 {
+		mult := 1
+		if rand.Intn(2) &gt; 0 {
+			mult = -1
+		}
+		return val + (rand.Float64()*deviance)*val*float64(mult)
+	}
+	height = randomize(initialHeight, deviance)
+	velocity = randomize(initialVelocity, deviance)
+	fuel = randomize(initialFuel, deviance)
+}
+
+func showUsage() {
+	fmt.Println(&quot;\n    Welcome to the Lunar Landing Simulation!&quot;)
+	fmt.Println(&quot;--------------------------------------------------------------\n&quot;)
+	fmt.Printf(&quot;Do you want instructions ? (enter 'y' or 'n'): &quot;)
+	var choice string
+	fmt.Scan(&amp;choice)
+	if strings.ToLower(choice) == &quot;n&quot; {
+		return
+	}
+	fmt.Printf(&quot;You are landing on the moon and have taken over manual control %5.2f feet above a good landing spot. You have a downward velocity of %5.2f ft/sec. %5.2f units of fuel remain.\n&quot;, height, velocity, fuel)
+	fmt.Println(&quot;\nHere are the rules that govern your space vehicle: &quot;)
+	fmt.Println(&quot;(1) After each second, the height, velocity and remaining fuel will be reported.&quot;)
+	fmt.Println(&quot;(2) You will enter the number of units of fuel to burn during the next second. Each unit will slow your descent by 1 ft/sec (at a prompt showing '?')&quot;)
+	fmt.Printf(&quot;(3) The maximum thrust of your engine is %d ft/sec/sec, or %d units of fuel per second.\n&quot;, maxThrust, maxThrust)
+	fmt.Println(&quot;(4) When you contact the lunar surface, you will be given a report of your landing speed and remaining fuel.&quot;)
+	fmt.Println(&quot;(5) If you run out of fuel, you will no longer be prompted, but the second-by-second report will continue.&quot;)
+	fmt.Println(&quot;(6) You may enter a number greater than the total amount of fuel remaining to indicate that you want to use all your fuel.&quot;)
+	fmt.Println(&quot;\n... beginning landing procedure ...\n&quot;)
+	fmt.Println(&quot;GOOD LUCK!\n&quot;)
+}
+
+func getFuel() float64 {
+	for {
+		fmt.Printf(&quot;? &quot;)
+		var fuelToBurn float64
+		fmt.Scan(&amp;fuelToBurn)
+		if fuelToBurn &gt; fuel {
+			return fuel
+		}
+		if fuelToBurn &gt; maxThrust {
+			fmt.Printf(&quot;Sorry, you cannot use more than %d units at a time!\n&quot;, maxThrust)
+		} else {
+			return fuelToBurn
+		}
+	}
+}
+
+func update(height, velocity, fuel float64) (newheight, newvelocity float64) {
+	newvelocity = velocity - fuel + lunarGravitationalAccelaration
+	newheight = height - 0.5*(velocity+newvelocity)
+	return
+}
+
+func main() {
+	rand.Seed(time.Now().Unix())
+	setInitialParameters()
+	showUsage()
+	seconds := 0
+	fuelUnitsToBurn := 0.0
+	fmt.Println(&quot;Seconds Height     Speed     Fuel     |    Plot of Distance&quot;)
+	for height &gt; 0.0 &amp;&amp; height &lt; maxDistance {
+		fmt.Printf(&quot;%5d %8.2f %9.2f %9.2f    | &quot;, seconds, height, velocity, fuel)
+		scaledDistance := maxDistancePlotWidth * height / maxDistance
+		for i := 0; i &lt; int(scaledDistance); i++ {
+			fmt.Printf(&quot; &quot;)
+		}
+		fmt.Println(&quot;*&quot;)
+		if fuel &gt; 0 {
+			fuelUnitsToBurn = getFuel()
+			if floatEqual(fuel, fuelUnitsToBurn) {
+				fmt.Println(&quot;   ***   OUT OF FUEL   ***&quot;)
+			}
+		} else {
+			fuelUnitsToBurn = 0.0
+		}
+		height, velocity = update(height, velocity, fuelUnitsToBurn)
+		fuel = fuel - fuelUnitsToBurn
+		seconds++
+	}
+	if height &gt; maxDistance {
+		fmt.Println(&quot;\nSomehow, you managed to drift away into space. Unfortunately, we can't afford a rescue mission. Say hello to Dave Bowman in a few years. Goodbye.\n\n&quot;)
+		return
+	}
+	fmt.Println(&quot;\n   *** CONTACT ***\n&quot;)
+	fmt.Printf(&quot;Touchdown at %d seconds.\n&quot;, seconds)
+	fmt.Printf(&quot;Landing velocity = %5.2f ft/sec.\n\n&quot;, velocity)
+
+	if math.Abs(velocity) &gt; maxAllowableImpactVelocity {
+		fmt.Println(&quot;Sorry, you didn't make it. Condolences will be sent to your next of kin ...\n&quot;)
+	} else {
+		fmt.Println(&quot;Good job! Now make yourself comfortable, and come back with the next mission that makes it there ...\n&quot;)
+	}
+}
+</code></pre>
+
+<p>&hellip; and the original BASIC &hellip;</p>
+
+<pre><code class="language-basic">2 PRINT TAB(34);&quot;LEM&quot;
+4 PRINT TAB(15);&quot;CREATIVE COMPUTING  MORRISTOWN, NEW JERSEY&quot;
+7 REM ROCKT2 IS AN INTERACTIVE GAME THAT SIMULATES A LUNAR
+8 REM LANDING IS SIMILAR TO THAT OF THE APOLLO PROGRAM.
+9 REM THERE IS ABSOLUTELY NO CHANCE INVOLVED
+10 Z$=&quot;GO&quot;
+15 B1=1
+20 M=17.95
+25 F1=5.25
+30 N=7.5
+35 R0=926
+40 V0=1.29
+45 T=0
+50 H0=60
+55 R=R0+H0
+60 A=-3.425
+65 R1=0
+70 A1=8.84361E-04
+75 R3=0
+80 A3=0
+85 M1=7.45
+90 M0=M1
+95 B=750
+100 T1=0
+105 F=0
+110 P=0
+115 N=1
+120 M2=0
+125 S=0
+130 C=0
+135 IF Z$=&quot;YES&quot; THEN 1150
+140 PRINT
+145 PRINT &quot;LUNAR LANDING SIMULATION&quot;
+150 PRINT
+155 PRINT &quot;HAVE YOU FLOWN AN APOLLO/LEM MISSION BEFORE&quot;;
+160 PRINT &quot; (YES OR NO)&quot;;
+165 INPUT Q$
+170 IF Q$=&quot;YES&quot; THEN 190
+175 IF Q$=&quot;NO&quot; THEN 205
+180 PRINT &quot;JUST ANSWER THE QUESTION, PLEASE, &quot;;
+185 GOTO 160
+190 PRINT
+195 PRINT &quot;INPUT MEASUREMENT OPTION NUMBER&quot;;
+200 GOTO 225
+205 PRINT
+210 PRINT &quot;WHICH SYSTEM OF MEASUREMENT DO YOU PREFER?&quot;
+215 PRINT &quot; 1=METRIC     0=ENGLISH&quot;
+220 PRINT &quot;ENTER THE APPROPRIATE NUMBER&quot;;
+225 INPUT K
+230 PRINT
+235 IF K=0 THEN 280
+240 IF K=1 THEN 250
+245 GOTO 220
+250 Z=1852.8
+255 M$=&quot;METERS&quot;
+260 G3=3.6
+265 N$=&quot; KILOMETERS&quot;
+270 G5=1000
+275 GOTO 305
+280 Z=6080
+285 M$=&quot;FEET&quot;
+290 G3=.592
+295 N$=&quot;N.MILES&quot;
+300 G5=Z
+305 IF B1=3 THEN 670
+310 IF Q$=&quot;YES&quot; THEN 485
+315 PRINT
+320 PRINT &quot;  YOU ARE ON A LUNAR LANDING MISSION.  AS THE PILOT OF&quot;
+325 PRINT &quot;THE LUNAR EXCURSION MODULE, YOU WILL BE EXPECTED TO&quot;
+330 PRINT &quot;GIVE CERTAIN COMMANDS TO THE MODULE NAVIGATION SYSTEM.&quot;
+335 PRINT &quot;THE ON-BOARD COMPUTER WILL GIVE A RUNNING ACCOUNT&quot;
+340 PRINT &quot;OF INFORMATION NEEDED TO NAVIGATE THE SHIP.&quot;
+345 PRINT
+350 PRINT
+355 PRINT &quot;THE ATTITUDE ANGLE CALLED FOR IS DESCRIBED AS FOLLOWS.&quot;
+360 PRINT &quot;+ OR -180 DEGREES IS DIRECTLY AWAY FROM THE MOON&quot;
+365 PRINT &quot;-90 DEGREES IS ON A TANGENT IN THE DIRECTION OF ORBIT&quot;
+370 PRINT &quot;+90 DEGREES IS ON A TANGENT FROM THE DIRECTION OF ORBIT&quot;
+375 PRINT &quot;0 (ZERO) DEGREES IS DIRECTLY TOWARD THE MOON&quot;
+380 PRINT
+385 PRINT TAB(30);&quot;-180|+180&quot;
+390 PRINT TAB(34);&quot;^&quot;
+395 PRINT TAB(27);&quot;-90 &lt; -+- &gt; +90&quot;
+400 PRINT TAB(34);&quot;!&quot;
+405 PRINT TAB(34);&quot;0&quot;
+410 PRINT TAB(21);&quot;&lt;&lt;&lt;&lt; DIRECTION OF ORBIT &lt;&lt;&lt;&lt;&quot;
+415 PRINT
+420 PRINT TAB(20);&quot;------ SURFACE OF MOON ------&quot;
+425 PRINT
+430 PRINT
+435 PRINT &quot;ALL ANGLES BETWEEN -180 AND +180 DEGREES ARE ACCEPTED.&quot;
+440 PRINT
+445 PRINT &quot;1 FUEL UNIT = 1 SEC. AT MAX THRUST&quot;
+450 PRINT &quot;ANY DISCREPANCIES ARE ACCOUNTED FOR IN THE USE OF FUEL&quot;
+455 PRINT &quot;FOR AN ATTITUDE CHANGE.&quot;
+460 PRINT &quot;AVAILABLE ENGINE POWER: 0 (ZERO) AND ANY VALUE BETWEEN&quot;
+465 PRINT &quot;10 AND 100 PERCENT.&quot;
+470 PRINT
+475 PRINT&quot;NEGATIVE THRUST OR TIME IS PROHIBITED.&quot;
+480 PRINT
+485 PRINT
+490 PRINT &quot;INPUT: TIME INTERVAL IN SECONDS ------ (T)&quot;
+495 PRINT &quot;       PERCENTAGE OF THRUST ---------- (P)&quot;
+500 PRINT &quot;       ATTITUDE ANGLE IN DEGREES ----- (A)&quot;
+505 PRINT
+510 IF Q$=&quot;YES&quot; THEN 535
+515 PRINT &quot;FOR EXAMPLE:&quot;
+520 PRINT &quot;T,P,A? 10,65,-60&quot;
+525 PRINT &quot;TO ABORT THE MISSION AT ANY TIME, ENTER 0,0,0&quot;
+530 PRINT
+535 PRINT &quot;OUTPUT: TOTAL TIME IN ELAPSED SECONDS&quot;
+540 PRINT &quot;        HEIGHT IN &quot;;M$
+545 PRINT &quot;        DISTANCE FROM LANDING SITE IN &quot;;M$
+550 PRINT &quot;        VERTICAL VELOCITY IN &quot;;M$;&quot;/SECOND&quot;
+555 PRINT &quot;        HORIZONTAL VELOCITY IN &quot;;M$;&quot;/SECOND&quot;
+560 PRINT &quot;        FUEL UNITS REMAINING&quot;
+565 PRINT
+570 GOTO 670
+575 PRINT
+580 PRINT &quot;T,P,A&quot;;
+585 INPUT T1,F,P
+590 F=F/100
+595 IF T1&lt;0 THEN 905
+600 IF T1=0 THEN 1090
+605 IF ABS(F-.05)&gt;1 THEN 945
+610 IF ABS(F-.05)&lt;.05 THEN 945
+615 IF ABS(P)&gt;180 THEN 925
+620 N=20
+625 IF T1&lt;400 THEN 635
+630 N=T1/20
+635 T1=T1/N
+640 P=P*3.14159/180
+645 S=SIN(P)
+650 C=COS(P)
+655 M2=M0*T1*F/B
+660 R3=-.5*R0*((V0/R)^2)+R*A1*A1
+665 A3=-2*R1*A1/R
+670 FOR I=1 TO N
+675 IF M1=0 THEN 715
+680 M1=M1-M2
+685 IF M1&gt;0 THEN 725
+690 F=F*(1+M1/M2)
+695 M2=M1+M2
+700 PRINT &quot;YOU ARE OUT OF FUEL.&quot;
+705 M1=0
+710 GOTO 725
+715 F=0
+720 M2=0
+725 M=M-.5*M2
+730 R4=R3
+735 R3=-.5*R0*((V0/R)^2)+R*A1*A1
+740 R2=(3*R3-R4)/2+.00526*F1*F*C/M
+745 A4=A3
+750 A3=-2*R1*A1/R
+755 A2=(3*A3-A4)/2+.0056*F1*F*S/(M*R)
+760 X=R1*T1+.5*R2*T1*T1
+765 R=R+X
+770 H0=H0+X
+775 R1=R1+R2*T1
+780 A=A+A1*T1+.5*A2*T1*T1
+785 A1=A1+A2*T1
+790 M=M-.5*M2
+795 T=T+T1
+800 IF H0&lt;3.287828E-04 THEN 810
+805 NEXT I
+810 H=H0*Z
+815 H1=R1*Z
+820 D=R0*A*Z
+825 D1=R*A1*Z
+830 T2=M1*B/M0
+835 PRINT &quot; &quot;;T;TAB(10);H;TAB(23);D;
+840 PRINT TAB(37);H1;TAB(49);D1;TAB(60);T2
+845 IF H0&lt;3.287828E-04 THEN 880
+850 IF R0*A&gt;164.474 THEN 1050
+855 IF M1&gt;0 THEN 580
+860 T1=20
+865 F=0
+870 P=0
+875 GOTO 620
+880 IF R1&lt;-8.21957E-04 THEN 1020
+885 IF ABS(R*A1)&gt;4.93174E-04 THEN 1020
+890 IF H0&lt;-3.287828E-04 THEN 1020
+895 IF ABS(D)&gt;10*Z THEN 1065
+900 GOTO 995
+905 PRINT
+910 PRINT &quot;THIS SPACECRAFT IS NOT ABLE TO VIOLATE THE SPACE-&quot;;
+915 PRINT &quot;TIME CONTINUUM.&quot;
+920 GOTO 575
+925 PRINT
+930 PRINT &quot;IF YOU WANT TO SPIN AROUND, GO OUTSIDE THE MODULE&quot;
+935 PRINT &quot;FOR AN E.V.A.&quot;
+940 GOTO 575
+945 PRINT
+950 PRINT &quot;IMPOSSIBLE THRUST VALUE &quot;;
+955 IF F&lt;0 THEN 985
+960 IF F-.05&lt;.05 THEN 975
+965 PRINT &quot;TOO LARGE&quot;
+970 GOTO 575
+975 PRINT &quot;TOO SMALL&quot;
+980 GOTO 575
+985 PRINT &quot;NEGATIVE&quot;
+990 GOTO 575
+995 PRINT
+1000 PRINT &quot;TRANQUILITY BASE HERE -- THE EAGLE HAS LANDED.&quot;
+1005 PRINT &quot;CONGRATULATIONS -- THERE WAS NO SPACECRAFT DAMAGE.&quot;
+1010 PRINT &quot;YOU MAY NOW PROCEED WITH SURFACE EXPLORATION.&quot;
+1015 GOTO 1100
+1020 PRINT
+1025 PRINT &quot;CRASH !!!!!!!!!!!!!!!!&quot;
+1030 PRINT &quot;YOUR IMPACT CREATED A CRATER&quot;;ABS(H);M$;&quot; DEEP.&quot;
+1035 X1=SQR(D1*D1+H1*H1)*G3
+1040 PRINT &quot;AT CONTACT YOU WERE TRAVELING&quot;;X1;N$;&quot;/HR&quot;
+1045 GOTO 1100
+1050 PRINT
+1055 PRINT &quot;YOU HAVE BEEN LOST IN SPACE WITH NO HOPE OF RECOVERY.&quot;
+1060 GOTO 1100
+1065 PRINT &quot;YOU ARE DOWN SAFELY - &quot;
+1075 PRINT
+1080 PRINT &quot;BUT MISSED THE LANDING SITE BY&quot;;ABS(D/G5);N$;&quot;.&quot;
+1085 GOTO 1100
+1090 PRINT
+1095 PRINT &quot;MISSION ABENDED&quot;
+1100 PRINT
+1105 PRINT &quot;DO YOU WANT TO TRY IT AGAIN (YES/NO)?&quot;
+1110 INPUT Z$
+1115 IF Z$=&quot;YES&quot; THEN 20
+1120 IF Z$=&quot;NO&quot; THEN 1130
+1125 GOTO 1105
+1130 PRINT
+1135 PRINT &quot;TOO BAD, THE SPACE PROGRAM HATES TO LOSE EXPERIENCED&quot;
+1140 PRINT &quot;ASTRONAUTS.&quot;
+1145 STOP
+1150 PRINT
+1155 PRINT &quot;OK, DO YOU WANT THE COMPLETE INSTRUCTIONS OR THE INPUT -&quot;
+1160 PRINT &quot;OUTPUT STATEMENTS?&quot;
+1165 PRINT &quot;1=COMPLETE INSTRUCTIONS&quot;
+1170 PRINT &quot;2=INPUT-OUTPUT STATEMENTS&quot;
+1175 PRINT &quot;3=NEITHER&quot;
+1180 INPUT B1
+1185 Q$=&quot;NO&quot;
+1190 IF B1=1 THEN 205
+1195 Q$=&quot;YES&quot;
+1200 IF B1=2 THEN 190
+1205 IF B1=3 THEN 190
+1210 GOTO 1165
+1215 END
+</code></pre>
+
+<p>&hellip; and the <em>delightful</em> gameplay (you&rsquo;ll have to scroll a bit to the right to see the whole screenful):</p>
+
+<pre><code class="language-sh">$ go run lander.go
+
+Welcome to the Lunar Landing Simulation!
+--------------------------------------------------------------
+
+Do you want instructions ? (enter 'y' or 'n'): y
+You are landing on the moon and have taken over manual control 499.33 feet above a good landing spot. You have a downward velocity of 49.17 ft/sec. 114.86 units of fuel remain.
+
+Here are the rules that govern your space vehicle:
+(1) After each second, the height, velocity and remaining fuel will be reported.
+(2) You will enter the number of units of fuel to burn during the next second. Each unit will slow your descent by 1 ft/sec (at a prompt showing '?')
+(3) The maximum thrust of your engine is 30 ft/sec/sec, or 30 units of fuel per second.
+(4) When you contact the lunar surface, you will be given a report of your landing speed and remaining fuel.
+(5) If you run out of fuel, you will no longer be prompted, but the second-by-second report will continue.
+(6) You may enter a number greater than the total amount of fuel remaining to indicate that you want to use all your fuel.
+
+... beginning landing procedure ...
+
+GOOD LUCK!
+
+Seconds Height     Speed     Fuel     |    Plot of Distance
+0   499.33     49.17    114.86    |                                                  *
+? 30
+1   462.52     24.47     84.86    |                                               *
+? 20
+2   445.40      9.77     64.86    |                                             *
+? 10
+3   437.98      5.07     54.86    |                                            *
+? 0
+4   430.27     10.37     54.86    |                                            *
+? 0
+5   417.25     15.67     54.86    |                                          *
+? 0
+6   398.94     20.97     54.86    |                                        *
+? 0
+7   375.32     26.27     54.86    |                                      *
+? 10
+8   351.40     21.57     44.86    |                                    *
+? 0
+9   327.19     26.87     44.86    |                                 *
+? 0
+10   297.67     32.17     44.86    |                              *
+? 10
+11   267.85     27.47     34.86    |                           *
+? 0
+12   237.74     32.77     34.86    |                        *
+? 10
+13   207.32     28.07     24.86    |                     *
+? 10
+14   181.60     23.37     14.86    |                   *
+? 5
+15   158.09     23.67      9.86    |                *
+? 10
+***   OUT OF FUEL   ***
+16   136.70     19.11      0.00    |              *
+17   114.94     24.41      0.00    |            *
+18    87.89     29.71      0.00    |         *
+19    55.53     35.01      0.00    |      *
+20    17.87     40.31      0.00    |  *
+
+*** CONTACT ***
+
+Touchdown at 21 seconds.
+Landing velocity = 45.61 ft/sec.
+
+Sorry, you didn't make it. Condolences will be sent to your next of kin ...
+</code></pre>
+
+<p>As always, copy-paste and try it out!</p>
+
+      
+      
+      
+    </article>
+    
+
+
+  </main>
+  
+  <nav class="pagination-single">
+    
+      <span class="previous">&larr; <a href="http://agam.github.io/post/2015/01/13/blackjack/" rel="prev">blackjack</a></span>
+    
+    
+      <span class="next"><a href="http://agam.github.io/post/2015/01/20/battleships/" rel="next">battleships</a> &rarr;</span>
+    
+  </nav>
+
+
+  
+  <footer role="contentinfo">
+    <div style="text-align:center;">
+      
+      Copyright Agam Brahma
+    </div>
+  </footer>
+
+
+</div>
+
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-16612682-4', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</body>
+</html>
+

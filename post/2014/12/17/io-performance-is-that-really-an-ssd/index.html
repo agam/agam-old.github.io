@@ -1,0 +1,181 @@
+
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  
+  <meta charset="UTF-8">
+  <title>
+    io performance is that really an ssd | Agam&#39;s Mashed-Up Pome
+  </title>
+
+
+  
+  <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
+
+  
+  <link rel="canonical" href="http://agam.github.io/post/2014/12/17/io-performance-is-that-really-an-ssd/"/>
+
+  
+  <link rel="stylesheet" href="/css/sanitize.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/highlight_monokai.css">
+  <link rel="stylesheet" href="/css/theme.css">
+  <link rel="stylesheet" href="/css/custom.css">
+  
+  
+  <link href="http://agam.github.io/index.xml" rel="alternate" type="application/rss+xml" title="Agam&#39;s Mashed-Up Pome" />
+  <link href="http://agam.github.io/index.xml" rel="feed" type="application/rss+xml" title="Agam&#39;s Mashed-Up Pome" />
+
+  
+  
+
+
+</head>
+
+
+
+<body>
+<div class="container">
+
+  
+  <header role="banner">
+    <div class="row gutters">
+      <div id="site-title" class="col span_6">
+        <h1><a href="http://agam.github.io/">Agam&#39;s Mashed-Up Pome</a></h1>
+        <h2>A lazy evaluation of compute space</h2>
+      </div>
+      <div id="social" class="col span_6">
+        <ul>
+          <li><a href="https://twitter.com/agambrahma" target="_blank">Twitter</a></li>
+          
+          
+          <li><a href="http://agam.github.io/index.xml" type="application/rss+xml" target="_blank">RSS</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+
+  
+  <main id="single" role="main">
+    <div class="article-header">
+      <h1>io performance is that really an ssd</h1>
+      <div class="meta">
+        Dec 17, 2014 &nbsp;
+        
+      </div>
+    </div>
+    <article>
+      <p>I created a new VM in Google Compute Engine a few days ago, and assigned it an SSD disk, and then began wondering <em>if it was really an SSD disk</em>.</p>
+
+<p>(<em>Digression</em>: I never appreciated the difference an SSD makes until the first time a Macbook Air awoke from sleep <em>instantly</em>. From that moment onwards, the time taken for my desktop at home to show its login screen has <em>always</em> felt irritatingly long)</p>
+
+<p>So, this is a crude benchmark of a &ldquo;regular&rdquo; hard drive on my workstation:</p>
+
+<pre><code class="language-sh">$ sudo hdparm -tT /dev/sda1                                                                                                                                   
+
+/dev/sda1:
+ Timing cached reads:   20772 MB in  2.00 seconds = 10403.36 MB/sec
+ Timing buffered disk reads: 242 MB in  1.34 seconds = 180.53 MB/sec
+</code></pre>
+
+<p>By the way, the &ldquo;fresh&rdquo; disk division for a new VM looks something like this:</p>
+
+<pre><code class="language-sh">$ df -h
+Filesystem                                              Size  Used Avail Use% Mounted on
+rootfs                                                  9.9G  734M  8.7G   8% /
+udev                                                     10M     0   10M   0% /dev
+tmpfs                                                   3.0G  104K  3.0G   1% /run
+/dev/disk/by-uuid/foo  9.9G  734M  8.7G   8% /
+tmpfs                                                   5.0M     0  5.0M   0% /run/lock
+tmpfs                                                   6.0G     0  6.0G   0% /run/shm
+</code></pre>
+
+<p><code>foo</code> above is really a long uuid, which I subsituted to avoid repeating. This is the output from <code>hdparm</code>, run within my VM:</p>
+
+<pre><code class="language-sh">agam@myvm:~$ sudo hdparm -tT /dev/disk/by-uuid/foo
+/dev/disk/by-uuid/foo:
+ Timing cached reads:   16996 MB in  2.00 seconds = 8506.48 MB/sec
+ Timing buffered disk reads: 310 MB in  3.02 seconds = 102.65 MB/sec
+</code></pre>
+
+<p>So that&rsquo;s &hellip; <em>confusing</em>. The two seem pretty close (and the SSD seems slower!) Obviously, we&rsquo;re looking at the wrong metric. The big distinguishing factor for these two types of storage is <em>seek time</em>. So instead of <code>hdparm</code>, let&rsquo;s try <code>ioping</code> instead.</p>
+
+<p>Here&rsquo;s the workstation with the hard drive first (run twice, first random then sequential):</p>
+
+<pre><code class="language-sh">$ sudo ioping -R /dev/sda1
+
+--- /dev/sda1 (device 243.0 MiB) ioping statistics ---
+450 requests completed in 3.0 s, 150 iops, 600.3 KiB/s
+min/avg/max/mdev = 54 us / 6.7 ms / 74.1 ms / 6.5 ms
+
+$ sudo ioping -RL /dev/sda1
+
+--- /dev/sda1 (device 243.0 MiB) ioping statistics ---
+1.8 k requests completed in 3.0 s, 600 iops, 150.1 MiB/s
+min/avg/max/mdev = 648 us / 1.7 ms / 152.2 ms / 5.2 ms
+</code></pre>
+
+<p>And now &hellip; here&rsquo;s the VM with the SSD:</p>
+
+<pre><code class="language-sh">agam@myvm:~$ sudo ioping -R /dev/disk/by-uuid/foo
+--- /dev/disk/by-uuid/foo (device 10.0 Gb) ioping statistics ---
+9020 requests completed in 3000.1 ms, 5016 iops, 19.6 mb/s
+min/avg/max/mdev = 0.0/0.2/6.0/0.4 ms
+
+agam@myvm:~$ sudo ioping -RL /dev/disk/by-uuid/foo
+--- /dev/disk/by-uuid/foo (device 10.0 Gb) ioping statistics ---
+1230 requests completed in 3002.0 ms, 439 iops, 109.6 mb/s
+min/avg/max/mdev = 0.2/2.3/8.2/0.6 ms
+</code></pre>
+
+<p><em>Here</em> is where you see a big difference &hellip; a smaller one for the sequential case, but a huge one for the random case (at least an order of magnitude more).</p>
+
+<p>So yeah, the SSD is legit.</p>
+
+      
+      
+      
+    </article>
+    
+
+
+  </main>
+  
+  <nav class="pagination-single">
+    
+      <span class="previous">&larr; <a href="http://agam.github.io/post/2014/12/16/dailyprogramming-markov-chain/" rel="prev">dailyprogramming markov chain</a></span>
+    
+    
+      <span class="next"><a href="http://agam.github.io/post/2014/12/17/dailyprogrammer-textual-cycles/" rel="next">dailyprogrammer textual cycles</a> &rarr;</span>
+    
+  </nav>
+
+
+  
+  <footer role="contentinfo">
+    <div style="text-align:center;">
+      
+      Copyright Agam Brahma
+    </div>
+  </footer>
+
+
+</div>
+
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-16612682-4', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</body>
+</html>
+

@@ -1,0 +1,149 @@
+
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  
+  <meta charset="UTF-8">
+  <title>
+    euler 48 self powers | Agam&#39;s Mashed-Up Pome
+  </title>
+
+
+  
+  <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
+
+  
+  <link rel="canonical" href="http://agam.github.io/post/2015/05/04/euler-48-self-powers/"/>
+
+  
+  <link rel="stylesheet" href="/css/sanitize.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/highlight_monokai.css">
+  <link rel="stylesheet" href="/css/theme.css">
+  <link rel="stylesheet" href="/css/custom.css">
+  
+  
+  <link href="http://agam.github.io/index.xml" rel="alternate" type="application/rss+xml" title="Agam&#39;s Mashed-Up Pome" />
+  <link href="http://agam.github.io/index.xml" rel="feed" type="application/rss+xml" title="Agam&#39;s Mashed-Up Pome" />
+
+  
+  
+
+
+</head>
+
+
+
+<body>
+<div class="container">
+
+  
+  <header role="banner">
+    <div class="row gutters">
+      <div id="site-title" class="col span_6">
+        <h1><a href="http://agam.github.io/">Agam&#39;s Mashed-Up Pome</a></h1>
+        <h2>A lazy evaluation of compute space</h2>
+      </div>
+      <div id="social" class="col span_6">
+        <ul>
+          <li><a href="https://twitter.com/agambrahma" target="_blank">Twitter</a></li>
+          
+          
+          <li><a href="http://agam.github.io/index.xml" type="application/rss+xml" target="_blank">RSS</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+
+  
+  <main id="single" role="main">
+    <div class="article-header">
+      <h1>euler 48 self powers</h1>
+      <div class="meta">
+        May 4, 2015 &nbsp;
+        
+      </div>
+    </div>
+    <article>
+      <p>One of the simplest problems, that would be a one-liner in Python or Lisp. Decided to do it in C++ anyway, using the <code>GMP</code> library (verbose, but runs in <code>4 ms</code>)</p>
+
+<p>For this to work, you&rsquo;ll need to add (e.g. for <code>CMake</code>) a line like <code>target_link_libraries(Test gmpxx gmp)</code>, and include <code>gmpxx.h</code>.</p>
+
+<p><strong>Statutory Warning</strong>: <em>Spoilers Ahead</em></p>
+
+<pre><code class="language-cpp">int main() {
+  cout &lt;&lt; &quot;Euler #48 ... \n&quot;;
+  const int kNumTerms = 1000;
+  
+  // GMP has a C++ interface, see the following link:
+  // https://gmplib.org/manual/C_002b_002b-Interface-General.html
+  mpz_class sum = 0;
+
+  // Loop from 1 to 1000
+  for (int i = 1; i &lt;= kNumTerms; ++i) {
+    mpz_class term = 0;
+    
+    // GMP exponentiation function, see documentation at:
+    // https://gmplib.org/manual/Integer-Exponentiation.html
+    mpz_ui_pow_ui(term.get_mpz_t(), i, i);
+    
+    sum = sum + term;
+  }
+  
+  mpz_class last_ten_digits;
+
+  // We're looking for sum modulo (10 ^ 10)
+  mpz_class divisor;
+  mpz_ui_pow_ui(divisor.get_mpz_t(), 10, 10);
+  mpz_mod(last_ten_digits.get_mpz_t(), sum.get_mpz_t(), divisor.get_mpz_t());
+  cout &lt;&lt; &quot;The final answer is : &quot; &lt;&lt; last_ten_digits &lt;&lt; endl;
+}
+</code></pre>
+
+      
+      
+      
+    </article>
+    
+
+
+  </main>
+  
+  <nav class="pagination-single">
+    
+      <span class="previous">&larr; <a href="http://agam.github.io/post/2015/05/03/euler-46-goldbacks-other-conjecture/" rel="prev">euler 46 goldbacks other conjecture</a></span>
+    
+    
+      <span class="next"><a href="http://agam.github.io/post/2015/05/04/euler-47-distinct-prime-factors/" rel="next">euler 47 distinct prime factors</a> &rarr;</span>
+    
+  </nav>
+
+
+  
+  <footer role="contentinfo">
+    <div style="text-align:center;">
+      
+      Copyright Agam Brahma
+    </div>
+  </footer>
+
+
+</div>
+
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-16612682-4', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</body>
+</html>
+

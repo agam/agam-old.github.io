@@ -1,0 +1,177 @@
+
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  
+  <meta charset="UTF-8">
+  <title>
+    programming fun telephone keypads | Agam&#39;s Mashed-Up Pome
+  </title>
+
+
+  
+  <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
+
+  
+  <link rel="canonical" href="http://agam.github.io/post/2014/01/18/programming-fun-telephone-keypads/"/>
+
+  
+  <link rel="stylesheet" href="/css/sanitize.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/highlight_monokai.css">
+  <link rel="stylesheet" href="/css/theme.css">
+  <link rel="stylesheet" href="/css/custom.css">
+  
+  
+  <link href="http://agam.github.io/index.xml" rel="alternate" type="application/rss+xml" title="Agam&#39;s Mashed-Up Pome" />
+  <link href="http://agam.github.io/index.xml" rel="feed" type="application/rss+xml" title="Agam&#39;s Mashed-Up Pome" />
+
+  
+  
+
+
+</head>
+
+
+
+<body>
+<div class="container">
+
+  
+  <header role="banner">
+    <div class="row gutters">
+      <div id="site-title" class="col span_6">
+        <h1><a href="http://agam.github.io/">Agam&#39;s Mashed-Up Pome</a></h1>
+        <h2>A lazy evaluation of compute space</h2>
+      </div>
+      <div id="social" class="col span_6">
+        <ul>
+          <li><a href="https://twitter.com/agambrahma" target="_blank">Twitter</a></li>
+          
+          
+          <li><a href="http://agam.github.io/index.xml" type="application/rss+xml" target="_blank">RSS</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+
+  
+  <main id="single" role="main">
+    <div class="article-header">
+      <h1>programming fun telephone keypads</h1>
+      <div class="meta">
+        Jan 18, 2014 &nbsp;
+        
+      </div>
+    </div>
+    <article>
+      <p><a href="http://www.reddit.com/r/dailyprogrammer/comments/1sody4/12113_challenge_139_intermediate_telephone_keypads/">This is a <em>medium</em> level problem</a>  with two levels of difficulty.</p>
+
+<pre><code>Input Description
+-----------------
+
+On standard console input, you will be given an array of digits (0 to 9) and
+spaces. All digits will be space-delimited, unless the digits represent
+multiple presses of the same button (for example pressing 2 twice gives you the
+letter 'B').  Use the modern Telephone Keypads digit-letter layout:
+0 = Not used
+1 = Not used
+2 = ABC
+3 = DEF
+4 = GHI
+5 = JKL
+6 = MNO
+7 = PQRS
+8 = TUV
+9 = WXYZ
+You may use any source for looking up English-language words, though this
+simple English-language dictionary is complete enough for the challenge.
+
+Output Description
+------------------
+Print a list of all best-fitting words, meaning words that start with the word
+generated using the given input on a telephone keypad. You do not have to only
+print words of the same length as the input (e.g. even if the input is
+4-digits, it's possible there are many long words that start with those
+4-digits).
+</code></pre>
+
+<p>You could do this by reading the dictionary into a vector of strings, then figuring out the prefix determined by the input and matching it against each dictionary word. There is a better way to do this though, which makes more sense considering the second part of this question.</p>
+
+<p>Instead of using a vector, you could use a <a href="http://en.wikipedia.org/wiki/Trie">Trie</a> which in this case would look something like:</p>
+
+<p>(showing the words &lsquo;sailor&rsquo;, &lsquo;soldier&rsquo; and &lsquo;solder&rsquo;)</p>
+
+<p>{% img center <a href="http://farm6.staticflickr.com/5534/12005243014_69145160ae_o_d.jpg">http://farm6.staticflickr.com/5534/12005243014_69145160ae_o_d.jpg</a> 400 %}</p>
+
+<p>This is a sort of naive implementation, you could compress this by storing strings and only expanding out to character chains if needed, but I skipped that optimization here.</p>
+
+<script type="text/javascript" src="http://gist.github.com/8422418.js"></script>
+
+
+<p>There is a harder version of this problem:</p>
+
+<pre><code>Challenge++
+-----------
+If you want an extra challenge, accomplish the same challenge but without
+knowing the number of times a digit is pressed. For example &quot;7653&quot; could mean
+sold, or poke, or even solenoid! You must do this efficiently with regards to
+Big-O complexity.
+</code></pre>
+
+<p>This would have been more inefficient with a vector of strings (you would sort the vector and then for each prefix, print out all subsequent ones until you encounter a string with a different prefix. So it&rsquo;s O(n log n) where n is the size of the dictionary).</p>
+
+<p>With our trie, we can (once we have a list of all combinatorially possible prefixes) look them up <em>quickly</em> (O(k + n), where k is the length of the prefix; O(k) time for each lookup and O(n) time for creating the trie (or O(mn) where m is the length of the largest word, though I would consider that a constant here)).</p>
+
+<p>(Note: there&rsquo;s some duplication of common code, especially in the <code>Trie</code> class; sorry about that!)</p>
+
+<script type="text/javascript" src="http://gist.github.com/8460783.js"></script>
+
+
+      
+      
+      
+    </article>
+    
+
+
+  </main>
+  
+  <nav class="pagination-single">
+    
+      <span class="previous">&larr; <a href="http://agam.github.io/post/2014/01/16/programming-technology-and-science/" rel="prev">programming technology and science</a></span>
+    
+    
+      <span class="next"><a href="http://agam.github.io/post/2014/01/19/programming-fun-nuts-and-bolts/" rel="next">programming fun nuts and bolts</a> &rarr;</span>
+    
+  </nav>
+
+
+  
+  <footer role="contentinfo">
+    <div style="text-align:center;">
+      
+      Copyright Agam Brahma
+    </div>
+  </footer>
+
+
+</div>
+
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-16612682-4', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</body>
+</html>
+

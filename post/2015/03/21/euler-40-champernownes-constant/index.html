@@ -1,0 +1,168 @@
+
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+
+  
+  <meta charset="UTF-8">
+  <title>
+    euler 40 champernownes constant | Agam&#39;s Mashed-Up Pome
+  </title>
+
+
+  
+  <meta name="viewport" content="width=device-width,user-scalable=no,maximum-scale=1,initial-scale=1">
+
+  
+  <link rel="canonical" href="http://agam.github.io/post/2015/03/21/euler-40-champernownes-constant/"/>
+
+  
+  <link rel="stylesheet" href="/css/sanitize.css">
+  <link rel="stylesheet" href="/css/responsive.css">
+  <link rel="stylesheet" href="/css/highlight_monokai.css">
+  <link rel="stylesheet" href="/css/theme.css">
+  <link rel="stylesheet" href="/css/custom.css">
+  
+  
+  <link href="http://agam.github.io/index.xml" rel="alternate" type="application/rss+xml" title="Agam&#39;s Mashed-Up Pome" />
+  <link href="http://agam.github.io/index.xml" rel="feed" type="application/rss+xml" title="Agam&#39;s Mashed-Up Pome" />
+
+  
+  
+
+
+</head>
+
+
+
+<body>
+<div class="container">
+
+  
+  <header role="banner">
+    <div class="row gutters">
+      <div id="site-title" class="col span_6">
+        <h1><a href="http://agam.github.io/">Agam&#39;s Mashed-Up Pome</a></h1>
+        <h2>A lazy evaluation of compute space</h2>
+      </div>
+      <div id="social" class="col span_6">
+        <ul>
+          <li><a href="https://twitter.com/agambrahma" target="_blank">Twitter</a></li>
+          
+          
+          <li><a href="http://agam.github.io/index.xml" type="application/rss+xml" target="_blank">RSS</a></li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+
+  
+  <main id="single" role="main">
+    <div class="article-header">
+      <h1>euler 40 champernownes constant</h1>
+      <div class="meta">
+        Mar 21, 2015 &nbsp;
+        
+      </div>
+    </div>
+    <article>
+      <p>I was too lazy to avoid the brute-force approach here, especially since it took less than a second to run. The following seems longer than it should be, partly because I left in some helper and debugging functions &hellip;</p>
+
+<p><em>Edit</em>: There is obviously a very nice paper-and-pen solution to this &ndash; the 10th place is &lsquo;1&rsquo; (for 10), then the 100th place is &lsquo;5&rsquo; (for 55), and so on &hellip;</p>
+
+<p><strong>Statutory Warning</strong>: <em>Spoilers Ahead</em></p>
+
+<pre><code class="language-lisp">(defparameter *max-digits* 2000000)
+
+(defun digits (n)
+  (declare (type fixnum n))
+  (nreverse (loop
+               for tmp = n then (floor (/ tmp 10))
+               until (= tmp 0)
+               collect (mod tmp 10))))
+
+(defun set-digits (d start all-digits)
+  (loop
+     for elem in d
+     for idx = start then (1+ idx) do
+       (setf (aref all-digits idx) elem)))
+
+;; Fills out the array of digits and returns an accessor function
+;; Note: the index increments by the length of the number of
+;; digits of the _previous_ number.
+(let ((all-digits (make-array (list *max-digits*) :element-type '(integer 0 9) :initial-element 0)))
+  (defun populate-digits (n)
+    (progn
+      (loop
+         for num = 1 then (1+ num)
+         for d = (digits num)
+         for i = 0 then (+ i (length (digits (1- num))))
+         while (&lt; i n) do
+           (set-digits d i all-digits))
+    (lambda (idx)
+      (aref all-digits idx)))))
+
+(defun power-list ()
+  (let ((champer (populate-digits 1000000)))
+    (loop for p from 0 to 6 collect
+         (funcall champer (1- (expt 10 p))))))
+
+(defun euler40 ()
+  (apply '* (power-list)))
+
+
+;; Useful debugging tool
+(defun scan-list (start end)
+  (let ((champer (populate-digits)))
+    (loop for i from start to end do
+         (print (cons i (funcall champer i))))))
+</code></pre>
+
+<p>The &ldquo;final answer&rdquo; is given by <code>(euler40)</code>, and the intermediate digits themselves by <code>(power-list)</code>. I found <code>(scan-list)</code> useful to debug an embarassing off-by-one error in the loop.</p>
+
+      
+      
+      
+    </article>
+    
+
+
+  </main>
+  
+  <nav class="pagination-single">
+    
+      <span class="previous">&larr; <a href="http://agam.github.io/post/2015/03/20/euler-39-integer-right-triangles/" rel="prev">euler 39 integer right triangles</a></span>
+    
+    
+      <span class="next"><a href="http://agam.github.io/post/2015/03/22/euler-41-pandigital-primes/" rel="next">euler 41 pandigital primes</a> &rarr;</span>
+    
+  </nav>
+
+
+  
+  <footer role="contentinfo">
+    <div style="text-align:center;">
+      
+      Copyright Agam Brahma
+    </div>
+  </footer>
+
+
+</div>
+
+<script src="/js/highlight.pack.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+
+<script>
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-16612682-4', 'auto');
+	ga('send', 'pageview');
+</script>
+
+</body>
+</html>
+
