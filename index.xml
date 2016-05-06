@@ -6,8 +6,89 @@
     <description>Recent content on Agam&#39;s Mashed-Up Pome</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 05 May 2016 16:59:52 -0700</lastBuildDate>
+    <lastBuildDate>Thu, 05 May 2016 21:04:17 -0700</lastBuildDate>
     <atom:link href="http://agam.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>getting started with hugo</title>
+      <link>http://agam.github.io/post/getting-started-with-hugo/</link>
+      <pubDate>Thu, 05 May 2016 21:04:17 -0700</pubDate>
+      
+      <guid>http://agam.github.io/post/getting-started-with-hugo/</guid>
+      <description>
+
+&lt;p&gt;Some notes on renewing the blog &amp;hellip;&lt;/p&gt;
+
+&lt;h2 id=&#34;initial-set-up-and-migration&#34;&gt;Initial set up and migration&lt;/h2&gt;
+
+&lt;p&gt;Creating a new site couldn’t be simpler (and yes, this isn’t blog-specific, you could really make &lt;em&gt;any&lt;/em&gt; kind of static website)&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;$ hugo new site progblog
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;I came across this simple-to-use tool someone else created, called &lt;a href=&#34;thanks to [Alistair Young]&#34;&gt;Octohug&lt;/a&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Edit&lt;/em&gt;: I realized that the titles of the posts have been lost and replaced by the wordy urls, so “…” became “dot dot dot” and “/“ became “slash”. I might change this later, or I might be lazy and skip it. It’s not &lt;em&gt;all that bad&lt;/em&gt; to look at anyway. Ditto for adding back tags/categories. Too bad.&lt;/p&gt;
+
+&lt;h2 id=&#34;building-and-previewing-the-site&#34;&gt;Building and previewing the site&lt;/h2&gt;
+
+&lt;p&gt;The counterpart to &lt;code&gt;rake generate&lt;/code&gt; for Octopress, except much, much, &lt;em&gt;much&lt;/em&gt; faster.&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;$ hugo --theme &amp;quot;angels-ladder&amp;quot; --buildDrafts
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;The counterpart to &lt;code&gt;rake preview&lt;/code&gt; is something like:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;$ hugo server -t angels-ladder -D -w
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;It’s worth pointing out that there is no longer any “generating files …” output on the console, because any changes are reflected &lt;em&gt;within a second&lt;/em&gt; or so. Really, you can’t tell the difference (which, of course, is how it should be!)&lt;/p&gt;
+
+&lt;h2 id=&#34;gist-tags&#34;&gt;Gist tags&lt;/h2&gt;
+
+&lt;p&gt;A small digression: I had a lot of &lt;em&gt;gist tags&lt;/em&gt; of the form &lt;code&gt;{% gist 12f2347dfh9 %}&lt;/code&gt;, and I used these so often I began to think of them as part of standard markdown, but of course they’re &lt;em&gt;not&lt;/em&gt; part of standard markdown, so we need a workaround, and luckily Hugo has a similar feature called &lt;em&gt;shortcodes&lt;/em&gt;.&lt;/p&gt;
+
+&lt;p&gt;So, I added a shortcode layout for the &lt;code&gt;gist&lt;/code&gt; keyword as described &lt;a href=&#34;https://vielmetti.github.io/post/2015/2015-07-14-publishing-from-hugo-to-github-pages/&#34;&gt;here&lt;/a&gt;, and then ran &lt;code&gt;sed&lt;/code&gt; over the post content:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;$ sed -i -- &#39;s/{% gist \([0-9a-z]*\) %}/&lt;script type=&#34;text/javascript&#34; src=&#34;http://gist.github.com/1.js&#34;&gt;&lt;/script&gt;
+/&#39; content/post/*
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;archiving-the-old-blog&#34;&gt;Archiving the old blog&lt;/h2&gt;
+
+&lt;p&gt;For nostalgic purposes (?) alone, I created a new repo, and saved a snapshot of the current &lt;code&gt;agam.github.io&lt;/code&gt; repo there:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;$ git push https://github.com/agam/Old-Jekyll-Blog.git
+$ git push https://github.com/agam/Old-Jekyll-Blog.git master
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;h2 id=&#34;publishing-to-github-pages&#34;&gt;Publishing to Github Pages&lt;/h2&gt;
+
+&lt;p&gt;First of all, creating a new post is as simple as&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;$ hugo new post/getting-started-with-hugo.md
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;I briefly considered jumping to a different static hosting site, but it didn’t seem worth the trouble. So I adapted the approach described &lt;a href=&#34;thanks to Edward Vielmetti&#34;&gt;here&lt;/a&gt;, which just means cleaning up the existing repo, deleting the &lt;code&gt;source&lt;/code&gt; branch, and directing Hugo’s output to the &lt;code&gt;master&lt;/code&gt; branch,  then pushing the same up to Github:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;$ hugo -d ../Github/agam.github.io/ --theme=angels-ladder
+$ cd ../Github/abam.github.io
+$ git commit -a -m ‘sync to latest post’
+$ git push origin master
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;That’s it! I do have some TODOs left, like installing &lt;code&gt;Pygments&lt;/code&gt; so that source code formatting doesn’t suck , but other than that, I’m good to go.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Edit:&lt;/em&gt; No point leaving that hanging, so I added it:&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class=&#34;language-html&#34;&gt;&amp;lt;link rel=&amp;quot;stylesheet&amp;quot; href=&amp;quot;https://yandex.st/highlightjs/8.0/styles/default.min.css&amp;quot;&amp;gt;
+&amp;lt;script src=&amp;quot;https://yandex.st/highlightjs/8.0/highlight.min.js&amp;quot;&amp;gt;&amp;lt;/script&amp;gt;
+&amp;lt;script&amp;gt;hljs.initHighlightingOnLoad();&amp;lt;/script&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;(I went with client-side highlighting since I didn’t want to slow down my fast new Go site generator with a sluggish Python plugin. So if the syntax coloring is off, you know whom to blame.)&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>moving away from jekyll</title>
@@ -687,48 +768,6 @@ nil
 &lt;blockquote&gt;
 &lt;p&gt;Perhaps it was commercialization in the 1980s that killed off the next expected new thing. Our plan and our hope was that the next generation of kids would come along and do something better than Smalltalk around 1984 or so. We all thought that the next level of programming language would be much more strategic and even policy-oriented and would have much more knowledge about what it was trying to do. But a variety of different things conspired together, and that next generation actually didn’t show up. &lt;strong&gt;One could actually argue—as I sometimes do—that the success of commercial personal computing and operating systems has actually led to a considerable retrogression in many, many respects.&lt;/strong&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>a taste of j</title>
-      <link>http://agam.github.io/post/2015/10/09/a-taste-of-j/</link>
-      <pubDate>Fri, 09 Oct 2015 00:00:00 +0000</pubDate>
-      
-      <guid>http://agam.github.io/post/2015/10/09/a-taste-of-j/</guid>
-      <description>&lt;p&gt;I recently stumbled across APL and J, as mentioned in a previous post, and began reading a bit of &lt;a href=&#34;http://www.jsoftware.com/help/learning/contents.htm&#34;&gt;an introductory book&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;A couple of days ago, I came across this series of coding tasks on a blog called &amp;ldquo;Programming Praxis&amp;rdquo;, and I picked &lt;a href=&#34;http://programmingpraxis.com/2015/10/06/the-iron-bar/&#34;&gt;the most recent one&lt;/a&gt; as an example to try out some J noobism.&lt;/p&gt;
-
-&lt;p&gt;The example is simple but contrived (and &lt;em&gt;median&lt;/em&gt; is a terrible name) &amp;ndash; we basically have to write a function that that takes two arguments and either increments, decrements or does nothing, with the first argument. In J, like so many other tasks, this is essentially one line (12 characters, to be precise).&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;median =: [ + (* @: -)~
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;To give some idea on what&amp;rsquo;s going on here, this expression can be broken, first, into three parts: &lt;code&gt;[&lt;/code&gt;, &lt;code&gt;+&lt;/code&gt;, &lt;code&gt;(* @: -)~&lt;/code&gt;. Let&amp;rsquo;s start with the sub-expression within the parentheses: &lt;code&gt;* @: -&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Here, &lt;code&gt;*&lt;/code&gt; is a &lt;em&gt;verb&lt;/em&gt; (think: &lt;em&gt;&amp;ldquo;function&amp;rdquo;&lt;/em&gt;) that returns 1, 0, or -1 depending on the sign of its argument. So &lt;code&gt;* 4&lt;/code&gt; is &lt;code&gt;1&lt;/code&gt;, &lt;code&gt;* _2&lt;/code&gt; (that&amp;rsquo;s how -2 is represented) is &lt;code&gt;_1&lt;/code&gt;, &lt;code&gt;* 0&lt;/code&gt; is &lt;code&gt;0&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;-&lt;/code&gt; is the only thing that does what you would expect: &lt;code&gt;4 - 3&lt;/code&gt; is &lt;code&gt;1&lt;/code&gt;, and so on.&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;@:&lt;/code&gt; is a &lt;em&gt;conjunction&lt;/em&gt;, such that &lt;code&gt;f @: g&lt;/code&gt; when applied to &lt;em&gt;x&lt;/em&gt; has the effect of &lt;em&gt;f (g x)&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;]&lt;/code&gt; is a verb that when given two values, always selects the first of the two.&lt;/p&gt;
-
-&lt;p&gt;&lt;code&gt;~&lt;/code&gt; is an &lt;em&gt;adverb&lt;/em&gt; that reverses the order of arguments to its preceding verb. So while &lt;code&gt;%&lt;/code&gt; applied to &lt;em&gt;x&lt;/em&gt; and &lt;em&gt;y&lt;/em&gt; yields &lt;em&gt;(x % y)&lt;/em&gt;, &lt;code&gt;%~&lt;/code&gt; applied to &lt;em&gt;x&lt;/em&gt; and &lt;em&gt;y&lt;/em&gt; yields &lt;em&gt;(y % x)&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Now things get a little tricky (but only a &lt;em&gt;little&lt;/em&gt;; we&amp;rsquo;re barely scratching the surface of J here). The expression for median can be seen as three verbs laid down together, and this is interpreted as a &lt;em&gt;&amp;ldquo;train&amp;rdquo;&lt;/em&gt; of verbs, or more specifically in this case, a &lt;em&gt;&amp;ldquo;dyadic fork&amp;rdquo;&lt;/em&gt;.&lt;/p&gt;
-
-&lt;p&gt;Basically, &lt;em&gt;(f g h)&lt;/em&gt; when applied to two values &lt;em&gt;x&lt;/em&gt; and &lt;em&gt;y&lt;/em&gt;, is equivalent to &lt;em&gt;g&lt;/em&gt; applied to the result of &lt;em&gt;f&lt;/em&gt; applied to &lt;em&gt;x&lt;/em&gt; and &lt;em&gt;y&lt;/em&gt;, and the result of &lt;em&gt;h&lt;/em&gt; applied to &lt;em&gt;x&lt;/em&gt; and &lt;em&gt;y&lt;/em&gt;. Or, using infix notation,&lt;/p&gt;
-
-&lt;pre&gt;&lt;code&gt;x (f g h) y   is equivalent to    (x f y) g (x h y)
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;The reason &lt;em&gt;x&lt;/em&gt; and &lt;em&gt;y&lt;/em&gt; aren&amp;rsquo;t present in the definition of &lt;em&gt;median&lt;/em&gt; is that it&amp;rsquo;s defined using a &amp;ldquo;tacit&amp;rdquo; form rather than an &amp;ldquo;explicit&amp;rdquo; form (somewhat similar to &amp;ldquo;point-free&amp;rdquo; definitions in Haskell).&lt;/p&gt;
-
-&lt;p&gt;Putting it all together now, when applied to two arguments, we get the equivalent of &lt;code&gt;(x [ y) + (* (y - x))&lt;/code&gt;, which gives &lt;code&gt;x + 1&lt;/code&gt; when &lt;em&gt;y &amp;gt; x&lt;/em&gt;, &lt;code&gt;x + 0&lt;/code&gt; when &lt;em&gt;y == x&lt;/em&gt;, and &lt;code&gt;x + (-1)&lt;/code&gt; when &lt;em&gt;y &amp;lt; x&lt;/em&gt;, which is what we want.&lt;/p&gt;
-
-&lt;p&gt;If you like this sort of thing, head over to &lt;a href=&#34;http://www.jsoftware.com/&#34;&gt;jsoftware.com&lt;/a&gt; for more.&lt;/p&gt;
 </description>
     </item>
     
