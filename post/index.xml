@@ -6,8 +6,74 @@
     <description>Recent content in Posts on Agam&#39;s Mashed-Up Pome</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Thu, 05 May 2016 21:04:17 -0700</lastBuildDate>
+    <lastBuildDate>Fri, 27 May 2016 21:33:24 -0700</lastBuildDate>
     <atom:link href="http://agam.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>luminus</title>
+      <link>http://agam.github.io/post/luminus/</link>
+      <pubDate>Fri, 27 May 2016 21:33:24 -0700</pubDate>
+      
+      <guid>http://agam.github.io/post/luminus/</guid>
+      <description>&lt;p&gt;Trying out a bunch of Clojure web programming options for fun, came across Luminus, which is &lt;em&gt;excellent&lt;/em&gt; for getting started, is not full of magic like Rails, and has great debugging — see this screenshot!&lt;/p&gt;
+
+
+&lt;figure &gt;
+    
+        &lt;img src=&#34;https://lh3.googleusercontent.com/eG2i2y469aUcejhJRReycIjudGvfidpQnIw3VbxhpC44FTvFbYVgUP5BylKhDd7ee3-0k4GzPs2w3IJ7bQ2C_zkGBOQYGYHqyY82TMJT69JpAe6CwVTF3nkaepSyEuiSTt7cPnFwGy-uLugO9W-9MnUXmO5JlhWT4AfPNJchCKhxD9hNjZlfJ3rZh8-Pwfvlszr3rgk_5bhxNd20RLvtxccGyVzGjzCktM2ATBinGpRSQgeB0a_gK0A-OMQQxVfc6O6mUvqPLiX1QnKLcTFzgCQ4Z7NXu_3vUGgTSeNrlbD8t5ayX6LCNiBW-LG3uBx_0-JoaEestIjoJmACr9rcaT2Ay466Htd-7-yHt5uUBVqjfaTIbjnVTRSNeXDkq1i5rHtzPHP0Zc8-Q69ldXHn8GaU_9wY16cbT7DfhbrtjKKRb3RmdWKXLGCTwi-I0whERx6LSz-DO1Qw_kANFvj2m49OIT65VIICxhvf5LWFKFLh13rANa4A2fu5g1DF67MTdqNOBz761P6BlB7HBahhg_jFpSVWWvzXsC38Gm9fn5GlAc5vSCiFfo3DP7Mu6s2iQkIcc38e52P4KNWbzqiAuHJ8_f8dueRj=w1454-h822-no&#34; /&gt;
+    
+    
+    &lt;figcaption&gt;
+        &lt;h4&gt;Luminus Error Trace&lt;/h4&gt;
+        
+    &lt;/figcaption&gt;
+    
+&lt;/figure&gt;
+
+</description>
+    </item>
+    
+    <item>
+      <title>mothly prog math sci summary may 2016</title>
+      <link>http://agam.github.io/post/monthly-prog-math-sci-summary-may-2016/</link>
+      <pubDate>Fri, 27 May 2016 21:29:00 -0700</pubDate>
+      
+      <guid>http://agam.github.io/post/monthly-prog-math-sci-summary-may-2016/</guid>
+      <description>
+
+&lt;h2 id=&#34;programming-summary-may-2016&#34;&gt;Programming Summary: May 2016&lt;/h2&gt;
+
+&lt;p&gt;May’s list of interesting prog/math/sci stuff:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;To start off with, a post on &lt;a href=&#34;https://medium.freecodecamp.com/being-a-developer-after-40-3c5dd112210c#.fulqyztcs&#34;&gt;being a programmer in your 40s&lt;/a&gt;, full of good tips (&lt;em&gt;“forget the hype”, “learn about software history”, “teach”, “don’t take a job just for the money”, and other good stuff&lt;/em&gt;)&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;In the era of &lt;a href=&#34;http://www.theregister.co.uk/2016/03/23/npm_left_pad_chaos/&#34;&gt;“leftpad”&lt;/a&gt;, someone asks, half-joking, half-despairing, whether &lt;a href=&#34;http://blog.dantup.com/2016/04/have-software-developers-given-up/&#34;&gt;software developers have given up&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;em&gt;Bots are Hot!&lt;/em&gt; Yawn, right? Everyone knows this, right? Except &lt;a href=&#34;http://www.wired.com/1996/04/netbots/&#34;&gt;this article&lt;/a&gt; is from twenty years ago, from the April 1996 issue of Wired magazine.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;If we need software to be modular, to reuse and “plug in” parts from libraries and so on, some concept of &lt;em&gt;Objects&lt;/em&gt; are &lt;a href=&#34;http://www.cs.cmu.edu/~aldrich/papers/objects-essay.pdf&#34;&gt;inevitable&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Clojure and Python &lt;a href=&#34;http://jkkramer.com/sudoku.html&#34;&gt;aren’t so different&lt;/a&gt; after all (shown via a side-by-side Sudoku solving programs)&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;An old Minsky paper from 1970, on &lt;a href=&#34;http://web.mit.edu/dxh/www/1970_Marvin_Lecture_Transcript_Italy_Limitations_Language.pdf&#34;&gt;The limitations of using languages for description&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;This &lt;a href=&#34;http://jr0cket.co.uk/2015/08/spacemacs-first-impressions-from-an-emacs-driven-developer.html&#34;&gt;article&lt;/a&gt; inspired me to try Spacemacs, and it really was quite good. I just happen to have a large &lt;code&gt;.emacs&lt;/code&gt;, so after a few days change aversion kicked in and I moved back to “plain old Emacs”, but it’s definitely very well done, recommended for newbies, and something to keep an eye on.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;If you have time to watch one YouTube video, let it be THIS. The one and only Matthias Felleisen gives a keynote lecture at Clojure West 2016: &lt;a href=&#34;https://www.youtube.com/watch?v=XTl7Jn_kmio&#34;&gt;“Types are like the weather, Type Systems are like weathermen”&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;My “to read” list keeps growing, but it doesn’t stop me from adding to it. This month’s entry: &lt;a href=&#34;http://cleveralgorithms.com/nature-inspired/index.html&#34;&gt;“Clever Algorithms: Nature-inspired Programming Recipes”&lt;/a&gt; (uses Ruby, but I’m sure it’s easily translatable to your favorite language)&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Finally, a contrarian open-source opinion, by Bill Joy in &lt;a href=&#34;https://www.salon.com/2000/05/16/chapter_2_part_one/&#34;&gt;an interview&lt;/a&gt; from a bit over a decade ago:&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;“&lt;em&gt;Most people are bad programmers&lt;/em&gt;,” says Joy. “The honest truth is that having a lot of people staring at the code does not find the really nasty bugs. The really nasty bugs are found by a couple of really smart people who just kill themselves. Most people looking at the code won’t see anything … You can’t have thousands of people contributing and achieve a high standard.”&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;(Make of that what you will)&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>getting started with hugo</title>
@@ -707,66 +773,6 @@ nil
 
 &lt;blockquote&gt;
 &lt;p&gt;Now we’re staring at computer screens and moving our hands on a keyboard, but it’s basically the same thing. &lt;strong&gt;We’re computer users thinking paper thoughts.”&lt;/strong&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>monthly programming summary november 2015</title>
-      <link>http://agam.github.io/post/2015/11/27/monthly-programming-summary-november-2015/</link>
-      <pubDate>Fri, 27 Nov 2015 00:00:00 +0000</pubDate>
-      
-      <guid>http://agam.github.io/post/2015/11/27/monthly-programming-summary-november-2015/</guid>
-      <description>&lt;p&gt;A second installment of &amp;ldquo;interesting stuff I came across this month&amp;rdquo; &amp;hellip;&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;A 1972 article in Rolling Stone magazine by Stewart Brand: &lt;a href=&#34;http://www.wheels.org/spacewar/stone/rolling_stone.html&#34;&gt;&lt;em&gt;&amp;ldquo;Fanatic Life and Symbolic Death Among the Computer Bums&amp;rdquo;&lt;/em&gt;&lt;/a&gt;. If only the present had corresponded a little closer to the imagined future of the past, eh? :)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;The hackers are the technicians of this science - &lt;em&gt;“It’s a term of derision and also the ultimate compliment.”&lt;/em&gt; They are the ones who translate human demands into code that the machines can understand and act on. They are legion. &lt;strong&gt;Fanatics with a potent new toy&lt;/strong&gt;. A mobile new-found elite, with its own apparat, language and character, its own legends and humor. Those magnificent men with their flying machines, scouting a leading edge of technology which has an odd softness to it; outlaw country, where rules are not decree or routine so much as the starker demands of what’s possible.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;An excellent blog that was forced offline by vociferous commentors, but lives on in the depths of the Wayback Machine: &lt;a href=&#34;http://web.archive.org/web/20140107054458/http://yinwang0.wordpress.com/&#34;&gt;&lt;em&gt;&amp;ldquo;Surely I am Joking&amp;rdquo;&lt;/em&gt;&lt;/a&gt; by Yin Wang. &lt;em&gt;All&lt;/em&gt; the posts are good, my favorites are the ones on the downsides of &amp;ldquo;pure&amp;rdquo; FP and &amp;ldquo;pure&amp;rdquo; OOP (and &lt;a href=&#34;http://web.archive.org/web/20140116155929/http://yinwang0.wordpress.com/2013/11/09/oop-fp&#34;&gt;how the two are similar!&lt;/a&gt;), the one on &lt;a href=&#34;http://web.archive.org/web/20131127131340/http://yinwang0.wordpress.com/2012/09/16/what-is-a-program/&#34;&gt;&lt;em&gt;&amp;ldquo;what is a program?&amp;rdquo;&lt;/em&gt;&lt;/a&gt;, and the one on the &lt;a href=&#34;http://web.archive.org/web/20140103011845/http://yinwang0.wordpress.com/2013/04/05/database/&#34;&gt;&lt;em&gt;&amp;ldquo;dark age of programming&amp;rdquo;&lt;/em&gt;&lt;/a&gt;.&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;A 1987 article in &lt;em&gt;&amp;ldquo;Computer Language&amp;rdquo;&lt;/em&gt; magazine: &lt;a href=&#34;http://bit-player.org/wp-content/extras/bph-publications/CompLang-1987-04-Hayes-mutant-lisps.pdf&#34;&gt;&lt;em&gt;&amp;ldquo;Mutant languages from the LISP lab&amp;rdquo;&lt;/em&gt;&lt;/a&gt; &amp;ndash; just for fun, and an insight into the pre-Common Lisp era.&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;A humorous blog entry from 2009: &lt;a href=&#34;http://james-iry.blogspot.com/2009/05/brief-incomplete-and-mostly-wrong.html&#34;&gt;&lt;em&gt;&amp;ldquo;A Brief, Incomplete, and Mostly Wrong History of Programming Languages&amp;rdquo;&lt;/em&gt;&lt;/a&gt;, with a self-explanatory title.&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;And finally, a &amp;ldquo;quote-of-the-month&amp;rdquo;. This one is short and succinct &lt;em&gt;Perlisism&lt;/em&gt;:&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;Computer Science is embarrassed by the computer.&lt;/strong&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>monthly programming summary</title>
-      <link>http://agam.github.io/post/2015/10/26/monthly-programming-summary/</link>
-      <pubDate>Mon, 26 Oct 2015 00:00:00 +0000</pubDate>
-      
-      <guid>http://agam.github.io/post/2015/10/26/monthly-programming-summary/</guid>
-      <description>&lt;p&gt;Here&amp;rsquo;s the first installment in an experiment &amp;ndash; writing a monthly roundup of a few things I read/saw/did this month that I found sort of interesting. I do something on my (general, non-programming-specific) &lt;a href=&#34;http://abacusnoirform.com/&#34;&gt;personal blog&lt;/a&gt;, so I thought the same might be a useful exercise here too.&lt;/p&gt;
-
-&lt;p&gt;In no particular order:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;The &amp;ldquo;Balloon edition&amp;rdquo; of BYTE magazine &lt;a href=&#34;https://archive.org/stream/byte-magazine-1981-08/1981_08_BYTE_06-08_Smalltalk#page/n0/mode/2up&#34;&gt;from 1981&lt;/a&gt; &amp;hellip; it&amp;rsquo;s amazing how this stuff is &lt;em&gt;still&lt;/em&gt; a revolutionary idea (also, the advertisements from three decades ago are hilarious)&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;em&gt;&amp;rdquo;&amp;lsquo;SHOULD I learn to program?&amp;rsquo; and &amp;lsquo;Do I have to learn to program?&amp;rsquo; are two variants of the question probably most asked by people testing the waters of computer ownership. The answer usually boils down to an emphatic &amp;lsquo;that depends &amp;hellip;, but probably not.&amp;rsquo;&amp;rdquo;&lt;/em&gt; Sounds relevant? Sounds current? In fact, this is from a New York Times article &lt;a href=&#34;http://www.nytimes.com/1984/01/17/science/personal-computers-does-everyone-need-to-learn-programming.html&#34;&gt;from 1984 (!)&lt;/a&gt;, titled &lt;em&gt;&amp;ldquo;Personal computers: Does everyone need to learn programming?&amp;rdquo;&lt;/em&gt; (there is a conclusion to be drawn from this, but I won&amp;rsquo;t go there)&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;I read through Dijkstra&amp;rsquo;s &lt;a href=&#34;https://www.cs.utexas.edu/users/EWD/&#34;&gt;notes&lt;/a&gt; a while ago, here&amp;rsquo;s &lt;a href=&#34;https://www.vex.net/~trebla/ewd.html&#34;&gt;someone else&amp;rsquo;s curated version&lt;/a&gt; of them.&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;A Google Tech Talk from 2007 by Alex Wright, on &lt;a href=&#34;https://www.youtube.com/watch?v=72nfrhXroo8&#34;&gt;&lt;em&gt;&amp;ldquo;The Web That Wasn&amp;rsquo;t&amp;rdquo;&lt;/em&gt;&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;I&amp;rsquo;ll leave you with this quote from Alan Kay:&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;Perhaps it was commercialization in the 1980s that killed off the next expected new thing. Our plan and our hope was that the next generation of kids would come along and do something better than Smalltalk around 1984 or so. We all thought that the next level of programming language would be much more strategic and even policy-oriented and would have much more knowledge about what it was trying to do. But a variety of different things conspired together, and that next generation actually didn’t show up. &lt;strong&gt;One could actually argue—as I sometimes do—that the success of commercial personal computing and operating systems has actually led to a considerable retrogression in many, many respects.&lt;/strong&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
 </description>
     </item>
