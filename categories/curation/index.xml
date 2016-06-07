@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Curation on Agam&#39;s Mashed-Up Pome</title>
+    <link>http://agam.github.io/categories/curation/</link>
+    <description>Recent content in Curation on Agam&#39;s Mashed-Up Pome</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 27 May 2016 21:29:00 -0700</lastBuildDate>
+    <atom:link href="http://agam.github.io/categories/curation/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>mothly prog math sci summary may 2016</title>
+      <link>http://agam.github.io/post/monthly-prog-math-sci-summary-may-2016/</link>
+      <pubDate>Fri, 27 May 2016 21:29:00 -0700</pubDate>
+      
+      <guid>http://agam.github.io/post/monthly-prog-math-sci-summary-may-2016/</guid>
+      <description>
+
+&lt;h2 id=&#34;programming-summary-may-2016&#34;&gt;Programming Summary: May 2016&lt;/h2&gt;
+
+&lt;p&gt;May’s list of interesting prog/math/sci stuff:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;To start off with, a post on &lt;a href=&#34;https://medium.freecodecamp.com/being-a-developer-after-40-3c5dd112210c#.fulqyztcs&#34;&gt;being a programmer in your 40s&lt;/a&gt;, full of good tips (&lt;em&gt;“forget the hype”, “learn about software history”, “teach”, “don’t take a job just for the money”, and other good stuff&lt;/em&gt;)&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;In the era of &lt;a href=&#34;http://www.theregister.co.uk/2016/03/23/npm_left_pad_chaos/&#34;&gt;“leftpad”&lt;/a&gt;, someone asks, half-joking, half-despairing, whether &lt;a href=&#34;http://blog.dantup.com/2016/04/have-software-developers-given-up/&#34;&gt;software developers have given up&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;em&gt;Bots are Hot!&lt;/em&gt; Yawn, right? Everyone knows this, right? Except &lt;a href=&#34;http://www.wired.com/1996/04/netbots/&#34;&gt;this article&lt;/a&gt; is from twenty years ago, from the April 1996 issue of Wired magazine.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;If we need software to be modular, to reuse and “plug in” parts from libraries and so on, some concept of &lt;em&gt;Objects&lt;/em&gt; are &lt;a href=&#34;http://www.cs.cmu.edu/~aldrich/papers/objects-essay.pdf&#34;&gt;inevitable&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Clojure and Python &lt;a href=&#34;http://jkkramer.com/sudoku.html&#34;&gt;aren’t so different&lt;/a&gt; after all (shown via a side-by-side Sudoku solving programs)&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;An old Minsky paper from 1970, on &lt;a href=&#34;http://web.mit.edu/dxh/www/1970_Marvin_Lecture_Transcript_Italy_Limitations_Language.pdf&#34;&gt;The limitations of using languages for description&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;This &lt;a href=&#34;http://jr0cket.co.uk/2015/08/spacemacs-first-impressions-from-an-emacs-driven-developer.html&#34;&gt;article&lt;/a&gt; inspired me to try Spacemacs, and it really was quite good. I just happen to have a large &lt;code&gt;.emacs&lt;/code&gt;, so after a few days change aversion kicked in and I moved back to “plain old Emacs”, but it’s definitely very well done, recommended for newbies, and something to keep an eye on.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;If you have time to watch one YouTube video, let it be THIS. The one and only Matthias Felleisen gives a keynote lecture at Clojure West 2016: &lt;a href=&#34;https://www.youtube.com/watch?v=XTl7Jn_kmio&#34;&gt;“Types are like the weather, Type Systems are like weathermen”&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;My “to read” list keeps growing, but it doesn’t stop me from adding to it. This month’s entry: &lt;a href=&#34;http://cleveralgorithms.com/nature-inspired/index.html&#34;&gt;“Clever Algorithms: Nature-inspired Programming Recipes”&lt;/a&gt; (uses Ruby, but I’m sure it’s easily translatable to your favorite language)&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Finally, a contrarian open-source opinion, by Bill Joy in &lt;a href=&#34;https://www.salon.com/2000/05/16/chapter_2_part_one/&#34;&gt;an interview&lt;/a&gt; from a bit over a decade ago:&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;“&lt;em&gt;Most people are bad programmers&lt;/em&gt;,” says Joy. “The honest truth is that having a lot of people staring at the code does not find the really nasty bugs. The really nasty bugs are found by a couple of really smart people who just kill themselves. Most people looking at the code won’t see anything … You can’t have thousands of people contributing and achieve a high standard.”&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;(Make of that what you will)&lt;/p&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

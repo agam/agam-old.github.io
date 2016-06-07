@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Dabbling on Agam&#39;s Mashed-Up Pome</title>
+    <link>http://agam.github.io/categories/dabbling/</link>
+    <description>Recent content in Dabbling on Agam&#39;s Mashed-Up Pome</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Fri, 27 May 2016 21:33:24 -0700</lastBuildDate>
+    <atom:link href="http://agam.github.io/categories/dabbling/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>luminus</title>
+      <link>http://agam.github.io/post/luminus/</link>
+      <pubDate>Fri, 27 May 2016 21:33:24 -0700</pubDate>
+      
+      <guid>http://agam.github.io/post/luminus/</guid>
+      <description>&lt;p&gt;Trying out a bunch of Clojure web programming options for fun, came across Luminus, which is &lt;em&gt;excellent&lt;/em&gt; for getting started, is not full of magic like Rails, and has great debugging — see this screenshot!&lt;/p&gt;
+
+
+&lt;figure &gt;
+    
+        &lt;img src=&#34;https://lh3.googleusercontent.com/eG2i2y469aUcejhJRReycIjudGvfidpQnIw3VbxhpC44FTvFbYVgUP5BylKhDd7ee3-0k4GzPs2w3IJ7bQ2C_zkGBOQYGYHqyY82TMJT69JpAe6CwVTF3nkaepSyEuiSTt7cPnFwGy-uLugO9W-9MnUXmO5JlhWT4AfPNJchCKhxD9hNjZlfJ3rZh8-Pwfvlszr3rgk_5bhxNd20RLvtxccGyVzGjzCktM2ATBinGpRSQgeB0a_gK0A-OMQQxVfc6O6mUvqPLiX1QnKLcTFzgCQ4Z7NXu_3vUGgTSeNrlbD8t5ayX6LCNiBW-LG3uBx_0-JoaEestIjoJmACr9rcaT2Ay466Htd-7-yHt5uUBVqjfaTIbjnVTRSNeXDkq1i5rHtzPHP0Zc8-Q69ldXHn8GaU_9wY16cbT7DfhbrtjKKRb3RmdWKXLGCTwi-I0whERx6LSz-DO1Qw_kANFvj2m49OIT65VIICxhvf5LWFKFLh13rANa4A2fu5g1DF67MTdqNOBz761P6BlB7HBahhg_jFpSVWWvzXsC38Gm9fn5GlAc5vSCiFfo3DP7Mu6s2iQkIcc38e52P4KNWbzqiAuHJ8_f8dueRj=w1454-h822-no&#34; /&gt;
+    
+    
+    &lt;figcaption&gt;
+        &lt;h4&gt;Luminus Error Trace&lt;/h4&gt;
+        
+    &lt;/figcaption&gt;
+    
+&lt;/figure&gt;
+
+</description>
+    </item>
+    
+  </channel>
+</rss>
