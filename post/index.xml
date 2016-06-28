@@ -6,8 +6,46 @@
     <description>Recent content in Posts on Agam&#39;s Mashed-Up Pome</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Fri, 27 May 2016 21:33:24 -0700</lastBuildDate>
+    <lastBuildDate>Mon, 27 Jun 2016 21:05:00 -0700</lastBuildDate>
     <atom:link href="http://agam.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>prog math sci summary june 2016</title>
+      <link>http://agam.github.io/post/prog-math-sci-summary-june-2016/</link>
+      <pubDate>Mon, 27 Jun 2016 21:05:00 -0700</pubDate>
+      
+      <guid>http://agam.github.io/post/prog-math-sci-summary-june-2016/</guid>
+      <description>&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Something for old-timers (yay!): &lt;a href=&#34;https://rcrowley.org/2010/01/06/things-unix-can-do-atomically.html&#34;&gt;&lt;em&gt;”Things UNIX can do atomically”&lt;/em&gt;&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://blog.acolyer.org&#34;&gt;&lt;em&gt;”The Morning Paper”&lt;/em&gt;&lt;/a&gt; is an excellent blog I stumbled across, but which like many excellent things, I’m struggling to keep up with. It explores one interesting CS paper every day.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://homepages.cwi.nl/~steven/Talks/2016/05-13-pygrunn/&#34;&gt;&lt;em&gt;”Moore’s Switch and the future of programming”&lt;/em&gt;&lt;/a&gt; (also a talk at &lt;a href=&#34;http://www.pygrunn.org&#34;&gt;pygrunn&lt;/a&gt;) is (yet another?) an attempt to persuade us that traditional imperative programming has hit a wall.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;This is something you either &lt;em&gt;totally relate to&lt;/em&gt;, or just go &lt;em&gt;meh&lt;/em&gt; at, there’s no middle ground: &lt;a href=&#34;https://medium.com/@fun_cuddles/linux-of-the-90s-or-why-i-have-linux-desktop-ptsd-1f276a7887fb#.r3k5v1thf&#34;&gt;&lt;em&gt;”My Experience With Linux of the 90s, or why I have Linux Desktop PTSD”&lt;/em&gt;&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://www.vitavonni.de/blog/201503/2015031201-the-sad-state-of-sysadmin-in-the-age-of-containers.html&#34;&gt;&lt;em&gt;”The sad state of sysadmin in the age of containers”&lt;/em&gt;&lt;/a&gt; bemoans the layers of crapware piling up these days.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Essentially, the Docker approach boils down to downloading an unsigned binary, running it, and hoping it doesn&amp;rsquo;t contain any backdoor into your companies network.
+&lt;em&gt;Feels like downloading Windows shareware in the 90s to me.&lt;/em&gt;
+When will the first docker image appear which contains the Ask toolbar? The first internet worm spreading via flawed docker images?&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;https://hueniverse.com/2016/06/08/the-fucking-open-web/&#34;&gt;&lt;em&gt;”The Fucking Open Web”&lt;/em&gt;&lt;/a&gt; (sorry, that’s the actual title) bemoans (you see the pattern here, yes?) the inability of web apps to match native apps in slickness. Unlike most rant-writers though, this guy wrote a devil’s advocate style &lt;a href=&#34;https://hueniverse.com/2016/06/20/the-open-web-fuck-yeah/&#34;&gt;rebuttal&lt;/a&gt; too, so it’s not all bad&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&lt;a href=&#34;http://coding2learn.org/blog/2013/07/29/kids-cant-use-computers/&#34;&gt;&lt;em&gt;”Kids can’t use computers”&lt;/em&gt;&lt;/a&gt; bemoans (you see the pattern here, yes?) the fact that computers are these opaque magic boxes that everyone doesn’t even try to understand (but, c’mon, isn’t that a sign of success? how hard do most people try to understand their &lt;em&gt;car&lt;/em&gt;?)&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;To complete the trend, &lt;a href=&#34;http://beauty-of-imagination.blogspot.co.uk/2016/01/tcltk-vs-web-we-should-abandon-web.html&#34;&gt;&lt;em&gt;”Tcl/Tk vs the Web”&lt;/em&gt;&lt;/a&gt; isn’t content with rejuvenating the web. The claim here is that the web is fine, but we should ditch CSS in favor of some simple interpreted standardized widget set. Good luck with that.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Finally, on an unrelated note — every now and then I discover something new I had no idea about. I was aware of the many really good language-specific IDEs that JetBrains puts out, but I had haver heard of the &lt;a href=&#34;http://www.onboard.jetbrains.com/articles/04/10/lop/&#34;&gt;“Meta Programming System”&lt;/a&gt;. Really cool stuff (though I wonder how it compares to &lt;a href=&#34;http://racket-lang.org&#34;&gt;Racket&lt;/a&gt; … &lt;em&gt;language-oriented programming&lt;/em&gt; seems to describe both of them).&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;(as part of a six-month experiment, I’m cross-posting this at &lt;a href=&#34;https://medium.com/@agam&#34;&gt;Medium&lt;/a&gt; as well as &lt;a href=&#34;http://agam.github.io&#34;&gt;the regular blog&lt;/a&gt;)&lt;/p&gt;
+</description>
+    </item>
     
     <item>
       <title>luminus</title>
@@ -34,16 +72,12 @@
     </item>
     
     <item>
-      <title>mothly prog math sci summary may 2016</title>
+      <title>prog math sci summary may 2016</title>
       <link>http://agam.github.io/post/monthly-prog-math-sci-summary-may-2016/</link>
       <pubDate>Fri, 27 May 2016 21:29:00 -0700</pubDate>
       
       <guid>http://agam.github.io/post/monthly-prog-math-sci-summary-may-2016/</guid>
-      <description>
-
-&lt;h2 id=&#34;programming-summary-may-2016&#34;&gt;Programming Summary: May 2016&lt;/h2&gt;
-
-&lt;p&gt;May’s list of interesting prog/math/sci stuff:&lt;/p&gt;
+      <description>&lt;p&gt;May’s list of interesting prog/math/sci stuff:&lt;/p&gt;
 
 &lt;ul&gt;
 &lt;li&gt;&lt;p&gt;To start off with, a post on &lt;a href=&#34;https://medium.freecodecamp.com/being-a-developer-after-40-3c5dd112210c#.fulqyztcs&#34;&gt;being a programmer in your 40s&lt;/a&gt;, full of good tips (&lt;em&gt;“forget the hype”, “learn about software history”, “teach”, “don’t take a job just for the money”, and other good stuff&lt;/em&gt;)&lt;/p&gt;&lt;/li&gt;
@@ -742,38 +776,6 @@ nil
 &lt;/code&gt;&lt;/pre&gt;
 
 &lt;p&gt;Here&amp;rsquo;s hoping to fun times ahead (and a &lt;em&gt;happy new year&lt;/em&gt; to you too!)&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>monthly programming summary december 2015</title>
-      <link>http://agam.github.io/post/2015/12/26/monthly-programming-summary-december-2015/</link>
-      <pubDate>Sat, 26 Dec 2015 00:00:00 +0000</pubDate>
-      
-      <guid>http://agam.github.io/post/2015/12/26/monthly-programming-summary-december-2015/</guid>
-      <description>&lt;p&gt;A second installment of &amp;ldquo;interesting stuff I came across this month&amp;rdquo; &amp;hellip;&lt;/p&gt;
-
-&lt;p&gt;(&lt;em&gt;Aside:&lt;/em&gt; I shouldn&amp;rsquo;t call this a &amp;ldquo;programming&amp;rdquo; summary, but I can&amp;rsquo;t think of anything better &amp;ndash; it&amp;rsquo;s more of a &amp;ldquo;math + science + computers&amp;rdquo; newsletter)&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;The highlight of the last month for me was the realization of the dream of an ultra-cheap computer, the &lt;a href=&#34;https://www.raspberrypi.org/blog/raspberry-pi-zero/&#34;&gt;Raspberry Pi Zero&lt;/a&gt;, which is cheaper than several drinks at Starbucks.&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Yes, ants displaying &amp;ldquo;collective intelligence&amp;rdquo; is old stuff (I first encountered a reference to it in the pages of &lt;em&gt;Godel, Escher, Bach&lt;/em&gt;), but &lt;a href=&#34;http://www.kurzweilai.net/army-ants-living-bridges-suggest-collective-intelligence&#34;&gt;this article&lt;/a&gt; is something else altogether, showing how &amp;ldquo;living bridges&amp;rdquo; are dynamically adjusted by the constituent ants, in response to foraaging needs.&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;&lt;em&gt;&amp;ldquo;Get Lamp&amp;rdquo;&lt;/em&gt; (&lt;a href=&#34;https://www.youtube.com/watch?v=UwZxUGmqSOo&#34;&gt;link to trailer&lt;/a&gt;) is an interesting documentary on the history of interactive text-based fiction, mostly adventure games. If you&amp;rsquo;ve ever telneted to a MUD, you will like this.&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;I lap up everything by Bret Victor, and hope for him to turn out as the Alan Kay of our time. &lt;a href=&#34;https://medium.com/re-form/the-utopian-ui-architect-34dead42a28#.emrat4pnv&#34;&gt;This&lt;/a&gt; is aanother recent piece where he insists we haven&amp;rsquo;t really &lt;em&gt;used&lt;/em&gt; computers well at all.&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Finally, &lt;a href=&#34;http://www.popularmechanics.com/military/weapons/a18343/the-cannons-on-the-b-29-bomber-were-a-mid-century-engineering-masterpiece/&#34;&gt;this Popular Mechanics article&lt;/a&gt; blew me away &amp;ndash; before there were &amp;ldquo;real&amp;rdquo; computers, the B-29 Superfortress had high-tech computing &lt;em&gt;way&lt;/em&gt; ahead of its time, to remotely operate its gun turrets. Obligatory youtube video below:&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;iframe width=&#34;560&#34; height=&#34;315&#34; src=&#34;https://www.youtube.com/embed/nskFayhBcy0&#34; frameborder=&#34;0&#34; allowfullscreen&gt;&lt;/iframe&gt;
-
-&lt;p&gt;This month&amp;rsquo;s QOTM is from Bret Victor&amp;rsquo;s piece above:&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;Now we’re staring at computer screens and moving our hands on a keyboard, but it’s basically the same thing. &lt;strong&gt;We’re computer users thinking paper thoughts.”&lt;/strong&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
 </description>
     </item>
     
