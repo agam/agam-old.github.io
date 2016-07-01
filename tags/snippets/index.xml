@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Snippets on Agam&#39;s Mashed-Up Pome</title>
+    <link>http://agam.github.io/tags/snippets/</link>
+    <description>Recent content in Snippets on Agam&#39;s Mashed-Up Pome</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 30 Jun 2016 21:44:34 -0700</lastBuildDate>
+    <atom:link href="http://agam.github.io/tags/snippets/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>random snippets 1</title>
+      <link>http://agam.github.io/post/random-snippets-1/</link>
+      <pubDate>Thu, 30 Jun 2016 21:44:34 -0700</pubDate>
+      
+      <guid>http://agam.github.io/post/random-snippets-1/</guid>
+      <description>&lt;p&gt;(This is a new thing where I bunch up mini-posts, or &lt;em&gt;snippets&lt;/em&gt;, and
+share them as a single post here. I guess the alternative would be a
+single post at Tumblr, but I&amp;rsquo;d rather keep everything in one place,
+for personal sanity. Perhaps later I&amp;rsquo;ll cross-post this on Medium&amp;hellip;)&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Nathan Marz, in an interview with &amp;ldquo;Programmer Magazine&amp;rdquo;,
+&lt;a href=&#34;http://nathanmarz.com/blog/interview-with-programmer-magazine.html&#34;&gt;relates&lt;/a&gt; this experience:&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;I talked with John McCarthy for two hours when I was a sophomore in college. The most striking thing he told me was when I asked about the history of Lisp. He told me he needed a better programming language for doing AI research, so he invented Lisp for that purpose. He really didn&amp;rsquo;t seem to care that much about programming languages – his real passion was AI. It struck me as exactly like how Isaac Newton invented calculus because he needed it for his physics work. &lt;strong&gt;The pebbles of giants really are big boulders.&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ol&gt;
+&lt;li&gt;The HackerNews &lt;a href=&#34;https://news.ycombinator.com/item?id=11933427&#34;&gt;discussion&lt;/a&gt; on a &lt;a href=&#34;http://spectrum.ieee.org/view-from-the-valley/telecom/internet/the-fathers-of-the-internet-revolution-urge-todays-pioneers-to-reinvent-the-web&#34;&gt;recent article&lt;/a&gt; featured the
+following comment:&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;The Web has already been reinvented, but not in the direction that Bernars-Lee wants. We have HTTP2 running everything through one pipe to big sites. We have Javascript that puts the site in control of the user&amp;rsquo;s machine and makes web pages display-only, like PostScript. More than half of all traffic is coming from the top 10 sites. &lt;strong&gt;The federated systems, email, IRC, and Usenet, have been replaced by Gmail, WhatsApp, and Facebook&lt;/strong&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Did you know that Tim O&amp;rsquo;Reilly (of the website and the book series,
+etc) was a huge fan of &lt;em&gt;Dune&lt;/em&gt;?!
+&lt;a href=&#34;http://www.oreilly.com/tim/herbert/intro.html&#34;&gt;Here&lt;/a&gt; is his own
+confession (tl;dr: he wrote a whole book about it!). The following
+is an extract from chapter 8, _&amp;ldquo;Transcending the Human&amp;rdquo;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Herbert&amp;rsquo;s layered view of higher intelligence no doubt had many sources, built over time into a coherent philosophy. However it is conveniently explained in the language of general semantics. Any event has an infinite number of characteristics that can be abstracted from it; any sensory system (a mix of neurology, language, and training) abstracts a finite number, therefore experience is always less than the event that gave rise to it. Different sensory systems might perceive the same object entirely differently. A larger sensory system might approach a larger grasp of the object, a larger sense of its internal characteristics, as well as of its interrelationships with other objects and events. Herbert&amp;rsquo;s assumption, as shown in his treatment of the Calebans and of Avata, the electrokelp, is that a larger consciousness will come to see more and more of the essential interconnections of the universe, its multiple tracks of intertwined identity. On still deeper levels, asymptotically approaching (but never reaching) the infinity of the universe itself, consciousness approaches the appearance of unconsciousness (as in the Sleeper of The Dosadi Experiment), because perceiver and perceived approach identity. &lt;strong&gt;The logical conclusion of this process is that an infinite being, or Cod, is conterminous with the universe itself, and not with any of its parts. The savior god of human dreams must inevitably be a more limited creation; if not, like Jesus on the cross, he must inevitably refuse to act.&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
+    
+  </channel>
+</rss>

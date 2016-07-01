@@ -6,8 +6,51 @@
     <description>Recent content in Posts on Agam&#39;s Mashed-Up Pome</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 27 Jun 2016 21:05:00 -0700</lastBuildDate>
+    <lastBuildDate>Thu, 30 Jun 2016 21:44:34 -0700</lastBuildDate>
     <atom:link href="http://agam.github.io/post/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>random snippets 1</title>
+      <link>http://agam.github.io/post/random-snippets-1/</link>
+      <pubDate>Thu, 30 Jun 2016 21:44:34 -0700</pubDate>
+      
+      <guid>http://agam.github.io/post/random-snippets-1/</guid>
+      <description>&lt;p&gt;(This is a new thing where I bunch up mini-posts, or &lt;em&gt;snippets&lt;/em&gt;, and
+share them as a single post here. I guess the alternative would be a
+single post at Tumblr, but I&amp;rsquo;d rather keep everything in one place,
+for personal sanity. Perhaps later I&amp;rsquo;ll cross-post this on Medium&amp;hellip;)&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Nathan Marz, in an interview with &amp;ldquo;Programmer Magazine&amp;rdquo;,
+&lt;a href=&#34;http://nathanmarz.com/blog/interview-with-programmer-magazine.html&#34;&gt;relates&lt;/a&gt; this experience:&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;I talked with John McCarthy for two hours when I was a sophomore in college. The most striking thing he told me was when I asked about the history of Lisp. He told me he needed a better programming language for doing AI research, so he invented Lisp for that purpose. He really didn&amp;rsquo;t seem to care that much about programming languages – his real passion was AI. It struck me as exactly like how Isaac Newton invented calculus because he needed it for his physics work. &lt;strong&gt;The pebbles of giants really are big boulders.&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ol&gt;
+&lt;li&gt;The HackerNews &lt;a href=&#34;https://news.ycombinator.com/item?id=11933427&#34;&gt;discussion&lt;/a&gt; on a &lt;a href=&#34;http://spectrum.ieee.org/view-from-the-valley/telecom/internet/the-fathers-of-the-internet-revolution-urge-todays-pioneers-to-reinvent-the-web&#34;&gt;recent article&lt;/a&gt; featured the
+following comment:&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;The Web has already been reinvented, but not in the direction that Bernars-Lee wants. We have HTTP2 running everything through one pipe to big sites. We have Javascript that puts the site in control of the user&amp;rsquo;s machine and makes web pages display-only, like PostScript. More than half of all traffic is coming from the top 10 sites. &lt;strong&gt;The federated systems, email, IRC, and Usenet, have been replaced by Gmail, WhatsApp, and Facebook&lt;/strong&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ol&gt;
+&lt;li&gt;Did you know that Tim O&amp;rsquo;Reilly (of the website and the book series,
+etc) was a huge fan of &lt;em&gt;Dune&lt;/em&gt;?!
+&lt;a href=&#34;http://www.oreilly.com/tim/herbert/intro.html&#34;&gt;Here&lt;/a&gt; is his own
+confession (tl;dr: he wrote a whole book about it!). The following
+is an extract from chapter 8, _&amp;ldquo;Transcending the Human&amp;rdquo;&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Herbert&amp;rsquo;s layered view of higher intelligence no doubt had many sources, built over time into a coherent philosophy. However it is conveniently explained in the language of general semantics. Any event has an infinite number of characteristics that can be abstracted from it; any sensory system (a mix of neurology, language, and training) abstracts a finite number, therefore experience is always less than the event that gave rise to it. Different sensory systems might perceive the same object entirely differently. A larger sensory system might approach a larger grasp of the object, a larger sense of its internal characteristics, as well as of its interrelationships with other objects and events. Herbert&amp;rsquo;s assumption, as shown in his treatment of the Calebans and of Avata, the electrokelp, is that a larger consciousness will come to see more and more of the essential interconnections of the universe, its multiple tracks of intertwined identity. On still deeper levels, asymptotically approaching (but never reaching) the infinity of the universe itself, consciousness approaches the appearance of unconsciousness (as in the Sleeper of The Dosadi Experiment), because perceiver and perceived approach identity. &lt;strong&gt;The logical conclusion of this process is that an infinite being, or Cod, is conterminous with the universe itself, and not with any of its parts. The savior god of human dreams must inevitably be a more limited creation; if not, like Jesus on the cross, he must inevitably refuse to act.&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+</description>
+    </item>
     
     <item>
       <title>prog math sci summary june 2016</title>
@@ -713,69 +756,6 @@ main() {
 &lt;pre&gt;&lt;code class=&#34;language-sh&#34;&gt;&amp;gt; lein run /tmp/challenge-input
 {:buy-price 8.03, :sell-price 10.02, :difference 1.9900007247924805}
 &lt;/code&gt;&lt;/pre&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>clojure from the ground up</title>
-      <link>http://agam.github.io/post/2016/01/06/clojure-from-the-ground-up/</link>
-      <pubDate>Wed, 06 Jan 2016 00:00:00 +0000</pubDate>
-      
-      <guid>http://agam.github.io/post/2016/01/06/clojure-from-the-ground-up/</guid>
-      <description>&lt;p&gt;It&amp;rsquo;s time for the same old new year resolution again: going to stop randomly skimming new languages and focus on something in depth.&lt;/p&gt;
-
-&lt;p&gt;This time, without loss of generality (hopefully!), I picked Clojure (&lt;em&gt;again ?&lt;/em&gt;).&lt;/p&gt;
-
-&lt;p&gt;Found this nice series of posts called &lt;a href=&#34;https://aphyr.com/posts/301-clojure-from-the-ground-up-welcome&#34;&gt;&lt;em&gt;&amp;ldquo;Clojure from the ground up&amp;rdquo;&lt;/em&gt;&lt;/a&gt;.&lt;/p&gt;
-
-&lt;p&gt;The best part is that unlike other random free tutorials online, this one has exercises.&lt;/p&gt;
-
-&lt;p&gt;For example, &lt;a href=&#34;https://aphyr.com/posts/306-clojure-from-the-ground-up-state&#34;&gt;the post that introduces concurrency primitives&lt;/a&gt; asks us to write our own &lt;code&gt;future&lt;/code&gt; macro.&lt;/p&gt;
-
-&lt;p&gt;I came up with this kludge:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-clojure&#34;&gt;(defmacro my-future [&amp;amp; body]
-  `(let [p# (promise)]
-    (.start (Thread.
-      (fn [] (let [f# (fn [] ~@body)
-                   r# (f#)]
-               (deliver p# r#)))))
-               p#))
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;The expansion looks like this:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-clojure&#34;&gt;clojure-noob.core&amp;gt; (pprint (macroexpand &#39;(my-future (Thread/sleep 5000) (prn &amp;quot;Hey ... &amp;quot;))))
-(let*
-  [p__9904__auto__ (clojure.core/promise)]
-  (.start
-    (java.lang.Thread.
-      (clojure.core/fn
-       []
-       (clojure.core/let
-        [f__9905__auto__
-          (clojure.core/fn [] (Thread/sleep 5000) (prn &amp;quot;Hey ... &amp;quot;))
-          r__9906__auto__ (f__9905__auto__)]
-        (clojure.core/deliver p__9904__auto__ r__9906__auto__)))))
-        p__9904__auto__)
-nil
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;And it seems to work:&lt;/p&gt;
-
-&lt;pre&gt;&lt;code class=&#34;language-clojure&#34;&gt;clojure-noob.core&amp;gt; (def x (my-future (Thread/sleep 5000) (prn &amp;quot;Hey ... &amp;quot;)))
-#&#39;clojure-noob.core/x
-clojure-noob.core&amp;gt; (pprint x)
-#&amp;lt;Promise@6a1dc62: :not-delivered&amp;gt;
-nil
-&amp;quot;Hey ... &amp;quot;
-clojure-noob.core&amp;gt;
-clojure-noob.core&amp;gt; (pprint x)
-#&amp;lt;Promise@6a1dc62: nil&amp;gt;
-nil
-&lt;/code&gt;&lt;/pre&gt;
-
-&lt;p&gt;Here&amp;rsquo;s hoping to fun times ahead (and a &lt;em&gt;happy new year&lt;/em&gt; to you too!)&lt;/p&gt;
 </description>
     </item>
     
