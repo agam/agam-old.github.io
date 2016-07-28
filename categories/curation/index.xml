@@ -6,8 +6,108 @@
     <description>Recent content in Curation on Agam&#39;s Mashed-Up Pome</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 27 Jun 2016 21:05:00 -0700</lastBuildDate>
+    <lastBuildDate>Wed, 27 Jul 2016 22:04:47 -0700</lastBuildDate>
     <atom:link href="http://agam.github.io/categories/curation/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>prog math sci summary july 2016</title>
+      <link>http://agam.github.io/post/prog-math-sci-summary-july-2016/</link>
+      <pubDate>Wed, 27 Jul 2016 22:04:47 -0700</pubDate>
+      
+      <guid>http://agam.github.io/post/prog-math-sci-summary-july-2016/</guid>
+      <description>&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Once again, I start with something for old-timers: here is the original marketing pre-development pitch&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:diablo&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:diablo&#34;&gt;1&lt;/a&gt;&lt;/sup&gt; for the first &lt;em&gt;Diablo&lt;/em&gt; game (an old time sink).&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;This trip&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:reddit-math&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:reddit-math&#34;&gt;2&lt;/a&gt;&lt;/sup&gt; goes on my bucket list: visiting the places Gauss, Hilbert, Planck etc. lived in.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;The Decentralized Web Summit was held late last month, and I recommend watching atleast the initial few talks&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:e-g-Vint-Cerf-Tim-Berners-Lee&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:e-g-Vint-Cerf-Tim-Berners-Lee&#34;&gt;0&lt;/a&gt;&lt;/sup&gt; &amp;hellip; and particularly relevant if you believed in the promises of the 90s.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Some people are hard to classify. Is Terry Davis deranged or brilliant or both? Read this article&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:davis&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:davis&#34;&gt;3&lt;/a&gt;&lt;/sup&gt; and decide for yourself.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;Davis emails me regularly and late into the night, in Courier font, from a two or three year-old Dell desktop running Ubuntu. Unable to work, he collects Social Security disability and spends most of his time coding, web surfing, or &lt;strong&gt;using the output from the National Institute of Standards and Technology randomness beacon to talk to God&lt;/strong&gt; — he posts the results on his webpage as &amp;ldquo;Terry Davis’ Rants.&amp;rdquo;&lt;/p&gt;
+
+&lt;p&gt;He drinks a lot of caffeine and lives mostly on a 48-hour schedule: &amp;ldquo;I stay awake 16 * 2 and sleep 8 * 2.&amp;rdquo; He shares a house with his parents and a pair of cockatiels. Of his parents he says, &amp;ldquo;We don&amp;rsquo;t interact that much.&amp;rdquo;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;If you&amp;rsquo;re not familiar with Forth or Chuck Moore (or even if you are), you might like this&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:forth&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:forth&#34;&gt;4&lt;/a&gt;&lt;/sup&gt; iconoclastic essay.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;My long-form recommendation&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:long&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:long&#34;&gt;5&lt;/a&gt;&lt;/sup&gt; of the month: it covers the breadth and depth of &amp;ldquo;programming&amp;rdquo;, the old and the new, all with nostalgic images from the recent past and the not-so-recent past.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;A short take on Scheme vs Python&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:scheme-python&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:scheme-python&#34;&gt;6&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;The &amp;ldquo;archaeological&amp;rdquo; snippet of the month: the source code for the Apollo 11 Guidance Computer, available&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:as-everything-else-these-days&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:as-everything-else-these-days&#34;&gt;0&lt;/a&gt;&lt;/sup&gt; on Github.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Choice extract (lines 251-255 of &lt;code&gt;THE_LUNAR_LANDING.agc&lt;/code&gt;):&lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;P63SPOT4	TC	BANKCALL	# ENTER		INITIALIZE LANDING RADAR
+            CADR	SETPOS1
+
+            TC		POSTJUMP	# OFF TO SEE THE WIZARD ...
+            CADR	BURNBABY
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;(I&amp;rsquo;ll leave you to consider the &amp;ldquo;advantages&amp;rdquo; we enjoy in our &amp;ldquo;high-level&amp;rdquo; languages today)&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;This person points&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:broken&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:broken&#34;&gt;7&lt;/a&gt;&lt;/sup&gt; out the obvious but painful truth: software is broken because &lt;em&gt;we&amp;rsquo;re ok with it being broken&lt;/em&gt;.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Ok, another archaeological post (sorry!): this one&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:slug&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:slug&#34;&gt;8&lt;/a&gt;&lt;/sup&gt; is from the archives of the Symbolics Lisp Users Group (SLUG), 25 years ago. I won&amp;rsquo;t summarize it, read it if you care about that sort of thing &amp;hellip;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Quanta magazine is turning out to be my go-to source of cool science-y stuff. This one is about certain patterns&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:quanta&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:quanta&#34;&gt;9&lt;/a&gt;&lt;/sup&gt; common to bird&amp;rsquo;s eyes, shaken marbles, and certain emulsions, a pattern called &lt;em&gt;hyperuniformity&lt;/em&gt;.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;I&amp;rsquo;m still not sure whether Wolfram&amp;rsquo;s &lt;em&gt;New Kind of Science&lt;/em&gt; was excellent or just &lt;em&gt;meh&lt;/em&gt; (or, lookup TODO&amp;rsquo;s one-word review), but here&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:wolfram&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:wolfram&#34;&gt;10&lt;/a&gt;&lt;/sup&gt; is a collection of a bunch of reviews and commentary on it.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Today, Java is this verbose, enterprise-y language, but there were many twists and turns along the way&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:java&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:java&#34;&gt;11&lt;/a&gt;&lt;/sup&gt;, some of them quite unexpected.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+&lt;p&gt;I first met James Gosling in the spring of 1988. He was wearing an ill-fitting white T-shirt with an obscure reference to Jean Paul Sartre&amp;rsquo;s cat. He wasn&amp;rsquo;t wearing shoes, and his socks didn&amp;rsquo;t quite match. His large corner office in building 14 of Sun&amp;rsquo;s Mountain View campus was crowded with piles of books and papers strewn about. His Sun &lt;sup&gt;3&lt;/sup&gt;&amp;frasl;&lt;sub&gt;60&lt;/sub&gt; had a &amp;ldquo;Macintosh Test Drive&amp;rdquo; bumper sticker on the side of the monitor. He had nice art on his walls. Not the typical hacker dinosaurs and free posters from Usenix conferences, but real Japanese pen and ink prints. His bookshelf was full of the classics of computer science. Horowitz, Knuth, Foley and Van Dam, Xerox bluebooks, SIGGRAPH and OOPSLA proceedings, the collected works of Breathed and Larson. &lt;strong&gt;Clearly, James was not your garden variety programmer.&lt;/strong&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;We&amp;rsquo;re used to a certain genre of examples in programming textbooks, which is why when someone goes out of their way[^political] to create politically charged test cases, it &amp;hellip; uh &amp;hellip; stands out, especially if you do it in a popular Oreilly book.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;This is either funny, or deep, or banal, I can&amp;rsquo;t decide &amp;hellip; apparently there are clues&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:borges&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:borges&#34;&gt;12&lt;/a&gt;&lt;/sup&gt; in a Borges story that refer to the Object-Oriented vs Functional Programming debate of today (in my opinion though, this is just because the links between natural languages and programming languages aren&amp;rsquo;t well understood enough).&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;(once again, cross-posted to &lt;a href=&#34;https://medium.com/@agam&#34;&gt;Medium&lt;/a&gt; and the regular &lt;a href=&#34;http://agam.github.io/&#34;&gt;blog&lt;/a&gt;)&lt;/p&gt;
+&lt;div class=&#34;footnotes&#34;&gt;
+
+&lt;hr /&gt;
+
+&lt;ol&gt;
+&lt;li id=&#34;fn:diablo&#34;&gt;&lt;em&gt;Diablo&lt;/em&gt;, &lt;a href=&#34;http://www.graybeardgames.com/download/diablo_pitch.pdf&#34;&gt;game concept by Condor Inc&lt;/a&gt;
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:diablo&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:reddit-math&#34;&gt;Math Reddit, &lt;a href=&#34;https://www.reddit.com/r/math/comments/4o6m2z/history_of_mathematics_backpacking_trip_in_germany/&#34;&gt;&lt;em&gt;&amp;ldquo;History of Mathematics backpacking trip&amp;rdquo;&lt;/em&gt;&lt;/a&gt;
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:reddit-math&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:davis&#34;&gt;Motherboard, &lt;a href=&#34;http://motherboard.vice.com/read/gods-lonely-programmer&#34;&gt;&lt;em&gt;&amp;ldquo;God&amp;rsquo;s Lonely Programmer&amp;rdquo;&lt;/em&gt;&lt;/a&gt;
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:davis&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:forth&#34;&gt;Jeff Fox, &lt;a href=&#34;http://www.ultratechnology.com/lowfat.htm&#34;&gt;&lt;em&gt;&amp;ldquo;Low Fat Computing&amp;rdquo;&lt;/em&gt;&lt;/a&gt; (1998)
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:forth&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:long&#34;&gt;Medium, &lt;a href=&#34;https://medium.com/@thi.ng/the-jacob-s-ladder-of-coding-4b12477a26c1&#34;&gt;&lt;em&gt;&amp;ldquo;The Jacob&amp;rsquo;s Ladder of coding&amp;rdquo;&lt;/em&gt;&lt;/a&gt;
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:long&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:scheme-python&#34;&gt;Brian Harvey, &lt;a href=&#34;https://people.eecs.berkeley.edu/~bh/proglang.html&#34;&gt;&lt;em&gt;&amp;ldquo;Scheme vs. Python&amp;rdquo;&lt;/em&gt;&lt;/a&gt;
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:scheme-python&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:broken&#34;&gt;SAPM Course Blog, &lt;a href=&#34;https://blog.inf.ed.ac.uk/sapm/2014/03/14/we-could-write-nearly-perfect-software-but-we-choose-not-to/&#34;&gt;&lt;em&gt;&amp;ldquo;We could write nearly perfect software but we choose not to&amp;rdquo;&lt;/em&gt;&lt;/a&gt;
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:broken&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:slug&#34;&gt;Symbolics Lisp Users Group, &lt;a href=&#34;ftp://ftp.ai.sri.com/pub/mailing-lists/slug/910630/msg00107.html&#34;&gt;&lt;em&gt;&amp;ldquo;C vs. Lisp, or UNIX vs. Genera, or just US vs. THEM. Cuckoo?&amp;rdquo;&lt;/em&gt;&lt;/a&gt;
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:slug&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:quanta&#34;&gt;Quanta magazine, &lt;a href=&#34;https://www.quantamagazine.org/20160712-hyperuniformity-found-in-birds-math-and-physics/&#34;&gt;&lt;em&gt;&amp;ldquo;A Bird’s-Eye View of Nature’s Hidden Order&amp;rdquo;&lt;/em&gt;&lt;/a&gt;
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:quanta&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:wolfram&#34;&gt;W. Edwin Clark, &lt;a href=&#34;http://shell.cas.usf.edu/~wclark/ANKOS_reviews.html&#34;&gt;&lt;em&gt;&amp;ldquo;Collection of reviews of Wolfram&amp;rsquo;s A New Kind of Science&amp;rdquo;&lt;/em&gt;&lt;/a&gt;
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:wolfram&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:java&#34;&gt;Blinkenlights, &lt;a href=&#34;http://www.blinkenlights.com/classiccmp/javaorigin.html&#34;&gt;&lt;em&gt;&amp;ldquo;The long strange road to Java&amp;rdquo;&lt;/em&gt;&lt;/a&gt;
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:java&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:borges&#34;&gt;Jan vs Machine, &lt;a href=&#34;http://www.janvsmachine.net/2013/09/did-borges-predict-oo-vs-functional.html&#34;&gt;&lt;em&gt;&amp;ldquo;Did Borges predict the OO vs functional programming debate?&amp;rdquo;&lt;/em&gt;&lt;/a&gt;
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:borges&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</description>
+    </item>
     
     <item>
       <title>prog math sci summary june 2016</title>
