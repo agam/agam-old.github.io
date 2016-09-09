@@ -6,8 +6,55 @@
     <description>Recent content on Agam&#39;s Mashed-Up Pome</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 27 Jul 2016 22:04:47 -0700</lastBuildDate>
+    <lastBuildDate>Thu, 08 Sep 2016 22:18:03 -0700</lastBuildDate>
     <atom:link href="http://agam.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Prog/Math/Sci summary: August 2016</title>
+      <link>http://agam.github.io/post/prog-math-sci-summary-aug-2016/</link>
+      <pubDate>Thu, 08 Sep 2016 22:18:03 -0700</pubDate>
+      
+      <guid>http://agam.github.io/post/prog-math-sci-summary-aug-2016/</guid>
+      <description>&lt;p&gt;Some interesting stuff, in no particular order:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;I didn&amp;rsquo;t know Knuth even &lt;em&gt;had&lt;/em&gt; a book on Surreal numbers, but here&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:knuth&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:knuth&#34;&gt;1&lt;/a&gt;&lt;/sup&gt; is his humorous recounting of how it was written.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;There&amp;rsquo;s always more room at the bottom &amp;hellip; this Economist article&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:storage&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:storage&#34;&gt;2&lt;/a&gt;&lt;/sup&gt; mentions a recent breakthrough, where scientists were able to store a paragraph of text on individual atoms at the relatively not-so-cold temperature of -196 degress celsius.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;James Noble of &lt;a href=&#34;http://homepages.mcs.vuw.ac.nz/~kjx/papers/nopp.pdf&#34;&gt;&amp;ldquo;Notes on Post-Modern programming&amp;rdquo;&lt;/a&gt; returns with a sequel&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:postmodern&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:postmodern&#34;&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;I&amp;rsquo;m always interested in posssible zones of &amp;ldquo;incommensurability&amp;rdquo; in computer science, and most of such things have to do with people disagreeing&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:types&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:types&#34;&gt;4&lt;/a&gt;&lt;/sup&gt; on what &amp;ldquo;types&amp;rdquo; mean &amp;hellip;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&amp;hellip; but occasionally disagreeing more broadly&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:paradigms&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:paradigms&#34;&gt;5&lt;/a&gt;&lt;/sup&gt;, about what computer science &lt;em&gt;is&lt;/em&gt;.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;There has to be &lt;em&gt;some&lt;/em&gt; depressing link shared every month, so here&amp;rsquo;s&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:feudal&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:feudal&#34;&gt;6&lt;/a&gt;&lt;/sup&gt; a discussion of trust and power in today&amp;rsquo;s Internet.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Finally, everything old is going to be new again&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:mainframe&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:mainframe&#34;&gt;7&lt;/a&gt;&lt;/sup&gt;, and vice versa, so there isn&amp;rsquo;t really anything to worry about, unless you want to, that is. Hardware becomes softwre becomes hardware, general becomes specific becomes general, and so on.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;footnotes&#34;&gt;
+
+&lt;hr /&gt;
+
+&lt;ol&gt;
+&lt;li id=&#34;fn:knuth&#34;&gt;Youtube.com, &lt;a href=&#34;https://www.youtube.com/watch?v=mPn2AdMH7UQ&#34;&gt;&lt;em&gt;&amp;ldquo;Surreal numbers: writing the first book&amp;rdquo;&lt;/em&gt;&lt;/a&gt;
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:knuth&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:storage&#34;&gt;Economist, &lt;a href=&#34;http://www.economist.com/news/science-and-technology/21702343-individual-atoms-offer-ultra-dense-information-storage-atoms-and-voids&#34;&gt;&lt;em&gt;&amp;ldquo;Atoms and the voids&amp;rdquo;&lt;/em&gt;&lt;/a&gt;
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:storage&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:postmodern&#34;&gt;Youtube, &lt;a href=&#34;https://www.youtube.com/watch?v=a5Q7td6t-iw&#34;&gt;&lt;em&gt;&amp;ldquo;James Noble: Notes on Post-Post-Modern-Modern Programming&amp;rdquo;&lt;/em&gt;&lt;/a&gt;
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:postmodern&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:types&#34;&gt;Birmingham theory group, &lt;a href=&#34;http://researchblogs.cs.bham.ac.uk/thelablunch/2015/06/types-computation-vs-interaction/&#34;&gt;&lt;em&gt;&amp;ldquo;Types: computation vs. interaction&amp;rdquo;&lt;/em&gt;&lt;/a&gt;
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:types&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:paradigms&#34;&gt;Amnon Eden, &lt;a href=&#34;http://www.eden-study.org/articles/2007/three_paradigms_of_computer_science.pdf&#34;&gt;&lt;em&gt;&amp;ldquo;Three paradigms of Computer Science&amp;rdquo;&lt;/em&gt;&lt;/a&gt;
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:paradigms&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:feudal&#34;&gt;&lt;a href=&#34;Co:llaboratory&#34;&gt;Co:llaboratory&lt;/a&gt;, &lt;a href=&#34;http://en.collaboratory.de/w/Power_in_the_Age_of_the_Feudal_Internet&#34;&gt;&lt;em&gt;&amp;ldquo;Power in the Age of the Feudal Internet&amp;rdquo;&lt;/em&gt;&lt;/a&gt;
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:feudal&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:mainframe&#34;&gt;Rudolf Winestock, &lt;a href=&#34;http://www.winestockwebdesign.com/Essays/Lisp_Curse.html&#34;&gt;&lt;em&gt;&amp;ldquo;The Eternal Mainframe&amp;rdquo;&lt;/em&gt;&lt;/a&gt;
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:mainframe&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</description>
+    </item>
     
     <item>
       <title>prog math sci summary july 2016</title>
@@ -765,50 +812,6 @@ main() {
 &lt;p&gt;Unfortunately, time is scarcer now, my free time is less structured, and I often find myself away from an actual terminal, though equipped with a capable smartphone. For my &lt;a href=&#34;https://abacusnoirform.wordpress.com&#34;&gt;more-general-purpose blog&lt;/a&gt;, I used Wordpress and it&amp;rsquo;s worked out pretty well so far, because I can &amp;ldquo;write on the go&amp;rdquo;, and I&amp;rsquo;d like to be able to do the same for this blog too.&lt;/p&gt;
 
 &lt;p&gt;So I haven&amp;rsquo;t decided exactly how and when to migrate (because hey, I do want to keep what I have) to a &amp;ldquo;dynamic blog&amp;rdquo; (funny phrase, that), but I definitely want to do it sometime this year.&lt;/p&gt;
-</description>
-    </item>
-    
-    <item>
-      <title>monthly programming summary january 2016</title>
-      <link>http://agam.github.io/post/2016/01/25/monthly-programming-summary-january-2016/</link>
-      <pubDate>Mon, 25 Jan 2016 00:00:00 +0000</pubDate>
-      
-      <guid>http://agam.github.io/post/2016/01/25/monthly-programming-summary-january-2016/</guid>
-      <description>&lt;p&gt;Again, this isn’t really restricted to &lt;em&gt;Programming&lt;/em&gt; per se, but more generally “computer-related stuff”. Next time, I’ll pick a better name. Until then, here are a few interesting links I came across last month, in no  particular order:&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;The Handbook of Lisp Functions (cover page below): a &lt;a href=&#34;http://www.softwarepreservation.org/projects/LISP/mblisp/Handbook_of_LISP_Functions.pdf&#34;&gt;technical report&lt;/a&gt; from &lt;em&gt;1961&lt;/em&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;{% img &lt;a href=&#34;https://doc-14-48-docs.googleusercontent.com/docs/securesc/o7m1hv4d96s4jtg9a81aobcff174890t/49eh1go9f5v2i53agksqnv1ghn4m8mj9/1453780800000/03675759775475626385/03675759775475626385/0B7bvhABhpDqmMmRPQmRvWXpkZTg&#34;&gt;https://doc-14-48-docs.googleusercontent.com/docs/securesc/o7m1hv4d96s4jtg9a81aobcff174890t/49eh1go9f5v2i53agksqnv1ghn4m8mj9/1453780800000/03675759775475626385/03675759775475626385/0B7bvhABhpDqmMmRPQmRvWXpkZTg&lt;/a&gt; %}&lt;/p&gt;
-
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;Digression on learning new languages: Ugh, I’m too embarassed to even write this. I keep changing my mind about what I like more. I thought this was going to be “the year of Clojure” for me, but then &lt;a href=&#34;http://www.amazon.com/Dart-Programming-Language-Gilad-Bracha/dp/0321927702#&#34;&gt;Gilad Bracha’s book&lt;/a&gt; came out and now I’m torn again (Can I have them &lt;em&gt;both&lt;/em&gt;? Maybe, but I fear I don’t have that kind of time anymore :P)&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Busting the myths behind MicroKernels: &lt;a href=&#34;http://blog.darknedgy.net/technology/2016/01/01/0/&#34;&gt;&lt;em&gt;”Microkernels are slow and Elvis didn’t do no drugs”&lt;/em&gt;&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Here is a paper from 1982 (&lt;a href=&#34;http://www.smecc.org/The%20Architecture%20%20of%20the%20Burroughs%20B-5000.htm&#34;&gt;&lt;em&gt;”The Architecture of the Burroughs B5000 - 20 Years Later and Still Ahead of the Times?”&lt;/em&gt;&lt;/a&gt;), which was &lt;em&gt;even then&lt;/em&gt; lamenting the sorry state of hardware, and only seems quaint now (as in &lt;em&gt;”why would you do things different?”&lt;/em&gt;)&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Various ways to make Clojure programming more productive: &lt;a href=&#34;http://dev.solita.fi/2014/03/18/pimp-my-repl.html&#34;&gt;&lt;em&gt;”Pimp My REPL”&lt;/em&gt;&lt;/a&gt;&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;I had a bunch of entertaining blog posts by Crista Lopez in the past (e.g. &lt;a href=&#34;http://tagide.com/blog/fiction/jedi-masters/&#34;&gt;&lt;em&gt;”Jedi Masters”&lt;/em&gt;&lt;/a&gt;), but was blown away by this set of slides. You’re a programmer, you want to be a programmer for life, you &lt;em&gt;have&lt;/em&gt; to read this: &lt;a href=&#34;http://gotocon.com/dl/goto-aar-2013/slides/CristinaVideiraLopes_ExercisesInStyle.pdf&#34;&gt;&lt;em&gt;”Exercises in Programming Style”&lt;/em&gt;&lt;/a&gt;. And if you really like it, &lt;a href=&#34;http://www.amazon.com/Exercises-Programming-Style-Cristina-Videira/dp/1482227371&#34;&gt;get the book&lt;/a&gt;.&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Came across this intriguing indie film trailer (&lt;a href=&#34;https://vimeo.com/147111732&#34;&gt;&lt;em&gt;”TraceRoute”&lt;/em&gt;&lt;/a&gt;), though I haven’t gotten around to seeing the movie yet (the writer/protagonist navigates “… the ghosts of nerddom’s past present and future …”). Dunno, added it to my “to watch” list.&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;Obviously, the X-Files is back. If you like this sort of stuff, the first episode &lt;a href=&#34;http://www.fox.com/watch/607308867569/7756658688&#34;&gt;is free to watch&lt;/a&gt; on Fox. Go watch it :)&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;A couple of articles for “historical interest”. The first is the New York Times reporting on … &lt;a href=&#34;http://www.nytimes.com/1996/01/22/business/the-new-york-times-introduces-a-web-site.html&#34;&gt;the opening of its web site, in 1996!&lt;/a&gt;. But really, you skip ahead to the very last line for your dose of irony-or-tragedy: &lt;em&gt;“The market is booming for newspapers on the World Wide Web”&lt;/em&gt;. Ouch.&lt;/p&gt;&lt;/li&gt;
-
-&lt;li&gt;&lt;p&gt;The second is hilarious, from even further back (&lt;a href=&#34;http://www.nytimes.com/1984/12/25/science/value-of-windowing-is-questioned.html&#34;&gt;&lt;em&gt;”Value of Windowing is Questioned”&lt;/em&gt;&lt;/a&gt;, 1984!!), and here the Times speculates on the dubious value of a graphical user interface. The opening line asks: &lt;em&gt;“Does anyone do windows any more?”&lt;/em&gt;, and the article concludes by predicting “doom” for the upcoming new OS by Microsoft. I thought I’d see if the author had time to reflect on his past predictions, so I looked through the newspaper’s archives, but it looks like he stopped writing technology articles in 1987 and switched to Food and Travel. Anyway.&lt;/p&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Here’s a “quote of the month” for you:&lt;/p&gt;
-
-&lt;blockquote&gt;
-&lt;p&gt;Science is much more ‘sloppy’ and ‘irrational’ than its methodological image.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;(Paul Feyerabend, &lt;em&gt;Against Method&lt;/em&gt;, and I meant to refer to the so-called science of computers)&lt;/p&gt;
 </description>
     </item>
     
