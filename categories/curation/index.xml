@@ -6,8 +6,55 @@
     <description>Recent content in Curation on Agam&#39;s Mashed-Up Pome</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 27 Jul 2016 22:04:47 -0700</lastBuildDate>
+    <lastBuildDate>Thu, 08 Sep 2016 22:18:03 -0700</lastBuildDate>
     <atom:link href="http://agam.github.io/categories/curation/index.xml" rel="self" type="application/rss+xml" />
+    
+    <item>
+      <title>Prog/Math/Sci summary: August 2016</title>
+      <link>http://agam.github.io/post/prog-math-sci-summary-aug-2016/</link>
+      <pubDate>Thu, 08 Sep 2016 22:18:03 -0700</pubDate>
+      
+      <guid>http://agam.github.io/post/prog-math-sci-summary-aug-2016/</guid>
+      <description>&lt;p&gt;Some interesting stuff, in no particular order:&lt;/p&gt;
+
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;I didn&amp;rsquo;t know Knuth even &lt;em&gt;had&lt;/em&gt; a book on Surreal numbers, but here&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:knuth&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:knuth&#34;&gt;1&lt;/a&gt;&lt;/sup&gt; is his humorous recounting of how it was written.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;There&amp;rsquo;s always more room at the bottom &amp;hellip; this Economist article&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:storage&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:storage&#34;&gt;2&lt;/a&gt;&lt;/sup&gt; mentions a recent breakthrough, where scientists were able to store a paragraph of text on individual atoms at the relatively not-so-cold temperature of -196 degress celsius.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;James Noble of &lt;a href=&#34;http://homepages.mcs.vuw.ac.nz/~kjx/papers/nopp.pdf&#34;&gt;&amp;ldquo;Notes on Post-Modern programming&amp;rdquo;&lt;/a&gt; returns with a sequel&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:postmodern&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:postmodern&#34;&gt;3&lt;/a&gt;&lt;/sup&gt;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;I&amp;rsquo;m always interested in posssible zones of &amp;ldquo;incommensurability&amp;rdquo; in computer science, and most of such things have to do with people disagreeing&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:types&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:types&#34;&gt;4&lt;/a&gt;&lt;/sup&gt; on what &amp;ldquo;types&amp;rdquo; mean &amp;hellip;&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;&amp;hellip; but occasionally disagreeing more broadly&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:paradigms&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:paradigms&#34;&gt;5&lt;/a&gt;&lt;/sup&gt;, about what computer science &lt;em&gt;is&lt;/em&gt;.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;There has to be &lt;em&gt;some&lt;/em&gt; depressing link shared every month, so here&amp;rsquo;s&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:feudal&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:feudal&#34;&gt;6&lt;/a&gt;&lt;/sup&gt; a discussion of trust and power in today&amp;rsquo;s Internet.&lt;/p&gt;&lt;/li&gt;
+
+&lt;li&gt;&lt;p&gt;Finally, everything old is going to be new again&lt;sup class=&#34;footnote-ref&#34; id=&#34;fnref:mainframe&#34;&gt;&lt;a rel=&#34;footnote&#34; href=&#34;#fn:mainframe&#34;&gt;7&lt;/a&gt;&lt;/sup&gt;, and vice versa, so there isn&amp;rsquo;t really anything to worry about, unless you want to, that is. Hardware becomes softwre becomes hardware, general becomes specific becomes general, and so on.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&#34;footnotes&#34;&gt;
+
+&lt;hr /&gt;
+
+&lt;ol&gt;
+&lt;li id=&#34;fn:knuth&#34;&gt;Youtube.com, &lt;a href=&#34;https://www.youtube.com/watch?v=mPn2AdMH7UQ&#34;&gt;&lt;em&gt;&amp;ldquo;Surreal numbers: writing the first book&amp;rdquo;&lt;/em&gt;&lt;/a&gt;
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:knuth&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:storage&#34;&gt;Economist, &lt;a href=&#34;http://www.economist.com/news/science-and-technology/21702343-individual-atoms-offer-ultra-dense-information-storage-atoms-and-voids&#34;&gt;&lt;em&gt;&amp;ldquo;Atoms and the voids&amp;rdquo;&lt;/em&gt;&lt;/a&gt;
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:storage&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:postmodern&#34;&gt;Youtube, &lt;a href=&#34;https://www.youtube.com/watch?v=a5Q7td6t-iw&#34;&gt;&lt;em&gt;&amp;ldquo;James Noble: Notes on Post-Post-Modern-Modern Programming&amp;rdquo;&lt;/em&gt;&lt;/a&gt;
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:postmodern&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:types&#34;&gt;Birmingham theory group, &lt;a href=&#34;http://researchblogs.cs.bham.ac.uk/thelablunch/2015/06/types-computation-vs-interaction/&#34;&gt;&lt;em&gt;&amp;ldquo;Types: computation vs. interaction&amp;rdquo;&lt;/em&gt;&lt;/a&gt;
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:types&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:paradigms&#34;&gt;Amnon Eden, &lt;a href=&#34;http://www.eden-study.org/articles/2007/three_paradigms_of_computer_science.pdf&#34;&gt;&lt;em&gt;&amp;ldquo;Three paradigms of Computer Science&amp;rdquo;&lt;/em&gt;&lt;/a&gt;
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:paradigms&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:feudal&#34;&gt;&lt;a href=&#34;Co:llaboratory&#34;&gt;Co:llaboratory&lt;/a&gt;, &lt;a href=&#34;http://en.collaboratory.de/w/Power_in_the_Age_of_the_Feudal_Internet&#34;&gt;&lt;em&gt;&amp;ldquo;Power in the Age of the Feudal Internet&amp;rdquo;&lt;/em&gt;&lt;/a&gt;
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:feudal&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;li id=&#34;fn:mainframe&#34;&gt;Rudolf Winestock, &lt;a href=&#34;http://www.winestockwebdesign.com/Essays/Lisp_Curse.html&#34;&gt;&lt;em&gt;&amp;ldquo;The Eternal Mainframe&amp;rdquo;&lt;/em&gt;&lt;/a&gt;
+ &lt;a class=&#34;footnote-return&#34; href=&#34;#fnref:mainframe&#34;&gt;&lt;sup&gt;[return]&lt;/sup&gt;&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;/div&gt;
+</description>
+    </item>
     
     <item>
       <title>prog math sci summary july 2016</title>
